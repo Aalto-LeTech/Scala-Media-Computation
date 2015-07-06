@@ -30,7 +30,7 @@ This library uses [sbt](http://www.scala-sbt.org/) as its build tool. One way to
 ```
 sbt clean test package
 ```
-The packaged Java archives (.jar files) will be found under the generated `target` folder.
+The packaged Java archives (.jar files) can be found under the generated `target` folder, arranged into subfolders by Scala version.
 
 
 ## Developing the Library with the Scala-IDE
