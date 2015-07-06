@@ -1,4 +1,4 @@
-name := "Scala Media Computing Library"
+name := "Scala Media Computation Library"
 
 version := "0.1"
 
