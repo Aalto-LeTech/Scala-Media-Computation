@@ -48,6 +48,6 @@ Afterwards, the project can be imported into the Scala-IDE as follows:
   5. From the *Projects* list, select the *Scala Media Computation Library*
   6. Press *Finish*
 
-Now the *Scala Media Computation Library* project should open into the currently open workspace. Since the Scala-IDE does not include support for sbt (yet), it will function only as a code editor. Scala-IDE's own build functionality should be turned off e.g. by unchecking the *Build Automatically* option from the *Project* menu. If the Scala-IDE's internal build is executed, the `bin` folder will be created under the main folder; this folder can (and should) be deleted.
+Now the *Scala Media Computation Library* project should open into the currently open workspace. Since the Scala-IDE does not include support for sbt (yet), it will function only as a code editor. Scala-IDE's own build functionality should be turned off e.g. by unchecking the *Build Automatically* option from the *Project* menu. If the Scala-IDE's internal build is executed, the `bin` folder will be created under the library's root folder; this folder can (and should) be deleted.
 
 NOTE: Any environment-specific files created for or produced by the Scala-IDE, as well as any build products of any build tool, must **not** be committed into the repository!
