@@ -1,0 +1,12 @@
+#
+# File ignoration patterns for Git
+#
+
+/*
+!/build.sbt
+!/src
+!/project
+
+/project/*
+!/project/plugins.sbt
+
