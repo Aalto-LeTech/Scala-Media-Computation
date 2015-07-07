@@ -4,6 +4,8 @@ import org.scalatest._
 import aalto.smcl.UnitBaseSpec
 
 /**
+ *
+ *
  * @author Aleksi Lukkarinen
  */
 class BitmapImageSpec extends UnitBaseSpec {

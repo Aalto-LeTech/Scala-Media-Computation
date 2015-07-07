@@ -3,6 +3,8 @@ package aalto.smcl.images
 import java.awt.image._
 
 /**
+ *
+ *
  * @author Aleksi Lukkarinen
  */
 object BitmapImage {
@@ -128,6 +130,8 @@ object BitmapImage {
 }
 
 /**
+ *
+ *
  * @author Aleksi Lukkarinen
  */
 class BitmapImage(
