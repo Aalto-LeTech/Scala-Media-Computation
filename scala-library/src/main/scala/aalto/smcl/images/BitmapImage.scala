@@ -165,7 +165,7 @@ class BitmapImage(
   /**
    *
    */
-  def setPixel(x: Int, y: Int, red: Byte, green: Byte, blue: Byte, transparency: Byte) = {
+  def setPixel(x: Int, y: Int, red: Int, green: Int, blue: Int, transparency: Int) = {
     require(_widthRange.contains(x),
       s"The x coordinate must be >= zero and less than the width of the image (was $x)")
 
