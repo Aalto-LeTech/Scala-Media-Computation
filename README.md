@@ -28,7 +28,7 @@ This will create a `Scala-Media-Computation` folder into the folder in which it 
 
 This library uses [sbt](http://www.scala-sbt.org/) as its build tool. One way to test and package the library is to issue the following command in its root folder (`Scala-Media-Computation/scala-library/`):
 ```
-sbt clean test package
+sbt clean test doc package
 ```
 The packaged Java archives (.jar files) can be found under the generated `target` folder, arranged into subfolders by Scala version.
 
