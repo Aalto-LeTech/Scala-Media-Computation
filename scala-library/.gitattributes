@@ -1,0 +1,13 @@
+*.gitattributes eol=lf
+*.gitignore     eol=lf
+*.java          eol=lf
+*.jpg           binary
+*.MD            eol=lf
+*.MF            eol=lf
+*.pdf           binary
+*.png           binary
+*.properties    eol=lf
+*.scala         eol=lf
+*.sbt           eol=lf
+*.txt           text
+*.xml           eol=lf
