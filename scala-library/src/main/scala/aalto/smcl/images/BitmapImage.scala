@@ -28,12 +28,7 @@ object BitmapImage {
     assignment: Option[String] = None,
     creatorName: Option[String] = None): BitmapImage = {
 
-    val imageController = new BitmapImage(
-      title: Option[String],
-      description: Option[String],
-      courseName: Option[String],
-      assignment: Option[String],
-      creatorName: Option[String])
+    val imageController = new BitmapImage(title, description, courseName, assignment, creatorName)
 
     val imageModel = BitmapImageModel(
       imageController,
