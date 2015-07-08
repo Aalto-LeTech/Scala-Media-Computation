@@ -1,4 +1,4 @@
-package aalto.smcl
+package aalto.smcl.images
 
 import org.scalatest._
 import aalto.smcl.images._
@@ -8,17 +8,7 @@ import aalto.smcl.images._
  *
  * @author Aleksi Lukkarinen
  */
-class packageSpec extends aalto.smcl.UnitBaseSpec {
-
-  val TEST_PIXEL_INT = 0xFEDCBA98
-  val TEST_RED_VALUE = 0xDC
-  val TEST_GREEN_VALUE = 0xBA
-  val TEST_BLUE_VALUE = 0x98
-  val TEST_TRANSPARENCY_VALUE = 0xFE
-  val TEST_PIXEL_INT_WITH_ZEROED_RED = 0xFE00BA98
-  val TEST_PIXEL_INT_WITH_ZEROED_GREEN = 0xFEDC0098
-  val TEST_PIXEL_INT_WITH_ZEROED_BLUE = 0xFEDCBA00
-  val TEST_PIXEL_INT_WITH_ZEROED_TRANSPARENCY = 0x00DCBA98
+class packageSpec extends ImageSpecBase {
 
   "the right color component must be extracted from an Int representing a pixel value by" - {
     "redComponentFrom()" in {
