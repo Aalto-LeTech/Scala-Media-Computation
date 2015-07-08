@@ -13,4 +13,5 @@ libraryDependencies += (scalaBinaryVersion.value match {
 
 scalacOptions in (Compile, doc) ++=
     Seq("-implicits",
+    	"-doc-root-content", baseDirectory.value + "/root-doc.txt",
         "-doc-title", "Scala Media Computation Library")

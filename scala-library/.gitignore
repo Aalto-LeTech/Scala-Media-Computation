@@ -5,6 +5,7 @@
 /*
 !/.gitignore
 !/build.sbt
+!/root-doc.txt
 !/src
 !/project
 
