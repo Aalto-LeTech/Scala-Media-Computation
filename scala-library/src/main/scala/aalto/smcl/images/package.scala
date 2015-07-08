@@ -64,71 +64,71 @@ package object images {
   /**
    *
    */
-  def redComponentFrom(rgbaPixelInt: Int): Int = (rgbaPixelInt & THIRD_BYTE) >>> TWO_BYTES
+  def redComponentFrom(pixelInt: Int): Int = (pixelInt & THIRD_BYTE) >>> TWO_BYTES
 
   /**
    *
    */
-  def withNewRedComponent(rgbaPixelInt:Int, newRed : Int) = {
+  def withNewRedComponent(pixelInt: Int, newRed: Int) = {
     require(BYTE_RANGE.contains(newRed),
       s"'newRed' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newRed)")
 
-    (rgbaPixelInt & ~THIRD_BYTE) | (newRed << TWO_BYTES)
+    (pixelInt & ~THIRD_BYTE) | (newRed << TWO_BYTES)
   }
 
   /**
    *
    */
-  def greenComponentFrom(rgbaPixelInt: Int): Int = (rgbaPixelInt & SECOND_BYTE) >>> ONE_BYTE
+  def greenComponentFrom(pixelInt: Int): Int = (pixelInt & SECOND_BYTE) >>> ONE_BYTE
 
   /**
    *
    */
-  def withNewGreenComponent(rgbaPixelInt:Int, newGreen : Int) = {
+  def withNewGreenComponent(pixelInt: Int, newGreen: Int) = {
     require(BYTE_RANGE.contains(newGreen),
       s"'newGreen' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newGreen)")
 
-    (rgbaPixelInt & ~SECOND_BYTE) | (newGreen << ONE_BYTE)
+    (pixelInt & ~SECOND_BYTE) | (newGreen << ONE_BYTE)
   }
 
   /**
    *
    */
-  def blueComponentFrom(rgbaPixelInt: Int): Int = rgbaPixelInt & FIRST_BYTE
+  def blueComponentFrom(pixelInt: Int): Int = pixelInt & FIRST_BYTE
 
   /**
    *
    */
-  def withNewBlueComponent(rgbaPixelInt:Int, newBlue : Int) = {
+  def withNewBlueComponent(pixelInt: Int, newBlue: Int) = {
     require(BYTE_RANGE.contains(newBlue),
       s"'newBlue' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newBlue)")
 
-    (rgbaPixelInt & ~FIRST_BYTE) | newBlue
+    (pixelInt & ~FIRST_BYTE) | newBlue
   }
 
   /**
    *
    */
-  def transparencyComponentFrom(rgbaPixelInt: Int): Int = rgbaPixelInt >>> THREE_BYTES
+  def transparencyComponentFrom(pixelInt: Int): Int = pixelInt >>> THREE_BYTES
 
   /**
    *
    */
-  def withNewTransparencyComponent(rgbaPixelInt:Int, newTransparency : Int) = {
+  def withNewTransparencyComponent(pixelInt: Int, newTransparency: Int) = {
     require(BYTE_RANGE.contains(newTransparency),
       s"'newTransparency' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newTransparency)")
 
-    (rgbaPixelInt & ~FOURTH_BYTE) | (newTransparency << THREE_BYTES)
+    (pixelInt & ~FOURTH_BYTE) | (newTransparency << THREE_BYTES)
   }
 
   /**
    *
    */
-  def colorComponentsFrom(rgbaPixelInt: Int): Tuple4[Int, Int, Int, Int] = {
-    (redComponentFrom(rgbaPixelInt),
-     greenComponentFrom(rgbaPixelInt),
-     blueComponentFrom(rgbaPixelInt),
-     transparencyComponentFrom(rgbaPixelInt))
+  def colorComponentsFrom(pixelInt: Int): Tuple4[Int, Int, Int, Int] = {
+    (redComponentFrom(pixelInt),
+      greenComponentFrom(pixelInt),
+      blueComponentFrom(pixelInt),
+      transparencyComponentFrom(pixelInt))
   }
 
   /**
