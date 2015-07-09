@@ -1,5 +1,7 @@
 package aalto.smcl
 
+import scala.collection.immutable
+
 /**
  *
  *
@@ -130,8 +132,8 @@ package object images {
   /**
    *
    */
-  def colorComponentsFrom(pixelInt: Int): Map[Symbol, Int] = {
-    Map[Symbol, Int](
+  def colorComponentsFrom(pixelInt: Int): immutable.Map[Symbol, Int] = {
+    immutable.Map[Symbol, Int](
       'red -> redComponentFrom(pixelInt),
       'green -> greenComponentFrom(pixelInt),
       'blue -> blueComponentFrom(pixelInt),
@@ -177,7 +179,7 @@ package object images {
      * res0: Map[Symbol,Int] = Map('red -> 171, 'green -> 205, 'blue -> 239, 'transparency -> 137) // 0x89 = 137 etc.
      * }}}
      */
-    def colorComponentInts: Map[Symbol, Int] = colorComponentsFrom(self)
+    def colorComponentInts: immutable.Map[Symbol, Int] = colorComponentsFrom(self)
 
     /**
      * Returns the red color component of this ARGB-style `Int`.

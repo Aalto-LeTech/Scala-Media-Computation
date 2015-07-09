@@ -2,6 +2,8 @@ package aalto.smcl.images
 
 import java.awt.image.BufferedImage
 import java.awt.Graphics2D
+import scala.collection.immutable
+
 
 /**
  *
@@ -93,7 +95,7 @@ class BitmapImageModel private (
   /**
    *
    */
-  def colorComponentsAt(x: Int, y: Int): Map[Symbol, Int] = {
+  def colorComponentsAt(x: Int, y: Int): immutable.Map[Symbol, Int] = {
     colorComponentsFrom(pixelIntAt(x, y))
   }
 
