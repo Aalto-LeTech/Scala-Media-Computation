@@ -7,6 +7,12 @@ package aalto.smcl
  */
 package object images {
 
+  /** A space character. */
+  private val SPACE = " "
+
+  /** A zero character. */
+  private val ZERO = "0"
+
   /** Number of bits in one byte. */
   private[images] val ONE_BYTE = 8
 
@@ -185,6 +191,22 @@ package object images {
      *
      */
     def transparentcyComponentInt: Int = transparencyComponentFrom(self)
+
+    /**
+     * Displays this <code>Int</code> as a zero-padded hexadecimal form, like "89ABCDEF".
+     */
+    def toArgbHexColorString: String = f"${self}%08x"
+
+    /**
+     * Displays this <code>Int</code> as a zero-padded binary form divided to bytes by spaces,
+     * like "10101011 11001101 11101111 10011000".
+     */
+    def toArgbBinaryColorString: String = {
+      val withoutGroups = f"${self.toBinaryString}%32s".replace(SPACE, ZERO)
+      val grouped = withoutGroups.sliding(ONE_BYTE, ONE_BYTE).mkString(SPACE)
+
+      return grouped
+    }
 
   }
 
