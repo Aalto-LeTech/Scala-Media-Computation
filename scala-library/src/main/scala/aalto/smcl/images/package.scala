@@ -163,7 +163,8 @@ package object images {
   }
 
   /**
-   * Some methods for handling ARGB-style [[Int]] values representing pixels.
+   * Some methods for composing ARGB-style [[Int]] values as well as
+   * extracting the individual color components from them.
    */
   implicit class PixelInt(val self: Int) extends AnyVal {
 
