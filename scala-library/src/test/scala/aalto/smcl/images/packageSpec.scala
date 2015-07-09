@@ -85,9 +85,13 @@ class packageSpec extends ImageSpecBase {
   }
 
   "colorComponentsFrom() must" - {
-    "return a tuple with the right color components of an Int representing a pixel value" in {
+    "return a map with the right color components of an Int representing a pixel value" in {
       assert(colorComponentsFrom(TEST_PIXEL_INT) ===
-        (TEST_RED_VALUE, TEST_GREEN_VALUE, TEST_BLUE_VALUE, TEST_TRANSPARENCY_VALUE))
+        Map[Symbol, Int](
+          'red -> TEST_RED_VALUE,
+          'green -> TEST_GREEN_VALUE,
+          'blue -> TEST_BLUE_VALUE,
+          'transparency -> TEST_TRANSPARENCY_VALUE))
     }
   }
 

@@ -124,11 +124,12 @@ package object images {
   /**
    *
    */
-  def colorComponentsFrom(pixelInt: Int): Tuple4[Int, Int, Int, Int] = {
-    (redComponentFrom(pixelInt),
-      greenComponentFrom(pixelInt),
-      blueComponentFrom(pixelInt),
-      transparencyComponentFrom(pixelInt))
+  def colorComponentsFrom(pixelInt: Int): Map[Symbol, Int] = {
+    Map[Symbol, Int](
+      'red -> redComponentFrom(pixelInt),
+      'green -> greenComponentFrom(pixelInt),
+      'blue -> blueComponentFrom(pixelInt),
+      'transparency -> transparencyComponentFrom(pixelInt))
   }
 
   /**
@@ -163,7 +164,7 @@ package object images {
     /**
      *
      */
-    def colorComponentInts: Tuple4[Int, Int, Int, Int] = colorComponentsFrom(self)
+    def colorComponentInts: Map[Symbol, Int] = colorComponentsFrom(self)
 
     /**
      *

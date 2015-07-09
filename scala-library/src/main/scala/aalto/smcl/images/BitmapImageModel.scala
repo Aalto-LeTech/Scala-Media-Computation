@@ -93,7 +93,7 @@ class BitmapImageModel private (
   /**
    *
    */
-  def colorComponentsAt(x: Int, y: Int): Tuple4[Int, Int, Int, Int] = {
+  def colorComponentsAt(x: Int, y: Int): Map[Symbol, Int] = {
     colorComponentsFrom(pixelIntAt(x, y))
   }
 
