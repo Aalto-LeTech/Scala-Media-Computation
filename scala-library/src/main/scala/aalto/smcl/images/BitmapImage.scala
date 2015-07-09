@@ -48,11 +48,11 @@ object BitmapImage {
  * @author Aleksi Lukkarinen
  */
 class BitmapImage(
-    var title: Option[String] = None,
-    var description: Option[String] = None,
-    var courseName: Option[String] = None,
-    var assignment: Option[String] = None,
-    var creatorName: Option[String] = None) {
+    var title: Option[String],
+    var description: Option[String],
+    var courseName: Option[String],
+    var assignment: Option[String],
+    var creatorName: Option[String]) {
 
   /** Represents the pixels of this image. */
   private var _model: Option[BitmapImageModel] = None
