@@ -1,7 +1,5 @@
 package aalto.smcl.images
 
-import java.awt.image._
-
 /**
  *
  *
