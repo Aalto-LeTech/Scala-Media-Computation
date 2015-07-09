@@ -58,11 +58,11 @@ class BitmapImage(
   /**
    *  Returns the <code>BitmapImageModel</code> instance related to this image.
    */
-  def model = _model
+  def model: Option[BitmapImageModel] = _model
 
   /**
    * Sets the <code>BitmapImageModel</code> instance related to this image.
    */
-  private def model_=(newModel: Option[BitmapImageModel]) = _model = newModel
+  private def model_=(newModel: Option[BitmapImageModel]): Unit = _model = newModel
 
 }

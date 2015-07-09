@@ -1,6 +1,7 @@
 package aalto.smcl.images
 
 import java.awt.image.BufferedImage
+import java.awt.Graphics2D
 
 /**
  *
@@ -47,23 +48,23 @@ class BitmapImageModel private (
    * Returns a <code>Range</code> representing the range of numbers from
    * zero to the width of this <code>BitmapImageModel</code>'s pixel buffer.
    */
-  def widthRange = 0 to (pixelBuffer.getWidth - 1)
+  def widthRange: Range.Inclusive = 0 to (pixelBuffer.getWidth - 1)
 
   /**
    * Returns a <code>Range</code> representing the range of numbers from
    * zero to the height of this <code>BitmapImageModel</code>'s pixel buffer.
    */
-  def heightRange = 0 to (pixelBuffer.getHeight - 1)
+  def heightRange: Range.Inclusive = 0 to (pixelBuffer.getHeight - 1)
 
   /**
    *
    */
-  def numberOfPixels = pixelBuffer.getWidth * pixelBuffer.getHeight
+  def numberOfPixels: Int = pixelBuffer.getWidth * pixelBuffer.getHeight
 
   /**
    *  Returns Java's Graphics2D interface to support more advanced graphic capabilities.
    */
-  def graphics2D = pixelBuffer.createGraphics()
+  def graphics2D: Graphics2D = pixelBuffer.createGraphics()
 
   /**
    *
@@ -98,7 +99,7 @@ class BitmapImageModel private (
   /**
    *
    */
-  def setPixelIntAt(x: Int, y: Int, pixelInt: Int) = {
+  def setPixelIntAt(x: Int, y: Int, pixelInt: Int): Unit = {
     require(widthRange.contains(x),
       s"The x coordinate must be >= zero and less than the width of the image (was $x)")
 
@@ -111,7 +112,7 @@ class BitmapImageModel private (
   /**
    *
    */
-  def setColorComponentsAt(x: Int, y: Int, red: Int, green: Int, blue: Int, transparency: Int) = {
+  def setColorComponentsAt(x: Int, y: Int, red: Int, green: Int, blue: Int, transparency: Int): Unit = {
     require(widthRange.contains(x),
       s"The x coordinate must be >= zero and less than the width of the image (was $x)")
 
@@ -129,7 +130,7 @@ class BitmapImageModel private (
   /**
    *
    */
-  def setRedComponentAt(x: Int, y: Int, red: Int) =
+  def setRedComponentAt(x: Int, y: Int, red: Int): Unit =
     setPixelIntAt(x, y, withNewRedComponent(pixelIntAt(x, y), red))
 
   /**
@@ -140,7 +141,7 @@ class BitmapImageModel private (
   /**
    *
    */
-  def setGreenComponentAt(x: Int, y: Int, green: Int) =
+  def setGreenComponentAt(x: Int, y: Int, green: Int): Unit =
     setPixelIntAt(x, y, withNewGreenComponent(pixelIntAt(x, y), green))
 
   /**
@@ -151,7 +152,7 @@ class BitmapImageModel private (
   /**
    *
    */
-  def setBlueComponentAt(x: Int, y: Int, blue: Int) =
+  def setBlueComponentAt(x: Int, y: Int, blue: Int): Unit =
     setPixelIntAt(x, y, withNewBlueComponent(pixelIntAt(x, y), blue))
 
   /**
@@ -162,7 +163,7 @@ class BitmapImageModel private (
   /**
    *
    */
-  def setTransparencyComponentAt(x: Int, y: Int, transparency: Int) =
+  def setTransparencyComponentAt(x: Int, y: Int, transparency: Int): Unit =
     setPixelIntAt(x, y, withNewTransparencyComponent(pixelIntAt(x, y), transparency))
 
 }

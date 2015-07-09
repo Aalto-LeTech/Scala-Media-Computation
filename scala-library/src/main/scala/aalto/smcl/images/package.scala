@@ -69,7 +69,7 @@ package object images {
   /**
    *
    */
-  def withNewRedComponent(pixelInt: Int, newRed: Int) = {
+  def withNewRedComponent(pixelInt: Int, newRed: Int): Int = {
     require(BYTE_RANGE.contains(newRed),
       s"'newRed' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newRed)")
 
@@ -84,7 +84,7 @@ package object images {
   /**
    *
    */
-  def withNewGreenComponent(pixelInt: Int, newGreen: Int) = {
+  def withNewGreenComponent(pixelInt: Int, newGreen: Int): Int = {
     require(BYTE_RANGE.contains(newGreen),
       s"'newGreen' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newGreen)")
 
@@ -99,7 +99,7 @@ package object images {
   /**
    *
    */
-  def withNewBlueComponent(pixelInt: Int, newBlue: Int) = {
+  def withNewBlueComponent(pixelInt: Int, newBlue: Int): Int = {
     require(BYTE_RANGE.contains(newBlue),
       s"'newBlue' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newBlue)")
 
@@ -114,7 +114,7 @@ package object images {
   /**
    *
    */
-  def withNewTransparencyComponent(pixelInt: Int, newTransparency: Int) = {
+  def withNewTransparencyComponent(pixelInt: Int, newTransparency: Int): Int = {
     require(BYTE_RANGE.contains(newTransparency),
       s"'newTransparency' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newTransparency)")
 
@@ -138,7 +138,7 @@ package object images {
     red: Int = MIN_RED,
     green: Int = MIN_GREEN,
     blue: Int = MIN_BLUE,
-    transparency: Int = MIN_TRANSPARENCY) = {
+    transparency: Int = MIN_TRANSPARENCY): Int = {
 
     require(BYTE_RANGE.contains(red),
       s"The 'red' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $red)")
