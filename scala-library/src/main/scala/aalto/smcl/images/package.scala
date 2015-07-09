@@ -190,7 +190,7 @@ package object images {
     /**
      *
      */
-    def transparentcyComponentInt: Int = transparencyComponentFrom(self)
+    def transparencyComponentInt: Int = transparencyComponentFrom(self)
 
     /**
      * Displays this <code>Int</code> as a zero-padded hexadecimal form, like "89ABCDEF".
