@@ -34,7 +34,7 @@ object BitmapImage {
       heightInPixels,
       initialBackgroundColor)
 
-    imageController.setModel(imageModel)
+    imageController.model = Option[BitmapImageModel](imageModel)
 
     return imageController
   }
@@ -52,13 +52,17 @@ class BitmapImage(
     var assignment: Option[String],
     var creatorName: Option[String]) {
 
-  /** Represents the pixels of this image. */
+  /** Represents the pixels of this image via a <code>BitmapImageModel</code> instance. */
   private var _model: Option[BitmapImageModel] = None
 
-  /**  */
+  /**
+   *  Returns the <code>BitmapImageModel</code> instance related to this image.
+   */
   def model = _model
 
-  /**  */
-  private def setModel(model: BitmapImageModel) = _model = Option[BitmapImageModel](model)
+  /**
+   * Sets the <code>BitmapImageModel</code> instance related to this image.
+   */
+  private def model_=(newModel: Option[BitmapImageModel]) = _model = newModel
 
 }
