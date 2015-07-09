@@ -1,5 +1,7 @@
 package aalto.smcl.images
 
+import java.util.Calendar
+
 /**
  *
  *
@@ -54,6 +56,9 @@ class BitmapImage(
 
   /** Represents the pixels of this image via a [[BitmapImageModel]] instance. */
   private[this] var _model: Option[BitmapImageModel] = None
+
+  /** Creation time and date of this image. */
+  val created = Calendar.getInstance.getTime
 
   /**
    *  Returns the [[BitmapImageModel]] instance related to this image.

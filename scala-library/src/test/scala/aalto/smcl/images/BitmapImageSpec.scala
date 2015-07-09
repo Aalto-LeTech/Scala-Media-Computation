@@ -63,6 +63,11 @@ class BitmapImageSpec extends ImageSpecBase {
           assert(b.getHeight === TEST_HEIGHT_IN_PIXELS)
         }
       }
-  }
 
+    "when constructed, must get timestamped and be able to tell the time of creation" in {
+      val b = BitmapImage()
+      assert(b.created.isInstanceOf[java.util.Date])
+      info(s"Timestamp: ${b.created.toString()}")
+    }
+  }
 }
