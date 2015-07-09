@@ -7,10 +7,10 @@ package aalto.smcl.images
  */
 object BitmapImage {
 
-  /** Default width of <code>BitmapImage</code> instances created without giving width. */
+  /** Default width of [[BitmapImage]] instances created without giving width. */
   val DEFAULT_WIDTH_IN_PIXELS: Int = 10
 
-  /** Default height of <code>BitmapImage</code> instances created without giving height. */
+  /** Default height of [[BitmapImage]] instances created without giving height. */
   val DEFAULT_HEIGHT_IN_PIXELS: Int = 10
 
   /**
@@ -52,16 +52,16 @@ class BitmapImage(
     var assignment: Option[String],
     var creatorName: Option[String]) {
 
-  /** Represents the pixels of this image via a <code>BitmapImageModel</code> instance. */
+  /** Represents the pixels of this image via a [[BitmapImageModel]] instance. */
   private[this] var _model: Option[BitmapImageModel] = None
 
   /**
-   *  Returns the <code>BitmapImageModel</code> instance related to this image.
+   *  Returns the [[BitmapImageModel]] instance related to this image.
    */
   def model: Option[BitmapImageModel] = _model
 
   /**
-   * Sets the <code>BitmapImageModel</code> instance related to this image.
+   * Sets the [[BitmapImageModel]] instance related to this image.
    */
   private def model_=(newModel: Option[BitmapImageModel]): Unit = _model = newModel
 

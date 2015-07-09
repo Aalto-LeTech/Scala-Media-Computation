@@ -36,8 +36,8 @@ object BitmapImageModel {
 
 /**
  *
- * @param controllerImage     <code>BitmapImage</code> instance, whose pixel data this model represents
- * @param pixelBuffer         the underlying BufferedImage instance acting as a container for pixel data
+ * @param controllerImage     [[BitmapImage]] instance, whose pixel data this model represents
+ * @param pixelBuffer         the underlying `BufferedImage` instance acting as a container for pixel data
  *
  * @author Aleksi Lukkarinen
  */
@@ -46,14 +46,14 @@ class BitmapImageModel private (
     val pixelBuffer: BufferedImage) {
 
   /**
-   * Returns a <code>Range</code> representing the range of numbers from
-   * zero to the width of this <code>BitmapImageModel</code>'s pixel buffer.
+   * Returns a `Range` representing the range of numbers from
+   * zero to the width of this [[BitmapImageModel]]'s pixel buffer.
    */
   def widthRange: Range.Inclusive = 0 to (pixelBuffer.getWidth - 1)
 
   /**
-   * Returns a <code>Range</code> representing the range of numbers from
-   * zero to the height of this <code>BitmapImageModel</code>'s pixel buffer.
+   * Returns a `Range` representing the range of numbers from
+   * zero to the height of this [[BitmapImageModel]]'s pixel buffer.
    */
   def heightRange: Range.Inclusive = 0 to (pixelBuffer.getHeight - 1)
 
@@ -63,7 +63,7 @@ class BitmapImageModel private (
   def numberOfPixels: Int = pixelBuffer.getWidth * pixelBuffer.getHeight
 
   /**
-   *  Returns Java's Graphics2D interface to support more advanced graphic capabilities.
+   *  Returns Java's `Graphics2D` interface to support more advanced graphic capabilities.
    */
   def graphics2D: Graphics2D = pixelBuffer.createGraphics()
 
