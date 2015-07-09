@@ -22,16 +22,16 @@ package object images {
   /** Number of bits in three bytes. */
   private[images] val THREE_BYTES = TWO_BYTES + ONE_BYTE
 
-  /** Bits belonging to the rightmost byte of an <code>Int</code>. */
+  /** Bits belonging to the rightmost byte of an [[Int]]. */
   private[images] val FIRST_BYTE = 0xFF
 
-  /** Bits belonging to the second-rightmost byte of an <code>Int</code>. */
+  /** Bits belonging to the second-rightmost byte of an [[Int]]. */
   private[images] val SECOND_BYTE = FIRST_BYTE << ONE_BYTE
 
-  /** Bits belonging to the second-leftmost byte of an <code>Int</code>. */
+  /** Bits belonging to the second-leftmost byte of an [[Int]]. */
   private[images] val THIRD_BYTE = SECOND_BYTE << ONE_BYTE
 
-  /** Bits belonging to the leftmost byte of an <code>Int</code>. */
+  /** Bits belonging to the leftmost byte of an [[Int]]. */
   private[images] val FOURTH_BYTE = THIRD_BYTE << ONE_BYTE
 
   /** The value range that a single unsigned byte can represent. */
@@ -163,43 +163,50 @@ package object images {
   }
 
   /**
-   * Offers
+   * Some methods for handling ARGB-style [[Int]] values representing pixels.
    */
   implicit class PixelInt(val self: Int) extends AnyVal {
 
     /**
+     * Returns an immutable map containing individual color components of this ARGB-style [[Int]].
+     * The keys in the map are <code>'red</code>, <code>'green</code>, <code>'blue</code>,
+     * and <code>'transparency</code>. An example result is given below:
      *
+     * {{{
+     * scala> 0x89ABCDEF.colorComponentInts
+     * res0: Map[Symbol,Int] = Map('red -> 171, 'green -> 205, 'blue -> 239, 'transparency -> 137) // 0x89 = 137 etc.
+     * }}}
      */
     def colorComponentInts: Map[Symbol, Int] = colorComponentsFrom(self)
 
     /**
-     *
+     * Returns the red color component of this ARGB-style [[Int]].
      */
     def redComponentInt: Int = redComponentFrom(self)
 
     /**
-     *
+     * Returns the green color component of this ARGB-style [[Int]].
      */
     def greenComponentInt: Int = greenComponentFrom(self)
 
     /**
-     *
+     * Returns the blue color component of this ARGB-style [[Int]].
      */
     def blueComponentInt: Int = blueComponentFrom(self)
 
     /**
-     *
+     * Returns the transparency component of this ARGB-style [[Int]].
      */
     def transparencyComponentInt: Int = transparencyComponentFrom(self)
 
     /**
-     * Displays this <code>Int</code> as a zero-padded hexadecimal form, like "89ABCDEF".
+     * Displays this [[Int]] as a zero-padded hexadecimal form, like <code>"89ABCDEF"</code>.
      */
     def toArgbHexColorString: String = f"${self}%08x"
 
     /**
-     * Displays this <code>Int</code> as a zero-padded binary form divided to bytes by spaces,
-     * like "10101011 11001101 11101111 10011000".
+     * Displays this [[Int]] as a zero-padded binary form divided to bytes by spaces,
+     * like <code>"10101011 11001101 11101111 10011000"</code>.
      */
     def toArgbBinaryColorString: String = {
       val withoutGroups = f"${self.toBinaryString}%32s".replace(SPACE, ZERO)
