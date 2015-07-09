@@ -40,7 +40,7 @@ object BitmapImageModel {
  * @author Aleksi Lukkarinen
  */
 class BitmapImageModel private (
-    private val controllerImage: BitmapImage,
+    private[this] val controllerImage: BitmapImage,
     val pixelBuffer: BufferedImage) {
 
   /**

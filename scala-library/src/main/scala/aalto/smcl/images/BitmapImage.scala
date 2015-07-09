@@ -53,7 +53,7 @@ class BitmapImage(
     var creatorName: Option[String]) {
 
   /** Represents the pixels of this image via a <code>BitmapImageModel</code> instance. */
-  private var _model: Option[BitmapImageModel] = None
+  private[this] var _model: Option[BitmapImageModel] = None
 
   /**
    *  Returns the <code>BitmapImageModel</code> instance related to this image.
