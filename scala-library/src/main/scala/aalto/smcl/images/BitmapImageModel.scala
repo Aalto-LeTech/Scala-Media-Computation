@@ -19,6 +19,7 @@ object BitmapImageModel {
     heightInPixels: Int = BitmapImage.DEFAULT_HEIGHT_IN_PIXELS,
     initialBackgroundColor: Option[Int] = None): BitmapImageModel = {
 
+    require(controllerImage != null, "The controllerImage parameter cannot be null")
     require(widthInPixels > 0, s"Width of the image must be greater than zero (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the image must be greater than zero (was $heightInPixels)")
 
