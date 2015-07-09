@@ -155,4 +155,36 @@ package object images {
     (transparency << THREE_BYTES) | (red << TWO_BYTES) | (green << ONE_BYTE) | blue
   }
 
+  /**
+   * Offers
+   */
+  implicit class PixelInt(val self: Int) extends AnyVal {
+
+    /**
+     *
+     */
+    def colorComponentInts: Tuple4[Int, Int, Int, Int] = colorComponentsFrom(self)
+
+    /**
+     *
+     */
+    def redComponentInt: Int = redComponentFrom(self)
+
+    /**
+     *
+     */
+    def greenComponentInt: Int = greenComponentFrom(self)
+
+    /**
+     *
+     */
+    def blueComponentInt: Int = blueComponentFrom(self)
+
+    /**
+     *
+     */
+    def transparentcyComponentInt: Int = transparencyComponentFrom(self)
+
+  }
+
 }
