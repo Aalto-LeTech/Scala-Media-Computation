@@ -18,16 +18,18 @@ object BitmapImageModel {
     controllerImage: BitmapImage,
     widthInPixels: Int = BitmapImage.DEFAULT_WIDTH_IN_PIXELS,
     heightInPixels: Int = BitmapImage.DEFAULT_HEIGHT_IN_PIXELS,
-    initialBackgroundColor: Option[Int] = None): BitmapImageModel = {
+    initialBackgroundColorOption: Option[Int] = None): BitmapImageModel = {
 
     require(controllerImage != null, "The controllerImage parameter cannot be null")
     require(widthInPixels > 0, s"Width of the image must be greater than zero (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the image must be greater than zero (was $heightInPixels)")
 
+    val bgColor = initialBackgroundColorOption getOrElse 0x00FFFFFF
+
     val pixelBuffer = new BufferedImage(widthInPixels, heightInPixels, BufferedImage.TYPE_INT_ARGB)
-    val m = new BitmapImageModel(controllerImage, pixelBuffer)
-    
-    initialBackgroundColor.foreach { c => m.clear(c) }
+    val m = new BitmapImageModel(controllerImage, pixelBuffer, bgColor)
+
+    m.clear()
 
     return m
   }
@@ -35,14 +37,16 @@ object BitmapImageModel {
 
 /**
  *
- * @param controllerImage     [[BitmapImage]] instance, whose pixel data this model represents
- * @param pixelBuffer         the underlying `BufferedImage` instance acting as a container for pixel data
+ * @param controllerImage           [[BitmapImage]] instance, whose pixel data this model represents
+ * @param pixelBuffer               the underlying `BufferedImage` instance acting as a container for pixel data
+ * @param initialBackgroundColor    background color at the time of creation as well as for clearing without a given color
  *
  * @author Aleksi Lukkarinen
  */
 class BitmapImageModel private (
     private[this] val controllerImage: BitmapImage,
-    val pixelBuffer: BufferedImage) {
+    val pixelBuffer: BufferedImage,
+    val initialBackgroundColor: Int) {
 
   /**
    * Returns a `Range` representing the range of numbers from
@@ -69,7 +73,7 @@ class BitmapImageModel private (
   /**
    *
    */
-  def clear(color: Int = 0x00FFFFFF): Unit = {
+  def clear(color: Int = initialBackgroundColor): Unit = {
     val g = graphics2D
 
     g.setPaint(new java.awt.Color(color, true))

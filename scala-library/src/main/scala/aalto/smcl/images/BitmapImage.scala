@@ -21,20 +21,25 @@ object BitmapImage {
   def apply(
     widthInPixels: Int = BitmapImage.DEFAULT_WIDTH_IN_PIXELS,
     heightInPixels: Int = BitmapImage.DEFAULT_HEIGHT_IN_PIXELS,
-    initialBackgroundColor: Option[Int] = None,
-    title: Option[String] = None,
-    description: Option[String] = None,
-    courseName: Option[String] = None,
-    assignment: Option[String] = None,
-    creatorName: Option[String] = None): BitmapImage = {
+    initialBackgroundColorOption: Option[Int] = None,
+    titleOption: Option[String] = None,
+    descriptionOption: Option[String] = None,
+    courseNameOption: Option[String] = None,
+    assignmentOption: Option[String] = None,
+    creatorNameOption: Option[String] = None): BitmapImage = {
 
-    val imageController = new BitmapImage(title, description, courseName, assignment, creatorName)
+    val imageController = new BitmapImage(
+      titleOption,
+      descriptionOption,
+      courseNameOption,
+      assignmentOption,
+      creatorNameOption)
 
     val imageModel = BitmapImageModel(
       imageController,
       widthInPixels,
       heightInPixels,
-      initialBackgroundColor)
+      initialBackgroundColorOption)
 
     imageController.model = Option[BitmapImageModel](imageModel)
 
@@ -48,11 +53,11 @@ object BitmapImage {
  * @author Aleksi Lukkarinen
  */
 class BitmapImage(
-    var title: Option[String],
-    var description: Option[String],
-    var courseName: Option[String],
-    var assignment: Option[String],
-    var creatorName: Option[String]) {
+    var titleOption: Option[String],
+    var descriptionOption: Option[String],
+    var courseNameOption: Option[String],
+    var assignmentOption: Option[String],
+    var creatorNameOption: Option[String]) {
 
   private val EMPTY_STRING = ""
 
@@ -60,7 +65,7 @@ class BitmapImage(
   private val MSG_MODEL_CAN_BE_SET_ONLY_ONCE = "Model can be set only once, and it was already set."
 
   /** Represents the pixels of this image via a [[BitmapImageModel]] instance. */
-  private[this] var _model: Option[BitmapImageModel] = None
+  private[this] var _modelOption: Option[BitmapImageModel] = None
 
   /** Creation time and date of this image. */
   val created = Calendar.getInstance.getTime
@@ -68,7 +73,7 @@ class BitmapImage(
   /**
    *  Returns the [[BitmapImageModel]] instance related to this image.
    */
-  def model: BitmapImageModel = _model.get
+  def model: BitmapImageModel = _modelOption.get
 
   /**
    * Sets the [[BitmapImageModel]] instance related to this image.
@@ -76,8 +81,8 @@ class BitmapImage(
    * in the companion object's `apply()` method.
    */
   private def model_=(newModel: Option[BitmapImageModel]): Unit = {
-    _model.foreach { m => throw new IllegalStateException(MSG_MODEL_CAN_BE_SET_ONLY_ONCE) }
-    _model = newModel
+    _modelOption.foreach { m => throw new IllegalStateException(MSG_MODEL_CAN_BE_SET_ONLY_ONCE) }
+    _modelOption = newModel
   }
 
   /**
@@ -87,7 +92,7 @@ class BitmapImage(
     val p = model.pixelBuffer
 
     s"[BitmapImage ${p.getWidth}x${p.getWidth} px" +
-      title.fold[String](EMPTY_STRING)(t => s"; Title: '${t}'") +
+      titleOption.fold[String](EMPTY_STRING)(t => s"; Title: '${t}'") +
       s"; created: ${created}]"
   }
 

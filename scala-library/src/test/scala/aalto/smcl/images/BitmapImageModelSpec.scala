@@ -28,7 +28,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
     }
 
     "when created for an image with a given background color, must have all its pixels of that colour" in {
-      val m = BitmapImage(initialBackgroundColor = Option[Int](TEST_PIXEL_INT)).model
+      val m = BitmapImage(initialBackgroundColorOption = Option[Int](TEST_PIXEL_INT)).model
 
       for (y <- m.heightRange; x <- m.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
         assert(m.pixelIntAt(x, y) === TEST_PIXEL_INT)
