@@ -173,4 +173,12 @@ class BitmapImageModel private (
   def setTransparencyComponentAt(x: Int, y: Int, transparency: Int): Unit =
     setPixelIntAt(x, y, withNewTransparencyComponent(pixelIntAt(x, y), transparency))
 
+
+  /**
+   *
+   */
+  override def toString() = {
+    s"[BitmapImageModel ${pixelBuffer.getWidth}x${pixelBuffer.getWidth} px]"
+  }
+  
 }
