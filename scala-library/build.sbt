@@ -6,12 +6,20 @@ scalaVersion := "2.11.7"
 
 crossScalaVersions := Seq("2.10.5")
 
+
+
+
+libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.11" % "2.0.0-M2"
+
 libraryDependencies += (scalaBinaryVersion.value match {
     case "2.10" => "org.scalatest" % "scalatest_2.10" % "2.2.4" % "test" 
     case "2.11" => "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test" withSources() withJavadoc()
 })
 
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.12.4" % "test"
+
+
+
 
 scalacOptions in (Compile, doc) ++=
     Seq("-implicits",
