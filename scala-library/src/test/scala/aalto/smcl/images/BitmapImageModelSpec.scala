@@ -39,7 +39,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
       }
     }
 
-    "when created for an image with a given background color, must have all its pixels of that colour" in {
+    "when created for an image with a given opaque background color, must have all its pixels of that colour" in {
       val m = BitmapImage(initialBackgroundColorOption = Option[Int](TEST_PIXEL_INT)).model
 
       for (y <- m.heightRange; x <- m.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
@@ -51,7 +51,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
       assert(BitmapImage().model.graphics2D.isInstanceOf[Graphics2D])
     }
 
-    "must be able to clear() the image with a given color" in {
+    "must be able to clear() the image with a given opaque color" in {
       val testColors = Table("c", 0xFF9EADBC, 0xFF000000, 0xFF123456)
 
       forAll(testColors) { c =>
@@ -67,7 +67,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
       }
     }
 
-    "must be able to clear() the image with the default background color" in {
+    "must be able to clear() the image with the default (opaque) background color" in {
       val testColors = Table("c", 0xFF9EADBC, 0xFF000000, 0xFF123456)
 
       forAll(testColors) { c =>

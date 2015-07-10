@@ -3,7 +3,6 @@ package aalto.smcl.images
 import java.awt.image.BufferedImage
 import java.awt.Graphics2D
 import scala.collection.immutable
-import java.util.logging.Logger
 
 /**
  *
@@ -25,7 +24,7 @@ object BitmapImageModel {
     require(widthInPixels > 0, s"Width of the image must be greater than zero (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the image must be greater than zero (was $heightInPixels)")
 
-    val bgColor = initialBackgroundColorOption getOrElse 0x00FFFFFF
+    val bgColor = initialBackgroundColorOption getOrElse 0x00000000
 
     val pixelBuffer = new BufferedImage(widthInPixels, heightInPixels, BufferedImage.TYPE_INT_ARGB)
     val m = new BitmapImageModel(controllerImage, pixelBuffer, bgColor)

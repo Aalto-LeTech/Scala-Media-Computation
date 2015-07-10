@@ -75,11 +75,11 @@ class packageSpec extends ImageSpecBase {
       assert(withNewTransparencyComponent(TEST_PIXEL_INT, 0) === TEST_PIXEL_INT_WITH_ZEROED_TRANSPARENCY)
     }
     "throw an IllegalArgumentException when color component is" - {
-      "less than MIN_TRANSPARENCY" in {
-        intercept[IllegalArgumentException] { withNewTransparencyComponent(TEST_PIXEL_INT, MIN_TRANSPARENCY - 1) }
+      "less than MIN_OPAQUENESS" in {
+        intercept[IllegalArgumentException] { withNewTransparencyComponent(TEST_PIXEL_INT, MIN_OPAQUENESS - 1) }
       }
-      "greater than MAX_TRANSPARENCY" in {
-        intercept[IllegalArgumentException] { withNewTransparencyComponent(TEST_PIXEL_INT, MAX_TRANSPARENCY + 1) }
+      "greater than MAX_OPAQUENESS" in {
+        intercept[IllegalArgumentException] { withNewTransparencyComponent(TEST_PIXEL_INT, MAX_OPAQUENESS + 1) }
       }
     }
   }
@@ -135,14 +135,14 @@ class packageSpec extends ImageSpecBase {
           pixelIntFrom(blue = (MAX_BLUE + 1))
         }
       }
-      "transparency is less than MIN_TRANSPARENCY" in {
+      "transparency is less than MIN_OPAQUENESS" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(transparency = (MIN_TRANSPARENCY - 1))
+          pixelIntFrom(transparency = (MIN_OPAQUENESS - 1))
         }
       }
-      "transparency is greater than MAX_TRANSPARENCY" in {
+      "transparency is greater than MAX_OPAQUENESS" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(transparency = (MAX_TRANSPARENCY + 1))
+          pixelIntFrom(transparency = (MAX_OPAQUENESS + 1))
         }
       }
     }

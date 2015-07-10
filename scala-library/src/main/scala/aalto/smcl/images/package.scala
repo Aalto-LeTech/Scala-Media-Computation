@@ -58,16 +58,16 @@ package object images {
   val MAX_BLUE: Int = BYTE_RANGE.end
 
   /** Color component value representing minimal transparency. */
-  val MIN_TRANSPARENCY: Int = BYTE_RANGE.start
+  val MIN_OPAQUENESS: Int = BYTE_RANGE.start
 
   /** Color component value representing maximal transparency. */
-  val MAX_TRANSPARENCY: Int = BYTE_RANGE.end
+  val MAX_OPAQUENESS: Int = BYTE_RANGE.end
 
   /** Color component value representing minimal transparency. */
-  val FULLY_OPAQUE: Int = MIN_TRANSPARENCY
+  val FULLY_OPAQUE: Int = MAX_OPAQUENESS
 
   /** Color component value representing maximal transparency. */
-  val FULLY_TRANSPARENT: Int = MAX_TRANSPARENCY
+  val FULLY_TRANSPARENT: Int = MIN_OPAQUENESS
 
   /**
    *
@@ -147,7 +147,7 @@ package object images {
     red: Int = MIN_RED,
     green: Int = MIN_GREEN,
     blue: Int = MIN_BLUE,
-    transparency: Int = MIN_TRANSPARENCY): Int = {
+    transparency: Int = FULLY_OPAQUE): Int = {
 
     require(BYTE_RANGE.contains(red),
       s"The 'red' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $red)")
@@ -229,7 +229,7 @@ package object images {
   }
 
   /**
-   * A string interpolator for creating [[BitmapImages]].
+   * A string interpolator for creating [[BitmapImage]] instances.
    *
    *
    *
