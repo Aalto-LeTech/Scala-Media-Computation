@@ -52,7 +52,7 @@ object BitmapImage {
  *
  * @author Aleksi Lukkarinen
  */
-class BitmapImage(
+class BitmapImage private (
     var titleOption: Option[String],
     var descriptionOption: Option[String],
     var courseNameOption: Option[String],

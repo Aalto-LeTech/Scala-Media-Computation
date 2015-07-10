@@ -23,18 +23,10 @@ class BitmapImageSpec extends ImageSpecBase {
     }
 
     "must throw an IllegalArgumentException when tried to instantiate with" - {
-      "zero width" in {
-        intercept[IllegalArgumentException] { BitmapImage(widthInPixels = 0) }
-      }
-      "zero height" in {
-        intercept[IllegalArgumentException] { BitmapImage(heightInPixels = 0) }
-      }
-      "negative width" in {
-        intercept[IllegalArgumentException] { BitmapImage(widthInPixels = (-1)) }
-      }
-      "negative height" in {
-        intercept[IllegalArgumentException] { BitmapImage(heightInPixels = (-1)) }
-      }
+      "zero width" in { intercept[IllegalArgumentException] { BitmapImage(widthInPixels = 0) } }
+      "zero height" in { intercept[IllegalArgumentException] { BitmapImage(heightInPixels = 0) } }
+      "negative width" in { intercept[IllegalArgumentException] { BitmapImage(widthInPixels = (-1)) } }
+      "negative height" in { intercept[IllegalArgumentException] { BitmapImage(heightInPixels = (-1)) } }
     }
 
     "when constructed without arguments, must be" - {
@@ -56,18 +48,24 @@ class BitmapImageSpec extends ImageSpecBase {
 
         val b = BitmapImage(TEST_WIDTH_IN_PIXELS, TEST_HEIGHT_IN_PIXELS).model.pixelBuffer
 
-        s"${TEST_WIDTH_IN_PIXELS} pixels in width" in {
-          assert(b.getWidth === TEST_WIDTH_IN_PIXELS)
-        }
-        s"${TEST_HEIGHT_IN_PIXELS} pixels in height" in {
-          assert(b.getHeight === TEST_HEIGHT_IN_PIXELS)
-        }
+        s"${TEST_WIDTH_IN_PIXELS} pixels in width" in { assert(b.getWidth === TEST_WIDTH_IN_PIXELS) }
+        s"${TEST_HEIGHT_IN_PIXELS} pixels in height" in { assert(b.getHeight === TEST_HEIGHT_IN_PIXELS) }
       }
 
     "when constructed, must get timestamped and be able to tell the time of creation" in {
       val b = BitmapImage()
       assert(b.created.isInstanceOf[java.util.Date])
       info(s"Timestamp: ${b.created.toString()}")
+    }
+
+    "must be able to tell its" - {
+      val testValue = Option("Koe")
+
+      "title" in { assert(BitmapImage(titleOption = testValue).titleOption === testValue) }
+      "description" in { assert(BitmapImage(descriptionOption = testValue).descriptionOption === testValue) }
+      "courseName" in { assert(BitmapImage(courseNameOption = testValue).courseNameOption === testValue) }
+      "assignmentOption" in { assert(BitmapImage(assignmentOption = testValue).assignmentOption === testValue) }
+      "creatorName" in { assert(BitmapImage(creatorNameOption = testValue).creatorNameOption === testValue) }
     }
   }
 }

@@ -148,6 +148,33 @@ class packageSpec extends ImageSpecBase {
     }
   }
 
-
+  "implicit class PixelInt must return the correct" - {
+    "color component map by invoking colorComponentInts()" in {
+      assert(TEST_PIXEL_INT.colorComponentInts ===
+        Map[Symbol, Int](
+          'red -> TEST_RED_VALUE,
+          'green -> TEST_GREEN_VALUE,
+          'blue -> TEST_BLUE_VALUE,
+          'transparency -> TEST_TRANSPARENCY_VALUE))
+    }
+    "red component by invoking redComponentInt()" in {
+      assert(TEST_PIXEL_INT.redComponentInt === TEST_RED_VALUE)
+    }
+    "green component by invoking greenComponentInt()" in {
+      assert(TEST_PIXEL_INT.greenComponentInt === TEST_GREEN_VALUE)
+    }
+    "blue component by invoking blueComponentInt()" in {
+      assert(TEST_PIXEL_INT.blueComponentInt === TEST_BLUE_VALUE)
+    }
+    "transparency component by invoking transparencyComponentInt()" in {
+      assert(TEST_PIXEL_INT.transparencyComponentInt === TEST_TRANSPARENCY_VALUE)
+    }
+    "hexadecimal representation by invoking toArgbHexColorString()" in {
+      assert(TEST_PIXEL_INT.toArgbHexColorString === "ffdcba98")
+    }
+    "binary representation by invoking toArgbBinaryColorString()" in {
+      assert(TEST_PIXEL_INT.toArgbBinaryColorString === "11111111 11011100 10111010 10011000")
+    }
+  }
 
 }

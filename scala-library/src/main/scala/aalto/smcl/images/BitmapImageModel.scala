@@ -3,6 +3,7 @@ package aalto.smcl.images
 import java.awt.image.BufferedImage
 import java.awt.Graphics2D
 import scala.collection.immutable
+import java.util.logging.Logger
 
 /**
  *
@@ -73,10 +74,13 @@ class BitmapImageModel private (
   /**
    *
    */
-  def clear(color: Int = initialBackgroundColor): Unit = {
+  def clear(colorOption: Option[Int] = None): Unit = {
     val g = graphics2D
+    val c = colorOption getOrElse initialBackgroundColor
 
-    g.setPaint(new java.awt.Color(color, true))
+    val awtc = new java.awt.Color(c, true)
+
+    g.setPaint(awtc)
     g.fillRect(0, 0, pixelBuffer.getWidth, pixelBuffer.getHeight)
   }
 
