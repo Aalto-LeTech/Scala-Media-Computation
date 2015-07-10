@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage
 import java.awt.Graphics2D
 import scala.collection.immutable
 
-
 /**
  *
  *
@@ -25,12 +24,10 @@ object BitmapImageModel {
     require(widthInPixels > 0, s"Width of the image must be greater than zero (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the image must be greater than zero (was $heightInPixels)")
 
-    val pixelBuffer: BufferedImage = new BufferedImage(widthInPixels, heightInPixels, BufferedImage.TYPE_INT_ARGB)
-
+    val pixelBuffer = new BufferedImage(widthInPixels, heightInPixels, BufferedImage.TYPE_INT_ARGB)
     val m = new BitmapImageModel(controllerImage, pixelBuffer)
-
-    if (!initialBackgroundColor.isEmpty)
-      m.clear(initialBackgroundColor.get);
+    
+    initialBackgroundColor.foreach { c => m.clear(c) }
 
     return m
   }
