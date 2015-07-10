@@ -11,6 +11,8 @@ libraryDependencies += (scalaBinaryVersion.value match {
     case "2.11" => "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test" withSources() withJavadoc()
 })
 
+libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.12.4" % "test"
+
 scalacOptions in (Compile, doc) ++=
     Seq("-implicits",
     	"-doc-root-content", baseDirectory.value + "/root-doc.txt",
