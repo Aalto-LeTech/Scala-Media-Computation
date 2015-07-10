@@ -8,7 +8,7 @@ crossScalaVersions := Seq("2.10.5")
 
 
 
-
+// Please see: http://search.maven.org/#search|ga|1|scala-swing
 libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.11" % "2.0.0-M2"
 
 libraryDependencies += (scalaBinaryVersion.value match {
