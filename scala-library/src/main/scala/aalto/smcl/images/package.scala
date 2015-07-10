@@ -228,4 +228,19 @@ package object images {
 
   }
 
+  /**
+   * A string interpolator for creating [[BitmapImages]].
+   *
+   *
+   *
+   */
+  implicit class BitmapCreationStringInterpolator(val sc: StringContext) extends AnyVal {
+    def bmp(args: Any*): BitmapImage = {
+      val s = sc.standardInterpolator(StringContext.processEscapes, args)
+
+      // TODO: Replace with real functionality when it is available
+      BitmapImage(titleOption = Option(s))
+    }
+  }
+
 }
