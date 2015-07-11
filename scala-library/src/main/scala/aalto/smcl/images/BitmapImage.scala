@@ -1,6 +1,6 @@
 package aalto.smcl.images
 
-import java.util.Calendar
+import java.util.{Calendar => JCalendar}
 import aalto.smcl._
 
 /**
@@ -21,7 +21,7 @@ case class BitmapImage (
   val imageModel = BitmapImageModel(this, widthInPixels, heightInPixels, initialBackgroundColorOption)
 
   /** Creation time and date of this image. */
-  val created = Calendar.getInstance.getTime
+  val created = JCalendar.getInstance.getTime
 
   /**
    *
