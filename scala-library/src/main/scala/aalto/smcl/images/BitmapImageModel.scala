@@ -1,7 +1,7 @@
 package aalto.smcl.images
 
-import java.awt.image.BufferedImage
-import java.awt.Graphics2D
+import java.awt.image.{BufferedImage => JBufferedImage}
+import java.awt.{Graphics2D => JGraphics2D}
 import scala.collection.immutable
 
 /**
@@ -26,7 +26,7 @@ object BitmapImageModel {
 
     val bgColor = initialBackgroundColorOption getOrElse 0x00000000
 
-    val pixelBuffer = new BufferedImage(widthInPixels, heightInPixels, BufferedImage.TYPE_INT_ARGB)
+    val pixelBuffer = new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
     val m = new BitmapImageModel(controllerImage, pixelBuffer, bgColor)
 
     m.clear()
@@ -38,14 +38,14 @@ object BitmapImageModel {
 /**
  *
  * @param controllerImage           [[BitmapImage]] instance, whose pixel data this model represents
- * @param pixelBuffer               the underlying `BufferedImage` instance acting as a container for pixel data
+ * @param pixelBuffer               the underlying Java's `BufferedImage` instance acting as a container for pixel data
  * @param initialBackgroundColor    background color at the time of creation as well as for clearing without a given color
  *
  * @author Aleksi Lukkarinen
  */
 class BitmapImageModel private (
     private[this] val controllerImage: BitmapImage,
-    val pixelBuffer: BufferedImage,
+    val pixelBuffer: JBufferedImage,
     val initialBackgroundColor: Int) {
 
   /**
@@ -68,7 +68,7 @@ class BitmapImageModel private (
   /**
    *  Returns Java's `Graphics2D` interface to support more advanced graphic capabilities.
    */
-  def graphics2D: Graphics2D = pixelBuffer.createGraphics()
+  def graphics2D: JGraphics2D = pixelBuffer.createGraphics()
 
   /**
    *

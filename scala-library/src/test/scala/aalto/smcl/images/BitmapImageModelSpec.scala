@@ -1,6 +1,6 @@
 package aalto.smcl.images
 
-import java.awt.Graphics2D
+import java.awt.{Graphics2D => JGraphics2D}
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks._
 import aalto.smcl.images._
@@ -48,7 +48,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
     }
 
     "must be able to give a Graphics2D instance" in {
-      assert(BitmapImage().imageModel.graphics2D.isInstanceOf[Graphics2D])
+      assert(BitmapImage().imageModel.graphics2D.isInstanceOf[JGraphics2D])
     }
 
     "must be able to clear() the image with a given opaque color" in {
