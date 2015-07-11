@@ -1,6 +1,7 @@
 package aalto.smcl.images
 
 import java.util.Calendar
+import aalto.smcl._
 
 /**
  *
@@ -17,8 +18,6 @@ case class BitmapImage (
     assignmentOption: Option[String] = None,
     creatorNameOption: Option[String] = None) {
  
-  val EMPTY_STRING = ""
-  
   val imageModel = BitmapImageModel(this, widthInPixels, heightInPixels, initialBackgroundColorOption)
 
   /** Creation time and date of this image. */
@@ -31,7 +30,7 @@ case class BitmapImage (
     val p = imageModel.pixelBuffer
 
     s"[BitmapImage ${p.getWidth}x${p.getWidth} px" +
-      titleOption.fold[String](EMPTY_STRING)(t => s"; Title: '${t}'") +
+      titleOption.fold[String](STR_EMPTY)(t => s"; Title: '${t}'") +
       s"; created: ${created}]"
   }
 

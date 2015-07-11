@@ -8,4 +8,13 @@ package aalto
  */
 package object smcl {
 
+  /** An empty string. */
+  protected[smcl] val STR_EMPTY = ""
+  
+  /** A string containing a single space. */
+  protected[smcl] val STR_SPACE = " "
+
+  /** A string containing a single zero. */
+  protected[smcl] val STR_ZERO = "0"
+
 }

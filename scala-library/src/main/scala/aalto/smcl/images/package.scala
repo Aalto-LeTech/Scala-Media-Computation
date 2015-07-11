@@ -9,12 +9,6 @@ import scala.collection.immutable
  */
 package object images {
 
-  /** A space character. */
-  private val SPACE = " "
-
-  /** A zero character. */
-  private val ZERO = "0"
-
   /** Number of bits in one byte. */
   private[images] val ONE_BYTE = 8
 
@@ -226,8 +220,8 @@ package object images {
      * }}}
      */
     def toArgbBinaryColorString: String = {
-      val withoutGroups = f"${self.toBinaryString}%32s".replace(SPACE, ZERO)
-      val grouped = withoutGroups.sliding(ONE_BYTE, ONE_BYTE).mkString(SPACE)
+      val withoutGroups = f"${self.toBinaryString}%32s".replace(STR_SPACE, STR_ZERO)
+      val grouped = withoutGroups.sliding(ONE_BYTE, ONE_BYTE).mkString(STR_SPACE)
 
       return grouped
     }
