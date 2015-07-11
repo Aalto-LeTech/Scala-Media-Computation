@@ -1,4 +1,4 @@
-package aalto.smcl
+package aalto.smcl.images
 
 import java.awt.Graphics2D
 import org.scalatest._
