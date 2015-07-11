@@ -18,7 +18,7 @@ case class BitmapImage (
     assignmentOption: Option[String] = None,
     creatorNameOption: Option[String] = None) {
  
-  val imageModel = BitmapImageModel(this, widthInPixels, heightInPixels, initialBackgroundColorOption)
+  val imageModel = new BitmapImageModel(this, widthInPixels, heightInPixels, initialBackgroundColorOption)
 
   /** Creation time and date of this image. */
   val created = JCalendar.getInstance.getTime

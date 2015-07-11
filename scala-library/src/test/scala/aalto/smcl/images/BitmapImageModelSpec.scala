@@ -35,7 +35,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
       val m = newDefaultSmallTestImage.imageModel
 
       for (y <- m.heightRange; x <- m.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
-        assert(m.pixelIntAt(x, y) === 0)
+        assert(m.pixelIntAt(x, y) === 0xFF000000)
       }
     }
 

@@ -1,39 +1,11 @@
 package aalto.smcl.images
 
-import java.awt.image.{BufferedImage => JBufferedImage}
-import java.awt.{Graphics2D => JGraphics2D}
-import scala.collection.immutable
-
-/**
- *
- *
- * @author Aleksi Lukkarinen
- */
-object BitmapImageModel {
-
-  /**
-   *
-   */
-  private[images] def apply(
-    controllerImage: BitmapImage,
-    widthInPixels: Int,
-    heightInPixels: Int,
-    initialBackgroundColorOption: Option[Int] = None): BitmapImageModel = {
-
-    require(controllerImage != null, "The controllerImage parameter cannot be null")
-    require(widthInPixels > 0, s"Width of the image must be greater than zero (was $widthInPixels)")
-    require(heightInPixels > 0, s"Height of the image must be greater than zero (was $heightInPixels)")
-
-    val bgColor = initialBackgroundColorOption getOrElse 0x00000000
-
-    val pixelBuffer = new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
-    val m = new BitmapImageModel(controllerImage, pixelBuffer, bgColor)
-
-    m.clear()
-
-    return m
-  }
+import java.awt.{ 
+  Color => JColor, 
+  Graphics2D => JGraphics2D 
 }
+import java.awt.image.{ BufferedImage => JBufferedImage }
+import scala.collection.immutable
 
 /**
  *
@@ -43,10 +15,18 @@ object BitmapImageModel {
  *
  * @author Aleksi Lukkarinen
  */
-class BitmapImageModel private (
+class BitmapImageModel private[images] (
     private[this] val controllerImage: BitmapImage,
-    val pixelBuffer: JBufferedImage,
-    val initialBackgroundColor: Int) {
+    val widthInPixels: Int,
+    val heightInPixels: Int,
+    val initialBackgroundColorOption: Option[Int] = None) {
+
+  require(controllerImage != null, "The controllerImage parameter cannot be null")
+  require(widthInPixels > 0, s"Width of the image must be greater than zero (was $widthInPixels)")
+  require(heightInPixels > 0, s"Height of the image must be greater than zero (was $heightInPixels)")
+
+  val pixelBuffer = new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
+  clear()
 
   /**
    * Returns a `Range` representing the range of numbers from
@@ -75,9 +55,8 @@ class BitmapImageModel private (
    */
   def clear(colorOption: Option[Int] = None): Unit = {
     val g = graphics2D
-    val c = colorOption getOrElse initialBackgroundColor
-
-    val awtc = new java.awt.Color(c, true)
+    val color = colorOption.getOrElse(initialBackgroundColorOption getOrElse 0xFF000000)
+    val awtc = new JColor(color, true)
 
     g.setPaint(awtc)
     g.fillRect(0, 0, pixelBuffer.getWidth, pixelBuffer.getHeight)
@@ -179,5 +158,5 @@ class BitmapImageModel private (
   override def toString() = {
     s"[BitmapImageModel ${pixelBuffer.getWidth}x${pixelBuffer.getWidth} px]"
   }
-  
+
 }
