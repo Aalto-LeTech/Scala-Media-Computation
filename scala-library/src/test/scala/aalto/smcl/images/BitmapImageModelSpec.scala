@@ -16,7 +16,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
     "when created for a BitmapImage of size 8 x 9 pixels" - {
       val (width, height) = (8, 9)
       val numOfPixels = width * height
-      val m = BitmapImage(width, height).model
+      val m = BitmapImage(width, height).imageModel
 
       "must have a width of 8 pixels" in { assert(m.pixelBuffer.getWidth === 8) }
       "must have a width of 9 pixels" in { assert(m.pixelBuffer.getHeight === 9) }
@@ -32,7 +32,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
     }
 
     "when created for an image without giving a background color, must have all its pixels of fully opaque black" in {
-      val m = newDefaultSmallTestImage.model
+      val m = newDefaultSmallTestImage.imageModel
 
       for (y <- m.heightRange; x <- m.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
         assert(m.pixelIntAt(x, y) === 0)
@@ -40,7 +40,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
     }
 
     "when created for an image with a given opaque background color, must have all its pixels of that colour" in {
-      val m = BitmapImage(initialBackgroundColorOption = Option[Int](TEST_PIXEL_INT)).model
+      val m = BitmapImage(initialBackgroundColorOption = Option[Int](TEST_PIXEL_INT)).imageModel
 
       for (y <- m.heightRange; x <- m.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
         assert(m.pixelIntAt(x, y) === TEST_PIXEL_INT)
@@ -48,7 +48,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
     }
 
     "must be able to give a Graphics2D instance" in {
-      assert(BitmapImage().model.graphics2D.isInstanceOf[Graphics2D])
+      assert(BitmapImage().imageModel.graphics2D.isInstanceOf[Graphics2D])
     }
 
     "must be able to clear() the image with a given opaque color" in {
@@ -57,7 +57,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
       forAll(testColors) { c =>
         info(s"testing pixelInt value: 0x${c.toArgbHexColorString}  (${c})")
 
-        val m = BitmapImage().model
+        val m = BitmapImage().imageModel
 
         m.clear(Option(c))
 
@@ -73,7 +73,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
       forAll(testColors) { c =>
         info(s"testing pixelInt value: 0x${c.toArgbHexColorString}  (${c})")
 
-        val m = BitmapImage(initialBackgroundColorOption = Option(c)).model
+        val m = BitmapImage(initialBackgroundColorOption = Option(c)).imageModel
 
         m.clear()
 

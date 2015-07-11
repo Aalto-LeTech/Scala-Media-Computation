@@ -15,10 +15,10 @@ class BitmapImageSpec extends ImageSpecBase {
   "Class BitmapImage" - {
     "must have a default" - {
       s"width defined as ${EXPECTED_DEFAULT_WIDTH_IN_PIXELS} pixels" in {
-        assert(BitmapImage.DEFAULT_WIDTH_IN_PIXELS === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
+        assert(DEFAULT_IMAGE_WIDTH_IN_PIXELS === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
       }
       s"height defined as ${EXPECTED_DEFAULT_HEIGHT_IN_PIXELS} pixels" in {
-        assert(BitmapImage.DEFAULT_HEIGHT_IN_PIXELS === EXPECTED_DEFAULT_HEIGHT_IN_PIXELS)
+        assert(DEFAULT_IMAGE_HEIGHT_IN_PIXELS === EXPECTED_DEFAULT_HEIGHT_IN_PIXELS)
       }
     }
 
@@ -30,7 +30,7 @@ class BitmapImageSpec extends ImageSpecBase {
     }
 
     "when constructed without arguments, must be" - {
-      val b = BitmapImage().model.pixelBuffer
+      val b = BitmapImage().imageModel.pixelBuffer
 
       s"${EXPECTED_DEFAULT_WIDTH_IN_PIXELS} pixels in width" in {
         assert(b.getWidth === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
@@ -46,7 +46,7 @@ class BitmapImageSpec extends ImageSpecBase {
     s"when constructed with an arbitrary size of " +
       s"${TEST_WIDTH_IN_PIXELS} x ${TEST_HEIGHT_IN_PIXELS} pixels, must be" - {
 
-        val b = BitmapImage(TEST_WIDTH_IN_PIXELS, TEST_HEIGHT_IN_PIXELS).model.pixelBuffer
+        val b = BitmapImage(TEST_WIDTH_IN_PIXELS, TEST_HEIGHT_IN_PIXELS).imageModel.pixelBuffer
 
         s"${TEST_WIDTH_IN_PIXELS} pixels in width" in { assert(b.getWidth === TEST_WIDTH_IN_PIXELS) }
         s"${TEST_HEIGHT_IN_PIXELS} pixels in height" in { assert(b.getHeight === TEST_HEIGHT_IN_PIXELS) }

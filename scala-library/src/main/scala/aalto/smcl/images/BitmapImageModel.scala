@@ -16,8 +16,8 @@ object BitmapImageModel {
    */
   private[images] def apply(
     controllerImage: BitmapImage,
-    widthInPixels: Int = BitmapImage.DEFAULT_WIDTH_IN_PIXELS,
-    heightInPixels: Int = BitmapImage.DEFAULT_HEIGHT_IN_PIXELS,
+    widthInPixels: Int,
+    heightInPixels: Int,
     initialBackgroundColorOption: Option[Int] = None): BitmapImageModel = {
 
     require(controllerImage != null, "The controllerImage parameter cannot be null")
@@ -170,9 +170,8 @@ class BitmapImageModel private (
   /**
    *
    */
-  def setTransparencyComponentAt(x: Int, y: Int, transparency: Int): Unit =
+  def transparencyComponentAt_=(x: Int, y: Int, transparency: Int): Unit =
     setPixelIntAt(x, y, withNewTransparencyComponent(pixelIntAt(x, y), transparency))
-
 
   /**
    *

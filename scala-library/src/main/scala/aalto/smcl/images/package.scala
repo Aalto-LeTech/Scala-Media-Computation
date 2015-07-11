@@ -69,6 +69,12 @@ package object images {
   /** Color component value representing maximal transparency. */
   val FULLY_TRANSPARENT: Int = MIN_OPAQUENESS
 
+  /** Default width of [[BitmapImage]] instances created without giving width. */
+  val DEFAULT_IMAGE_WIDTH_IN_PIXELS: Int = 10
+
+  /** Default height of [[BitmapImage]] instances created without giving height. */
+  val DEFAULT_IMAGE_HEIGHT_IN_PIXELS: Int = 10
+
   /**
    *
    */
@@ -239,7 +245,7 @@ package object images {
       val s = sc.standardInterpolator(StringContext.processEscapes, args)
 
       // TODO: Replace with real functionality when it is available
-      BitmapImage(titleOption = Option(s))
+      BitmapImage(titleOption=Option(s))
     }
   }
 
