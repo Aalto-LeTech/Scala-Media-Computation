@@ -1,7 +1,5 @@
 package aalto.smcl.images.immutable
 
-import scala.Range
-
 /**
  * A rectangle having its dimensions measured in pixels.
  *

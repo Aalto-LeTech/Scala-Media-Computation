@@ -32,7 +32,7 @@ class BitmapSpec extends ImageSpecBase {
     }
 
     "when created for an image without giving a background color, must have all its pixels of fully opaque black" in {
-      val b = newDefaultSmallTestImage
+      val b = newSmallDefaultImmutableTestImage
 
       for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
         assert(b.pixelIntAt(x, y) === 0xFF000000)
