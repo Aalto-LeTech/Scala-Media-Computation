@@ -42,8 +42,6 @@ case class BitmapImage(
    *
    */
   override def toString() = {
-    val p = pixelBuffer
-
     s"[BitmapImage ${widthInPixels}x${heightInPixels} px" +
       titleOption.fold[String](STR_EMPTY)(t => s"; Title: '${t}'") +
       s"; created: ${created}]"
