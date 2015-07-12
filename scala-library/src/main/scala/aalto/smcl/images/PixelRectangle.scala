@@ -5,7 +5,7 @@ package aalto.smcl.images
  *
  * @author Aleksi Lukkarinen
  */
-trait PixelRectangle {
+private[images] trait PixelRectangle {
 
   /**
    * Width of this rectangle in pixels.
