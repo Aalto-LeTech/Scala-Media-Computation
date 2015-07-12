@@ -1,11 +1,12 @@
-package aalto.smcl.images
+package aalto.smcl.images.immutable
 
 import java.awt.{
   Color => JColor,
   Graphics2D => JGraphics2D
 }
 import java.awt.image.{ BufferedImage => JBufferedImage }
-import scala.collection.immutable
+import aalto.smcl.images._
+import aalto.smcl.images.immutable._
 
 /**
  *
@@ -54,7 +55,7 @@ private[images] trait Bitmap { this: PixelRectangle with ColorableBackground =>
   /**
    *
    */
-  def colorComponentsAt(x: Int, y: Int): immutable.Map[Symbol, Int] = {
+  def colorComponentsAt(x: Int, y: Int): collection.immutable.Map[Symbol, Int] = {
     colorComponentsFrom(pixelIntAt(x, y))
   }
 

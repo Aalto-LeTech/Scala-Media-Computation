@@ -1,4 +1,4 @@
-package aalto.smcl.images
+package aalto.smcl.images.immutable
 
 import java.awt.{Graphics2D => JGraphics2D}
 import org.scalatest._

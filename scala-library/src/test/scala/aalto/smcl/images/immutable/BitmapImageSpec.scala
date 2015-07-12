@@ -1,6 +1,7 @@
-package aalto.smcl.images
+package aalto.smcl.images.immutable
 
 import org.scalatest._
+import aalto.smcl.images._
 
 /**
  *

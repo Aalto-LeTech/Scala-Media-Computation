@@ -1,6 +1,7 @@
 package aalto.smcl.images
 
 import aalto.smcl.UnitBaseSpec
+import aalto.smcl.images.immutable.BitmapImage
 
 /**
  *

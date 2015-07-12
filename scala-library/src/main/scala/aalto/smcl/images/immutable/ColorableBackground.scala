@@ -1,4 +1,4 @@
-package aalto.smcl.images
+package aalto.smcl.images.immutable
 
 /**
  * Ensures, that a place to store a background color exists.

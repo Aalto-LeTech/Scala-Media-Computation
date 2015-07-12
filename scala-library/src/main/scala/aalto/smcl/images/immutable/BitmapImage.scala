@@ -1,7 +1,9 @@
-package aalto.smcl.images
+package aalto.smcl.images.immutable
 
-import java.util.{ Calendar => JCalendar }
 import aalto.smcl._
+import aalto.smcl.images._
+import aalto.smcl.images.immutable._
+import java.util.{Calendar => JCalendar}
 
 /**
  *
@@ -36,7 +38,7 @@ case class BitmapImage(
   /** Creation time and date of this image. */
   val created = JCalendar.getInstance.getTime
 
-} with Bitmap with PixelRectangle with ColorableBackground {
+} with Bitmap with PixelRectangle with ColorableBackground with Immutable {
 
   /**
    *
