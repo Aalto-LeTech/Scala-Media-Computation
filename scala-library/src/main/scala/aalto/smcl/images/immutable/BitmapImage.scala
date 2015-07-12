@@ -1,9 +1,9 @@
 package aalto.smcl.images.immutable
 
 import aalto.smcl._
+import aalto.smcl.common._
 import aalto.smcl.images._
 import aalto.smcl.images.immutable._
-import java.util.{Calendar => JCalendar}
 
 /**
  *
@@ -35,10 +35,7 @@ case class BitmapImage(
   /** Initial background color of this [[BitmapImage]] (may not be the actual background color at a later time). */
   override val initialBackgroundColor = initialBackgroundColorOption getOrElse 0xFF000000
 
-  /** Creation time and date of this image. */
-  val created = JCalendar.getInstance.getTime
-
-} with Bitmap with PixelRectangle with ColorableBackground with Immutable {
+} with Bitmap with PixelRectangle with ColorableBackground with Immutable with TimestampedCreation {
 
   /**
    *
