@@ -19,6 +19,6 @@ abstract class ImageSpecBase extends UnitBaseSpec {
   val TEST_PIXEL_INT_WITH_ZEROED_BLUE = 0xFFDCBA00
   val TEST_PIXEL_INT_WITH_ZEROED_TRANSPARENCY = 0x00DCBA98
 
-  def newDefaultSmallTestImage = BitmapImage(10, 10)
+  def newDefaultSmallTestImage = BitmapImage(Option(10), Option(10))
 
 }

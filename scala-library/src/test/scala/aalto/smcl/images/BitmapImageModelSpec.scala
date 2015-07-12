@@ -16,7 +16,7 @@ class BitmapImageModelSpec extends ImageSpecBase {
     "when created for a BitmapImage of size 8 x 9 pixels" - {
       val (width, height) = (8, 9)
       val numOfPixels = width * height
-      val m = BitmapImage(width, height).imageModel
+      val m = BitmapImage(Option(width), Option(height)).imageModel
 
       "must have a width of 8 pixels" in { assert(m.pixelBuffer.getWidth === 8) }
       "must have a width of 9 pixels" in { assert(m.pixelBuffer.getHeight === 9) }
