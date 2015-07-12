@@ -25,8 +25,6 @@ private[images] trait Bitmap { this: PixelRectangle with ColorableBackground =>
   /** Java's `Graphics2D` interface to support more advanced graphic capabilities. */
   private[images] val graphics2D: JGraphics2D = pixelBuffer.createGraphics()
 
-  clear()
-
   /**
    *
    */
@@ -38,6 +36,7 @@ private[images] trait Bitmap { this: PixelRectangle with ColorableBackground =>
     g.setPaint(awtc)
     g.fillRect(0, 0, pixelBuffer.getWidth, pixelBuffer.getHeight)
   }
+  clear()
 
   /**
    *
