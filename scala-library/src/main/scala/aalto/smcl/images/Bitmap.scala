@@ -1,13 +1,14 @@
 package aalto.smcl.images
 
-import java.awt.{ 
-  Color => JColor, 
-  Graphics2D => JGraphics2D 
+import java.awt.{
+  Color => JColor,
+  Graphics2D => JGraphics2D
 }
 import java.awt.image.{ BufferedImage => JBufferedImage }
 import scala.collection.immutable
 
 /**
+ *
  *
  * @param controllerImage           [[BitmapImage]] instance, whose pixel data this model represents
  * @param pixelBuffer               the underlying Java's `BufferedImage` instance acting as a container for pixel data
@@ -15,47 +16,31 @@ import scala.collection.immutable
  *
  * @author Aleksi Lukkarinen
  */
-class BitmapImageModel private[images] (
-    private[this] val controllerImage: BitmapImage,
-    val widthInPixels: Int,
-    val heightInPixels: Int,
-    val initialBackgroundColorOption: Option[Int] = None) {
+private[images] trait Bitmap { this: PixelRectangle with ColorableBackground =>
 
-  require(controllerImage != null, "The controllerImage parameter cannot be null")
-  require(widthInPixels > 0, s"Width of the image must be greater than zero (was $widthInPixels)")
-  require(heightInPixels > 0, s"Height of the image must be greater than zero (was $heightInPixels)")
+  /** The range of numbers from zero to the width of this bitmap. */
+  val widthRange: Range.Inclusive = 0 to (widthInPixels - 1)
 
-  val pixelBuffer = new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
+  /** The range of numbers from zero to the height of this bitmap. */
+  val heightRange: Range.Inclusive = 0 to (heightInPixels - 1)
+
+  /** Total number of pixels in the bitmap. */
+  val pixelCount: Int = widthInPixels * heightInPixels
+
+  /** Storage buffer for the actual bitmap. */
+  private[images] val pixelBuffer = new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
+
+  /** Java's `Graphics2D` interface to support more advanced graphic capabilities. */
+  private[images] val graphics2D: JGraphics2D = pixelBuffer.createGraphics()
+
   clear()
-
-  /**
-   * Returns a `Range` representing the range of numbers from
-   * zero to the width of this [[BitmapImageModel]]'s pixel buffer.
-   */
-  def widthRange: Range.Inclusive = 0 to (pixelBuffer.getWidth - 1)
-
-  /**
-   * Returns a `Range` representing the range of numbers from
-   * zero to the height of this [[BitmapImageModel]]'s pixel buffer.
-   */
-  def heightRange: Range.Inclusive = 0 to (pixelBuffer.getHeight - 1)
-
-  /**
-   *
-   */
-  def numberOfPixels: Int = pixelBuffer.getWidth * pixelBuffer.getHeight
-
-  /**
-   *  Returns Java's `Graphics2D` interface to support more advanced graphic capabilities.
-   */
-  def graphics2D: JGraphics2D = pixelBuffer.createGraphics()
 
   /**
    *
    */
   def clear(colorOption: Option[Int] = None): Unit = {
     val g = graphics2D
-    val color = colorOption.getOrElse(initialBackgroundColorOption getOrElse 0xFF000000)
+    val color = colorOption getOrElse initialBackgroundColor
     val awtc = new JColor(color, true)
 
     g.setPaint(awtc)
@@ -151,12 +136,5 @@ class BitmapImageModel private[images] (
    */
   def transparencyComponentAt_=(x: Int, y: Int, transparency: Int): Unit =
     setPixelIntAt(x, y, withNewTransparencyComponent(pixelIntAt(x, y), transparency))
-
-  /**
-   *
-   */
-  override def toString() = {
-    s"[BitmapImageModel ${pixelBuffer.getWidth}x${pixelBuffer.getWidth} px]"
-  }
 
 }

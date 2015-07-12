@@ -9,32 +9,40 @@ import aalto.smcl._
  * @author Aleksi Lukkarinen
  */
 case class BitmapImage(
-  widthInPixelsOption: Option[Int] = None,
-  heightInPixelsOption: Option[Int] = None,
-  initialBackgroundColorOption: Option[Int] = None,
+  private val widthInPixelsOption: Option[Int] = None,
+  private val heightInPixelsOption: Option[Int] = None,
+  private val initialBackgroundColorOption: Option[Int] = None,
   titleOption: Option[String] = None,
   descriptionOption: Option[String] = None,
   courseNameOption: Option[String] = None,
   assignmentOption: Option[String] = None,
-  creatorNameOption: Option[String] = None)
-    extends PixelRectangle {
+  creatorNameOption: Option[String] = None) extends {
 
-  /** Width of this [[BitmapImage]]. */  
-  val widthInPixels = widthInPixelsOption getOrElse DEFAULT_IMAGE_WIDTH_IN_PIXELS
-  
-  /** Height of this [[BitmapImage]]. */  
-  val heightInPixels = heightInPixelsOption getOrElse DEFAULT_IMAGE_HEIGHT_IN_PIXELS
-  
-  val imageModel = new BitmapImageModel(this, widthInPixels, heightInPixels, initialBackgroundColorOption)
+  /** Width of this [[BitmapImage]]. */
+  override val widthInPixels = widthInPixelsOption.fold(DEFAULT_IMAGE_WIDTH_IN_PIXELS) { width =>
+    require(width > 0, s"Width of the image must be greater than zero (was $width)")
+    width
+  }
+
+  /** Height of this [[BitmapImage]]. */
+  override val heightInPixels = heightInPixelsOption.fold(DEFAULT_IMAGE_HEIGHT_IN_PIXELS) { height =>
+    require(height > 0, s"Height of the image must be greater than zero (was $height)")
+    height
+  }
+
+  /** Initial background color of this [[BitmapImage]] (may not be the actual background color at a later time). */
+  override val initialBackgroundColor = initialBackgroundColorOption getOrElse 0xFF000000
 
   /** Creation time and date of this image. */
   val created = JCalendar.getInstance.getTime
+
+} with Bitmap with PixelRectangle with ColorableBackground {
 
   /**
    *
    */
   override def toString() = {
-    val p = imageModel.pixelBuffer
+    val p = pixelBuffer
 
     s"[BitmapImage ${widthInPixels}x${heightInPixels} px" +
       titleOption.fold[String](STR_EMPTY)(t => s"; Title: '${t}'") +
