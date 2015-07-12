@@ -8,7 +8,7 @@ import aalto.smcl.images._
 /**
  *
  *
- * @author Aleksi Lukkarinen
+ * @author Aleksi Lukkarinen 
  */
 class BitmapSpec extends ImageSpecBase {
 

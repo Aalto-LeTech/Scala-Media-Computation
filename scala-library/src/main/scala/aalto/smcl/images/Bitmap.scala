@@ -18,15 +18,6 @@ import scala.collection.immutable
  */
 private[images] trait Bitmap { this: PixelRectangle with ColorableBackground =>
 
-  /** The range of numbers from zero to the width of this bitmap. */
-  val widthRange: Range.Inclusive = 0 to (widthInPixels - 1)
-
-  /** The range of numbers from zero to the height of this bitmap. */
-  val heightRange: Range.Inclusive = 0 to (heightInPixels - 1)
-
-  /** Total number of pixels in the bitmap. */
-  val pixelCount: Int = widthInPixels * heightInPixels
-
   /** Storage buffer for the actual bitmap. */
   private[images] val pixelBuffer = new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
 
