@@ -1,6 +1,5 @@
 package aalto.smcl.images
 
-import java.awt.{ Graphics2D => JGraphics2D }
 import aalto.smcl.images.operations.BitmapOperation
 
 /**
