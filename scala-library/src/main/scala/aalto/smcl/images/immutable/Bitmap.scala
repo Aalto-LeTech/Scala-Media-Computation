@@ -20,7 +20,7 @@ import aalto.smcl.images.operations._
 object Bitmap {
 
   /**
-   *
+   * Creates a new empty [[Bitmap]] instance.
    */
   def apply(
     widthInPixelsOption: Option[Int] = None,
@@ -41,15 +41,6 @@ object Bitmap {
     val operationList = List[BitmapOperation]() :+ Clear(Option(bgColor))
 
     new Bitmap(operationList, width, height)
-  }
-
-  /**
-   *
-   */
-  def apply(bmp: Bitmap): Bitmap = {
-    val operationList = List[BitmapOperation]()
-
-    new Bitmap(operationList, bmp.widthInPixels, bmp.heightInPixels)
   }
 
   /**
@@ -99,16 +90,31 @@ class Bitmap private (
     }
 
   /**
-   *
+   * Returns a copy of this [[Bitmap]].
    */
-  override def apply(operation: BitmapOperation): Unit = {
-    operationList :+ operation
+  def copy(): Bitmap = {
+    new Bitmap(operationList, widthInPixels, heightInPixels)
   }
 
   /**
-   *
+   * Applies a [[BitmapOperation]] to this [[Bitmap]].
+   */
+  override def apply(operation: BitmapOperation): Bitmap = {
+    new Bitmap(operationList :+ operation, widthInPixels, heightInPixels)
+  }
+
+  /**
+   * Renders this [[Bitmap]] onto a drawing surface.
    */
   def render(drawingSurface: JGraphics2D, x: Int, y: Int): Unit = {
+    ensureThatBufferIsRendered()
+    drawingSurface.drawImage(_renderingBuffer.apply, null, x, y)
+  }
+
+  /**
+   * Creates the rendering buffer, if it does not exist, and renders this [[Bitmap]] onto it.
+   */
+  private[this] def ensureThatBufferIsRendered(): Unit =
     if (_renderingBuffer.get.isEmpty) {
       val buffer = new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
       val drawingSurface = buffer.createGraphics
@@ -120,114 +126,8 @@ class Bitmap private (
       }
     }
 
-    drawingSurface.drawImage(_renderingBuffer.apply, null, x, y)
-  }
-
-  //  /**
-  //   *
-  //   */
-  //  def clear(colorOption: Option[Int] = None): Unit = {
-  //    val g = graphics2D
-  //    val color = colorOption getOrElse initialBackgroundColor
-  //    val awtc = new JColor(color, true)
-  //
-  //    g.setPaint(awtc)
-  //    g.fillRect(0, 0, buffer.getWidth, buffer.getHeight)
-  //  }
-  //  clear()
-  //
-  //  /**
-  //   *
-  //   */
-  //  def pixelIntAt(x: Int, y: Int): Int = {
-  //    require(widthRange.contains(x),
-  //      s"The x coordinate must be >= zero and less than the width of the image (was $x)")
-  //
-  //    require(heightRange.contains(y),
-  //      s"The y coordinate must be >= zero and less than the height of the image (was $y)")
-  //
-  //    buffer.getRGB(x, y)
-  //  }
-  //
-  //  /**
-  //   *
-  //   */
-  //  def colorComponentsAt(x: Int, y: Int): collection.immutable.Map[Symbol, Int] = {
-  //    colorComponentsFrom(pixelIntAt(x, y))
-  //  }
-  //
-  //  /**
-  //   *
-  //   */
-  //  def setPixelIntAt(x: Int, y: Int, pixelInt: Int): Unit = {
-  //    require(widthRange.contains(x),
-  //      s"The x coordinate must be >= zero and less than the width of the image (was $x)")
-  //
-  //    require(heightRange.contains(y),
-  //      s"The y coordinate must be >= zero and less than the height of the image (was $y)")
-  //
-  //    buffer.setRGB(x, y, pixelInt)
-  //  }
-  //
-  //  /**
-  //   *
-  //   */
-  //  def setColorComponentsAt(x: Int, y: Int, red: Int, green: Int, blue: Int, transparency: Int): Unit = {
-  //    require(widthRange.contains(x),
-  //      s"The x coordinate must be >= zero and less than the width of the image (was $x)")
-  //
-  //    require(heightRange.contains(y),
-  //      s"The y coordinate must be >= zero and less than the height of the image (was $y)")
-  //
-  //    buffer.setRGB(x, y, pixelIntFrom(red, green, blue, transparency))
-  //  }
-  //
-  //  /**
-  //   *
-  //   */
-  //  def redComponentAt(x: Int, y: Int): Int = redComponentFrom(pixelIntAt(x, y))
-  //
-  //  /**
-  //   *
-  //   */
-  //  def setRedComponentAt(x: Int, y: Int, red: Int): Unit =
-  //    setPixelIntAt(x, y, withNewRedComponent(pixelIntAt(x, y), red))
-  //
-  //  /**
-  //   *
-  //   */
-  //  def greenComponentAt(x: Int, y: Int): Int = greenComponentFrom(pixelIntAt(x, y))
-  //
-  //  /**
-  //   *
-  //   */
-  //  def setGreenComponentAt(x: Int, y: Int, green: Int): Unit =
-  //    setPixelIntAt(x, y, withNewGreenComponent(pixelIntAt(x, y), green))
-  //
-  //  /**
-  //   *
-  //   */
-  //  def blueComponentAt(x: Int, y: Int): Int = blueComponentFrom(pixelIntAt(x, y))
-  //
-  //  /**
-  //   *
-  //   */
-  //  def setBlueComponentAt(x: Int, y: Int, blue: Int): Unit =
-  //    setPixelIntAt(x, y, withNewBlueComponent(pixelIntAt(x, y), blue))
-  //
-  //  /**
-  //   *
-  //   */
-  //  def transparencyComponentAt(x: Int, y: Int): Int = transparencyComponentFrom(pixelIntAt(x, y))
-  //
-  //  /**
-  //   *
-  //   */
-  //  def transparencyComponentAt_=(x: Int, y: Int, transparency: Int): Unit =
-  //    setPixelIntAt(x, y, withNewTransparencyComponent(pixelIntAt(x, y), transparency))
-
   /**
-   *
+   * Returns a string representation of this [[Bitmap]].
    */
   override def toString() = {
     s"[BitmapImage ${widthInPixels}x${heightInPixels} px" +

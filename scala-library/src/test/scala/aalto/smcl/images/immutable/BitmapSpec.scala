@@ -32,16 +32,16 @@ class BitmapSpec extends ImageSpecBase {
       "negative height" in { intercept[IllegalArgumentException] { Bitmap(heightInPixelsOption = Option(-1)) } }
     }
 
-    //    "when constructed without arguments, must be" - {
-    //      val b = Bitmap().buffer
-    //
-    //      s"${EXPECTED_DEFAULT_WIDTH_IN_PIXELS} pixels in width" in {
-    //        assert(b.getWidth === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
-    //      }
-    //      s"${EXPECTED_DEFAULT_HEIGHT_IN_PIXELS} pixels in height" in {
-    //        assert(b.getHeight === EXPECTED_DEFAULT_HEIGHT_IN_PIXELS)
-    //      }
-    //    }
+    "when constructed without arguments, must be" - {
+      val b = Bitmap()
+
+      s"${EXPECTED_DEFAULT_WIDTH_IN_PIXELS} pixels in width" in {
+        assert(b.widthInPixels === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
+      }
+      s"${EXPECTED_DEFAULT_HEIGHT_IN_PIXELS} pixels in height" in {
+        assert(b.heightInPixels === EXPECTED_DEFAULT_HEIGHT_IN_PIXELS)
+      }
+    }
 
     val TEST_WIDTH_IN_PIXELS = 23
     val TEST_HEIGHT_IN_PIXELS = 45
@@ -96,10 +96,6 @@ class BitmapSpec extends ImageSpecBase {
     //      for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
     //        assert(b.pixelIntAt(x, y) === TEST_PIXEL_INT)
     //      }
-    //    }
-    //
-    //    "must be able to give a Graphics2D instance" in {
-    //      assert(Bitmap().graphics2D.isInstanceOf[JGraphics2D])
     //    }
     //
     //    "must be able to clear() the image with a given opaque color" in {
