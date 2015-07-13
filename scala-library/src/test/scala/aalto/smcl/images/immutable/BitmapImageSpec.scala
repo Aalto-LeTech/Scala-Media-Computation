@@ -58,7 +58,7 @@ class BitmapImageSpec extends ImageSpecBase {
         "have a widthRange" - {
           "starting from 0" in { assert(b.widthRange.start === 0) }
           s"ending to ${width - 1}" in { assert(b.widthRange.end === (width - 1)) }
-        }                                                                                                                                                                                           
+        }
         "have a heightRange" - {
           "starting from 0" in { assert(b.heightRange.start === 0) }
           s"ending to ${height - 1}" in { assert(b.heightRange.end === (height - 1)) }
@@ -82,11 +82,11 @@ class BitmapImageSpec extends ImageSpecBase {
       "creatorName" in { assert(BitmapImage(creatorNameOption = testValue).creatorNameOption === testValue) }
     }
 
-    "when created for an image without giving a background color, must have all its pixels of fully opaque black" in {
+    "when created for an image without giving a background color, must have all its pixels of pure white" in {
       val b = newSmallDefaultImmutableTestImage
 
       for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
-        assert(b.pixelIntAt(x, y) === 0xFF000000)
+        assert(b.pixelIntAt(x, y) === 0xFFFFFFFF)
       }
     }
 

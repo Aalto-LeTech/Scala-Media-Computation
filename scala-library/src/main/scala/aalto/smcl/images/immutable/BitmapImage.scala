@@ -5,12 +5,18 @@ import java.awt.{
   Graphics2D => JGraphics2D
 }
 import java.awt.image.{ BufferedImage => JBufferedImage }
+import scala.collection.immutable
 import aalto.smcl._
 import aalto.smcl.common._
 import aalto.smcl.images._
 import aalto.smcl.images.immutable._
-import java.awt.image.BufferedImage
+import aalto.smcl.images.operations._
 
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
 object BitmapImage {
 
   /**
@@ -36,7 +42,7 @@ object BitmapImage {
       h
     }
 
-    val bgColor = initialBackgroundColorOption getOrElse 0xFF000000
+    val bgColor = initialBackgroundColorOption getOrElse 0xFFFFFFFF
 
     val buffer = new JBufferedImage(width, height, JBufferedImage.TYPE_INT_ARGB)
 
@@ -108,6 +114,13 @@ class BitmapImage private (
     with OperableBitmap
     with Immutable
     with TimestampedCreation {
+
+  /**
+   *
+   */
+  override def applyOperation(operation: BitmapOperation) = {
+
+  }
 
   /**
    *
