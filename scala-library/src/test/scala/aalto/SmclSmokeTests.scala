@@ -1,7 +1,7 @@
 package aalto
 
 import org.scalatest._
-import aalto.smcl.images.immutable.BitmapImage
+import aalto.smcl.images.immutable.Bitmap
 
 /**
  * 
@@ -11,7 +11,7 @@ import aalto.smcl.images.immutable.BitmapImage
 class SmclSmokeTests extends UnitSpecBase {
 
   "sdfsd" - {
-    val b = BitmapImage(widthInPixelsOption = Option(15))
+    val b = Bitmap(widthInPixelsOption = Option(15))
   }
   
 }

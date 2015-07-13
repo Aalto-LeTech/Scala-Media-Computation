@@ -1,7 +1,7 @@
 package aalto.smcl
 
 import scala.collection.immutable
-import aalto.smcl.images.immutable.BitmapImage
+import aalto.smcl.images.immutable.Bitmap
 
 /**
  *
@@ -236,11 +236,11 @@ package object images {
    *
    */
   implicit class BitmapCreationStringInterpolator(val sc: StringContext) extends AnyVal {
-    def bmp(args: Any*): BitmapImage = {
+    def bmp(args: Any*): Bitmap = {
       val s = sc.standardInterpolator(StringContext.processEscapes, args)
 
       // TODO: Replace with real functionality when it is available
-      BitmapImage(titleOption=Option(s))
+      Bitmap(titleOption = Option(s))
     }
   }
 

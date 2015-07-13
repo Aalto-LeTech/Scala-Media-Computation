@@ -15,7 +15,7 @@ import aalto.smcl.images.OperableBitmap
 case class Clear(private val colorOption: Option[Int] = None) extends BitmapOperation {
 
   /** The color with which to clear bitmaps. */
-  private[this] val color = new JColor(colorOption getOrElse 0xFFFFFFFF, true)
+  private[this] val _color = new JColor(colorOption getOrElse 0xFFFFFFFF, true)
 
   /**
    * Clears the given bitmap with the given color.
@@ -23,13 +23,17 @@ case class Clear(private val colorOption: Option[Int] = None) extends BitmapOper
    * @param bmp           the bitmap to be operated with
    * @param colorOption   the color with which the bitmap is to be cleared
    */
-  override def apply(bmp: OperableBitmap) = {
-    val g = bmp.graphics2D
-    val oldColor = g.getColor
+  override def apply(
+    bmp: OperableBitmap,
+    drawingSurface: JGraphics2D,
+    widthInPixels: Int,
+    heightInPixels: Int) = {
 
-    g.setColor(color)
-    g.fillRect(0, 0, g.getClipBounds.width, g.getClipBounds.height)
-    g.setColor(oldColor)
+    val oldColor = drawingSurface.getColor
+
+    drawingSurface.setColor(_color)
+    drawingSurface.fillRect(0, 0, widthInPixels, heightInPixels)
+    drawingSurface.setColor(oldColor)
   }
 
   /**
