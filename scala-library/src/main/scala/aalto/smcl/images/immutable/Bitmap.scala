@@ -78,16 +78,15 @@ class Bitmap private (
   val heightInPixels: Int) extends {
 
   /** Rendering buffer for this image. */
-  private[this] val _renderingBuffer: WeakReference[JBufferedImage] =
+  private[this] var _renderingBuffer: WeakReference[JBufferedImage] =
     WeakReference[JBufferedImage](null)
 
-} with PixelRectangle
+} with RenderableBitmap
+    with PixelRectangle
     with ColorableBackground
     with OperableBitmap
     with Immutable
     with TimestampedCreation {
-
-  // new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
 
   /**
    * Returns the initial background color of this [[Bitmap]]
@@ -102,8 +101,26 @@ class Bitmap private (
   /**
    *
    */
-  override def apply(operation: BitmapOperation) = {
+  override def apply(operation: BitmapOperation): Unit = {
     operationList :+ operation
+  }
+
+  /**
+   *
+   */
+  def render(drawingSurface: JGraphics2D, x: Int, y: Int): Unit = {
+    if (_renderingBuffer.get.isEmpty) {
+      val buffer = new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
+      val drawingSurface = buffer.createGraphics
+
+      _renderingBuffer = WeakReference[JBufferedImage](buffer)
+
+      operationList.foreach { operation =>
+        operation.apply(this, drawingSurface, widthInPixels, heightInPixels)
+      }
+    }
+
+    drawingSurface.drawImage(_renderingBuffer.apply, null, x, y)
   }
 
   //  /**
