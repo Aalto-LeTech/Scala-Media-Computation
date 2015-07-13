@@ -72,15 +72,15 @@ class BitmapSpec extends ImageSpecBase {
       info(s"Timestamp: ${b.created.toString()}")
     }
 
-    "must be able to tell its" - {
-      val testValue = Option("Koe")
-
-      "title" in { assert(Bitmap(titleOption = testValue).titleOption === testValue) }
-      "description" in { assert(Bitmap(descriptionOption = testValue).descriptionOption === testValue) }
-      "courseName" in { assert(Bitmap(courseNameOption = testValue).courseNameOption === testValue) }
-      "assignmentOption" in { assert(Bitmap(assignmentOption = testValue).assignmentOption === testValue) }
-      "creatorName" in { assert(Bitmap(creatorNameOption = testValue).creatorNameOption === testValue) }
-    }
+    //    "must be able to tell its" - {
+    //      val testValue = Option("Koe")
+    //
+    //      "title" in { assert(Bitmap(titleOption = testValue).titleOption === testValue) }
+    //      "description" in { assert(Bitmap(descriptionOption = testValue).descriptionOption === testValue) }
+    //      "courseName" in { assert(Bitmap(courseNameOption = testValue).courseNameOption === testValue) }
+    //      "assignmentOption" in { assert(Bitmap(assignmentOption = testValue).assignmentOption === testValue) }
+    //      "creatorName" in { assert(Bitmap(creatorNameOption = testValue).creatorNameOption === testValue) }
+    //    }
 
     //    "when created for an image without giving a background color, must have all its pixels of pure white" in {
     //      val b = newSmallDefaultImmutableTestImage

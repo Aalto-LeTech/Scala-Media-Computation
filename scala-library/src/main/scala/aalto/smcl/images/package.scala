@@ -240,7 +240,7 @@ package object images {
       val s = sc.standardInterpolator(StringContext.processEscapes, args)
 
       // TODO: Replace with real functionality when it is available
-      Bitmap(titleOption = Option(s))
+      Bitmap()
     }
   }
 

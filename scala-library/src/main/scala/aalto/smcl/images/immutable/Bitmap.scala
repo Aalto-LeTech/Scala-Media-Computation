@@ -25,12 +25,7 @@ object Bitmap {
   def apply(
     widthInPixelsOption: Option[Int] = None,
     heightInPixelsOption: Option[Int] = None,
-    initialBackgroundColorOption: Option[Int] = None,
-    titleOption: Option[String] = None,
-    descriptionOption: Option[String] = None,
-    courseNameOption: Option[String] = None,
-    assignmentOption: Option[String] = None,
-    creatorNameOption: Option[String] = None): Bitmap = {
+    initialBackgroundColorOption: Option[Int] = None): Bitmap = {
 
     val width = widthInPixelsOption.fold(DEFAULT_IMAGE_WIDTH_IN_PIXELS) { w =>
       require(w > 0, s"Width of the image must be greater than zero (was $w)")
@@ -43,43 +38,29 @@ object Bitmap {
     }
 
     val bgColor = initialBackgroundColorOption getOrElse 0xFFFFFFFF
+    val operationList = List[BitmapOperation]() :+ Clear(Option(bgColor))
 
-    val operationList = List[BitmapOperation]()
-
-    new Bitmap(operationList, width, height, bgColor, titleOption, descriptionOption, courseNameOption, assignmentOption, creatorNameOption)
+    new Bitmap(operationList, width, height, bgColor)
   }
 
-  def fromExistingImageBuffer(
-    existingImageBuffer: JBufferedImage,
-    titleOption: Option[String] = None,
-    descriptionOption: Option[String] = None,
-    courseNameOption: Option[String] = None,
-    assignmentOption: Option[String] = None,
-    creatorNameOption: Option[String] = None): Bitmap = {
-
-    val width = 10
-    val height = 10
+  def apply(bmp: Bitmap): Bitmap = {
     val operationList = List[BitmapOperation]()
 
     new Bitmap(
-      operationList, width, height, 0xFFFFFFFF, titleOption, descriptionOption, courseNameOption, assignmentOption, creatorNameOption)
+      operationList,
+      bmp.widthInPixels,
+      bmp.heightInPixels,
+      0xFFFFFFFF)
   }
 
-  def fromSourceFile(
-    sourceFilePath: String,
-    titleOption: Option[String] = None,
-    descriptionOption: Option[String] = None,
-    courseNameOption: Option[String] = None,
-    assignmentOption: Option[String] = None,
-    creatorNameOption: Option[String] = None): Bitmap = {
+  def apply(sourceFilePath: String): Bitmap = {
 
     // TODO: Load image from the given file and init the Bitmap accordingly
     val width = 10
     val height = 10
     val operationList = List[BitmapOperation]()
 
-    new Bitmap(
-      operationList, width, height, 0xFFFFFFFF, titleOption, descriptionOption, courseNameOption, assignmentOption, creatorNameOption)
+    new Bitmap(operationList, width, height, 0xFFFFFFFF)
   }
 
 }
@@ -93,12 +74,7 @@ class Bitmap private (
   private val operationList: immutable.List[BitmapOperation],
   val widthInPixels: Int,
   val heightInPixels: Int,
-  val initialBackgroundColor: Int,
-  val titleOption: Option[String],
-  val descriptionOption: Option[String],
-  val courseNameOption: Option[String],
-  val assignmentOption: Option[String],
-  val creatorNameOption: Option[String]) extends {
+  val initialBackgroundColor: Int) extends {
 
   /** Rendering buffer for this image. */
   private[this] val _renderingBuffer: WeakReference[JBufferedImage] =
@@ -115,7 +91,7 @@ class Bitmap private (
   /**
    *
    */
-  override def applyOperation(operation: BitmapOperation) = {
+  override def apply(operation: BitmapOperation) = {
 
   }
 
@@ -227,7 +203,6 @@ class Bitmap private (
    */
   override def toString() = {
     s"[BitmapImage ${widthInPixels}x${heightInPixels} px" +
-      titleOption.fold[String](STR_EMPTY)(t => s"; Title: '${t}'") +
       s"; created: ${created}]"
   }
 

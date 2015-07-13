@@ -18,7 +18,7 @@ object BitmapOps {
    * Adds a [[Clear]] operation to a given [[OperableBitmap]].
    */
   def clear(bmp: OperableBitmap, colorOption: Option[Int] = None): Unit = {
-    bmp.applyOperation(Clear(colorOption))
+    bmp.apply(Clear(colorOption))
   }
 
 }

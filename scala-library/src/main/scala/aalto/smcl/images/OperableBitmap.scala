@@ -13,6 +13,6 @@ private[images] trait OperableBitmap {
   /**
    * Applies a bitmap operation to a bitmap.
    */
-  def applyOperation(operation: BitmapOperation): Unit
+  def apply(operation: BitmapOperation): Unit
 
 }
