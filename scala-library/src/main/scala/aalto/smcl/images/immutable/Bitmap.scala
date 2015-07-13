@@ -43,16 +43,18 @@ object Bitmap {
     new Bitmap(operationList, width, height, bgColor)
   }
 
+  /**
+   *
+   */
   def apply(bmp: Bitmap): Bitmap = {
     val operationList = List[BitmapOperation]()
 
-    new Bitmap(
-      operationList,
-      bmp.widthInPixels,
-      bmp.heightInPixels,
-      0xFFFFFFFF)
+    new Bitmap(operationList, bmp.widthInPixels, bmp.heightInPixels, 0xFFFFFFFF)
   }
 
+  /**
+   *
+   */
   def apply(sourceFilePath: String): Bitmap = {
 
     // TODO: Load image from the given file and init the Bitmap accordingly
