@@ -19,9 +19,6 @@ case class Clear(private val colorOption: Option[Int] = None) extends BitmapOper
 
   /**
    * Clears the given bitmap with the given color.
-   *
-   * @param bmp           the bitmap to be operated with
-   * @param colorOption   the color with which the bitmap is to be cleared
    */
   override def apply(
     bmp: OperableBitmap,

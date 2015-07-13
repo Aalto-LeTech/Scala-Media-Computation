@@ -38,7 +38,7 @@ object Bitmap {
     }
 
     val bgColor = initialBackgroundColorOption getOrElse 0xFFFFFFFF
-    val operationList = List[BitmapOperation]() :+ Clear(Option(bgColor))
+    val operationList = List[BitmapOperation]() :+ CreateBitmap(width, height) :+ Clear(Option(bgColor))
 
     new Bitmap(operationList, width, height)
   }
