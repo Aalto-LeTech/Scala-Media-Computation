@@ -1,6 +1,8 @@
 package aalto.smcl.images.immutable
 
+import java.awt.{ Graphics2D => JGraphics2D }
 import org.scalatest._
+import org.scalatest.prop.TableDrivenPropertyChecks._
 import aalto.smcl.images._
 
 /**
@@ -31,7 +33,7 @@ class BitmapImageSpec extends ImageSpecBase {
     }
 
     "when constructed without arguments, must be" - {
-      val b = BitmapImage().pixelBuffer
+      val b = BitmapImage().buffer
 
       s"${EXPECTED_DEFAULT_WIDTH_IN_PIXELS} pixels in width" in {
         assert(b.getWidth === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
@@ -45,15 +47,26 @@ class BitmapImageSpec extends ImageSpecBase {
     val TEST_HEIGHT_IN_PIXELS = 45
 
     s"when constructed with an arbitrary size of " +
-      s"${TEST_WIDTH_IN_PIXELS} x ${TEST_HEIGHT_IN_PIXELS} pixels, must be" - {
+      s"${TEST_WIDTH_IN_PIXELS} x ${TEST_HEIGHT_IN_PIXELS} pixels, must" - {
 
-        val b = BitmapImage(Option(TEST_WIDTH_IN_PIXELS), Option(TEST_HEIGHT_IN_PIXELS)).pixelBuffer
+        val (width, height) = (TEST_WIDTH_IN_PIXELS, TEST_HEIGHT_IN_PIXELS)
+        val numOfPixels = width * height
+        val b = BitmapImage(Option(width), Option(height))
 
-        s"${TEST_WIDTH_IN_PIXELS} pixels in width" in { assert(b.getWidth === TEST_WIDTH_IN_PIXELS) }
-        s"${TEST_HEIGHT_IN_PIXELS} pixels in height" in { assert(b.getHeight === TEST_HEIGHT_IN_PIXELS) }
+        s"be ${width} pixels by width" in { assert(b.buffer.getWidth === width) }
+        s"be ${height} pixels by height" in { assert(b.buffer.getHeight === height) }
+        "have a widthRange" - {
+          "starting from 0" in { assert(b.widthRange.start === 0) }
+          s"ending to ${width - 1}" in { assert(b.widthRange.end === (width - 1)) }
+        }                                                                                                                                                                                           
+        "have a heightRange" - {
+          "starting from 0" in { assert(b.heightRange.start === 0) }
+          s"ending to ${height - 1}" in { assert(b.heightRange.end === (height - 1)) }
+        }
+        s"have ${numOfPixels} pixels in total" in { assert(b.pixelCount === numOfPixels) }
       }
 
-    "when constructed, must get timestamped and be able to tell the time of creation" in {
+    "must get timestamped and be able to tell the time of creation" in {
       val b = BitmapImage()
       assert(b.created.isInstanceOf[java.util.Date])
       info(s"Timestamp: ${b.created.toString()}")
@@ -68,5 +81,58 @@ class BitmapImageSpec extends ImageSpecBase {
       "assignmentOption" in { assert(BitmapImage(assignmentOption = testValue).assignmentOption === testValue) }
       "creatorName" in { assert(BitmapImage(creatorNameOption = testValue).creatorNameOption === testValue) }
     }
+
+    "when created for an image without giving a background color, must have all its pixels of fully opaque black" in {
+      val b = newSmallDefaultImmutableTestImage
+
+      for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
+        assert(b.pixelIntAt(x, y) === 0xFF000000)
+      }
+    }
+
+    "when created for an image with a given opaque background color, must have all its pixels of that colour" in {
+      val b = BitmapImage(initialBackgroundColorOption = Option[Int](TEST_PIXEL_INT))
+
+      for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
+        assert(b.pixelIntAt(x, y) === TEST_PIXEL_INT)
+      }
+    }
+
+    "must be able to give a Graphics2D instance" in {
+      assert(BitmapImage().graphics2D.isInstanceOf[JGraphics2D])
+    }
+
+    "must be able to clear() the image with a given opaque color" in {
+      val testColors = Table("c", 0xFF9EADBC, 0xFF000000, 0xFF123456)
+
+      forAll(testColors) { c =>
+        info(s"testing pixelInt value: 0x${c.toArgbHexColorString}  (${c})")
+
+        val b = BitmapImage()
+
+        b.clear(Option(c))
+
+        for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
+          b.pixelIntAt(x, y) shouldEqual c
+        }
+      }
+    }
+
+    "must be able to clear() the image with the default (opaque) background color" in {
+      val testColors = Table("c", 0xFF9EADBC, 0xFF000000, 0xFF123456)
+
+      forAll(testColors) { c =>
+        info(s"testing pixelInt value: 0x${c.toArgbHexColorString}  (${c})")
+
+        val b = BitmapImage(initialBackgroundColorOption = Option(c))
+
+        b.clear()
+
+        for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
+          b.pixelIntAt(x, y) shouldEqual c
+        }
+      }
+    }
   }
+
 }

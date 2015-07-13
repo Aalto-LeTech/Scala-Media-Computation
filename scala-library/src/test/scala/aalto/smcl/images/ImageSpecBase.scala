@@ -1,13 +1,13 @@
 package aalto.smcl.images
 
-import aalto.smcl.UnitBaseSpec
+import aalto.UnitSpecBase
 
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-abstract class ImageSpecBase extends UnitBaseSpec {
+abstract class ImageSpecBase extends UnitSpecBase {
 
   val TEST_PIXEL_INT = 0xFFDCBA98
   val TEST_RED_VALUE = 0xDC

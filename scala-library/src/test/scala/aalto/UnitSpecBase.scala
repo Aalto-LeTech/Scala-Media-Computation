@@ -1,4 +1,4 @@
-package aalto.smcl
+package aalto
 
 import org.scalatest.{ FreeSpec, Matchers }
 import org.scalatest.prop.PropertyChecks
@@ -8,6 +8,6 @@ import org.scalatest.prop.PropertyChecks
  *
  * @author Aleksi Lukkarinen
  */
-abstract class UnitBaseSpec extends FreeSpec with Matchers with PropertyChecks {
+abstract class UnitSpecBase extends FreeSpec with Matchers with PropertyChecks {
 
 }
