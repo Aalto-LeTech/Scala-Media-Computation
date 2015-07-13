@@ -40,7 +40,7 @@ object Bitmap {
     val bgColor = initialBackgroundColorOption getOrElse 0xFFFFFFFF
     val operationList = List[BitmapOperation]() :+ Clear(Option(bgColor))
 
-    new Bitmap(operationList, width, height, bgColor)
+    new Bitmap(operationList, width, height)
   }
 
   /**
@@ -49,7 +49,7 @@ object Bitmap {
   def apply(bmp: Bitmap): Bitmap = {
     val operationList = List[BitmapOperation]()
 
-    new Bitmap(operationList, bmp.widthInPixels, bmp.heightInPixels, 0xFFFFFFFF)
+    new Bitmap(operationList, bmp.widthInPixels, bmp.heightInPixels)
   }
 
   /**
@@ -62,7 +62,7 @@ object Bitmap {
     val height = 10
     val operationList = List[BitmapOperation]()
 
-    new Bitmap(operationList, width, height, 0xFFFFFFFF)
+    new Bitmap(operationList, width, height)
   }
 
 }
@@ -75,8 +75,7 @@ object Bitmap {
 class Bitmap private (
   private val operationList: immutable.List[BitmapOperation],
   val widthInPixels: Int,
-  val heightInPixels: Int,
-  val initialBackgroundColor: Int) extends {
+  val heightInPixels: Int) extends {
 
   /** Rendering buffer for this image. */
   private[this] val _renderingBuffer: WeakReference[JBufferedImage] =
@@ -91,10 +90,20 @@ class Bitmap private (
   // new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
 
   /**
+   * Returns the initial background color of this [[Bitmap]]
+   * (may not be the actual background color at a later time).
+   */
+  override def initialBackgroundColor(): Int =
+    operationList.head match {
+      case Clear(color) => color getOrElse 0xFFFFFFFF
+      case _            => 0xFFFFFFFF
+    }
+
+  /**
    *
    */
   override def apply(operation: BitmapOperation) = {
-
+    operationList :+ operation
   }
 
   //  /**
