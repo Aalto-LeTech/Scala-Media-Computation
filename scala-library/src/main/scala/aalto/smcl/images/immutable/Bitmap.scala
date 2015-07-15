@@ -68,7 +68,6 @@ case class Bitmap private (private val operations: BitmapOperationList) extends 
 
 } with RenderableBitmap
     with PixelRectangle
-    with ColorableBackground
     with OperableBitmap
     with Immutable
     with TimestampedCreation {
