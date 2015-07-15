@@ -9,7 +9,10 @@ crossScalaVersions := Seq("2.10.5")
 
 
 // Please see: http://search.maven.org/#search|ga|1|scala-swing
-libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.11" % "2.0.0-M2"
+libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.11" % "2.0.0-M2" withSources() withJavadoc()
+
+// Please see: http://search.maven.org/#search|ga|1|scala-reflect
+libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.11.7" withSources() withJavadoc()
 
 libraryDependencies += (scalaBinaryVersion.value match {
     case "2.10" => "org.scalatest" % "scalatest_2.10" % "2.2.4" % "test" 
