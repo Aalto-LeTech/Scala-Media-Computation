@@ -3,6 +3,13 @@
 #
 
 /*
+.cache-main
+.cache-tests
+.classpath
+.project
+.settings
+
+!/.gitattributes
 !/.gitignore
 !/build.sbt
 !/root-doc.txt
@@ -11,4 +18,3 @@
 
 /project/*
 !/project/plugins.sbt
-
