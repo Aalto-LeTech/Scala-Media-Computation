@@ -11,7 +11,7 @@ import java.awt.image.{ BufferedImage => JBufferedImage }
  *
  * @author Aleksi Lukkarinen
  */
-case class CreateBitmap(widthInPixels: Int, heightInPixels: Int)
+private[images] case class CreateBitmap(widthInPixels: Int, heightInPixels: Int)
     extends AbstractBufferProviderOperation {
 
   /** This [[BitmapOperation]] does not have any child operations. */
