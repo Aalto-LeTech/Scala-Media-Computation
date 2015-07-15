@@ -54,7 +54,7 @@ private[smcl] object ClassTokenizer {
 
     s.clear
     s ++= STR_LEFT_ANGLE_BRACKET ++= escapeTokenPart(className)
-    clazz.metaInformation.toSeq.foreach { appendKv(_) }
+    clazz.metaInformation.foreach { appendKv(_) }
     s ++= STR_RIGHT_ANGLE_BRACKET
     s.toString()
   }
