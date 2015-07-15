@@ -12,7 +12,7 @@ import java.awt.image.{ BufferedImage => JBufferedImage }
  * @author Aleksi Lukkarinen
  */
 case class CreateBitmap(widthInPixels: Int, heightInPixels: Int)
-    extends AbstractOperation with BufferProvider {
+    extends AbstractBufferProviderOperation {
 
   /** This [[BitmapOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None

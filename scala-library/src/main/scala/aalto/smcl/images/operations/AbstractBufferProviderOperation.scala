@@ -3,12 +3,12 @@ package aalto.smcl.images.operations
 import java.awt.image.{ BufferedImage => JBufferedImage }
 
 /**
- * Ensures that the [[BitmapOperation]] classes providing a buffer for rendering images,
+ * Ensures that the [[AbstractOperation]] classes providing a buffer for rendering images,
  * have a function for returning that buffer.
  *
  * @author Aleksi Lukkarinen
  */
-trait BufferProvider { this: AbstractOperation =>
+private[images] abstract class AbstractBufferProviderOperation {
 
   /** Width of the provided buffer in pixels. */
   def widthInPixels: Int

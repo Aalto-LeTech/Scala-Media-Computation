@@ -13,7 +13,7 @@ private[images] object BitmapOperationList {
   /**
    * Returns an empty [[BitmapOperationList]].
    */
-  private[images] def apply(bufferProvider: AbstractOperation with BufferProvider): BitmapOperationList =
+  private[images] def apply(bufferProvider: AbstractBufferProviderOperation): BitmapOperationList =
     new BitmapOperationList(bufferProvider, List[AbstractOperation with AbstractSingleSourceOperation]())
 
 }
@@ -24,7 +24,7 @@ private[images] object BitmapOperationList {
  * @author Aleksi Lukkarinen
  */
 private[images] case class BitmapOperationList private (
-    private val bufferProvider: AbstractOperation with BufferProvider,
+    private val bufferProvider: AbstractBufferProviderOperation,
     private val operations: List[AbstractSingleSourceOperation]) {
 
   /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
