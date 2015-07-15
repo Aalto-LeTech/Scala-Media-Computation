@@ -6,6 +6,6 @@ package aalto.smcl.images.operations
  *
  * @author Aleksi Lukkarinen
  */
-trait PixelReader { this: BitmapOperation =>
+trait PixelReader { this: AbstractOperation =>
 
 }

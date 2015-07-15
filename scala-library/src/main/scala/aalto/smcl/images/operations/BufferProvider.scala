@@ -8,7 +8,7 @@ import java.awt.image.{ BufferedImage => JBufferedImage }
  *
  * @author Aleksi Lukkarinen
  */
-trait BufferProvider { this: BitmapOperation =>
+trait BufferProvider { this: AbstractOperation =>
 
   /** Width of the provided buffer in pixels. */
   def widthInPixels: Int

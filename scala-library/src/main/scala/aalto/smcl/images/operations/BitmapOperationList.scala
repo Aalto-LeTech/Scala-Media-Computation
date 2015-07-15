@@ -13,8 +13,8 @@ private[images] object BitmapOperationList {
   /**
    * Returns an empty [[BitmapOperationList]].
    */
-  private[images] def apply(bufferProvider: BitmapOperation with BufferProvider): BitmapOperationList =
-    new BitmapOperationList(bufferProvider, List[BitmapOperation with SingleSource]())
+  private[images] def apply(bufferProvider: AbstractOperation with BufferProvider): BitmapOperationList =
+    new BitmapOperationList(bufferProvider, List[AbstractOperation with SingleSource]())
 
 }
 
@@ -24,8 +24,8 @@ private[images] object BitmapOperationList {
  * @author Aleksi Lukkarinen
  */
 private[images] case class BitmapOperationList private (
-    private val bufferProvider: BitmapOperation with BufferProvider,
-    private val operations: List[BitmapOperation with SingleSource]) {
+    private val bufferProvider: AbstractOperation with BufferProvider,
+    private val operations: List[AbstractOperation with SingleSource]) {
 
   /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
   val widthInPixels: Int = bufferProvider.widthInPixels
@@ -36,13 +36,13 @@ private[images] case class BitmapOperationList private (
   /**
    * Adds a new [[BitmapOperation]] to the beginning of this [[BitmapOperationList]].
    */
-  private[images] def add(newOperation: BitmapOperation with SingleSource) =
+  private[images] def add(newOperation: AbstractOperation with SingleSource) =
     BitmapOperationList(bufferProvider, newOperation +: operations)
 
   /**
    * Adds a new [[BitmapOperation]] to the beginning of this [[BitmapOperationList]].
    */
-  private[images] def +:(newOperation: BitmapOperation with SingleSource) = this.add(newOperation)
+  private[images] def +:(newOperation: AbstractOperation with SingleSource) = this.add(newOperation)
 
   /**
    *
@@ -63,7 +63,7 @@ private[images] case class BitmapOperationList private (
    */
   @tailrec
   private def renderOperations(
-    list: List[BitmapOperation with SingleSource],
+    list: List[AbstractOperation with SingleSource],
     buffer: JBufferedImage): JBufferedImage = {
 
     list match {

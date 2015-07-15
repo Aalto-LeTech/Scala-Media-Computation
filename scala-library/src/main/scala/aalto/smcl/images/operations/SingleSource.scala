@@ -7,7 +7,7 @@ import java.awt.image.{ BufferedImage => JBufferedImage }
  *
  * @author Aleksi Lukkarinen
  */
-trait SingleSource { this: BitmapOperation =>
+trait SingleSource { this: AbstractOperation =>
 
   /** A buffer for applying bitmap operations. */
   def render(destination: JBufferedImage): Unit
