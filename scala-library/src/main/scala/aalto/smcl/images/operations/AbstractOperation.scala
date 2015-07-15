@@ -10,7 +10,7 @@ import aalto.smcl.images._
  *
  * @author Aleksi Lukkarinen
  */
-private[images] trait AbstractOperation {
+private[images] abstract class AbstractOperation() {
 
   val INITIAL_STRINGBUILDER_CAPACITY_IN_CHARS = 50
 
