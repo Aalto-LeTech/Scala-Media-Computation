@@ -39,7 +39,7 @@ object Bitmap {
     val bgColor = initialBackgroundColorOption getOrElse 0xFFFFFFFF
     val operationList = Clear(Option(bgColor)) +: BitmapOperationList(CreateBitmap(width, height))
 
-    new Bitmap(operationList, width, height)
+    new Bitmap(operationList)
   }
 
   /**
@@ -48,11 +48,9 @@ object Bitmap {
   //  def apply(sourceFilePath: String): Bitmap = {
   //
   //    // TODO: Load image from the given file and init the Bitmap accordingly
-  //    val width = 10
-  //    val height = 10
   //    val operationList = BitmapOperationList()
   //
-  //    new Bitmap(operationList, width, height)
+  //    new Bitmap(operationList)
   //  }
 
 }
@@ -62,10 +60,7 @@ object Bitmap {
  *
  * @author Aleksi Lukkarinen
  */
-case class Bitmap private (
-  private val operations: BitmapOperationList,
-  val widthInPixels: Int,
-  val heightInPixels: Int) extends {
+case class Bitmap private (private val operations: BitmapOperationList) extends {
 
   /** Rendering buffer for this image. */
   private[this] var _renderingBuffer: WeakReference[JBufferedImage] =
@@ -78,25 +73,23 @@ case class Bitmap private (
     with Immutable
     with TimestampedCreation {
 
+  /** Width of this [[Bitmap]]. */
+  val widthInPixels: Int = operations.widthInPixels
+
+  /** Height of this [[Bitmap]]. */
+  val heightInPixels: Int = operations.heightInPixels
+
   /**
    * Returns the initial background color of this [[Bitmap]]
    * (may not be the actual background color at a later time).
    */
-  val initialBackgroundColor: Int = operations.initialBackgroundColor()
-
-  /**
-   * Returns a copy of this [[Bitmap]].
-   */
-  def copy(): Bitmap = {
-    new Bitmap(operations, widthInPixels, heightInPixels)
-  }
+  val initialBackgroundColor: Int = operations.initialBackgroundColor
 
   /**
    * Applies a [[BitmapOperation]] to this [[Bitmap]].
    */
-  def apply(operation: BitmapOperation with SingleSource): Bitmap = {
-    new Bitmap(operation +: operations, widthInPixels, heightInPixels)
-  }
+  def apply(newOperation: BitmapOperation with SingleSource): Bitmap =
+    copy(operations = newOperation +: operations)
 
   /**
    * Renders this [[Bitmap]] onto a drawing surface.
@@ -117,13 +110,5 @@ case class Bitmap private (
 
       return renderation
     }
-
-  /**
-   * Returns a string representation of this [[Bitmap]].
-   */
-  override def toString() = {
-    s"[BitmapImage ${widthInPixels}x${heightInPixels} px" +
-      s"; created: ${created}]"
-  }
 
 }

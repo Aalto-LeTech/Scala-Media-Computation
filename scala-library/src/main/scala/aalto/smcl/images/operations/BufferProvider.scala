@@ -10,6 +10,12 @@ import java.awt.image.{ BufferedImage => JBufferedImage }
  */
 trait BufferProvider { this: BitmapOperation =>
 
+  /** Width of the provided buffer in pixels. */
+  def widthInPixels: Int
+
+  /** Height of the provided buffer in pixels. */
+  def heightInPixels: Int
+
   /** A buffer for applying bitmap operations. */
   def buffer: JBufferedImage
 

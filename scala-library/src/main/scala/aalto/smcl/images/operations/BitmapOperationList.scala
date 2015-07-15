@@ -27,6 +27,12 @@ private[images] case class BitmapOperationList private (
     private val bufferProvider: BitmapOperation with BufferProvider,
     private val operations: List[BitmapOperation with SingleSource]) {
 
+  /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
+  val widthInPixels: Int = bufferProvider.widthInPixels
+
+  /** Height of the bitmap produced by the content of this [[BitmapOperationList]]. */
+  val heightInPixels: Int = bufferProvider.heightInPixels
+
   /**
    * Adds a new [[BitmapOperation]] to the beginning of this [[BitmapOperationList]].
    */
