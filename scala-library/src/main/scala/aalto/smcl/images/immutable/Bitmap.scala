@@ -5,7 +5,6 @@ import java.awt.{
   Graphics2D => JGraphics2D
 }
 import java.awt.image.{ BufferedImage => JBufferedImage }
-import scala.collection.immutable
 import scala.ref.WeakReference
 import aalto.smcl._
 import aalto.smcl.common._
@@ -38,7 +37,7 @@ object Bitmap {
     }
 
     val bgColor = initialBackgroundColorOption getOrElse 0xFFFFFFFF
-    val operationList = List[BitmapOperation]() :+ CreateBitmap(width, height) :+ Clear(Option(bgColor))
+    val operationList = Clear(Option(bgColor)) +: BitmapOperationList(CreateBitmap(width, height))
 
     new Bitmap(operationList, width, height)
   }
@@ -46,15 +45,15 @@ object Bitmap {
   /**
    *
    */
-  def apply(sourceFilePath: String): Bitmap = {
-
-    // TODO: Load image from the given file and init the Bitmap accordingly
-    val width = 10
-    val height = 10
-    val operationList = List[BitmapOperation]()
-
-    new Bitmap(operationList, width, height)
-  }
+  //  def apply(sourceFilePath: String): Bitmap = {
+  //
+  //    // TODO: Load image from the given file and init the Bitmap accordingly
+  //    val width = 10
+  //    val height = 10
+  //    val operationList = BitmapOperationList()
+  //
+  //    new Bitmap(operationList, width, height)
+  //  }
 
 }
 
@@ -63,8 +62,8 @@ object Bitmap {
  *
  * @author Aleksi Lukkarinen
  */
-class Bitmap private (
-  private val operationList: immutable.List[BitmapOperation],
+case class Bitmap private (
+  private val operations: BitmapOperationList,
   val widthInPixels: Int,
   val heightInPixels: Int) extends {
 
@@ -83,47 +82,40 @@ class Bitmap private (
    * Returns the initial background color of this [[Bitmap]]
    * (may not be the actual background color at a later time).
    */
-  override def initialBackgroundColor(): Int =
-    operationList.head match {
-      case Clear(color) => color getOrElse 0xFFFFFFFF
-      case _            => 0xFFFFFFFF
-    }
+  val initialBackgroundColor: Int = operations.initialBackgroundColor()
 
   /**
    * Returns a copy of this [[Bitmap]].
    */
   def copy(): Bitmap = {
-    new Bitmap(operationList, widthInPixels, heightInPixels)
+    new Bitmap(operations, widthInPixels, heightInPixels)
   }
 
   /**
    * Applies a [[BitmapOperation]] to this [[Bitmap]].
    */
-  override def apply(operation: BitmapOperation): Bitmap = {
-    new Bitmap(operationList :+ operation, widthInPixels, heightInPixels)
+  def apply(operation: BitmapOperation with SingleSource): Bitmap = {
+    new Bitmap(operation +: operations, widthInPixels, heightInPixels)
   }
 
   /**
    * Renders this [[Bitmap]] onto a drawing surface.
    */
   def render(drawingSurface: JGraphics2D, x: Int, y: Int): Unit = {
-    ensureThatBufferIsRendered()
+    toRenderedRepresentation()
     drawingSurface.drawImage(_renderingBuffer.apply, null, x, y)
   }
 
   /**
-   * Creates the rendering buffer, if it does not exist, and renders this [[Bitmap]] onto it.
+   * Returns a `BufferedImage` instance representing this [[Bitmap]].
    */
-  private[this] def ensureThatBufferIsRendered(): Unit =
-    if (_renderingBuffer.get.isEmpty) {
-      val buffer = new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
-      val drawingSurface = buffer.createGraphics
+  def toRenderedRepresentation(): JBufferedImage =
+    _renderingBuffer.get getOrElse {
+      val renderation = operations.render()
 
-      _renderingBuffer = WeakReference[JBufferedImage](buffer)
+      _renderingBuffer = WeakReference[JBufferedImage](renderation)
 
-      operationList.foreach { operation =>
-        operation.apply(this, drawingSurface, widthInPixels, heightInPixels)
-      }
+      return renderation
     }
 
   /**

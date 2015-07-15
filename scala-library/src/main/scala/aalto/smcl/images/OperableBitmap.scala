@@ -1,7 +1,7 @@
 package aalto.smcl.images
 
-import aalto.smcl.images.immutable.Bitmap
-import aalto.smcl.images.operations.BitmapOperation
+import aalto.smcl.images.immutable._
+import aalto.smcl.images.operations._
 
 /**
  * Ensures that a bitmap can be operated with using [[BitmapOperation]] instances.
@@ -13,6 +13,6 @@ private[images] trait OperableBitmap {
   /**
    * Returns a new instance of this [[Bitmap]] with the [[BitmapOperation]] applied to it.
    */
-  def apply(operation: BitmapOperation): Bitmap
+  private[images] def apply(operation: BitmapOperation with SingleSource): Bitmap
 
 }

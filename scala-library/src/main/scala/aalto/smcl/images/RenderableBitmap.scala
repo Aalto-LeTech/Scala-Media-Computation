@@ -10,7 +10,7 @@ import java.awt.{ Graphics2D => JGraphics2D }
 trait RenderableBitmap {
 
   /**
-   * Applies a bitmap operation to a bitmap.
+   * Renders this [[RenderableBitmap]] onto a drawing surface.
    */
   def render(drawingSurface: JGraphics2D, x: Int, y: Int): Unit
 
