@@ -7,7 +7,7 @@ import scala.reflect.runtime.universe.{ Literal, Constant }
  *
  * @author Aleksi Lukkarinen
  */
-object StringUtils {
+private[smcl] object StringUtils {
 
   /**
    * Returns Scala's standard escaped representation of a given string.
