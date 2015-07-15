@@ -25,50 +25,54 @@ private[smcl] object ClassTokenizer {
   /** Initial capacity of the `StringBuilder` class used for tokenization. */
   private val INITIAL_STRINGBUILDER_CAPACITY_IN_CHARS = 200
 
-  /** The `StringBuilder` instance used for tokenization. */
-  private val s: StringBuilder = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY_IN_CHARS)
-
   /** The separator string inserted to separate keys from values. */
-  private val keyvalue_sep = STR_COLON + STR_SPACE
+  private val KEYVALUE_SEP = STR_COLON + STR_SPACE
 
   /** The separator string inserted to separate key-value pairs from each other. */
-  private val item_sep = STR_SEMICOLON + STR_SPACE
+  private val ITEM_SEP = STR_SEMICOLON + STR_SPACE
+
+  /** The `StringBuilder` instance used for tokenization. */
+  private[this] val builder: StringBuilder = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY_IN_CHARS)
 
   /**
    * Returns a tokenized representation of a given class extending the [[Tokenizable]] trait.
    *
    * @param clazz   the instance to be
    */
-  def tokenize(clazz: Tokenizable): String = {
-    val kvPairs = clazz.metaInformation.toSeq
+  def tokenize(clazz: Tokenizable): String = tokenize0(clazz: Tokenizable, builder)
+
+  /**
+   * Returns a tokenized representation of a given class extending the [[Tokenizable]] trait.
+   * Tokenization is performed using a provided `StringBuilder` instance.
+   *
+   * @param clazz   the instance to be tokenized
+   * @param s       the `StringBuilder` instance to be used
+   */
+  private def tokenize0(clazz: Tokenizable, s: StringBuilder): String = {
+    val appendKv = appendKvPairTo(_: Tuple2[String, String], s)
+    val className = ReflectionUtils.symbolOf(clazz).name.decodedName.toString
 
     s.clear
-    s ++= STR_LEFT_ANGLE_BRACKET
-    s ++= escapeTokenPart(ReflectionUtils.symbolOf(clazz).name.decodedName.toString) ++= item_sep
-
-    kvPairs.foreach { x =>
-      s ++= escapeTokenPart(x._1) ++= keyvalue_sep ++= escapeTokenPart(x._2) ++= item_sep
-    }
-    s.dropRight(2) ++= STR_RIGHT_ANGLE_BRACKET
+    s ++= STR_LEFT_ANGLE_BRACKET ++= escapeTokenPart(className)
+    clazz.metaInformation.toSeq.foreach { appendKv(_) }
+    s ++= STR_RIGHT_ANGLE_BRACKET
     s.toString()
   }
 
   /**
-   * Appends a given key-value pair to a given `StringBuilder`.
+   * Appends a given key-value pair to a given `StringBuilder` in the form `"; key: value"`.
+   * If `key` is empty or `null`, nothing will be appended. If `key` is a non-empty string
+   * but `value` is empty or `null`, only the `key` will be appended (as in `"; key"`).
+   *
+   * @param pair            the key-value pair to be appended
+   * @param shouldSeparate  whether to append the item separator after the key-value pair
+   * @param s               the `StringBuilder` instance to be used
    */
-  private def appendKvPairTo(pair: Tuple2[String, String], s: StringBuilder): Unit = {
-    val key = pair._1
-    val value = pair._2
-
-    if (key == null || key.isEmpty())
-      return
-
-    s ++= escapeTokenPart(key)
-
-    if (value != null && !value.isEmpty())
-      s ++= keyvalue_sep ++= escapeTokenPart(value)
-
-    s ++= item_sep
+  private def appendKvPairTo(pair: Tuple2[String, String], s: StringBuilder): Unit = pair match {
+    case (k: String, v: String) if k.nonEmpty && v.nonEmpty => s ++=
+      s"${ITEM_SEP}${escapeTokenPart(k)}${KEYVALUE_SEP}${escapeTokenPart(v)}"
+    case (k: String, _) if k.nonEmpty => s ++= s"${ITEM_SEP}${escapeTokenPart(k)}"
+    case _                            =>
   }
 
   /**
