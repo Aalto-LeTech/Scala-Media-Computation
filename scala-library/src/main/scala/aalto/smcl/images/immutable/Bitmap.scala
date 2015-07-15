@@ -87,7 +87,7 @@ case class Bitmap private (private val operations: BitmapOperationList) extends 
   /**
    * Applies a [[BitmapOperation]] to this [[Bitmap]].
    */
-  def apply(newOperation: AbstractOperation with SingleSource): Bitmap =
+  def apply(newOperation: AbstractSingleSourceOperation): Bitmap =
     copy(operations = newOperation +: operations)
 
   /**

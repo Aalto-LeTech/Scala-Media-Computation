@@ -13,6 +13,6 @@ private[images] trait OperableBitmap {
   /**
    * Returns a new instance of this [[Bitmap]] with the [[BitmapOperation]] applied to it.
    */
-  private[images] def apply(operation: AbstractOperation with SingleSource): Bitmap
+  private[images] def apply(operation: AbstractSingleSourceOperation): Bitmap
 
 }

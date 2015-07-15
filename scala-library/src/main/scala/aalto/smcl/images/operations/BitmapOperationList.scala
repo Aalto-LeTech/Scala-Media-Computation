@@ -14,7 +14,7 @@ private[images] object BitmapOperationList {
    * Returns an empty [[BitmapOperationList]].
    */
   private[images] def apply(bufferProvider: AbstractOperation with BufferProvider): BitmapOperationList =
-    new BitmapOperationList(bufferProvider, List[AbstractOperation with SingleSource]())
+    new BitmapOperationList(bufferProvider, List[AbstractOperation with AbstractSingleSourceOperation]())
 
 }
 
@@ -25,7 +25,7 @@ private[images] object BitmapOperationList {
  */
 private[images] case class BitmapOperationList private (
     private val bufferProvider: AbstractOperation with BufferProvider,
-    private val operations: List[AbstractOperation with SingleSource]) {
+    private val operations: List[AbstractSingleSourceOperation]) {
 
   /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
   val widthInPixels: Int = bufferProvider.widthInPixels
@@ -36,13 +36,13 @@ private[images] case class BitmapOperationList private (
   /**
    * Adds a new [[BitmapOperation]] to the beginning of this [[BitmapOperationList]].
    */
-  private[images] def add(newOperation: AbstractOperation with SingleSource) =
+  private[images] def add(newOperation: AbstractSingleSourceOperation) =
     BitmapOperationList(bufferProvider, newOperation +: operations)
 
   /**
    * Adds a new [[BitmapOperation]] to the beginning of this [[BitmapOperationList]].
    */
-  private[images] def +:(newOperation: AbstractOperation with SingleSource) = this.add(newOperation)
+  private[images] def +:(newOperation: AbstractSingleSourceOperation) = this.add(newOperation)
 
   /**
    *
@@ -63,7 +63,7 @@ private[images] case class BitmapOperationList private (
    */
   @tailrec
   private def renderOperations(
-    list: List[AbstractOperation with SingleSource],
+    list: List[AbstractSingleSourceOperation],
     buffer: JBufferedImage): JBufferedImage = {
 
     list match {
