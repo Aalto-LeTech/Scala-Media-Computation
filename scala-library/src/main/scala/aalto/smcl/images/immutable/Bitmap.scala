@@ -62,6 +62,12 @@ object Bitmap {
  */
 case class Bitmap private (private val operations: BitmapOperationList) extends {
 
+  /** Width of this [[Bitmap]]. */
+  val widthInPixels: Int = operations.widthInPixels
+
+  /** Height of this [[Bitmap]]. */
+  val heightInPixels: Int = operations.heightInPixels
+
   /** Rendering buffer for this image. */
   private[this] var _renderingBuffer: WeakReference[JBufferedImage] =
     WeakReference[JBufferedImage](null)
@@ -71,12 +77,6 @@ case class Bitmap private (private val operations: BitmapOperationList) extends 
     with OperableBitmap
     with Immutable
     with TimestampedCreation {
-
-  /** Width of this [[Bitmap]]. */
-  val widthInPixels: Int = operations.widthInPixels
-
-  /** Height of this [[Bitmap]]. */
-  val heightInPixels: Int = operations.heightInPixels
 
   /**
    * Returns the initial background color of this [[Bitmap]]
