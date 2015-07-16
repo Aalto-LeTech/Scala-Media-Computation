@@ -14,6 +14,9 @@ libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.11" % "2.0.0-M2
 // Please see: http://search.maven.org/#search|ga|1|scala-reflect
 libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.11.7" withSources() withJavadoc()
 
+// Please see: http://search.maven.org/#search|ga|1|rxscala
+libraryDependencies += "io.reactivex" %% "rxscala" % "0.25.0" withSources() withJavadoc()
+
 libraryDependencies += (scalaBinaryVersion.value match {
     case "2.10" => "org.scalatest" % "scalatest_2.10" % "2.2.4" % "test" 
     case "2.11" => "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test" withSources() withJavadoc()
