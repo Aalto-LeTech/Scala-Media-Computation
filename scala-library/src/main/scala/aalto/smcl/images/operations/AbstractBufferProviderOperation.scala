@@ -8,7 +8,8 @@ import java.awt.image.{ BufferedImage => JBufferedImage }
  *
  * @author Aleksi Lukkarinen
  */
-private[images] abstract class AbstractBufferProviderOperation {
+private[images] abstract class AbstractBufferProviderOperation
+    extends AbstractOperation with Immutable {
 
   /** Width of the provided buffer in pixels. */
   def widthInPixels: Int

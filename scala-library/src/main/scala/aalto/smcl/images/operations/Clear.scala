@@ -14,7 +14,7 @@ import aalto.smcl.images._
  * @author Aleksi Lukkarinen
  */
 private[images] case class Clear(private val colorOption: Option[Int] = None)
-    extends AbstractSingleSourceOperation {
+    extends AbstractSingleSourceOperation with Immutable {
 
   /** The color with which to clear bitmaps. */
   private[this] val _color: Int = colorOption getOrElse 0xFFFFFFFF

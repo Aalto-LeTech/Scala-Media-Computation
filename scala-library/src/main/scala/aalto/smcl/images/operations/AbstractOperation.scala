@@ -10,7 +10,8 @@ import aalto.smcl.images._
  *
  * @author Aleksi Lukkarinen
  */
-private[images] abstract class AbstractOperation extends Tokenizable {
+private[images] abstract class AbstractOperation
+    extends Tokenizable with Immutable {
 
   /** Tokenized representation of this operation, after it is calculated. */
   private lazy val _tokenizedRepresentation: String = ClassTokenizer.tokenize(this)
@@ -24,6 +25,6 @@ private[images] abstract class AbstractOperation extends Tokenizable {
   /**
    * Returns this operation as a formal string, which could be used to assess exercises.
    */
-  def toToken(): String = _tokenizedRepresentation 
+  def toToken(): String = _tokenizedRepresentation
 
 }

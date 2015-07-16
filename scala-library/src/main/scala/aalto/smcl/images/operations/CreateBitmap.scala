@@ -13,7 +13,7 @@ import aalto.smcl.common._
  * @author Aleksi Lukkarinen
  */
 private[images] case class CreateBitmap(widthInPixels: Int, heightInPixels: Int)
-    extends AbstractBufferProviderOperation {
+    extends AbstractBufferProviderOperation with Immutable {
 
   /** This [[BitmapOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None

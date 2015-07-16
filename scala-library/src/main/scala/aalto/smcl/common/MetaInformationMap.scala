@@ -45,7 +45,8 @@ private[smcl] object MetaInformationMap {
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class MetaInformationMap private (private val content: Map[String, Option[String]]) {
+private[smcl] class MetaInformationMap private (private val content: Map[String, Option[String]])
+    extends Immutable {
 
   /**
    *

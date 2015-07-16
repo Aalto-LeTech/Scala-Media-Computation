@@ -25,7 +25,7 @@ private[images] object BitmapOperationList {
  */
 private[images] case class BitmapOperationList private (
     private val bufferProvider: AbstractBufferProviderOperation,
-    private val operations: List[AbstractSingleSourceOperation]) {
+    private val operations: List[AbstractSingleSourceOperation]) extends Immutable {
 
   /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
   val widthInPixels: Int = bufferProvider.widthInPixels

@@ -7,7 +7,8 @@ import java.awt.image.{ BufferedImage => JBufferedImage }
  *
  * @author Aleksi Lukkarinen
  */
-private[images] abstract class AbstractSingleSourceOperation {
+private[images] abstract class AbstractSingleSourceOperation
+    extends AbstractOperation with Immutable {
 
   /** A buffer for applying bitmap operations. */
   def render(destination: JBufferedImage): Unit
