@@ -1,6 +1,6 @@
 package aalto.smcl
 
-import scala.collection.immutable
+import aalto.smcl.common._
 import aalto.smcl.images.immutable.Bitmap
 
 /**

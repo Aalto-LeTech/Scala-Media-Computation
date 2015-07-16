@@ -2,7 +2,7 @@ package aalto.smcl.images.operations
 
 import java.awt.image.{ BufferedImage => JBufferedImage }
 import scala.collection.mutable.StringBuilder
-import aalto.smcl._
+import aalto.smcl.common._
 import aalto.smcl.images._
 
 /**

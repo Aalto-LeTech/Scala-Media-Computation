@@ -1,6 +1,6 @@
-package aalto.smcl
+package aalto.smcl.common
 
-import scala.reflect.runtime.universe.{ Symbol, TypeTag, typeOf }
+import scala.reflect.runtime.universe.{Symbol, typeOf, TypeTag}
 
 /**
  * Miscellaneous reflection-related utility operations.

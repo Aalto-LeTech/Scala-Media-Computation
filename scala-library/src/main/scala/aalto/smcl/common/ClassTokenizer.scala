@@ -1,6 +1,6 @@
 package aalto.smcl.common
 
-import aalto.smcl._
+import aalto.smcl.common._
 
 /**
  * Creates formal-like textual tokens representing classes. A class to
@@ -53,7 +53,7 @@ private[smcl] object ClassTokenizer {
     val className = ReflectionUtils.symbolOf(clazz).name.decodedName.toString
 
     s.clear
-    s ++= STR_LEFT_ANGLE_BRACKET ++= escapeTokenPart(className)
+    s ++= STR_LEFT_ANGLE_BRACKET ++= escape(className)
     clazz.metaInformation.foreach { appendKv(_) }
     s ++= STR_RIGHT_ANGLE_BRACKET
     s.toString()
@@ -69,17 +69,16 @@ private[smcl] object ClassTokenizer {
    * @param s               the `StringBuilder` instance to be used
    */
   private def appendKvPairTo(pair: Tuple2[String, String], s: StringBuilder): Unit = pair match {
-    case (k: String, v: String) if k.nonEmpty && v.nonEmpty => s ++=
-      s"${ITEM_SEP}${escapeTokenPart(k)}${KEYVALUE_SEP}${escapeTokenPart(v)}"
-    case (k: String, _) if k.nonEmpty => s ++= s"${ITEM_SEP}${escapeTokenPart(k)}"
-    case _                            =>
+    case (k: String, v: String) if k.nonEmpty && v.nonEmpty => s ++= s"${ITEM_SEP}${escape(k)}${KEYVALUE_SEP}${escape(v)}"
+    case (k: String, _) if k.nonEmpty => s ++= s"${ITEM_SEP}${escape(k)}"
+    case _ =>
   }
 
   /**
    * Returns an escaped string for tokenization with the `tokenize()` method. The charaters to be
    * escaped are the Scala's standard ones plus both colons and semicolons.
    */
-  private def escapeTokenPart(part: String): String =
+  private def escape(part: String): String =
     StringUtils.escapeString(part)
       .replaceAllLiterally(STR_COLON, STR_COLON_AS_UNICODE)
       .replaceAllLiterally(STR_SEMICOLON, STR_SEMICOLON_AS_UNICODE)

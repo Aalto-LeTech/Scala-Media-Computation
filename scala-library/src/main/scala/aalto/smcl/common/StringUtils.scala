@@ -1,6 +1,6 @@
-package aalto.smcl
+package aalto.smcl.common
 
-import scala.reflect.runtime.universe.{ Literal, Constant }
+import scala.reflect.runtime.universe.{Constant, Literal}
 
 /**
  * Miscellaneous string utility operations.
