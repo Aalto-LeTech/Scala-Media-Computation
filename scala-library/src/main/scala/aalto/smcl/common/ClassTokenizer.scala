@@ -37,7 +37,7 @@ private[smcl] object ClassTokenizer {
   /**
    * Returns a tokenized representation of a given class extending the [[Tokenizable]] trait.
    *
-   * @param clazz   the instance to be
+   * @param clazz   the instance to be tokenized
    */
   def tokenize(clazz: Tokenizable): String = tokenize0(clazz: Tokenizable, builder)
 
@@ -49,30 +49,47 @@ private[smcl] object ClassTokenizer {
    * @param s       the `StringBuilder` instance to be used
    */
   private def tokenize0(clazz: Tokenizable, s: StringBuilder): String = {
-    val appendKv = appendKvPairTo(_: Tuple2[String, Option[String]], s)
-    val className = ReflectionUtils.symbolOf(clazz).name.decodedName.toString
-
     s.clear
-    s ++= STR_LEFT_ANGLE_BRACKET ++= escape(className)
-    clazz.metaInformation.foreach { appendKv(_) }
-    s ++= STR_RIGHT_ANGLE_BRACKET
-    s.toString() 
+
+    appendPrologOfTo(clazz, s)
+    appendKvPairsOfTo(clazz, s)
+    appendEpilogTo(s)
+
+    s.toString()
   }
 
   /**
-   * Appends a given key-value pair to a given `StringBuilder` in the form `"; key: value"`.
+   * Appends a prolog to a given `StringBuilder` in the form `"[ClassName"`.
+   *
+   * @param clazz   the instance to be tokenized
+   * @param s       the `StringBuilder` instance to be used
+   */
+  private def appendPrologOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
+    s ++= STR_LEFT_ANGLE_BRACKET ++= escape(ReflectionUtils.symbolOf(clazz).name.decodedName.toString)
+
+  /**
+   * Appends key-value pairs to a given `StringBuilder` in the form `"; key: value"`.
    * If `key` is empty or `null`, nothing will be appended. If `key` is a non-empty string
    * but `value` is empty or `null`, only the `key` will be appended (as in `"; key"`).
    *
-   * @param pair            the key-value pair to be appended
-   * @param shouldSeparate  whether to append the item separator after the key-value pair
-   * @param s               the `StringBuilder` instance to be used
+   * @param clazz   the instance to be tokenized
+   * @param s       the `StringBuilder` instance to be used
    */
-  private def appendKvPairTo(pair: Tuple2[String, Option[String]], s: StringBuilder): Unit = pair match {
-    case (k: String, Some(v: String)) => s ++= s"${ITEM_SEP}${escape(k)}${KEYVALUE_SEP}${escape(v)}"
-    case (k: String, None) => s ++= s"${ITEM_SEP}${escape(k)}"
-    case _ => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: ${pair}")
-  }
+  private def appendKvPairsOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
+    clazz.metaInformation.foreach { pair =>
+      pair match {
+        case (k: String, Some(v: String)) => s ++= ITEM_SEP ++= escape(k) ++= KEYVALUE_SEP ++= escape(v)
+        case (k: String, None)            => s ++= ITEM_SEP ++= escape(k)
+        case _                            => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: ${pair}")
+      }
+    }
+
+  /**
+   * Appends an epilog to a given `StringBuilder` in the form `"]"`.
+   *
+   * @param s       the `StringBuilder` instance to be used
+   */
+  private def appendEpilogTo(s: StringBuilder): Unit = s ++= STR_RIGHT_ANGLE_BRACKET
 
   /**
    * Returns an escaped string for tokenization with the `tokenize()` method. The charaters to be

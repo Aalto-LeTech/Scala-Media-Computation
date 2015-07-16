@@ -7,7 +7,7 @@ package aalto.smcl.common
  */
 private[smcl] object MetaInformationMap {
 
-  // Messages  
+  // Messages
   private val MSG_KEY_CANNOT_BE_NULL =
     "MetaInformationMap content key cannot be null"
 
@@ -50,12 +50,12 @@ private[smcl] class MetaInformationMap private (private val content: Map[String,
   /**
    *
    */
-  def size: Int = content size
+  def size: Int = content.size
 
   /**
    *
    */
-  def keyValuePairs: Seq[Tuple2[String, Option[String]]] = content toSeq
+  def keyValuePairs: Seq[Tuple2[String, Option[String]]] = content.toSeq
 
   /**
    *
