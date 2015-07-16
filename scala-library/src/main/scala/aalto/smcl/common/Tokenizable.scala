@@ -8,6 +8,6 @@ package aalto.smcl.common
 private[smcl] trait Tokenizable {
 
   /** Meta information based on which the class is tokenized. */
-  def metaInformation: Map[String, String]
+  def metaInformation: MetaInformationMap
 
 }

@@ -5,6 +5,7 @@ import java.awt.{
   Graphics2D => JGraphics2D
 }
 import java.awt.image.{ BufferedImage => JBufferedImage }
+import aalto.smcl.common._
 import aalto.smcl.images._
 
 /**
@@ -22,10 +23,8 @@ private[images] case class Clear(private val colorOption: Option[Int] = None)
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this operation instance */
-  val metaInformation = Map(
-    "name" -> "Clear",
-    "backgroundcolor" -> "0x${_color.toArgbHexColorString}"
-  )
+  val metaInformation = MetaInformationMap(Map(
+    "background-color" -> Option("0x${_color.toArgbHexColorString}")))
 
   /**
    * Clears the given bitmap with the given color.

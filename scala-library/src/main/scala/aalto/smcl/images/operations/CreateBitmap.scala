@@ -5,6 +5,7 @@ import java.awt.{
   Graphics2D => JGraphics2D
 }
 import java.awt.image.{ BufferedImage => JBufferedImage }
+import aalto.smcl.common._
 
 /**
  * An operation to create a bitmap buffer of a given size.
@@ -18,11 +19,9 @@ private[images] case class CreateBitmap(widthInPixels: Int, heightInPixels: Int)
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this [[BitmapOperation]] instance */
-  val metaInformation = Map(
-    "name" -> "CreateBitmap",
-    "width" -> "${widthInPixels} px",
-    "height" -> "${heightInPixels} px"
-  )
+  val metaInformation = MetaInformationMap(Map(
+    "width" -> Option("${widthInPixels} px"),
+    "height" -> Option("${heightInPixels} px")))
 
   /**
    * Returns a new bitmap buffer of a size given to this [[BitmapOperation]] instance.

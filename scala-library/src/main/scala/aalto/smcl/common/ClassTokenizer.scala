@@ -49,14 +49,14 @@ private[smcl] object ClassTokenizer {
    * @param s       the `StringBuilder` instance to be used
    */
   private def tokenize0(clazz: Tokenizable, s: StringBuilder): String = {
-    val appendKv = appendKvPairTo(_: Tuple2[String, String], s)
+    val appendKv = appendKvPairTo(_: Tuple2[String, Option[String]], s)
     val className = ReflectionUtils.symbolOf(clazz).name.decodedName.toString
 
     s.clear
     s ++= STR_LEFT_ANGLE_BRACKET ++= escape(className)
     clazz.metaInformation.foreach { appendKv(_) }
     s ++= STR_RIGHT_ANGLE_BRACKET
-    s.toString()
+    s.toString() 
   }
 
   /**
@@ -68,10 +68,10 @@ private[smcl] object ClassTokenizer {
    * @param shouldSeparate  whether to append the item separator after the key-value pair
    * @param s               the `StringBuilder` instance to be used
    */
-  private def appendKvPairTo(pair: Tuple2[String, String], s: StringBuilder): Unit = pair match {
-    case (k: String, v: String) if k.nonEmpty && v.nonEmpty => s ++= s"${ITEM_SEP}${escape(k)}${KEYVALUE_SEP}${escape(v)}"
-    case (k: String, _) if k.nonEmpty => s ++= s"${ITEM_SEP}${escape(k)}"
-    case _ =>
+  private def appendKvPairTo(pair: Tuple2[String, Option[String]], s: StringBuilder): Unit = pair match {
+    case (k: String, Some(v: String)) => s ++= s"${ITEM_SEP}${escape(k)}${KEYVALUE_SEP}${escape(v)}"
+    case (k: String, None) => s ++= s"${ITEM_SEP}${escape(k)}"
+    case _ => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: ${pair}")
   }
 
   /**
