@@ -1,0 +1,8 @@
+#
+# File ignoration patterns for Git
+#
+
+/*
+!/.gitignore
+!/README.md
+!/scala-library
