@@ -1,12 +1,13 @@
 package aalto.smcl.images.viewer
 
-import java.awt.{
-  Color => JColor,
-  Graphics2D => JGraphics2D
-}
-import java.awt.image.{ BufferedImage => JBufferedImage }
+
+import java.awt.image.{BufferedImage => JBufferedImage}
+import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
+
 import scala.swing._
-import scala.swing.event._
+
+
+
 
 /**
  *

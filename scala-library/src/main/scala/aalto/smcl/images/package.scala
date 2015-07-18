@@ -1,7 +1,11 @@
 package aalto.smcl
 
+
 import aalto.smcl.common._
-import aalto.smcl.images.immutable.Bitmap
+import aalto.smcl.images.immutable._
+
+
+
 
 /**
  *
@@ -64,16 +68,11 @@ package object images {
   /** Color component value representing maximal transparency. */
   val FULLY_TRANSPARENT: Int = MIN_OPAQUENESS
 
-  /** Default width of [[BitmapImage]] instances created without giving width. */
+  /** Default width of [[Bitmap]] instances created without giving width. */
   val DEFAULT_IMAGE_WIDTH_IN_PIXELS: Int = 10
 
-  /** Default height of [[BitmapImage]] instances created without giving height. */
+  /** Default height of [[Bitmap]] instances created without giving height. */
   val DEFAULT_IMAGE_HEIGHT_IN_PIXELS: Int = 10
-
-  /**
-   *
-   */
-  def redComponentFrom(pixelInt: Int): Int = (pixelInt & THIRD_BYTE) >>> TWO_BYTES
 
   /**
    *
@@ -88,22 +87,12 @@ package object images {
   /**
    *
    */
-  def greenComponentFrom(pixelInt: Int): Int = (pixelInt & SECOND_BYTE) >>> ONE_BYTE
-
-  /**
-   *
-   */
   def withNewGreenComponent(pixelInt: Int, newGreen: Int): Int = {
     require(BYTE_RANGE.contains(newGreen),
       s"'newGreen' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newGreen)")
 
     (pixelInt & ~SECOND_BYTE) | (newGreen << ONE_BYTE)
   }
-
-  /**
-   *
-   */
-  def blueComponentFrom(pixelInt: Int): Int = pixelInt & FIRST_BYTE
 
   /**
    *
@@ -118,11 +107,6 @@ package object images {
   /**
    *
    */
-  def transparencyComponentFrom(pixelInt: Int): Int = pixelInt >>> THREE_BYTES
-
-  /**
-   *
-   */
   def withNewTransparencyComponent(pixelInt: Int, newTransparency: Int): Int = {
     require(BYTE_RANGE.contains(newTransparency),
       s"'newTransparency' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newTransparency)")
@@ -133,22 +117,40 @@ package object images {
   /**
    *
    */
-  def colorComponentsFrom(pixelInt: Int): collection.immutable.Map[Symbol, Int] = {
+  def colorComponentsFrom(pixelInt: Int): collection.immutable.Map[Symbol, Int] =
     collection.immutable.Map[Symbol, Int](
       'red -> redComponentFrom(pixelInt),
       'green -> greenComponentFrom(pixelInt),
       'blue -> blueComponentFrom(pixelInt),
       'transparency -> transparencyComponentFrom(pixelInt))
-  }
 
   /**
    *
    */
-  def pixelIntFrom(
-    red: Int = MIN_RED,
-    green: Int = MIN_GREEN,
-    blue: Int = MIN_BLUE,
-    transparency: Int = FULLY_OPAQUE): Int = {
+  def redComponentFrom(pixelInt: Int): Int = (pixelInt & THIRD_BYTE) >>> TWO_BYTES
+
+  /**
+   * l
+   */
+  def greenComponentFrom(pixelInt: Int): Int = (pixelInt & SECOND_BYTE) >>> ONE_BYTE
+
+  /**
+   *
+   */
+  def blueComponentFrom(pixelInt: Int): Int = pixelInt & FIRST_BYTE
+
+  /**
+   *
+   */
+  def transparencyComponentFrom(pixelInt: Int): Int = pixelInt >>> THREE_BYTES
+
+  /**
+   *
+   */
+  def pixelIntFrom(red: Int = MIN_RED,
+      green: Int = MIN_GREEN,
+      blue: Int = MIN_BLUE,
+      transparency: Int = FULLY_OPAQUE): Int = {
 
     require(BYTE_RANGE.contains(red),
       s"The 'red' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $red)")
@@ -164,6 +166,7 @@ package object images {
 
     (transparency << THREE_BYTES) | (red << TWO_BYTES) | (green << ONE_BYTE) | blue
   }
+
 
   /**
    * Some methods for composing ARGB-style `Int` values as well as
@@ -221,18 +224,16 @@ package object images {
      * }}}
      */
     def toArgbBinaryColorString: String =
-      f"${self.toBinaryString}%32s".replace(STR_SPACE, STR_ZERO)
-        .sliding(ONE_BYTE, ONE_BYTE).mkString(STR_SPACE)
+      self.toBinaryString.format("$s%32s").replace(STR_SPACE, STR_ZERO).sliding(ONE_BYTE, ONE_BYTE).mkString(STR_SPACE)
 
   }
 
+
   /**
-   * A string interpolator for creating [[BitmapImage]] instances.
-   *
-   *
-   *
+   * A string interpolator for creating [[Bitmap]] instances.
    */
   implicit class BitmapCreationStringInterpolator(val sc: StringContext) extends AnyVal {
+
     def bmp(args: Any*): Bitmap = {
       val s = sc.standardInterpolator(StringContext.processEscapes, args)
 
@@ -240,5 +241,6 @@ package object images {
       Bitmap()
     }
   }
+
 
 }

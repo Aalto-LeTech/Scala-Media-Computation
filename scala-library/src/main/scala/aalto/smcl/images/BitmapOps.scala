@@ -1,11 +1,13 @@
 package aalto.smcl.images
 
-import java.awt.{
-  Color => JColor,
-  Graphics2D => JGraphics2D
-}
-import java.awt.image.{ BufferedImage => JBufferedImage }
+
+import java.awt.image.{BufferedImage => JBufferedImage}
+import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
+
 import aalto.smcl.images.operations._
+
+
+
 
 /**
  * Provides a way to add bitmap operations into [[OperableBitmap]] instances.
@@ -22,6 +24,7 @@ object BitmapOps {
   }
 
 }
+
 
 //  /**
 //   *

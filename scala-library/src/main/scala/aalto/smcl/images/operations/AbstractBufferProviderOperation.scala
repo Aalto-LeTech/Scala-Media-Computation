@@ -1,6 +1,10 @@
 package aalto.smcl.images.operations
 
-import java.awt.image.{ BufferedImage => JBufferedImage }
+
+import java.awt.image.{BufferedImage => JBufferedImage}
+
+
+
 
 /**
  * Ensures that the [[AbstractOperation]] classes providing a buffer for rendering images,

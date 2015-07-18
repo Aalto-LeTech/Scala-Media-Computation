@@ -1,7 +1,14 @@
 package aalto.smcl.images.operations
 
-import java.awt.image.{ BufferedImage => JBufferedImage }
+
+import java.awt.image.{BufferedImage => JBufferedImage}
+
 import scala.annotation.tailrec
+
+import aalto.smcl.images.immutable._
+
+
+
 
 /**
  * A companion object for [[BitmapOperationList]].
@@ -18,12 +25,15 @@ private[images] object BitmapOperationList {
 
 }
 
+
+
+
 /**
  * A list containing bitmap operations.
  *
  * @author Aleksi Lukkarinen
  */
-private[images] case class BitmapOperationList private (
+private[images] case class BitmapOperationList private(
     private val bufferProvider: AbstractBufferProviderOperation,
     private val operations: List[AbstractSingleSourceOperation]) extends Immutable {
 
@@ -34,15 +44,15 @@ private[images] case class BitmapOperationList private (
   val heightInPixels: Int = bufferProvider.heightInPixels
 
   /**
-   * Adds a new [[BitmapOperation]] to the beginning of this [[BitmapOperationList]].
+   * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
   private[images] def add(newOperation: AbstractSingleSourceOperation) =
     BitmapOperationList(bufferProvider, newOperation +: operations)
 
   /**
-   * Adds a new [[BitmapOperation]] to the beginning of this [[BitmapOperationList]].
+   * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
-  private[images] def +:(newOperation: AbstractSingleSourceOperation) = this.add(newOperation)
+  private[images] def +: (newOperation: AbstractSingleSourceOperation) = this.add(newOperation)
 
   /**
    *
@@ -63,11 +73,11 @@ private[images] case class BitmapOperationList private (
    */
   @tailrec
   private def renderOperations(
-    list: List[AbstractSingleSourceOperation],
-    buffer: JBufferedImage): JBufferedImage = {
+      list: List[AbstractSingleSourceOperation],
+      buffer: JBufferedImage): JBufferedImage = {
 
     list match {
-      case Nil => buffer
+      case Nil                => buffer
       case theRest :+ theLast =>
         theLast.render(buffer)
         renderOperations(theRest, buffer)

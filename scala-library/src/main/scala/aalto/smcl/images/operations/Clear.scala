@@ -1,12 +1,14 @@
 package aalto.smcl.images.operations
 
-import java.awt.{
-  Color => JColor,
-  Graphics2D => JGraphics2D
-}
-import java.awt.image.{ BufferedImage => JBufferedImage }
+
+import java.awt.image.{BufferedImage => JBufferedImage}
+import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
+
 import aalto.smcl.common._
-import aalto.smcl.images._
+import aalto.smcl.images.immutable._
+
+
+
 
 /**
  * Operation to clear a bitmap with a given color. If a color is not given, a pure white will be used.
@@ -19,7 +21,7 @@ private[images] case class Clear(private val colorOption: Option[Int] = None)
   /** The color with which to clear bitmaps. */
   private[this] val _color: Int = colorOption getOrElse 0xFFFFFFFF
 
-  /** This [[BitmapOperation]] does not have any child operations. */
+  /** This [[Bitmap]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this operation instance */

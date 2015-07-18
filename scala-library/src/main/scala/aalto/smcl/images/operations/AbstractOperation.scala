@@ -1,9 +1,12 @@
 package aalto.smcl.images.operations
 
-import java.awt.image.{ BufferedImage => JBufferedImage }
-import scala.collection.mutable.StringBuilder
+
+import java.awt.image.{BufferedImage => JBufferedImage}
+
 import aalto.smcl.common._
-import aalto.smcl.images._
+
+
+
 
 /**
  * Provides functionality to represent a single bitmap operation in the operation trees.

@@ -1,7 +1,11 @@
 package aalto
 
-import org.scalatest.{ FreeSpec, Matchers }
+
 import org.scalatest.prop.PropertyChecks
+import org.scalatest.{FreeSpec, Matchers}
+
+
+
 
 /**
  * Base class for unit tests.

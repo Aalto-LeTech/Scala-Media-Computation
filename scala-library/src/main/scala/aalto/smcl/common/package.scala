@@ -1,12 +1,13 @@
 package aalto.smcl
 
+
 /**
- * 
- * 
+ *
+ *
  * @author Aleksi Lukkarinen
  */
 package object common {
-  
+
   /** An empty string. */
   protected[smcl] val STR_EMPTY = ""
 

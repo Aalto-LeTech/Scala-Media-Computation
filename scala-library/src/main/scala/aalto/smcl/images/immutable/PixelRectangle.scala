@@ -1,5 +1,6 @@
 package aalto.smcl.images.immutable
 
+
 /**
  * A rectangle having its dimensions measured in pixels.
  *

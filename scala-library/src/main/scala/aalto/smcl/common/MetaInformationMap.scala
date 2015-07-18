@@ -1,5 +1,6 @@
 package aalto.smcl.common
 
+
 /**
  *
  *
@@ -21,7 +22,7 @@ private[smcl] object MetaInformationMap {
   def apply(contentProposal: Map[String, Option[String]]) = {
     var content = Map[String, Option[String]]()
 
-    contentProposal foreach { pair =>
+    contentProposal foreach {pair =>
       var key = pair._1
       require(key != null, MSG_KEY_CANNOT_BE_NULL)
 
@@ -40,12 +41,13 @@ private[smcl] object MetaInformationMap {
 
 }
 
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class MetaInformationMap private (private val content: Map[String, Option[String]])
+private[smcl] class MetaInformationMap private(private val content: Map[String, Option[String]])
     extends Immutable {
 
   /**

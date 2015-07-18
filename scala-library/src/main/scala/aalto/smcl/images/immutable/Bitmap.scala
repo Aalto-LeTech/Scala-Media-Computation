@@ -1,15 +1,17 @@
 package aalto.smcl.images.immutable
 
-import java.awt.{
-  Color => JColor,
-  Graphics2D => JGraphics2D
-}
-import java.awt.image.{ BufferedImage => JBufferedImage }
+
+import java.awt.image.{BufferedImage => JBufferedImage}
+import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
+
 import scala.ref.WeakReference
-import aalto.smcl._
+
 import aalto.smcl.common._
 import aalto.smcl.images._
 import aalto.smcl.images.operations._
+
+
+
 
 /**
  *
@@ -22,16 +24,16 @@ object Bitmap {
    * Creates a new empty [[Bitmap]] instance.
    */
   def apply(
-    widthInPixelsOption: Option[Int] = None,
-    heightInPixelsOption: Option[Int] = None,
-    initialBackgroundColorOption: Option[Int] = None): Bitmap = {
+      widthInPixelsOption: Option[Int] = None,
+      heightInPixelsOption: Option[Int] = None,
+      initialBackgroundColorOption: Option[Int] = None): Bitmap = {
 
-    val width = widthInPixelsOption.fold(DEFAULT_IMAGE_WIDTH_IN_PIXELS) { w =>
+    val width = widthInPixelsOption.fold(DEFAULT_IMAGE_WIDTH_IN_PIXELS) {w =>
       require(w > 0, s"Width of the image must be greater than zero (was $w)")
       w
     }
 
-    val height = heightInPixelsOption.fold(DEFAULT_IMAGE_HEIGHT_IN_PIXELS) { h =>
+    val height = heightInPixelsOption.fold(DEFAULT_IMAGE_HEIGHT_IN_PIXELS) {h =>
       require(h > 0, s"Height of the image must be greater than zero (was $h)")
       h
     }
@@ -55,12 +57,13 @@ object Bitmap {
 
 }
 
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-case class Bitmap private (private val operations: BitmapOperationList) extends {
+case class Bitmap private(private val operations: BitmapOperationList) extends {
 
   /** Width of this [[Bitmap]]. */
   val widthInPixels: Int = operations.widthInPixels
@@ -73,10 +76,10 @@ case class Bitmap private (private val operations: BitmapOperationList) extends 
     WeakReference[JBufferedImage](null)
 
 } with RenderableBitmap
-    with PixelRectangle
-    with OperableBitmap
-    with Immutable
-    with TimestampedCreation {
+       with PixelRectangle
+       with OperableBitmap
+       with Immutable
+       with TimestampedCreation {
 
   /**
    * Returns the initial background color of this [[Bitmap]]

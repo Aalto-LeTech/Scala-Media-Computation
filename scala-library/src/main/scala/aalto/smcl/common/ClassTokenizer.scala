@@ -1,6 +1,5 @@
 package aalto.smcl.common
 
-import aalto.smcl.common._
 
 /**
  * Creates formal-like textual tokens representing classes. A class to
@@ -12,9 +11,9 @@ import aalto.smcl.common._
  * {{{
  * /** Information about this [[CreateBitmap]] instance */
  * val metaInformation = Map(
- *   "name" -> "CreateBitmap",
- *   "width" -> "${widthInPixels} px",
- *   "height" -> "${heightInPixels} px" // etc.
+ * "name" -> "CreateBitmap",
+ * "width" -> "${widthInPixels} px",
+ * "height" -> "${heightInPixels} px" // etc.
  * )
  * }}}
  *
@@ -79,7 +78,7 @@ private[smcl] object ClassTokenizer {
     clazz.metaInformation.foreach {
       case (k: String, Some(v: String)) => s ++= ITEM_SEP ++= escape(k) ++= KEYVALUE_SEP ++= escape(v)
       case (k: String, None)            => s ++= ITEM_SEP ++= escape(k)
-      case pair                         => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: ${pair }")
+      case pair                         => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: ${pair}")
     }
 
   /**
@@ -95,7 +94,7 @@ private[smcl] object ClassTokenizer {
    */
   private def escape(part: String): String =
     StringUtils.escapeString(part)
-      .replaceAllLiterally(STR_COLON, STR_COLON_AS_UNICODE)
-      .replaceAllLiterally(STR_SEMICOLON, STR_SEMICOLON_AS_UNICODE)
+        .replaceAllLiterally(STR_COLON, STR_COLON_AS_UNICODE)
+        .replaceAllLiterally(STR_SEMICOLON, STR_SEMICOLON_AS_UNICODE)
 
 }

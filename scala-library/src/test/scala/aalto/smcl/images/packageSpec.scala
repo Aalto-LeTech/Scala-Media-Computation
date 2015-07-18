@@ -1,7 +1,5 @@
 package aalto.smcl.images
 
-import org.scalatest._
-import aalto.smcl.images._
 
 /**
  *
@@ -34,10 +32,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_RED" in {
-        intercept[IllegalArgumentException] { withNewRedComponent(TEST_PIXEL_INT, MIN_RED - 1) }
+        intercept[IllegalArgumentException] {withNewRedComponent(TEST_PIXEL_INT, MIN_RED - 1)}
       }
       "greater than MAX_RED" in {
-        intercept[IllegalArgumentException] { withNewRedComponent(TEST_PIXEL_INT, MAX_RED + 1) }
+        intercept[IllegalArgumentException] {withNewRedComponent(TEST_PIXEL_INT, MAX_RED + 1)}
       }
     }
   }
@@ -48,10 +46,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_GREEN" in {
-        intercept[IllegalArgumentException] { withNewGreenComponent(TEST_PIXEL_INT, MIN_GREEN - 1) }
+        intercept[IllegalArgumentException] {withNewGreenComponent(TEST_PIXEL_INT, MIN_GREEN - 1)}
       }
       "greater than MAX_GREEN" in {
-        intercept[IllegalArgumentException] { withNewGreenComponent(TEST_PIXEL_INT, MAX_GREEN + 1) }
+        intercept[IllegalArgumentException] {withNewGreenComponent(TEST_PIXEL_INT, MAX_GREEN + 1)}
       }
     }
   }
@@ -62,10 +60,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_BLUE" in {
-        intercept[IllegalArgumentException] { withNewBlueComponent(TEST_PIXEL_INT, MIN_BLUE - 1) }
+        intercept[IllegalArgumentException] {withNewBlueComponent(TEST_PIXEL_INT, MIN_BLUE - 1)}
       }
       "greater than MAX_BLUE" in {
-        intercept[IllegalArgumentException] { withNewBlueComponent(TEST_PIXEL_INT, MAX_BLUE + 1) }
+        intercept[IllegalArgumentException] {withNewBlueComponent(TEST_PIXEL_INT, MAX_BLUE + 1)}
       }
     }
   }
@@ -76,10 +74,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_OPAQUENESS" in {
-        intercept[IllegalArgumentException] { withNewTransparencyComponent(TEST_PIXEL_INT, MIN_OPAQUENESS - 1) }
+        intercept[IllegalArgumentException] {withNewTransparencyComponent(TEST_PIXEL_INT, MIN_OPAQUENESS - 1)}
       }
       "greater than MAX_OPAQUENESS" in {
-        intercept[IllegalArgumentException] { withNewTransparencyComponent(TEST_PIXEL_INT, MAX_OPAQUENESS + 1) }
+        intercept[IllegalArgumentException] {withNewTransparencyComponent(TEST_PIXEL_INT, MAX_OPAQUENESS + 1)}
       }
     }
   }
@@ -87,11 +85,11 @@ class packageSpec extends ImageSpecBase {
   "colorComponentsFrom() must" - {
     "return a map with the right color components of an Int representing a pixel value" in {
       assert(colorComponentsFrom(TEST_PIXEL_INT) ===
-        Map[Symbol, Int](
-          'red -> TEST_RED_VALUE,
-          'green -> TEST_GREEN_VALUE,
-          'blue -> TEST_BLUE_VALUE,
-          'transparency -> TEST_TRANSPARENCY_VALUE))
+          Map[Symbol, Int](
+            'red -> TEST_RED_VALUE,
+            'green -> TEST_GREEN_VALUE,
+            'blue -> TEST_BLUE_VALUE,
+            'transparency -> TEST_TRANSPARENCY_VALUE))
     }
   }
 
@@ -151,11 +149,11 @@ class packageSpec extends ImageSpecBase {
   "implicit class PixelInt must return the correct" - {
     "color component map by invoking colorComponentInts()" in {
       assert(TEST_PIXEL_INT.colorComponentInts ===
-        Map[Symbol, Int](
-          'red -> TEST_RED_VALUE,
-          'green -> TEST_GREEN_VALUE,
-          'blue -> TEST_BLUE_VALUE,
-          'transparency -> TEST_TRANSPARENCY_VALUE))
+          Map[Symbol, Int](
+            'red -> TEST_RED_VALUE,
+            'green -> TEST_GREEN_VALUE,
+            'blue -> TEST_BLUE_VALUE,
+            'transparency -> TEST_TRANSPARENCY_VALUE))
     }
     "red component by invoking redComponentInt()" in {
       assert(TEST_PIXEL_INT.redComponentInt === TEST_RED_VALUE)

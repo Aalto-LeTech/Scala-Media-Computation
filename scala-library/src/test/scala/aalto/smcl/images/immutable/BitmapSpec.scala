@@ -1,9 +1,12 @@
 package aalto.smcl.images.immutable
 
-import java.awt.{ Graphics2D => JGraphics2D }
-import org.scalatest._
-import org.scalatest.prop.TableDrivenPropertyChecks._
+
+import java.awt.{Graphics2D => JGraphics2D}
+
 import aalto.smcl.images._
+
+
+
 
 /**
  *
@@ -12,7 +15,7 @@ import aalto.smcl.images._
  */
 class BitmapSpec extends ImageSpecBase {
 
-  val EXPECTED_DEFAULT_WIDTH_IN_PIXELS = 10
+  val EXPECTED_DEFAULT_WIDTH_IN_PIXELS  = 10
   val EXPECTED_DEFAULT_HEIGHT_IN_PIXELS = 10
 
   "Class BitmapImage" - {
@@ -26,10 +29,10 @@ class BitmapSpec extends ImageSpecBase {
     }
 
     "must throw an IllegalArgumentException when tried to instantiate with" - {
-      "zero width" in { intercept[IllegalArgumentException] { Bitmap(widthInPixelsOption = Option(0)) } }
-      "zero height" in { intercept[IllegalArgumentException] { Bitmap(heightInPixelsOption = Option(0)) } }
-      "negative width" in { intercept[IllegalArgumentException] { Bitmap(widthInPixelsOption = Option(-1)) } }
-      "negative height" in { intercept[IllegalArgumentException] { Bitmap(heightInPixelsOption = Option(-1)) } }
+      "zero width" in {intercept[IllegalArgumentException] {Bitmap(widthInPixelsOption = Option(0))}}
+      "zero height" in {intercept[IllegalArgumentException] {Bitmap(heightInPixelsOption = Option(0))}}
+      "negative width" in {intercept[IllegalArgumentException] {Bitmap(widthInPixelsOption = Option(-1))}}
+      "negative height" in {intercept[IllegalArgumentException] {Bitmap(heightInPixelsOption = Option(-1))}}
     }
 
     "when constructed without arguments, must be" - {
@@ -47,24 +50,24 @@ class BitmapSpec extends ImageSpecBase {
     val TEST_HEIGHT_IN_PIXELS = 45
 
     s"when constructed with an arbitrary size of " +
-      s"$TEST_WIDTH_IN_PIXELS x $TEST_HEIGHT_IN_PIXELS pixels, must" - {
+        s"$TEST_WIDTH_IN_PIXELS x $TEST_HEIGHT_IN_PIXELS pixels, must" - {
 
-        val (width, height) = (TEST_WIDTH_IN_PIXELS, TEST_HEIGHT_IN_PIXELS)
-        val numOfPixels = width * height
-        val b = Bitmap(Option(width), Option(height))
+      val (width, height) = (TEST_WIDTH_IN_PIXELS, TEST_HEIGHT_IN_PIXELS)
+      val numOfPixels = width * height
+      val b = Bitmap(Option(width), Option(height))
 
-        //        s"be ${width} pixels by width" in { assert(b.buffer.getWidth === width) }
-        //        s"be ${height} pixels by height" in { assert(b.buffer.getHeight === height) }
-        "have a widthRange" - {
-          "starting from 0" in { assert(b.widthRange.start === 0) }
-          s"ending to ${width - 1}" in { assert(b.widthRange.end === (width - 1)) }
-        }
-        "have a heightRange" - {
-          "starting from 0" in { assert(b.heightRange.start === 0) }
-          s"ending to ${height - 1}" in { assert(b.heightRange.end === (height - 1)) }
-        }
-        s"have $numOfPixels pixels in total" in { assert(b.pixelCount === numOfPixels) }
+      //        s"be ${width} pixels by width" in { assert(b.buffer.getWidth === width) }
+      //        s"be ${height} pixels by height" in { assert(b.buffer.getHeight === height) }
+      "have a widthRange" - {
+        "starting from 0" in {assert(b.widthRange.start === 0)}
+        s"ending to ${width - 1}" in {assert(b.widthRange.end === (width - 1))}
       }
+      "have a heightRange" - {
+        "starting from 0" in {assert(b.heightRange.start === 0)}
+        s"ending to ${height - 1}" in {assert(b.heightRange.end === (height - 1))}
+      }
+      s"have $numOfPixels pixels in total" in {assert(b.pixelCount === numOfPixels)}
+    }
 
     "must get timestamped and be able to tell the time of creation" in {
       val b = Bitmap()
