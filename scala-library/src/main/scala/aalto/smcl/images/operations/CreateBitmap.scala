@@ -26,6 +26,6 @@ private[images] case class CreateBitmap(widthInPixels: Int, heightInPixels: Int)
   /**
    * Returns a new bitmap buffer of a size given to this [[BitmapOperation]] instance.
    */
-  def buffer(): JBufferedImage =
+  def buffer: JBufferedImage =
     new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
 }

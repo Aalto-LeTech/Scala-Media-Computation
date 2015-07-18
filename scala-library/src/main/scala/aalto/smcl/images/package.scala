@@ -210,7 +210,7 @@ package object images {
      * res0: String = 89abcdef
      * }}}
      */
-    def toArgbHexColorString: String = f"${self}%08x"
+    def toArgbHexColorString: String = f"$self%08x"
 
     /**
      * Displays this `Int` as a zero-padded binary form divided to bytes by spaces.
@@ -220,12 +220,9 @@ package object images {
      * res0: String = 10001001 10101011 11001101 11101111
      * }}}
      */
-    def toArgbBinaryColorString: String = {
-      val withoutGroups = f"${self.toBinaryString}%32s".replace(STR_SPACE, STR_ZERO)
-      val grouped = withoutGroups.sliding(ONE_BYTE, ONE_BYTE).mkString(STR_SPACE)
-
-      return grouped
-    }
+    def toArgbBinaryColorString: String =
+      f"${self.toBinaryString}%32s".replace(STR_SPACE, STR_ZERO)
+        .sliding(ONE_BYTE, ONE_BYTE).mkString(STR_SPACE)
 
   }
 

@@ -1,3 +1,4 @@
+*.dic           text
 *.gitattributes eol=lf
 *.gitignore     eol=lf
 *.java          eol=lf

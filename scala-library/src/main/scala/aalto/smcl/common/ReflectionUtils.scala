@@ -12,7 +12,7 @@ private[smcl] object ReflectionUtils {
   /**
    * Retrieves the `Symbol` object for the type of the object referenced by a given variable.
    *
-   * @param variable
+   * @param variable    reference to the object which the `Symbol` is to be retrieved for
    */
   def symbolOf[T](variable: T)(implicit tt: TypeTag[T]): Symbol = typeOf(tt).typeSymbol
 

@@ -17,10 +17,10 @@ class BitmapSpec extends ImageSpecBase {
 
   "Class BitmapImage" - {
     "must have a default" - {
-      s"width defined as ${EXPECTED_DEFAULT_WIDTH_IN_PIXELS} pixels" in {
+      s"width defined as $EXPECTED_DEFAULT_WIDTH_IN_PIXELS pixels" in {
         assert(DEFAULT_IMAGE_WIDTH_IN_PIXELS === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
       }
-      s"height defined as ${EXPECTED_DEFAULT_HEIGHT_IN_PIXELS} pixels" in {
+      s"height defined as $EXPECTED_DEFAULT_HEIGHT_IN_PIXELS pixels" in {
         assert(DEFAULT_IMAGE_HEIGHT_IN_PIXELS === EXPECTED_DEFAULT_HEIGHT_IN_PIXELS)
       }
     }
@@ -35,10 +35,10 @@ class BitmapSpec extends ImageSpecBase {
     "when constructed without arguments, must be" - {
       val b = Bitmap()
 
-      s"${EXPECTED_DEFAULT_WIDTH_IN_PIXELS} pixels in width" in {
+      s"$EXPECTED_DEFAULT_WIDTH_IN_PIXELS pixels in width" in {
         assert(b.widthInPixels === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
       }
-      s"${EXPECTED_DEFAULT_HEIGHT_IN_PIXELS} pixels in height" in {
+      s"$EXPECTED_DEFAULT_HEIGHT_IN_PIXELS pixels in height" in {
         assert(b.heightInPixels === EXPECTED_DEFAULT_HEIGHT_IN_PIXELS)
       }
     }
@@ -47,7 +47,7 @@ class BitmapSpec extends ImageSpecBase {
     val TEST_HEIGHT_IN_PIXELS = 45
 
     s"when constructed with an arbitrary size of " +
-      s"${TEST_WIDTH_IN_PIXELS} x ${TEST_HEIGHT_IN_PIXELS} pixels, must" - {
+      s"$TEST_WIDTH_IN_PIXELS x $TEST_HEIGHT_IN_PIXELS pixels, must" - {
 
         val (width, height) = (TEST_WIDTH_IN_PIXELS, TEST_HEIGHT_IN_PIXELS)
         val numOfPixels = width * height
@@ -63,13 +63,13 @@ class BitmapSpec extends ImageSpecBase {
           "starting from 0" in { assert(b.heightRange.start === 0) }
           s"ending to ${height - 1}" in { assert(b.heightRange.end === (height - 1)) }
         }
-        s"have ${numOfPixels} pixels in total" in { assert(b.pixelCount === numOfPixels) }
+        s"have $numOfPixels pixels in total" in { assert(b.pixelCount === numOfPixels) }
       }
 
     "must get timestamped and be able to tell the time of creation" in {
       val b = Bitmap()
       assert(b.created.isInstanceOf[java.util.Date])
-      info(s"Timestamp: ${b.created.toString()}")
+      info(s"Timestamp: ${b.created.toString}")
     }
 
     //    "must be able to tell its" - {

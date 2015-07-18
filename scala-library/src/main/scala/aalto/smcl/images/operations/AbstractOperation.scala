@@ -25,6 +25,6 @@ private[images] abstract class AbstractOperation
   /**
    * Returns this operation as a formal string, which could be used to assess exercises.
    */
-  def toToken(): String = _tokenizedRepresentation
+  def toToken: String = _tokenizedRepresentation
 
 }

@@ -82,7 +82,7 @@ case class Bitmap private (private val operations: BitmapOperationList) extends 
    * Returns the initial background color of this [[Bitmap]]
    * (may not be the actual background color at a later time).
    */
-  val initialBackgroundColor: Int = operations.initialBackgroundColor
+  val initialBackgroundColor: Int = operations.initialBackgroundColor()
 
   /**
    * Applies a [[BitmapOperation]] to this [[Bitmap]].
@@ -94,14 +94,14 @@ case class Bitmap private (private val operations: BitmapOperationList) extends 
    * Renders this [[Bitmap]] onto a drawing surface.
    */
   def render(drawingSurface: JGraphics2D, x: Int, y: Int): Unit = {
-    toRenderedRepresentation()
-    drawingSurface.drawImage(_renderingBuffer.apply, null, x, y)
+    toRenderedRepresentation
+    drawingSurface.drawImage(_renderingBuffer.apply(), null, x, y)
   }
 
   /**
    * Returns a `BufferedImage` instance representing this [[Bitmap]].
    */
-  def toRenderedRepresentation(): JBufferedImage =
+  def toRenderedRepresentation: JBufferedImage =
     _renderingBuffer.get getOrElse {
       val renderation = operations.render()
 

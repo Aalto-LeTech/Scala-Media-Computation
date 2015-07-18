@@ -25,7 +25,7 @@ class ViewFrame extends MainFrame {
   reactions += {
     case WindowClosing(_) =>
       visible = false
-      dispose
+      dispose()
   }
 
 }

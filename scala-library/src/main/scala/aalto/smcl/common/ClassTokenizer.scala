@@ -49,7 +49,7 @@ private[smcl] object ClassTokenizer {
    * @param s       the `StringBuilder` instance to be used
    */
   private def tokenize0(clazz: Tokenizable, s: StringBuilder): String = {
-    s.clear
+    s.clear()
 
     appendPrologOfTo(clazz, s)
     appendKvPairsOfTo(clazz, s)
@@ -76,12 +76,10 @@ private[smcl] object ClassTokenizer {
    * @param s       the `StringBuilder` instance to be used
    */
   private def appendKvPairsOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
-    clazz.metaInformation.foreach { pair =>
-      pair match {
-        case (k: String, Some(v: String)) => s ++= ITEM_SEP ++= escape(k) ++= KEYVALUE_SEP ++= escape(v)
-        case (k: String, None)            => s ++= ITEM_SEP ++= escape(k)
-        case _                            => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: ${pair}")
-      }
+    clazz.metaInformation.foreach {
+      case (k: String, Some(v: String)) => s ++= ITEM_SEP ++= escape(k) ++= KEYVALUE_SEP ++= escape(v)
+      case (k: String, None)            => s ++= ITEM_SEP ++= escape(k)
+      case pair                         => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: ${pair }")
     }
 
   /**

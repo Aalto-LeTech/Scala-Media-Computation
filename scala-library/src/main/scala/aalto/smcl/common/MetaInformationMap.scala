@@ -56,7 +56,7 @@ private[smcl] class MetaInformationMap private (private val content: Map[String,
   /**
    *
    */
-  def keyValuePairs: Seq[Tuple2[String, Option[String]]] = content.toSeq
+  def keyValuePairs: Seq[(String, Option[String])] = content.toSeq
 
   /**
    *
@@ -66,6 +66,6 @@ private[smcl] class MetaInformationMap private (private val content: Map[String,
   /**
    *
    */
-  def foreach[T](f: ((String, Option[String])) => T) = content.foreach(f)
+  def foreach[T](f: ((String, Option[String])) => T): Unit = content.foreach(f)
 
 }

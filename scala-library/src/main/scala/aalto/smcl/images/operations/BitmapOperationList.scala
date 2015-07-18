@@ -68,10 +68,9 @@ private[images] case class BitmapOperationList private (
 
     list match {
       case Nil => buffer
-      case theRest :+ theLast => {
-        theLast render buffer
+      case theRest :+ theLast =>
+        theLast.render(buffer)
         renderOperations(theRest, buffer)
-      }
     }
   }
 
