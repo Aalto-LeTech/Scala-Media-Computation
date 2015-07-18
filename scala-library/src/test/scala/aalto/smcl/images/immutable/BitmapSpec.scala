@@ -60,11 +60,13 @@ class BitmapSpec extends ImageSpecBase {
       //        s"be ${height} pixels by height" in { assert(b.buffer.getHeight === height) }
       "have a widthRange" - {
         "starting from 0" in {assert(b.widthRange.start === 0)}
-        s"ending to ${width - 1}" in {assert(b.widthRange.end === (width - 1))}
+        s"ending to $width" in {assert(b.widthRange.end === width)}
+        s"and not being inclusive (effectively $width - 1)" in {assert(!b.widthRange.isInclusive)}
       }
       "have a heightRange" - {
         "starting from 0" in {assert(b.heightRange.start === 0)}
-        s"ending to ${height - 1}" in {assert(b.heightRange.end === (height - 1))}
+        s"ending to $height" in {assert(b.heightRange.end === height)}
+        s"and not being inclusive (effectively $height - 1)" in {assert(!b.heightRange.isInclusive)}
       }
       s"have $numOfPixels pixels in total" in {assert(b.pixelCount === numOfPixels)}
     }

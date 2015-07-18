@@ -14,11 +14,11 @@ private[images] trait PixelRectangle {
   /** Height of this rectangle in pixels. */
   def heightInPixels: Int
 
-  /** The range of numbers from zero to the width of this rectangle. */
-  lazy val widthRange: Range.Inclusive = 0 to (widthInPixels - 1)
+  /** The range of numbers from zero until the width of this rectangle. */
+  lazy val widthRange: Range = 0 until widthInPixels
 
-  /** The range of numbers from zero to the height of this rectangle. */
-  lazy val heightRange: Range.Inclusive = 0 to (heightInPixels - 1)
+  /** The range of numbers from zero until the height of this rectangle. */
+  lazy val heightRange: Range = 0 until heightInPixels
 
   /** Total number of pixels occupied by the area of this rectangle. */
   lazy val pixelCount: Int = widthInPixels * heightInPixels
