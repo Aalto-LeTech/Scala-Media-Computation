@@ -90,7 +90,7 @@ private[smcl] object ClassTokenizer {
   private def appendEpilogTo(s: StringBuilder): Unit = s ++= STR_RIGHT_ANGLE_BRACKET
 
   /**
-   * Returns an escaped string for tokenization with the `tokenize()` method. The charaters to be
+   * Returns an escaped string for tokenization with the `tokenize()` method. The characters to be
    * escaped are the Scala's standard ones plus both colons and semicolons.
    */
   private def escape(part: String): String =

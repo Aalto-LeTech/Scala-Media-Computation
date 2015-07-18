@@ -103,11 +103,11 @@ case class Bitmap private (private val operations: BitmapOperationList) extends 
    */
   def toRenderedRepresentation: JBufferedImage =
     _renderingBuffer.get getOrElse {
-      val renderation = operations.render()
+      val rendition = operations.render()
 
-      _renderingBuffer = WeakReference[JBufferedImage](renderation)
+      _renderingBuffer = WeakReference[JBufferedImage](rendition)
 
-      return renderation
+      return rendition
     }
 
 }
