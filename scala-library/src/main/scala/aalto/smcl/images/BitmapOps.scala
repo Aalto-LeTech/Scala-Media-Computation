@@ -4,6 +4,7 @@ package aalto.smcl.images
 import java.awt.image.{BufferedImage => JBufferedImage}
 import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
 
+import aalto.smcl.images.immutable.Color
 import aalto.smcl.images.operations._
 
 
@@ -19,7 +20,7 @@ object BitmapOps {
   /**
    * Adds a [[Clear]] operation to a given [[OperableBitmap]].
    */
-  def clear(bmp: OperableBitmap, colorOption: Option[Int] = None): Unit = {
+  def clear(bmp: OperableBitmap, colorOption: Option[Color] = None): Unit = {
     bmp.apply(Clear(colorOption))
   }
 

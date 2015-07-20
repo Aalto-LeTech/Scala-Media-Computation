@@ -57,10 +57,10 @@ private[images] case class BitmapOperationList private(
   /**
    *
    */
-  def initialBackgroundColor(): Int =
+  def initialBackgroundColor(): Color =
     operations.last match {
-      case Clear(color) => color getOrElse NamedColors.white.asPixelInt
-      case _            => NamedColors.white.asPixelInt
+      case Clear(color) => color getOrElse NamedColors.white
+      case _            => NamedColors.white
     }
 
   /**

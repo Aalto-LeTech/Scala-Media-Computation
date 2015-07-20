@@ -2,7 +2,6 @@ package aalto.smcl.images.operations
 
 
 import java.awt.image.{BufferedImage => JBufferedImage}
-import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
 
 import aalto.smcl.common._
 import aalto.smcl.images.immutable._
@@ -15,18 +14,18 @@ import aalto.smcl.images.immutable._
  *
  * @author Aleksi Lukkarinen
  */
-private[images] case class Clear(private val colorOption: Option[Int] = None)
+private[images] case class Clear(private val colorOption: Option[Color] = None)
     extends AbstractSingleSourceOperation with Immutable {
 
   /** The color with which to clear bitmaps. */
-  private[this] val _color: Int = colorOption getOrElse NamedColors.white.asPixelInt
+  private[this] val _color: Color = colorOption getOrElse NamedColors.white
 
   /** This [[Bitmap]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this operation instance */
   val metaInformation = MetaInformationMap(Map(
-    "background-color" -> Option("0x${_color.toArgbHexColorString}")))
+    "background-color" -> Option("0x${_color.asPixelInt.toArgbHexColorString}")))
 
   /**
    * Clears the given bitmap with the given color.
@@ -35,7 +34,7 @@ private[images] case class Clear(private val colorOption: Option[Int] = None)
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    drawingSurface.setColor(new JColor(_color, true))
+    drawingSurface.setColor(_color.toOpaqueAwtColor)
     drawingSurface.fillRect(0, 0, destination.getWidth, destination.getHeight)
     drawingSurface.setColor(oldColor)
   }

@@ -26,7 +26,7 @@ object Bitmap {
   def apply(
       widthInPixelsOption: Option[Int] = None,
       heightInPixelsOption: Option[Int] = None,
-      initialBackgroundColorOption: Option[Int] = None): Bitmap = {
+      initialBackgroundColorOption: Option[Color] = None): Bitmap = {
 
     val width = widthInPixelsOption.fold(DEFAULT_IMAGE_WIDTH_IN_PIXELS) {w =>
       require(w > 0, s"Width of the image must be greater than zero (was $w)")
@@ -38,7 +38,7 @@ object Bitmap {
       h
     }
 
-    val bgColor = initialBackgroundColorOption getOrElse NamedColors.white.asPixelInt
+    val bgColor = initialBackgroundColorOption getOrElse NamedColors.white
     val operationList = Clear(Option(bgColor)) +: BitmapOperationList(CreateBitmap(width, height))
 
     new Bitmap(operationList)
@@ -85,7 +85,7 @@ case class Bitmap private(private val operations: BitmapOperationList) extends {
    * Returns the initial background color of this [[Bitmap]]
    * (may not be the actual background color at a later time).
    */
-  val initialBackgroundColor: Int = operations.initialBackgroundColor()
+  val initialBackgroundColor: Color = operations.initialBackgroundColor()
 
   /**
    * Applies a [[BitmapOperation]] to this [[Bitmap]].
