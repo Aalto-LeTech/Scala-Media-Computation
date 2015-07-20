@@ -2,7 +2,7 @@ package aalto.smcl
 
 
 import aalto.smcl.common._
-import aalto.smcl.images.immutable._
+import aalto.smcl.images.immutable.Bitmap
 
 
 
@@ -183,7 +183,7 @@ package object images {
      * res0: Map[Symbol,Int] = Map('red -> 171, 'green -> 205, 'blue -> 239, 'transparency -> 137) // 0x89 = 137 etc.
      * }}}
      */
-    def colorComponentInts: collection.immutable.Map[Symbol, Int] = colorComponentsFrom(self)
+    def colorComponentMap: Map[Symbol, Int] = colorComponentsFrom(self)
 
     /**
      * Returns the red color component of this ARGB-style `Int`.
@@ -224,7 +224,8 @@ package object images {
      * }}}
      */
     def toArgbBinaryColorString: String =
-      self.toBinaryString.format("$s%32s").replace(STR_SPACE, STR_ZERO).sliding(ONE_BYTE, ONE_BYTE).mkString(STR_SPACE)
+      self.toBinaryString.format("$s%32s").replace(STR_SPACE, STR_ZERO)
+          .sliding(ONE_BYTE, ONE_BYTE).mkString(STR_SPACE)
 
   }
 

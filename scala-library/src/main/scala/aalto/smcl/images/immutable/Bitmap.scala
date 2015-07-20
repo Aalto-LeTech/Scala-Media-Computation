@@ -38,7 +38,7 @@ object Bitmap {
       h
     }
 
-    val bgColor = initialBackgroundColorOption getOrElse 0xFFFFFFFF
+    val bgColor = initialBackgroundColorOption getOrElse NamedColors.white.asPixelInt
     val operationList = Clear(Option(bgColor)) +: BitmapOperationList(CreateBitmap(width, height))
 
     new Bitmap(operationList)

@@ -148,7 +148,7 @@ class packageSpec extends ImageSpecBase {
 
   "implicit class PixelInt must return the correct" - {
     "color component map by invoking colorComponentInts()" in {
-      assert(TEST_PIXEL_INT.colorComponentInts ===
+      assert(TEST_PIXEL_INT.colorComponentMap ===
           Map[Symbol, Int](
             'red -> TEST_RED_VALUE,
             'green -> TEST_GREEN_VALUE,

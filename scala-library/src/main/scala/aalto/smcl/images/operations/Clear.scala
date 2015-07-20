@@ -19,7 +19,7 @@ private[images] case class Clear(private val colorOption: Option[Int] = None)
     extends AbstractSingleSourceOperation with Immutable {
 
   /** The color with which to clear bitmaps. */
-  private[this] val _color: Int = colorOption getOrElse 0xFFFFFFFF
+  private[this] val _color: Int = colorOption getOrElse NamedColors.white.asPixelInt
 
   /** This [[Bitmap]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
