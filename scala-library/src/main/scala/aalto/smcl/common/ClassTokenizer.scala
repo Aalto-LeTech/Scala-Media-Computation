@@ -78,7 +78,7 @@ private[smcl] object ClassTokenizer {
     clazz.metaInformation.foreach {
       case (k: String, Some(v: String)) => s ++= ITEM_SEP ++= escape(k) ++= KEYVALUE_SEP ++= escape(v)
       case (k: String, None)            => s ++= ITEM_SEP ++= escape(k)
-      case pair                         => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: ${pair}")
+      case pair                         => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: $pair")
     }
 
   /**
