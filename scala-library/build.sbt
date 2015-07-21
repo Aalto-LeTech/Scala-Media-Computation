@@ -10,7 +10,7 @@ crossScalaVersions := Seq("2.10.5")
 //
 // D E P E N D E N C I ES
 //
-// RxXcala                      http://search.maven.org/#search|ga|1|rxscala
+// RxScala                      http://search.maven.org/#search|ga|1|rxscala
 // ScalaCheck                   http://search.maven.org/#search|ga|1|scalacheck
 // scala-reflect                http://search.maven.org/#search|ga|1|scala-reflect
 // scala-swing                  http://search.maven.org/#search|ga|1|scala-swing
