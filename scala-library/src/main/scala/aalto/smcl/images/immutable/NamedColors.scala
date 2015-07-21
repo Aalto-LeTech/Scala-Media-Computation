@@ -11,7 +11,10 @@ import scala.collection.immutable.HashMap
  *
  * @author Aleksi Lukkarinen
  */
-object NamedColors extends HashMap[String, Color] {
+object NamedColors extends Map[String, Color] {
+
+  /** */
+  private[this] var _colorMap: Map[String, Color] = new HashMap[String, Color]()
 
   /** */
   val aliceBlue = Color(0xfff0f8ff, Option("alice blue"))
@@ -435,5 +438,56 @@ object NamedColors extends HashMap[String, Color] {
 
   /** */
   val yellowGreen = Color(0xff9acd32, Option("yellow green"))
+
+  /**
+   *
+   *
+   * @param kv
+   * @tparam T
+   * @return
+   */
+  override def +[T >: Color] (kv: (String, T)): Map[String, T] = {
+    var keyCandidate = kv._1
+
+    require(keyCandidate != null, "Color map key must not be null.")
+
+    keyCandidate = keyCandidate.trim
+
+    require(keyCandidate.length > 0,
+      "Color map key must not be an empty string or contain only white space.")
+
+    require(!_colorMap.contains(keyCandidate),
+      s"Key of color map must be unique, but this key ($keyCandidate) was already inserted.")
+
+    val valueCandidate = kv._2.asInstanceOf[Color]
+
+    require(valueCandidate != null, "Value of color map must not be null.")
+
+    _colorMap = _colorMap + (keyCandidate -> valueCandidate)
+    _colorMap
+  }
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  override def get(key: String): Option[Color] = _colorMap.get(key)
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def iterator: Iterator[(String, Color)] = _colorMap.iterator
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  override def - (key: String): Map[String, Color] = _colorMap.-(key)
 
 }
