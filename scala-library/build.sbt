@@ -37,8 +37,10 @@ libraryDependencies ++= (scalaBinaryVersion.value match {
   )
 })
 
-scalacOptions in (Compile) ++= Seq(
-  "-deprecation"
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-feature",
+  "-unchecked"
 )
 
 scalacOptions in (Compile, doc) ++= Seq(
