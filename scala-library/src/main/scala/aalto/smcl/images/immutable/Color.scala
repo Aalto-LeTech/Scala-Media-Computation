@@ -26,8 +26,8 @@ object Color {
    * @param nameOption
    * @return
    */
-  def apply(red: Int, green: Int, blue: Int, transparency: Int,
-      nameOption: Option[String] = None): Color = {
+  private[immutable] def validateColorArguments(red: Int, green: Int, blue: Int,
+      transparency: Int, nameOption: Option[String] = None): Tuple5[Int, Int, Int, Int, Option[String]] = {
 
     require(BYTE_RANGE.contains(red),
       s"The 'red' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $red)")
@@ -53,11 +53,26 @@ object Color {
         resultNameOption = Option(name)
     }
 
-    var newColor = new Color(red, green, blue, transparency, resultNameOption)
+    (red, green, blue, transparency, resultNameOption)
+  }
 
-    NamedColors + (resultNameOption.get -> newColor)
 
-    newColor
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @param transparency
+   * @param nameOption
+   * @return
+   */
+  def apply(red: Int, green: Int, blue: Int, transparency: Int,
+      nameOption: Option[String] = None): Color = {
+
+    val args = validateColorArguments(red, green, blue, transparency, nameOption)
+
+    new Color(args._1, args._2, args._3, args._4, args._5)
   }
 
 
@@ -149,12 +164,17 @@ object Color {
  *
  * @author Aleksi Lukkarinen
  */
-class Color private(
+class Color protected(
     val red: Int,
     val green: Int,
     val blue: Int,
     val transparency: Int,
-    val nameOption: Option[String] = None) extends Immutable {
+    val nameOption: Option[String] = None) extends {
+
+  /** Returns `true` if this [[Color]] is provided by SMCL, otherwise `false`. */
+  val isPreset: Boolean = false
+
+} with Immutable {
 
   /** This [[Color]] coded into an `Int`. */
   val asPixelInt: Int = pixelIntFrom(red, green, blue, transparency)
@@ -164,6 +184,9 @@ class Color private(
 
   /** Returns `false` if this [[Color]] is fully opaque, otherwise `true`. */
   val isTransparent: Boolean = !isOpaque
+
+  /** Returns `true` if this [[Color]] is created by the user, otherwise `false`. */
+  val isUserCreated: Boolean = !isPreset
 
   /** This [[Color]] represented as a 32-digit binary string of four 8-digit groups. */
   lazy val asBinaryString: String = asPixelInt.toArgbBinaryColorString
