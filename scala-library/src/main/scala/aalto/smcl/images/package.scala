@@ -14,6 +14,9 @@ import aalto.smcl.images.immutable.Bitmap
  */
 package object images {
 
+  /** */
+  private[this] val _viewerClient = new ViewerClient()
+
   /** Number of bits in one byte. */
   private[images] val ONE_BYTE = 8
 
@@ -73,6 +76,13 @@ package object images {
 
   /** Default height of [[Bitmap]] instances created without giving height. */
   val DEFAULT_IMAGE_HEIGHT_IN_PIXELS: Int = 10
+
+  /**
+   *
+   *
+   * @param sourceBitmap
+   */
+  def display(sourceBitmap: Bitmap): Unit = _viewerClient.display(sourceBitmap)
 
   /**
    *

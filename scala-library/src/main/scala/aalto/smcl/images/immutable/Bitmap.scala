@@ -3,12 +3,13 @@ package aalto.smcl.images.immutable
 
 import java.awt.image.{BufferedImage => JBufferedImage}
 import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
+import java.util.UUID
 
 import scala.ref.WeakReference
 
 import aalto.smcl.common._
-import aalto.smcl.images._
 import aalto.smcl.images.operations._
+import aalto.smcl.images.{display => displayInViewer, _}
 
 
 
@@ -41,7 +42,7 @@ object Bitmap {
     val bgColor = initialBackgroundColorOption getOrElse NamedColors.white
     val operationList = Clear(Option(bgColor)) +: BitmapOperationList(CreateBitmap(width, height))
 
-    new Bitmap(operationList)
+    new Bitmap(operationList, UUID.randomUUID())
   }
 
   /**
@@ -63,7 +64,7 @@ object Bitmap {
  *
  * @author Aleksi Lukkarinen
  */
-case class Bitmap private(private val operations: BitmapOperationList) extends {
+case class Bitmap private(private val operations: BitmapOperationList, id: UUID) extends {
 
   /** Width of this [[Bitmap]]. */
   val widthInPixels: Int = operations.widthInPixels
@@ -88,10 +89,23 @@ case class Bitmap private(private val operations: BitmapOperationList) extends {
   val initialBackgroundColor: Color = operations.initialBackgroundColor()
 
   /**
-   * Applies a [[BitmapOperation]] to this [[Bitmap]].
+   * Applies an [[AbstractSingleSourceOperation]] to this [[Bitmap]].
    */
-  def apply(newOperation: AbstractSingleSourceOperation): Bitmap =
-    copy(operations = newOperation +: operations)
+  def apply(newOperation: AbstractSingleSourceOperation): Bitmap = {
+    require(newOperation != null, "Operation argument cannot be null.")
+
+    copy(operations = newOperation +: operations).display()
+  }
+
+  /**
+   *
+   * @param colorOption
+   */
+  def clear(colorOption: Option[Color]): Bitmap = {
+    require(colorOption != null, "Color argument cannot be null.")
+
+    apply(Clear(colorOption))
+  }
 
   /**
    * Renders this [[Bitmap]] onto a drawing surface.
@@ -112,5 +126,14 @@ case class Bitmap private(private val operations: BitmapOperationList) extends {
 
       return rendition
     }
+
+  /**
+   *
+   */
+  def display(): Bitmap = {
+    displayInViewer(this)
+
+    this
+  }
 
 }

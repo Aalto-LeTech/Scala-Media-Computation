@@ -6,6 +6,9 @@ import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
 
 import scala.swing._
 
+import aalto.smcl.images.ImageUtils
+
+
 
 
 /**
@@ -29,7 +32,7 @@ private[images] class ImageDisplayPanel extends Panel {
    *
    */
   def updateImageBuffer(newBuffer: JBufferedImage) = {
-    _buffer = new JBufferedImage(newBuffer.getWidth, newBuffer.getHeight, newBuffer.getType)
+    _buffer = ImageUtils.deepCopy(newBuffer)
 
     revalidate()
   }

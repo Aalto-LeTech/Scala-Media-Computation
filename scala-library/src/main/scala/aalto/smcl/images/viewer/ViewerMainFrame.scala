@@ -1,6 +1,8 @@
 package aalto.smcl.images.viewer
 
 
+import java.awt.image.{BufferedImage => JBufferedImage}
+
 import scala.swing._
 import scala.swing.event._
 
@@ -12,7 +14,7 @@ import scala.swing.event._
  *
  * @author Aleksi Lukkarinen
  */
-class ViewFrame extends MainFrame {
+class ViewerMainFrame extends MainFrame {
 
   title = "SMCL Image Viewer"
   resizable = true
@@ -34,6 +36,10 @@ class ViewFrame extends MainFrame {
     case WindowClosing(_) =>
       visible = false
       dispose()
+  }
+
+  def updateBitmapBuffer(newContent: JBufferedImage): Unit = {
+    contentPanel.updateImageBuffer(newContent)
   }
 
 }
