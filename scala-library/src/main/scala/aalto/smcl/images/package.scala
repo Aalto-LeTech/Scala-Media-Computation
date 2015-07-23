@@ -187,7 +187,7 @@ package object images {
    * Some methods for composing ARGB-style `Int` values as well as
    * extracting the individual color components from them.
    */
-  implicit class PixelInt(val self: Int) extends AnyVal {
+  implicit class RichPixelInt(val self: Int) extends AnyVal {
 
     /**
      * Returns an immutable map containing individual color components of this ARGB-style `Int`.
