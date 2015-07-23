@@ -42,7 +42,7 @@ object Bitmap {
     val bgColor = initialBackgroundColorOption getOrElse NamedColors.white
     val operationList = Clear(Option(bgColor)) +: BitmapOperationList(CreateBitmap(width, height))
 
-    new Bitmap(operationList, UUID.randomUUID())
+    new Bitmap(operationList, UUID.randomUUID()).display()
   }
 
   /**

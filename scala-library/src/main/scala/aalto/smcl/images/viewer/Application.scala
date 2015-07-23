@@ -4,6 +4,8 @@ package aalto.smcl.images.viewer
 import java.awt.image.{BufferedImage => JBufferedImage}
 import java.util.UUID
 
+import scala.swing.Swing
+
 import rx.lang.scala.{Observable, Observer}
 
 import aalto.smcl.images.viewer.events.{DisplayBitmapEvent, ViewerEvent}
@@ -47,20 +49,27 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
       newViewer
     })
 
-    viewer.updateBitmapBuffer(newContent)
-    viewer.visible = true
+    Swing.onEDT {
+      viewer.updateBitmapBuffer(newContent)
+
+      if (!viewer.visible)
+        viewer.visible = true
+    }
   }
+
 
   /**
    *
    */
-  private[this] def closeAllViewers: Unit = {
+  private[this] def disposeAllViewers(): Unit = {
     _viewers.foreach[Unit] {case (id, view) =>
-      view.close()
+      Swing.onEDTWait {
+        view.close()
+        view.dispose()
+      }
       _viewers = _viewers - id
     }
   }
-
 
   // Set up an observer for the incoming event stream
   incomingEventStream.subscribe(new Observer[ViewerEvent] {
@@ -87,7 +96,7 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
      *
      */
     override def onCompleted(): Unit = {
-      closeAllViewers
+      disposeAllViewers
     }
 
   })

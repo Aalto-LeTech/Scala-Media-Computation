@@ -24,7 +24,9 @@ private[images] class ImageDisplayPanel extends Panel {
   /**
    *
    */
-  override def paint(g: JGraphics2D) = {
+  override def paintComponent(g: JGraphics2D) = {
+    super.paintComponent(g)
+
     g.drawImage(_buffer, null, 0, 0)
   }
 
