@@ -47,7 +47,10 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
   private[this] def createOrUpdateViewerFor(id: UUID, newContent: JBufferedImage): Unit = {
     val viewer = _viewers.getOrElse(id, {
       val newViewer = new ViewerMainFrame()
+
       _viewers = _viewers + (id -> newViewer)
+
+      newViewer.centerOnScreen()
       newViewer
     })
 

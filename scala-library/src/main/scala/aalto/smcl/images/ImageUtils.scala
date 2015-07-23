@@ -11,7 +11,7 @@ import java.awt.image.{BufferedImage => JBufferedImage, ColorModel => JColorMode
  *
  * @author Aleksi Lukkarinen
  */
-object ImageUtils {
+private[images] object ImageUtils {
 
   /**
    *

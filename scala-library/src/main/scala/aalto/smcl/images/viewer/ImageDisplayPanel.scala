@@ -32,8 +32,24 @@ private[images] class ImageDisplayPanel extends Panel {
 
   /**
    *
+   *
+   * @return
+   */
+  def bufferWidth: Int = _buffer.getWidth
+
+  /**
+   *
+   *
+   * @return
+   */
+  def bufferHeight: Int = _buffer.getHeight
+
+  /**
+   *
    */
   def updateImageBuffer(newBuffer: JBufferedImage) = {
+    require(newBuffer != null, "Internal error occurred: newBuffer cannot be null.")
+
     _buffer = ImageUtils.deepCopy(newBuffer)
 
     repaint()

@@ -51,7 +51,7 @@ object PresetColor {
  *
  * @author Aleksi Lukkarinen
  */
-private[immutable] class PresetColor private[immutable](
+class PresetColor private[immutable] (
     override val red: Int,
     override val green: Int,
     override val blue: Int,

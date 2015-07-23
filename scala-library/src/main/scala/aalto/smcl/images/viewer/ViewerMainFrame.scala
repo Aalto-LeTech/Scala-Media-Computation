@@ -31,8 +31,8 @@ class ViewerMainFrame extends Frame {
 
   title = "SMCL Image Viewer"
   resizable = true
-  preferredSize = new Dimension(600, 400)
-  minimumSize = new Dimension(100, 100)
+  minimumSize = new Dimension(200, 100)
+  preferredSize = calculateInitialFrameSize
   contents = scroller
 
   reactions += {
@@ -52,6 +52,21 @@ class ViewerMainFrame extends Frame {
 
   listenTo(this)
   pack()
+
+  /**
+   *
+   */
+  def calculateInitialFrameSize(): Dimension = {
+    val tk = java.awt.Toolkit.getDefaultToolkit
+    val screenWidth = tk.getScreenSize.width
+    val screenHeight = tk.getScreenSize.height
+    val bufferWidth = contentPanel.bufferWidth
+    val bufferHeight = contentPanel.bufferHeight
+
+
+
+    new Dimension(400, 400)
+  }
 
   /**
    *
