@@ -3,6 +3,7 @@ package aalto.smcl.images.immutable
 
 import java.awt.{Graphics2D => JGraphics2D}
 
+import aalto.smcl.common.GlobalSettings
 import aalto.smcl.images._
 
 
@@ -15,10 +16,13 @@ import aalto.smcl.images._
  */
 class BitmapSpec extends ImageSpecBase {
 
-  val EXPECTED_DEFAULT_WIDTH_IN_PIXELS  = 10
-  val EXPECTED_DEFAULT_HEIGHT_IN_PIXELS = 10
+  val EXPECTED_DEFAULT_WIDTH_IN_PIXELS  = 50
+  val EXPECTED_DEFAULT_HEIGHT_IN_PIXELS = 50
 
   "Class BitmapImage" - {
+    GlobalSettings.displayNewBitmapsAutomatically = false
+    GlobalSettings.displayBitmapsAutomaticallyAfterOperations = false
+
     "must have a default" - {
       s"width defined as $EXPECTED_DEFAULT_WIDTH_IN_PIXELS pixels" in {
         assert(DEFAULT_IMAGE_WIDTH_IN_PIXELS === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)

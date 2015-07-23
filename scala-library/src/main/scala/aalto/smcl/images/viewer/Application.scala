@@ -8,7 +8,7 @@ import scala.swing.Swing
 
 import rx.lang.scala.{Observable, Observer}
 
-import aalto.smcl.images.viewer.events.{DisplayBitmapEvent, ViewerEvent}
+import aalto.smcl.images.viewer.events.{ForceAllViewersToClose, DisplayBitmapEvent, ViewerEvent}
 
 
 
@@ -29,7 +29,9 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
    * @param event
    */
   private[this] def dispatchEvent(event: ViewerEvent): Unit = event match {
-    case DisplayBitmapEvent(id, buffer) => createOrUpdateViewer(id, buffer)
+    case DisplayBitmapEvent(id, buffer) => createOrUpdateViewerFor(id, buffer)
+
+    case ForceAllViewersToClose() => closeAllViewersWithTheForce()
 
     case _ =>
       throw new IllegalArgumentException(
@@ -42,33 +44,26 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
    * @param id
    * @param newContent
    */
-  private[this] def createOrUpdateViewer(id: UUID, newContent: JBufferedImage): Unit = {
+  private[this] def createOrUpdateViewerFor(id: UUID, newContent: JBufferedImage): Unit = {
     val viewer = _viewers.getOrElse(id, {
       val newViewer = new ViewerMainFrame()
       _viewers = _viewers + (id -> newViewer)
       newViewer
     })
 
-    Swing.onEDT {
-      viewer.updateBitmapBuffer(newContent)
-
-      if (!viewer.visible)
-        viewer.visible = true
-    }
+    Swing.onEDT { viewer.updateBitmapBuffer(newContent) }
   }
 
 
   /**
    *
    */
-  private[this] def disposeAllViewers(): Unit = {
-    _viewers.foreach[Unit] {case (id, view) =>
-      Swing.onEDTWait {
-        view.close()
-        view.dispose()
-      }
-      _viewers = _viewers - id
+  private[this] def closeAllViewersWithTheForce(): Unit = {
+    _viewers.values.foreach { viewer =>
+      Swing.onEDT { viewer.forceToClose() }
     }
+
+    _viewers = _viewers.empty
   }
 
   // Set up an observer for the incoming event stream
@@ -96,7 +91,7 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
      *
      */
     override def onCompleted(): Unit = {
-      disposeAllViewers
+      closeAllViewersWithTheForce
     }
 
   })

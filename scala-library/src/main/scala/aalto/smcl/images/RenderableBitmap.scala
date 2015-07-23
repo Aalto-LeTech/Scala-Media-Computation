@@ -1,6 +1,7 @@
 package aalto.smcl.images
 
 
+import java.awt.image.{BufferedImage => JBufferedImage}
 import java.awt.{Graphics2D => JGraphics2D}
 
 
@@ -17,5 +18,10 @@ trait RenderableBitmap {
    * Renders this [[RenderableBitmap]] onto a drawing surface.
    */
   def render(drawingSurface: JGraphics2D, x: Int, y: Int): Unit
+
+  /**
+   * Returns an instance of Java's `BufferedImage` representing this [[RenderableBitmap]].
+   */
+  def toRenderedRepresentation: JBufferedImage
 
 }

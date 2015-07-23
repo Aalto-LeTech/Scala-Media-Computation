@@ -72,10 +72,10 @@ package object images {
   val FULLY_TRANSPARENT: Int = MIN_OPAQUENESS
 
   /** Default width of [[Bitmap]] instances created without giving width. */
-  val DEFAULT_IMAGE_WIDTH_IN_PIXELS: Int = 10
+  val DEFAULT_IMAGE_WIDTH_IN_PIXELS: Int = 50
 
   /** Default height of [[Bitmap]] instances created without giving height. */
-  val DEFAULT_IMAGE_HEIGHT_IN_PIXELS: Int = 10
+  val DEFAULT_IMAGE_HEIGHT_IN_PIXELS: Int = 50
 
   /**
    *
@@ -83,6 +83,11 @@ package object images {
    * @param sourceBitmap
    */
   def display(sourceBitmap: Bitmap): Unit = _viewerClient.display(sourceBitmap)
+
+  /**
+   *
+   */
+  def closeBitmapViewersWithoutSaving(): Unit = _viewerClient.closeAllViewersWithTheForce()
 
   /**
    *

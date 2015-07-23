@@ -39,10 +39,15 @@ object Bitmap {
       h
     }
 
-    val bgColor = initialBackgroundColorOption getOrElse NamedColors.white
+    val bgColor = initialBackgroundColorOption getOrElse GlobalSettings.defaultBackgroundColor
     val operationList = Clear(Option(bgColor)) +: BitmapOperationList(CreateBitmap(width, height))
 
-    new Bitmap(operationList, UUID.randomUUID()).display()
+    val newBitmap = new Bitmap(operationList, UUID.randomUUID())
+
+    if (GlobalSettings.displayNewBitmapsAutomatically)
+      newBitmap.display()
+
+    newBitmap
   }
 
   /**
@@ -91,13 +96,19 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
   /**
    * Applies an [[AbstractSingleSourceOperation]] to this [[Bitmap]].
    */
-  def apply(newOperation: AbstractSingleSourceOperation): Bitmap = {
+  private[images] def apply(newOperation: AbstractSingleSourceOperation): Bitmap = {
     require(newOperation != null, "Operation argument cannot be null.")
 
-    copy(operations = newOperation +: operations).display()
+    val newBitmap = copy(operations = newOperation +: operations)
+
+    if (GlobalSettings.displayBitmapsAutomaticallyAfterOperations)
+      newBitmap.display()
+
+    newBitmap
   }
 
   /**
+   *
    *
    * @param colorOption
    */
@@ -111,6 +122,8 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
    * Renders this [[Bitmap]] onto a drawing surface.
    */
   def render(drawingSurface: JGraphics2D, x: Int, y: Int): Unit = {
+    require(drawingSurface != null, "Drawing surface argument cannot be null.")
+
     toRenderedRepresentation
     drawingSurface.drawImage(_renderingBuffer.apply(), null, x, y)
   }

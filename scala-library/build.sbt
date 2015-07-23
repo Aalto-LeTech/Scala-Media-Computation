@@ -37,6 +37,13 @@ libraryDependencies ++= (scalaBinaryVersion.value match {
   )
 })
 
+initialCommands in console := """
+   |import aalto.smcl.common._
+   |import aalto.smcl.images._
+   |import aalto.smcl.images.immutable._
+   |""".stripMargin
+
+
 scalacOptions ++= Seq(
   "-deprecation",
   "-feature",

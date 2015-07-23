@@ -36,7 +36,7 @@ private[images] class ImageDisplayPanel extends Panel {
   def updateImageBuffer(newBuffer: JBufferedImage) = {
     _buffer = ImageUtils.deepCopy(newBuffer)
 
-    revalidate()
+    repaint()
   }
 
 }

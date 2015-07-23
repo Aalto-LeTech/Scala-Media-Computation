@@ -35,4 +35,7 @@ package object common {
   /** A string containing a single zero. */
   protected[smcl] val STR_ZERO = "0"
 
+  /** Global settings for the SMCL. */
+  val GlobalSettings: SmclSettings = new SmclSettings()
+
 }

@@ -8,6 +8,8 @@ import scala.swing.Dialog.{Message, Options}
 import scala.swing._
 import scala.swing.event._
 
+import aalto.smcl.common.SwingUtils
+
 
 
 
@@ -18,50 +20,93 @@ import scala.swing.event._
  */
 class ViewerMainFrame extends Frame {
 
+  /** */
+  private var _forcefulClosing: Boolean = false
+
+  /** */
+  val contentPanel = new ImageDisplayPanel()
+
+  /** */
+  val scroller = new ScrollPane() {contents = contentPanel}
+
   title = "SMCL Image Viewer"
   resizable = true
   preferredSize = new Dimension(600, 400)
   minimumSize = new Dimension(100, 100)
-
-  peer.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
-
-
-  val contentPanel = new ImageDisplayPanel()
-
-  val scroller = new ScrollPane() {contents = contentPanel}
-
   contents = scroller
 
   reactions += {
     case WindowClosing(_) =>
-      if (userReallyWishesToClose) {
-        visible = false
+      if (notToBeClosedForcefully) {
+        if (shouldCloseBasedOn(closingMessageBoxResult()))
+          hideAndDispose()
+      }
+      else {
+        hideAndDispose()
       }
 
     case _ => ()
   }
 
+  peer.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
+
   listenTo(this)
+  pack()
 
   /**
    *
    *
    * @return
    */
-  def userReallyWishesToClose(): Boolean = {
+  def notToBeClosedForcefully: Boolean = !_forcefulClosing
+
+  /**
+   *
+   *
+   * @return
+   */
+  def forceToClose(): Unit = {
+    _forcefulClosing = true
+    publish(WindowClosing(this))
+  }
+
+  /**
+   *
+   */
+  def showWithoutFocusTransfer(): Unit = {
+    if (!visible)
+      visible = true
+  }
+
+  /**
+   *
+   */
+  def hideAndDispose(): Unit = {
+    visible = false
+    dispose()
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def shouldCloseBasedOn(result: Dialog.Result.Value): Boolean =
+    SwingUtils.yesNoDialogResultAsBoolean(result)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def closingMessageBoxResult(): Dialog.Result.Value = {
     Dialog.showConfirmation(
       this,
-      "Do you really want to close this bitmap preview window?",
+      "Do you really want to close this window without saving?",
       this.title,
       Options.YesNo,
       Message.Question
-    ) match {
-      case Dialog.Result.No  => false
-      case Dialog.Result.Yes => true
-      case _                 =>
-        throw new RuntimeException(
-          "Unexpected error: Invalid closing confirmation dialog return value.")
-    }
+    )
   }
 
   /**
@@ -71,6 +116,8 @@ class ViewerMainFrame extends Frame {
    */
   def updateBitmapBuffer(newContent: JBufferedImage): Unit = {
     contentPanel.updateImageBuffer(newContent)
+
+    showWithoutFocusTransfer()
   }
 
 }
