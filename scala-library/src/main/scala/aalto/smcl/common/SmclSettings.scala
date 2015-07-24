@@ -1,7 +1,7 @@
 package aalto.smcl.common
 
 
-import aalto.smcl.images.immutable.{NamedColors, Color}
+import aalto.smcl.images.immutable.{Color, NamedColors}
 
 
 
@@ -13,6 +13,12 @@ import aalto.smcl.images.immutable.{NamedColors, Color}
  */
 private[smcl] class SmclSettings() extends Mutable {
 
+  ///////////////////////////////////////////////
+  //
+  // One-variable settings
+  //
+  ///////////////////////////////////////////////
+
   /**  */
   var displayNewBitmapsAutomatically: Boolean = true
 
@@ -22,6 +28,64 @@ private[smcl] class SmclSettings() extends Mutable {
 
 
 
+
+  ///////////////////////////////////////////////
+  //
+  // Default bitmap width
+  //
+  ///////////////////////////////////////////////
+
+  /**  */
+  private[this] var _defaultBitmapWidthInPixels: Int = 50
+
+  /**
+   *
+   */
+  def defaultBitmapWidthInPixels: Int = _defaultBitmapWidthInPixels
+
+  /**
+   *
+   *
+   * @param value
+   * @return
+   */
+  def defaultBitmapWidthInPixels_=(value: Int): Unit = {
+    _defaultBitmapWidthInPixels = value
+  }
+
+
+
+  ///////////////////////////////////////////////
+  //
+  // Default bitmap height
+  //
+  ///////////////////////////////////////////////
+
+  /**  */
+  private[this] var _defaultBitmapHeightInPixels: Int = 50
+
+  /**
+   *
+   */
+  def defaultBitmapHeightInPixels: Int = _defaultBitmapHeightInPixels
+
+  /**
+   *
+   *
+   * @param value
+   * @return
+   */
+  def defaultBitmapHeightInPixels_=(value: Int): Unit = {
+    _defaultBitmapHeightInPixels = value
+  }
+
+
+
+  ///////////////////////////////////////////////
+  //
+  // Default background color
+  //
+  ///////////////////////////////////////////////
 
   /**  */
   private[this] var _defaultBackgroundColor: Color = NamedColors.white

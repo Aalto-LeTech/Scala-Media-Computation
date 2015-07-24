@@ -29,12 +29,12 @@ object Bitmap {
       heightInPixelsOption: Option[Int] = None,
       initialBackgroundColorOption: Option[Color] = None): Bitmap = {
 
-    val width = widthInPixelsOption.fold(DEFAULT_IMAGE_WIDTH_IN_PIXELS) {w =>
+    val width = widthInPixelsOption.fold(GlobalSettings.defaultBitmapWidthInPixels) {w =>
       require(w > 0, s"Width of the image must be greater than zero (was $w)")
       w
     }
 
-    val height = heightInPixelsOption.fold(DEFAULT_IMAGE_HEIGHT_IN_PIXELS) {h =>
+    val height = heightInPixelsOption.fold(GlobalSettings.defaultBitmapHeightInPixels) {h =>
       require(h > 0, s"Height of the image must be greater than zero (was $h)")
       h
     }
