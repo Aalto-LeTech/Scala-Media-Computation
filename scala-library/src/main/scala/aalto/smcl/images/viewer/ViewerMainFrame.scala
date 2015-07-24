@@ -8,7 +8,7 @@ import scala.swing.Dialog.{Message, Options}
 import scala.swing._
 import scala.swing.event._
 
-import aalto.smcl.common.SwingUtils
+import aalto.smcl.common.{Screen, SwingUtils}
 
 
 
@@ -18,7 +18,54 @@ import aalto.smcl.common.SwingUtils
  *
  * @author Aleksi Lukkarinen
  */
-class ViewerMainFrame extends Frame {
+private[images] object ViewerMainFrame {
+
+  /** */
+  val MIN_FRAME_SIZE: Dimension = new Dimension(500, 200)
+
+
+  /**
+   *
+   *
+   * @param buffer
+   */
+  def apply(buffer: JBufferedImage): ViewerMainFrame = {
+    val frameSize = initialFrameSizeFor(buffer)
+    val frame = new ViewerMainFrame(MIN_FRAME_SIZE, frameSize)
+
+    frame.updateBitmapBuffer(buffer)
+    frame
+  }
+
+  /**
+   *
+   *
+   * @param buffer
+   * @return
+   */
+  def initialFrameSizeFor(buffer: JBufferedImage): Dimension = {
+    val width = (Screen.width * 0.8).toInt
+        .min((buffer.getWidth * 1.1).toInt)
+        .max(MIN_FRAME_SIZE.width)
+
+    val height = (Screen.height * 0.8).toInt
+        .min((buffer.getHeight * 1.1).toInt)
+        .max(MIN_FRAME_SIZE.height)
+
+    new Dimension(width, height)
+  }
+
+}
+
+
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
+private[images] class ViewerMainFrame private(
+    private val _minimumSize: Dimension,
+    private val _preferredSize: Dimension) extends Frame {
 
   /** */
   private var _forcefulClosing: Boolean = false
@@ -27,12 +74,18 @@ class ViewerMainFrame extends Frame {
   val contentPanel = new ImageDisplayPanel()
 
   /** */
-  val scroller = new ScrollPane() {contents = contentPanel}
+  val scroller = new ScrollPane() {
+
+    horizontalScrollBarPolicy = ScrollPane.BarPolicy.Always
+    verticalScrollBarPolicy = ScrollPane.BarPolicy.Always
+
+    contents = contentPanel
+  }
 
   title = "SMCL Image Viewer"
+  minimumSize = _minimumSize
+  preferredSize = _preferredSize
   resizable = true
-  minimumSize = new Dimension(200, 100)
-  preferredSize = calculateInitialFrameSize
   contents = scroller
 
   reactions += {
@@ -50,23 +103,8 @@ class ViewerMainFrame extends Frame {
 
   peer.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
 
-  listenTo(this)
   pack()
-
-  /**
-   *
-   */
-  def calculateInitialFrameSize(): Dimension = {
-    val tk = java.awt.Toolkit.getDefaultToolkit
-    val screenWidth = tk.getScreenSize.width
-    val screenHeight = tk.getScreenSize.height
-    val bufferWidth = contentPanel.bufferWidth
-    val bufferHeight = contentPanel.bufferHeight
-
-
-
-    new Dimension(400, 400)
-  }
+  listenTo(this)
 
   /**
    *

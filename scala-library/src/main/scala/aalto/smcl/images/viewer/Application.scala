@@ -28,7 +28,7 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
    *
    * @param event
    */
-  private[this] def dispatchEvent(event: ViewerEvent): Unit = event match {
+  private[this] def processEvent(event: ViewerEvent): Unit = event match {
     case DisplayBitmapEvent(id, buffer) => createOrUpdateViewerFor(id, buffer)
 
     case ForceAllViewersToClose() => closeAllViewersWithTheForce()
@@ -46,7 +46,7 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
    */
   private[this] def createOrUpdateViewerFor(id: UUID, newContent: JBufferedImage): Unit = {
     val viewer = _viewers.getOrElse(id, {
-      val newViewer = new ViewerMainFrame()
+      val newViewer = ViewerMainFrame(newContent)
 
       _viewers = _viewers + (id -> newViewer)
 
@@ -78,7 +78,7 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
      * @param event
      */
     override def onNext(event: ViewerEvent): Unit = {
-      dispatchEvent(event)
+      processEvent(event)
     }
 
     /**
@@ -94,7 +94,7 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
      *
      */
     override def onCompleted(): Unit = {
-      closeAllViewersWithTheForce
+      closeAllViewersWithTheForce()
     }
 
   })
