@@ -50,6 +50,8 @@ private[smcl] class SmclSettings() extends Mutable {
    * @return
    */
   def defaultBitmapWidthInPixels_=(value: Int): Unit = {
+    require(value > 9, "Default bitmap width must be larger than 9 pixels.")
+
     _defaultBitmapWidthInPixels = value
   }
 
@@ -76,6 +78,8 @@ private[smcl] class SmclSettings() extends Mutable {
    * @return
    */
   def defaultBitmapHeightInPixels_=(value: Int): Unit = {
+    require(value > 9, "Default bitmap height must be larger than 9 pixels.")
+
     _defaultBitmapHeightInPixels = value
   }
 
