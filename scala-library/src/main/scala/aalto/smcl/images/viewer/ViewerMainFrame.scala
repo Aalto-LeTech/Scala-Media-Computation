@@ -9,6 +9,7 @@ import scala.swing._
 import scala.swing.event._
 
 import aalto.smcl.common.{Screen, SwingUtils}
+import aalto.smcl.images.immutable.Bitmap
 
 
 
@@ -21,35 +22,35 @@ import aalto.smcl.common.{Screen, SwingUtils}
 private[images] object ViewerMainFrame {
 
   /** */
-  val MIN_FRAME_SIZE: Dimension = new Dimension(500, 200)
+  val MIN_FRAME_SIZE: Dimension = new Dimension(300, 200)
 
 
   /**
    *
    *
-   * @param buffer
+   * @param bitmap
    */
-  def apply(buffer: JBufferedImage): ViewerMainFrame = {
-    val frameSize = initialFrameSizeFor(buffer)
+  def apply(bitmap: Bitmap): ViewerMainFrame = {
+    val frameSize = initialFrameSizeFor(bitmap)
     val frame = new ViewerMainFrame(MIN_FRAME_SIZE, frameSize)
 
-    frame.updateBitmapBuffer(buffer)
+    frame.updateBitmapBuffer(bitmap)
     frame
   }
 
   /**
    *
    *
-   * @param buffer
+   * @param bitmap
    * @return
    */
-  def initialFrameSizeFor(buffer: JBufferedImage): Dimension = {
+  def initialFrameSizeFor(bitmap: Bitmap): Dimension = {
     val width = (Screen.width * 0.8).toInt
-        .min((buffer.getWidth * 1.1).toInt)
+        .min((bitmap.widthInPixels * 1.1).toInt)
         .max(MIN_FRAME_SIZE.width)
 
     val height = (Screen.height * 0.8).toInt
-        .min((buffer.getHeight * 1.1).toInt)
+        .min((bitmap.heightInPixels * 1.1).toInt)
         .max(MIN_FRAME_SIZE.height)
 
     new Dimension(width, height)
@@ -165,10 +166,10 @@ private[images] class ViewerMainFrame private(
   /**
    *
    *
-   * @param newContent
+   * @param bitmap
    */
-  def updateBitmapBuffer(newContent: JBufferedImage): Unit = {
-    contentPanel.updateImageBuffer(newContent)
+  def updateBitmapBuffer(bitmap: Bitmap): Unit = {
+    contentPanel.updateImageBuffer(bitmap)
 
     showWithoutFocusTransfer()
   }

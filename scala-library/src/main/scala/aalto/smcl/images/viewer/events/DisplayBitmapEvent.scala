@@ -2,7 +2,8 @@ package aalto.smcl.images.viewer.events
 
 
 import java.awt.image.{BufferedImage => JBufferedImage}
-import java.util.UUID
+
+import aalto.smcl.images.immutable.Bitmap
 
 
 
@@ -12,7 +13,7 @@ import java.util.UUID
  *
  * @author Aleksi Lukkarinen
  */
-private[images] case class DisplayBitmapEvent(bitmapId: UUID, bitmapBuffer: JBufferedImage)
+private[images] case class DisplayBitmapEvent(bitmap: Bitmap)
     extends ViewerEvent with Immutable {
 
 }

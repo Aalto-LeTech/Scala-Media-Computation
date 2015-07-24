@@ -10,7 +10,8 @@ import aalto.smcl.images.immutable._
 
 
 /**
- * Operation to clear a bitmap with a given color. If a color is not given, a pure white will be used.
+ * Operation to clear a bitmap with a given color. If a color is not given, the default background color will be used,
+ * as defined in the [[GlobalSettings.defaultBackgroundColor]].
  *
  * @author Aleksi Lukkarinen
  */
@@ -18,9 +19,9 @@ private[images] case class Clear(private val colorOption: Option[Color] = None)
     extends AbstractSingleSourceOperation with Immutable {
 
   /** The color with which to clear bitmaps. */
-  private[this] val _color: Color = colorOption getOrElse NamedColors.white
+  private[this] val _color: Color = colorOption getOrElse GlobalSettings.defaultBackgroundColor
 
-  /** This [[Bitmap]] does not have any child operations. */
+  /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this operation instance */

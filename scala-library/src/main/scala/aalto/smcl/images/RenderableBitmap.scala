@@ -17,7 +17,7 @@ trait RenderableBitmap {
   /**
    * Renders this [[RenderableBitmap]] onto a drawing surface.
    */
-  def render(drawingSurface: JGraphics2D, x: Int, y: Int): Unit
+  def renderOnto(drawingSurface: JGraphics2D, x: Int, y: Int): Unit
 
   /**
    * Returns an instance of Java's `BufferedImage` representing this [[RenderableBitmap]].

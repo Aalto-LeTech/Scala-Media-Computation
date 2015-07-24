@@ -1,6 +1,11 @@
 package aalto.smcl.images.immutable
 
 
+import scala.swing.Dimension
+
+
+
+
 /**
  * A rectangle having its dimensions measured in pixels.
  *
@@ -15,12 +20,18 @@ private[images] trait PixelRectangle {
   def heightInPixels: Int
 
   /** The range of numbers from zero until the width of this rectangle. */
-  lazy val widthRange: Range = 0 until widthInPixels
+  lazy val widthRangeInPixels: Range = 0 until widthInPixels
 
   /** The range of numbers from zero until the height of this rectangle. */
-  lazy val heightRange: Range = 0 until heightInPixels
+  lazy val heightRangeInPixels: Range = 0 until heightInPixels
 
-  /** Total number of pixels occupied by the area of this rectangle. */
-  lazy val pixelCount: Int = widthInPixels * heightInPixels
+  /** Dimensions (width and height) of this rectangle. */
+  lazy val sizeInPixels: Dimension = new Dimension(widthInPixels, heightInPixels)
+
+  /** Area of this rectangle in pixels (equals to `pixelCount`). */
+  lazy val areaInPixels: Int = widthInPixels * heightInPixels
+
+  /** Total number of pixels occupied by the area of this rectangle (equals to `areaInPixels`). */
+  lazy val pixelCount: Int = areaInPixels
 
 }

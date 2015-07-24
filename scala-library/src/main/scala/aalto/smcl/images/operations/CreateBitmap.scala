@@ -18,10 +18,10 @@ import aalto.smcl.images.immutable._
 private[images] case class CreateBitmap(widthInPixels: Int, heightInPixels: Int)
     extends AbstractBufferProviderOperation with Immutable {
 
-  /** This [[Bitmap]] does not have any child operations. */
+  /** This [[AbstractBufferProviderOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
-  /** Information about this [[Bitmap]] instance */
+  /** Information about this [[AbstractBufferProviderOperation]] instance */
   val metaInformation = MetaInformationMap(Map(
     "width" -> Option("${widthInPixels} px"),
     "height" -> Option("${heightInPixels} px")

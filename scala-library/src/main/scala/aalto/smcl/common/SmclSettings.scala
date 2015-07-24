@@ -113,5 +113,30 @@ private[smcl] class SmclSettings() extends Mutable {
 
 
 
+  ///////////////////////////////////////////////
+  //
+  // Default primary color
+  //
+  ///////////////////////////////////////////////
+
+  /**  */
+  private[this] var _defaultPrimaryColor: Color = NamedColors.black
+
+  /**
+   *
+   */
+  def defaultPrimaryColor: Color = _defaultPrimaryColor
+
+  /**
+   *
+   *
+   * @param value
+   * @return
+   */
+  def defaultPrimaryColor_=(value: Color): Unit = {
+    require(value != null, "Default primary color cannot be null.")
+
+    _defaultPrimaryColor = value
+  }
 
 }

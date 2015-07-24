@@ -1,10 +1,8 @@
 package aalto.smcl.images
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
-import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
-
-import aalto.smcl.images.immutable.Color
+import aalto.smcl.common.GlobalSettings
+import aalto.smcl.images.immutable.{Bitmap, Color}
 import aalto.smcl.images.operations._
 
 
@@ -19,9 +17,42 @@ object BitmapOps {
 
   /**
    * Adds a [[Clear]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param colorOption
+   * @return
    */
-  def clear(bmp: OperableBitmap, colorOption: Option[Color] = None): Unit = {
+  def clear(
+      bmp: OperableBitmap,
+      colorOption: Option[Color] = Option(GlobalSettings.defaultBackgroundColor)): Bitmap = {
+
+    require(bmp != null, "The bitmap to be cleared cannot be null.")
+    require(colorOption != null, "The color argument has to be None or a Color instance (was null).")
+
     bmp.apply(Clear(colorOption))
+  }
+
+  /**
+   * Adds a [[DrawCircle]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param centerXInPixels
+   * @param centerYInPixels
+   * @param radiusInPixels
+   * @param colorOption
+   * @return
+   */
+  def drawCircle(
+      bmp: OperableBitmap,
+      centerXInPixels: Int,
+      centerYInPixels: Int,
+      radiusInPixels: Int,
+      colorOption: Option[Color] = Option(GlobalSettings.defaultPrimaryColor)): Bitmap = {
+
+    require(bmp != null, "The bitmap to be drawn onto cannot be null.")
+    require(colorOption != null, "The color argument has to be None or a Color instance (was null).")
+
+    bmp.apply(DrawCircle(centerXInPixels, centerYInPixels, radiusInPixels, colorOption))
   }
 
 }

@@ -40,10 +40,7 @@ private[images] class ViewerClient {
   def display(sourceBitmap: Bitmap): Unit = {
     require(sourceBitmap != null, "Source bitmap must not be null.")
 
-    dispatchEvent(
-      DisplayBitmapEvent(
-        sourceBitmap.id,
-        ImageUtils.deepCopy(sourceBitmap.toRenderedRepresentation)))
+    dispatchEvent(DisplayBitmapEvent(sourceBitmap))
   }
 
   /**

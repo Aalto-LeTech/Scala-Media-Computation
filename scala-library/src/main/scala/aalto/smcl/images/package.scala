@@ -2,7 +2,7 @@ package aalto.smcl
 
 
 import aalto.smcl.common._
-import aalto.smcl.images.immutable.Bitmap
+import aalto.smcl.images.immutable._
 
 
 
@@ -247,9 +247,17 @@ package object images {
 
   /**
    * A string interpolator for creating [[Bitmap]] instances.
+   *
+   * @param sc
    */
   implicit class BitmapCreationStringInterpolator(val sc: StringContext) extends AnyVal {
 
+    /**
+     *
+     *
+     * @param args
+     * @return
+     */
     def bmp(args: Any*): Bitmap = {
       val s = sc.standardInterpolator(StringContext.processEscapes, args)
 
@@ -257,6 +265,5 @@ package object images {
       Bitmap()
     }
   }
-
 
 }

@@ -8,7 +8,8 @@ import scala.swing.Swing
 
 import rx.lang.scala.{Observable, Observer}
 
-import aalto.smcl.images.viewer.events.{ForceAllViewersToClose, DisplayBitmapEvent, ViewerEvent}
+import aalto.smcl.images.immutable.Bitmap
+import aalto.smcl.images.viewer.events.{DisplayBitmapEvent, ForceAllViewersToClose, ViewerEvent}
 
 
 
@@ -29,7 +30,7 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
    * @param event
    */
   private[this] def processEvent(event: ViewerEvent): Unit = event match {
-    case DisplayBitmapEvent(id, buffer) => createOrUpdateViewerFor(id, buffer)
+    case DisplayBitmapEvent(bitmap) => createOrUpdateViewerFor(bitmap)
 
     case ForceAllViewersToClose() => closeAllViewersWithTheForce()
 
@@ -41,20 +42,19 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
   /**
    *
    *
-   * @param id
-   * @param newContent
+   * @param bitmap
    */
-  private[this] def createOrUpdateViewerFor(id: UUID, newContent: JBufferedImage): Unit = {
-    val viewer = _viewers.getOrElse(id, {
-      val newViewer = ViewerMainFrame(newContent)
+  private[this] def createOrUpdateViewerFor(bitmap: Bitmap): Unit = {
+    val viewer = _viewers.getOrElse(bitmap.id, {
+      val newViewer = ViewerMainFrame(bitmap)
 
-      _viewers = _viewers + (id -> newViewer)
+      _viewers = _viewers + (bitmap.id -> newViewer)
 
       newViewer.centerOnScreen()
       newViewer
     })
 
-    Swing.onEDT { viewer.updateBitmapBuffer(newContent) }
+    Swing.onEDT { viewer.updateBitmapBuffer(bitmap) }
   }
 
 
@@ -94,7 +94,7 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
      *
      */
     override def onCompleted(): Unit = {
-      closeAllViewersWithTheForce()
+
     }
 
   })

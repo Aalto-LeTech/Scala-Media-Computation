@@ -1,6 +1,7 @@
 package aalto.smcl.images.immutable
 
 
+import java.awt.geom.AffineTransform
 import java.awt.image.{BufferedImage => JBufferedImage}
 import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
 import java.util.UUID
@@ -112,20 +113,57 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
    *
    * @param colorOption
    */
-  def clear(colorOption: Option[Color]): Bitmap = {
-    require(colorOption != null, "Color argument cannot be null.")
+  def clear(colorOption: Option[Color] = Option(GlobalSettings.defaultBackgroundColor)): Bitmap = {
+    require(colorOption != null, "The color argument has to be None or a Color instance (was null).")
 
     apply(Clear(colorOption))
   }
 
   /**
-   * Renders this [[Bitmap]] onto a drawing surface.
+   *
+   *
+   * @param centerXInPixels
+   * @param centerYInPixels
+   * @param radiusInPixels
+   * @param colorOption
+   * @return
    */
-  def render(drawingSurface: JGraphics2D, x: Int, y: Int): Unit = {
+  def drawCircle(
+      centerXInPixels: Int,
+      centerYInPixels: Int,
+      radiusInPixels: Int,
+      colorOption: Option[Color] = Option(GlobalSettings.defaultPrimaryColor)): Bitmap = {
+
+    require(colorOption != null, "The color argument has to be None or a Color instance (was null).")
+
+    apply(DrawCircle(centerXInPixels, centerYInPixels, radiusInPixels, colorOption))
+  }
+
+  /**
+   * Renders this [[Bitmap]] onto a drawing surface using specified coordinates.
+   *
+   * @param drawingSurface
+   * @param x
+   * @param y
+   */
+  def renderOnto(drawingSurface: JGraphics2D, x: Int, y: Int): Unit = {
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
     toRenderedRepresentation
     drawingSurface.drawImage(_renderingBuffer.apply(), null, x, y)
+  }
+
+  /**
+   * Renders this [[Bitmap]] onto a drawing surface using specified affine transformation.
+   *
+   * @param drawingSurface
+   * @param affineTransformation
+   */
+  def renderOnto(drawingSurface: JGraphics2D, affineTransformation: AffineTransform): Unit = {
+    require(drawingSurface != null, "Drawing surface argument cannot be null.")
+
+    toRenderedRepresentation
+    drawingSurface.drawImage(_renderingBuffer.apply(), affineTransformation, null)
   }
 
   /**
