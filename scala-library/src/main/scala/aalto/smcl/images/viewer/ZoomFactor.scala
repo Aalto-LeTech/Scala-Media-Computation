@@ -18,6 +18,9 @@ private[viewer] object ZoomFactor {
   /** */
   val validRangeInPercents: Range.Inclusive = 10 to 500
 
+  /**  */
+  val IDENTITY = ZoomFactor(100)
+
   /**
    *
    *
@@ -43,6 +46,8 @@ private[viewer] object ZoomFactor {
 private[viewer] class ZoomFactor private(val valueInPercents: Int)
     extends Ordered[ZoomFactor] with Immutable {
 
+  private val HUNDRED_AS_DOUBLE: Double = 100.toDouble
+
   /**
    *
    *
@@ -62,7 +67,7 @@ private[viewer] class ZoomFactor private(val valueInPercents: Int)
    *
    * @return
    */
-  val asFactor: Double = valueInPercents / 100
+  val asFactor: Double = valueInPercents / HUNDRED_AS_DOUBLE
 
   /**
    *
@@ -84,7 +89,7 @@ private[viewer] class ZoomFactor private(val valueInPercents: Int)
    * @param measure
    * @return
    */
-  def scale(measure: Double): Double = asFactor * measure
+  def scaleToDouble(measure: Double): Double = asFactor * measure
 
   /**
    *
@@ -92,7 +97,15 @@ private[viewer] class ZoomFactor private(val valueInPercents: Int)
    * @param measure
    * @return
    */
-  def scale(measure: Int): Double = asFactor * measure
+  def scaleToDouble(measure: Int): Double = asFactor * measure
+
+  /**
+   *
+   *
+   * @param measure
+   * @return
+   */
+  def scaleToInt(measure: Int): Int = (asFactor * measure).toInt
 
   /**
    *
@@ -100,10 +113,10 @@ private[viewer] class ZoomFactor private(val valueInPercents: Int)
    * @param dimensions
    * @return
    */
-  def scale(dimensions: Dimension): Dimension =
+  def scaleToDimension(dimensions: Dimension): Dimension =
     new Dimension(
-      (asFactor * dimensions.getWidth).toInt,
-      (asFactor * dimensions.getHeight).toInt)
+      scaleToInt(dimensions.width),
+      scaleToInt(dimensions.height))
 
   /**
    *

@@ -31,8 +31,8 @@ private[images] object ViewerMainFrame {
    * @param bitmap
    */
   def apply(bitmap: Bitmap): ViewerMainFrame = {
-    val frameSize = initialFrameSizeFor(bitmap)
-    val frame = new ViewerMainFrame(MIN_FRAME_SIZE, frameSize)
+    val initialFrameSize = initialFrameSizeFor(bitmap)
+    val frame = new ViewerMainFrame(initialFrameSize)
 
     frame.updateBitmapBuffer(bitmap)
     frame
@@ -65,29 +65,19 @@ private[images] object ViewerMainFrame {
  * @author Aleksi Lukkarinen
  */
 private[images] class ViewerMainFrame private(
-    private val _minimumSize: Dimension,
-    private val _preferredSize: Dimension) extends Frame {
+    private val _initialPreferredSize: Dimension) extends Frame {
+
+  /** */
+  private val _imagePanel = new ImageDisplayPanel
 
   /** */
   private var _forcefulClosing: Boolean = false
 
-  /** */
-  val contentPanel = new ImageDisplayPanel()
-
-  /** */
-  val scroller = new ScrollPane() {
-
-    horizontalScrollBarPolicy = ScrollPane.BarPolicy.Always
-    verticalScrollBarPolicy = ScrollPane.BarPolicy.Always
-
-    contents = contentPanel
-  }
-
   title = "SMCL Image Viewer"
-  minimumSize = _minimumSize
-  preferredSize = _preferredSize
+  minimumSize = ViewerMainFrame.MIN_FRAME_SIZE
+  preferredSize = _initialPreferredSize
   resizable = true
-  contents = scroller
+  contents = new LayoutBase(_imagePanel)
 
   reactions += {
     case WindowClosing(_) =>
@@ -169,7 +159,7 @@ private[images] class ViewerMainFrame private(
    * @param bitmap
    */
   def updateBitmapBuffer(bitmap: Bitmap): Unit = {
-    contentPanel.updateImageBuffer(bitmap)
+    _imagePanel.updateImageBuffer(bitmap)
 
     showWithoutFocusTransfer()
   }
