@@ -26,4 +26,7 @@ object Library {
   /** Name of this library's original author. */
   val ORIGINAL_AUTHOR_NAME: String = "Aleksi Lukkarinen"
 
+  /** Inception year of this library. */
+  val INCEPTION_YEAR: Int = 2015
+
 }

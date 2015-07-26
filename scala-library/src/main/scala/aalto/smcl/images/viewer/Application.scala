@@ -15,6 +15,20 @@ import aalto.smcl.images.viewer.events.external.{DisplayBitmapEvent, ExternalVie
 
 
 /**
+ * Information and functionality related to this application.
+ */
+object Application {
+
+  import aalto.smcl.Library
+
+  /** Full name of this application. */
+  val FULL_NAME = s"${Library.ABBREVIATED_NAME} Image Viewer"
+
+}
+
+
+
+/**
  *
  *
  * @author Aleksi Lukkarinen

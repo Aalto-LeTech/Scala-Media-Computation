@@ -21,13 +21,18 @@ import aalto.smcl.images.immutable.Bitmap
  */
 private[images] object ViewerMainFrame {
 
-  /** */
-  val MSG_ABOUT: String = "Image viewing application of the Scala Multimedia Computing Library.\n\n" +
-      "SMCL was originally created by Aleksi Lukkarinen in 2015 as a part of his\n" +
-      "Master's Thesis for Aalto University."
+  // @formatter:off
+  import aalto.smcl.Library._
 
   /** */
-  val STR_FRAME_TITLE: String = "SMCL Image Viewer"
+  val MSG_ABOUT: String =
+    s"""Image viewing application of the $FULL_NAME.
+      |
+      |Version $VERSION_STRING.
+      |
+      |$ABBREVIATED_NAME was originally created by $ORIGINAL_AUTHOR_NAME in $INCEPTION_YEAR as
+      |a part of his Master's Thesis for Aalto University.""".stripMargin
+  // @formatter:on
 
   /** */
   val MIN_FRAME_SIZE: Dimension = new Dimension(300, 200)
@@ -123,7 +128,7 @@ private[images] class ViewerMainFrame private(
 
   }
 
-  title = ViewerMainFrame.STR_FRAME_TITLE
+  title = Application.FULL_NAME
   minimumSize = ViewerMainFrame.MIN_FRAME_SIZE
   resizable = true
   contents = layoutBase
