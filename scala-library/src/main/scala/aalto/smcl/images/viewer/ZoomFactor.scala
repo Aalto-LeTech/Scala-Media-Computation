@@ -18,8 +18,41 @@ private[viewer] object ZoomFactor {
   /** */
   val validRangeInPercents: Range.Inclusive = 10 to 500
 
+  /** */
+  val STANDARD_ENLARGEMENT_FACTOR: Double = 1.1
+
+  /** */
+  val STANDARD_REDUCTION_FACTOR: Double = 0.9
+
   /**  */
   val IDENTITY = ZoomFactor(100)
+
+  /**  */
+  val ZF60 = ZoomFactor(60)
+
+  /**  */
+  val ZF70 = ZoomFactor(70)
+
+  /**  */
+  val ZF80 = ZoomFactor(80)
+
+  /**  */
+  val ZF90 = ZoomFactor(90)
+
+  /**  */
+  val ZF150 = ZoomFactor(150)
+
+  /**  */
+  val ZF200 = ZoomFactor(200)
+
+  /**  */
+  val ZF300 = ZoomFactor(300)
+
+  /**  */
+  val ZF400 = ZoomFactor(400)
+
+  /**  */
+  val ZF500 = ZoomFactor(500)
 
   /**
    *
@@ -61,6 +94,22 @@ private[viewer] class ZoomFactor private(val valueInPercents: Int)
 
     new ZoomFactor(newValue)
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def enlargeByStandardAmountIfPossible() =
+    this.adjustByIfPossible(ZoomFactor.STANDARD_ENLARGEMENT_FACTOR)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def reduceByStandardAmountIfPossible() =
+    this.adjustByIfPossible(ZoomFactor.STANDARD_REDUCTION_FACTOR)
 
   /**
    *

@@ -1,7 +1,6 @@
 package aalto.smcl.images.viewer
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
 import javax.swing.WindowConstants
 
 import scala.swing.Dialog.{Message, Options}
@@ -23,7 +22,6 @@ private[images] object ViewerMainFrame {
 
   /** */
   val MIN_FRAME_SIZE: Dimension = new Dimension(300, 200)
-
 
   /**
    *
@@ -68,7 +66,13 @@ private[images] class ViewerMainFrame private(
     private val _initialPreferredSize: Dimension) extends Frame {
 
   /** */
-  private val _imagePanel = new ImageDisplayPanel
+  private val _actionMap = new ActionMap(this)
+
+  /** */
+  val imagePanel = new ImageDisplayPanel
+
+  /** */
+  val layoutBase = new LayoutBase(imagePanel)
 
   /** */
   private var _forcefulClosing: Boolean = false
@@ -77,7 +81,32 @@ private[images] class ViewerMainFrame private(
   minimumSize = ViewerMainFrame.MIN_FRAME_SIZE
   preferredSize = _initialPreferredSize
   resizable = true
-  contents = new LayoutBase(_imagePanel)
+  contents = layoutBase
+
+  menuBar = MenuBuilder.newMenuBarUsing(_actionMap)
+      .menu("Image", Option(Key.I))
+      .item('copyToClipboard).separator()
+      .item('saveToFile).separator()
+      .item('exitViewer)
+      .defined()
+      .menu("View", Option(Key.V))
+      .item('ZoomIn)
+      .item('ZoomOut).separator()
+      .item('Zoom60Percent)
+      .item('Zoom70Percent)
+      .item('Zoom80Percent)
+      .item('Zoom90Percent)
+      .item('Zoom100Percent)
+      .item('Zoom150Percent)
+      .item('Zoom200Percent)
+      .item('Zoom300Percent)
+      .item('Zoom400Percent)
+      .item('Zoom500Percent)
+      .defined()
+      .menu("Help", Option(Key.H))
+      .item('About)
+      .defined()
+      .get()
 
   reactions += {
     case WindowClosing(_) =>
@@ -159,7 +188,7 @@ private[images] class ViewerMainFrame private(
    * @param bitmap
    */
   def updateBitmapBuffer(bitmap: Bitmap): Unit = {
-    _imagePanel.updateImageBuffer(bitmap)
+    imagePanel.updateImageBuffer(bitmap)
 
     showWithoutFocusTransfer()
   }

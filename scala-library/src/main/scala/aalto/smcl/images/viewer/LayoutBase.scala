@@ -18,11 +18,6 @@ import scala.swing.event.{Key, KeyPressed, MouseWheelMoved}
 private[viewer] class LayoutBase(
     private val _imagePanel: ImageDisplayPanel) extends BorderPanel {
 
-  /** */
-  private val ENLARGEMENT_ZOOMFACTOR: Double = 1.1
-
-  /** */
-  private val REDUCTION_ZOOMFACTOR: Double = 0.9
 
   /** */
   private val _calendar = Calendar.getInstance()
@@ -36,7 +31,7 @@ private[viewer] class LayoutBase(
     Key.Key4 -> ZoomFactor(400),
     Key.Key5 -> ZoomFactor(500),
     Key.Key6 -> ZoomFactor(60),
-    Key.Key7 -> ZoomFactor(75),
+    Key.Key7 -> ZoomFactor(70),
     Key.Key8 -> ZoomFactor(80),
     Key.Key9 -> ZoomFactor(90)
   )
@@ -147,6 +142,7 @@ private[viewer] class LayoutBase(
    * @return
    */
   def enlargingIfTrueElseReducing(enlargeIfTrue: Boolean) =
-    if (enlargeIfTrue) ENLARGEMENT_ZOOMFACTOR else REDUCTION_ZOOMFACTOR
+    if (enlargeIfTrue) ZoomFactor.STANDARD_ENLARGEMENT_FACTOR
+    else ZoomFactor.STANDARD_REDUCTION_FACTOR
 
 }
