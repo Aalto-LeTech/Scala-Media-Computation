@@ -5,6 +5,7 @@ import javax.swing.WindowConstants
 
 import scala.swing.Dialog.{Message, Options}
 import scala.swing._
+import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
 
 import aalto.smcl.common.{Screen, SwingUtils}
@@ -19,6 +20,14 @@ import aalto.smcl.images.immutable.Bitmap
  * @author Aleksi Lukkarinen
  */
 private[images] object ViewerMainFrame {
+
+  /** */
+  val MSG_ABOUT: String = "Image viewing application of the Scala Multimedia Computing Library.\n\n" +
+      "SMCL was originally created by Aleksi Lukkarinen in 2015 as a part of his\n" +
+      "Master's Thesis for Aalto University."
+
+  /** */
+  val STR_FRAME_TITLE: String = "SMCL Image Viewer"
 
   /** */
   val MIN_FRAME_SIZE: Dimension = new Dimension(300, 200)
@@ -66,22 +75,61 @@ private[images] class ViewerMainFrame private(
     private val _initialPreferredSize: Dimension) extends Frame {
 
   /** */
+  private val NO_MODIFIERS: Key.Modifiers = 0
+
+  /** */
   private val _actionMap = new ActionMap(this)
+
+  /** */
+  private var _forcefulClosing: Boolean = false
 
   /** */
   val imagePanel = new ImageDisplayPanel
 
   /** */
-  val layoutBase = new LayoutBase(imagePanel)
+  val scrollerViewportBackground = new GridBagPanel {
+
+    layout(imagePanel) = new Constraints
+    background = new Color(40, 40, 40)
+    revalidate()
+
+  }
 
   /** */
-  private var _forcefulClosing: Boolean = false
+  val scroller = new ScrollPane {
 
-  title = "SMCL Image Viewer"
+    contents = scrollerViewportBackground
+    peer.getViewport.setPreferredSize(_initialPreferredSize)
+    horizontalScrollBarPolicy = ScrollPane.BarPolicy.Always
+    verticalScrollBarPolicy = ScrollPane.BarPolicy.Always
+    peer.setWheelScrollingEnabled(false)
+    focusable = true
+    revalidate()
+
+  }
+
+  /** */
+  val verticalSwingScrollbar = scroller.verticalScrollBar.peer
+
+  /** */
+  val horizontalSwingScrollbar = scroller.horizontalScrollBar.peer
+
+  /** */
+  val layoutBase = new BorderPanel {
+
+    layout(scroller) = BorderPanel.Position.Center
+
+    focusable = true
+
+  }
+
+  title = ViewerMainFrame.STR_FRAME_TITLE
   minimumSize = ViewerMainFrame.MIN_FRAME_SIZE
-  preferredSize = _initialPreferredSize
+  //preferredSize = _initialPreferredSize
   resizable = true
   contents = layoutBase
+
+  peer.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
 
   menuBar = MenuBuilder.newMenuBarUsing(_actionMap)
       .menu("Image", Option(Key.I))
@@ -108,7 +156,54 @@ private[images] class ViewerMainFrame private(
       .defined()
       .get()
 
+  val zoomInAction  = _actionMap.get('ZoomIn).get
+  val zoomOutAction = _actionMap.get('ZoomOut).get
+
   reactions += {
+    case KeyPressed(source: Component, key: Key.Value, modifiers: Key.Modifiers, location: Key.Location.Value) =>
+      // NOTE (AL 26.7.2015):
+      // For non-slugish performance, the keyboard processing is done via
+      // event listener instead of relying on the Action-class-based accelerators.
+      key match {
+        case Key.Plus  => zoomInAction.apply()
+        case Key.Minus => zoomOutAction.apply()
+        case _         => ()
+      }
+
+    case MouseWheelMoved(source: Component, point: Point, modifiers: Key.Modifiers, rotation: Int)
+      if rotation != 0 =>
+
+      val upOrLeftDirection = rotation < 1
+
+      modifiers match {
+        case NO_MODIFIERS | Shift =>
+          val targetScrollBar = modifiers match {
+            case NO_MODIFIERS => verticalSwingScrollbar
+            case _            => horizontalSwingScrollbar
+          }
+
+          val op = upOrLeftDirection match {
+            case true => (_: Int) - (_: Int)
+            case _    => (_: Int) + (_: Int)
+          }
+
+          val newPositionCandidate =
+            op(targetScrollBar.getValue,
+              targetScrollBar.getBlockIncrement * Math.abs(rotation))
+
+          val newPosition = upOrLeftDirection match {
+            case true => newPositionCandidate.max(targetScrollBar.getMinimum)
+            case _    => newPositionCandidate.min(targetScrollBar.getMaximum)
+          }
+
+          targetScrollBar.setValue(newPosition)
+
+        case Control =>
+          if (upOrLeftDirection) zoomOutAction.apply() else zoomInAction.apply()
+
+        case _ => ()
+      }
+
     case WindowClosing(_) =>
       if (notToBeClosedForcefully) {
         if (shouldCloseBasedOn(closingMessageBoxResult()))
@@ -117,14 +212,16 @@ private[images] class ViewerMainFrame private(
       else {
         hideAndDispose()
       }
-
-    case _ => ()
   }
 
-  peer.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
 
   pack()
-  listenTo(this)
+
+  listenTo(this,
+    layoutBase.keys,
+    scroller.mouse.clicks,
+    scroller.mouse.moves,
+    scroller.mouse.wheel)
 
   /**
    *
@@ -192,5 +289,11 @@ private[images] class ViewerMainFrame private(
 
     showWithoutFocusTransfer()
   }
+
+  /**
+   *
+   */
+  def showAboutBox(): Unit =
+    Dialog.showMessage(parent = this, ViewerMainFrame.MSG_ABOUT, this.title)
 
 }

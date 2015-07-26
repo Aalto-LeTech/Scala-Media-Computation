@@ -9,7 +9,7 @@ import scala.swing.Swing
 import rx.lang.scala.{Observable, Observer}
 
 import aalto.smcl.images.immutable.Bitmap
-import aalto.smcl.images.viewer.events.{DisplayBitmapEvent, ForceAllViewersToClose, ViewerEvent}
+import aalto.smcl.images.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
 
 
 
@@ -19,8 +19,8 @@ import aalto.smcl.images.viewer.events.{DisplayBitmapEvent, ForceAllViewersToClo
  *
  * @author Aleksi Lukkarinen
  */
-private[images] class Application(val incomingEventStream: Observable[ViewerEvent])
-    extends Observer[ViewerEvent] {
+private[images] class Application(val incomingEventStream: Observable[ExternalViewerEvent])
+    extends Observer[ExternalViewerEvent] {
 
   private[this] var _viewers = Map[UUID, ViewerMainFrame]()
 
@@ -29,7 +29,7 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
    *
    * @param event
    */
-  private[this] def processEvent(event: ViewerEvent): Unit = event match {
+  private[this] def processEvent(event: ExternalViewerEvent): Unit = event match {
     case DisplayBitmapEvent(bitmap) => createOrUpdateViewerFor(bitmap)
 
     case ForceAllViewersToClose() => closeAllViewersWithTheForce()
@@ -70,14 +70,14 @@ private[images] class Application(val incomingEventStream: Observable[ViewerEven
   }
 
   // Set up an observer for the incoming event stream
-  incomingEventStream.subscribe(new Observer[ViewerEvent] {
+  incomingEventStream.subscribe(new Observer[ExternalViewerEvent] {
 
     /**
      *
      *
      * @param event
      */
-    override def onNext(event: ViewerEvent): Unit = {
+    override def onNext(event: ExternalViewerEvent): Unit = {
       processEvent(event)
     }
 

@@ -1,8 +1,8 @@
 package aalto.smcl.images.viewer
 
 
-import scala.swing.event.{WindowClosing, Key}
 import scala.swing.event.Key.Modifier.{Alt, Control}
+import scala.swing.event.{Key, WindowClosing}
 
 
 
@@ -30,33 +30,33 @@ private[viewer] class ActionMap(val relatedMainFrame: ViewerMainFrame) extends A
       }
 
   'ZoomIn ==>
-      ViewerAction("Zoom In", Option(Key.I), Option((Key.Plus, 0))) {
+      ViewerAction("Zoom In", Option(Key.I)) {
         relatedMainFrame.imagePanel.adjustZoomWith(_.enlargeByStandardAmountIfPossible())
       }
 
   'ZoomOut ==>
-      ViewerAction("Zoom Out", Option(Key.O), Option((Key.Minus, 0))) {
+      ViewerAction("Zoom Out", Option(Key.O)) {
         relatedMainFrame.imagePanel.adjustZoomWith(_.reduceByStandardAmountIfPossible())
       }
 
   'Zoom60Percent ==>
       ViewerAction("Zoom 60 %", Option(Key.Key6), Option((Key.Key6, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.ZF60
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_60
       }
 
   'Zoom70Percent ==>
       ViewerAction("Zoom 70 %", Option(Key.Key7), Option((Key.Key7, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.ZF70
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_70
       }
 
   'Zoom80Percent ==>
       ViewerAction("Zoom 80 %", Option(Key.Key8), Option((Key.Key8, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.ZF80
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_80
       }
 
   'Zoom90Percent ==>
       ViewerAction("Zoom 90 %", Option(Key.Key9), Option((Key.Key9, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.ZF90
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_90
       }
 
   'Zoom100Percent ==>
@@ -66,32 +66,32 @@ private[viewer] class ActionMap(val relatedMainFrame: ViewerMainFrame) extends A
 
   'Zoom150Percent ==>
       ViewerAction("Zoom 150 %", Option(Key.Key1), Option((Key.Key1, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.ZF150
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_150
       }
 
   'Zoom200Percent ==>
       ViewerAction("Zoom 200 %", Option(Key.Key2), Option((Key.Key2, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.ZF200
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_200
       }
 
   'Zoom300Percent ==>
       ViewerAction("Zoom 300 %", Option(Key.Key3), Option((Key.Key3, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.ZF300
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_300
       }
 
   'Zoom400Percent ==>
       ViewerAction("Zoom 400 %", Option(Key.Key4), Option((Key.Key4, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.ZF400
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_400
       }
 
   'Zoom500Percent ==>
       ViewerAction("Zoom 500 %", Option(Key.Key5), Option((Key.Key5, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.ZF500
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_500
       }
 
   'About ==>
       ViewerAction("About", Option(Key.F1), Option((Key.F1, 0))) {
-
+        relatedMainFrame.showAboutBox()
       }
 
 }

@@ -10,7 +10,7 @@ import rx.lang.scala.{JavaConversions, Subject}
 import aalto.smcl.common.SwingUtils
 import aalto.smcl.images.immutable.Bitmap
 import aalto.smcl.images.viewer.Application
-import aalto.smcl.images.viewer.events.{DisplayBitmapEvent, ForceAllViewersToClose, ViewerEvent}
+import aalto.smcl.images.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
 
 
 
@@ -23,7 +23,7 @@ import aalto.smcl.images.viewer.events.{DisplayBitmapEvent, ForceAllViewersToClo
 private[images] class ViewerClient {
 
   /** */
-  private val _outgoingEventSubject = Subject[ViewerEvent]()
+  private val _outgoingEventSubject = Subject[ExternalViewerEvent]()
 
   /** */
   private val _observableOutgoingEventSubject =
@@ -75,7 +75,7 @@ private[images] class ViewerClient {
    *
    * @param event
    */
-  def dispatchEvent(event: ViewerEvent): Unit = {
+  def dispatchEvent(event: ExternalViewerEvent): Unit = {
     require(event != null, "Event to be dispatched must not be null.")
 
     _outgoingEventSubject.onNext(event)

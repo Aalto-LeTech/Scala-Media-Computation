@@ -28,31 +28,31 @@ private[viewer] object ZoomFactor {
   val IDENTITY = ZoomFactor(100)
 
   /**  */
-  val ZF60 = ZoomFactor(60)
+  val PERCENTS_60 = ZoomFactor(60)
 
   /**  */
-  val ZF70 = ZoomFactor(70)
+  val PERCENTS_70 = ZoomFactor(70)
 
   /**  */
-  val ZF80 = ZoomFactor(80)
+  val PERCENTS_80 = ZoomFactor(80)
 
   /**  */
-  val ZF90 = ZoomFactor(90)
+  val PERCENTS_90 = ZoomFactor(90)
 
   /**  */
-  val ZF150 = ZoomFactor(150)
+  val PERCENTS_150 = ZoomFactor(150)
 
   /**  */
-  val ZF200 = ZoomFactor(200)
+  val PERCENTS_200 = ZoomFactor(200)
 
   /**  */
-  val ZF300 = ZoomFactor(300)
+  val PERCENTS_300 = ZoomFactor(300)
 
   /**  */
-  val ZF400 = ZoomFactor(400)
+  val PERCENTS_400 = ZoomFactor(400)
 
   /**  */
-  val ZF500 = ZoomFactor(500)
+  val PERCENTS_500 = ZoomFactor(500)
 
   /**
    *
