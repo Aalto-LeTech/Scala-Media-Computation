@@ -22,7 +22,7 @@ private[images] case class CreateBitmap(widthInPixels: Int, heightInPixels: Int)
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this [[AbstractBufferProviderOperation]] instance */
-  val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap(Map(
     "width" -> Option("${widthInPixels} px"),
     "height" -> Option("${heightInPixels} px")
   ))

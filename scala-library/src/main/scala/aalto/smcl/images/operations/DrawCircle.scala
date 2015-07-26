@@ -36,7 +36,7 @@ private[images] case class DrawCircle(
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this [[AbstractSingleSourceOperation]] instance */
-  val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap(Map(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),
     "radius" -> Option(s"$radiusInPixels px"),

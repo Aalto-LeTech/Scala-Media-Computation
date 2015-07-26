@@ -25,7 +25,7 @@ private[images] case class Clear(private val colorOption: Option[Color] = None)
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this operation instance */
-  val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap(Map(
     "background-color" -> Option("0x${_color.asPixelInt.toArgbHexColorString}")))
 
   /**
