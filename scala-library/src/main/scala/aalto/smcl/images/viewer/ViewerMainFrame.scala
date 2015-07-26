@@ -38,8 +38,8 @@ private[images] object ViewerMainFrame {
    * @param bitmap
    */
   def apply(bitmap: Bitmap): ViewerMainFrame = {
-    val initialFrameSize = initialFrameSizeFor(bitmap)
-    val frame = new ViewerMainFrame(initialFrameSize)
+    val initialViewAreaSize = initialViewAreaSizeFor(bitmap)
+    val frame = new ViewerMainFrame(initialViewAreaSize)
 
     frame.updateBitmapBuffer(bitmap)
     frame
@@ -51,7 +51,7 @@ private[images] object ViewerMainFrame {
    * @param bitmap
    * @return
    */
-  def initialFrameSizeFor(bitmap: Bitmap): Dimension = {
+  def initialViewAreaSizeFor(bitmap: Bitmap): Dimension = {
     val width = (Screen.width * 0.8).toInt
         .min((bitmap.widthInPixels * 1.1).toInt)
         .max(MIN_FRAME_SIZE.width)
@@ -72,7 +72,7 @@ private[images] object ViewerMainFrame {
  * @author Aleksi Lukkarinen
  */
 private[images] class ViewerMainFrame private(
-    private val _initialPreferredSize: Dimension) extends Frame {
+    private val _initialPreferredViewAreaSize: Dimension) extends Frame {
 
   /** */
   private val NO_MODIFIERS: Key.Modifiers = 0
@@ -99,7 +99,7 @@ private[images] class ViewerMainFrame private(
   val scroller = new ScrollPane {
 
     contents = scrollerViewportBackground
-    peer.getViewport.setPreferredSize(_initialPreferredSize)
+    peer.getViewport.setPreferredSize(_initialPreferredViewAreaSize)
     horizontalScrollBarPolicy = ScrollPane.BarPolicy.Always
     verticalScrollBarPolicy = ScrollPane.BarPolicy.Always
     peer.setWheelScrollingEnabled(false)
@@ -125,7 +125,6 @@ private[images] class ViewerMainFrame private(
 
   title = ViewerMainFrame.STR_FRAME_TITLE
   minimumSize = ViewerMainFrame.MIN_FRAME_SIZE
-  //preferredSize = _initialPreferredSize
   resizable = true
   contents = layoutBase
 
