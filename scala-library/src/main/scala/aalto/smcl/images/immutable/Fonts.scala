@@ -25,7 +25,7 @@ object Fonts extends Map[String, Font] with Immutable {
 
 
   /**
-   * 
+   *
    */
   def initializeFontMap(): Unit = {
     Platform.awtGraphEnv.getAllFonts.foreach {font =>
