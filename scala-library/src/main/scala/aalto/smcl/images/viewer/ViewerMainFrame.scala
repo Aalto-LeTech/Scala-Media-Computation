@@ -105,8 +105,8 @@ private[images] class ViewerMainFrame private(
 
     contents = scrollerViewportBackground
     peer.getViewport.setPreferredSize(_initialPreferredViewAreaSize)
-    horizontalScrollBarPolicy = ScrollPane.BarPolicy.Always
-    verticalScrollBarPolicy = ScrollPane.BarPolicy.Always
+    //horizontalScrollBarPolicy = ScrollPane.BarPolicy.Always
+    //verticalScrollBarPolicy = ScrollPane.BarPolicy.Always
     peer.setWheelScrollingEnabled(false)
     focusable = true
     revalidate()
