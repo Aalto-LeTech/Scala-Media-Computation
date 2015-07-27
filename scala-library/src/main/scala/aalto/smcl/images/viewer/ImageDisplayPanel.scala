@@ -6,6 +6,7 @@ import java.awt.image.{BufferedImage => JBufferedImage}
 import java.awt.{Color => JColor, Graphics2D => JGraphics2D, RenderingHints}
 
 import scala.swing._
+import scala.util.Try
 
 import aalto.smcl.images.immutable.Bitmap
 
@@ -33,7 +34,7 @@ private[images] class ImageDisplayPanel extends Panel {
    *
    * @param g
    */
-  override def paintComponent(g: JGraphics2D) = {
+  override def paintComponent(g: JGraphics2D): Unit = {
     super.paintComponent(g)
 
     g.setRenderingHint(
@@ -58,15 +59,20 @@ private[images] class ImageDisplayPanel extends Panel {
   def zoomFactor_=(value: ZoomFactor): Unit = {
     require(value != null, "Internal error: Zoom factor cannot be null.")
 
-    _zoomFactor = value
 
-    updateView()
+    cursor = Application.WAIT_CURSOR
+    _zoomFactor = value
+    val result = Try(updateView()) // TODO: Error processing, here as well as elsewhere...
+    if (result.isFailure)
+      println(result)
+    cursor = Application.DEFAULT_CURSOR
   }
 
   /**
    *
    *
    * @param adjuster
+   * @return
    */
   def adjustZoomWith(adjuster: ZoomFactor => ZoomFactor): ZoomFactor = {
     require(adjuster != null, "Internal error: Function cannot be null.")
@@ -74,8 +80,7 @@ private[images] class ImageDisplayPanel extends Panel {
     val newZoomFactor = adjuster(_zoomFactor)
     require(newZoomFactor != null, "Internal error: Zoom factor returned by adjuster function cannot be null.")
 
-    _zoomFactor = newZoomFactor
-    updateView()
+    zoomFactor = newZoomFactor
 
     newZoomFactor
   }
@@ -90,7 +95,11 @@ private[images] class ImageDisplayPanel extends Panel {
 
     _bitmapOption = Option(bitmap)
 
-    updateView()
+    cursor = Application.WAIT_CURSOR
+    val result = Try(updateView()) // TODO: Error processing, here as well as elsewhere...
+    if (result.isFailure)
+      println(result)
+    cursor = Application.DEFAULT_CURSOR
   }
 
   /**

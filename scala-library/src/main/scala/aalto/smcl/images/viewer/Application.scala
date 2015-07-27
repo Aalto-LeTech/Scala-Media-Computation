@@ -1,6 +1,7 @@
 package aalto.smcl.images.viewer
 
 
+import java.awt.Cursor
 import java.awt.image.{BufferedImage => JBufferedImage}
 import java.util.UUID
 
@@ -23,6 +24,15 @@ object Application {
 
   /** Full name of this application. */
   val FULL_NAME = s"${Library.ABBREVIATED_NAME} Image Viewer"
+
+  /** Default mouse cursor used by this application. */
+  val DEFAULT_CURSOR: Cursor = Cursor.getDefaultCursor
+
+  /** Waiting mouse cursor used by this application. */
+  val WAIT_CURSOR: Cursor = Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)
+
+  /** Hand mouse cursor used by this application. */
+  val HAND_CURSOR: Cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
 
 }
 

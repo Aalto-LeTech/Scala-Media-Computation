@@ -203,7 +203,9 @@ private[images] class ViewerMainFrame private(
           targetScrollBar.setValue(newPosition)
 
         case Control =>
+          cursor = Application.WAIT_CURSOR
           if (upOrLeftDirection) zoomOutAction.apply() else zoomInAction.apply()
+          cursor = Application.DEFAULT_CURSOR
 
         case _ => ()
       }
@@ -297,7 +299,10 @@ private[images] class ViewerMainFrame private(
   /**
    *
    */
-  def showAboutBox(): Unit =
+  def showAboutBox(): Unit = {
+    cursor = Application.WAIT_CURSOR
     Dialog.showMessage(parent = this, ViewerMainFrame.MSG_ABOUT, this.title)
+    cursor = Application.DEFAULT_CURSOR
+  }
 
 }
