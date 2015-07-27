@@ -19,14 +19,19 @@ private[smcl] class SmclSettings() extends Mutable {
   //
   ///////////////////////////////////////////////
 
-  /**  */
-  var displayNewBitmapsAutomatically: Boolean = true
+  /** */
+  val DISPLAY_NEW_BITMAPS_AUTOMATICALLY_DEFAULT = true
 
-  /**  */
-  var displayBitmapsAutomaticallyAfterOperations: Boolean = true
+  /** */
+  var displayNewBitmapsAutomatically: Boolean =
+    DISPLAY_NEW_BITMAPS_AUTOMATICALLY_DEFAULT
 
+  /** */
+  val DISPLAY_BITMAPS_AUTOMATICALLY_AFTER_OPERATIONS = true
 
-
+  /** */
+  var displayBitmapsAutomaticallyAfterOperations: Boolean =
+    DISPLAY_BITMAPS_AUTOMATICALLY_AFTER_OPERATIONS
 
 
   ///////////////////////////////////////////////
@@ -35,8 +40,12 @@ private[smcl] class SmclSettings() extends Mutable {
   //
   ///////////////////////////////////////////////
 
-  /**  */
-  private[this] var _defaultBitmapWidthInPixels: Int = 50
+  /** */
+  val DEFAULT_BITMAP_WIDTH_IN_PIXELS_DEFAULT = 50
+
+  /** */
+  private[this] var _defaultBitmapWidthInPixels: Int =
+    DEFAULT_BITMAP_WIDTH_IN_PIXELS_DEFAULT
 
   /**
    *
@@ -56,15 +65,18 @@ private[smcl] class SmclSettings() extends Mutable {
   }
 
 
-
   ///////////////////////////////////////////////
   //
   // Default bitmap height
   //
   ///////////////////////////////////////////////
 
-  /**  */
-  private[this] var _defaultBitmapHeightInPixels: Int = 50
+  /** */
+  val DEFAULT_BITMAP_HEIGHT_IN_PIXELS_DEFAULT = 50
+
+  /** */
+  private[this] var _defaultBitmapHeightInPixels: Int =
+    DEFAULT_BITMAP_HEIGHT_IN_PIXELS_DEFAULT
 
   /**
    *
@@ -84,15 +96,18 @@ private[smcl] class SmclSettings() extends Mutable {
   }
 
 
-
   ///////////////////////////////////////////////
   //
   // Default background color
   //
   ///////////////////////////////////////////////
 
-  /**  */
-  private[this] var _defaultBackgroundColor: Color = NamedColors.white
+  /** */
+  val DEFAULT_BACKGROUND_COLOR_DEFAULT = NamedColors.white
+
+  /** */
+  private[this] var _defaultBackgroundColor: Color =
+    DEFAULT_BACKGROUND_COLOR_DEFAULT
 
   /**
    *
@@ -112,15 +127,18 @@ private[smcl] class SmclSettings() extends Mutable {
   }
 
 
-
   ///////////////////////////////////////////////
   //
   // Default primary color
   //
   ///////////////////////////////////////////////
 
-  /**  */
-  private[this] var _defaultPrimaryColor: Color = NamedColors.black
+  /** */
+  val DEFAULT_PRIMARY_COLOR_DEFAULT = NamedColors.black
+
+  /** */
+  private[this] var _defaultPrimaryColor: Color =
+    DEFAULT_PRIMARY_COLOR_DEFAULT
 
   /**
    *
@@ -137,6 +155,59 @@ private[smcl] class SmclSettings() extends Mutable {
     require(value != null, "Default primary color cannot be null.")
 
     _defaultPrimaryColor = value
+  }
+
+
+  ///////////////////////////////////////////////
+  //
+  // Default secondary color
+  //
+  ///////////////////////////////////////////////
+
+  /** */
+  val DEFAULT_SECONDARY_COLOR_DEFAULT = NamedColors.black
+
+  /** */
+  private[this] var _defaultSecondaryColor: Color =
+    DEFAULT_SECONDARY_COLOR_DEFAULT
+
+  /**
+   *
+   */
+  def defaultSecondaryColor: Color = _defaultSecondaryColor
+
+  /**
+   *
+   *
+   * @param value
+   * @return
+   */
+  def defaultSecondaryColor_=(value: Color): Unit = {
+    require(value != null, "Default secondary color cannot be null.")
+
+    _defaultSecondaryColor = value
+  }
+
+
+  ///////////////////////////////////////////////
+  //
+  // Resetting the settings to default values
+  //
+  ///////////////////////////////////////////////
+
+  /**
+   * Resets all settings to their default values.
+   */
+  def reset(): Unit = {
+    displayNewBitmapsAutomatically = DISPLAY_NEW_BITMAPS_AUTOMATICALLY_DEFAULT
+    displayBitmapsAutomaticallyAfterOperations = DISPLAY_BITMAPS_AUTOMATICALLY_AFTER_OPERATIONS
+
+    defaultBitmapWidthInPixels = DEFAULT_BITMAP_WIDTH_IN_PIXELS_DEFAULT
+    defaultBitmapHeightInPixels = DEFAULT_BITMAP_HEIGHT_IN_PIXELS_DEFAULT
+
+    defaultBackgroundColor = DEFAULT_BACKGROUND_COLOR_DEFAULT
+    defaultPrimaryColor = DEFAULT_PRIMARY_COLOR_DEFAULT
+    defaultSecondaryColor = DEFAULT_SECONDARY_COLOR_DEFAULT
   }
 
 }
