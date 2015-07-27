@@ -163,6 +163,7 @@ private[images] class ViewerMainFrame private(
   val zoomInAction  = _actionMap.get('ZoomIn).get
   val zoomOutAction = _actionMap.get('ZoomOut).get
 
+
   reactions += {
     case KeyPressed(source: Component, key: Key.Value, modifiers: Key.Modifiers, location: Key.Location.Value) =>
       // NOTE (AL 26.7.2015):
@@ -171,7 +172,21 @@ private[images] class ViewerMainFrame private(
       key match {
         case Key.Plus  => zoomInAction.apply()
         case Key.Minus => zoomOutAction.apply()
-        case _         => ()
+
+        case Key.Up | Key.KpUp | Key.Down | Key.KpDown |
+             Key.Left | Key.KpLeft | Key.Right | Key.KpRight |
+             Key.PageUp | Key.PageDown | Key.Home | Key.End =>
+
+          val directions = representedDirections(key)
+
+          val magnitude = modifiers match {
+            case Shift => ScrollingMagnitude.Unit
+            case _     => ScrollingMagnitude.Block
+          }
+
+          adjustScrollBars(directions, magnitude)
+
+        case _ => ()
       }
 
     case MouseWheelMoved(source: Component, point: Point, modifiers: Key.Modifiers, rotation: Int)
@@ -181,26 +196,18 @@ private[images] class ViewerMainFrame private(
 
       modifiers match {
         case NO_MODIFIERS | Shift =>
-          val targetScrollBar = modifiers match {
-            case NO_MODIFIERS => verticalSwingScrollbar
-            case _            => horizontalSwingScrollbar
+          val direction = (modifiers, upOrLeftDirection) match {
+            case (NO_MODIFIERS, true)  => ScrollingDirection.Upwards
+            case (NO_MODIFIERS, false) => ScrollingDirection.Downwards
+            case (Shift, true)         => ScrollingDirection.Leftwards
+            case (Shift, false)        => ScrollingDirection.Rightwards
+
+            case _ =>
+              throw new RuntimeException(
+                "Internal error: Invalid value match when determining scrolling direction.")
           }
 
-          val op = upOrLeftDirection match {
-            case true => (_: Int) - (_: Int)
-            case _    => (_: Int) + (_: Int)
-          }
-
-          val newPositionCandidate =
-            op(targetScrollBar.getValue,
-              targetScrollBar.getBlockIncrement * Math.abs(rotation))
-
-          val newPosition = upOrLeftDirection match {
-            case true => newPositionCandidate.max(targetScrollBar.getMinimum)
-            case _    => newPositionCandidate.min(targetScrollBar.getMaximum)
-          }
-
-          targetScrollBar.setValue(newPosition)
+          adjustScrollBars(Seq(direction), ScrollingMagnitude.Block, Math.abs(rotation))
 
         case Control =>
           cursor = Application.WAIT_CURSOR
@@ -228,6 +235,113 @@ private[images] class ViewerMainFrame private(
     scroller.mouse.clicks,
     scroller.mouse.moves,
     scroller.mouse.wheel)
+
+
+  /**
+   *
+   *
+   * @param magnitude
+   * @param directions
+   */
+  def adjustScrollBars(
+      directions: Seq[ScrollingDirection.Value],
+      magnitude: ScrollingMagnitude.Value,
+      steps: Int = 1) = {
+
+    import aalto.smcl.images.viewer.ScrollingDirection._
+
+    directions.foreach {direction =>
+      val upOrLeftDirection = direction match {
+        case Upwards | Leftwards => true
+        case _                   => false
+      }
+
+      val targetScrollBar = direction match {
+        case Upwards | Downwards => verticalSwingScrollbar
+        case _                   => horizontalSwingScrollbar
+      }
+
+      val op = upOrLeftDirection match {
+        case true => (_: Int) - (_: Int)
+        case _    => (_: Int) + (_: Int)
+      }
+
+      val adjustment = magnitude match {
+        case ScrollingMagnitude.Unit => targetScrollBar.getUnitIncrement
+        case _                       => targetScrollBar.getBlockIncrement
+      }
+
+      val newPositionCandidate = op(targetScrollBar.getValue, adjustment)
+
+      val newPosition = upOrLeftDirection match {
+        case true => newPositionCandidate.max(targetScrollBar.getMinimum)
+        case _    => newPositionCandidate.min(targetScrollBar.getMaximum)
+      }
+
+      targetScrollBar.setValue(newPosition)
+    }
+  }
+
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def representedDirections(key: Key.Value): Seq[ScrollingDirection.Value] = {
+    var result = Seq[ScrollingDirection.Value]()
+
+    if (representsMovingUpwards(key))
+      result = result :+ ScrollingDirection.Upwards
+
+    if (representsMovingDownwards(key))
+      result = result :+ ScrollingDirection.Downwards
+
+    if (representsMovingLeftwards(key))
+      result = result :+ ScrollingDirection.Leftwards
+
+    if (representsMovingRightwards(key))
+      result = result :+ ScrollingDirection.Rightwards
+
+    result
+  }
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def representsMovingUpwards(key: Key.Value): Boolean =
+    (key == Key.Up) || (key == Key.KpUp) || (key == Key.Home) || (key == Key.PageUp)
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def representsMovingDownwards(key: Key.Value): Boolean =
+    (key == Key.Down) || (key == Key.KpDown) || (key == Key.End) || (key == Key.PageDown)
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def representsMovingLeftwards(key: Key.Value): Boolean =
+    (key == Key.Left) || (key == Key.KpLeft) || (key == Key.Home) || (key == Key.End)
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def representsMovingRightwards(key: Key.Value): Boolean =
+    (key == Key.Right) || (key == Key.KpRight) || (key == Key.PageUp) || (key == Key.PageDown)
 
   /**
    *
@@ -278,7 +392,7 @@ private[images] class ViewerMainFrame private(
   def closingMessageBoxResult(): Dialog.Result.Value = {
     Dialog.showConfirmation(
       this,
-      "Do you really want to close this window without saving?",
+      "Are you sure you want to exit without saving?\n\nUnsaved content will be lost.",
       this.title,
       Options.YesNo,
       Message.Question
