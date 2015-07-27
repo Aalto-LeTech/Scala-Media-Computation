@@ -167,7 +167,7 @@ private[images] class ViewerMainFrame private(
   reactions += {
     case KeyPressed(source: Component, key: Key.Value, modifiers: Key.Modifiers, location: Key.Location.Value) =>
       // NOTE (AL 26.7.2015):
-      // For non-slugish performance, the keyboard processing is done via
+      // For non-sluggish performance, the keyboard processing is done via
       // event listener instead of relying on the Action-class-based accelerators.
       key match {
         case Key.Plus  => zoomInAction.apply()
