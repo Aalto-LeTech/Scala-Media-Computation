@@ -29,4 +29,20 @@ object Library {
   /** Inception year of this library. */
   val INCEPTION_YEAR: Int = 2015
 
+
+  // @formatter:off
+  /** */
+  private val MSG_ABOUT: String =
+    s"""$FULL_NAME ($ABBREVIATED_NAME)
+      |Version $VERSION_STRING.
+      |
+      |$ABBREVIATED_NAME was originally created by $ORIGINAL_AUTHOR_NAME in $INCEPTION_YEAR as
+      |a part of his Master's Thesis for Aalto University.""".stripMargin
+  // @formatter:on
+
+  /**
+   * Prints an information message about the SMCL.
+   */
+  def information(): Unit = println(MSG_ABOUT)
+
 }

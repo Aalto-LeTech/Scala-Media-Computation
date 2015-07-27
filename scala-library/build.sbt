@@ -18,6 +18,7 @@ crossScalaVersions := Seq("2.10.5")
 // scala-xml                    http://search.maven.org/#search|ga|1|scala-xml
 //
 
+// @formatter:off
 libraryDependencies ++= (scalaBinaryVersion.value match {
   case "2.10" => Seq(
     "io.reactivex"              % "rxscala_2.10"      % "0.25.0"                  withSources() withJavadoc(),
@@ -36,12 +37,15 @@ libraryDependencies ++= (scalaBinaryVersion.value match {
     "org.scala-lang.modules"    % "scala-xml_2.11"    % "1.0.4"                   withSources() withJavadoc()
   )
 })
+// @formatter:on
 
-initialCommands in console := """
-   |import aalto.smcl.common._
-   |import aalto.smcl.images._
-   |import aalto.smcl.images.immutable._
-   |""".stripMargin
+
+initialCommands in console :=
+    """import aalto.smcl._
+      |import aalto.smcl.common._
+      |import aalto.smcl.images._
+      |import aalto.smcl.images.immutable._
+      | """.stripMargin
 
 
 scalacOptions ++= Seq(
