@@ -1,7 +1,7 @@
 package aalto.smcl.common
 
 
-import java.awt.Toolkit
+import java.awt.{GraphicsEnvironment, Toolkit}
 import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}
 
 
@@ -19,6 +19,9 @@ private[smcl] object Platform {
 
   /** AWT toolkit. */
   val awtToolkit = Toolkit.getDefaultToolkit
+
+  /** AWT graphics environment */
+  val awtGraphEnv = GraphicsEnvironment.getLocalGraphicsEnvironment
 
 
   initializePlatform()
