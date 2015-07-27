@@ -120,8 +120,38 @@ private[images] class ViewerMainFrame private(
   val horizontalSwingScrollbar = scroller.horizontalScrollBar.peer
 
   /** */
+  val toolbar = new ToolBar() {
+
+    name = "Main"
+
+    contents += new Button(_actionMap.get('copyToClipboard).get) {
+
+    }
+
+    contents += new Button(_actionMap.get('saveToFile).get) {
+
+    }
+
+    contents += new Separator()
+
+    contents += new Button(_actionMap.get('ZoomIn).get) {
+
+    }
+
+    contents += new Button(_actionMap.get('ZoomOut).get) {
+
+    }
+
+    contents += new Button(_actionMap.get('Zoom100Percent).get) {
+
+    }
+
+  }
+
+  /** */
   val layoutBase = new BorderPanel {
 
+    layout(toolbar) = BorderPanel.Position.North
     layout(scroller) = BorderPanel.Position.Center
 
     focusable = true
