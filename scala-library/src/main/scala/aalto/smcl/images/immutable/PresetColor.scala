@@ -11,7 +11,7 @@ import aalto.smcl.images.{transparencyComponentFrom, blueComponentFrom, greenCom
  *
  * @author Aleksi Lukkarinen
  */
-object PresetColor {
+private[images] object PresetColor {
 
   /**
    *
@@ -61,9 +61,4 @@ class PresetColor private[immutable] (
   /** Returns `true` if this [[Color]] is provided by SMCL, otherwise `false`. */
   override val isPreset: Boolean = true
 
-} with Color(red, green, blue, transparency, nameOption) with Immutable {
-
-  // Add this preset color into the NamedColors map
-  NamedColors + (nameOption.get -> this)
-
-}
+} with Color(red, green, blue, transparency, nameOption) with Immutable { }

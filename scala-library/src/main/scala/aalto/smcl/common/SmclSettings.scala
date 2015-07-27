@@ -11,7 +11,35 @@ import aalto.smcl.images.immutable.{Color, NamedColors}
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class SmclSettings() extends Mutable {
+private[smcl] class SmclSettings() {
+
+  ///////////////////////////////////////////////
+  //
+  // Default values of all settings
+  //
+  ///////////////////////////////////////////////
+
+  /** */
+  val DISPLAY_NEW_BITMAPS_AUTOMATICALLY_DEFAULT: Boolean = true
+
+  /** */
+  val DISPLAY_BITMAPS_AUTOMATICALLY_AFTER_OPERATIONS: Boolean = true
+
+  /** */
+  val DEFAULT_BITMAP_WIDTH_IN_PIXELS_DEFAULT: Int = 50
+
+  /** */
+  val DEFAULT_BITMAP_HEIGHT_IN_PIXELS_DEFAULT: Int = 50
+
+  /** */
+  val DEFAULT_BACKGROUND_COLOR_DEFAULT: Color = NamedColors.white
+
+  /** */
+  val DEFAULT_PRIMARY_COLOR_DEFAULT: Color = NamedColors.black
+
+  /** */
+  val DEFAULT_SECONDARY_COLOR_DEFAULT: Color = NamedColors.black
+
 
   ///////////////////////////////////////////////
   //
@@ -20,18 +48,10 @@ private[smcl] class SmclSettings() extends Mutable {
   ///////////////////////////////////////////////
 
   /** */
-  val DISPLAY_NEW_BITMAPS_AUTOMATICALLY_DEFAULT = true
+  var displayNewBitmapsAutomatically: Boolean = DISPLAY_NEW_BITMAPS_AUTOMATICALLY_DEFAULT
 
   /** */
-  var displayNewBitmapsAutomatically: Boolean =
-    DISPLAY_NEW_BITMAPS_AUTOMATICALLY_DEFAULT
-
-  /** */
-  val DISPLAY_BITMAPS_AUTOMATICALLY_AFTER_OPERATIONS = true
-
-  /** */
-  var displayBitmapsAutomaticallyAfterOperations: Boolean =
-    DISPLAY_BITMAPS_AUTOMATICALLY_AFTER_OPERATIONS
+  var displayBitmapsAutomaticallyAfterOperations: Boolean = DISPLAY_BITMAPS_AUTOMATICALLY_AFTER_OPERATIONS
 
 
   ///////////////////////////////////////////////
@@ -41,11 +61,7 @@ private[smcl] class SmclSettings() extends Mutable {
   ///////////////////////////////////////////////
 
   /** */
-  val DEFAULT_BITMAP_WIDTH_IN_PIXELS_DEFAULT = 50
-
-  /** */
-  private[this] var _defaultBitmapWidthInPixels: Int =
-    DEFAULT_BITMAP_WIDTH_IN_PIXELS_DEFAULT
+  private[this] var _defaultBitmapWidthInPixels: Int = DEFAULT_BITMAP_WIDTH_IN_PIXELS_DEFAULT
 
   /**
    *
@@ -72,11 +88,7 @@ private[smcl] class SmclSettings() extends Mutable {
   ///////////////////////////////////////////////
 
   /** */
-  val DEFAULT_BITMAP_HEIGHT_IN_PIXELS_DEFAULT = 50
-
-  /** */
-  private[this] var _defaultBitmapHeightInPixels: Int =
-    DEFAULT_BITMAP_HEIGHT_IN_PIXELS_DEFAULT
+  private[this] var _defaultBitmapHeightInPixels: Int = DEFAULT_BITMAP_HEIGHT_IN_PIXELS_DEFAULT
 
   /**
    *
@@ -103,11 +115,7 @@ private[smcl] class SmclSettings() extends Mutable {
   ///////////////////////////////////////////////
 
   /** */
-  val DEFAULT_BACKGROUND_COLOR_DEFAULT = NamedColors.white
-
-  /** */
-  private[this] var _defaultBackgroundColor: Color =
-    DEFAULT_BACKGROUND_COLOR_DEFAULT
+  private[this] var _defaultBackgroundColor: Color = DEFAULT_BACKGROUND_COLOR_DEFAULT
 
   /**
    *
@@ -134,11 +142,7 @@ private[smcl] class SmclSettings() extends Mutable {
   ///////////////////////////////////////////////
 
   /** */
-  val DEFAULT_PRIMARY_COLOR_DEFAULT = NamedColors.black
-
-  /** */
-  private[this] var _defaultPrimaryColor: Color =
-    DEFAULT_PRIMARY_COLOR_DEFAULT
+  private[this] var _defaultPrimaryColor: Color = DEFAULT_PRIMARY_COLOR_DEFAULT
 
   /**
    *
@@ -165,11 +169,7 @@ private[smcl] class SmclSettings() extends Mutable {
   ///////////////////////////////////////////////
 
   /** */
-  val DEFAULT_SECONDARY_COLOR_DEFAULT = NamedColors.black
-
-  /** */
-  private[this] var _defaultSecondaryColor: Color =
-    DEFAULT_SECONDARY_COLOR_DEFAULT
+  private[this] var _defaultSecondaryColor: Color = DEFAULT_SECONDARY_COLOR_DEFAULT
 
   /**
    *
@@ -198,7 +198,7 @@ private[smcl] class SmclSettings() extends Mutable {
   /**
    * Resets all settings to their default values.
    */
-  def reset(): Unit = {
+  def resetToDefaults(): Unit = {
     displayNewBitmapsAutomatically = DISPLAY_NEW_BITMAPS_AUTOMATICALLY_DEFAULT
     displayBitmapsAutomaticallyAfterOperations = DISPLAY_BITMAPS_AUTOMATICALLY_AFTER_OPERATIONS
 

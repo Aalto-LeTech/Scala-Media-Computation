@@ -125,18 +125,23 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
    * @param centerXInPixels
    * @param centerYInPixels
    * @param radiusInPixels
-   * @param colorOption
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
    * @return
    */
   def drawCircle(
       centerXInPixels: Int,
       centerYInPixels: Int,
       radiusInPixels: Int,
-      colorOption: Option[Color] = Option(GlobalSettings.defaultPrimaryColor)): Bitmap = {
+      isFilled: Boolean,
+      lineColor: Color = GlobalSettings.defaultPrimaryColor,
+      fillColor: Color = GlobalSettings.defaultSecondaryColor): Bitmap = {
 
-    require(colorOption != null, "The color argument has to be None or a Color instance (was null).")
+    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
-    apply(DrawCircle(centerXInPixels, centerYInPixels, radiusInPixels, colorOption))
+    apply(DrawCircle(centerXInPixels, centerYInPixels, radiusInPixels, isFilled, lineColor, fillColor))
   }
 
   /**

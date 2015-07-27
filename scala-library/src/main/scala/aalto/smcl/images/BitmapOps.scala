@@ -39,7 +39,9 @@ object BitmapOps {
    * @param centerXInPixels
    * @param centerYInPixels
    * @param radiusInPixels
-   * @param colorOption
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
    * @return
    */
   def drawCircle(
@@ -47,12 +49,15 @@ object BitmapOps {
       centerXInPixels: Int,
       centerYInPixels: Int,
       radiusInPixels: Int,
-      colorOption: Option[Color] = Option(GlobalSettings.defaultPrimaryColor)): Bitmap = {
+      isFilled: Boolean,
+      lineColor: Color = GlobalSettings.defaultPrimaryColor,
+      fillColor: Color = GlobalSettings.defaultSecondaryColor): Bitmap = {
 
-    require(bmp != null, "The bitmap to be drawn onto cannot be null.")
-    require(colorOption != null, "The color argument has to be None or a Color instance (was null).")
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
-    bmp.apply(DrawCircle(centerXInPixels, centerYInPixels, radiusInPixels, colorOption))
+    bmp.apply(DrawCircle(centerXInPixels, centerYInPixels, radiusInPixels, isFilled, lineColor, fillColor))
   }
 
 }

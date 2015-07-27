@@ -4,33 +4,32 @@ package aalto.smcl.images.operations
 import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.common.{GlobalSettings, MetaInformationMap}
+import aalto.smcl.images._
 import aalto.smcl.images.immutable.Color
 
 
 
 
 /**
- * Operation to draw an unfilled circle with a given color. If a color is not given,
- * the default primary color will be used, as defined in the [[GlobalSettings.defaultPrimaryColor]].
+ * Operation to draw a circle with given colors. If a color is not given, the default
+ * primary/secondary colors will be used, as defined in the [[GlobalSettings]].
  *
  * @author Aleksi Lukkarinen
  */
 private[images] case class DrawCircle(
-    centerXInPixels: Int, centerYInPixels: Int, radiusInPixels: Int,
-    private val colorOption: Option[Color] = None)
+    centerXInPixels: Int, centerYInPixels: Int, radiusInPixels: Int, isFilled: Boolean,
+    lineColor: Color = GlobalSettings.defaultPrimaryColor,
+    fillColor: Color = GlobalSettings.defaultSecondaryColor)
     extends AbstractSingleSourceOperation with Immutable {
 
-  /** The color with which to draw the circle. */
-  private[this] val _color: Color = colorOption getOrElse GlobalSettings.defaultPrimaryColor
-
   /** X coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  private[this] val _upperLeftX: Int = centerXInPixels - radiusInPixels
+  val boundingBoxUpperLeftX: Int = centerXInPixels - radiusInPixels
 
   /** Y coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  private[this] val _upperLeftY: Int = centerYInPixels - radiusInPixels
+  val boundingBoxUpperLeftY: Int = centerYInPixels - radiusInPixels
 
   /** Length of a side of the bounding box of the circle to be drawn. */
-  private[this] val _side: Int = 2 * radiusInPixels
+  val boundingBoxSideLength: Int = 2 * radiusInPixels
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
@@ -40,17 +39,29 @@ private[images] case class DrawCircle(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),
     "radius" -> Option(s"$radiusInPixels px"),
-    "color" -> Option("0x${_color.asPixelInt.toArgbHexColorString}")))
+    "filled" -> Option(isFilled.toString),
+    "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
+    "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
-   * Draws a circle onto the given bitmap with the given color.
+   * Draws a circle onto the given bitmap with the given colors.
    */
   override def render(destination: JBufferedImage): Unit = {
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    drawingSurface.setColor(_color.toOpaqueAwtColor)
-    drawingSurface.drawOval(_upperLeftX, _upperLeftX, _side, _side)
+    if (isFilled) {
+      drawingSurface.setColor(fillColor.toOpaqueAwtColor)
+      drawingSurface.fillOval(
+        boundingBoxUpperLeftX, boundingBoxUpperLeftX,
+        boundingBoxSideLength, boundingBoxSideLength)
+    }
+
+    drawingSurface.setColor(lineColor.toOpaqueAwtColor)
+    drawingSurface.drawOval(
+      boundingBoxUpperLeftX, boundingBoxUpperLeftX,
+      boundingBoxSideLength, boundingBoxSideLength)
+
     drawingSurface.setColor(oldColor)
   }
 

@@ -11,10 +11,7 @@ import scala.collection.immutable.HashMap
  *
  * @author Aleksi Lukkarinen
  */
-object NamedColors extends Map[String, Color] {
-
-  /** */
-  private[this] var _colorMap: Map[String, Color] = new HashMap[String, Color]()
+object NamedColors extends {
 
   /** */
   val aliceBlue = PresetColor(0xfff0f8ff, Option("alice blue"))
@@ -438,6 +435,13 @@ object NamedColors extends Map[String, Color] {
 
   /** */
   val yellowGreen = PresetColor(0xff9acd32, Option("yellow green"))
+
+
+} with Map[String, Color] {
+
+
+  /** */
+  private[this] var _colorMap: Map[String, Color] = new HashMap[String, Color]()
 
   /**
    *
