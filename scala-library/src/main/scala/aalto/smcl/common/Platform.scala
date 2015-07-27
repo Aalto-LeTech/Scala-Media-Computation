@@ -23,6 +23,9 @@ private[smcl] object Platform {
   /** AWT graphics environment */
   val awtGraphEnv = GraphicsEnvironment.getLocalGraphicsEnvironment
 
+  /** Is this environment a headless one? */
+  val isHeadless = awtGraphEnv.isHeadlessInstance
+
 
   initializePlatform()
 
