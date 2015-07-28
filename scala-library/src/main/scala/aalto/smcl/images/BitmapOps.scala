@@ -1,8 +1,8 @@
 package aalto.smcl.images
 
 
-import aalto.smcl.common.GlobalSettings
-import aalto.smcl.images.immutable.{Bitmap, Color}
+import aalto.smcl.common.{Color, GlobalSettings}
+import aalto.smcl.images.immutable.Bitmap
 import aalto.smcl.images.operations._
 
 

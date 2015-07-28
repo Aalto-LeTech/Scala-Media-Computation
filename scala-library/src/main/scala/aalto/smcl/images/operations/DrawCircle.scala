@@ -3,9 +3,8 @@ package aalto.smcl.images.operations
 
 import java.awt.image.{BufferedImage => JBufferedImage}
 
-import aalto.smcl.common.{GlobalSettings, MetaInformationMap}
+import aalto.smcl.common.{Color, GlobalSettings, MetaInformationMap}
 import aalto.smcl.images._
-import aalto.smcl.images.immutable.Color
 
 
 

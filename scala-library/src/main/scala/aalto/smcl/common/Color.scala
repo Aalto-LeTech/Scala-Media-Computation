@@ -1,9 +1,7 @@
-package aalto.smcl.images.immutable
-
+package aalto.smcl.common
 
 import java.awt.{Color => JColor}
 
-import aalto.smcl.common._
 import aalto.smcl.images._
 
 
@@ -26,7 +24,7 @@ object Color {
    * @param nameOption
    * @return
    */
-  private[immutable] def validateColorArguments(red: Int, green: Int, blue: Int,
+  private[smcl] def validateColorArguments(red: Int, green: Int, blue: Int,
       transparency: Int, nameOption: Option[String] = None): Tuple5[Int, Int, Int, Int, Option[String]] = {
 
     require(BYTE_RANGE.contains(red),

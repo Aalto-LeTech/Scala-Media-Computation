@@ -2,6 +2,7 @@ package aalto.smcl.images
 
 
 import aalto.UnitSpecBase
+import aalto.smcl.common._
 
 
 

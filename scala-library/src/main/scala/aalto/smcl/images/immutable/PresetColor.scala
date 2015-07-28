@@ -1,6 +1,7 @@
 package aalto.smcl.images.immutable
 
 
+import aalto.smcl.common.Color
 import aalto.smcl.images.{transparencyComponentFrom, blueComponentFrom, greenComponentFrom, redComponentFrom}
 
 
