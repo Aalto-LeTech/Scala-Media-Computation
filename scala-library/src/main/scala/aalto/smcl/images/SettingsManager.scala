@@ -1,0 +1,68 @@
+package aalto.smcl.images
+
+
+import aalto.smcl.common.settings.{BooleanSetting, ColorSetting, IntSetting}
+import aalto.smcl.common.{GS, PresetColors}
+import aalto.smcl.images.SettingKeys._
+
+
+
+
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
+private[images] object SettingsManager {
+
+  /**
+   *
+   */
+  def initializeSettings(): Unit = {
+
+    GS += BooleanSetting(name = NewBitmapsAreDisplayedAutomatically, initialValue = true)
+
+    GS += BooleanSetting(name = DisplayBitmapsAutomaticallyAfterOperations, initialValue = true)
+
+    GS += IntSetting(
+      name = DefaultBitmapWidthInPixels,
+      initialValue = 50,
+      validator = {value =>
+        if (value < 10) Option(new IllegalArgumentException("Bitmap width must be at least 10 pixels"))
+        else None
+      })
+
+    GS += IntSetting(
+      name = DefaultBitmapHeightInPixels,
+      initialValue = 50,
+      validator = {value =>
+        if (value < 10) Option(new IllegalArgumentException("Bitmap height must be at least 10 pixels"))
+        else None
+      })
+
+    GS += ColorSetting(
+      name = DefaultBackground,
+      initialValue = PresetColors('white),
+      validator = {value =>
+        if (value == null) Option(new IllegalArgumentException("Color cannot be null"))
+        else None
+      })
+
+    GS += ColorSetting(
+      name = DefaultPrimary,
+      initialValue = PresetColors('black),
+      validator = {value =>
+        if (value == null) Option(new IllegalArgumentException("Color cannot be null"))
+        else None
+      })
+
+    GS += ColorSetting(
+      name = DefaultSecondary,
+      initialValue = PresetColors('black),
+      validator = {value =>
+        if (value == null) Option(new IllegalArgumentException("Color cannot be null"))
+        else None
+      })
+  }
+
+}

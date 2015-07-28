@@ -14,7 +14,7 @@ import aalto.smcl.images.immutable.Bitmap
 class SmclSmokeTests extends UnitSpecBase {
 
   "sdfsd" - {
-    val b = Bitmap(widthInPixelsOption = Option(15))
+    val b = Bitmap(widthInPixels = 15)
   }
 
 }

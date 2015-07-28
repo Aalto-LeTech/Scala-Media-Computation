@@ -1,7 +1,8 @@
 package aalto.smcl.images
 
 
-import aalto.smcl.common.{Color, GlobalSettings}
+import aalto.smcl.common.{Color, GS}
+import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary, DefaultBackground}
 import aalto.smcl.images.immutable.Bitmap
 import aalto.smcl.images.operations._
 
@@ -19,17 +20,17 @@ object BitmapOps {
    * Adds a [[Clear]] operation to a given [[OperableBitmap]].
    *
    * @param bmp
-   * @param colorOption
+   * @param color
    * @return
    */
   def clear(
       bmp: OperableBitmap,
-      colorOption: Option[Color] = Option(GlobalSettings.defaultBackgroundColor)): Bitmap = {
+      color: Color = GS.colorFor(DefaultBackground)): Bitmap = {
 
     require(bmp != null, "The bitmap to be cleared cannot be null.")
-    require(colorOption != null, "The color argument has to be None or a Color instance (was null).")
+    require(color != null, "The color argument has to be a Color instance (was null).")
 
-    bmp.apply(Clear(colorOption))
+    bmp.apply(Clear(color))
   }
 
   /**
@@ -50,8 +51,8 @@ object BitmapOps {
       centerYInPixels: Int,
       radiusInPixels: Int,
       isFilled: Boolean,
-      lineColor: Color = GlobalSettings.defaultPrimaryColor,
-      fillColor: Color = GlobalSettings.defaultSecondaryColor): Bitmap = {
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary)): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
     require(lineColor != null, "The line color argument has to be a Color instance (was null).")

@@ -1,11 +1,8 @@
-package aalto.smcl.images.immutable
-
+package aalto.smcl.common
 
 import java.awt.Font
 
 import scala.collection.immutable.HashMap
-
-import aalto.smcl.common.Platform
 
 
 

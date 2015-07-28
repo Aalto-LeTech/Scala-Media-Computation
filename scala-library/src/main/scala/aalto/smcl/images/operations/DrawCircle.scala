@@ -3,22 +3,23 @@ package aalto.smcl.images.operations
 
 import java.awt.image.{BufferedImage => JBufferedImage}
 
-import aalto.smcl.common.{Color, GlobalSettings, MetaInformationMap}
-import aalto.smcl.images._
+import aalto.smcl.common.{Color, GS, MetaInformationMap}
+import aalto.smcl.common.ColorOps._
+import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary}
 
 
 
 
 /**
  * Operation to draw a circle with given colors. If a color is not given, the default
- * primary/secondary colors will be used, as defined in the [[GlobalSettings]].
+ * primary/secondary colors will be used, as defined in the [[GS]].
  *
  * @author Aleksi Lukkarinen
  */
 private[images] case class DrawCircle(
     centerXInPixels: Int, centerYInPixels: Int, radiusInPixels: Int, isFilled: Boolean,
-    lineColor: Color = GlobalSettings.defaultPrimaryColor,
-    fillColor: Color = GlobalSettings.defaultSecondaryColor)
+    lineColor: Color = GS.colorFor(DefaultPrimary),
+    fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
   /** X coordinate of the upper-left corner of the bounding box of the circle to be drawn. */

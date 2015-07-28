@@ -1,8 +1,9 @@
 package aalto.smcl.common
 
+
 import java.awt.{Color => JColor}
 
-import aalto.smcl.images._
+import aalto.smcl.common.ColorOps._
 
 
 

@@ -5,7 +5,7 @@ import java.awt.image.{BufferedImage => JBufferedImage}
 
 import scala.annotation.tailrec
 
-import aalto.smcl.common.Color
+import aalto.smcl.common.{PresetColors, Color}
 import aalto.smcl.images.immutable._
 
 
@@ -60,7 +60,7 @@ private[images] case class BitmapOperationList private(
    */
   def initialBackgroundColor(): Color =
     operations.last match {
-      case Clear(color) => color getOrElse PresetColors('white)
+      case Clear(color) => color
       case _            => PresetColors('white)
     }
 

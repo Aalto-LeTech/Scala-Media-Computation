@@ -1,8 +1,6 @@
-package aalto.smcl.images.immutable
+package aalto.smcl.common
 
-
-import aalto.smcl.common.Color
-import aalto.smcl.images.{transparencyComponentFrom, blueComponentFrom, greenComponentFrom, redComponentFrom}
+import aalto.smcl.common.ColorOps._
 
 
 
@@ -12,7 +10,7 @@ import aalto.smcl.images.{transparencyComponentFrom, blueComponentFrom, greenCom
  *
  * @author Aleksi Lukkarinen
  */
-private[images] object PresetColor {
+private[common] object PresetColor {
 
   /**
    *
@@ -52,7 +50,7 @@ private[images] object PresetColor {
  *
  * @author Aleksi Lukkarinen
  */
-class PresetColor private[immutable] (
+class PresetColor private[common] (
     override val red: Int,
     override val green: Int,
     override val blue: Int,

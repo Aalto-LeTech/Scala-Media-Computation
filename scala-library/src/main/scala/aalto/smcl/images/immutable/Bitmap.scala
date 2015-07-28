@@ -9,6 +9,7 @@ import java.util.UUID
 import scala.ref.WeakReference
 
 import aalto.smcl.common._
+import aalto.smcl.images.SettingKeys._
 import aalto.smcl.images.operations._
 import aalto.smcl.images.{display => displayInViewer, _}
 
@@ -22,30 +23,26 @@ import aalto.smcl.images.{display => displayInViewer, _}
  */
 object Bitmap {
 
+  aalto.smcl.images.SettingsManager.initializeSettings()
+
   /**
    * Creates a new empty [[Bitmap]] instance.
    */
   def apply(
-      widthInPixelsOption: Option[Int] = None,
-      heightInPixelsOption: Option[Int] = None,
-      initialBackgroundColorOption: Option[Color] = None): Bitmap = {
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      initialBackgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
 
-    val width = widthInPixelsOption.fold(GlobalSettings.defaultBitmapWidthInPixels) {w =>
-      require(w > 0, s"Width of the image must be greater than zero (was $w)")
-      w
-    }
+    require(widthInPixels > 10, s"Width of the image must be at least 10 pixels (was $widthInPixels)")
+    require(heightInPixels > 10, s"Height of the image must be at least 10 pixels (was $heightInPixels)")
 
-    val height = heightInPixelsOption.fold(GlobalSettings.defaultBitmapHeightInPixels) {h =>
-      require(h > 0, s"Height of the image must be greater than zero (was $h)")
-      h
-    }
-
-    val bgColor = initialBackgroundColorOption getOrElse GlobalSettings.defaultBackgroundColor
-    val operationList = Clear(Option(bgColor)) +: BitmapOperationList(CreateBitmap(width, height))
+    val operationList =
+      Clear(initialBackgroundColor) +:
+          BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
 
     val newBitmap = new Bitmap(operationList, UUID.randomUUID())
 
-    if (GlobalSettings.displayNewBitmapsAutomatically)
+    if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
       newBitmap.display()
 
     newBitmap
@@ -102,7 +99,7 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
 
     val newBitmap = copy(operations = newOperation +: operations)
 
-    if (GlobalSettings.displayBitmapsAutomaticallyAfterOperations)
+    if (GS.isTrueThat(DisplayBitmapsAutomaticallyAfterOperations))
       newBitmap.display()
 
     newBitmap
@@ -111,12 +108,11 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
   /**
    *
    *
-   * @param colorOption
+   * @param color
    */
-  def clear(colorOption: Option[Color] = Option(GlobalSettings.defaultBackgroundColor)): Bitmap = {
-    require(colorOption != null, "The color argument has to be None or a Color instance (was null).")
-
-    apply(Clear(colorOption))
+  def clear(color: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+    require(color != null, "The color argument has to be a Color instance (was null).")
+    apply(Clear(color))
   }
 
   /**
@@ -135,8 +131,8 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
       centerYInPixels: Int,
       radiusInPixels: Int,
       isFilled: Boolean,
-      lineColor: Color = GlobalSettings.defaultPrimaryColor,
-      fillColor: Color = GlobalSettings.defaultSecondaryColor): Bitmap = {
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary)): Bitmap = {
 
     require(lineColor != null, "The line color argument has to be a Color instance (was null).")
     require(fillColor != null, "The fill color argument has to be a Color instance (was null).")

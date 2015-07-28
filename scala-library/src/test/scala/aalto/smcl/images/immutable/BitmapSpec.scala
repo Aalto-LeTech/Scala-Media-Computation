@@ -3,8 +3,9 @@ package aalto.smcl.images.immutable
 
 import java.awt.{Graphics2D => JGraphics2D}
 
-import aalto.smcl.common.GlobalSettings
-import aalto.smcl.images._
+import aalto.smcl.common.GS
+import aalto.smcl.images.ImageSpecBase
+import aalto.smcl.images.SettingKeys._
 
 
 
@@ -20,23 +21,25 @@ class BitmapSpec extends ImageSpecBase {
   val EXPECTED_DEFAULT_HEIGHT_IN_PIXELS = 50
 
   "Class BitmapImage" - {
-    GlobalSettings.displayNewBitmapsAutomatically = false
-    GlobalSettings.displayBitmapsAutomaticallyAfterOperations = false
+    //GS.settingFor(NewBitmapsAreDisplayedAutomatically).value = false
+    //GS.displayBitmapsAutomaticallyAfterOperations = false
 
     "must have a default" - {
       s"width defined as $EXPECTED_DEFAULT_WIDTH_IN_PIXELS pixels" in {
-        assert(DEFAULT_IMAGE_WIDTH_IN_PIXELS === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
+        assert(GS.intFor(DefaultBitmapWidthInPixels) === EXPECTED_DEFAULT_WIDTH_IN_PIXELS)
       }
       s"height defined as $EXPECTED_DEFAULT_HEIGHT_IN_PIXELS pixels" in {
-        assert(DEFAULT_IMAGE_HEIGHT_IN_PIXELS === EXPECTED_DEFAULT_HEIGHT_IN_PIXELS)
+        assert(GS.intFor(DefaultBitmapHeightInPixels) === EXPECTED_DEFAULT_HEIGHT_IN_PIXELS)
       }
     }
 
     "must throw an IllegalArgumentException when tried to instantiate with" - {
-      "zero width" in {intercept[IllegalArgumentException] {Bitmap(widthInPixelsOption = Option(0))}}
-      "zero height" in {intercept[IllegalArgumentException] {Bitmap(heightInPixelsOption = Option(0))}}
-      "negative width" in {intercept[IllegalArgumentException] {Bitmap(widthInPixelsOption = Option(-1))}}
-      "negative height" in {intercept[IllegalArgumentException] {Bitmap(heightInPixelsOption = Option(-1))}}
+      "width < 10" in {intercept[IllegalArgumentException] {Bitmap(widthInPixels = 9)}}
+      "height < 10" in {intercept[IllegalArgumentException] {Bitmap(heightInPixels = 9)}}
+      "zero width" in {intercept[IllegalArgumentException] {Bitmap(widthInPixels = 0)}}
+      "zero height" in {intercept[IllegalArgumentException] {Bitmap(heightInPixels = 0)}}
+      "negative width" in {intercept[IllegalArgumentException] {Bitmap(widthInPixels = -1)}}
+      "negative height" in {intercept[IllegalArgumentException] {Bitmap(heightInPixels = -1)}}
     }
 
     "when constructed without arguments, must be" - {
@@ -58,7 +61,7 @@ class BitmapSpec extends ImageSpecBase {
 
       val (width, height) = (TEST_WIDTH_IN_PIXELS, TEST_HEIGHT_IN_PIXELS)
       val numOfPixels = width * height
-      val b = Bitmap(Option(width), Option(height))
+      val b = Bitmap(width, height)
 
       //        s"be ${width} pixels by width" in { assert(b.buffer.getWidth === width) }
       //        s"be ${height} pixels by height" in { assert(b.buffer.getHeight === height) }

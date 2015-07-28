@@ -4,22 +4,20 @@ package aalto.smcl.images.operations
 import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.common._
-import aalto.smcl.images.immutable._
+import aalto.smcl.images.SettingKeys.DefaultBackground
 
 
 
 
 /**
  * Operation to clear a bitmap with a given color. If a color is not given, the default background color will be used,
- * as defined in the [[GlobalSettings.defaultBackgroundColor]].
+ * as defined in the [[GS]].
  *
  * @author Aleksi Lukkarinen
  */
-private[images] case class Clear(private val colorOption: Option[Color] = None)
+private[images] case class Clear(
+    color: Color = GS.colorFor(DefaultBackground))
     extends AbstractSingleSourceOperation with Immutable {
-
-  /** The color with which to clear bitmaps. */
-  private[this] val _color: Color = colorOption getOrElse GlobalSettings.defaultBackgroundColor
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
@@ -35,7 +33,7 @@ private[images] case class Clear(private val colorOption: Option[Color] = None)
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    drawingSurface.setColor(_color.toOpaqueAwtColor)
+    drawingSurface.setColor(color.toOpaqueAwtColor)
     drawingSurface.fillRect(0, 0, destination.getWidth, destination.getHeight)
     drawingSurface.setColor(oldColor)
   }

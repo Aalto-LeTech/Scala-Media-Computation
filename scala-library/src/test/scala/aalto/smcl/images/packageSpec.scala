@@ -2,6 +2,7 @@ package aalto.smcl.images
 
 
 import aalto.smcl.common._
+import aalto.smcl.common.ColorOps._
 
 
 

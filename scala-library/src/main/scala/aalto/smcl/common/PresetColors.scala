@@ -1,7 +1,4 @@
-package aalto.smcl.images.immutable
-
-
-import aalto.smcl.common.Color
+package aalto.smcl.common
 
 
 

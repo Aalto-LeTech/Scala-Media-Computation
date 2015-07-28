@@ -6,4 +6,4 @@ package aalto.smcl.common.settings
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] trait SmclSettingKey {}
+private[smcl] trait SettingKey {}
