@@ -51,15 +51,15 @@ private[images] case class DrawCircle(
     val oldColor = drawingSurface.getColor
 
     if (isFilled) {
-      drawingSurface.setColor(fillColor.toOpaqueAwtColor)
+      drawingSurface.setColor(fillColor.asAwtColor)
       drawingSurface.fillOval(
-        boundingBoxUpperLeftX, boundingBoxUpperLeftX,
+        boundingBoxUpperLeftX, boundingBoxUpperLeftY,
         boundingBoxSideLength, boundingBoxSideLength)
     }
 
-    drawingSurface.setColor(lineColor.toOpaqueAwtColor)
+    drawingSurface.setColor(lineColor.asAwtColor)
     drawingSurface.drawOval(
-      boundingBoxUpperLeftX, boundingBoxUpperLeftX,
+      boundingBoxUpperLeftX, boundingBoxUpperLeftY,
       boundingBoxSideLength, boundingBoxSideLength)
 
     drawingSurface.setColor(oldColor)
