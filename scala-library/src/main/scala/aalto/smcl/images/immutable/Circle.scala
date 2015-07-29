@@ -17,7 +17,7 @@ object Circle {
   aalto.smcl.images.SettingsInitializer.perform()
 
   /**
-   * Creates a new empty [[Bitmap]] instance.
+   * Creates a new empty [[Bitmap]] instance with a circle drawn on it.
    */
   def apply(
       diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
