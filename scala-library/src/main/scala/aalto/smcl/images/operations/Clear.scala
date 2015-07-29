@@ -33,7 +33,7 @@ private[images] case class Clear(
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    drawingSurface.setColor(color.toOpaqueAwtColor)
+    drawingSurface.setColor(color.asAwtColor)
     drawingSurface.fillRect(0, 0, destination.getWidth, destination.getHeight)
     drawingSurface.setColor(oldColor)
   }

@@ -33,8 +33,8 @@ object Bitmap {
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       initialBackgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
 
-    require(widthInPixels > 10, s"Width of the image must be at least 10 pixels (was $widthInPixels)")
-    require(heightInPixels > 10, s"Height of the image must be at least 10 pixels (was $heightInPixels)")
+    require(widthInPixels >= 10, s"Width of the image must be at least 10 pixels (was $widthInPixels)")
+    require(heightInPixels >= 10, s"Height of the image must be at least 10 pixels (was $heightInPixels)")
 
     val operationList =
       Clear(initialBackgroundColor) +:
