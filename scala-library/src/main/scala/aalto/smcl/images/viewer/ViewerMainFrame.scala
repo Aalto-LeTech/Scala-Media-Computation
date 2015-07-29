@@ -22,7 +22,7 @@ import aalto.smcl.images.immutable.Bitmap
 private[images] object ViewerMainFrame {
 
   // @formatter:off
-  import aalto.smcl.Library._
+  import aalto.smcl.SMCL._
 
   /** */
   val MsgAbout: String =

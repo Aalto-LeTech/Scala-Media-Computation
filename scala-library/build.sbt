@@ -44,8 +44,9 @@ initialCommands in console :=
     """import aalto.smcl._
       |import aalto.smcl.common._
       |import aalto.smcl.images._
+      |import aalto.smcl.images.BitmapOps._
       |import aalto.smcl.images.immutable._
-      | """.stripMargin
+      |SMCL.welcomingMessage""".stripMargin
 
 
 scalacOptions ++= Seq(

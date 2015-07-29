@@ -20,10 +20,10 @@ import aalto.smcl.images.viewer.events.external.{DisplayBitmapEvent, ExternalVie
  */
 private[images] object Application {
 
-  import aalto.smcl.Library
+  import aalto.smcl.SMCL
 
   /** Full name of this application. */
-  val FullName = s"${Library.AbbreviatedName} Image Viewer"
+  val FullName = s"${SMCL.AbbreviatedName} Image Viewer"
 
   /** Default mouse cursor used by this application. */
   val DefaultCursor: Cursor = Cursor.getDefaultCursor
