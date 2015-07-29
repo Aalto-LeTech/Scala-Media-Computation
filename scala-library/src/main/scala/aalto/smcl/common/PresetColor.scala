@@ -1,5 +1,6 @@
 package aalto.smcl.common
 
+
 import aalto.smcl.common.ColorOps._
 
 
@@ -50,7 +51,7 @@ private[common] object PresetColor {
  *
  * @author Aleksi Lukkarinen
  */
-class PresetColor private[common] (
+class PresetColor private[common](
     override val red: Int,
     override val green: Int,
     override val blue: Int,
@@ -60,4 +61,14 @@ class PresetColor private[common] (
   /** Returns `true` if this [[Color]] is provided by SMCL, otherwise `false`. */
   override val isPreset: Boolean = true
 
-} with Color(red, green, blue, transparency, nameOption) with Immutable { }
+} with Color (red, green, blue, transparency, nameOption) with Immutable {
+
+  /** Default name for an unnamed preset color. */
+  private val StrNoName = "<unnamed preset>"
+
+  /**
+   * Returns a string representation of this [[Color]].
+   */
+  override def toString: String = s"${nameOption.getOrElse(StrNoName)} (${super.toString}})"
+
+}

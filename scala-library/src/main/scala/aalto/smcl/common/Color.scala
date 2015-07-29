@@ -204,4 +204,10 @@ class Color protected(
     "blue" -> Option(blue.toString),
     "transparency" -> Option(transparency.toString)))
 
+  /**
+   * Returns a string representation of this [[Color]].
+   */
+  override def toString: String =
+    s"ARGB: 0x$asHexString -- $transparency - $red - $green - $blue"
+
 }
