@@ -69,7 +69,7 @@ class Settings {
     case i: IntSetting     => _intMap += (i.name -> i)
     case s: StringSetting  => _stringMap += (s.name -> s)
     case c: ColorSetting   => _colorMap += (c.name -> c)
-    case _                 => throw new IllegalArgumentException("Unknown setting type.")
+    case _                 => throw new UnknownSettingTypeError(value)
   }
 
   /**
@@ -83,7 +83,7 @@ class Settings {
     case i: IntSettingKey     => _intMap.get(i)
     case s: StringSettingKey  => _stringMap.get(s)
     case c: ColorSettingKey   => _colorMap.get(c)
-    case _                    => throw new IllegalArgumentException("Unknown setting type.")
+    case _                    => throw new UnknownSettingTypeError(key)
   }
 
   /**
@@ -113,8 +113,7 @@ class Settings {
         throw new UninitializedSettingError(c)
       _colorMap(c).asInstanceOf[Setting[_]]
 
-    case _ =>
-      throw new IllegalArgumentException("Unknown setting type.")
+    case _ => throw new UnknownSettingTypeError(key)
   }
 
   /**
