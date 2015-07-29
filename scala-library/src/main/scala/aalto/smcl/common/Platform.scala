@@ -15,7 +15,7 @@ import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}
 private[smcl] object Platform {
 
   /** */
-  val NIMBUS_LOOK_AND_FEEL_NAME = "Nimbus"
+  val NimbusLookAndFeelName = "Nimbus"
 
   /** AWT toolkit. */
   val awtToolkit = Toolkit.getDefaultToolkit
@@ -41,7 +41,7 @@ private[smcl] object Platform {
    *
    */
   private def initializeLookAndFeel(): Unit =
-    tryToInitializeSpecificLookAndFeel(NIMBUS_LOOK_AND_FEEL_NAME)
+    tryToInitializeSpecificLookAndFeel(NimbusLookAndFeelName)
 
 
   /**

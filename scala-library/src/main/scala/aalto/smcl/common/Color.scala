@@ -4,6 +4,7 @@ package aalto.smcl.common
 import java.awt.{Color => JColor}
 
 import aalto.smcl.common.ColorOps._
+import aalto.smcl.images.operations.AbstractSingleSourceOperation
 
 
 
@@ -28,17 +29,17 @@ object Color {
   private[smcl] def validateColorArguments(red: Int, green: Int, blue: Int,
       transparency: Int, nameOption: Option[String] = None): Tuple5[Int, Int, Int, Int, Option[String]] = {
 
-    require(BYTE_RANGE.contains(red),
-      s"The 'red' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $red)")
+    require(ByteRange.contains(red),
+      s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
 
-    require(BYTE_RANGE.contains(green),
-      s"The 'green' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $green)")
+    require(ByteRange.contains(green),
+      s"The 'green' value must be between ${ByteRange.start} and ${ByteRange.end} (was $green)")
 
-    require(BYTE_RANGE.contains(blue),
-      s"The 'blue' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $blue)")
+    require(ByteRange.contains(blue),
+      s"The 'blue' value must be between ${ByteRange.start} and ${ByteRange.end} (was $blue)")
 
-    require(BYTE_RANGE.contains(transparency),
-      s"The transparency value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $transparency)")
+    require(ByteRange.contains(transparency),
+      s"The transparency value must be between ${ByteRange.start} and ${ByteRange.end} (was $transparency)")
 
     require(nameOption != null, "The nameOption argument must be Option(<name>) or None (was null).")
 
@@ -46,7 +47,7 @@ object Color {
     if (nameOption.nonEmpty) {
       val name = nameOption.get.trim
 
-      require(name != STR_EMPTY, "The name cannot be empty or contain only whitespace.")
+      require(name != StrEmpty, "The name cannot be empty or contain only whitespace.")
 
       if (name != nameOption.get)
         resultNameOption = Option(name)
@@ -85,7 +86,7 @@ object Color {
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, nameOption: Option[String]): Color =
-    Color(red, green, blue, MAX_OPAQUENESS, nameOption)
+    Color(red, green, blue, MaximumOpaqueness, nameOption)
 
   /**
    *
@@ -95,7 +96,7 @@ object Color {
    * @param blue
    * @return
    */
-  def apply(red: Int, green: Int, blue: Int): Color = Color(red, green, blue, MAX_OPAQUENESS)
+  def apply(red: Int, green: Int, blue: Int): Color = Color(red, green, blue, MaximumOpaqueness)
 
   /**
    *
@@ -173,13 +174,13 @@ class Color protected(
   /** Returns `true` if this [[Color]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false
 
-} with Immutable {
+} with Immutable with Tokenizable {
 
   /** This [[Color]] coded into an `Int`. */
   val asPixelInt: Int = pixelIntFrom(red, green, blue, transparency)
 
   /** Returns `true` if this [[Color]] is fully opaque, otherwise `false`. */
-  val isOpaque: Boolean = transparency == MAX_OPAQUENESS
+  val isOpaque: Boolean = transparency == MaximumOpaqueness
 
   /** Returns `false` if this [[Color]] is fully opaque, otherwise `true`. */
   val isTransparent: Boolean = !isOpaque
@@ -195,5 +196,12 @@ class Color protected(
 
   /** This [[Color]] represented as a `java.awt.Color` instance. */
   lazy val asAwtColor: JColor = new JColor(red, green, blue, transparency)
+
+  /** Information about this [[AbstractSingleSourceOperation]] instance */
+  lazy val metaInformation = MetaInformationMap(Map(
+    "red" -> Option(red.toString),
+    "green" -> Option(green.toString),
+    "blue" -> Option(blue.toString),
+    "transparency" -> Option(transparency.toString)))
 
 }

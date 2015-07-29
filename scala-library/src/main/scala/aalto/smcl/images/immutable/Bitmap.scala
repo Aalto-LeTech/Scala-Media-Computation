@@ -23,7 +23,7 @@ import aalto.smcl.images.{display => displayInViewer, _}
  */
 object Bitmap {
 
-  aalto.smcl.images.SettingsManager.initializeSettings()
+  aalto.smcl.images.SettingsInitializer.perform()
 
   /**
    * Creates a new empty [[Bitmap]] instance.

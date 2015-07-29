@@ -22,16 +22,16 @@ package aalto.smcl.common
 private[smcl] object ClassTokenizer {
 
   /** Initial capacity of the `StringBuilder` class used for tokenization. */
-  private val INITIAL_STRINGBUILDER_CAPACITY_IN_CHARS = 200
+  private val InitialStringbuilderCapacityInChars = 200
 
   /** The separator string inserted to separate keys from values. */
-  private val KEYVALUE_SEP = STR_COLON + STR_SPACE
+  private val KeyValueSeparator = StrColon + StrSpace
 
   /** The separator string inserted to separate key-value pairs from each other. */
-  private val ITEM_SEP = STR_SEMICOLON + STR_SPACE
+  private val ItemSep = StrSemicolon + StrSpace
 
   /** The `StringBuilder` instance used for tokenization. */
-  private[this] val builder: StringBuilder = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY_IN_CHARS)
+  private[this] val builder: StringBuilder = new StringBuilder(InitialStringbuilderCapacityInChars)
 
   /**
    * Returns a tokenized representation of a given class extending the [[Tokenizable]] trait.
@@ -64,7 +64,7 @@ private[smcl] object ClassTokenizer {
    * @param s       the `StringBuilder` instance to be used
    */
   private def appendPrologOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
-    s ++= STR_LEFT_ANGLE_BRACKET ++= escape(ReflectionUtils.symbolOf(clazz).name.decodedName.toString)
+    s ++= StrLeftAngleBracket ++= escape(ReflectionUtils.shortTypeNameOf(clazz))
 
   /**
    * Appends key-value pairs to a given `StringBuilder` in the form `"; key: value"`.
@@ -76,8 +76,8 @@ private[smcl] object ClassTokenizer {
    */
   private def appendKvPairsOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
     clazz.metaInformation.foreach {
-      case (k: String, Some(v: String)) => s ++= ITEM_SEP ++= escape(k) ++= KEYVALUE_SEP ++= escape(v)
-      case (k: String, None)            => s ++= ITEM_SEP ++= escape(k)
+      case (k: String, Some(v: String)) => s ++= ItemSep ++= escape(k) ++= KeyValueSeparator ++= escape(v)
+      case (k: String, None)            => s ++= ItemSep ++= escape(k)
       case pair                         => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: $pair")
     }
 
@@ -86,7 +86,7 @@ private[smcl] object ClassTokenizer {
    *
    * @param s       the `StringBuilder` instance to be used
    */
-  private def appendEpilogTo(s: StringBuilder): Unit = s ++= STR_RIGHT_ANGLE_BRACKET
+  private def appendEpilogTo(s: StringBuilder): Unit = s ++= StrRightAngleBracket
 
   /**
    * Returns an escaped string for tokenization with the `tokenize()` method. The characters to be
@@ -94,7 +94,7 @@ private[smcl] object ClassTokenizer {
    */
   private def escape(part: String): String =
     StringUtils.escapeString(part)
-        .replaceAllLiterally(STR_COLON, STR_COLON_AS_UNICODE)
-        .replaceAllLiterally(STR_SEMICOLON, STR_SEMICOLON_AS_UNICODE)
+        .replaceAllLiterally(StrColon, StrColonAsUnicode)
+        .replaceAllLiterally(StrSemicolon, StrSemicolonAsUnicode)
 
 }

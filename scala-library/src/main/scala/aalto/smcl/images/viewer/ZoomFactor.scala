@@ -19,40 +19,40 @@ private[viewer] object ZoomFactor {
   val validRangeInPercents: Range.Inclusive = 10 to 500
 
   /** */
-  val STANDARD_ENLARGEMENT_FACTOR: Double = 1.1
+  val StandardEnlargementFactor: Double = 1.1
 
   /** */
-  val STANDARD_REDUCTION_FACTOR: Double = 0.9
+  val StandardReductionFactor: Double = 0.9
 
   /**  */
-  val IDENTITY = ZoomFactor(100)
+  val Identity = ZoomFactor(100)
 
   /**  */
-  val PERCENTS_60 = ZoomFactor(60)
+  val Percents60 = ZoomFactor(60)
 
   /**  */
-  val PERCENTS_70 = ZoomFactor(70)
+  val Percents70 = ZoomFactor(70)
 
   /**  */
-  val PERCENTS_80 = ZoomFactor(80)
+  val Percents80 = ZoomFactor(80)
 
   /**  */
-  val PERCENTS_90 = ZoomFactor(90)
+  val Percents90 = ZoomFactor(90)
 
   /**  */
-  val PERCENTS_150 = ZoomFactor(150)
+  val Percents150 = ZoomFactor(150)
 
   /**  */
-  val PERCENTS_200 = ZoomFactor(200)
+  val Percents200 = ZoomFactor(200)
 
   /**  */
-  val PERCENTS_300 = ZoomFactor(300)
+  val Percents300 = ZoomFactor(300)
 
   /**  */
-  val PERCENTS_400 = ZoomFactor(400)
+  val Percents400 = ZoomFactor(400)
 
   /**  */
-  val PERCENTS_500 = ZoomFactor(500)
+  val Percents500 = ZoomFactor(500)
 
   /**
    *
@@ -101,7 +101,7 @@ private[viewer] class ZoomFactor private(val valueInPercents: Int)
    * @return
    */
   def enlargeByStandardAmountIfPossible() =
-    this.adjustByIfPossible(ZoomFactor.STANDARD_ENLARGEMENT_FACTOR)
+    this.adjustByIfPossible(ZoomFactor.StandardEnlargementFactor)
 
   /**
    *
@@ -109,7 +109,7 @@ private[viewer] class ZoomFactor private(val valueInPercents: Int)
    * @return
    */
   def reduceByStandardAmountIfPossible() =
-    this.adjustByIfPossible(ZoomFactor.STANDARD_REDUCTION_FACTOR)
+    this.adjustByIfPossible(ZoomFactor.StandardReductionFactor)
 
   /**
    *
@@ -172,6 +172,13 @@ private[viewer] class ZoomFactor private(val valueInPercents: Int)
    *
    * @return
    */
-  override def toString(): String = s"[ZoomFactor, $valueInPercents %]"
+  def toToken(): String = s"[ZoomFactor, $valueInPercents %]"
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def toString(): String = s"$valueInPercents %"
 
 }

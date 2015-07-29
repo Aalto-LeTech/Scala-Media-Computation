@@ -13,12 +13,12 @@ import aalto.smcl.images.SettingKeys._
  *
  * @author Aleksi Lukkarinen
  */
-private[images] object SettingsManager {
+private[images] object SettingsInitializer {
 
   /**
    *
    */
-  def initializeSettings(): Unit = {
+  def perform(): Unit = {
 
     GS += BooleanSetting(name = NewBitmapsAreDisplayedAutomatically, initialValue = true)
 

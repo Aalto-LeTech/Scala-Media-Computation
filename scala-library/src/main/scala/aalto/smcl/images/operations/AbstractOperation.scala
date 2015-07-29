@@ -16,18 +16,10 @@ import aalto.smcl.common._
 private[images] abstract class AbstractOperation
     extends Tokenizable with Immutable {
 
-  /** Tokenized representation of this operation, after it is calculated. */
-  private lazy val _tokenizedRepresentation: String = ClassTokenizer.tokenize(this)
-
   /** Operation streams needed to construct  */
   def childOperationListsOption: Option[Array[BitmapOperationList]]
 
   /** Operation streams needed to construct  */
   def metaInformation: MetaInformationMap
-
-  /**
-   * Returns this operation as a formal string, which could be used to assess exercises.
-   */
-  def toToken: String = _tokenizedRepresentation
 
 }

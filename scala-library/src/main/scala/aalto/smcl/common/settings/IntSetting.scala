@@ -30,15 +30,15 @@ object IntSetting {
 /**
  *
  *
- * @param name
+ * @param key
  * @param initialValue
  * @param validator
  * @author Aleksi Lukkarinen
  */
-class IntSetting(
-    override val name: IntSettingKey,
+class IntSetting private (
+    override val key: IntSettingKey,
     override val initialValue: Int,
     override val validator: Int => Option[Throwable])
-    extends Setting[Int](name, initialValue, validator) with Mutable {
+    extends Setting[Int](key, initialValue, validator) with Mutable {
 
 }

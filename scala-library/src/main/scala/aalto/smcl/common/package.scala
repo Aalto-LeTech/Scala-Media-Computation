@@ -14,85 +14,85 @@ import java.awt.{Color => AwtColor}
 package object common {
 
   /** An empty string. */
-  protected[smcl] val STR_EMPTY = ""
+  protected[smcl] val StrEmpty = ""
 
   /** A string containing a single space. */
-  protected[smcl] val STR_SPACE = " "
+  protected[smcl] val StrSpace = " "
 
   /** A string containing a single colon. */
-  protected[smcl] val STR_COLON = ":"
+  protected[smcl] val StrColon = ":"
 
   /** A string containing a single colon. */
-  protected[smcl] val STR_COLON_AS_UNICODE = "\u003A"
+  protected[smcl] val StrColonAsUnicode = "\u003A"
 
   /** A string containing a single semicolon. */
-  protected[smcl] val STR_SEMICOLON = ";"
+  protected[smcl] val StrSemicolon = ";"
 
   /** A string containing a single semicolon. */
-  protected[smcl] val STR_SEMICOLON_AS_UNICODE = "\u003B"
+  protected[smcl] val StrSemicolonAsUnicode = "\u003B"
 
   /** A string containing a single left angle bracket. */
-  protected[smcl] val STR_LEFT_ANGLE_BRACKET = "["
+  protected[smcl] val StrLeftAngleBracket = "["
 
   /** A string containing a single right angle bracket. */
-  protected[smcl] val STR_RIGHT_ANGLE_BRACKET = "]"
+  protected[smcl] val StrRightAngleBracket = "]"
 
   /** A string containing a single zero. */
-  protected[smcl] val STR_ZERO = "0"
+  protected[smcl] val StrZero = "0"
 
   /** Number of bits in one byte. */
-  protected[smcl] val ONE_BYTE = 8
+  protected[smcl] val OneByte = 8
 
   /** Number of bits in two bytes. */
-  protected[smcl] val TWO_BYTES = ONE_BYTE + ONE_BYTE
+  protected[smcl] val TwoBytes = OneByte + OneByte
 
   /** Number of bits in three bytes. */
-  protected[smcl] val THREE_BYTES = TWO_BYTES + ONE_BYTE
+  protected[smcl] val ThreeBytes = TwoBytes + OneByte
 
   /** Bits belonging to the rightmost byte of an `Int`. */
-  protected[smcl] val FIRST_BYTE = 0xFF
+  protected[smcl] val FirstByte = 0xFF
 
   /** Bits belonging to the second-rightmost byte of an `Int`. */
-  protected[smcl] val SECOND_BYTE = FIRST_BYTE << ONE_BYTE
+  protected[smcl] val SecondByte = FirstByte << OneByte
 
   /** Bits belonging to the second-leftmost byte of an `Int`. */
-  protected[smcl] val THIRD_BYTE = SECOND_BYTE << ONE_BYTE
+  protected[smcl] val ThirdByte = SecondByte << OneByte
 
   /** Bits belonging to the leftmost byte of an `Int`. */
-  protected[smcl] val FOURTH_BYTE = THIRD_BYTE << ONE_BYTE
+  protected[smcl] val FourthByte = ThirdByte << OneByte
 
   /** The value range that a single unsigned byte can represent. */
-  protected[smcl] val BYTE_RANGE = 0 to 255
+  protected[smcl] val ByteRange = 0 to 255
 
   /** Color component value representing minimal amount of red. */
-  val MIN_RED: Int = BYTE_RANGE.start
+  val MinimumRed: Int = ByteRange.start
 
   /** Color component value representing maximal amount of red. */
-  val MAX_RED: Int = BYTE_RANGE.end
+  val MaximumRed: Int = ByteRange.end
 
   /** Color component value representing minimal amount of green. */
-  val MIN_GREEN: Int = BYTE_RANGE.start
+  val MinimumGreen: Int = ByteRange.start
 
   /** Color component value representing maximal amount of green. */
-  val MAX_GREEN: Int = BYTE_RANGE.end
+  val MaximumGreen: Int = ByteRange.end
 
   /** Color component value representing minimal amount of blue. */
-  val MIN_BLUE: Int = BYTE_RANGE.start
+  val MinimumBlue: Int = ByteRange.start
 
   /** Color component value representing maximal amount of blue. */
-  val MAX_BLUE: Int = BYTE_RANGE.end
+  val MaximumBlue: Int = ByteRange.end
 
   /** Color component value representing minimal transparency. */
-  val MIN_OPAQUENESS: Int = BYTE_RANGE.start
+  val MinimumOpaqueness: Int = ByteRange.start
 
   /** Color component value representing maximal transparency. */
-  val MAX_OPAQUENESS: Int = BYTE_RANGE.end
+  val MaximumOpaqueness: Int = ByteRange.end
 
   /** Color component value representing minimal transparency. */
-  val FULLY_OPAQUE: Int = MAX_OPAQUENESS
+  val FullyOpaque: Int = MaximumOpaqueness
 
   /** Color component value representing maximal transparency. */
-  val FULLY_TRANSPARENT: Int = MIN_OPAQUENESS
+  val FullyTransparent: Int = MinimumOpaqueness
 
 
   /**
@@ -105,11 +105,11 @@ package object common {
     /** This [[Color]] with full opaqueness. */
     def toOpaqueColor: Color =
       if (self.isOpaque) self
-      else Color(self.red, self.green, self.blue, MAX_OPAQUENESS, self.nameOption)
+      else Color(self.red, self.green, self.blue, MaximumOpaqueness, self.nameOption)
 
     /** This [[Color]] as a `java.awt.Color` with full opaqueness. */
     def toOpaqueAwtColor: AwtColor =
-      new AwtColor(self.red, self.green, self.blue, MAX_OPAQUENESS)
+      new AwtColor(self.red, self.green, self.blue, MaximumOpaqueness)
 
   }
 

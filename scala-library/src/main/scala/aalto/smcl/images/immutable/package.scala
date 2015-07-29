@@ -8,6 +8,6 @@ package aalto.smcl.images
  */
 package object immutable {
 
-  aalto.smcl.images.SettingsManager.initializeSettings()
+  aalto.smcl.images.SettingsInitializer.perform()
 
 }

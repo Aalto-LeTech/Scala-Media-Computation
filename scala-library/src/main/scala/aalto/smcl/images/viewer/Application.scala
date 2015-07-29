@@ -18,21 +18,21 @@ import aalto.smcl.images.viewer.events.external.{DisplayBitmapEvent, ExternalVie
 /**
  * Information and functionality related to this application.
  */
-object Application {
+private[images] object Application {
 
   import aalto.smcl.Library
 
   /** Full name of this application. */
-  val FULL_NAME = s"${Library.ABBREVIATED_NAME} Image Viewer"
+  val FullName = s"${Library.AbbreviatedName} Image Viewer"
 
   /** Default mouse cursor used by this application. */
-  val DEFAULT_CURSOR: Cursor = Cursor.getDefaultCursor
+  val DefaultCursor: Cursor = Cursor.getDefaultCursor
 
   /** Waiting mouse cursor used by this application. */
-  val WAIT_CURSOR: Cursor = Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)
+  val WaitCursor: Cursor = Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)
 
   /** Hand mouse cursor used by this application. */
-  val HAND_CURSOR: Cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
+  val HandCursor: Cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
 
 }
 

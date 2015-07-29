@@ -41,52 +41,52 @@ private[viewer] class ActionMap(val relatedMainFrame: ViewerMainFrame) extends A
 
   'Zoom60Percent ==>
       ViewerAction("Zoom 60 %", Option(Key.Key6), Option((Key.Key6, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_60
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Percents60
       }
 
   'Zoom70Percent ==>
       ViewerAction("Zoom 70 %", Option(Key.Key7), Option((Key.Key7, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_70
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Percents70
       }
 
   'Zoom80Percent ==>
       ViewerAction("Zoom 80 %", Option(Key.Key8), Option((Key.Key8, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_80
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Percents80
       }
 
   'Zoom90Percent ==>
       ViewerAction("Zoom 90 %", Option(Key.Key9), Option((Key.Key9, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_90
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Percents90
       }
 
   'Zoom100Percent ==>
       ViewerAction("Zoom 100 %", Option(Key.Key0), Option((Key.Key0, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.IDENTITY
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Identity
       }
 
   'Zoom150Percent ==>
       ViewerAction("Zoom 150 %", Option(Key.Key1), Option((Key.Key1, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_150
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Percents150
       }
 
   'Zoom200Percent ==>
       ViewerAction("Zoom 200 %", Option(Key.Key2), Option((Key.Key2, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_200
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Percents200
       }
 
   'Zoom300Percent ==>
       ViewerAction("Zoom 300 %", Option(Key.Key3), Option((Key.Key3, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_300
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Percents300
       }
 
   'Zoom400Percent ==>
       ViewerAction("Zoom 400 %", Option(Key.Key4), Option((Key.Key4, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_400
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Percents400
       }
 
   'Zoom500Percent ==>
       ViewerAction("Zoom 500 %", Option(Key.Key5), Option((Key.Key5, 0))) {
-        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.PERCENTS_500
+        relatedMainFrame.imagePanel.zoomFactor = ZoomFactor.Percents500
       }
 
   'About ==>

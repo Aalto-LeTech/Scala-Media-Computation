@@ -31,15 +31,15 @@ object ColorSetting {
 /**
  *
  *
- * @param name
+ * @param key
  * @param initialValue
  * @param validator
  * @author Aleksi Lukkarinen
  */
-class ColorSetting(
-    override val name: ColorSettingKey,
+class ColorSetting private (
+    override val key: ColorSettingKey,
     override val initialValue: Color,
     override val validator: Color => Option[Throwable])
-    extends Setting[Color](name, initialValue, validator) with Mutable {
+    extends Setting[Color](key, initialValue, validator) with Mutable {
 
 }

@@ -25,17 +25,17 @@ private[images] object ViewerMainFrame {
   import aalto.smcl.Library._
 
   /** */
-  val MSG_ABOUT: String =
-    s"""Image viewing application of the $FULL_NAME.
+  val MsgAbout: String =
+    s"""Image viewing application of the $FullName.
       |
-      |Version $VERSION_STRING.
+      |Version $VersionString.
       |
-      |$ABBREVIATED_NAME was originally created by $ORIGINAL_AUTHOR_NAME in $INCEPTION_YEAR as
+      |$AbbreviatedName was originally created by $OriginalAuthorName in $InceptionYear as
       |a part of his Master's Thesis for Aalto University.""".stripMargin
   // @formatter:on
 
   /** */
-  val MIN_FRAME_SIZE: Dimension = new Dimension(300, 200)
+  val MinimumFrameSize: Dimension = new Dimension(300, 200)
 
   /**
    *
@@ -59,11 +59,11 @@ private[images] object ViewerMainFrame {
   def initialViewAreaSizeFor(bitmap: Bitmap): Dimension = {
     val width = (Screen.width * 0.8).toInt
         .min((bitmap.widthInPixels * 1.1).toInt)
-        .max(MIN_FRAME_SIZE.width)
+        .max(MinimumFrameSize.width)
 
     val height = (Screen.height * 0.8).toInt
         .min((bitmap.heightInPixels * 1.1).toInt)
-        .max(MIN_FRAME_SIZE.height)
+        .max(MinimumFrameSize.height)
 
     new Dimension(width, height)
   }
@@ -80,7 +80,7 @@ private[images] class ViewerMainFrame private(
     private val _initialPreferredViewAreaSize: Dimension) extends Frame {
 
   /** */
-  private val NO_MODIFIERS: Key.Modifiers = 0
+  private val NoModifiers: Key.Modifiers = 0
 
   /** */
   private val _actionMap = new ActionMap(this)
@@ -158,8 +158,8 @@ private[images] class ViewerMainFrame private(
 
   }
 
-  title = Application.FULL_NAME
-  minimumSize = ViewerMainFrame.MIN_FRAME_SIZE
+  title = Application.FullName
+  minimumSize = ViewerMainFrame.MinimumFrameSize
   resizable = true
   contents = layoutBase
 
@@ -225,10 +225,10 @@ private[images] class ViewerMainFrame private(
       val upOrLeftDirection = rotation < 1
 
       modifiers match {
-        case NO_MODIFIERS | Shift =>
+        case NoModifiers | Shift =>
           val direction = (modifiers, upOrLeftDirection) match {
-            case (NO_MODIFIERS, true)  => ScrollingDirection.Upwards
-            case (NO_MODIFIERS, false) => ScrollingDirection.Downwards
+            case (NoModifiers, true)  => ScrollingDirection.Upwards
+            case (NoModifiers, false) => ScrollingDirection.Downwards
             case (Shift, true)         => ScrollingDirection.Leftwards
             case (Shift, false)        => ScrollingDirection.Rightwards
 
@@ -240,9 +240,9 @@ private[images] class ViewerMainFrame private(
           adjustScrollBars(Seq(direction), ScrollingMagnitude.Block, Math.abs(rotation))
 
         case Control =>
-          cursor = Application.WAIT_CURSOR
+          cursor = Application.WaitCursor
           if (upOrLeftDirection) zoomOutAction.apply() else zoomInAction.apply()
-          cursor = Application.DEFAULT_CURSOR
+          cursor = Application.DefaultCursor
 
         case _ => ()
       }
@@ -444,9 +444,9 @@ private[images] class ViewerMainFrame private(
    *
    */
   def showAboutBox(): Unit = {
-    cursor = Application.WAIT_CURSOR
-    Dialog.showMessage(parent = this, ViewerMainFrame.MSG_ABOUT, this.title)
-    cursor = Application.DEFAULT_CURSOR
+    cursor = Application.WaitCursor
+    Dialog.showMessage(parent = this, ViewerMainFrame.MsgAbout, this.title)
+    cursor = Application.DefaultCursor
   }
 
 }

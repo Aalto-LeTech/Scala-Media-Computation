@@ -9,10 +9,10 @@ package aalto.smcl.common
 private[smcl] object MetaInformationMap {
 
   // Messages
-  private val MSG_KEY_CANNOT_BE_NULL =
+  private val MsgCannotBeNull =
     "MetaInformationMap content key cannot be null"
 
-  private val MSG_KEY_CANNOT_CONTAIN_ONLY_WHITESPACE =
+  private val MsgKeyCannotContainOnlyWhitespace =
     "MetaInformationMap content key cannot contain only white space"
 
   /**
@@ -24,10 +24,10 @@ private[smcl] object MetaInformationMap {
 
     contentProposal foreach {pair =>
       var key = pair._1
-      require(key != null, MSG_KEY_CANNOT_BE_NULL)
+      require(key != null, MsgCannotBeNull)
 
       key = key.trim()
-      require(key.nonEmpty, MSG_KEY_CANNOT_CONTAIN_ONLY_WHITESPACE)
+      require(key.nonEmpty, MsgKeyCannotContainOnlyWhitespace)
 
       var value = pair._2
       if (value == null)

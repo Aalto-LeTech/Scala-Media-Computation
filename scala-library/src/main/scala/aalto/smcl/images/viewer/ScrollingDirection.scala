@@ -5,21 +5,21 @@ package aalto.smcl.images.viewer
  *
  * @author Aleksi Lukkarinen
  */
-object ScrollingDirection {
+private[viewer] object ScrollingDirection {
 
   /** Type of all directions. */
   trait Value
 
   /** Upward direction. */
-  object Upwards extends Value
+  case object Upwards extends Value
 
   /** Downward direction. */
-  object Downwards extends Value
+  case object Downwards extends Value
 
   /** Leftward direction. */
-  object Leftwards extends Value
+  case object Leftwards extends Value
 
   /** Rightward direction. */
-  object Rightwards extends Value
+  case object Rightwards extends Value
 
 }

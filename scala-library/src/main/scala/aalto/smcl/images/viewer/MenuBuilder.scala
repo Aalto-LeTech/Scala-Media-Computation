@@ -62,7 +62,7 @@ private[viewer] class MenuBuilder private(
     require(mnemonicOption != null, "Mnemonic of the menu to be created cannot be null.")
 
     val trimmedName = name.trim
-    require(trimmedName != STR_EMPTY, "Mnemonic of the menu to be created cannot be null.")
+    require(trimmedName != StrEmpty, "Mnemonic of the menu to be created cannot be null.")
 
     if (_isFinished)
       throw new IllegalStateException("This MenuBuilder has already returned its product.")

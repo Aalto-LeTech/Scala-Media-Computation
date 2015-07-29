@@ -24,7 +24,7 @@ private[images] class ImageDisplayPanel extends Panel {
   private var _bitmapOption: Option[Bitmap] = None
 
   /** */
-  private var _zoomFactor: ZoomFactor = ZoomFactor.IDENTITY
+  private var _zoomFactor: ZoomFactor = ZoomFactor.Identity
 
   /** */
   private var _affineTransformation: AffineTransform = new AffineTransform()
@@ -60,12 +60,12 @@ private[images] class ImageDisplayPanel extends Panel {
     require(value != null, "Internal error: Zoom factor cannot be null.")
 
 
-    cursor = Application.WAIT_CURSOR
+    cursor = Application.WaitCursor
     _zoomFactor = value
     val result = Try(updateView()) // TODO: Error processing, here as well as elsewhere...
     if (result.isFailure)
       println(result)
-    cursor = Application.DEFAULT_CURSOR
+    cursor = Application.DefaultCursor
   }
 
   /**
@@ -95,11 +95,11 @@ private[images] class ImageDisplayPanel extends Panel {
 
     _bitmapOption = Option(bitmap)
 
-    cursor = Application.WAIT_CURSOR
+    cursor = Application.WaitCursor
     val result = Try(updateView()) // TODO: Error processing, here as well as elsewhere...
     if (result.isFailure)
       println(result)
-    cursor = Application.DEFAULT_CURSOR
+    cursor = Application.DefaultCursor
   }
 
   /**

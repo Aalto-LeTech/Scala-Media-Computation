@@ -38,10 +38,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_RED" in {
-        intercept[IllegalArgumentException] {withNewRedComponent(TEST_PIXEL_INT, MIN_RED - 1)}
+        intercept[IllegalArgumentException] {withNewRedComponent(TEST_PIXEL_INT, MinimumRed - 1)}
       }
       "greater than MAX_RED" in {
-        intercept[IllegalArgumentException] {withNewRedComponent(TEST_PIXEL_INT, MAX_RED + 1)}
+        intercept[IllegalArgumentException] {withNewRedComponent(TEST_PIXEL_INT, MaximumRed + 1)}
       }
     }
   }
@@ -52,10 +52,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_GREEN" in {
-        intercept[IllegalArgumentException] {withNewGreenComponent(TEST_PIXEL_INT, MIN_GREEN - 1)}
+        intercept[IllegalArgumentException] {withNewGreenComponent(TEST_PIXEL_INT, MinimumGreen - 1)}
       }
       "greater than MAX_GREEN" in {
-        intercept[IllegalArgumentException] {withNewGreenComponent(TEST_PIXEL_INT, MAX_GREEN + 1)}
+        intercept[IllegalArgumentException] {withNewGreenComponent(TEST_PIXEL_INT, MaximumGreen + 1)}
       }
     }
   }
@@ -66,10 +66,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_BLUE" in {
-        intercept[IllegalArgumentException] {withNewBlueComponent(TEST_PIXEL_INT, MIN_BLUE - 1)}
+        intercept[IllegalArgumentException] {withNewBlueComponent(TEST_PIXEL_INT, MinimumBlue - 1)}
       }
       "greater than MAX_BLUE" in {
-        intercept[IllegalArgumentException] {withNewBlueComponent(TEST_PIXEL_INT, MAX_BLUE + 1)}
+        intercept[IllegalArgumentException] {withNewBlueComponent(TEST_PIXEL_INT, MaximumBlue + 1)}
       }
     }
   }
@@ -80,10 +80,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_OPAQUENESS" in {
-        intercept[IllegalArgumentException] {withNewTransparencyComponent(TEST_PIXEL_INT, MIN_OPAQUENESS - 1)}
+        intercept[IllegalArgumentException] {withNewTransparencyComponent(TEST_PIXEL_INT, MinimumOpaqueness - 1)}
       }
       "greater than MAX_OPAQUENESS" in {
-        intercept[IllegalArgumentException] {withNewTransparencyComponent(TEST_PIXEL_INT, MAX_OPAQUENESS + 1)}
+        intercept[IllegalArgumentException] {withNewTransparencyComponent(TEST_PIXEL_INT, MaximumOpaqueness + 1)}
       }
     }
   }
@@ -111,42 +111,42 @@ class packageSpec extends ImageSpecBase {
     "throw an IllegalArgumentException when color component" - {
       "'red' is less than MIN_RED" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(red = MIN_RED - 1)
+          pixelIntFrom(red = MinimumRed - 1)
         }
       }
       "'red' is greater than MAX_RED" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(red = MAX_RED + 1)
+          pixelIntFrom(red = MaximumRed + 1)
         }
       }
       "'green' is less than MIN_GREEN" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(green = MIN_GREEN - 1)
+          pixelIntFrom(green = MinimumGreen - 1)
         }
       }
       "'green' is greater than MAX_GREEN" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(green = MAX_GREEN + 1)
+          pixelIntFrom(green = MaximumGreen + 1)
         }
       }
       "'blue' is less than MIN_BLUE" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(blue = MIN_BLUE - 1)
+          pixelIntFrom(blue = MinimumBlue - 1)
         }
       }
       "'blue' is greater than MAX_BLUE" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(blue = MAX_BLUE + 1)
+          pixelIntFrom(blue = MaximumBlue + 1)
         }
       }
       "transparency is less than MIN_OPAQUENESS" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(transparency = MIN_OPAQUENESS - 1)
+          pixelIntFrom(transparency = MinimumOpaqueness - 1)
         }
       }
       "transparency is greater than MAX_OPAQUENESS" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(transparency = MAX_OPAQUENESS + 1)
+          pixelIntFrom(transparency = MaximumOpaqueness + 1)
         }
       }
     }

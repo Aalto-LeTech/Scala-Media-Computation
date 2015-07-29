@@ -1,7 +1,7 @@
 package aalto.smcl.common
 
 
-import scala.reflect.runtime.universe.{Symbol, TypeTag, typeOf}
+import scala.reflect.runtime.universe.{ClassSymbol, Mirror, Symbol, runtimeMirror => apiRuntimeMirror}
 
 
 
@@ -14,10 +14,36 @@ import scala.reflect.runtime.universe.{Symbol, TypeTag, typeOf}
 private[smcl] object ReflectionUtils {
 
   /**
-   * Retrieves the `Symbol` object for the type of the object referenced by a given variable.
-   *
-   * @param variable    reference to the object which the `Symbol` is to be retrieved for
+   * Returns a runtime mirror.
    */
-  def symbolOf[T](variable: T)(implicit tt: TypeTag[T]): Symbol = typeOf(tt).typeSymbol
+  def runtimeMirror: Mirror = apiRuntimeMirror(this.getClass.getClassLoader)
+
+  /**
+   * Returns the runtime class symbol object for the object referenced by a given variable.
+   *
+   * @param variable    reference to the object which the symbol is to be retrieved for
+   */
+  def classSymbolOf(variable: Any): ClassSymbol = runtimeMirror.classSymbol(variable.getClass)
+
+  /**
+   * Returns the runtime type symbol object for the object referenced by a given variable.
+   *
+   * @param variable    reference to the object which the symbol is to be retrieved for
+   */
+  def typeSymbolOf(variable: Any): Symbol = classSymbolOf(variable).toType.typeSymbol
+
+  /**
+   * Returns the runtime short name of the object referenced by a given variable.
+   *
+   * @param variable    reference to the object which the symbol is to be retrieved for
+   */
+  def shortTypeNameOf(variable: Any): String = typeSymbolOf(variable).name.decodedName.toString
+
+  /**
+   * Returns the runtime full name of the object referenced by a given variable.
+   *
+   * @param variable
+   */
+  def fullTypeNameOf(variable: Any): String = typeSymbolOf(variable).fullName
 
 }

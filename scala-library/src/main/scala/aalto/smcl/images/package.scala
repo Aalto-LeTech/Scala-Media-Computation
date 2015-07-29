@@ -14,7 +14,7 @@ import aalto.smcl.images.immutable._
 package object images {
 
   SettingKeys
-  SettingsManager.initializeSettings()
+  SettingsInitializer.perform()
 
 
   /** */

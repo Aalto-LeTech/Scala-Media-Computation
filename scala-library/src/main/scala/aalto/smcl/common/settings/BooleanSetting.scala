@@ -40,15 +40,15 @@ object BooleanSetting {
 /**
  *
  *
- * @param name
+ * @param key
  * @param initialValue
  * @param validator
  * @author Aleksi Lukkarinen
  */
-class BooleanSetting(
-    override val name: BooleanSettingKey,
+class BooleanSetting private (
+    override val key: BooleanSettingKey,
     override val initialValue: Boolean,
     override val validator: Boolean => Option[Throwable])
-    extends Setting[Boolean](name, initialValue, validator) with Mutable {
+    extends Setting[Boolean](key, initialValue, validator) with Mutable {
 
 }

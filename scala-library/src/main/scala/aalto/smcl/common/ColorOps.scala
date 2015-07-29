@@ -12,40 +12,40 @@ object ColorOps {
    *
    */
   def withNewRedComponent(pixelInt: Int, newRed: Int): Int = {
-    require(BYTE_RANGE.contains(newRed),
-      s"'newRed' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newRed)")
+    require(ByteRange.contains(newRed),
+      s"'newRed' must be between ${ByteRange.start} and ${ByteRange.end} (was $newRed)")
 
-    (pixelInt & ~THIRD_BYTE) | (newRed << TWO_BYTES)
+    (pixelInt & ~ThirdByte) | (newRed << TwoBytes)
   }
 
   /**
    *
    */
   def withNewGreenComponent(pixelInt: Int, newGreen: Int): Int = {
-    require(BYTE_RANGE.contains(newGreen),
-      s"'newGreen' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newGreen)")
+    require(ByteRange.contains(newGreen),
+      s"'newGreen' must be between ${ByteRange.start} and ${ByteRange.end} (was $newGreen)")
 
-    (pixelInt & ~SECOND_BYTE) | (newGreen << ONE_BYTE)
+    (pixelInt & ~SecondByte) | (newGreen << OneByte)
   }
 
   /**
    *
    */
   def withNewBlueComponent(pixelInt: Int, newBlue: Int): Int = {
-    require(BYTE_RANGE.contains(newBlue),
-      s"'newBlue' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newBlue)")
+    require(ByteRange.contains(newBlue),
+      s"'newBlue' must be between ${ByteRange.start} and ${ByteRange.end} (was $newBlue)")
 
-    (pixelInt & ~FIRST_BYTE) | newBlue
+    (pixelInt & ~FirstByte) | newBlue
   }
 
   /**
    *
    */
   def withNewTransparencyComponent(pixelInt: Int, newTransparency: Int): Int = {
-    require(BYTE_RANGE.contains(newTransparency),
-      s"'newTransparency' must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $newTransparency)")
+    require(ByteRange.contains(newTransparency),
+      s"'newTransparency' must be between ${ByteRange.start} and ${ByteRange.end} (was $newTransparency)")
 
-    (pixelInt & ~FOURTH_BYTE) | (newTransparency << THREE_BYTES)
+    (pixelInt & ~FourthByte) | (newTransparency << ThreeBytes)
   }
 
   /**
@@ -61,44 +61,44 @@ object ColorOps {
   /**
    *
    */
-  def redComponentFrom(pixelInt: Int): Int = (pixelInt & THIRD_BYTE) >>> TWO_BYTES
-
-  /**
-   * l
-   */
-  def greenComponentFrom(pixelInt: Int): Int = (pixelInt & SECOND_BYTE) >>> ONE_BYTE
+  def redComponentFrom(pixelInt: Int): Int = (pixelInt & ThirdByte) >>> TwoBytes
 
   /**
    *
    */
-  def blueComponentFrom(pixelInt: Int): Int = pixelInt & FIRST_BYTE
+  def greenComponentFrom(pixelInt: Int): Int = (pixelInt & SecondByte) >>> OneByte
 
   /**
    *
    */
-  def transparencyComponentFrom(pixelInt: Int): Int = pixelInt >>> THREE_BYTES
+  def blueComponentFrom(pixelInt: Int): Int = pixelInt & FirstByte
 
   /**
    *
    */
-  def pixelIntFrom(red: Int = MIN_RED,
-      green: Int = MIN_GREEN,
-      blue: Int = MIN_BLUE,
-      transparency: Int = FULLY_OPAQUE): Int = {
+  def transparencyComponentFrom(pixelInt: Int): Int = pixelInt >>> ThreeBytes
 
-    require(BYTE_RANGE.contains(red),
-      s"The 'red' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $red)")
+  /**
+   *
+   */
+  def pixelIntFrom(red: Int = MinimumRed,
+      green: Int = MinimumGreen,
+      blue: Int = MinimumBlue,
+      transparency: Int = FullyOpaque): Int = {
 
-    require(BYTE_RANGE.contains(green),
-      s"The 'green' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $green)")
+    require(ByteRange.contains(red),
+      s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
 
-    require(BYTE_RANGE.contains(blue),
-      s"The 'blue' value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $blue)")
+    require(ByteRange.contains(green),
+      s"The 'green' value must be between ${ByteRange.start} and ${ByteRange.end} (was $green)")
 
-    require(BYTE_RANGE.contains(transparency),
-      s"The transparency value must be between ${BYTE_RANGE.start} and ${BYTE_RANGE.end} (was $transparency)")
+    require(ByteRange.contains(blue),
+      s"The 'blue' value must be between ${ByteRange.start} and ${ByteRange.end} (was $blue)")
 
-    (transparency << THREE_BYTES) | (red << TWO_BYTES) | (green << ONE_BYTE) | blue
+    require(ByteRange.contains(transparency),
+      s"The transparency value must be between ${ByteRange.start} and ${ByteRange.end} (was $transparency)")
+
+    (transparency << ThreeBytes) | (red << TwoBytes) | (green << OneByte) | blue
   }
 
 
@@ -158,8 +158,8 @@ object ColorOps {
      * }}}
      */
     def toArgbBinaryColorString: String =
-      self.toBinaryString.format("$s%32s").replace(STR_SPACE, STR_ZERO)
-          .sliding(ONE_BYTE, ONE_BYTE).mkString(STR_SPACE)
+      self.toBinaryString.format("$s%32s").replace(StrSpace, StrZero)
+          .sliding(OneByte, OneByte).mkString(StrSpace)
 
   }
 

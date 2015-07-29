@@ -30,15 +30,15 @@ object StringSetting {
 /**
  *
  *
- * @param name
+ * @param key
  * @param initialValue
  * @param validator
  * @author Aleksi Lukkarinen
  */
-class StringSetting(
-    override val name: StringSettingKey,
+class StringSetting private (
+    override val key: StringSettingKey,
     override val initialValue: String,
     override val validator: String => Option[Throwable])
-    extends Setting[String](name, initialValue, validator) with Mutable {
+    extends Setting[String](key, initialValue, validator) with Mutable {
 
 }

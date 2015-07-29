@@ -1,7 +1,7 @@
 package aalto.smcl.common.settings
 
 
-import aalto.smcl.common.Color
+import aalto.smcl.common.{ReflectionUtils, Color}
 import aalto.smcl.common.settings.SettingKeys.{BooleanSettingKey, ColorSettingKey, IntSettingKey, StringSettingKey}
 
 
@@ -65,10 +65,10 @@ class Settings {
    * @return
    */
   def += (value: Setting[_]): Unit = value match {
-    case b: BooleanSetting => _booleanMap += (b.name -> b)
-    case i: IntSetting     => _intMap += (i.name -> i)
-    case s: StringSetting  => _stringMap += (s.name -> s)
-    case c: ColorSetting   => _colorMap += (c.name -> c)
+    case b: BooleanSetting => _booleanMap += (b.key -> b)
+    case i: IntSetting     => _intMap += (i.key -> i)
+    case s: StringSetting  => _stringMap += (s.key -> s)
+    case c: ColorSetting   => _colorMap += (c.key -> c)
     case _                 => throw new UnknownSettingTypeError(value)
   }
 
@@ -199,5 +199,46 @@ class Settings {
   def resetAll(): Unit = {
     Seq(_booleanMap, _colorMap, _intMap, _stringMap).foreach {_.values.foreach {_.reset()}}
   }
+
+  /**
+   *
+   */
+  def list(): Unit = {
+    println("\nBooleans:")
+    for (setting <- booleans().values) {
+      println(s" - ${setting.key.simpleName}: ${setting.value.toString}")
+    }
+
+    println("\nInts:")
+    for (setting <- ints().values) {
+      println(s" - ${setting.key.simpleName}: ${setting.value.toString}")
+    }
+
+    println("\nStrings:")
+    for (setting <- strings().values) {
+      println(s" - ${setting.key.simpleName}: ${setting.value.toString}")
+    }
+
+    println("\nColors:")
+    for (setting <- colors().values) {
+      println(s" - ${setting.key.simpleName}: ${setting.value.toString}")
+    }
+  }
+
+  /**
+   *
+   */
+  def toToken: String =
+    s"[${ReflectionUtils.shortTypeNameOf(this)}; " +
+        s"booleans: ${booleans().size}; ints: ${ints().size}; strings: ${strings().size}; " +
+        s"colors: ${colors().size}]"
+
+  /**
+   *
+   */
+  override def toString: String =
+    s"${ReflectionUtils.shortTypeNameOf(this)} containing " +
+        s"${booleans().size} booleans, ${ints().size} ints, ${strings().size} strings and " +
+        s"${colors().size} colors."
 
 }
