@@ -6,7 +6,7 @@ package aalto.smcl.common.settings
  *
  * @author Aleksi Lukkarinen
  */
-final class WrongSettingTypeError(setting: SettingKey, settingValue: Any, cause: Throwable)
+final class WrongSettingTypeError(setting: SettingKeys.Value, settingValue: Any, cause: Throwable)
     extends RuntimeException(
       s"""Setting with "${setting.toString}" is of type ${settingValue.getClass.getName}.""",
       cause) {
@@ -18,6 +18,6 @@ final class WrongSettingTypeError(setting: SettingKey, settingValue: Any, cause:
    * @param settingValue
    * @return
    */
-  def this(setting: SettingKey, settingValue: Any) = this(setting, settingValue, null)
+  def this(setting: SettingKeys.Value, settingValue: Any) = this(setting, settingValue, null)
 
 }

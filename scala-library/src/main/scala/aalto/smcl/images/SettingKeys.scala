@@ -1,7 +1,7 @@
 package aalto.smcl.images
 
 
-import aalto.smcl.common.settings.SettingKey
+import aalto.smcl.common.settings.SettingKeys._
 
 
 
@@ -13,30 +13,28 @@ import aalto.smcl.common.settings.SettingKey
  */
 object SettingKeys {
 
-  /** */
-  sealed trait ImageSettingKey extends SettingKey
 
   // @formatter:off
 
   /** */
-  case object NewBitmapsAreDisplayedAutomatically extends ImageSettingKey
+  case object NewBitmapsAreDisplayedAutomatically extends BooleanSettingKey
 
   /** */
-  case object DisplayBitmapsAutomaticallyAfterOperations extends ImageSettingKey
+  case object DisplayBitmapsAutomaticallyAfterOperations extends BooleanSettingKey
 
   /** */
-  case object DefaultBitmapWidthInPixels extends ImageSettingKey
+  case object DefaultBitmapWidthInPixels extends IntSettingKey
 
   /** */
-  case object DefaultBitmapHeightInPixels extends ImageSettingKey
+  case object DefaultBitmapHeightInPixels extends IntSettingKey
 
   /** */
-  case object DefaultBackground extends ImageSettingKey
+  case object DefaultBackground extends ColorSettingKey
 
   /** */
-  case object DefaultPrimary extends ImageSettingKey
+  case object DefaultPrimary extends ColorSettingKey
 
   /** */
-  case object DefaultSecondary extends ImageSettingKey
+  case object DefaultSecondary extends ColorSettingKey
 
 }

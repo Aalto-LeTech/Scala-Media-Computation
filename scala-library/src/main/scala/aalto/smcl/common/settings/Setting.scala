@@ -24,7 +24,7 @@ object Setting {
  * @author Aleksi Lukkarinen
  */
 abstract class Setting[A] protected (
-    val name: SettingKey,
+    val name: SettingKeys.Value,
     val initialValue: A,
     val validator: A => Option[Throwable]) extends Mutable {
 

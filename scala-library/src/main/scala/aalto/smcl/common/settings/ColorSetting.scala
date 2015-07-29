@@ -2,6 +2,7 @@ package aalto.smcl.common.settings
 
 
 import aalto.smcl.common.Color
+import aalto.smcl.common.settings.SettingKeys.ColorSettingKey
 
 
 
@@ -21,7 +22,7 @@ object ColorSetting {
    * @param validator
    * @return
    */
-  def apply(name: SettingKey, initialValue: Color, validator: Color => Option[Throwable]): ColorSetting =
+  def apply(name: ColorSettingKey, initialValue: Color, validator: Color => Option[Throwable]): ColorSetting =
     new ColorSetting(name, initialValue, validator)
 
 }
@@ -36,9 +37,9 @@ object ColorSetting {
  * @author Aleksi Lukkarinen
  */
 class ColorSetting(
-    name: SettingKey,
-    initialValue: Color,
-    validator: Color => Option[Throwable])
+    override val name: ColorSettingKey,
+    override val initialValue: Color,
+    override val validator: Color => Option[Throwable])
     extends Setting[Color](name, initialValue, validator) with Mutable {
 
 }

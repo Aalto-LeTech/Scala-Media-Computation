@@ -2,6 +2,7 @@ package aalto.smcl.common.settings
 
 
 import aalto.smcl.common.Color
+import aalto.smcl.common.settings.SettingKeys.{BooleanSettingKey, ColorSettingKey, IntSettingKey, StringSettingKey}
 
 
 
@@ -11,51 +12,64 @@ import aalto.smcl.common.Color
  *
  * @author Aleksi Lukkarinen
  */
-class Settings extends collection.mutable.Map[SettingKey, Setting[_]] with Mutable {
+class Settings {
 
   /** */
-  private[this] val _currentSettingsMap =
-    collection.mutable.HashMap[SettingKey, Setting[_]]()
+  private[this] val _booleanMap =
+    collection.mutable.HashMap[BooleanSettingKey, BooleanSetting]()
+
+  /** */
+  private[this] val _intMap =
+    collection.mutable.HashMap[IntSettingKey, IntSetting]()
+
+  /** */
+  private[this] val _stringMap =
+    collection.mutable.HashMap[StringSettingKey, StringSetting]()
+
+  /** */
+  private[this] val _colorMap =
+    collection.mutable.HashMap[ColorSettingKey, ColorSetting]()
 
   /**
    *
    *
-   * @param kv
    * @return
    */
-  override def += (kv: (SettingKey, Setting[_])): Settings.this.type =
-    (_currentSettingsMap += kv).asInstanceOf[Settings.this.type]
+  def booleans() = _booleanMap.toMap
 
   /**
    *
    *
-   * @param s
    * @return
    */
-  def += (s: Setting[_]): collection.mutable.Map[SettingKey, Setting[_]] =
-    _currentSettingsMap += (s.name -> s)
-
+  def ints() = _intMap.toMap
 
   /**
    *
    *
-   * @param key
    * @return
    */
-  override def -= (key: SettingKey): Settings.this.type =
-    throw new UnsupportedOperationException("Removal from the settings map is prohibited.")
+  def strings() = _stringMap.toMap
 
   /**
    *
    *
-   * @param key
    * @return
    */
-  override def get(key: SettingKey): Option[Setting[_]] = {
-    if (!_currentSettingsMap.contains(key))
-      throw new UninitializedSettingError(key)
+  def colors() = _colorMap.toMap
 
-    _currentSettingsMap.get(key)
+  /**
+   *
+   *
+   * @param value
+   * @return
+   */
+  def += (value: Setting[_]): Unit = value match {
+    case b: BooleanSetting => _booleanMap += (b.name -> b)
+    case i: IntSetting     => _intMap += (i.name -> i)
+    case s: StringSetting  => _stringMap += (s.name -> s)
+    case c: ColorSetting   => _colorMap += (c.name -> c)
+    case _                 => throw new IllegalArgumentException("Unknown setting type.")
   }
 
   /**
@@ -64,22 +78,12 @@ class Settings extends collection.mutable.Map[SettingKey, Setting[_]] with Mutab
    * @param key
    * @return
    */
-  def settingFor(key: SettingKey): Setting[_] = get(key).get
-
-  /**
-   *
-   *
-   * @param key
-   * @return
-   */
-  def isTrueThat(key: SettingKey): Boolean = {
-    val setting = settingFor(key)
-    val value = setting.value
-
-    if (!setting.isInstanceOf[BooleanSetting])
-      throw new WrongSettingTypeError(key, value)
-
-    value.asInstanceOf[Boolean]
+  def get(key: SettingKeys.Value): Option[Setting[_]] = key match {
+    case b: BooleanSettingKey => _booleanMap.get(b)
+    case i: IntSettingKey     => _intMap.get(i)
+    case s: StringSettingKey  => _stringMap.get(s)
+    case c: ColorSettingKey   => _colorMap.get(c)
+    case _                    => throw new IllegalArgumentException("Unknown setting type.")
   }
 
   /**
@@ -88,14 +92,29 @@ class Settings extends collection.mutable.Map[SettingKey, Setting[_]] with Mutab
    * @param key
    * @return
    */
-  def intFor(key: SettingKey): Int = {
-    val setting = settingFor(key)
-    val value = setting.value
+  def apply(key: SettingKeys.Value): Setting[_] = key match {
+    case b: BooleanSettingKey =>
+      if (!_booleanMap.contains(b))
+        throw new UninitializedSettingError(b)
+      _booleanMap(b).asInstanceOf[Setting[_]]
 
-    if (!setting.isInstanceOf[IntSetting])
-      throw new WrongSettingTypeError(key, value)
+    case i: IntSettingKey =>
+      if (!_intMap.contains(i))
+        throw new UninitializedSettingError(i)
+      _intMap(i).asInstanceOf[Setting[_]]
 
-    value.asInstanceOf[Int]
+    case s: StringSettingKey =>
+      if (!_stringMap.contains(s))
+        throw new UninitializedSettingError(s)
+      _stringMap(s).asInstanceOf[Setting[_]]
+
+    case c: ColorSettingKey =>
+      if (!_colorMap.contains(c))
+        throw new UninitializedSettingError(c)
+      _colorMap(c).asInstanceOf[Setting[_]]
+
+    case _ =>
+      throw new IllegalArgumentException("Unknown setting type.")
   }
 
   /**
@@ -104,15 +123,7 @@ class Settings extends collection.mutable.Map[SettingKey, Setting[_]] with Mutab
    * @param key
    * @return
    */
-  def stringFor(key: SettingKey): String = {
-    val setting = settingFor(key)
-    val value = setting.value
-
-    if (!setting.isInstanceOf[StringSetting])
-      throw new WrongSettingTypeError(key, value)
-
-    value.asInstanceOf[String]
-  }
+  def settingFor(key: SettingKeys.Value): Setting[_] = apply(key)
 
   /**
    *
@@ -120,27 +131,74 @@ class Settings extends collection.mutable.Map[SettingKey, Setting[_]] with Mutab
    * @param key
    * @return
    */
-  def colorFor(key: SettingKey): Color = {
-    val setting = settingFor(key)
-    val value = setting.value
-
-    if (!setting.isInstanceOf[ColorSetting])
-      throw new WrongSettingTypeError(key, value)
-
-    value.asInstanceOf[Color]
-  }
+  def booleanSettingFor(key: BooleanSettingKey): BooleanSetting =
+    apply(key).asInstanceOf[BooleanSetting]
 
   /**
    *
    *
+   * @param key
    * @return
    */
-  override def iterator: Iterator[(SettingKey, Setting[_])] =
-    _currentSettingsMap.iterator
+  def intSettingFor(key: IntSettingKey): IntSetting =
+    apply(key).asInstanceOf[IntSetting]
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def stringSettingFor(key: StringSettingKey): StringSetting =
+    apply(key).asInstanceOf[StringSetting]
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def colorSettingFor(key: ColorSettingKey): ColorSetting =
+    apply(key).asInstanceOf[ColorSetting]
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def isTrueThat(key: BooleanSettingKey): Boolean = booleanSettingFor(key).value
+
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def intFor(key: IntSettingKey): Int = intSettingFor(key).value
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def stringFor(key: StringSettingKey): String = stringSettingFor(key).value
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def colorFor(key: ColorSettingKey): Color = colorSettingFor(key).value
 
   /**
    *
    */
-  def resetAll(): Unit = _currentSettingsMap.values.foreach {_.reset()}
+  def resetAll(): Unit = {
+    Seq(_booleanMap, _colorMap, _intMap, _stringMap).foreach {_.values.foreach {_.reset()}}
+  }
 
 }

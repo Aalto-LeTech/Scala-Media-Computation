@@ -1,6 +1,11 @@
 package aalto.smcl.common.settings
 
 
+import aalto.smcl.common.settings.SettingKeys.BooleanSettingKey
+
+
+
+
 /**
  *
  *
@@ -16,7 +21,7 @@ object BooleanSetting {
    * @param validator
    * @return
    */
-  def apply(name: SettingKey, initialValue: Boolean, validator: Boolean => Option[Throwable]): BooleanSetting =
+  def apply(name: BooleanSettingKey, initialValue: Boolean, validator: Boolean => Option[Throwable]): BooleanSetting =
     new BooleanSetting(name, initialValue, validator)
 
   /**
@@ -26,7 +31,7 @@ object BooleanSetting {
    * @param initialValue
    * @return
    */
-  def apply(name: SettingKey, initialValue: Boolean): BooleanSetting =
+  def apply(name: BooleanSettingKey, initialValue: Boolean): BooleanSetting =
     new BooleanSetting(name, initialValue, Setting.EmptyValidator)
 
 }
@@ -41,9 +46,9 @@ object BooleanSetting {
  * @author Aleksi Lukkarinen
  */
 class BooleanSetting(
-    name: SettingKey,
-    initialValue: Boolean,
-    validator: Boolean => Option[Throwable])
+    override val name: BooleanSettingKey,
+    override val initialValue: Boolean,
+    override val validator: Boolean => Option[Throwable])
     extends Setting[Boolean](name, initialValue, validator) with Mutable {
 
 }

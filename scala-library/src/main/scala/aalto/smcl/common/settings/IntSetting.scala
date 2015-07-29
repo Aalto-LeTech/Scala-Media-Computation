@@ -1,6 +1,11 @@
 package aalto.smcl.common.settings
 
 
+import aalto.smcl.common.settings.SettingKeys.IntSettingKey
+
+
+
+
 /**
  *
  *
@@ -16,7 +21,7 @@ object IntSetting {
    * @param validator
    * @return
    */
-  def apply(name: SettingKey, initialValue: Int, validator: Int => Option[Throwable]): IntSetting =
+  def apply(name: IntSettingKey, initialValue: Int, validator: Int => Option[Throwable]): IntSetting =
     new IntSetting(name, initialValue, validator)
 
 }
@@ -31,9 +36,9 @@ object IntSetting {
  * @author Aleksi Lukkarinen
  */
 class IntSetting(
-    name: SettingKey,
-    initialValue: Int,
-    validator: Int => Option[Throwable])
+    override val name: IntSettingKey,
+    override val initialValue: Int,
+    override val validator: Int => Option[Throwable])
     extends Setting[Int](name, initialValue, validator) with Mutable {
 
 }
