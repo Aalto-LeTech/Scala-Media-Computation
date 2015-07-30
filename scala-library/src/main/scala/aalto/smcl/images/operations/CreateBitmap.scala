@@ -5,6 +5,7 @@ import java.awt.image.{BufferedImage => JBufferedImage}
 import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
 
 import aalto.smcl.common._
+import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels}
 import aalto.smcl.images.immutable._
 
 
@@ -13,9 +14,14 @@ import aalto.smcl.images.immutable._
 /**
  * An operation to create a bitmap buffer of a given size.
  *
+ * @param widthInPixels
+ * @param heightInPixels
+ *
  * @author Aleksi Lukkarinen
  */
-private[images] case class CreateBitmap(widthInPixels: Int, heightInPixels: Int)
+private[images] case class CreateBitmap(
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels))
     extends AbstractBufferProviderOperation with Immutable {
 
   /** This [[AbstractBufferProviderOperation]] does not have any child operations. */

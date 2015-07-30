@@ -5,7 +5,7 @@ import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
 import aalto.smcl.common.ColorOps._
-import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary}
+import aalto.smcl.images.SettingKeys.{DefaultCircleRadiusInPixels, DefaultSecondary, DefaultPrimary}
 
 
 
@@ -14,13 +14,27 @@ import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary}
  * Operation to draw a circle with given colors. If a color is not given, the default
  * primary/secondary colors will be used, as defined in the [[GS]].
  *
+ * @param centerXInPixels
+ * @param centerYInPixels
+ * @param radiusInPixels
+ * @param isFilled
+ * @param lineColor
+ * @param fillColor
+ *
  * @author Aleksi Lukkarinen
  */
 private[images] case class DrawCircle(
-    centerXInPixels: Int, centerYInPixels: Int, radiusInPixels: Int, isFilled: Boolean,
+    centerXInPixels: Int,
+    centerYInPixels: Int,
+    radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+    isFilled: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
+
+  require(radiusInPixels > 0, s"The radius argument must be greater than zero (was $radiusInPixels).")
+  require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+  require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** X coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
   val boundingBoxUpperLeftX: Int = centerXInPixels - radiusInPixels
@@ -45,6 +59,8 @@ private[images] case class DrawCircle(
 
   /**
    * Draws a circle onto the given bitmap with the given colors.
+   *
+   * @param destination
    */
   override def render(destination: JBufferedImage): Unit = {
     val drawingSurface = destination.createGraphics()

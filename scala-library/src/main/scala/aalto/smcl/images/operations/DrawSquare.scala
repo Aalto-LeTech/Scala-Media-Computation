@@ -1,28 +1,40 @@
 package aalto.smcl.images.operations
 
+
 import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
-import aalto.smcl.images.SettingKeys.{DefaultPrimary, DefaultSecondary}
+import aalto.smcl.images.SettingKeys.{DefaultBitmapWidthInPixels, DefaultPrimary, DefaultSecondary}
 
 
 
 
 /**
- * Operation to draw a rectangle with given colors. If a color is not given, the default
+ * Operation to draw a square with given colors. If a color is not given, the default
  * primary/secondary colors will be used, as defined in the [[GS]].
+ *
+ * @param upperLeftCornerXInPixels
+ * @param upperLeftCornerYInPixels
+ * @param sideLengthInPixels
+ * @param isFilled
+ * @param lineColor
+ * @param fillColor
  *
  * @author Aleksi Lukkarinen
  */
 private[images] case class DrawSquare(
     upperLeftCornerXInPixels: Int,
     upperLeftCornerYInPixels: Int,
-    sideLengthInPixels: Int,
-    isFilled: Boolean,
+    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    isFilled: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
+
+  require(sideLengthInPixels > 0, s"The side length argument must be greater than zero (was $sideLengthInPixels).")
+  require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+  require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
@@ -37,7 +49,9 @@ private[images] case class DrawSquare(
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
-   * Draws a circle onto the given bitmap with the given colors.
+   * Draws a square onto the given bitmap with the given colors.
+   *
+   * @param destination
    */
   override def render(destination: JBufferedImage): Unit = {
     val drawingSurface = destination.createGraphics()

@@ -2,6 +2,7 @@ package aalto.smcl.images.immutable
 
 import aalto.smcl.common.{Color, GS}
 import aalto.smcl.images.SettingKeys.{DefaultBackground, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary}
+import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
 import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 
 
@@ -23,7 +24,8 @@ object Ellipse {
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       circleColor: Color = GS.colorFor(DefaultPrimary),
-      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+      backgroundColor: Color = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels >= 10, s"Width of the ellipse must be at least 10 pixels (was $widthInPixels)")
     require(heightInPixels >= 10, s"Width of the ellipse must be at least 10 pixels (was $heightInPixels)")
@@ -48,7 +50,7 @@ object Ellipse {
       isFilled = true,
       lineColor = circleColor,
       fillColor = circleColor,
-      viewerHandling = UpdateViewerPerDefaults)
+      viewerHandling)
   }
 
 }

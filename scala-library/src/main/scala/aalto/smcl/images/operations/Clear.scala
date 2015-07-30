@@ -13,11 +13,15 @@ import aalto.smcl.images.SettingKeys.DefaultBackground
  * Operation to clear a bitmap with a given color. If a color is not given, the default background color will be used,
  * as defined in the [[GS]].
  *
+ * @param color
+ *
  * @author Aleksi Lukkarinen
  */
 private[images] case class Clear(
     color: Color = GS.colorFor(DefaultBackground))
     extends AbstractSingleSourceOperation with Immutable {
+
+  require(color != null, "The color argument has to be a Color instance (was null).")
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
@@ -28,6 +32,8 @@ private[images] case class Clear(
 
   /**
    * Clears the given bitmap with the given color.
+   *
+   * @param destination
    */
   override def render(destination: JBufferedImage): Unit = {
     val drawingSurface = destination.createGraphics()

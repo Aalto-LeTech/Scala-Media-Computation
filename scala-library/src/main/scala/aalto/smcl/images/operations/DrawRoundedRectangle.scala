@@ -5,30 +5,34 @@ import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
-import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary, DefaultSecondary}
+import aalto.smcl.images.SettingKeys._
 
 
 
 
 /**
- * Operation to draw an ellipse with given colors. If a color is not given, the default
- * primary/secondary colors will be used, as defined in the [[GS]].
+ * Operation to draw a rounded-corner rectangle with given colors. If a color is not
+ * given, the default primary/secondary colors will be used, as defined in the [[GS]].
  *
- * @param centerXInPixels
- * @param centerYInPixels
+ * @param upperLeftCornerXInPixels
+ * @param upperLeftCornerYInPixels
  * @param widthInPixels
  * @param heightInPixels
+ * @param roundingWidthInPixels
+ * @param roundingHeightInPixels
  * @param isFilled
  * @param lineColor
  * @param fillColor
  *
  * @author Aleksi Lukkarinen
  */
-private[images] case class DrawEllipse(
-    centerXInPixels: Int,
-    centerYInPixels: Int,
+private[images] case class DrawRoundedRectangle(
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
     isFilled: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
@@ -36,30 +40,28 @@ private[images] case class DrawEllipse(
 
   require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
   require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")
+  require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
+  require(roundingHeightInPixels > 0, s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
   require(lineColor != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
-
-  /** X coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  val boundingBoxUpperLeftX: Int = centerXInPixels - (widthInPixels / 2)
-
-  /** Y coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  val boundingBoxUpperLeftY: Int = centerYInPixels - (heightInPixels / 2)
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this [[AbstractSingleSourceOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
-    "centerX" -> Option(s"$centerXInPixels px"),
-    "centerY" -> Option(s"$centerYInPixels px"),
+    "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
+    "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),
     "height" -> Option(s"$heightInPixels px"),
+    "roundingWidth" -> Option(s"$roundingWidthInPixels px"),
+    "roundingHeight" -> Option(s"$roundingHeightInPixels px"),
     "filled" -> Option(isFilled.toString),
     "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
-   * Draws a ellipse onto the given bitmap with the given colors.
+   * Draws a rounded-corner rectangle onto the given bitmap with the given colors.
    *
    * @param destination
    */
@@ -69,15 +71,17 @@ private[images] case class DrawEllipse(
 
     if (isFilled) {
       drawingSurface.setColor(fillColor.asAwtColor)
-      drawingSurface.fillOval(
-        boundingBoxUpperLeftX, boundingBoxUpperLeftY,
-        widthInPixels, heightInPixels)
+      drawingSurface.fillRoundRect(
+        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+        widthInPixels, heightInPixels,
+        roundingWidthInPixels, roundingHeightInPixels)
     }
 
     drawingSurface.setColor(lineColor.asAwtColor)
-    drawingSurface.drawOval(
-      boundingBoxUpperLeftX, boundingBoxUpperLeftY,
-      widthInPixels, heightInPixels)
+    drawingSurface.drawRoundRect(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      widthInPixels, heightInPixels,
+      roundingWidthInPixels, roundingHeightInPixels)
 
     drawingSurface.setColor(oldColor)
   }

@@ -40,6 +40,30 @@ private[images] object SettingsInitializer {
         else None
       })
 
+    GS += IntSetting(
+      name = DefaultCircleRadiusInPixels,
+      initialValue = 10,
+      validator = {value =>
+        if (value < 1) Option(new IllegalArgumentException("Circle radius must be at least 1 pixel"))
+        else None
+      })
+
+    GS += IntSetting(
+      name = DefaultRoundingWidthInPixels,
+      initialValue = 10,
+      validator = {value =>
+        if (value < 1) Option(new IllegalArgumentException("Rounding width must be at least 1 pixel"))
+        else None
+      })
+
+    GS += IntSetting(
+      name = DefaultRoundingHeightInPixels,
+      initialValue = 10,
+      validator = {value =>
+        if (value < 1) Option(new IllegalArgumentException("Rounding height must be at least 1 pixel"))
+        else None
+      })
+
     GS += ColorSetting(
       name = DefaultBackground,
       initialValue = PresetColors('white),

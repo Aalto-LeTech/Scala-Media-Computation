@@ -99,9 +99,14 @@ object Bitmap {
 /**
  *
  *
+ * @param operations
+ * @param id
+ *
  * @author Aleksi Lukkarinen
  */
-case class Bitmap private(private val operations: BitmapOperationList, id: UUID) extends {
+case class Bitmap private(
+    private val operations: BitmapOperationList,
+    id: UUID) extends {
 
   /** Width of this [[Bitmap]]. */
   val widthInPixels: Int = operations.widthInPixels
@@ -159,8 +164,6 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
       color: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(color != null, "The color argument has to be a Color instance (was null).")
-
     apply(Clear(color), viewerHandling)
   }
 
@@ -179,15 +182,11 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
   def drawSquare(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      sideLengthInPixels: Int,
-      isFilled: Boolean,
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      isFilled: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
-
-    require(sideLengthInPixels > 0, s"The side length argument must be greater than zero (was $sideLengthInPixels).")
-    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
-    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
     apply(DrawSquare(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
@@ -197,7 +196,7 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
 
   /**
    *
-   * 
+   *
    * @param upperLeftCornerXInPixels
    * @param upperLeftCornerYInPixels
    * @param widthInPixels
@@ -211,21 +210,82 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
   def drawRectangle(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      widthInPixels: Int,
-      heightInPixels: Int,
-      isFilled: Boolean,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      isFilled: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
-    require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")
-    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
-    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
-
     apply(DrawRectangle(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftCornerXInPixels
+   * @param upperLeftCornerYInPixels
+   * @param sideLengthInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawRoundedSquare(
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      isFilled: Boolean = false,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(DrawRoundedSquare(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      sideLengthInPixels,
+      roundingWidthInPixels, roundingHeightInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftCornerXInPixels
+   * @param upperLeftCornerYInPixels
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawRoundedRectangle(
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      isFilled: Boolean = false,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(DrawRoundedRectangle(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      widthInPixels, heightInPixels,
+      roundingWidthInPixels, roundingHeightInPixels,
       isFilled, lineColor, fillColor), viewerHandling)
   }
 
@@ -244,15 +304,11 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
   def drawCircle(
       centerXInPixels: Int,
       centerYInPixels: Int,
-      radiusInPixels: Int,
-      isFilled: Boolean,
+      radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+      isFilled: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
-
-    require(radiusInPixels > 0, s"The radius argument must be greater than zero (was $radiusInPixels).")
-    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
-    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
     apply(DrawCircle(
       centerXInPixels, centerYInPixels,
@@ -276,17 +332,12 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
   def drawEllipse(
       centerXInPixels: Int,
       centerYInPixels: Int,
-      widthInPixels: Int,
-      heightInPixels: Int,
-      isFilled: Boolean,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      isFilled: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
-
-    require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
-    require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")
-    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
-    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
     apply(DrawEllipse(
       centerXInPixels, centerYInPixels,

@@ -3,6 +3,7 @@ package aalto.smcl.images.immutable
 
 import aalto.smcl.common.{Color, GS}
 import aalto.smcl.images.SettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary}
+import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
 import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 
 
@@ -23,7 +24,8 @@ object Circle {
   def apply(
       diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
       circleColor: Color = GS.colorFor(DefaultPrimary),
-      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+      backgroundColor: Color = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(diameter >= 10, s"Diameter of the circle must be at least 10 pixels (was $diameter)")
 
@@ -44,7 +46,7 @@ object Circle {
       isFilled = true,
       lineColor = circleColor,
       fillColor = circleColor,
-      viewerHandling = UpdateViewerPerDefaults)
+      viewerHandling)
   }
 
 }

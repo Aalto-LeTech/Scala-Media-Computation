@@ -2,7 +2,7 @@ package aalto.smcl.images
 
 
 import aalto.smcl.common.{Color, GS}
-import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary, DefaultBackground}
+import aalto.smcl.images.SettingKeys._
 import aalto.smcl.images.immutable.Bitmap
 import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
 import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
@@ -31,14 +31,14 @@ object BitmapOps {
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap to be cleared cannot be null.")
-    require(color != null, "The color argument has to be a Color instance (was null).")
 
     bmp.apply(Clear(color), viewerHandling)
   }
 
   /**
+   * Adds a [[DrawSquare]] operation to a given [[OperableBitmap]].
    *
-   *
+   * @param bmp
    * @param upperLeftCornerXInPixels
    * @param upperLeftCornerYInPixels
    * @param sideLengthInPixels
@@ -52,16 +52,13 @@ object BitmapOps {
       bmp: OperableBitmap,
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      sideLengthInPixels: Int,
-      isFilled: Boolean,
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      isFilled: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-    require(sideLengthInPixels > 0, s"The side length argument must be greater than zero (was $sideLengthInPixels).")
-    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
-    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
     bmp.apply(DrawSquare(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
@@ -70,8 +67,9 @@ object BitmapOps {
   }
 
   /**
+   * Adds a [[DrawRectangle]] operation to a given [[OperableBitmap]].
    *
-   *
+   * @param bmp
    * @param upperLeftCornerXInPixels
    * @param upperLeftCornerYInPixels
    * @param widthInPixels
@@ -86,22 +84,92 @@ object BitmapOps {
       bmp: OperableBitmap,
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      widthInPixels: Int,
-      heightInPixels: Int,
-      isFilled: Boolean,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      isFilled: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-    require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
-    require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")
-    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
-    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
     bmp.apply(DrawRectangle(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
+   * Adds a [[DrawRoundedSquare]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param upperLeftCornerXInPixels
+   * @param upperLeftCornerYInPixels
+   * @param sideLengthInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawRoundedSquare(
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      isFilled: Boolean = false,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(DrawRoundedSquare(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      sideLengthInPixels,
+      roundingWidthInPixels, roundingHeightInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
+   * Adds a [[DrawRoundedRectangle]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param upperLeftCornerXInPixels
+   * @param upperLeftCornerYInPixels
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawRoundedRectangle(
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      isFilled: Boolean = false,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(DrawRoundedRectangle(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      widthInPixels, heightInPixels,
+      roundingWidthInPixels, roundingHeightInPixels,
       isFilled, lineColor, fillColor), viewerHandling)
   }
 
@@ -121,15 +189,13 @@ object BitmapOps {
       bmp: OperableBitmap,
       centerXInPixels: Int,
       centerYInPixels: Int,
-      radiusInPixels: Int,
-      isFilled: Boolean,
+      radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+      isFilled: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
-    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
     bmp.apply(DrawCircle(
       centerXInPixels, centerYInPixels,
@@ -154,16 +220,14 @@ object BitmapOps {
       bmp: OperableBitmap,
       centerXInPixels: Int,
       centerYInPixels: Int,
-      widthInPixels: Int,
-      heightInPixels: Int,
-      isFilled: Boolean,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      isFilled: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
-    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
     bmp.apply(DrawEllipse(
       centerXInPixels, centerYInPixels,

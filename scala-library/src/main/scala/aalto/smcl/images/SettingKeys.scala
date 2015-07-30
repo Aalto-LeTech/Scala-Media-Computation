@@ -29,6 +29,15 @@ object SettingKeys {
   case object DefaultBitmapHeightInPixels extends IntSettingKey
 
   /** */
+  case object DefaultRoundingWidthInPixels extends IntSettingKey
+
+  /** */
+  case object DefaultRoundingHeightInPixels extends IntSettingKey
+
+  /** */
+  case object DefaultCircleRadiusInPixels extends IntSettingKey
+
+  /** */
   case object DefaultBackground extends ColorSettingKey
 
   /** */
