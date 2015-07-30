@@ -4,6 +4,8 @@ package aalto.smcl.images
 import aalto.smcl.common.{Color, GS}
 import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary, DefaultBackground}
 import aalto.smcl.images.immutable.Bitmap
+import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
+import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.images.operations._
 
 
@@ -25,12 +27,13 @@ object BitmapOps {
    */
   def clear(
       bmp: OperableBitmap,
-      color: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+      color: Color = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap to be cleared cannot be null.")
     require(color != null, "The color argument has to be a Color instance (was null).")
 
-    bmp.apply(Clear(color))
+    bmp.apply(Clear(color), viewerHandling)
   }
 
   /**
@@ -52,13 +55,51 @@ object BitmapOps {
       radiusInPixels: Int,
       isFilled: Boolean,
       lineColor: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary)): Bitmap = {
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
     require(lineColor != null, "The line color argument has to be a Color instance (was null).")
     require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
-    bmp.apply(DrawCircle(centerXInPixels, centerYInPixels, radiusInPixels, isFilled, lineColor, fillColor))
+    bmp.apply(DrawCircle(
+      centerXInPixels, centerYInPixels,
+      radiusInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
+   * Adds a [[DrawEllipse]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param centerXInPixels
+   * @param centerYInPixels
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @return
+   */
+  def drawEllipse(
+      bmp: OperableBitmap,
+      centerXInPixels: Int,
+      centerYInPixels: Int,
+      widthInPixels: Int,
+      heightInPixels: Int,
+      isFilled: Boolean,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
+
+    bmp.apply(DrawEllipse(
+      centerXInPixels, centerYInPixels,
+      widthInPixels, heightInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
   }
 
 }

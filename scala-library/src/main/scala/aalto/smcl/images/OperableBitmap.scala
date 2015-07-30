@@ -1,6 +1,8 @@
 package aalto.smcl.images
 
 
+import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
+import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.images.immutable._
 import aalto.smcl.images.operations._
 
@@ -16,7 +18,13 @@ private[images] trait OperableBitmap {
 
   /**
    * Returns a new instance of this [[Bitmap]] with the [[AbstractOperation]] applied to it.
+   *
+   * @param operation
+   * @param viewerHandling
+   * @return
    */
-  private[images] def apply(operation: AbstractSingleSourceOperation): Bitmap
+  private[images] def apply(
+      operation: AbstractSingleSourceOperation,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap
 
 }

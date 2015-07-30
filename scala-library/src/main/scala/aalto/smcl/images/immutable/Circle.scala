@@ -2,7 +2,8 @@ package aalto.smcl.images.immutable
 
 
 import aalto.smcl.common.{Color, GS}
-import aalto.smcl.images.SettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary, NewBitmapsAreDisplayedAutomatically}
+import aalto.smcl.images.SettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary}
+import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 
 
 
@@ -28,25 +29,22 @@ object Circle {
 
     val imageSide = if (diameter % 2 == 0) diameter + 1 else diameter
 
-    var newBitmap = Bitmap(
+    val newBitmap = Bitmap(
       widthInPixels = imageSide,
       heightInPixels = imageSide,
-      initialBackgroundColor = backgroundColor)
+      initialBackgroundColor = backgroundColor,
+      viewerHandling = PreventViewerUpdates)
 
     val radius = (imageSide - 2) / 2
 
-    newBitmap = newBitmap.drawCircle(
+    newBitmap.drawCircle(
       centerXInPixels = radius + 1,
       centerYInPixels = radius + 1,
       radiusInPixels = radius,
       isFilled = true,
       lineColor = circleColor,
-      fillColor = circleColor)
-
-    if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
-      newBitmap.display()
-
-    newBitmap
+      fillColor = circleColor,
+      viewerHandling = UpdateViewerPerDefaults)
   }
 
 }

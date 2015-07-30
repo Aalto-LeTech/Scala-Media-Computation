@@ -10,6 +10,8 @@ import scala.ref.WeakReference
 
 import aalto.smcl.common._
 import aalto.smcl.images.SettingKeys._
+import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
+import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.images.operations._
 import aalto.smcl.images.{display => displayInViewer, _}
 
@@ -25,13 +27,42 @@ object Bitmap {
 
   aalto.smcl.images.SettingsInitializer.perform()
 
+
+  /**
+   *
+   */
+  object ViewerUpdateStyle {
+
+
+    /**
+     *
+     */
+    abstract sealed class Value
+
+
+    /**
+     *
+     */
+    case object UpdateViewerPerDefaults extends Value
+
+
+    /**
+     *
+     */
+    case object PreventViewerUpdates extends Value
+
+
+  }
+
+
   /**
    * Creates a new empty [[Bitmap]] instance.
    */
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      initialBackgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+      initialBackgroundColor: Color = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels >= 10, s"Width of the image must be at least 10 pixels (was $widthInPixels)")
     require(heightInPixels >= 10, s"Height of the image must be at least 10 pixels (was $heightInPixels)")
@@ -42,11 +73,14 @@ object Bitmap {
 
     val newBitmap = new Bitmap(operationList, UUID.randomUUID())
 
-    if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
-      newBitmap.display()
+    if (viewerHandling == UpdateViewerPerDefaults) {
+      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+        newBitmap.display()
+    }
 
     newBitmap
   }
+
 
   /**
    *
@@ -93,14 +127,23 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
 
   /**
    * Applies an [[AbstractSingleSourceOperation]] to this [[Bitmap]].
+   *
+   * @param newOperation
+   * @param viewerHandling
+   * @return
    */
-  private[images] def apply(newOperation: AbstractSingleSourceOperation): Bitmap = {
+  private[images] def apply(
+      newOperation: AbstractSingleSourceOperation,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     require(newOperation != null, "Operation argument cannot be null.")
 
     val newBitmap = copy(operations = newOperation +: operations)
 
-    if (GS.isTrueThat(DisplayBitmapsAutomaticallyAfterOperations))
-      newBitmap.display()
+    if (viewerHandling == UpdateViewerPerDefaults) {
+      if (GS.isTrueThat(DisplayBitmapsAutomaticallyAfterOperations))
+        newBitmap.display()
+    }
 
     newBitmap
   }
@@ -109,10 +152,16 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
    *
    *
    * @param color
+   * @param viewerHandling
+   * @return
    */
-  def clear(color: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+  def clear(
+      color: Color = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     require(color != null, "The color argument has to be a Color instance (was null).")
-    apply(Clear(color))
+
+    apply(Clear(color), viewerHandling)
   }
 
   /**
@@ -124,6 +173,7 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
    * @param isFilled
    * @param lineColor
    * @param fillColor
+   * @param viewerHandling
    * @return
    */
   def drawCircle(
@@ -132,12 +182,48 @@ case class Bitmap private(private val operations: BitmapOperationList, id: UUID)
       radiusInPixels: Int,
       isFilled: Boolean,
       lineColor: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary)): Bitmap = {
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(lineColor != null, "The line color argument has to be a Color instance (was null).")
     require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
-    apply(DrawCircle(centerXInPixels, centerYInPixels, radiusInPixels, isFilled, lineColor, fillColor))
+    apply(DrawCircle(
+      centerXInPixels, centerYInPixels,
+      radiusInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param centerXInPixels
+   * @param centerYInPixels
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawEllipse(
+      centerXInPixels: Int,
+      centerYInPixels: Int,
+      widthInPixels: Int,
+      heightInPixels: Int,
+      isFilled: Boolean,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
+
+    apply(DrawEllipse(
+      centerXInPixels, centerYInPixels,
+      widthInPixels, heightInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
   }
 
   /**
