@@ -37,6 +37,75 @@ object BitmapOps {
   }
 
   /**
+   *
+   *
+   * @param upperLeftCornerXInPixels
+   * @param upperLeftCornerYInPixels
+   * @param sideLengthInPixels
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawSquare(
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      sideLengthInPixels: Int,
+      isFilled: Boolean,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+    require(sideLengthInPixels > 0, s"The side length argument must be greater than zero (was $sideLengthInPixels).")
+    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
+
+    bmp.apply(DrawSquare(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      sideLengthInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftCornerXInPixels
+   * @param upperLeftCornerYInPixels
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawRectangle(
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int,
+      heightInPixels: Int,
+      isFilled: Boolean,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+    require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
+    require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")
+    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+    require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
+
+    bmp.apply(DrawRectangle(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      widthInPixels, heightInPixels,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
    * Adds a [[DrawCircle]] operation to a given [[OperableBitmap]].
    *
    * @param bmp

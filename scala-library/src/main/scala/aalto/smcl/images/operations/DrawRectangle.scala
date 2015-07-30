@@ -10,14 +10,14 @@ import aalto.smcl.images.SettingKeys.{DefaultPrimary, DefaultSecondary}
 
 
 /**
- * Operation to draw an ellipse with given colors. If a color is not given, the default
+ * Operation to draw a rectangle with given colors. If a color is not given, the default
  * primary/secondary colors will be used, as defined in the [[GS]].
  *
  * @author Aleksi Lukkarinen
  */
-private[images] case class DrawEllipse(
-    centerXInPixels: Int,
-    centerYInPixels: Int,
+private[images] case class DrawRectangle(
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
     widthInPixels: Int,
     heightInPixels: Int,
     isFilled: Boolean,
@@ -25,19 +25,13 @@ private[images] case class DrawEllipse(
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
-  /** X coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  val boundingBoxUpperLeftX: Int = centerXInPixels - (widthInPixels / 2)
-
-  /** Y coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  val boundingBoxUpperLeftY: Int = centerYInPixels - (heightInPixels / 2)
-
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
 
   /** Information about this [[AbstractSingleSourceOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
-    "centerX" -> Option(s"$centerXInPixels px"),
-    "centerY" -> Option(s"$centerYInPixels px"),
+    "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
+    "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),
     "height" -> Option(s"$heightInPixels px"),
     "filled" -> Option(isFilled.toString),
@@ -53,14 +47,14 @@ private[images] case class DrawEllipse(
 
     if (isFilled) {
       drawingSurface.setColor(fillColor.asAwtColor)
-      drawingSurface.fillOval(
-        boundingBoxUpperLeftX, boundingBoxUpperLeftY,
+      drawingSurface.fillRect(
+        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
         widthInPixels, heightInPixels)
     }
 
     drawingSurface.setColor(lineColor.asAwtColor)
-    drawingSurface.drawOval(
-      boundingBoxUpperLeftX, boundingBoxUpperLeftY,
+    drawingSurface.drawRect(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels)
 
     drawingSurface.setColor(oldColor)
