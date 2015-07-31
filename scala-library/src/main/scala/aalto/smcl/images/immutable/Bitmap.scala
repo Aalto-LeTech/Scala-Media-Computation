@@ -170,6 +170,31 @@ case class Bitmap private(
   /**
    *
    *
+   * @param fromXInPixels
+   * @param fromYInPixels
+   * @param toXInPixels
+   * @param toYInPixels
+   * @param color
+   * @param viewerHandling
+   * @return
+   */
+  def drawLine(
+      fromXInPixels: Int,
+      fromYInPixels: Int,
+      toXInPixels: Int,
+      toYInPixels: Int,
+      color: Color = GS.colorFor(DefaultPrimary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(DrawLine(
+      fromXInPixels, fromYInPixels,
+      toXInPixels, toYInPixels,
+      color), viewerHandling)
+  }
+
+  /**
+   *
+   *
    * @param upperLeftCornerXInPixels
    * @param upperLeftCornerYInPixels
    * @param sideLengthInPixels

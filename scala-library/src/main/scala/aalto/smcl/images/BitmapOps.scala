@@ -36,6 +36,35 @@ object BitmapOps {
   }
 
   /**
+   * Adds a [[DrawLine]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param fromXInPixels
+   * @param fromYInPixels
+   * @param toXInPixels
+   * @param toYInPixels
+   * @param color
+   * @param viewerHandling
+   * @return
+   */
+  def drawLine(
+      bmp: OperableBitmap,
+      fromXInPixels: Int,
+      fromYInPixels: Int,
+      toXInPixels: Int,
+      toYInPixels: Int,
+      color: Color = GS.colorFor(DefaultPrimary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(DrawLine(
+      fromXInPixels, fromYInPixels,
+      toXInPixels, toYInPixels,
+      color), viewerHandling)
+  }
+
+  /**
    * Adds a [[DrawSquare]] operation to a given [[OperableBitmap]].
    *
    * @param bmp
