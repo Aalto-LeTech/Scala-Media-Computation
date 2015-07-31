@@ -62,7 +62,7 @@ private[images] case class DrawPolygon(
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
-   * Draws a line onto the given bitmap with the given colors.
+   * Draws a polygon onto the given bitmap with the given colors.
    *
    * @param destination
    */
