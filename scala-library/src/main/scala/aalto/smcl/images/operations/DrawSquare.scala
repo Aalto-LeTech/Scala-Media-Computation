@@ -46,7 +46,8 @@ private[images] case class DrawSquare(
     "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "side" -> Option(s"$sideLengthInPixels px"),
-    "filled" -> Option(hasFilling.toString),
+    "hasBorder" -> Option(hasBorder.toString),
+    "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 

@@ -59,7 +59,8 @@ private[images] case class DrawPolygon(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
     "numberOfCoordinatesPreset" -> Option(numberOfCoordinatesPreset.toString),
     "numberOfCoordinatesToDraw" -> Option(numberOfCoordinatesToDraw.toString),
-    "filled" -> Option(hasFilling.toString),
+    "hasBorder" -> Option(hasBorder.toString),
+    "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 

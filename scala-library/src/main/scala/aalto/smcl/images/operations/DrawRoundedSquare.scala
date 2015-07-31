@@ -53,7 +53,8 @@ private[images] case class DrawRoundedSquare(
     "sideLength" -> Option(s"$sideLengthInPixels px"),
     "roundingWidth" -> Option(s"$roundingWidthInPixels px"),
     "roundingHeight" -> Option(s"$roundingHeightInPixels px"),
-    "filled" -> Option(hasFilling.toString),
+    "hasBorder" -> Option(hasBorder.toString),
+    "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 

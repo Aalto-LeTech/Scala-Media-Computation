@@ -55,7 +55,8 @@ private[images] case class DrawCircle(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),
     "radius" -> Option(s"$radiusInPixels px"),
-    "filled" -> Option(hasFilling.toString),
+    "hasBorder" -> Option(hasBorder.toString),
+    "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 

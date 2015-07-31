@@ -56,7 +56,8 @@ private[images] case class DrawEllipse(
     "centerY" -> Option(s"$centerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),
     "height" -> Option(s"$heightInPixels px"),
-    "filled" -> Option(hasFilling.toString),
+    "hasBorder" -> Option(hasBorder.toString),
+    "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
