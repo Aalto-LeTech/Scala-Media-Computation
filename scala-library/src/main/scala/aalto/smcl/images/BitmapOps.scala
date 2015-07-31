@@ -343,6 +343,48 @@ object BitmapOps {
       color, fillColor), viewerHandling)
   }
 
+
+  /**
+   * Adds a [[DrawArc]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param upperLeftCornerXInPixels
+   * @param upperLeftCornerYInPixels
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param startAngle
+   * @param arcAngle
+   * @param hasBorder
+   * @param hasFilling
+   * @param color
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawArc(
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      startAngle: Int = GS.intFor(DefaultArcStartAngle),
+      arcAngle: Int = GS.intFor(DefaultArcAngle),
+      hasBorder: Boolean = true,
+      hasFilling: Boolean = false,
+      color: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(DrawArc(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      widthInPixels, heightInPixels,
+      startAngle, arcAngle,
+      hasBorder, hasFilling,
+      color, fillColor), viewerHandling)
+  }
+
 }
 
 

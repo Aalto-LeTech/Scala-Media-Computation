@@ -443,6 +443,43 @@ case class Bitmap private(
   }
 
   /**
+   *
+   *
+   * @param upperLeftCornerXInPixels
+   * @param upperLeftCornerYInPixels
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param startAngle
+   * @param arcAngle
+   * @param hasBorder
+   * @param hasFilling
+   * @param color
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawArc(
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      startAngle: Int = GS.intFor(DefaultArcStartAngle),
+      arcAngle: Int = GS.intFor(DefaultArcAngle),
+      hasBorder: Boolean = true,
+      hasFilling: Boolean = false,
+      color: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(DrawArc(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      widthInPixels, heightInPixels,
+      startAngle, arcAngle,
+      hasBorder, hasFilling,
+      color, fillColor), viewerHandling)
+  }
+
+  /**
    * Renders this [[Bitmap]] onto a drawing surface using specified coordinates.
    *
    * @param drawingSurface

@@ -38,6 +38,12 @@ object SettingKeys {
   case object DefaultCircleRadiusInPixels extends IntSettingKey
 
   /** */
+  case object DefaultArcStartAngle extends IntSettingKey
+
+  /** */
+  case object DefaultArcAngle extends IntSettingKey
+
+  /** */
   case object DefaultBackground extends ColorSettingKey
 
   /** */

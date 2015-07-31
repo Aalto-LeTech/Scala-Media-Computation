@@ -1,7 +1,7 @@
 package aalto.smcl.images
 
 
-import aalto.smcl.common.settings.{BooleanSetting, ColorSetting, IntSetting}
+import aalto.smcl.common.settings.{Setting, BooleanSetting, ColorSetting, IntSetting}
 import aalto.smcl.common.{GS, PresetColors}
 import aalto.smcl.images.SettingKeys._
 
@@ -63,6 +63,16 @@ private[images] object SettingsInitializer {
         if (value < 1) Option(new IllegalArgumentException("Rounding height must be at least 1 pixel"))
         else None
       })
+
+    GS += IntSetting(
+      name = DefaultArcStartAngle,
+      initialValue = 0,
+      validator = Setting.EmptyValidator)
+
+    GS += IntSetting(
+      name = DefaultArcAngle,
+      initialValue = 180,
+      validator = Setting.EmptyValidator)
 
     GS += ColorSetting(
       name = DefaultBackground,
