@@ -3,31 +3,33 @@ package aalto.smcl.images.operations
 
 import java.awt.image.{BufferedImage => JBufferedImage}
 
-import aalto.smcl.common._
 import aalto.smcl.common.ColorOps._
-import aalto.smcl.common.{Color, GS, MetaInformationMap}
-import aalto.smcl.images.SettingKeys.DefaultPrimary
+import aalto.smcl.common.{Color, GS, MetaInformationMap, _}
+import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary}
 
 
 
 
 /**
- * Operation to draw a polyline with given color. If the color is not given, the default primary color
- * will be used, as defined in the [[GS]]. If the start and end points do not point to the same pixel,
- * the resulting polyline will not be closed.
+ * Operation to draw a polygon with given colors. If a color is not given, the default primary/secondary
+ * color will be used, as defined in the [[GS]]. The resulting polyline will be automatically closed.
  *
  * @param xCoordinates
  * @param yCoordinates
  * @param numberOfCoordinatesToDraw
- * @param color
+ * @param isFilled
+ * @param lineColor
+ * @param fillColor
  *
  * @author Aleksi Lukkarinen
  */
-private[images] case class DrawPolyline(
+private[images] case class DrawPolygon(
     xCoordinates: Array[Int],
     yCoordinates: Array[Int],
     numberOfCoordinatesToDraw: Int,
-    color: Color = GS.colorFor(DefaultPrimary))
+    isFilled: Boolean = false,
+    lineColor: Color = GS.colorFor(DefaultPrimary),
+    fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
   require(xCoordinates != null, "The x coordinate argument has to be an Array[Int] instance (was null).")
@@ -44,7 +46,8 @@ private[images] case class DrawPolyline(
     s"The coordinate arrays do not contain the requested amount of coordinate pairs " +
         s"(only $numberOfCoordinatesPreset pairs present, $numberOfCoordinatesToDraw requested).")
 
-  require(color != null, "The color argument has to be a Color instance (was null).")
+  require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+  require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Array[BitmapOperationList]] = None
@@ -54,10 +57,12 @@ private[images] case class DrawPolyline(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
     "numberOfCoordinatesPreset" -> Option(numberOfCoordinatesPreset.toString),
     "numberOfCoordinatesToDraw" -> Option(numberOfCoordinatesToDraw.toString),
-    "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}")))
+    "filled" -> Option(isFilled.toString),
+    "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
+    "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
-   * Draws a polyline onto the given bitmap with the given colors.
+   * Draws a line onto the given bitmap with the given colors.
    *
    * @param destination
    */
@@ -65,8 +70,14 @@ private[images] case class DrawPolyline(
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    drawingSurface.setColor(color.asAwtColor)
-    drawingSurface.drawPolyline(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
+    if (isFilled) {
+      drawingSurface.setColor(fillColor.asAwtColor)
+      drawingSurface.fillPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
+    }
+
+    drawingSurface.setColor(lineColor.asAwtColor)
+    drawingSurface.drawPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
+
     drawingSurface.setColor(oldColor)
   }
 

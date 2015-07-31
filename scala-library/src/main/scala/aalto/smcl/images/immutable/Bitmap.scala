@@ -219,6 +219,33 @@ case class Bitmap private(
   /**
    *
    *
+   * @param xCoordinates
+   * @param yCoordinates
+   * @param numberOfCoordinatesToDraw
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawPolygon(
+      xCoordinates: Array[Int],
+      yCoordinates: Array[Int],
+      numberOfCoordinatesToDraw: Int,
+      isFilled: Boolean = false,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(DrawPolygon(
+      xCoordinates, yCoordinates,
+      numberOfCoordinatesToDraw,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
+   *
+   *
    * @param upperLeftCornerXInPixels
    * @param upperLeftCornerYInPixels
    * @param sideLengthInPixels

@@ -92,6 +92,37 @@ object BitmapOps {
   }
 
   /**
+   * Adds a [[DrawPolygon]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param xCoordinates
+   * @param yCoordinates
+   * @param numberOfCoordinatesToDraw
+   * @param isFilled
+   * @param lineColor
+   * @param fillColor
+   * @param viewerHandling
+   * @return
+   */
+  def drawPolygon(
+      bmp: OperableBitmap,
+      xCoordinates: Array[Int],
+      yCoordinates: Array[Int],
+      numberOfCoordinatesToDraw: Int,
+      isFilled: Boolean = false,
+      lineColor: Color = GS.colorFor(DefaultPrimary),
+      fillColor: Color = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(DrawPolygon(
+      xCoordinates, yCoordinates,
+      numberOfCoordinatesToDraw,
+      isFilled, lineColor, fillColor), viewerHandling)
+  }
+
+  /**
    * Adds a [[DrawSquare]] operation to a given [[OperableBitmap]].
    *
    * @param bmp

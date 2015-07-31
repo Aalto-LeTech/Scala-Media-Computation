@@ -59,7 +59,7 @@ private[images] case class DrawEllipse(
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
-   * Draws a ellipse onto the given bitmap with the given colors.
+   * Draws an ellipse onto the given bitmap with the given colors.
    *
    * @param destination
    */
