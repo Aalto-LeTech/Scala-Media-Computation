@@ -64,8 +64,8 @@ object Bitmap {
       initialBackgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(widthInPixels >= 10, s"Width of the image must be at least 10 pixels (was $widthInPixels)")
-    require(heightInPixels >= 10, s"Height of the image must be at least 10 pixels (was $heightInPixels)")
+    require(widthInPixels > 0, s"Width of the image must be at least 1 pixel (was $widthInPixels)")
+    require(heightInPixels > 0, s"Height of the image must be at least 1 pixel (was $heightInPixels)")
 
     val operationList =
       Clear(initialBackgroundColor) +:

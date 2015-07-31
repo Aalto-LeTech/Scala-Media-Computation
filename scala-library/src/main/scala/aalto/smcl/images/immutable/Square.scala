@@ -26,10 +26,9 @@ object Square {
       color: Color = GS.colorFor(DefaultPrimary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(sideLengthInPixels >= 10,
-      s"Side of the square must be at least 10 pixels (was $sideLengthInPixels)")
+    require(sideLengthInPixels > 0, s"Side length of the square must be at least 1 pixel (was $sideLengthInPixels)")
 
-    Rectangle(sideLengthInPixels, sideLengthInPixels, color, viewerHandling)
+    Bitmap(sideLengthInPixels, sideLengthInPixels, color, viewerHandling)
   }
 
 }

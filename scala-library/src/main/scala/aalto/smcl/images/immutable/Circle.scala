@@ -27,7 +27,7 @@ object Circle {
       backgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(diameter >= 10, s"Diameter of the circle must be at least 10 pixels (was $diameter)")
+    require(diameter > 0, s"Diameter of the circle must be at least 1 pixel (was $diameter)")
 
     val imageSide = if (diameter % 2 == 0) diameter + 1 else diameter
 

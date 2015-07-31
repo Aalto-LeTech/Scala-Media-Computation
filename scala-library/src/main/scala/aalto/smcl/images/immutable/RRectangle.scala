@@ -18,7 +18,7 @@ object RRectangle {
   aalto.smcl.images.SettingsInitializer.perform()
 
   /**
-   * Creates a new empty [[Bitmap]] instance with a rectangle drawn on it.
+   * Creates a new empty [[Bitmap]] instance with a rounded-corner rectangle drawn on it.
    */
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -29,8 +29,8 @@ object RRectangle {
       backgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(widthInPixels >= 10, s"Width of the rectangle must be at least 10 pixels (was $widthInPixels)")
-    require(heightInPixels >= 10, s"Height of the rectangle must be at least 10 pixels (was $heightInPixels)")
+    require(widthInPixels > 0, s"Width of the rectangle must be at least 1 pixel (was $widthInPixels)")
+    require(heightInPixels > 0, s"Height of the rectangle must be at least 1 pixel (was $heightInPixels)")
     require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
     require(roundingHeightInPixels > 0, s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
     require(rectangleColor != null, "The rectangle color argument has to be a Color instance (was null).")

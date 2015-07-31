@@ -18,7 +18,7 @@ object Ellipse {
   aalto.smcl.images.SettingsInitializer.perform()
 
   /**
-   * Creates a new empty [[Bitmap]] instance with a circle drawn on it.
+   * Creates a new empty [[Bitmap]] instance with an ellipse drawn on it.
    */
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -27,8 +27,8 @@ object Ellipse {
       backgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(widthInPixels >= 10, s"Width of the ellipse must be at least 10 pixels (was $widthInPixels)")
-    require(heightInPixels >= 10, s"Width of the ellipse must be at least 10 pixels (was $heightInPixels)")
+    require(widthInPixels > 0, s"Width of the ellipse must be at least 1 pixel (was $widthInPixels)")
+    require(heightInPixels > 0, s"Height of the ellipse must be at least 1 pixel (was $heightInPixels)")
 
     val bitmapWidth = if (widthInPixels % 2 == 0) widthInPixels + 1 else widthInPixels
     val bitmapHeight = if (heightInPixels % 2 == 0) heightInPixels + 1 else heightInPixels
