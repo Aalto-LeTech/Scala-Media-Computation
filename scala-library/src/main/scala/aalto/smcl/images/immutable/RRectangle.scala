@@ -55,6 +55,7 @@ object RRectangle {
       0, 0,
       widthInPixels - 1, heightInPixels - 1,
       roundingWidthInPixels, roundingHeightInPixels,
+      hasBorder = true,
       hasFilling = true,
       lineColor = rectangleColor,
       fillColor = rectangleColor,

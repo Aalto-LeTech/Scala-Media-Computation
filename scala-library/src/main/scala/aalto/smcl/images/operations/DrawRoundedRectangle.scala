@@ -20,6 +20,7 @@ import aalto.smcl.images.SettingKeys._
  * @param heightInPixels
  * @param roundingWidthInPixels
  * @param roundingHeightInPixels
+ * @param hasBorder
  * @param hasFilling
  * @param lineColor
  * @param fillColor
@@ -33,6 +34,7 @@ private[images] case class DrawRoundedRectangle(
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
     roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
     roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+    hasBorder: Boolean = true,
     hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
@@ -77,11 +79,13 @@ private[images] case class DrawRoundedRectangle(
         roundingWidthInPixels, roundingHeightInPixels)
     }
 
-    drawingSurface.setColor(lineColor.asAwtColor)
-    drawingSurface.drawRoundRect(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      widthInPixels, heightInPixels,
-      roundingWidthInPixels, roundingHeightInPixels)
+    if (hasBorder) {
+      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.drawRoundRect(
+        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+        widthInPixels, heightInPixels,
+        roundingWidthInPixels, roundingHeightInPixels)
+    }
 
     drawingSurface.setColor(oldColor)
   }

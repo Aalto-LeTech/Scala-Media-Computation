@@ -51,6 +51,7 @@ object Circle {
       centerXInPixels = radius + 1,
       centerYInPixels = radius + 1,
       radiusInPixels = radius,
+      hasBorder = true,
       hasFilling = true,
       lineColor = circleColor,
       fillColor = circleColor,

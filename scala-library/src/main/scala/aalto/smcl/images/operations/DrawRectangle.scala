@@ -18,6 +18,7 @@ import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmap
  * @param upperLeftCornerYInPixels
  * @param widthInPixels
  * @param heightInPixels
+ * @param hasBorder
  * @param hasFilling
  * @param lineColor
  * @param fillColor
@@ -29,6 +30,7 @@ private[images] case class DrawRectangle(
     upperLeftCornerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    hasBorder: Boolean = true,
     hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
@@ -68,10 +70,12 @@ private[images] case class DrawRectangle(
         widthInPixels, heightInPixels)
     }
 
-    drawingSurface.setColor(lineColor.asAwtColor)
-    drawingSurface.drawRect(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      widthInPixels, heightInPixels)
+    if (hasBorder) {
+      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.drawRect(
+        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+        widthInPixels, heightInPixels)
+    }
 
     drawingSurface.setColor(oldColor)
   }

@@ -17,6 +17,7 @@ import aalto.smcl.images.SettingKeys.{DefaultCircleRadiusInPixels, DefaultSecond
  * @param centerXInPixels
  * @param centerYInPixels
  * @param radiusInPixels
+ * @param hasBorder
  * @param hasFilling
  * @param lineColor
  * @param fillColor
@@ -27,6 +28,7 @@ private[images] case class DrawCircle(
     centerXInPixels: Int,
     centerYInPixels: Int,
     radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+    hasBorder: Boolean = true,
     hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
@@ -73,10 +75,12 @@ private[images] case class DrawCircle(
         boundingBoxSideLength, boundingBoxSideLength)
     }
 
-    drawingSurface.setColor(lineColor.asAwtColor)
-    drawingSurface.drawOval(
-      boundingBoxUpperLeftX, boundingBoxUpperLeftY,
-      boundingBoxSideLength, boundingBoxSideLength)
+    if (hasBorder) {
+      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.drawOval(
+        boundingBoxUpperLeftX, boundingBoxUpperLeftY,
+        boundingBoxSideLength, boundingBoxSideLength)
+    }
 
     drawingSurface.setColor(oldColor)
   }

@@ -18,6 +18,7 @@ import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmap
  * @param centerYInPixels
  * @param widthInPixels
  * @param heightInPixels
+ * @param hasBorder
  * @param hasFilling
  * @param lineColor
  * @param fillColor
@@ -29,6 +30,7 @@ private[images] case class DrawEllipse(
     centerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    hasBorder: Boolean = true,
     hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
@@ -74,10 +76,12 @@ private[images] case class DrawEllipse(
         widthInPixels, heightInPixels)
     }
 
-    drawingSurface.setColor(lineColor.asAwtColor)
-    drawingSurface.drawOval(
-      boundingBoxUpperLeftX, boundingBoxUpperLeftY,
-      widthInPixels, heightInPixels)
+    if (hasBorder) {
+      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.drawOval(
+        boundingBoxUpperLeftX, boundingBoxUpperLeftY,
+        widthInPixels, heightInPixels)
+    }
 
     drawingSurface.setColor(oldColor)
   }

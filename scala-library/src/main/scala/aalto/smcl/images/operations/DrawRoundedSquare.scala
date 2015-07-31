@@ -18,6 +18,7 @@ import aalto.smcl.images.SettingKeys.{DefaultBitmapWidthInPixels, DefaultRoundin
  * @param sideLengthInPixels
  * @param roundingWidthInPixels
  * @param roundingHeightInPixels
+ * @param hasBorder
  * @param hasFilling
  * @param lineColor
  * @param fillColor
@@ -30,6 +31,7 @@ private[images] case class DrawRoundedSquare(
     sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
     roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+    hasBorder: Boolean = true,
     hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
@@ -72,11 +74,13 @@ private[images] case class DrawRoundedSquare(
         roundingWidthInPixels, roundingHeightInPixels)
     }
 
-    drawingSurface.setColor(lineColor.asAwtColor)
-    drawingSurface.drawRoundRect(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      sideLengthInPixels, sideLengthInPixels,
-      roundingWidthInPixels, roundingHeightInPixels)
+    if (hasBorder) {
+      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.drawRoundRect(
+        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+        sideLengthInPixels, sideLengthInPixels,
+        roundingWidthInPixels, roundingHeightInPixels)
+    }
 
     drawingSurface.setColor(oldColor)
   }

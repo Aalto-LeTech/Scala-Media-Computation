@@ -222,6 +222,7 @@ case class Bitmap private(
    * @param xCoordinates
    * @param yCoordinates
    * @param numberOfCoordinatesToDraw
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -232,6 +233,7 @@ case class Bitmap private(
       xCoordinates: Array[Int],
       yCoordinates: Array[Int],
       numberOfCoordinatesToDraw: Int,
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -240,7 +242,8 @@ case class Bitmap private(
     apply(DrawPolygon(
       xCoordinates, yCoordinates,
       numberOfCoordinatesToDraw,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -249,6 +252,7 @@ case class Bitmap private(
    * @param upperLeftCornerXInPixels
    * @param upperLeftCornerYInPixels
    * @param sideLengthInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -259,6 +263,7 @@ case class Bitmap private(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
       sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -267,7 +272,8 @@ case class Bitmap private(
     apply(DrawSquare(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       sideLengthInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -277,6 +283,7 @@ case class Bitmap private(
    * @param upperLeftCornerYInPixels
    * @param widthInPixels
    * @param heightInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -288,6 +295,7 @@ case class Bitmap private(
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -296,7 +304,8 @@ case class Bitmap private(
     apply(DrawRectangle(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -307,6 +316,7 @@ case class Bitmap private(
    * @param sideLengthInPixels
    * @param roundingWidthInPixels
    * @param roundingHeightInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -319,6 +329,7 @@ case class Bitmap private(
       sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -328,7 +339,8 @@ case class Bitmap private(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       sideLengthInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -340,6 +352,7 @@ case class Bitmap private(
    * @param heightInPixels
    * @param roundingWidthInPixels
    * @param roundingHeightInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -353,6 +366,7 @@ case class Bitmap private(
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -362,7 +376,8 @@ case class Bitmap private(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -371,6 +386,7 @@ case class Bitmap private(
    * @param centerXInPixels
    * @param centerYInPixels
    * @param radiusInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -381,6 +397,7 @@ case class Bitmap private(
       centerXInPixels: Int,
       centerYInPixels: Int,
       radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -389,7 +406,8 @@ case class Bitmap private(
     apply(DrawCircle(
       centerXInPixels, centerYInPixels,
       radiusInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -399,6 +417,7 @@ case class Bitmap private(
    * @param centerYInPixels
    * @param widthInPixels
    * @param heightInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -410,6 +429,7 @@ case class Bitmap private(
       centerYInPixels: Int,
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -418,7 +438,8 @@ case class Bitmap private(
     apply(DrawEllipse(
       centerXInPixels, centerYInPixels,
       widthInPixels, heightInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**

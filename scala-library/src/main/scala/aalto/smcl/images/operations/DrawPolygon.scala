@@ -17,6 +17,7 @@ import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary}
  * @param xCoordinates
  * @param yCoordinates
  * @param numberOfCoordinatesToDraw
+ * @param hasBorder
  * @param hasFilling
  * @param lineColor
  * @param fillColor
@@ -27,6 +28,7 @@ private[images] case class DrawPolygon(
     xCoordinates: Array[Int],
     yCoordinates: Array[Int],
     numberOfCoordinatesToDraw: Int,
+    hasBorder: Boolean = true,
     hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
@@ -75,8 +77,10 @@ private[images] case class DrawPolygon(
       drawingSurface.fillPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
     }
 
-    drawingSurface.setColor(lineColor.asAwtColor)
-    drawingSurface.drawPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
+    if (hasBorder) {
+      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.drawPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
+    }
 
     drawingSurface.setColor(oldColor)
   }

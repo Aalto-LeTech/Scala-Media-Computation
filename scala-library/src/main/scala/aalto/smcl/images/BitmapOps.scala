@@ -98,6 +98,7 @@ object BitmapOps {
    * @param xCoordinates
    * @param yCoordinates
    * @param numberOfCoordinatesToDraw
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -109,6 +110,7 @@ object BitmapOps {
       xCoordinates: Array[Int],
       yCoordinates: Array[Int],
       numberOfCoordinatesToDraw: Int,
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -119,7 +121,8 @@ object BitmapOps {
     bmp.apply(DrawPolygon(
       xCoordinates, yCoordinates,
       numberOfCoordinatesToDraw,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -129,6 +132,7 @@ object BitmapOps {
    * @param upperLeftCornerXInPixels
    * @param upperLeftCornerYInPixels
    * @param sideLengthInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -140,6 +144,7 @@ object BitmapOps {
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
       sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -150,7 +155,8 @@ object BitmapOps {
     bmp.apply(DrawSquare(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       sideLengthInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -161,6 +167,7 @@ object BitmapOps {
    * @param upperLeftCornerYInPixels
    * @param widthInPixels
    * @param heightInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -173,6 +180,7 @@ object BitmapOps {
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -183,7 +191,8 @@ object BitmapOps {
     bmp.apply(DrawRectangle(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -195,6 +204,7 @@ object BitmapOps {
    * @param sideLengthInPixels
    * @param roundingWidthInPixels
    * @param roundingHeightInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -208,6 +218,7 @@ object BitmapOps {
       sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -219,7 +230,8 @@ object BitmapOps {
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       sideLengthInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -232,6 +244,7 @@ object BitmapOps {
    * @param heightInPixels
    * @param roundingWidthInPixels
    * @param roundingHeightInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -246,6 +259,7 @@ object BitmapOps {
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -257,7 +271,8 @@ object BitmapOps {
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -267,6 +282,7 @@ object BitmapOps {
    * @param centerXInPixels
    * @param centerYInPixels
    * @param radiusInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -277,6 +293,7 @@ object BitmapOps {
       centerXInPixels: Int,
       centerYInPixels: Int,
       radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -287,7 +304,8 @@ object BitmapOps {
     bmp.apply(DrawCircle(
       centerXInPixels, centerYInPixels,
       radiusInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
   /**
@@ -298,6 +316,7 @@ object BitmapOps {
    * @param centerYInPixels
    * @param widthInPixels
    * @param heightInPixels
+   * @param hasBorder
    * @param hasFilling
    * @param lineColor
    * @param fillColor
@@ -309,6 +328,7 @@ object BitmapOps {
       centerYInPixels: Int,
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = true,
       hasFilling: Boolean = false,
       lineColor: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
@@ -319,7 +339,8 @@ object BitmapOps {
     bmp.apply(DrawEllipse(
       centerXInPixels, centerYInPixels,
       widthInPixels, heightInPixels,
-      hasFilling, lineColor, fillColor), viewerHandling)
+      hasBorder, hasFilling,
+      lineColor, fillColor), viewerHandling)
   }
 
 }

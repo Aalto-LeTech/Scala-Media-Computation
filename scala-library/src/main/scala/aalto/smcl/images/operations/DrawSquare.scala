@@ -17,6 +17,7 @@ import aalto.smcl.images.SettingKeys.{DefaultBitmapWidthInPixels, DefaultPrimary
  * @param upperLeftCornerXInPixels
  * @param upperLeftCornerYInPixels
  * @param sideLengthInPixels
+ * @param hasBorder
  * @param hasFilling
  * @param lineColor
  * @param fillColor
@@ -27,6 +28,7 @@ private[images] case class DrawSquare(
     upperLeftCornerXInPixels: Int,
     upperLeftCornerYInPixels: Int,
     sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    hasBorder: Boolean = true,
     hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
@@ -64,10 +66,12 @@ private[images] case class DrawSquare(
         sideLengthInPixels, sideLengthInPixels)
     }
 
-    drawingSurface.setColor(lineColor.asAwtColor)
-    drawingSurface.drawRect(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      sideLengthInPixels, sideLengthInPixels)
+    if (hasBorder) {
+      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.drawRect(
+        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+        sideLengthInPixels, sideLengthInPixels)
+    }
 
     drawingSurface.setColor(oldColor)
   }

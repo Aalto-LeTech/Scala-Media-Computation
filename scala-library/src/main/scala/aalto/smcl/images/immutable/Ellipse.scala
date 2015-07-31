@@ -56,6 +56,7 @@ object Ellipse {
     newBitmap.drawEllipse(
       ellipseCenterX, ellipseCenterY,
       ellipseWidth, ellipseHeight,
+      hasBorder = true,
       hasFilling = true,
       lineColor = ellipseColor,
       fillColor = ellipseColor,
