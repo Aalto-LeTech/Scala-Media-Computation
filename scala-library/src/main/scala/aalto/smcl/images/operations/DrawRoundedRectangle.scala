@@ -34,8 +34,8 @@ private[images] case class DrawRoundedRectangle(
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
     roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
     roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    hasBorder: Boolean = true,
-    hasFilling: Boolean = false,
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
     color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {

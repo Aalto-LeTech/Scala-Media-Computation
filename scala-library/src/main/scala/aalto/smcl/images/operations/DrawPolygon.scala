@@ -5,7 +5,7 @@ import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.common.{Color, GS, MetaInformationMap, _}
-import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary}
+import aalto.smcl.images.SettingKeys.{ShapesHaveFillingsByDefault, ShapesHaveBordersByDefault, DefaultSecondary, DefaultPrimary}
 
 
 
@@ -28,8 +28,8 @@ private[images] case class DrawPolygon(
     xCoordinates: Array[Int],
     yCoordinates: Array[Int],
     numberOfCoordinatesToDraw: Int,
-    hasBorder: Boolean = true,
-    hasFilling: Boolean = false,
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
     color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {

@@ -24,6 +24,10 @@ private[images] object SettingsInitializer {
 
     GS += BooleanSetting(name = DisplayBitmapsAutomaticallyAfterOperations, initialValue = true)
 
+    GS += BooleanSetting(name = ShapesHaveBordersByDefault, initialValue = true)
+
+    GS += BooleanSetting(name = ShapesHaveFillingsByDefault, initialValue = false)
+
     GS += IntSetting(
       name = DefaultBitmapWidthInPixels,
       initialValue = 50,

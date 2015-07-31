@@ -34,8 +34,8 @@ private[images] case class DrawArc(
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
     startAngle: Int = GS.intFor(DefaultArcStartAngle),
     arcAngle: Int = GS.intFor(DefaultArcAngle),
-    hasBorder: Boolean = true,
-    hasFilling: Boolean = false,
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
     color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {

@@ -5,7 +5,7 @@ import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
 import aalto.smcl.common.ColorOps._
-import aalto.smcl.images.SettingKeys.{DefaultCircleRadiusInPixels, DefaultSecondary, DefaultPrimary}
+import aalto.smcl.images.SettingKeys.{ShapesHaveFillingsByDefault, ShapesHaveBordersByDefault, DefaultCircleRadiusInPixels, DefaultSecondary, DefaultPrimary}
 
 
 
@@ -28,8 +28,8 @@ private[images] case class DrawCircle(
     centerXInPixels: Int,
     centerYInPixels: Int,
     radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
-    hasBorder: Boolean = true,
-    hasFilling: Boolean = false,
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
     color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {

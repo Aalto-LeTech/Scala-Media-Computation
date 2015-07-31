@@ -4,7 +4,7 @@ import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
-import aalto.smcl.images.SettingKeys.{DefaultBitmapWidthInPixels, DefaultRoundingHeightInPixels, DefaultRoundingWidthInPixels, DefaultPrimary, DefaultSecondary}
+import aalto.smcl.images.SettingKeys._
 
 
 
@@ -31,8 +31,8 @@ private[images] case class DrawRoundedSquare(
     sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
     roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    hasBorder: Boolean = true,
-    hasFilling: Boolean = false,
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
     color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {

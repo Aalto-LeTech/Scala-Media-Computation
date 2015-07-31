@@ -23,6 +23,12 @@ object SettingKeys {
   case object DisplayBitmapsAutomaticallyAfterOperations extends BooleanSettingKey
 
   /** */
+  case object ShapesHaveBordersByDefault extends BooleanSettingKey
+
+  /** */
+  case object ShapesHaveFillingsByDefault extends BooleanSettingKey
+
+  /** */
   case object DefaultBitmapWidthInPixels extends IntSettingKey
 
   /** */

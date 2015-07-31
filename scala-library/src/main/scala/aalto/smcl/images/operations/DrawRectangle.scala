@@ -5,7 +5,7 @@ import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
-import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary, DefaultSecondary}
+import aalto.smcl.images.SettingKeys._
 
 
 
@@ -30,8 +30,8 @@ private[images] case class DrawRectangle(
     upperLeftCornerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    hasBorder: Boolean = true,
-    hasFilling: Boolean = false,
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
     color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
