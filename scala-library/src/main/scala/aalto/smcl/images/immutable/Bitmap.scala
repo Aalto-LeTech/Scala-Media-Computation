@@ -224,7 +224,7 @@ case class Bitmap private(
    * @param numberOfCoordinatesToDraw
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -235,7 +235,7 @@ case class Bitmap private(
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -243,7 +243,7 @@ case class Bitmap private(
       xCoordinates, yCoordinates,
       numberOfCoordinatesToDraw,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -254,7 +254,7 @@ case class Bitmap private(
    * @param sideLengthInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -265,7 +265,7 @@ case class Bitmap private(
       sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -273,7 +273,7 @@ case class Bitmap private(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       sideLengthInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -285,7 +285,7 @@ case class Bitmap private(
    * @param heightInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -297,7 +297,7 @@ case class Bitmap private(
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -305,7 +305,7 @@ case class Bitmap private(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -318,7 +318,7 @@ case class Bitmap private(
    * @param roundingHeightInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -331,7 +331,7 @@ case class Bitmap private(
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -340,7 +340,7 @@ case class Bitmap private(
       sideLengthInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -354,7 +354,7 @@ case class Bitmap private(
    * @param roundingHeightInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -368,7 +368,7 @@ case class Bitmap private(
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -377,7 +377,7 @@ case class Bitmap private(
       widthInPixels, heightInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -388,7 +388,7 @@ case class Bitmap private(
    * @param radiusInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -399,7 +399,7 @@ case class Bitmap private(
       radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -407,7 +407,7 @@ case class Bitmap private(
       centerXInPixels, centerYInPixels,
       radiusInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -419,7 +419,7 @@ case class Bitmap private(
    * @param heightInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -431,7 +431,7 @@ case class Bitmap private(
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -439,7 +439,7 @@ case class Bitmap private(
       centerXInPixels, centerYInPixels,
       widthInPixels, heightInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**

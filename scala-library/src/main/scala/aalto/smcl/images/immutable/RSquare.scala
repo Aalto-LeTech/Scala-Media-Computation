@@ -23,7 +23,7 @@ object RSquare {
    * @param sideLengthInPixels
    * @param roundingWidthInPixels
    * @param roundingHeightInPixels
-   * @param squareColor
+   * @param color
    * @param backgroundColor
    * @param viewerHandling
    * @return
@@ -32,14 +32,14 @@ object RSquare {
       sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      squareColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       backgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(sideLengthInPixels >= 5, s"Side length of the square must be at least 5 pixels (was $sideLengthInPixels)")
     require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
     require(roundingHeightInPixels > 0, s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
-    require(squareColor != null, "The rectangle color argument has to be a Color instance (was null).")
+    require(color != null, "The rectangle color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val newBitmap = Bitmap(
@@ -54,8 +54,8 @@ object RSquare {
       roundingWidthInPixels, roundingHeightInPixels,
       hasBorder = true,
       hasFilling = true,
-      lineColor = squareColor,
-      fillColor = squareColor,
+      color = color,
+      fillColor = color,
       viewerHandling)
 
   }

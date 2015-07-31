@@ -19,7 +19,7 @@ import aalto.smcl.images.SettingKeys.{DefaultCircleRadiusInPixels, DefaultSecond
  * @param radiusInPixels
  * @param hasBorder
  * @param hasFilling
- * @param lineColor
+ * @param color
  * @param fillColor
  *
  * @author Aleksi Lukkarinen
@@ -30,12 +30,12 @@ private[images] case class DrawCircle(
     radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
     hasBorder: Boolean = true,
     hasFilling: Boolean = false,
-    lineColor: Color = GS.colorFor(DefaultPrimary),
+    color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
   require(radiusInPixels > 0, s"The radius argument must be greater than zero (was $radiusInPixels).")
-  require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+  require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** X coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
@@ -56,7 +56,7 @@ private[images] case class DrawCircle(
     "centerY" -> Option(s"$centerYInPixels px"),
     "radius" -> Option(s"$radiusInPixels px"),
     "filled" -> Option(hasFilling.toString),
-    "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
+    "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
@@ -76,7 +76,7 @@ private[images] case class DrawCircle(
     }
 
     if (hasBorder) {
-      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.setColor(color.asAwtColor)
       drawingSurface.drawOval(
         boundingBoxUpperLeftX, boundingBoxUpperLeftY,
         boundingBoxSideLength, boundingBoxSideLength)

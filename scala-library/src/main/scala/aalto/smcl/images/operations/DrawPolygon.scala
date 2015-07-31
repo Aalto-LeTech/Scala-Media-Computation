@@ -19,7 +19,7 @@ import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary}
  * @param numberOfCoordinatesToDraw
  * @param hasBorder
  * @param hasFilling
- * @param lineColor
+ * @param color
  * @param fillColor
  *
  * @author Aleksi Lukkarinen
@@ -30,7 +30,7 @@ private[images] case class DrawPolygon(
     numberOfCoordinatesToDraw: Int,
     hasBorder: Boolean = true,
     hasFilling: Boolean = false,
-    lineColor: Color = GS.colorFor(DefaultPrimary),
+    color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
@@ -48,7 +48,7 @@ private[images] case class DrawPolygon(
     s"The coordinate arrays do not contain the requested amount of coordinate pairs " +
         s"(only $numberOfCoordinatesPreset pairs present, $numberOfCoordinatesToDraw requested).")
 
-  require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+  require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
@@ -60,7 +60,7 @@ private[images] case class DrawPolygon(
     "numberOfCoordinatesPreset" -> Option(numberOfCoordinatesPreset.toString),
     "numberOfCoordinatesToDraw" -> Option(numberOfCoordinatesToDraw.toString),
     "filled" -> Option(hasFilling.toString),
-    "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
+    "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
@@ -78,7 +78,7 @@ private[images] case class DrawPolygon(
     }
 
     if (hasBorder) {
-      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.setColor(color.asAwtColor)
       drawingSurface.drawPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
     }
 

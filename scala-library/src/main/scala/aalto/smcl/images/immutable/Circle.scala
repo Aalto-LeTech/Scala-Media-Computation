@@ -22,19 +22,19 @@ object Circle {
    * Creates a new empty [[Bitmap]] instance with a circle drawn on it.
    *
    * @param diameter
-   * @param circleColor
+   * @param color
    * @param backgroundColor
    * @param viewerHandling
    * @return
    */
   def apply(
       diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      circleColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       backgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(diameter > 0, s"Diameter of the circle must be at least 1 pixel (was $diameter)")
-    require(circleColor != null, "The circle color argument has to be a Color instance (was null).")
+    require(color != null, "The circle color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val imageSide = if (diameter % 2 == 0) diameter + 1 else diameter
@@ -53,8 +53,8 @@ object Circle {
       radiusInPixels = radius,
       hasBorder = true,
       hasFilling = true,
-      lineColor = circleColor,
-      fillColor = circleColor,
+      color = color,
+      fillColor = color,
       viewerHandling)
   }
 

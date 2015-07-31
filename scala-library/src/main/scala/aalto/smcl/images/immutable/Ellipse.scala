@@ -22,7 +22,7 @@ object Ellipse {
    *
    * @param widthInPixels
    * @param heightInPixels
-   * @param ellipseColor
+   * @param color
    * @param backgroundColor
    * @param viewerHandling
    * @return
@@ -30,13 +30,13 @@ object Ellipse {
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      ellipseColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       backgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels > 0, s"Width of the ellipse must be at least 1 pixel (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the ellipse must be at least 1 pixel (was $heightInPixels)")
-    require(ellipseColor != null, "The rectangle color argument has to be a Color instance (was null).")
+    require(color != null, "The ellipse color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val bitmapWidth = if (widthInPixels % 2 == 0) widthInPixels + 1 else widthInPixels
@@ -58,8 +58,8 @@ object Ellipse {
       ellipseWidth, ellipseHeight,
       hasBorder = true,
       hasFilling = true,
-      lineColor = ellipseColor,
-      fillColor = ellipseColor,
+      color = color,
+      fillColor = color,
       viewerHandling)
   }
 

@@ -19,7 +19,7 @@ import aalto.smcl.images.SettingKeys.{DefaultBitmapWidthInPixels, DefaultPrimary
  * @param sideLengthInPixels
  * @param hasBorder
  * @param hasFilling
- * @param lineColor
+ * @param color
  * @param fillColor
  *
  * @author Aleksi Lukkarinen
@@ -30,12 +30,12 @@ private[images] case class DrawSquare(
     sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     hasBorder: Boolean = true,
     hasFilling: Boolean = false,
-    lineColor: Color = GS.colorFor(DefaultPrimary),
+    color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
   require(sideLengthInPixels > 0, s"The side length argument must be greater than zero (was $sideLengthInPixels).")
-  require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+  require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
@@ -47,7 +47,7 @@ private[images] case class DrawSquare(
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "side" -> Option(s"$sideLengthInPixels px"),
     "filled" -> Option(hasFilling.toString),
-    "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
+    "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
@@ -67,7 +67,7 @@ private[images] case class DrawSquare(
     }
 
     if (hasBorder) {
-      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.setColor(color.asAwtColor)
       drawingSurface.drawRect(
         upperLeftCornerXInPixels, upperLeftCornerYInPixels,
         sideLengthInPixels, sideLengthInPixels)

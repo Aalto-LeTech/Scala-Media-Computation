@@ -20,7 +20,7 @@ import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmap
  * @param heightInPixels
  * @param hasBorder
  * @param hasFilling
- * @param lineColor
+ * @param color
  * @param fillColor
  *
  * @author Aleksi Lukkarinen
@@ -32,13 +32,13 @@ private[images] case class DrawEllipse(
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
     hasBorder: Boolean = true,
     hasFilling: Boolean = false,
-    lineColor: Color = GS.colorFor(DefaultPrimary),
+    color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
   require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
   require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")
-  require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+  require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** X coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
@@ -57,7 +57,7 @@ private[images] case class DrawEllipse(
     "width" -> Option(s"$widthInPixels px"),
     "height" -> Option(s"$heightInPixels px"),
     "filled" -> Option(hasFilling.toString),
-    "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
+    "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
@@ -77,7 +77,7 @@ private[images] case class DrawEllipse(
     }
 
     if (hasBorder) {
-      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.setColor(color.asAwtColor)
       drawingSurface.drawOval(
         boundingBoxUpperLeftX, boundingBoxUpperLeftY,
         widthInPixels, heightInPixels)

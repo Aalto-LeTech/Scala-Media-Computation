@@ -100,7 +100,7 @@ object BitmapOps {
    * @param numberOfCoordinatesToDraw
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -112,7 +112,7 @@ object BitmapOps {
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -122,7 +122,7 @@ object BitmapOps {
       xCoordinates, yCoordinates,
       numberOfCoordinatesToDraw,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -134,7 +134,7 @@ object BitmapOps {
    * @param sideLengthInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -146,7 +146,7 @@ object BitmapOps {
       sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -156,7 +156,7 @@ object BitmapOps {
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       sideLengthInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -169,7 +169,7 @@ object BitmapOps {
    * @param heightInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -182,7 +182,7 @@ object BitmapOps {
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -192,7 +192,7 @@ object BitmapOps {
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -206,7 +206,7 @@ object BitmapOps {
    * @param roundingHeightInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -220,7 +220,7 @@ object BitmapOps {
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -231,7 +231,7 @@ object BitmapOps {
       sideLengthInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -246,7 +246,7 @@ object BitmapOps {
    * @param roundingHeightInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @param viewerHandling
    * @return
@@ -261,7 +261,7 @@ object BitmapOps {
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -272,7 +272,7 @@ object BitmapOps {
       widthInPixels, heightInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -284,7 +284,7 @@ object BitmapOps {
    * @param radiusInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @return
    */
@@ -295,7 +295,7 @@ object BitmapOps {
       radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -305,7 +305,7 @@ object BitmapOps {
       centerXInPixels, centerYInPixels,
       radiusInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
   /**
@@ -318,7 +318,7 @@ object BitmapOps {
    * @param heightInPixels
    * @param hasBorder
    * @param hasFilling
-   * @param lineColor
+   * @param color
    * @param fillColor
    * @return
    */
@@ -330,7 +330,7 @@ object BitmapOps {
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       fillColor: Color = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -340,7 +340,7 @@ object BitmapOps {
       centerXInPixels, centerYInPixels,
       widthInPixels, heightInPixels,
       hasBorder, hasFilling,
-      lineColor, fillColor), viewerHandling)
+      color, fillColor), viewerHandling)
   }
 
 }

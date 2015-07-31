@@ -27,7 +27,7 @@ object Line {
    * @param fromYInPixels
    * @param toXInPixels
    * @param toYInPixels
-   * @param lineColor
+   * @param color
    * @param backgroundColor
    * @param viewerHandling
    * @return
@@ -37,11 +37,11 @@ object Line {
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      lineColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       backgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+    require(color != null, "The line color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val differenceX = toXInPixels - fromXInPixels
@@ -61,7 +61,7 @@ object Line {
       else
         (0, bitmapHeight - 1, bitmapWidth - 1, 0)
 
-    newBitmap.drawLine(x0, y0, x1, y1, lineColor, viewerHandling)
+    newBitmap.drawLine(x0, y0, x1, y1, color, viewerHandling)
   }
 
 }

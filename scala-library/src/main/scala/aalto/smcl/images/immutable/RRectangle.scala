@@ -24,7 +24,7 @@ object RRectangle {
    * @param heightInPixels
    * @param roundingWidthInPixels
    * @param roundingHeightInPixels
-   * @param rectangleColor
+   * @param color
    * @param backgroundColor
    * @param viewerHandling
    * @return
@@ -34,7 +34,7 @@ object RRectangle {
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      rectangleColor: Color = GS.colorFor(DefaultPrimary),
+      color: Color = GS.colorFor(DefaultPrimary),
       backgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -42,7 +42,7 @@ object RRectangle {
     require(heightInPixels >= 5, s"Height of the rectangle must be at least 5 pixels (was $heightInPixels)")
     require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
     require(roundingHeightInPixels > 0, s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
-    require(rectangleColor != null, "The rectangle color argument has to be a Color instance (was null).")
+    require(color != null, "The rectangle color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val newBitmap = Bitmap(
@@ -57,8 +57,8 @@ object RRectangle {
       roundingWidthInPixels, roundingHeightInPixels,
       hasBorder = true,
       hasFilling = true,
-      lineColor = rectangleColor,
-      fillColor = rectangleColor,
+      color = color,
+      fillColor = color,
       viewerHandling)
 
   }

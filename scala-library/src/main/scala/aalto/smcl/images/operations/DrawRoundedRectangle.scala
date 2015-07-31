@@ -22,7 +22,7 @@ import aalto.smcl.images.SettingKeys._
  * @param roundingHeightInPixels
  * @param hasBorder
  * @param hasFilling
- * @param lineColor
+ * @param color
  * @param fillColor
  *
  * @author Aleksi Lukkarinen
@@ -36,7 +36,7 @@ private[images] case class DrawRoundedRectangle(
     roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
     hasBorder: Boolean = true,
     hasFilling: Boolean = false,
-    lineColor: Color = GS.colorFor(DefaultPrimary),
+    color: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
@@ -44,7 +44,7 @@ private[images] case class DrawRoundedRectangle(
   require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")
   require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
   require(roundingHeightInPixels > 0, s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
-  require(lineColor != null, "The line color argument has to be a Color instance (was null).")
+  require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
@@ -59,7 +59,7 @@ private[images] case class DrawRoundedRectangle(
     "roundingWidth" -> Option(s"$roundingWidthInPixels px"),
     "roundingHeight" -> Option(s"$roundingHeightInPixels px"),
     "filled" -> Option(hasFilling.toString),
-    "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
+    "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
   /**
@@ -80,7 +80,7 @@ private[images] case class DrawRoundedRectangle(
     }
 
     if (hasBorder) {
-      drawingSurface.setColor(lineColor.asAwtColor)
+      drawingSurface.setColor(color.asAwtColor)
       drawingSurface.drawRoundRect(
         upperLeftCornerXInPixels, upperLeftCornerYInPixels,
         widthInPixels, heightInPixels,
