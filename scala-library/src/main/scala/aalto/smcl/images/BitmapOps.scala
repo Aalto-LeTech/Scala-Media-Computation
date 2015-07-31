@@ -65,6 +65,33 @@ object BitmapOps {
   }
 
   /**
+   * Adds a [[DrawPolyline]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param xCoordinates
+   * @param yCoordinates
+   * @param numberOfCoordinatesToDraw
+   * @param color
+   * @param viewerHandling
+   * @return
+   */
+  def drawPolyline(
+      bmp: OperableBitmap,
+      xCoordinates: Array[Int],
+      yCoordinates: Array[Int],
+      numberOfCoordinatesToDraw: Int,
+      color: Color = GS.colorFor(DefaultPrimary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(DrawPolyline(
+      xCoordinates, yCoordinates,
+      numberOfCoordinatesToDraw,
+      color), viewerHandling)
+  }
+
+  /**
    * Adds a [[DrawSquare]] operation to a given [[OperableBitmap]].
    *
    * @param bmp

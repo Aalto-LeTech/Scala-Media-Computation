@@ -21,6 +21,7 @@ import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmap
  * @param isFilled
  * @param lineColor
  * @param fillColor
+ *
  * @author Aleksi Lukkarinen
  */
 private[images] case class DrawRectangle(

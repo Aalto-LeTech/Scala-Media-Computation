@@ -196,6 +196,29 @@ case class Bitmap private(
   /**
    *
    *
+   * @param xCoordinates
+   * @param yCoordinates
+   * @param numberOfCoordinatesToDraw
+   * @param color
+   * @param viewerHandling
+   * @return
+   */
+  def drawPolyline(
+      xCoordinates: Array[Int],
+      yCoordinates: Array[Int],
+      numberOfCoordinatesToDraw: Int,
+      color: Color = GS.colorFor(DefaultPrimary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(DrawPolyline(
+      xCoordinates, yCoordinates,
+      numberOfCoordinatesToDraw,
+      color), viewerHandling)
+  }
+
+  /**
+   *
+   *
    * @param upperLeftCornerXInPixels
    * @param upperLeftCornerYInPixels
    * @param sideLengthInPixels
