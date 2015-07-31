@@ -19,6 +19,15 @@ object RRectangle {
 
   /**
    * Creates a new empty [[Bitmap]] instance with a rounded-corner rectangle drawn on it.
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param rectangleColor
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
    */
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),

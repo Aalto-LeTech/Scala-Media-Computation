@@ -19,6 +19,14 @@ object RSquare {
 
   /**
    * Creates a new empty [[Bitmap]] instance with a rounded-corner square drawn on it.
+   *
+   * @param sideLengthInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param squareColor
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
    */
   def apply(
       sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),

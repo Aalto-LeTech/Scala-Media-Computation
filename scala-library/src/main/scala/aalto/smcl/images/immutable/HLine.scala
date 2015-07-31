@@ -19,6 +19,11 @@ object HLine {
 
   /**
    * Creates a new empty [[Bitmap]] instance with a horizontal line drawn on it.
+   *
+   * @param widthInPixels
+   * @param color
+   * @param viewerHandling
+   * @return
    */
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -26,6 +31,7 @@ object HLine {
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels > 0, s"Width of the line must be at least 1 pixel (was $widthInPixels)")
+    require(color != null, "The color argument has to be a Color instance (was null).")
 
     Bitmap(widthInPixels, 1, color, viewerHandling)
   }

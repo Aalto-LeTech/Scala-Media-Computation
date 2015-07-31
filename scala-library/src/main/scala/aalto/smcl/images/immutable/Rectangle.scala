@@ -20,6 +20,12 @@ object Rectangle {
 
   /**
    * Creates a new empty [[Bitmap]] instance with a rectangle drawn on it.
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param color
+   * @param viewerHandling
+   * @return
    */
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -29,6 +35,7 @@ object Rectangle {
 
     require(widthInPixels > 0, s"Width of the rectangle must be at least 1 pixel (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the rectangle must be at least 1 pixel (was $heightInPixels)")
+    require(color != null, "The color argument has to be a Color instance (was null).")
 
     Bitmap(widthInPixels, heightInPixels, color, viewerHandling)
   }

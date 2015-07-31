@@ -43,7 +43,7 @@ private[images] case class DrawLine(
     "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}")))
 
   /**
-   * Draws a line onto the given bitmap with the given color.
+   * Draws a line onto the given bitmap with the given colors.
    *
    * @param destination
    */

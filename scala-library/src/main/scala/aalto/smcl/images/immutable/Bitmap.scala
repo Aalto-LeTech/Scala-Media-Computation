@@ -66,6 +66,7 @@ object Bitmap {
 
     require(widthInPixels > 0, s"Width of the image must be at least 1 pixel (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the image must be at least 1 pixel (was $heightInPixels)")
+    require(initialBackgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val operationList =
       Clear(initialBackgroundColor) +:
