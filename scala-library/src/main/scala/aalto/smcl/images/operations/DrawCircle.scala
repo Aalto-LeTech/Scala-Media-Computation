@@ -17,7 +17,7 @@ import aalto.smcl.images.SettingKeys.{DefaultCircleRadiusInPixels, DefaultSecond
  * @param centerXInPixels
  * @param centerYInPixels
  * @param radiusInPixels
- * @param isFilled
+ * @param hasFilling
  * @param lineColor
  * @param fillColor
  *
@@ -27,7 +27,7 @@ private[images] case class DrawCircle(
     centerXInPixels: Int,
     centerYInPixels: Int,
     radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
-    isFilled: Boolean = false,
+    hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
@@ -53,7 +53,7 @@ private[images] case class DrawCircle(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),
     "radius" -> Option(s"$radiusInPixels px"),
-    "filled" -> Option(isFilled.toString),
+    "filled" -> Option(hasFilling.toString),
     "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
@@ -66,7 +66,7 @@ private[images] case class DrawCircle(
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    if (isFilled) {
+    if (hasFilling) {
       drawingSurface.setColor(fillColor.asAwtColor)
       drawingSurface.fillOval(
         boundingBoxUpperLeftX, boundingBoxUpperLeftY,

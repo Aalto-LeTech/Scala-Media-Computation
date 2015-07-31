@@ -52,7 +52,7 @@ object RSquare {
       0, 0,
       sideLengthInPixels - 1, sideLengthInPixels - 1,
       roundingWidthInPixels, roundingHeightInPixels,
-      isFilled = true,
+      hasFilling = true,
       lineColor = squareColor,
       fillColor = squareColor,
       viewerHandling)

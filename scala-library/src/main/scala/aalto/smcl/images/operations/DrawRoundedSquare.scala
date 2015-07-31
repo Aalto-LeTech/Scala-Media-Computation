@@ -18,7 +18,7 @@ import aalto.smcl.images.SettingKeys.{DefaultBitmapWidthInPixels, DefaultRoundin
  * @param sideLengthInPixels
  * @param roundingWidthInPixels
  * @param roundingHeightInPixels
- * @param isFilled
+ * @param hasFilling
  * @param lineColor
  * @param fillColor
  *
@@ -30,7 +30,7 @@ private[images] case class DrawRoundedSquare(
     sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
     roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    isFilled: Boolean = false,
+    hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
@@ -51,7 +51,7 @@ private[images] case class DrawRoundedSquare(
     "sideLength" -> Option(s"$sideLengthInPixels px"),
     "roundingWidth" -> Option(s"$roundingWidthInPixels px"),
     "roundingHeight" -> Option(s"$roundingHeightInPixels px"),
-    "filled" -> Option(isFilled.toString),
+    "filled" -> Option(hasFilling.toString),
     "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
@@ -64,7 +64,7 @@ private[images] case class DrawRoundedSquare(
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    if (isFilled) {
+    if (hasFilling) {
       drawingSurface.setColor(fillColor.asAwtColor)
       drawingSurface.fillRoundRect(
         upperLeftCornerXInPixels, upperLeftCornerYInPixels,

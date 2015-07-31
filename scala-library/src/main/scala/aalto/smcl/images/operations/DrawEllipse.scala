@@ -18,7 +18,7 @@ import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmap
  * @param centerYInPixels
  * @param widthInPixels
  * @param heightInPixels
- * @param isFilled
+ * @param hasFilling
  * @param lineColor
  * @param fillColor
  *
@@ -29,7 +29,7 @@ private[images] case class DrawEllipse(
     centerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    isFilled: Boolean = false,
+    hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
@@ -54,7 +54,7 @@ private[images] case class DrawEllipse(
     "centerY" -> Option(s"$centerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),
     "height" -> Option(s"$heightInPixels px"),
-    "filled" -> Option(isFilled.toString),
+    "filled" -> Option(hasFilling.toString),
     "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
@@ -67,7 +67,7 @@ private[images] case class DrawEllipse(
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    if (isFilled) {
+    if (hasFilling) {
       drawingSurface.setColor(fillColor.asAwtColor)
       drawingSurface.fillOval(
         boundingBoxUpperLeftX, boundingBoxUpperLeftY,

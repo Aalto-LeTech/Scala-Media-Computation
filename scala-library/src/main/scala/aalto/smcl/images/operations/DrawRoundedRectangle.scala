@@ -20,7 +20,7 @@ import aalto.smcl.images.SettingKeys._
  * @param heightInPixels
  * @param roundingWidthInPixels
  * @param roundingHeightInPixels
- * @param isFilled
+ * @param hasFilling
  * @param lineColor
  * @param fillColor
  *
@@ -33,7 +33,7 @@ private[images] case class DrawRoundedRectangle(
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
     roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
     roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    isFilled: Boolean = false,
+    hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
@@ -56,7 +56,7 @@ private[images] case class DrawRoundedRectangle(
     "height" -> Option(s"$heightInPixels px"),
     "roundingWidth" -> Option(s"$roundingWidthInPixels px"),
     "roundingHeight" -> Option(s"$roundingHeightInPixels px"),
-    "filled" -> Option(isFilled.toString),
+    "filled" -> Option(hasFilling.toString),
     "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
@@ -69,7 +69,7 @@ private[images] case class DrawRoundedRectangle(
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    if (isFilled) {
+    if (hasFilling) {
       drawingSurface.setColor(fillColor.asAwtColor)
       drawingSurface.fillRoundRect(
         upperLeftCornerXInPixels, upperLeftCornerYInPixels,

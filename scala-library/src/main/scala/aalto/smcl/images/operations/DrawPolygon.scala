@@ -17,7 +17,7 @@ import aalto.smcl.images.SettingKeys.{DefaultSecondary, DefaultPrimary}
  * @param xCoordinates
  * @param yCoordinates
  * @param numberOfCoordinatesToDraw
- * @param isFilled
+ * @param hasFilling
  * @param lineColor
  * @param fillColor
  *
@@ -27,7 +27,7 @@ private[images] case class DrawPolygon(
     xCoordinates: Array[Int],
     yCoordinates: Array[Int],
     numberOfCoordinatesToDraw: Int,
-    isFilled: Boolean = false,
+    hasFilling: Boolean = false,
     lineColor: Color = GS.colorFor(DefaultPrimary),
     fillColor: Color = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
@@ -57,7 +57,7 @@ private[images] case class DrawPolygon(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
     "numberOfCoordinatesPreset" -> Option(numberOfCoordinatesPreset.toString),
     "numberOfCoordinatesToDraw" -> Option(numberOfCoordinatesToDraw.toString),
-    "filled" -> Option(isFilled.toString),
+    "filled" -> Option(hasFilling.toString),
     "lineColor" -> Option(s"0x${lineColor.asPixelInt.toArgbHexColorString}"),
     "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
 
@@ -70,7 +70,7 @@ private[images] case class DrawPolygon(
     val drawingSurface = destination.createGraphics()
     val oldColor = drawingSurface.getColor
 
-    if (isFilled) {
+    if (hasFilling) {
       drawingSurface.setColor(fillColor.asAwtColor)
       drawingSurface.fillPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
     }
