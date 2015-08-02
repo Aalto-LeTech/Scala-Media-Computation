@@ -43,9 +43,14 @@ libraryDependencies ++= (scalaBinaryVersion.value match {
 initialCommands in console :=
     """import aalto.smcl._
       |import aalto.smcl.common._
+      |import aalto.smcl.common.ColorOps._
       |import aalto.smcl.images._
       |import aalto.smcl.images.BitmapOps._
       |import aalto.smcl.images.immutable._
+      |import aalto.smcl.images.immutable.primitives._
+      |import aalto.smcl.images.immutable.collections._
+      |
+      |
       |SMCL.welcomingMessage""".stripMargin
 
 
