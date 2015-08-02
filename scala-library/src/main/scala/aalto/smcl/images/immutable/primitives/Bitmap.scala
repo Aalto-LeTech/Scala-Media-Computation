@@ -13,6 +13,8 @@ import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateVie
 import aalto.smcl.images.operations._
 import aalto.smcl.images.{display => displayInViewer, _}
 
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.ref.WeakReference
 
 
@@ -517,6 +519,42 @@ case class Bitmap private(
 
       return rendition
     }
+
+  /**
+   * Returns a mutable `ArrayBuffer` containing a given number of copies of this [[Bitmap]] instance.
+   *
+   * @param size
+   * @return
+   */
+  private def copyToArrayBuffer(size: Int): ArrayBuffer[Bitmap] = {
+    require(size >= 0, s"Size of the collection cannot be negative (was $size)")
+
+    mutable.ArrayBuffer.fill[Bitmap](size)(this)
+  }
+
+  /**
+   * Returns an immutable `Array` containing a given number of copies of this [[Bitmap]] instance.
+   *
+   * @param size
+   * @return
+   */
+  def copyToArray(size: Int): Array[Bitmap] = copyToArrayBuffer(size).toArray
+
+  /**
+   * Returns an immutable `List` containing a given number of copies of this [[Bitmap]] instance.
+   *
+   * @param size
+   * @return
+   */
+  def copyToList(size: Int): List[Bitmap] = copyToArrayBuffer(size).toList
+
+  /**
+   * Returns an immutable `Seq` containing a given number of copies of this [[Bitmap]] instance.
+   *
+   * @param size
+   * @return
+   */
+  def copyToSeq(size: Int): Seq[Bitmap] = copyToArrayBuffer(size).toSeq
 
   /**
    *
