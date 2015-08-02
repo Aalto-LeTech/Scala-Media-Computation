@@ -3,15 +3,14 @@ package aalto.smcl.images.viewer
 
 import javax.swing.WindowConstants
 
+import aalto.smcl.images.immutable.primitives.Bitmap
+
 import scala.swing.Dialog.{Message, Options}
 import scala.swing._
 import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
 
 import aalto.smcl.common.{Screen, SwingUtils}
-import aalto.smcl.images.immutable.Bitmap
-
-
 
 
 /**

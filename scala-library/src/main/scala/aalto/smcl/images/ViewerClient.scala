@@ -3,12 +3,13 @@ package aalto.smcl.images
 
 import java.awt.image.{BufferedImage => JBufferedImage}
 
+import aalto.smcl.images.immutable.primitives.Bitmap
+
 import scala.swing.Dialog
 
 import rx.lang.scala.{JavaConversions, Subject}
 
 import aalto.smcl.common.SwingUtils
-import aalto.smcl.images.immutable.Bitmap
 import aalto.smcl.images.viewer.Application
 import aalto.smcl.images.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
 

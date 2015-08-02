@@ -3,8 +3,7 @@ package aalto.smcl.images
 
 import aalto.UnitSpecBase
 import aalto.smcl.common._
-
-
+import aalto.smcl.images.immutable.primitives.Bitmap
 
 
 /**
@@ -24,6 +23,6 @@ abstract class ImageSpecBase extends UnitSpecBase {
   val TEST_PIXEL_INT_WITH_ZEROED_BLUE         = 0xFFDCBA00
   val TEST_PIXEL_INT_WITH_ZEROED_TRANSPARENCY = 0x00DCBA98
 
-  def newSmallDefaultImmutableTestImage = immutable.Bitmap(10, 10)
+  def newSmallDefaultImmutableTestImage = Bitmap(10, 10)
 
 }

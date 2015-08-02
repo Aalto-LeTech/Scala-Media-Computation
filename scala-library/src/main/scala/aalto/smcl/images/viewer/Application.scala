@@ -5,11 +5,11 @@ import java.awt.Cursor
 import java.awt.image.{BufferedImage => JBufferedImage}
 import java.util.UUID
 
+import aalto.smcl.images.immutable.primitives.Bitmap
+
 import scala.swing.Swing
 
 import rx.lang.scala.{Observable, Observer}
-
-import aalto.smcl.images.immutable.Bitmap
 import aalto.smcl.images.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
 
 

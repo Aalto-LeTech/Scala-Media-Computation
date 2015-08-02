@@ -1,19 +1,19 @@
-package aalto.smcl.images.immutable
-
+package aalto.smcl.images.immutable.primitives
 
 import java.awt.geom.AffineTransform
 import java.awt.image.{BufferedImage => JBufferedImage}
 import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
 import java.util.UUID
 
-import scala.ref.WeakReference
-
 import aalto.smcl.common._
 import aalto.smcl.images.SettingKeys._
-import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
-import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.images.immutable.PixelRectangle
+import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle
+import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.images.operations._
 import aalto.smcl.images.{display => displayInViewer, _}
+
+import scala.ref.WeakReference
 
 
 

@@ -11,7 +11,7 @@ import scala.swing.Dimension
  *
  * @author Aleksi Lukkarinen
  */
-private[images] trait PixelRectangle {
+trait PixelRectangle {
 
   /** Width of this rectangle in pixels. */
   def widthInPixels: Int

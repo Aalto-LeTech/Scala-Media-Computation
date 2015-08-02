@@ -3,6 +3,8 @@ package aalto.smcl.images.operations
 
 import java.awt.image.{BufferedImage => JBufferedImage}
 
+import aalto.smcl.images.immutable.primitives.Bitmap
+
 import scala.annotation.tailrec
 
 import aalto.smcl.common.{PresetColors, Color}

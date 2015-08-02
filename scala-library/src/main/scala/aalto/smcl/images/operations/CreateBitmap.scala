@@ -7,8 +7,7 @@ import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
 import aalto.smcl.common._
 import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels}
 import aalto.smcl.images.immutable._
-
-
+import aalto.smcl.images.immutable.primitives.Bitmap
 
 
 /**

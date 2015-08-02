@@ -3,9 +3,9 @@ package aalto.smcl.images
 
 import aalto.smcl.common.{Color, GS}
 import aalto.smcl.images.SettingKeys._
-import aalto.smcl.images.immutable.Bitmap
-import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
-import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.images.immutable.primitives.Bitmap
+import Bitmap.ViewerUpdateStyle
+import Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.images.operations._
 
 

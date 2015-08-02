@@ -5,12 +5,10 @@ import java.awt.geom.AffineTransform
 import java.awt.image.{BufferedImage => JBufferedImage}
 import java.awt.{Color => JColor, Graphics2D => JGraphics2D, RenderingHints}
 
+import aalto.smcl.images.immutable.primitives.Bitmap
+
 import scala.swing._
 import scala.util.Try
-
-import aalto.smcl.images.immutable.Bitmap
-
-
 
 
 /**

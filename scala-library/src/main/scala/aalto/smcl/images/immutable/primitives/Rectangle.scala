@@ -1,10 +1,9 @@
-package aalto.smcl.images.immutable
-
+package aalto.smcl.images.immutable.primitives
 
 import aalto.smcl.common.{Color, GS}
 import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary}
-import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
-import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle
+import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 
 
 

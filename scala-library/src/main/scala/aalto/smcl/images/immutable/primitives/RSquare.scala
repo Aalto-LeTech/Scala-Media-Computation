@@ -1,9 +1,9 @@
-package aalto.smcl.images.immutable
+package aalto.smcl.images.immutable.primitives
 
 import aalto.smcl.common.{Color, GS}
-import aalto.smcl.images.SettingKeys._
-import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle
-import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
+import aalto.smcl.images.SettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary, DefaultRoundingHeightInPixels, DefaultRoundingWidthInPixels}
+import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle
+import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 
 
 
@@ -13,15 +13,14 @@ import aalto.smcl.images.immutable.Bitmap.ViewerUpdateStyle.{PreventViewerUpdate
  *
  * @author Aleksi Lukkarinen
  */
-object RRectangle {
+object RSquare {
 
   aalto.smcl.images.SettingsInitializer.perform()
 
   /**
-   * Creates a new empty [[Bitmap]] instance with a rounded-corner rectangle drawn on it.
+   * Creates a new empty [[Bitmap]] instance with a rounded-corner square drawn on it.
    *
-   * @param widthInPixels
-   * @param heightInPixels
+   * @param sideLengthInPixels
    * @param roundingWidthInPixels
    * @param roundingHeightInPixels
    * @param color
@@ -30,30 +29,28 @@ object RRectangle {
    * @return
    */
   def apply(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
       color: Color = GS.colorFor(DefaultPrimary),
       backgroundColor: Color = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(widthInPixels >= 5, s"Width of the rectangle must be at least 5 pixels (was $widthInPixels)")
-    require(heightInPixels >= 5, s"Height of the rectangle must be at least 5 pixels (was $heightInPixels)")
+    require(sideLengthInPixels >= 5, s"Side length of the square must be at least 5 pixels (was $sideLengthInPixels)")
     require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
     require(roundingHeightInPixels > 0, s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
     require(color != null, "The rectangle color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val newBitmap = Bitmap(
-      widthInPixels,
-      heightInPixels,
+      sideLengthInPixels,
+      sideLengthInPixels,
       backgroundColor,
       viewerHandling = PreventViewerUpdates)
 
     newBitmap.drawRoundedRectangle(
       0, 0,
-      widthInPixels - 1, heightInPixels - 1,
+      sideLengthInPixels - 1, sideLengthInPixels - 1,
       roundingWidthInPixels, roundingHeightInPixels,
       hasBorder = true,
       hasFilling = true,
