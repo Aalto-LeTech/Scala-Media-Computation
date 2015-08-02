@@ -526,7 +526,7 @@ case class Bitmap private(
    * @param size
    * @return
    */
-  private def copyToArrayBuffer(size: Int): ArrayBuffer[Bitmap] = {
+  private def propagateToArrayBuffer(size: Int): ArrayBuffer[Bitmap] = {
     require(size >= 0, s"Size of the collection cannot be negative (was $size)")
 
     mutable.ArrayBuffer.fill[Bitmap](size)(this)
@@ -538,7 +538,7 @@ case class Bitmap private(
    * @param size
    * @return
    */
-  def copyToArray(size: Int): Array[Bitmap] = copyToArrayBuffer(size).toArray
+  def propagateToArray(size: Int): Array[Bitmap] = propagateToArrayBuffer(size).toArray
 
   /**
    * Returns an immutable `List` containing a given number of copies of this [[Bitmap]] instance.
@@ -546,7 +546,7 @@ case class Bitmap private(
    * @param size
    * @return
    */
-  def copyToList(size: Int): List[Bitmap] = copyToArrayBuffer(size).toList
+  def propagateToList(size: Int): List[Bitmap] = propagateToArrayBuffer(size).toList
 
   /**
    * Returns an immutable `Seq` containing a given number of copies of this [[Bitmap]] instance.
@@ -554,7 +554,7 @@ case class Bitmap private(
    * @param size
    * @return
    */
-  def copyToSeq(size: Int): Seq[Bitmap] = copyToArrayBuffer(size).toSeq
+  def propagateToSeq(size: Int): Seq[Bitmap] = propagateToArrayBuffer(size).toSeq
 
   /**
    *
