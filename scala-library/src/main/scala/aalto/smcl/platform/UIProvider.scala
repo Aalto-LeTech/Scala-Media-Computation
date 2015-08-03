@@ -1,8 +1,8 @@
-package aalto.smcl.common
+package aalto.smcl.platform
 
 
 import java.awt.{GraphicsEnvironment, Toolkit}
-import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}
+import javax.swing.{LookAndFeel, UnsupportedLookAndFeelException, UIManager}
 
 
 
@@ -12,36 +12,19 @@ import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object Platform {
+private[smcl] object UIProvider {
 
   /** */
-  val NimbusLookAndFeelName = "Nimbus"
+  private[platform] val NimbusLookAndFeelName = "Nimbus"
 
   /** AWT toolkit. */
-  val awtToolkit = Toolkit.getDefaultToolkit
+  private[platform] val awtToolkit = Toolkit.getDefaultToolkit
 
   /** AWT graphics environment */
-  val awtGraphEnv = GraphicsEnvironment.getLocalGraphicsEnvironment
+  private[platform] val awtGraphEnv = GraphicsEnvironment.getLocalGraphicsEnvironment
 
   /** Is this environment a headless one? */
   val isHeadless = awtGraphEnv.isHeadlessInstance
-
-
-  initializePlatform()
-
-
-  /**
-   *
-   */
-  private def initializePlatform(): Unit = {
-    initializeLookAndFeel()
-  }
-
-  /**
-   *
-   */
-  private def initializeLookAndFeel(): Unit =
-    tryToInitializeSpecificLookAndFeel(NimbusLookAndFeelName)
 
 
   /**
@@ -50,7 +33,7 @@ private[smcl] object Platform {
    * @param name
    * @return
    */
-  def tryToInitializeSpecificLookAndFeel(name: String): Option[UIManager.LookAndFeelInfo] = {
+  private[platform] def tryToInitializeSpecificLookAndFeel(name: String): Option[UIManager.LookAndFeelInfo] = {
     val lfInfoOption = installedLookAndFeels().find(i => i.getName.equals(name))
 
     try {
@@ -72,13 +55,15 @@ private[smcl] object Platform {
    *
    * @return
    */
-  def installedLookAndFeels(): Array[UIManager.LookAndFeelInfo] = UIManager.getInstalledLookAndFeels
+  private[platform] def installedLookAndFeels(): Array[UIManager.LookAndFeelInfo] =
+    UIManager.getInstalledLookAndFeels
 
   /**
    *
    *
    * @return
    */
-  def currentLookAndFeel(): LookAndFeel = UIManager.getLookAndFeel
+  private[platform] def currentLookAndFeel(): LookAndFeel =
+    UIManager.getLookAndFeel
 
 }

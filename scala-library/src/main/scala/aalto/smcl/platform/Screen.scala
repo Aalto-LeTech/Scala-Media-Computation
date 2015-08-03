@@ -1,5 +1,4 @@
-package aalto.smcl.common
-
+package aalto.smcl.platform
 
 import java.awt.Dimension
 
@@ -14,7 +13,7 @@ import java.awt.Dimension
 object Screen {
 
   /** Dimensions of the screen. */
-  private[smcl] val awtDimensions: Dimension = Platform.awtToolkit.getScreenSize
+  private[smcl] val awtDimensions: Dimension = UIProvider.awtToolkit.getScreenSize
 
   /** Width of the screen. */
   val width = awtDimensions.width
@@ -29,6 +28,6 @@ object Screen {
   val area = width * height
 
   /** Resolution of the screen. */
-  val resolution: Int = Platform.awtToolkit.getScreenResolution
+  val resolution: Int = UIProvider.awtToolkit.getScreenResolution
 
 }

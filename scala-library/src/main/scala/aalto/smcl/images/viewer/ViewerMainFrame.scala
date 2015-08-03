@@ -10,7 +10,10 @@ import scala.swing._
 import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
 
-import aalto.smcl.common.{Screen, SwingUtils}
+import aalto.smcl.common.SwingUtils
+import aalto.smcl.platform.Screen
+
+
 
 
 /**
