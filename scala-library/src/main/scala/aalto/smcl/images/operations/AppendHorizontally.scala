@@ -1,13 +1,15 @@
 package aalto.smcl.images.operations
 
-import java.awt.image.{BufferedImage => JBufferedImage}
+
+import scala.collection.mutable.ArrayBuffer
 
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.common._
 import aalto.smcl.images.SettingKeys._
 import aalto.smcl.images.immutable.primitives.Bitmap
+import aalto.smcl.platform.PlatformBitmapBuffer
 
-import scala.collection.mutable.ArrayBuffer
+
 
 
 /**
@@ -40,14 +42,14 @@ private[images] case class AppendHorizontally(
 
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int =
-    childOperationListsOption.get.maxBy({ _.heightInPixels }).heightInPixels
+    childOperationListsOption.get.maxBy({_.heightInPixels}).heightInPixels
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =
-    childOperationListsOption.get.foldLeft[Int](0)({ _ + _.widthInPixels }) +
-      (childOperationListsOption.get.length - 1) * paddingInPixels
+    childOperationListsOption.get.foldLeft[Int](0)({_ + _.widthInPixels}) +
+        (childOperationListsOption.get.length - 1) * paddingInPixels
 
-  /** Future vertical offsets of the bitmaps to be combined. */
+  /** Vertical offsets of the bitmaps to be combined. */
   val verticalOffsets: Array[Int] = verticalAlignment match {
     case VerticalAlignment.Top =>
       ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toArray
@@ -62,23 +64,20 @@ private[images] case class AppendHorizontally(
   }
 
   /** A buffer for applying bitmap operations. */
-  val buffer: JBufferedImage = {
-    val newBuffer = new JBufferedImage(
-      widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
-    val drawingSurface = newBuffer.createGraphics()
+  val buffer: PlatformBitmapBuffer = {
+    val newBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
+    val drawingSurface = newBuffer.drawingSurface()
 
-    val oldColor = drawingSurface.getColor
-    drawingSurface.fillRect(0, 0, widthInPixels, heightInPixels)
-    drawingSurface.setColor(oldColor)
+    drawingSurface.clearUsing(backgroundColor)
 
     var xPosition = 0
     var itemNumber = 0
-    childOperationListsOption.get.foreach { opList =>
+    childOperationListsOption.get.foreach {opList =>
       val sourceBuffer = opList.render()
 
-      drawingSurface.drawImage(sourceBuffer, xPosition, verticalOffsets(itemNumber), null)
+      drawingSurface.drawBitmap(sourceBuffer, xPosition, verticalOffsets(itemNumber))
 
-      xPosition += sourceBuffer.getWidth + paddingInPixels
+      xPosition += sourceBuffer.widthInPixels + paddingInPixels
       itemNumber += 1
     }
 

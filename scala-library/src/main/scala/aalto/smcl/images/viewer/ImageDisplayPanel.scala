@@ -5,10 +5,10 @@ import java.awt.geom.AffineTransform
 import java.awt.image.{BufferedImage => JBufferedImage}
 import java.awt.{Color => JColor, Graphics2D => JGraphics2D, RenderingHints}
 
-import aalto.smcl.images.immutable.primitives.Bitmap
-
 import scala.swing._
 import scala.util.Try
+
+import aalto.smcl.images.immutable.primitives.Bitmap
 
 
 /**
@@ -39,7 +39,10 @@ private[images] class ImageDisplayPanel extends Panel {
       RenderingHints.KEY_INTERPOLATION,
       RenderingHints.VALUE_INTERPOLATION_BICUBIC)
 
-    _bitmapOption.get.renderOnto(g, _affineTransformation)
+    g.drawImage(
+      _bitmapOption.get.toRenderedRepresentation.awtBufferedImage,
+      _affineTransformation,
+      null)
   }
 
   /**

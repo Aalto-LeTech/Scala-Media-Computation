@@ -1,9 +1,7 @@
 package aalto.smcl.images.operations
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
-
-import aalto.smcl.common._
+import aalto.smcl.common.{MetaInformationMap, Tokenizable}
 
 
 

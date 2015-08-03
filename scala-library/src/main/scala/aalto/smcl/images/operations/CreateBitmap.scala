@@ -1,13 +1,12 @@
 package aalto.smcl.images.operations
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
-import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
-
-import aalto.smcl.common._
+import aalto.smcl.common.{MetaInformationMap, GS}
 import aalto.smcl.images.SettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels}
-import aalto.smcl.images.immutable._
 import aalto.smcl.images.immutable.primitives.Bitmap
+import aalto.smcl.platform.PlatformBitmapBuffer
+
+
 
 
 /**
@@ -35,6 +34,6 @@ private[images] case class CreateBitmap(
   /**
    * Returns a new bitmap buffer of a size given to this [[Bitmap]] instance.
    */
-  def buffer: JBufferedImage =
-    new JBufferedImage(widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
+  def buffer: PlatformBitmapBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
+
 }

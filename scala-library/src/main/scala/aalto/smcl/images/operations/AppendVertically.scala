@@ -1,13 +1,14 @@
 package aalto.smcl.images.operations
 
-import java.awt.image.{BufferedImage => JBufferedImage}
-
-import aalto.smcl.common.ColorOps._
-import aalto.smcl.common._
-import aalto.smcl.images.SettingKeys._
-import aalto.smcl.images.immutable.primitives.Bitmap
-
 import scala.collection.mutable.ArrayBuffer
+
+import aalto.smcl.common.ColorOps.RichPixelInt
+import aalto.smcl.common.{MetaInformationMap, GS, HorizontalAlignment, Color}
+import aalto.smcl.images.SettingKeys.DefaultBackground
+import aalto.smcl.images.immutable.primitives.Bitmap
+import aalto.smcl.platform.PlatformBitmapBuffer
+
+
 
 
 /**
@@ -62,23 +63,20 @@ private[images] case class AppendVertically(
   }
 
   /** A buffer for applying bitmap operations. */
-  val buffer: JBufferedImage = {
-    val newBuffer = new JBufferedImage(
-      widthInPixels, heightInPixels, JBufferedImage.TYPE_INT_ARGB)
-    val drawingSurface = newBuffer.createGraphics()
+  val buffer: PlatformBitmapBuffer = {
+    val newBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
+    val drawingSurface = newBuffer.drawingSurface()
 
-    val oldColor = drawingSurface.getColor
-    drawingSurface.fillRect(0, 0, widthInPixels, heightInPixels)
-    drawingSurface.setColor(oldColor)
+    drawingSurface.clearUsing(backgroundColor)
 
     var yPosition = 0
     var itemNumber = 0
     childOperationListsOption.get.foreach { opList =>
       val sourceBuffer = opList.render()
 
-      drawingSurface.drawImage(sourceBuffer, horizontalOffsets(itemNumber), yPosition, null)
+      drawingSurface.drawBitmap(sourceBuffer, horizontalOffsets(itemNumber), yPosition)
 
-      yPosition += sourceBuffer.getHeight + paddingInPixels
+      yPosition += sourceBuffer.heightInPixels + paddingInPixels
       itemNumber += 1
     }
 

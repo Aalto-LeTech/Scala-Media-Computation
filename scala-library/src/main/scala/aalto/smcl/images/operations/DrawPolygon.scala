@@ -1,18 +1,18 @@
 package aalto.smcl.images.operations
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
-
-import aalto.smcl.common.ColorOps._
-import aalto.smcl.common.{Color, GS, MetaInformationMap, _}
-import aalto.smcl.images.SettingKeys.{ShapesHaveFillingsByDefault, ShapesHaveBordersByDefault, DefaultSecondary, DefaultPrimary}
+import aalto.smcl.common._
+import aalto.smcl.common.ColorOps.RichPixelInt
+import aalto.smcl.common.{MetaInformationMap, GS, Color}
+import aalto.smcl.images.SettingKeys._
+import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
 
 /**
  * Operation to draw a polygon with given colors. If a color is not given, the default primary/secondary
- * color will be used, as defined in the [[GS]]. The resulting polyline will be automatically closed.
+ * color will be used, as defined in the [[aalto.smcl.common.GS]]. The resulting polyline will be automatically closed.
  *
  * @param xCoordinates
  * @param yCoordinates
@@ -37,16 +37,16 @@ private[images] case class DrawPolygon(
   require(xCoordinates != null, "The x coordinate argument has to be an Array[Int] instance (was null).")
   require(yCoordinates != null, "The y coordinate argument has to be an Array[Int] instance (was null).")
 
-  val numberOfCoordinatesPreset = xCoordinates.length.min(yCoordinates.length)
+  val numberOfCoordinatesPresent = xCoordinates.length.min(yCoordinates.length)
 
-  require(numberOfCoordinatesPreset > 1, s"The coordinate arrays must have at least two coordinate pairs present.")
+  require(numberOfCoordinatesPresent > 1, s"The coordinate arrays must have at least two coordinate pairs present.")
 
   require(numberOfCoordinatesToDraw > 1,
     s"At least two coordinate pairs (which equals one line segment) has to be drawn.")
 
-  require(numberOfCoordinatesToDraw <= numberOfCoordinatesPreset,
+  require(numberOfCoordinatesToDraw <= numberOfCoordinatesPresent,
     s"The coordinate arrays do not contain the requested amount of coordinate pairs " +
-        s"(only $numberOfCoordinatesPreset pairs present, $numberOfCoordinatesToDraw requested).")
+        s"(only $numberOfCoordinatesPresent pairs present, $numberOfCoordinatesToDraw requested).")
 
   require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
@@ -57,7 +57,7 @@ private[images] case class DrawPolygon(
   /** Information about this [[AbstractSingleSourceOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
-    "numberOfCoordinatesPreset" -> Option(numberOfCoordinatesPreset.toString),
+    "numberOfCoordinatesPresent" -> Option(numberOfCoordinatesPresent.toString),
     "numberOfCoordinatesToDraw" -> Option(numberOfCoordinatesToDraw.toString),
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
@@ -69,21 +69,12 @@ private[images] case class DrawPolygon(
    *
    * @param destination
    */
-  override def render(destination: JBufferedImage): Unit = {
-    val drawingSurface = destination.createGraphics()
-    val oldColor = drawingSurface.getColor
-
-    if (hasFilling) {
-      drawingSurface.setColor(fillColor.asAwtColor)
-      drawingSurface.fillPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
-    }
-
-    if (hasBorder) {
-      drawingSurface.setColor(color.asAwtColor)
-      drawingSurface.drawPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
-    }
-
-    drawingSurface.setColor(oldColor)
+  override def render(destination: PlatformBitmapBuffer): Unit = {
+    destination.drawingSurface().drawPolygon(
+      xCoordinates, yCoordinates,
+      numberOfCoordinatesToDraw,
+      hasBorder, hasFilling,
+      color, fillColor)
   }
 
 }

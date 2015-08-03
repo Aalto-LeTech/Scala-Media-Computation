@@ -1,10 +1,10 @@
 package aalto.smcl.images.operations
 
-import java.awt.image.{BufferedImage => JBufferedImage}
 
-import aalto.smcl.common.ColorOps._
+import aalto.smcl.common.ColorOps.RichPixelInt
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
 import aalto.smcl.images.SettingKeys.DefaultPrimary
+import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
@@ -47,16 +47,11 @@ private[images] case class DrawLine(
    *
    * @param destination
    */
-  override def render(destination: JBufferedImage): Unit = {
-    val drawingSurface = destination.createGraphics()
-    val oldColor = drawingSurface.getColor
-
-    drawingSurface.setColor(color.asAwtColor)
-    drawingSurface.drawLine(
+  override def render(destination: PlatformBitmapBuffer): Unit = {
+    destination.drawingSurface().drawLine(
       fromXInPixels, fromYInPixels,
-      toXInPixels, toYInPixels)
-
-    drawingSurface.setColor(oldColor)
+      toXInPixels, toYInPixels,
+      color)
   }
 
 }

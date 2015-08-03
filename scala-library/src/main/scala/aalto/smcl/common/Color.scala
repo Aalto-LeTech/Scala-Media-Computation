@@ -1,10 +1,9 @@
 package aalto.smcl.common
 
 
-import java.awt.{Color => JColor}
-
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.images.operations.AbstractSingleSourceOperation
+import aalto.smcl.platform.PlatformColor
 
 
 
@@ -70,9 +69,10 @@ object Color {
   def apply(red: Int, green: Int, blue: Int, transparency: Int,
       nameOption: Option[String] = None): Color = {
 
-    val args = validateColorArguments(red, green, blue, transparency, nameOption)
+    val (validRed, validGreen, validBlue, validTransparency, validNameOption) =
+      validateColorArguments(red, green, blue, transparency, nameOption)
 
-    new Color(args._1, args._2, args._3, args._4, args._5)
+    new Color(validRed, validGreen, validBlue, validTransparency, validNameOption)
   }
 
 
@@ -127,28 +127,33 @@ object Color {
   /**
    *
    *
-   * @param awtColor
+   * @param platformColor
    * @return
    */
-  def apply(awtColor: JColor): Color = Color(
-    awtColor.getRed,
-    awtColor.getGreen,
-    awtColor.getBlue,
-    awtColor.getAlpha)
+  private[smcl] def apply(
+      platformColor: PlatformColor): Color =
+    Color(
+      platformColor.red,
+      platformColor.green,
+      platformColor.blue,
+      platformColor.transparency)
 
   /**
    *
    *
-   * @param awtColor
+   * @param platformColor
    * @param nameOption
    * @return
    */
-  def apply(awtColor: JColor, nameOption: Option[String]): Color = Color(
-    awtColor.getRed,
-    awtColor.getGreen,
-    awtColor.getBlue,
-    awtColor.getAlpha,
-    nameOption)
+  private[smcl] def apply(
+      platformColor: PlatformColor,
+      nameOption: Option[String]): Color =
+    Color(
+      platformColor.red,
+      platformColor.green,
+      platformColor.blue,
+      platformColor.transparency,
+      nameOption)
 
 }
 
@@ -193,9 +198,6 @@ class Color protected(
 
   /** This [[Color]] represented as a hexadecimal string. */
   lazy val asHexString: String = asPixelInt.toArgbHexColorString
-
-  /** This [[Color]] represented as a `java.awt.Color` instance. */
-  lazy val asAwtColor: JColor = new JColor(red, green, blue, transparency)
 
   /** Information about this [[AbstractSingleSourceOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

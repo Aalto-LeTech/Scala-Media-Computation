@@ -8,6 +8,8 @@ import aalto.smcl.images.immutable.primitives.Bitmap
 
 import scala.annotation.tailrec
 
+import aalto.smcl.platform.{PlatformBitmapBuffer, PlatformBitmapBuffer$}
+
 
 
 
@@ -64,11 +66,11 @@ private[images] case class BitmapOperationList private(
       case _            => PresetColors('white)
     }
 
-
   /**
    *
    */
-  private[images] def render(): JBufferedImage = renderOperations(operations, bufferProvider.buffer)
+  private[images] def render(): PlatformBitmapBuffer =
+    renderOperations(operations, bufferProvider.buffer)
 
   /**
    *
@@ -76,7 +78,7 @@ private[images] case class BitmapOperationList private(
   @tailrec
   private def renderOperations(
       list: List[AbstractSingleSourceOperation],
-      buffer: JBufferedImage): JBufferedImage = {
+      buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
 
     list match {
       case Nil                => buffer

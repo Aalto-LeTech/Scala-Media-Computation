@@ -1,10 +1,10 @@
 package aalto.smcl.images.operations
 
-import java.awt.image.{BufferedImage => JBufferedImage}
 
-import aalto.smcl.common.ColorOps._
+import aalto.smcl.common.ColorOps.RichPixelInt
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
 import aalto.smcl.images.SettingKeys._
+import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
@@ -63,27 +63,13 @@ private[images] case class DrawRoundedSquare(
    *
    * @param destination
    */
-  override def render(destination: JBufferedImage): Unit = {
-    val drawingSurface = destination.createGraphics()
-    val oldColor = drawingSurface.getColor
-
-    if (hasFilling) {
-      drawingSurface.setColor(fillColor.asAwtColor)
-      drawingSurface.fillRoundRect(
-        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-        sideLengthInPixels, sideLengthInPixels,
-        roundingWidthInPixels, roundingHeightInPixels)
-    }
-
-    if (hasBorder) {
-      drawingSurface.setColor(color.asAwtColor)
-      drawingSurface.drawRoundRect(
-        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-        sideLengthInPixels, sideLengthInPixels,
-        roundingWidthInPixels, roundingHeightInPixels)
-    }
-
-    drawingSurface.setColor(oldColor)
+  override def render(destination: PlatformBitmapBuffer): Unit = {
+    destination.drawingSurface().drawRoundedRectangle(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      sideLengthInPixels, sideLengthInPixels,
+      roundingWidthInPixels, roundingHeightInPixels,
+      hasBorder, hasFilling,
+      color, fillColor)
   }
 
 }

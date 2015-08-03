@@ -1,11 +1,6 @@
 package aalto.smcl
 
 
-import java.awt.{Color => AwtColor}
-
-
-
-
 /**
  *
  *
@@ -107,10 +102,7 @@ package object common {
       if (self.isOpaque) self
       else Color(self.red, self.green, self.blue, MaximumOpaqueness, self.nameOption)
 
-    /** This [[Color]] as a `java.awt.Color` with full opaqueness. */
-    def toOpaqueAwtColor: AwtColor =
-      new AwtColor(self.red, self.green, self.blue, MaximumOpaqueness)
-
   }
+
 
 }

@@ -1,11 +1,10 @@
 package aalto.smcl.images.operations
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
-
-import aalto.smcl.common.ColorOps._
+import aalto.smcl.common.ColorOps.RichPixelInt
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
-import aalto.smcl.images.SettingKeys.{ShapesHaveFillingsByDefault, ShapesHaveBordersByDefault, DefaultBitmapWidthInPixels, DefaultPrimary, DefaultSecondary}
+import aalto.smcl.images.SettingKeys._
+import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
@@ -56,25 +55,12 @@ private[images] case class DrawSquare(
    *
    * @param destination
    */
-  override def render(destination: JBufferedImage): Unit = {
-    val drawingSurface = destination.createGraphics()
-    val oldColor = drawingSurface.getColor
-
-    if (hasFilling) {
-      drawingSurface.setColor(fillColor.asAwtColor)
-      drawingSurface.fillRect(
-        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-        sideLengthInPixels, sideLengthInPixels)
-    }
-
-    if (hasBorder) {
-      drawingSurface.setColor(color.asAwtColor)
-      drawingSurface.drawRect(
-        upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-        sideLengthInPixels, sideLengthInPixels)
-    }
-
-    drawingSurface.setColor(oldColor)
+  override def render(destination: PlatformBitmapBuffer): Unit = {
+    destination.drawingSurface().drawRectangle(
+      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+      sideLengthInPixels, sideLengthInPixels,
+      hasBorder, hasFilling,
+      color, fillColor)
   }
 
 }

@@ -1,17 +1,16 @@
 package aalto.smcl.images.operations
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
-
-import aalto.smcl.common._
+import aalto.smcl.common.{MetaInformationMap, GS, Color}
 import aalto.smcl.images.SettingKeys.DefaultBackground
+import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
 
 /**
  * Operation to clear a bitmap with a given color. If a color is not given, the default background color will be used,
- * as defined in the [[GS]].
+ * as defined in the [[aalto.smcl.common.GS]].
  *
  * @param color
  *
@@ -35,13 +34,8 @@ private[images] case class Clear(
    *
    * @param destination
    */
-  override def render(destination: JBufferedImage): Unit = {
-    val drawingSurface = destination.createGraphics()
-    val oldColor = drawingSurface.getColor
+  override def render(destination: PlatformBitmapBuffer): Unit =
+    destination.drawingSurface().clearUsing(color)
 
-    drawingSurface.setColor(color.asAwtColor)
-    drawingSurface.fillRect(0, 0, destination.getWidth, destination.getHeight)
-    drawingSurface.setColor(oldColor)
-  }
 
 }

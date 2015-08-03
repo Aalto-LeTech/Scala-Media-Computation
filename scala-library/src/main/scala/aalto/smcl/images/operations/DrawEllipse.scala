@@ -1,11 +1,10 @@
 package aalto.smcl.images.operations
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
-
-import aalto.smcl.common.ColorOps._
+import aalto.smcl.common.ColorOps.RichPixelInt
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
 import aalto.smcl.images.SettingKeys._
+import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
@@ -66,25 +65,12 @@ private[images] case class DrawEllipse(
    *
    * @param destination
    */
-  override def render(destination: JBufferedImage): Unit = {
-    val drawingSurface = destination.createGraphics()
-    val oldColor = drawingSurface.getColor
-
-    if (hasFilling) {
-      drawingSurface.setColor(fillColor.asAwtColor)
-      drawingSurface.fillOval(
-        boundingBoxUpperLeftX, boundingBoxUpperLeftY,
-        widthInPixels, heightInPixels)
-    }
-
-    if (hasBorder) {
-      drawingSurface.setColor(color.asAwtColor)
-      drawingSurface.drawOval(
-        boundingBoxUpperLeftX, boundingBoxUpperLeftY,
-        widthInPixels, heightInPixels)
-    }
-
-    drawingSurface.setColor(oldColor)
+  override def render(destination: PlatformBitmapBuffer): Unit = {
+    destination.drawingSurface().drawEllipse(
+      boundingBoxUpperLeftX, boundingBoxUpperLeftY,
+      widthInPixels, heightInPixels,
+      hasBorder, hasFilling,
+      color, fillColor)
   }
 
 }

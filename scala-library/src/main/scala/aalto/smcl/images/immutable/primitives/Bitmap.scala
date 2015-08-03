@@ -1,9 +1,12 @@
 package aalto.smcl.images.immutable.primitives
 
+
 import java.awt.geom.AffineTransform
-import java.awt.image.{BufferedImage => JBufferedImage}
-import java.awt.{Color => JColor, Graphics2D => JGraphics2D}
 import java.util.UUID
+
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+import scala.ref.WeakReference
 
 import aalto.smcl.common._
 import aalto.smcl.images.SettingKeys._
@@ -12,10 +15,7 @@ import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.images.operations._
 import aalto.smcl.images.{display => displayInViewer, _}
-
-import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
-import scala.ref.WeakReference
+import aalto.smcl.platform.{PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
 
 
 
@@ -118,8 +118,8 @@ case class Bitmap private(
   val heightInPixels: Int = operations.heightInPixels
 
   /** Rendering buffer for this image. */
-  private[this] var _renderingBuffer: WeakReference[JBufferedImage] =
-    WeakReference[JBufferedImage](null)
+  private[this] var _renderingBuffer: WeakReference[PlatformBitmapBuffer] =
+    WeakReference[PlatformBitmapBuffer](null)
 
 } with RenderableBitmap
        with PixelRectangle
@@ -554,11 +554,11 @@ case class Bitmap private(
    * @param x
    * @param y
    */
-  def renderOnto(drawingSurface: JGraphics2D, x: Int, y: Int): Unit = {
+  def renderOnto(drawingSurface: PlatformDrawingSurface, x: Int, y: Int): Unit = {
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
-    toRenderedRepresentation
-    drawingSurface.drawImage(_renderingBuffer.apply(), null, x, y)
+    val rendition = toRenderedRepresentation
+    drawingSurface.drawBitmap(rendition, x, y)
   }
 
   /**
@@ -567,21 +567,21 @@ case class Bitmap private(
    * @param drawingSurface
    * @param affineTransformation
    */
-  def renderOnto(drawingSurface: JGraphics2D, affineTransformation: AffineTransform): Unit = {
+  def renderOnto(drawingSurface: PlatformDrawingSurface, affineTransformation: AffineTransform): Unit = {
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
-    toRenderedRepresentation
-    drawingSurface.drawImage(_renderingBuffer.apply(), affineTransformation, null)
+    val rendition = toRenderedRepresentation
+    drawingSurface.drawBitmap(_renderingBuffer.apply(), affineTransformation)
   }
 
   /**
    * Returns a `BufferedImage` instance representing this [[Bitmap]].
    */
-  def toRenderedRepresentation: JBufferedImage =
+  def toRenderedRepresentation: PlatformBitmapBuffer =
     _renderingBuffer.get getOrElse {
       val rendition = operations.render()
 
-      _renderingBuffer = WeakReference[JBufferedImage](rendition)
+      _renderingBuffer = WeakReference[PlatformBitmapBuffer](rendition)
 
       return rendition
     }

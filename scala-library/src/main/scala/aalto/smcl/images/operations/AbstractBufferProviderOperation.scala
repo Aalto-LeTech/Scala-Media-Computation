@@ -1,7 +1,7 @@
 package aalto.smcl.images.operations
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
+import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
@@ -22,6 +22,6 @@ private[images] abstract class AbstractBufferProviderOperation
   def heightInPixels: Int
 
   /** A buffer for applying bitmap operations. */
-  def buffer: JBufferedImage
+  def buffer: PlatformBitmapBuffer
 
 }

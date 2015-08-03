@@ -1,5 +1,6 @@
 package aalto.smcl.images.immutable.primitives
 
+
 import aalto.smcl.common.{Color, GS}
 import aalto.smcl.images.SettingKeys.{DefaultBackground, DefaultPrimary}
 import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle
