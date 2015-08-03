@@ -4,14 +4,13 @@ package aalto.smcl.images.immutable.primitives
 import java.awt.geom.AffineTransform
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 import scala.ref.WeakReference
 
 import aalto.smcl.common.{Color, GS, HorizontalAlignment, TimestampedCreation, VerticalAlignment}
 import aalto.smcl.images.SettingKeys._
-import aalto.smcl.images.immutable.{BitmapIdentity, PixelRectangle}
 import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.images.immutable.{BitmapIdentity, PixelRectangle}
 import aalto.smcl.images.operations._
 import aalto.smcl.images.{display => displayInViewer, _}
 import aalto.smcl.platform.{PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
@@ -513,7 +512,28 @@ case class Bitmap private(
    * @param backgroundColor
    * @return
    */
-  def appendHorizontally(
+  def appendOnLeft(
+      bitmapsToCombineWith: Bitmap*)(
+      verticalAlignment: VerticalAlignment.Value = VerticalAlignment.Middle,
+      paddingInPixels: Int = 0,
+      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+
+    apply(
+      AppendHorizontally(bitmapsToCombineWith :+ this)(
+        verticalAlignment, paddingInPixels, backgroundColor),
+      UpdateViewerPerDefaults)
+  }
+
+  /**
+   *
+   *
+   * @param bitmapsToCombineWith
+   * @param verticalAlignment
+   * @param paddingInPixels
+   * @param backgroundColor
+   * @return
+   */
+  def appendOnRight(
       bitmapsToCombineWith: Bitmap*)(
       verticalAlignment: VerticalAlignment.Value = VerticalAlignment.Middle,
       paddingInPixels: Int = 0,
@@ -534,7 +554,28 @@ case class Bitmap private(
    * @param backgroundColor
    * @return
    */
-  def appendVertically(
+  def appendOnTop(
+      bitmapsToCombineWith: Bitmap*)(
+      horizontalAlignment: HorizontalAlignment.Value = HorizontalAlignment.Left,
+      paddingInPixels: Int = 0,
+      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+
+    apply(
+      AppendVertically(bitmapsToCombineWith :+ this)(
+        horizontalAlignment, paddingInPixels, backgroundColor),
+      UpdateViewerPerDefaults)
+  }
+
+  /**
+   *
+   *
+   * @param bitmapsToCombineWith
+   * @param horizontalAlignment
+   * @param paddingInPixels
+   * @param backgroundColor
+   * @return
+   */
+  def appendOnBottom(
       bitmapsToCombineWith: Bitmap*)(
       horizontalAlignment: HorizontalAlignment.Value = HorizontalAlignment.Left,
       paddingInPixels: Int = 0,
@@ -545,6 +586,252 @@ case class Bitmap private(
         horizontalAlignment, paddingInPixels, backgroundColor),
       UpdateViewerPerDefaults)
   }
+
+
+  // ----------------------------------------------------------------------------------------------
+
+  //-------------------------------
+  //
+  //  :/\
+  //
+  //-------------------------------
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :/\(other: Bitmap): Bitmap = appendOnTop(other)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :/\(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other:_*)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :/\(other: scala.collection.Traversable[Bitmap]): Bitmap = :/\(other.toSeq)
+
+  //-------------------------------
+  //
+  //  /\:
+  //
+  //-------------------------------
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def /\:(other: Bitmap): Bitmap = appendOnTop(other)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def /\:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other:_*)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def /\:(other: scala.collection.Traversable[Bitmap]): Bitmap = /\:(other.toSeq)
+
+  //-------------------------------
+  //
+  //  :\/
+  //
+  //-------------------------------
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :\/(other: Bitmap): Bitmap = appendOnBottom(other)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */
+  def :\/(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other:_*)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :\/(other: scala.collection.Traversable[Bitmap]): Bitmap = :\/(other.toSeq)
+
+  //-------------------------------
+  //
+  //  \/:
+  //
+  //-------------------------------
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def \/:(other: Bitmap): Bitmap = appendOnBottom(other)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def \/:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other:_*)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def \/:(other: scala.collection.Traversable[Bitmap]): Bitmap = \/:(other.toSeq)
+
+  //-------------------------------
+  //
+  //  :>>
+  //
+  //-------------------------------
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :>>(other: Bitmap): Bitmap = appendOnRight(other)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :>>(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other:_*)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :>>(other: scala.collection.Traversable[Bitmap]): Bitmap = :>>(other.toSeq)
+
+  //-------------------------------
+  //
+  //  >>:
+  //
+  //-------------------------------
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def >>:(other: Bitmap): Bitmap = appendOnRight(other)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def >>:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other:_*)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def >>:(other: scala.collection.Traversable[Bitmap]): Bitmap = >>:(other.toSeq)
+
+  //-------------------------------
+  //
+  //  :<<
+  //
+  //-------------------------------
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :<<(other: Bitmap): Bitmap = appendOnLeft(other)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :<<(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other:_*)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :<<(other: scala.collection.Traversable[Bitmap]): Bitmap = :<<(other.toSeq)
+
+  //-------------------------------
+  //
+  //  <<:
+  //
+  //-------------------------------
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def <<:(other: Bitmap): Bitmap = appendOnLeft(other)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def <<:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other:_*)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def <<:(other: scala.collection.Traversable[Bitmap]): Bitmap = <<:(other.toSeq)
+
+  // ----------------------------------------------------------------------------------------------
+
 
   /**
    * Renders this [[Bitmap]] onto a drawing surface using specified coordinates.
@@ -591,7 +878,7 @@ case class Bitmap private(
    * @param size
    * @return
    */
-  private def propagateToArrayBuffer(size: Int): ArrayBuffer[Bitmap] = {
+  private def propagateToArrayBuffer(size: Int): mutable.ArrayBuffer[Bitmap] = {
     require(size >= 0, s"Size of the collection cannot be negative (was $size)")
 
     mutable.ArrayBuffer.fill[Bitmap](size)(this)
