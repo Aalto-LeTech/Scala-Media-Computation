@@ -527,6 +527,27 @@ case class Bitmap private(
   }
 
   /**
+   *
+   *
+   * @param bitmapsToCombineWith
+   * @param horizontalAlignment
+   * @param paddingInPixels
+   * @param backgroundColor
+   * @return
+   */
+  def appendVertically(
+      bitmapsToCombineWith: Bitmap*)(
+      horizontalAlignment: HorizontalAlignment.Value = HorizontalAlignment.Left,
+      paddingInPixels: Int = 0,
+      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+
+    apply(
+      AppendVertically(this +: bitmapsToCombineWith)(
+        horizontalAlignment, paddingInPixels, backgroundColor),
+      UpdateViewerPerDefaults)
+  }
+
+  /**
    * Renders this [[Bitmap]] onto a drawing surface using specified coordinates.
    *
    * @param drawingSurface

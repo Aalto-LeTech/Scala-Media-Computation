@@ -1,7 +1,7 @@
 package aalto.smcl.images
 
 
-import aalto.smcl.common.{VerticalAlignment, Color, GS}
+import aalto.smcl.common.{HorizontalAlignment, VerticalAlignment, Color, GS}
 import aalto.smcl.images.SettingKeys._
 import aalto.smcl.images.immutable.primitives.Bitmap
 import Bitmap.ViewerUpdateStyle
@@ -343,7 +343,6 @@ object BitmapOps {
       color, fillColor), viewerHandling)
   }
 
-
   /**
    * Adds a [[DrawArc]] operation to a given [[OperableBitmap]].
    *
@@ -385,7 +384,6 @@ object BitmapOps {
       color, fillColor), viewerHandling)
   }
 
-
   /**
    * Adds a [[AppendHorizontally]] operation to a given [[OperableBitmap]].
    *
@@ -407,6 +405,29 @@ object BitmapOps {
       AppendHorizontally(bitmapsToCombine)(
         verticalAlignment, paddingInPixels, backgroundColor),
       UpdateViewerPerDefaults)
+  }
+
+  /**
+   * Adds a [[AppendVertically]] operation to a given [[OperableBitmap]].
+   *
+   * @param bitmapsToCombine
+   * @param horizontalAlignment
+   * @param paddingInPixels
+   * @param backgroundColor
+   * @return
+   */
+  def appendVertically(
+      bitmapsToCombine: Bitmap*)(
+      horizontalAlignment: HorizontalAlignment.Value = HorizontalAlignment.Left,
+      paddingInPixels: Int = 0,
+      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+
+    require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
+
+    bitmapsToCombine.head.apply(
+        AppendVertically(bitmapsToCombine)(
+          horizontalAlignment, paddingInPixels, backgroundColor),
+        UpdateViewerPerDefaults)
   }
 
 }
