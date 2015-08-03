@@ -108,7 +108,7 @@ object Bitmap {
  * @author Aleksi Lukkarinen
  */
 case class Bitmap private(
-    private val operations: BitmapOperationList,
+    private[images] val operations: BitmapOperationList,
     id: UUID) extends {
 
   /** Width of this [[Bitmap]]. */
@@ -142,11 +142,35 @@ case class Bitmap private(
    */
   private[images] def apply(
       newOperation: AbstractSingleSourceOperation,
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
 
     require(newOperation != null, "Operation argument cannot be null.")
 
     val newBitmap = copy(operations = newOperation +: operations)
+
+    if (viewerHandling == UpdateViewerPerDefaults) {
+      if (GS.isTrueThat(DisplayBitmapsAutomaticallyAfterOperations))
+        newBitmap.display()
+    }
+
+    newBitmap
+  }
+
+  /**
+   * Applies an [[AbstractBufferProviderOperation]] to this [[Bitmap]].
+   *
+   * @param newOperation
+   * @param viewerHandling
+   * @return
+   */
+  private[images] def apply(
+      newOperation: AbstractBufferProviderOperation,
+      viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
+
+    require(newOperation != null, "Operation argument cannot be null.")
+
+    val newOperationList = BitmapOperationList(newOperation)
+    val newBitmap = copy(operations = newOperationList)
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(DisplayBitmapsAutomaticallyAfterOperations))
@@ -479,6 +503,27 @@ case class Bitmap private(
       startAngle, arcAngle,
       hasBorder, hasFilling,
       color, fillColor), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param bitmapsToCombineWith
+   * @param verticalAlignment
+   * @param paddingInPixels
+   * @param backgroundColor
+   * @return
+   */
+  def appendHorizontally(
+      bitmapsToCombineWith: Bitmap*)(
+      verticalAlignment: VerticalAlignment.Value = VerticalAlignment.Middle,
+      paddingInPixels: Int = 0,
+      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+
+    apply(
+      AppendHorizontally(this +: bitmapsToCombineWith)(
+        verticalAlignment, paddingInPixels, backgroundColor),
+      UpdateViewerPerDefaults)
   }
 
   /**
