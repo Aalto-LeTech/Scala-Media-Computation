@@ -1,14 +1,11 @@
 package aalto.smcl.images.operations
 
 
-import java.awt.image.{BufferedImage => JBufferedImage}
+import scala.annotation.tailrec
 
 import aalto.smcl.common.{Color, PresetColors}
 import aalto.smcl.images.immutable.primitives.Bitmap
-
-import scala.annotation.tailrec
-
-import aalto.smcl.platform.{PlatformBitmapBuffer, PlatformBitmapBuffer$}
+import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
