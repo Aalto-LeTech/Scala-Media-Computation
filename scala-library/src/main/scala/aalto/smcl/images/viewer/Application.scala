@@ -2,14 +2,13 @@ package aalto.smcl.images.viewer
 
 
 import java.awt.Cursor
-import java.awt.image.{BufferedImage => JBufferedImage}
-import java.util.UUID
-
-import aalto.smcl.images.immutable.primitives.Bitmap
 
 import scala.swing.Swing
 
 import rx.lang.scala.{Observable, Observer}
+
+import aalto.smcl.images.immutable.BitmapIdentity
+import aalto.smcl.images.immutable.primitives.Bitmap
 import aalto.smcl.images.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
 
 
@@ -19,6 +18,7 @@ import aalto.smcl.images.viewer.events.external.{DisplayBitmapEvent, ExternalVie
  * Information and functionality related to this application.
  */
 private[images] object Application {
+  // @formatter:off
 
   import aalto.smcl.SMCL
 
@@ -34,8 +34,8 @@ private[images] object Application {
   /** Hand mouse cursor used by this application. */
   val HandCursor: Cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
 
+  // @formatter:on
 }
-
 
 
 /**
@@ -46,7 +46,7 @@ private[images] object Application {
 private[images] class Application(val incomingEventStream: Observable[ExternalViewerEvent])
     extends Observer[ExternalViewerEvent] {
 
-  private[this] var _viewers = Map[UUID, ViewerMainFrame]()
+  private[this] var _viewers = Map[BitmapIdentity, ViewerMainFrame]()
 
   /**
    *
@@ -69,16 +69,16 @@ private[images] class Application(val incomingEventStream: Observable[ExternalVi
    * @param bitmap
    */
   private[this] def createOrUpdateViewerFor(bitmap: Bitmap): Unit = {
-    val viewer = _viewers.getOrElse(bitmap.id, {
+    val viewer = _viewers.getOrElse(bitmap.uniqueIdentifier, {
       val newViewer = ViewerMainFrame(bitmap)
 
-      _viewers = _viewers + (bitmap.id -> newViewer)
+      _viewers = _viewers + (bitmap.uniqueIdentifier -> newViewer)
 
       newViewer.centerOnScreen()
       newViewer
     })
 
-    Swing.onEDT { viewer.updateBitmapBuffer(bitmap) }
+    Swing.onEDT {viewer.updateBitmapBuffer(bitmap)}
   }
 
 
@@ -86,8 +86,8 @@ private[images] class Application(val incomingEventStream: Observable[ExternalVi
    *
    */
   private[this] def closeAllViewersWithTheForce(): Unit = {
-    _viewers.values.foreach { viewer =>
-      Swing.onEDT { viewer.forceToClose() }
+    _viewers.values.foreach {viewer =>
+      Swing.onEDT {viewer.forceToClose()}
     }
 
     _viewers = _viewers.empty

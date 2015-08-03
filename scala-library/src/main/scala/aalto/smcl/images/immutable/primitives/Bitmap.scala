@@ -2,15 +2,14 @@ package aalto.smcl.images.immutable.primitives
 
 
 import java.awt.geom.AffineTransform
-import java.util.UUID
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scala.ref.WeakReference
 
-import aalto.smcl.common._
+import aalto.smcl.common.{Color, GS, HorizontalAlignment, TimestampedCreation, VerticalAlignment}
 import aalto.smcl.images.SettingKeys._
-import aalto.smcl.images.immutable.PixelRectangle
+import aalto.smcl.images.immutable.{BitmapIdentity, PixelRectangle}
 import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.images.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.images.operations._
@@ -74,7 +73,7 @@ object Bitmap {
       Clear(initialBackgroundColor) +:
           BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
 
-    val newBitmap = new Bitmap(operationList, UUID.randomUUID())
+    val newBitmap = new Bitmap(operationList, BitmapIdentity())
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
@@ -103,13 +102,13 @@ object Bitmap {
  *
  *
  * @param operations
- * @param id
+ * @param uniqueIdentifier
  *
  * @author Aleksi Lukkarinen
  */
 case class Bitmap private(
     private[images] val operations: BitmapOperationList,
-    id: UUID) extends {
+    uniqueIdentifier: BitmapIdentity) extends {
 
   /** Width of this [[Bitmap]]. */
   val widthInPixels: Int = operations.widthInPixels
