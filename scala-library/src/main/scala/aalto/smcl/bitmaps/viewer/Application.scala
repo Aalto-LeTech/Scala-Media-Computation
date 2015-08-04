@@ -23,7 +23,7 @@ private[bitmaps] object Application {
   import aalto.smcl.SMCL
 
   /** Full name of this application. */
-  val FullName = s"${SMCL.AbbreviatedName} Image Viewer"
+  val FullName = s"${SMCL.AbbreviatedName} Bitmap Viewer"
 
   /** Default mouse cursor used by this application. */
   val DefaultCursor: Cursor = Cursor.getDefaultCursor
