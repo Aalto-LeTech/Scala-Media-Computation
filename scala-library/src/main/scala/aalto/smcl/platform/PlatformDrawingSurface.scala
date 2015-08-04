@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform
 import scala.swing.Graphics2D
 
 import aalto.smcl.common.{Color, GS}
-import aalto.smcl.images.SettingKeys._
+import aalto.smcl.bitmaps.SettingKeys._
 
 
 

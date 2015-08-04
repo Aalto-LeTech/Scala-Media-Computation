@@ -1,6 +1,6 @@
 package aalto
 
-import aalto.smcl.images.immutable.primitives.Bitmap
+import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 
 
 /**
