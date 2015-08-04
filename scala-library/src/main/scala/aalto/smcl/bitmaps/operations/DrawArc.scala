@@ -1,9 +1,9 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.common.ColorOps.RichPixelInt
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
-import aalto.smcl.bitmaps.SettingKeys._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -17,8 +17,8 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @param upperLeftCornerYInPixels
  * @param widthInPixels
  * @param heightInPixels
- * @param startAngle
- * @param arcAngle
+ * @param startAngleInDegrees
+ * @param arcAngleInDegrees
  * @param hasBorder
  * @param hasFilling
  * @param color
@@ -31,8 +31,8 @@ private[bitmaps] case class DrawArc(
     upperLeftCornerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    startAngle: Int = GS.intFor(DefaultArcStartAngle),
-    arcAngle: Int = GS.intFor(DefaultArcAngle),
+    startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
     hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
     hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
     color: Color = GS.colorFor(DefaultPrimary),
@@ -53,8 +53,8 @@ private[bitmaps] case class DrawArc(
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),
     "height" -> Option(s"$heightInPixels px"),
-    "startAngle" -> Option(startAngle.toString),
-    "arcAngle" -> Option(arcAngle.toString),
+    "startAngle" -> Option(s"${startAngleInDegrees.toString} deg"),
+    "arcAngle" -> Option(s"${arcAngleInDegrees.toString} deg"),
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
@@ -68,7 +68,7 @@ private[bitmaps] case class DrawArc(
   override def render(destination: PlatformBitmapBuffer): Unit = {
     destination.drawingSurface().drawArc(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      widthInPixels, heightInPixels, startAngle, arcAngle,
+      widthInPixels, heightInPixels, startAngleInDegrees, arcAngleInDegrees,
       hasBorder, hasFilling, color, fillColor)
   }
 

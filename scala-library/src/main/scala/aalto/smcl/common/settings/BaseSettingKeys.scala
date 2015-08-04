@@ -1,7 +1,7 @@
 package aalto.smcl.common.settings
 
 
-import aalto.smcl.common.{ReflectionUtils, Color}
+import aalto.smcl.common.{Color, ReflectionUtils}
 
 
 
@@ -11,13 +11,19 @@ import aalto.smcl.common.{ReflectionUtils, Color}
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object SettingKeys {
+object BaseSettingKeys {
 
 
   /**
    * The base class for setting keys of all possible setting data types.
+   *
+   * @param typeNameSingular
+   * @param typeNamePlural
+   * @tparam SettingType
    */
-  abstract sealed class Value {
+  abstract sealed class Value[SettingType](
+      val typeNameSingular: String,
+      val typeNamePlural: String) {
 
     /**
      * Returns full name of this setting key, which equals the full path of this class.
@@ -45,24 +51,31 @@ private[smcl] object SettingKeys {
   /**
    * Base class for setting keys of type `Boolean`.
    */
-  abstract class BooleanSettingKey() extends Value
+  abstract class BooleanSettingKey() extends Value[Boolean]("boolean", "booleans")
+
+
+  /**
+   * Base class for setting keys of type `Enumeration`.
+   */
+  abstract class EnumSettingKey[SettingType]() extends Value[SettingType]("enumeration", "enumerations")
 
 
   /**
    * Base class for setting keys of type `Int`.
    */
-  abstract class IntSettingKey() extends Value
+  abstract class IntSettingKey() extends Value[Int]("integer", "integers")
 
 
   /**
    * Base class for setting keys of type `String`.
    */
-  abstract class StringSettingKey() extends Value
+  abstract class StringSettingKey() extends Value[String]("string", "strings")
 
 
   /**
    * Base class for setting keys of type [[Color]].
    */
-  abstract class ColorSettingKey() extends Value
+  abstract class ColorSettingKey() extends Value[Color]("color", "colors")
+
 
 }

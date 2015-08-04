@@ -1,5 +1,6 @@
 package aalto.smcl.common
 
+
 /**
  * Vertical alignment positions.
  *
@@ -19,4 +20,4 @@ object VerticalAlignment extends Enumeration {
   /** Align to the bottom. */
   val Bottom = Value
 
- }
+}

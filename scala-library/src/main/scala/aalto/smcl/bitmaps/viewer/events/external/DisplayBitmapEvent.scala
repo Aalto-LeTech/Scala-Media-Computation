@@ -1,8 +1,11 @@
 package aalto.smcl.bitmaps.viewer.events.external
 
+
 import java.awt.image.{BufferedImage => JBufferedImage}
 
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+
+
 
 
 /**

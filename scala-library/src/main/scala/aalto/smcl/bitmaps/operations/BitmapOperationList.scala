@@ -3,8 +3,8 @@ package aalto.smcl.bitmaps.operations
 
 import scala.annotation.tailrec
 
-import aalto.smcl.common.{Color, PresetColors}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.common.{Color, PresetColors}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -24,8 +24,6 @@ private[bitmaps] object BitmapOperationList {
     new BitmapOperationList(bufferProvider, List[AbstractOperation with AbstractSingleSourceOperation]())
 
 }
-
-
 
 
 /**

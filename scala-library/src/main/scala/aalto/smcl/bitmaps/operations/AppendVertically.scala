@@ -1,11 +1,12 @@
 package aalto.smcl.bitmaps.operations
 
+
 import scala.collection.mutable.ArrayBuffer
 
-import aalto.smcl.common.ColorOps.RichPixelInt
-import aalto.smcl.common.{MetaInformationMap, GS, HorizontalAlignment, Color}
-import aalto.smcl.bitmaps.SettingKeys.DefaultBackground
+import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultHorizontalAlignment, DefaultPaddingInPixels}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.common.ColorOps.RichPixelInt
+import aalto.smcl.common.{Color, GS, HorizontalAlignment, MetaInformationMap}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -18,8 +19,8 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  */
 private[bitmaps] case class AppendVertically(
     bitmapsToCombine: Seq[Bitmap])(
-    horizontalAlignment: HorizontalAlignment.Value = HorizontalAlignment.Left,
-    paddingInPixels: Int = 0,
+    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
     backgroundColor: Color = GS.colorFor(DefaultBackground))
     extends AbstractBufferProviderOperation with Immutable {
 
@@ -41,12 +42,12 @@ private[bitmaps] case class AppendVertically(
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =
-    childOperationListsOption.get.maxBy({ _.widthInPixels }).widthInPixels
+    childOperationListsOption.get.maxBy({_.widthInPixels}).widthInPixels
 
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int =
-    childOperationListsOption.get.foldLeft[Int](0)({ _ + _.heightInPixels }) +
-      (childOperationListsOption.get.length - 1) * paddingInPixels
+    childOperationListsOption.get.foldLeft[Int](0)({_ + _.heightInPixels}) +
+        (childOperationListsOption.get.length - 1) * paddingInPixels
 
   /** Future vertical offsets of the bitmaps to be combined. */
   val horizontalOffsets: Seq[Int] = horizontalAlignment match {
@@ -71,7 +72,7 @@ private[bitmaps] case class AppendVertically(
 
     var yPosition = 0
     var itemNumber = 0
-    childOperationListsOption.get.foreach { opList =>
+    childOperationListsOption.get.foreach {opList =>
       val sourceBuffer = opList.render()
 
       drawingSurface.drawBitmap(sourceBuffer, horizontalOffsets(itemNumber), yPosition)

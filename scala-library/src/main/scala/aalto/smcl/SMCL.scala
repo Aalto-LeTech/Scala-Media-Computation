@@ -70,14 +70,14 @@ object SMCL {
   /**
    * Calls the help provider to print help with no given search terms.
    */
-  def help():Unit = Help.onTopic(Seq())
+  def help(): Unit = Help.onTopic(Seq())
 
   /**
    * Calls the help provider to print help on the given search terms.
    *
    * @param terms
    */
-  def help(terms: String*):Unit = Help.onTopic(terms)
+  def help(terms: String*): Unit = Help.onTopic(terms)
 
   /**
    *

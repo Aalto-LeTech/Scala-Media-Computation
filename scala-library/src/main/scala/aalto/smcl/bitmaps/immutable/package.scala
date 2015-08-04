@@ -8,6 +8,6 @@ package aalto.smcl.bitmaps
  */
 package object immutable {
 
-  aalto.smcl.bitmaps.SettingsInitializer.perform()
+  aalto.smcl.bitmaps.BitmapSettingsInitializer.perform()
 
 }

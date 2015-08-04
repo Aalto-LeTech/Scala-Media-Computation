@@ -5,7 +5,7 @@ import java.awt.{Graphics2D => JGraphics2D}
 
 import aalto.smcl.common.GS
 import aalto.smcl.bitmaps.ImageSpecBase
-import aalto.smcl.bitmaps.SettingKeys._
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 
 

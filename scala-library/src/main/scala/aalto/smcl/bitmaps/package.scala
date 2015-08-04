@@ -1,8 +1,9 @@
 package aalto.smcl
 
 
-import aalto.smcl.bitmaps.immutable._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+
+
 
 
 /**
@@ -12,13 +13,12 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap
  */
 package object bitmaps {
 
-  SettingKeys
-  SettingsInitializer.perform()
+  BitmapSettingKeys
+  BitmapSettingsInitializer.perform()
 
 
   /** */
   private[this] val _viewerClient = new ViewerClient()
-
 
   /**
    *
@@ -54,5 +54,6 @@ package object bitmaps {
       Bitmap()
     }
   }
+
 
 }

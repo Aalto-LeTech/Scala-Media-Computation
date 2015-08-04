@@ -1,4 +1,4 @@
-package aalto.smcl.bitmaps
+package aalto.smcl.platform
 
 
 import java.awt.image.{BufferedImage => JBufferedImage, ColorModel => JColorModel, WritableRaster => JWritableRaster}
@@ -11,7 +11,7 @@ import java.awt.image.{BufferedImage => JBufferedImage, ColorModel => JColorMode
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] object ImageUtils {
+private[platform] object BitmapUtils {
 
   /**
    *

@@ -6,13 +6,13 @@ import java.awt.geom.AffineTransform
 import scala.collection.mutable
 import scala.ref.WeakReference
 
-import aalto.smcl.common.{Color, GS, HorizontalAlignment, TimestampedCreation, VerticalAlignment}
-import aalto.smcl.bitmaps.SettingKeys._
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.bitmaps.immutable.{BitmapIdentity, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
+import aalto.smcl.common.{Color, GS, HorizontalAlignment, TimestampedCreation, VerticalAlignment}
 import aalto.smcl.platform.{PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
 
 
@@ -25,7 +25,7 @@ import aalto.smcl.platform.{PlatformBitmapBuffer, PlatformDrawingSurface, Render
  */
 object Bitmap {
 
-  aalto.smcl.bitmaps.SettingsInitializer.perform()
+  aalto.smcl.bitmaps.BitmapSettingsInitializer.perform()
 
 
   /**
@@ -473,8 +473,8 @@ case class Bitmap private(
    * @param upperLeftCornerYInPixels
    * @param widthInPixels
    * @param heightInPixels
-   * @param startAngle
-   * @param arcAngle
+   * @param startAngleInDegrees
+   * @param arcAngleInDegrees
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -487,8 +487,8 @@ case class Bitmap private(
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      startAngle: Int = GS.intFor(DefaultArcStartAngle),
-      arcAngle: Int = GS.intFor(DefaultArcAngle),
+      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
       color: Color = GS.colorFor(DefaultPrimary),
@@ -498,7 +498,7 @@ case class Bitmap private(
     apply(DrawArc(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
-      startAngle, arcAngle,
+      startAngleInDegrees, arcAngleInDegrees,
       hasBorder, hasFilling,
       color, fillColor), viewerHandling)
   }
@@ -514,8 +514,8 @@ case class Bitmap private(
    */
   def appendOnLeft(
       bitmapsToCombineWith: Bitmap*)(
-      verticalAlignment: VerticalAlignment.Value = VerticalAlignment.Middle,
-      paddingInPixels: Int = 0,
+      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
       backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
@@ -535,8 +535,8 @@ case class Bitmap private(
    */
   def appendOnRight(
       bitmapsToCombineWith: Bitmap*)(
-      verticalAlignment: VerticalAlignment.Value = VerticalAlignment.Middle,
-      paddingInPixels: Int = 0,
+      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
       backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
@@ -556,8 +556,8 @@ case class Bitmap private(
    */
   def appendOnTop(
       bitmapsToCombineWith: Bitmap*)(
-      horizontalAlignment: HorizontalAlignment.Value = HorizontalAlignment.Left,
-      paddingInPixels: Int = 0,
+      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
       backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
@@ -577,8 +577,8 @@ case class Bitmap private(
    */
   def appendOnBottom(
       bitmapsToCombineWith: Bitmap*)(
-      horizontalAlignment: HorizontalAlignment.Value = HorizontalAlignment.Left,
-      paddingInPixels: Int = 0,
+      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
       backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
@@ -602,7 +602,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :/\(other: Bitmap): Bitmap = appendOnTop(other)()
+  def :/\ (other: Bitmap): Bitmap = appendOnTop(other)()
 
   /**
    *
@@ -610,7 +610,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :/\(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other:_*)()
+  def :/\ (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other: _*)()
 
   /**
    *
@@ -618,7 +618,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :/\(other: scala.collection.Traversable[Bitmap]): Bitmap = :/\(other.toSeq)
+  def :/\ (other: scala.collection.Traversable[Bitmap]): Bitmap = :/\(other.toSeq)
 
   //-------------------------------
   //
@@ -632,7 +632,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def /\:(other: Bitmap): Bitmap = appendOnTop(other)()
+  def /\: (other: Bitmap): Bitmap = appendOnTop(other)()
 
   /**
    *
@@ -640,7 +640,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def /\:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other:_*)()
+  def /\: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other: _*)()
 
   /**
    *
@@ -648,7 +648,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def /\:(other: scala.collection.Traversable[Bitmap]): Bitmap = /\:(other.toSeq)
+  def /\: (other: scala.collection.Traversable[Bitmap]): Bitmap = /\:(other.toSeq)
 
   //-------------------------------
   //
@@ -662,15 +662,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :\/(other: Bitmap): Bitmap = appendOnBottom(other)()
-
-  /**
-   *
-   *
-   * @param other
-   * @return
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */
-  def :\/(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other:_*)()
+  def :\/ (other: Bitmap): Bitmap = appendOnBottom(other)()
 
   /**
    *
@@ -678,7 +670,15 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :\/(other: scala.collection.Traversable[Bitmap]): Bitmap = :\/(other.toSeq)
+  def :\/ (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other: _*)()
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :\/ (other: scala.collection.Traversable[Bitmap]): Bitmap = :\/(other.toSeq)
 
   //-------------------------------
   //
@@ -692,7 +692,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def \/:(other: Bitmap): Bitmap = appendOnBottom(other)()
+  def \/: (other: Bitmap): Bitmap = appendOnBottom(other)()
 
   /**
    *
@@ -700,7 +700,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def \/:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other:_*)()
+  def \/: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other: _*)()
 
   /**
    *
@@ -708,7 +708,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def \/:(other: scala.collection.Traversable[Bitmap]): Bitmap = \/:(other.toSeq)
+  def \/: (other: scala.collection.Traversable[Bitmap]): Bitmap = \/:(other.toSeq)
 
   //-------------------------------
   //
@@ -722,7 +722,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :>>(other: Bitmap): Bitmap = appendOnRight(other)()
+  def :>> (other: Bitmap): Bitmap = appendOnRight(other)()
 
   /**
    *
@@ -730,7 +730,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :>>(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other:_*)()
+  def :>> (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other: _*)()
 
   /**
    *
@@ -738,7 +738,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :>>(other: scala.collection.Traversable[Bitmap]): Bitmap = :>>(other.toSeq)
+  def :>> (other: scala.collection.Traversable[Bitmap]): Bitmap = :>>(other.toSeq)
 
   //-------------------------------
   //
@@ -752,7 +752,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def >>:(other: Bitmap): Bitmap = appendOnRight(other)()
+  def >>: (other: Bitmap): Bitmap = appendOnRight(other)()
 
   /**
    *
@@ -760,7 +760,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def >>:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other:_*)()
+  def >>: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other: _*)()
 
   /**
    *
@@ -768,7 +768,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def >>:(other: scala.collection.Traversable[Bitmap]): Bitmap = >>:(other.toSeq)
+  def >>: (other: scala.collection.Traversable[Bitmap]): Bitmap = >>:(other.toSeq)
 
   //-------------------------------
   //
@@ -782,7 +782,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :<<(other: Bitmap): Bitmap = appendOnLeft(other)()
+  def :<< (other: Bitmap): Bitmap = appendOnLeft(other)()
 
   /**
    *
@@ -790,7 +790,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :<<(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other:_*)()
+  def :<< (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other: _*)()
 
   /**
    *
@@ -798,7 +798,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :<<(other: scala.collection.Traversable[Bitmap]): Bitmap = :<<(other.toSeq)
+  def :<< (other: scala.collection.Traversable[Bitmap]): Bitmap = :<<(other.toSeq)
 
   //-------------------------------
   //
@@ -812,7 +812,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def <<:(other: Bitmap): Bitmap = appendOnLeft(other)()
+  def <<: (other: Bitmap): Bitmap = appendOnLeft(other)()
 
   /**
    *
@@ -820,7 +820,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def <<:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other:_*)()
+  def <<: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other: _*)()
 
   /**
    *
@@ -828,7 +828,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def <<:(other: scala.collection.Traversable[Bitmap]): Bitmap = <<:(other.toSeq)
+  def <<: (other: scala.collection.Traversable[Bitmap]): Bitmap = <<:(other.toSeq)
 
   // ----------------------------------------------------------------------------------------------
 

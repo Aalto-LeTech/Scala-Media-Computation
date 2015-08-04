@@ -18,6 +18,7 @@ import aalto.smcl.bitmaps.viewer.events.external.{DisplayBitmapEvent, ExternalVi
  * Information and functionality related to this application.
  */
 private[bitmaps] object Application {
+
   // @formatter:off
 
   import aalto.smcl.SMCL

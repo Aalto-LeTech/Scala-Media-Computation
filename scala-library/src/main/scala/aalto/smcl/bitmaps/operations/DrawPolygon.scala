@@ -1,10 +1,9 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.common._
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.common.ColorOps.RichPixelInt
-import aalto.smcl.common.{MetaInformationMap, GS, Color}
-import aalto.smcl.bitmaps.SettingKeys._
+import aalto.smcl.common.{Color, GS, MetaInformationMap, _}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 

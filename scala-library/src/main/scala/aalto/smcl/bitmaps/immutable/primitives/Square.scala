@@ -1,9 +1,10 @@
 package aalto.smcl.bitmaps.immutable.primitives
 
-import aalto.smcl.common.{Color, GS}
-import aalto.smcl.bitmaps.SettingKeys.{DefaultBitmapWidthInPixels, DefaultPrimary}
+
+import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBitmapWidthInPixels, DefaultPrimary}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.common.{Color, GS}
 
 
 
@@ -15,7 +16,7 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateVi
  */
 object Square {
 
-  aalto.smcl.bitmaps.SettingsInitializer.perform()
+  aalto.smcl.bitmaps.BitmapSettingsInitializer.perform()
 
   /**
    * Creates a new empty [[Bitmap]] instance with a square drawn on it.

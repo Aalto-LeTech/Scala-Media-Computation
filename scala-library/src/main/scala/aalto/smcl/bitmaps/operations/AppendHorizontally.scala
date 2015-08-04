@@ -3,10 +3,10 @@ package aalto.smcl.bitmaps.operations
 
 import scala.collection.mutable.ArrayBuffer
 
+import aalto.smcl.bitmaps.BitmapSettingKeys._
+import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.common._
-import aalto.smcl.bitmaps.SettingKeys._
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -19,8 +19,8 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  */
 private[bitmaps] case class AppendHorizontally(
     bitmapsToCombine: Seq[Bitmap])(
-    verticalAlignment: VerticalAlignment.Value = VerticalAlignment.Middle,
-    paddingInPixels: Int = 0,
+    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
     backgroundColor: Color = GS.colorFor(DefaultBackground))
     extends AbstractBufferProviderOperation with Immutable {
 

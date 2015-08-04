@@ -1,8 +1,8 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.common.{MetaInformationMap, GS, Color}
-import aalto.smcl.bitmaps.SettingKeys.DefaultBackground
+import aalto.smcl.bitmaps.BitmapSettingKeys.DefaultBackground
+import aalto.smcl.common.{Color, GS, MetaInformationMap}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -36,6 +36,5 @@ private[bitmaps] case class Clear(
    */
   override def render(destination: PlatformBitmapBuffer): Unit =
     destination.drawingSurface().clearUsing(color)
-
 
 }

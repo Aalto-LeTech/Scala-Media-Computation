@@ -1,7 +1,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.common.settings.SettingKeys._
+import aalto.smcl.common.settings.BaseSettingKeys._
+import aalto.smcl.common.{HorizontalAlignment, VerticalAlignment}
 
 
 
@@ -11,7 +12,7 @@ import aalto.smcl.common.settings.SettingKeys._
  *
  * @author Aleksi Lukkarinen
  */
-object SettingKeys {
+object BitmapSettingKeys {
 
 
   // @formatter:off
@@ -44,10 +45,13 @@ object SettingKeys {
   case object DefaultCircleRadiusInPixels extends IntSettingKey
 
   /** */
-  case object DefaultArcStartAngle extends IntSettingKey
+  case object DefaultArcStartAngleInDegrees extends IntSettingKey
 
   /** */
-  case object DefaultArcAngle extends IntSettingKey
+  case object DefaultArcAngleInDgrees extends IntSettingKey
+
+  /** */
+  case object DefaultPaddingInPixels extends IntSettingKey
 
   /** */
   case object DefaultBackground extends ColorSettingKey
@@ -57,5 +61,11 @@ object SettingKeys {
 
   /** */
   case object DefaultSecondary extends ColorSettingKey
+
+  /** */
+  case object DefaultHorizontalAlignment extends EnumSettingKey[HorizontalAlignment.Value]
+
+  /** */
+  case object DefaultVerticalAlignment extends EnumSettingKey[VerticalAlignment.Value]
 
 }

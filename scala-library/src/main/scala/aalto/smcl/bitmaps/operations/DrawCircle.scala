@@ -1,9 +1,9 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.common.{Color, GS, MetaInformationMap}
-import aalto.smcl.bitmaps.SettingKeys._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 

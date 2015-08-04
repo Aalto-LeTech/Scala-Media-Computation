@@ -1,8 +1,8 @@
 package aalto.smcl.common.settings
 
 
-import aalto.smcl.common.{ReflectionUtils, Color}
-import aalto.smcl.common.settings.SettingKeys.{BooleanSettingKey, ColorSettingKey, IntSettingKey, StringSettingKey}
+import aalto.smcl.common.settings.BaseSettingKeys.{BooleanSettingKey, ColorSettingKey, EnumSettingKey, IntSettingKey, StringSettingKey}
+import aalto.smcl.common.{Color, ReflectionUtils, _}
 
 
 
@@ -15,48 +15,21 @@ import aalto.smcl.common.settings.SettingKeys.{BooleanSettingKey, ColorSettingKe
 class Settings {
 
   /** */
-  private[this] val _booleanMap =
-    collection.mutable.HashMap[BooleanSettingKey, BooleanSetting]()
-
-  /** */
-  private[this] val _intMap =
-    collection.mutable.HashMap[IntSettingKey, IntSetting]()
-
-  /** */
-  private[this] val _stringMap =
-    collection.mutable.HashMap[StringSettingKey, StringSetting]()
-
-  /** */
-  private[this] val _colorMap =
-    collection.mutable.HashMap[ColorSettingKey, ColorSetting]()
+  private[this] val _settingMap =
+    collection.mutable.HashMap[BaseSettingKeys.Value[_], Setting[_]]()
 
   /**
    *
    *
    * @return
    */
-  def booleans() = _booleanMap.toMap
+  def all() = _settingMap.asInstanceOf[Map[BaseSettingKeys.Value[_], Setting[_]]]
 
   /**
    *
-   *
    * @return
    */
-  def ints() = _intMap.toMap
-
-  /**
-   *
-   *
-   * @return
-   */
-  def strings() = _stringMap.toMap
-
-  /**
-   *
-   *
-   * @return
-   */
-  def colors() = _colorMap.toMap
+  def groupedByKeyType() = _settingMap.groupBy[String]({case (key, _) => key.typeNamePlural})
 
   /**
    *
@@ -64,12 +37,27 @@ class Settings {
    * @param value
    * @return
    */
-  def += (value: Setting[_]): Unit = value match {
-    case b: BooleanSetting => _booleanMap += (b.key -> b)
-    case i: IntSetting     => _intMap += (i.key -> i)
-    case s: StringSetting  => _stringMap += (s.key -> s)
-    case c: ColorSetting   => _colorMap += (c.key -> c)
-    case _                 => throw new UnknownSettingTypeError(value)
+  def += (value: Setting[_]): Unit = _settingMap += (value.key -> value)
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def get(key: BaseSettingKeys.Value[_]): Option[Setting[_]] = _settingMap.get(key)
+
+  /**
+   *
+   *
+   * @param key
+   * @return
+   */
+  def apply(key: BaseSettingKeys.Value[_]): Setting[_] = {
+    if (!_settingMap.contains(key))
+      throw new UninitializedSettingError(key)
+
+    _settingMap(key)
   }
 
   /**
@@ -78,13 +66,7 @@ class Settings {
    * @param key
    * @return
    */
-  def get(key: SettingKeys.Value): Option[Setting[_]] = key match {
-    case b: BooleanSettingKey => _booleanMap.get(b)
-    case i: IntSettingKey     => _intMap.get(i)
-    case s: StringSettingKey  => _stringMap.get(s)
-    case c: ColorSettingKey   => _colorMap.get(c)
-    case _                    => throw new UnknownSettingTypeError(key)
-  }
+  def settingFor(key: BaseSettingKeys.Value[_]): Setting[_] = apply(key)
 
   /**
    *
@@ -92,29 +74,8 @@ class Settings {
    * @param key
    * @return
    */
-  def apply(key: SettingKeys.Value): Setting[_] = key match {
-    case b: BooleanSettingKey =>
-      if (!_booleanMap.contains(b))
-        throw new UninitializedSettingError(b)
-      _booleanMap(b).asInstanceOf[Setting[_]]
-
-    case i: IntSettingKey =>
-      if (!_intMap.contains(i))
-        throw new UninitializedSettingError(i)
-      _intMap(i).asInstanceOf[Setting[_]]
-
-    case s: StringSettingKey =>
-      if (!_stringMap.contains(s))
-        throw new UninitializedSettingError(s)
-      _stringMap(s).asInstanceOf[Setting[_]]
-
-    case c: ColorSettingKey =>
-      if (!_colorMap.contains(c))
-        throw new UninitializedSettingError(c)
-      _colorMap(c).asInstanceOf[Setting[_]]
-
-    case _ => throw new UnknownSettingTypeError(key)
-  }
+  def booleanSettingFor(key: BooleanSettingKey): Setting[Boolean] =
+    apply(key).asInstanceOf[Setting[Boolean]]
 
   /**
    *
@@ -122,7 +83,8 @@ class Settings {
    * @param key
    * @return
    */
-  def settingFor(key: SettingKeys.Value): Setting[_] = apply(key)
+  def intSettingFor(key: IntSettingKey): Setting[Int] =
+    apply(key).asInstanceOf[Setting[Int]]
 
   /**
    *
@@ -130,8 +92,8 @@ class Settings {
    * @param key
    * @return
    */
-  def booleanSettingFor(key: BooleanSettingKey): BooleanSetting =
-    apply(key).asInstanceOf[BooleanSetting]
+  def stringSettingFor(key: StringSettingKey): Setting[String] =
+    apply(key).asInstanceOf[Setting[String]]
 
   /**
    *
@@ -139,8 +101,8 @@ class Settings {
    * @param key
    * @return
    */
-  def intSettingFor(key: IntSettingKey): IntSetting =
-    apply(key).asInstanceOf[IntSetting]
+  def colorSettingFor(key: ColorSettingKey): Setting[Color] =
+    apply(key).asInstanceOf[Setting[Color]]
 
   /**
    *
@@ -148,17 +110,9 @@ class Settings {
    * @param key
    * @return
    */
-  def stringSettingFor(key: StringSettingKey): StringSetting =
-    apply(key).asInstanceOf[StringSetting]
+  def enumSettingFor[A](key: EnumSettingKey[A]): Setting[A] =
+    apply(key).asInstanceOf[Setting[A]]
 
-  /**
-   *
-   *
-   * @param key
-   * @return
-   */
-  def colorSettingFor(key: ColorSettingKey): ColorSetting =
-    apply(key).asInstanceOf[ColorSetting]
 
   /**
    *
@@ -195,50 +149,78 @@ class Settings {
 
   /**
    *
+   *
+   * @param key
+   * @return
    */
-  def resetAll(): Unit = {
-    Seq(_booleanMap, _colorMap, _intMap, _stringMap).foreach {_.values.foreach {_.reset()}}
-  }
+  def optionFor[A](key: EnumSettingKey[A]): A = enumSettingFor[A](key).value
+
+  /**
+   *
+   */
+  def resetAll(): Unit = _settingMap.values.foreach {_.reset()}
 
   /**
    *
    */
   def list(): Unit = {
-    println("\nBooleans:")
-    for (setting <- booleans().values) {
-      println(s" - ${setting.key.simpleName}: ${setting.value.toString}")
-    }
+    val settingGroups = groupedByKeyType()
 
-    println("\nInts:")
-    for (setting <- ints().values) {
-      println(s" - ${setting.key.simpleName}: ${setting.value.toString}")
-    }
+    if (settingGroups.isEmpty)
+      println("No settings defined")
 
-    println("\nStrings:")
-    for (setting <- strings().values) {
-      println(s" - ${setting.key.simpleName}: ${setting.value.toString}")
-    }
+    settingGroups.foreach {case (groupKey, group) =>
+      println(s"\n${groupKey.capitalize}:")
 
-    println("\nColors:")
-    for (setting <- colors().values) {
-      println(s" - ${setting.key.simpleName}: ${setting.value.toString}")
+      group.foreach {case (_, setting) =>
+        println(s" - ${setting.key.simpleName}: ${setting.value}")
+      }
     }
   }
 
   /**
    *
    */
-  def toToken: String =
-    s"[${ReflectionUtils.shortTypeNameOf(this)}; " +
-        s"booleans: ${booleans().size}; ints: ${ints().size}; strings: ${strings().size}; " +
-        s"colors: ${colors().size}]"
+  def toToken: String = {
+    val sb = new StringBuilder(100)
+
+    groupedByKeyType()
+        .map({case (groupKey, group) => groupKey + ": " + group.size})
+        .addString(sb,
+          start = StrLeftAngleBracket + ReflectionUtils.shortTypeNameOf(this) + StrSemicolon + StrSpace,
+          sep = StrSemicolon + StrSpace,
+          end = StrRightAngleBracket)
+
+    sb.toString()
+  }
 
   /**
    *
    */
-  override def toString: String =
-    s"${ReflectionUtils.shortTypeNameOf(this)} containing " +
-        s"${booleans().size} booleans, ${ints().size} ints, ${strings().size} strings and " +
-        s"${colors().size} colors."
+  override def toString: String = {
+    val sb = new StringBuilder(100)
+    val settingGroups = groupedByKeyType()
+
+    sb.append(ReflectionUtils.shortTypeNameOf(this))
+
+    if (settingGroups.isEmpty)
+      return sb.append(StrComma).append(StrSpace).append("currently empty").append(StrPeriod).toString()
+
+    sb.append(StrSpace + "containing" + StrSpace)
+
+    val countStrings = groupedByKeyType().map({case (groupKey, group) =>
+      val typeName = if (group.size == 1) group.head._1.typeNameSingular else group.head._1.typeNamePlural
+
+      group.size.toString + StrSpace + typeName
+    })
+
+    val initials = countStrings.init
+    if (initials.nonEmpty) {
+      initials.addString(sb, StrComma + StrSpace)
+      sb.append(StrSpace).append("and").append(StrSpace)
+    }
+
+    sb.append(countStrings.last).append(StrPeriod).toString()
+  }
 
 }

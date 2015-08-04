@@ -7,45 +7,31 @@ import aalto.smcl.common.ReflectionUtils
 
 
 /**
- * Constants related to the [[Settings]] class.
- *
- * @author Aleksi Lukkarinen
- */
-object Setting {
-
-  /** */
-  val EmptyValidator = null
-
-}
-
-
-/**
- * Represents a single setting of a specific type. This class must be inherited to
- * define the actual class to be used (see for instance [[BooleanSetting]] and [[ColorSetting]]).
+ * Represents a single setting of a specific type.
  *
  * @param key             Identifier of this [[Setting]].
  * @param initialValue    Initial value of this [[Setting]].
  * @param validator       A function literal of type `A => Option[Throwable]` used to validate this [[Setting]].
- * @tparam A              Type of the value contained by this [[Setting]].
+ * @tparam SettingType    Type of the value contained by this [[Setting]].
  *
- * @author Aleksi Lukkarinen
+ * @author Aleksi Lukkarinen private[smcl]
  */
-abstract class Setting[A] protected(
-    val key: SettingKeys.Value,
-    val initialValue: A,
-    val validator: A => Option[Throwable]) extends Mutable {
+final class Setting[SettingType](
+    val key: BaseSettingKeys.Value[SettingType],
+    val initialValue: SettingType,
+    val validator: SettingType => Option[Throwable]) extends Mutable {
 
   if (validator != null)
     validator(initialValue).foreach {reason => throw new SettingValidationError(key, reason)}
 
   /** Holds the current value of this [[Setting]]. */
-  private var _currentValue: A = initialValue
+  private var _currentValue: SettingType = initialValue
 
 
   /**
    * Returns the current value of this [[Setting]].
    */
-  def value: A = _currentValue
+  def value: SettingType = _currentValue
 
   /**
    * Sets the value of this [[Setting]].
@@ -53,7 +39,7 @@ abstract class Setting[A] protected(
    * @param value                     The new value to be set.
    * @throws SettingValidationError   Thrown if the validator defined for the setting does not accept the proposed new value.
    */
-  def value_=(value: A): Unit = {
+  def value_=(value: SettingType): Unit = {
     validator(initialValue).foreach {
       reason => throw new SettingValidationError(key, reason)
     }

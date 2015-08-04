@@ -1,9 +1,10 @@
 package aalto.smcl.bitmaps.immutable.primitives
 
-import aalto.smcl.common.{Color, GS}
-import aalto.smcl.bitmaps.SettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary}
+
+import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
+import aalto.smcl.common.{Color, GS}
 
 
 
@@ -15,7 +16,7 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{Prevent
  */
 object Circle {
 
-  aalto.smcl.bitmaps.SettingsInitializer.perform()
+  aalto.smcl.bitmaps.BitmapSettingsInitializer.perform()
 
   /**
    * Creates a new empty [[Bitmap]] instance with a circle drawn on it.

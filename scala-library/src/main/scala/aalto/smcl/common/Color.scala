@@ -1,8 +1,8 @@
 package aalto.smcl.common
 
 
-import aalto.smcl.common.ColorOps._
 import aalto.smcl.bitmaps.operations.AbstractSingleSourceOperation
+import aalto.smcl.common.ColorOps._
 import aalto.smcl.platform.PlatformColor
 
 

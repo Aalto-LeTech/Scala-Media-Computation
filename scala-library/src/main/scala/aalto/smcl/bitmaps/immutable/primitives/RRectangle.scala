@@ -1,9 +1,10 @@
 package aalto.smcl.bitmaps.immutable.primitives
 
-import aalto.smcl.common.{Color, GS}
-import aalto.smcl.bitmaps.SettingKeys._
+
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
+import aalto.smcl.common.{Color, GS}
 
 
 
@@ -15,7 +16,7 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{Prevent
  */
 object RRectangle {
 
-  aalto.smcl.bitmaps.SettingsInitializer.perform()
+  aalto.smcl.bitmaps.BitmapSettingsInitializer.perform()
 
   /**
    * Creates a new empty [[Bitmap]] instance with a rounded-corner rectangle drawn on it.

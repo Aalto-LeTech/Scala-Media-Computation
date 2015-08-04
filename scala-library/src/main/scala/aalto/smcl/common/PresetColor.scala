@@ -61,7 +61,7 @@ class PresetColor private[common](
   /** Returns `true` if this [[Color]] is provided by SMCL, otherwise `false`. */
   override val isPreset: Boolean = true
 
-} with Color (red, green, blue, transparency, nameOption) with Immutable {
+} with Color(red, green, blue, transparency, nameOption) with Immutable {
 
   /** Default name for an unnamed preset color. */
   private val StrNoName = "<unnamed preset>"

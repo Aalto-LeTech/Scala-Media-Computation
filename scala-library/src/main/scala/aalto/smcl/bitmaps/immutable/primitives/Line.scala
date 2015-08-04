@@ -1,10 +1,10 @@
 package aalto.smcl.bitmaps.immutable.primitives
 
 
-import aalto.smcl.common.{Color, GS}
-import aalto.smcl.bitmaps.SettingKeys.{DefaultBackground, DefaultPrimary}
+import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultPrimary}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
+import aalto.smcl.common.{Color, GS}
 
 
 
@@ -16,7 +16,7 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{Prevent
  */
 object Line {
 
-  aalto.smcl.bitmaps.SettingsInitializer.perform()
+  aalto.smcl.bitmaps.BitmapSettingsInitializer.perform()
 
   /**
    * Creates a new empty [[Bitmap]] instance with a line drawn on it. The line can be freely located in

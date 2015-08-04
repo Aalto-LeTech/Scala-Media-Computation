@@ -7,6 +7,8 @@ package aalto.smcl
  * @author Aleksi Lukkarinen
  */
 object Help {
+
+  // @formatter:off
   val HelpMsgGeneral =
     s"""
       |Welcome to explore the ${SMCL.FullName}!
@@ -26,6 +28,7 @@ object Help {
       |
       |Happy coding!
     """.stripMargin
+  // @formatter:on
 
   /**
    *

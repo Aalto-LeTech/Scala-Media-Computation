@@ -2,7 +2,7 @@ package aalto.smcl.platform
 
 
 import java.awt.{GraphicsEnvironment, Toolkit}
-import javax.swing.{LookAndFeel, UnsupportedLookAndFeelException, UIManager}
+import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}
 
 
 

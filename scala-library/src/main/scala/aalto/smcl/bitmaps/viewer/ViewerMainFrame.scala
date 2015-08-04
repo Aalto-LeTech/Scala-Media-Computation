@@ -3,13 +3,12 @@ package aalto.smcl.bitmaps.viewer
 
 import javax.swing.WindowConstants
 
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-
 import scala.swing.Dialog.{Message, Options}
 import scala.swing._
 import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
 
+import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.common.SwingUtils
 import aalto.smcl.platform.Screen
 
@@ -231,8 +230,8 @@ private[bitmaps] class ViewerMainFrame private(
           val direction = (modifiers, upOrLeftDirection) match {
             case (NoModifiers, true)  => ScrollingDirection.Upwards
             case (NoModifiers, false) => ScrollingDirection.Downwards
-            case (Shift, true)         => ScrollingDirection.Leftwards
-            case (Shift, false)        => ScrollingDirection.Rightwards
+            case (Shift, true)        => ScrollingDirection.Leftwards
+            case (Shift, false)       => ScrollingDirection.Rightwards
 
             case _ =>
               throw new RuntimeException(

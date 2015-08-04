@@ -1,12 +1,12 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.common.{HorizontalAlignment, VerticalAlignment, Color, GS}
-import aalto.smcl.bitmaps.SettingKeys._
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import Bitmap.ViewerUpdateStyle
-import Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
+import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.bitmaps.operations._
+import aalto.smcl.common.{Color, GS, HorizontalAlignment, VerticalAlignment}
 
 
 
@@ -351,8 +351,8 @@ object BitmapOps {
    * @param upperLeftCornerYInPixels
    * @param widthInPixels
    * @param heightInPixels
-   * @param startAngle
-   * @param arcAngle
+   * @param startAngleInDegrees
+   * @param arcAngleInDegrees
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -366,8 +366,8 @@ object BitmapOps {
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      startAngle: Int = GS.intFor(DefaultArcStartAngle),
-      arcAngle: Int = GS.intFor(DefaultArcAngle),
+      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
       color: Color = GS.colorFor(DefaultPrimary),
@@ -379,7 +379,7 @@ object BitmapOps {
     bmp.apply(DrawArc(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels,
-      startAngle, arcAngle,
+      startAngleInDegrees, arcAngleInDegrees,
       hasBorder, hasFilling,
       color, fillColor), viewerHandling)
   }
@@ -395,8 +395,8 @@ object BitmapOps {
    */
   def appendHorizontally(
       bitmapsToCombine: Bitmap*)(
-      verticalAlignment: VerticalAlignment.Value = VerticalAlignment.Middle,
-      paddingInPixels: Int = 0,
+      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
       backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
@@ -418,16 +418,16 @@ object BitmapOps {
    */
   def appendVertically(
       bitmapsToCombine: Bitmap*)(
-      horizontalAlignment: HorizontalAlignment.Value = HorizontalAlignment.Left,
-      paddingInPixels: Int = 0,
+      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
       backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
 
     bitmapsToCombine.head.apply(
-        AppendVertically(bitmapsToCombine)(
-          horizontalAlignment, paddingInPixels, backgroundColor),
-        UpdateViewerPerDefaults)
+      AppendVertically(bitmapsToCombine)(
+        horizontalAlignment, paddingInPixels, backgroundColor),
+      UpdateViewerPerDefaults)
   }
 
 }

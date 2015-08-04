@@ -24,34 +24,34 @@ private[viewer] object ZoomFactor {
   /** */
   val StandardReductionFactor: Double = 0.9
 
-  /**  */
+  /** */
   val Identity = ZoomFactor(100)
 
-  /**  */
+  /** */
   val Percents60 = ZoomFactor(60)
 
-  /**  */
+  /** */
   val Percents70 = ZoomFactor(70)
 
-  /**  */
+  /** */
   val Percents80 = ZoomFactor(80)
 
-  /**  */
+  /** */
   val Percents90 = ZoomFactor(90)
 
-  /**  */
+  /** */
   val Percents150 = ZoomFactor(150)
 
-  /**  */
+  /** */
   val Percents200 = ZoomFactor(200)
 
-  /**  */
+  /** */
   val Percents300 = ZoomFactor(300)
 
-  /**  */
+  /** */
   val Percents400 = ZoomFactor(400)
 
-  /**  */
+  /** */
   val Percents500 = ZoomFactor(500)
 
   /**

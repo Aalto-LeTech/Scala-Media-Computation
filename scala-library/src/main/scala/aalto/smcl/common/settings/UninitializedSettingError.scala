@@ -6,17 +6,17 @@ package aalto.smcl.common.settings
  *
  * @author Aleksi Lukkarinen
  */
-final class UninitializedSettingError(setting: SettingKeys.Value, cause: Throwable)
+final class UninitializedSettingError(settingKey: BaseSettingKeys.Value[_], cause: Throwable)
     extends RuntimeException(
-      s"""No setting with name "${setting.toString}" is initialized.""",
+      s"""No setting with name "${settingKey.toString}" is initialized.""",
       cause) {
 
   /**
    *
    *
-   * @param setting
+   * @param settingKey
    * @return
    */
-  def this(setting: SettingKeys.Value) = this(setting, null)
+  def this(settingKey: BaseSettingKeys.Value[_]) = this(settingKey, null)
 
 }

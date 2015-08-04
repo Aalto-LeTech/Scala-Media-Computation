@@ -5,8 +5,8 @@ import java.awt.geom.AffineTransform
 
 import scala.swing.Graphics2D
 
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.common.{Color, GS}
-import aalto.smcl.bitmaps.SettingKeys._
 
 
 
@@ -129,8 +129,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param upperLeftCornerYInPixels
    * @param widthInPixels
    * @param heightInPixels
-   * @param startAngle
-   * @param arcAngle
+   * @param startAngleInDegrees
+   * @param arcAngleInDegrees
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -141,8 +141,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      startAngle: Int = GS.intFor(DefaultArcStartAngle),
-      arcAngle: Int = GS.intFor(DefaultArcAngle),
+      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
       color: Color = GS.colorFor(DefaultPrimary),
@@ -156,7 +156,7 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       awtDrawingSurface.fillArc(
         upperLeftCornerXInPixels, upperLeftCornerYInPixels,
         widthInPixels, heightInPixels,
-        startAngle, arcAngle)
+        startAngleInDegrees, arcAngleInDegrees)
     }
 
     if (hasBorder) {
@@ -165,7 +165,7 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       awtDrawingSurface.drawArc(
         upperLeftCornerXInPixels, upperLeftCornerYInPixels,
         widthInPixels, heightInPixels,
-        startAngle, arcAngle)
+        startAngleInDegrees, arcAngleInDegrees)
     }
 
     this.color = oldColor

@@ -14,6 +14,12 @@ package object common {
   /** A string containing a single space. */
   protected[smcl] val StrSpace = " "
 
+  /** A string containing a single period. */
+  protected[smcl] val StrPeriod = "."
+
+  /** A string containing a single comma. */
+  protected[smcl] val StrComma = ","
+
   /** A string containing a single colon. */
   protected[smcl] val StrColon = ":"
 
