@@ -1,11 +1,6 @@
 package aalto.smcl.common
 
 
-import java.util.Date
-
-import aalto.smcl.platform.DateTimeProvider
-
-
 
 
 /**
@@ -16,6 +11,6 @@ import aalto.smcl.platform.DateTimeProvider
 private[smcl] trait TimestampedCreation {
 
   /** Approximate creation time of this object. */
-  val created: Date = DateTimeProvider.currentTime
+  val created: TimeStamp = TimeStamp()
 
 }
