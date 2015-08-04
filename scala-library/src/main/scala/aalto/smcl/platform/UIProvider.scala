@@ -55,8 +55,8 @@ private[smcl] object UIProvider {
    *
    * @return
    */
-  private[platform] def installedLookAndFeels(): Array[UIManager.LookAndFeelInfo] =
-    UIManager.getInstalledLookAndFeels
+  private[platform] def installedLookAndFeels(): Seq[UIManager.LookAndFeelInfo] =
+    UIManager.getInstalledLookAndFeels.toSeq
 
   /**
    *

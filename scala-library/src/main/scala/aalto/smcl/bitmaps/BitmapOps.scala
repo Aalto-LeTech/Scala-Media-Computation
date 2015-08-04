@@ -77,8 +77,8 @@ object BitmapOps {
    */
   def drawPolyline(
       bmp: OperableBitmap,
-      xCoordinates: Array[Int],
-      yCoordinates: Array[Int],
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
       color: Color = GS.colorFor(DefaultPrimary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
@@ -107,8 +107,8 @@ object BitmapOps {
    */
   def drawPolygon(
       bmp: OperableBitmap,
-      xCoordinates: Array[Int],
-      yCoordinates: Array[Int],
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),

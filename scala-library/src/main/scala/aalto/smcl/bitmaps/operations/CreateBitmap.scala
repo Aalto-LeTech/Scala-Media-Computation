@@ -23,7 +23,7 @@ private[bitmaps] case class CreateBitmap(
     extends AbstractBufferProviderOperation with Immutable {
 
   /** This [[AbstractBufferProviderOperation]] does not have any child operations. */
-  val childOperationListsOption: Option[Array[BitmapOperationList]] = None
+  val childOperationListsOption: Option[Seq[BitmapOperationList]] = None
 
   /** Information about this [[AbstractBufferProviderOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

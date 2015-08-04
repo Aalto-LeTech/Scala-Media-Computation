@@ -272,8 +272,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param color
    */
   def drawPolyline(
-      xCoordinates: Array[Int],
-      yCoordinates: Array[Int],
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
       color: Color = GS.colorFor(DefaultPrimary)): Unit = {
 
@@ -281,7 +281,7 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
 
     this.color = color
 
-    awtDrawingSurface.drawPolyline(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
+    awtDrawingSurface.drawPolyline(xCoordinates.toArray, yCoordinates.toArray, numberOfCoordinatesToDraw)
 
     this.color = oldColor
   }
@@ -298,8 +298,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param fillColor
    */
   def drawPolygon(
-      xCoordinates: Array[Int],
-      yCoordinates: Array[Int],
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
@@ -311,13 +311,13 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
     if (hasFilling) {
       this.color = fillColor
 
-      awtDrawingSurface.fillPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
+      awtDrawingSurface.fillPolygon(xCoordinates.toArray, yCoordinates.toArray, numberOfCoordinatesToDraw)
     }
 
     if (hasBorder) {
       this.color = color
 
-      awtDrawingSurface.drawPolygon(xCoordinates, yCoordinates, numberOfCoordinatesToDraw)
+      awtDrawingSurface.drawPolygon(xCoordinates.toArray, yCoordinates.toArray, numberOfCoordinatesToDraw)
     }
 
     this.color = oldColor

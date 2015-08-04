@@ -228,8 +228,8 @@ case class Bitmap private(
    * @return
    */
   def drawPolyline(
-      xCoordinates: Array[Int],
-      yCoordinates: Array[Int],
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
       color: Color = GS.colorFor(DefaultPrimary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
@@ -254,8 +254,8 @@ case class Bitmap private(
    * @return
    */
   def drawPolygon(
-      xCoordinates: Array[Int],
-      yCoordinates: Array[Int],
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
@@ -885,7 +885,7 @@ case class Bitmap private(
   }
 
   /**
-   * Returns an immutable `Array` containing a given number of copies of this [[Bitmap]] instance.
+   * Returns an `Array` containing a given number of copies of this [[Bitmap]] instance.
    *
    * @param size
    * @return
@@ -893,7 +893,7 @@ case class Bitmap private(
   def propagateToArray(size: Int): Array[Bitmap] = propagateToArrayBuffer(size).toArray
 
   /**
-   * Returns an immutable `List` containing a given number of copies of this [[Bitmap]] instance.
+   * Returns an `List` containing a given number of copies of this [[Bitmap]] instance.
    *
    * @param size
    * @return
@@ -901,7 +901,7 @@ case class Bitmap private(
   def propagateToList(size: Int): List[Bitmap] = propagateToArrayBuffer(size).toList
 
   /**
-   * Returns an immutable `Seq` containing a given number of copies of this [[Bitmap]] instance.
+   * Returns an `Seq` containing a given number of copies of this [[Bitmap]] instance.
    *
    * @param size
    * @return

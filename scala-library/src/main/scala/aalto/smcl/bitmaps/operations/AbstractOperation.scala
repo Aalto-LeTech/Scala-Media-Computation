@@ -15,7 +15,7 @@ private[bitmaps] abstract class AbstractOperation
     extends Tokenizable with Immutable {
 
   /** Operation streams needed to construct  */
-  def childOperationListsOption: Option[Array[BitmapOperationList]]
+  def childOperationListsOption: Option[Seq[BitmapOperationList]]
 
   /** Operation streams needed to construct  */
   def metaInformation: MetaInformationMap

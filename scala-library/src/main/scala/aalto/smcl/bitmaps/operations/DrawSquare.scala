@@ -38,7 +38,7 @@ private[bitmaps] case class DrawSquare(
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
-  val childOperationListsOption: Option[Array[BitmapOperationList]] = None
+  val childOperationListsOption: Option[Seq[BitmapOperationList]] = None
 
   /** Information about this [[AbstractSingleSourceOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

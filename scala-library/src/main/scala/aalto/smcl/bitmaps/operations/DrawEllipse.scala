@@ -47,7 +47,7 @@ private[bitmaps] case class DrawEllipse(
   val boundingBoxUpperLeftY: Int = centerYInPixels - (heightInPixels / 2)
 
   /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
-  val childOperationListsOption: Option[Array[BitmapOperationList]] = None
+  val childOperationListsOption: Option[Seq[BitmapOperationList]] = None
 
   /** Information about this [[AbstractSingleSourceOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

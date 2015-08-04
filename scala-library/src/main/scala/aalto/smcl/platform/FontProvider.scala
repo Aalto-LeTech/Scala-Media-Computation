@@ -18,7 +18,7 @@ private[smcl] object FontProvider {
    *
    * @return
    */
-  def availableFonts(): Array[Font] =
-    UIProvider.awtGraphEnv.getAllFonts
+  def availableFonts(): Seq[Font] =
+    UIProvider.awtGraphEnv.getAllFonts.toSeq
 
 }

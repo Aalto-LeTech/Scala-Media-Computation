@@ -24,14 +24,14 @@ private[bitmaps] case class AppendVertically(
     extends AbstractBufferProviderOperation with Immutable {
 
   require(bitmapsToCombine.nonEmpty,
-    "Append operation must be given a non-empty array of Bitmap instances to combine.")
+    "Append operation must be given a non-empty Sequence of Bitmap instances to combine.")
 
   require(paddingInPixels >= 0, s"The padding argument cannot be negative (was $paddingInPixels).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
   /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
-  val childOperationListsOption: Option[Array[BitmapOperationList]] =
-    Option(bitmapsToCombine.map(_.operations).toArray)
+  val childOperationListsOption: Option[Seq[BitmapOperationList]] =
+    Option(bitmapsToCombine.map(_.operations).toSeq)
 
   /** Information about this [[AbstractSingleSourceOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
@@ -49,17 +49,17 @@ private[bitmaps] case class AppendVertically(
       (childOperationListsOption.get.length - 1) * paddingInPixels
 
   /** Future vertical offsets of the bitmaps to be combined. */
-  val horizontalOffsets: Array[Int] = horizontalAlignment match {
+  val horizontalOffsets: Seq[Int] = horizontalAlignment match {
     case HorizontalAlignment.Left =>
-      ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toArray
+      ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toSeq
 
     case HorizontalAlignment.Right =>
-      bitmapsToCombine.map({widthInPixels - _.widthInPixels}).toArray
+      bitmapsToCombine.map({widthInPixels - _.widthInPixels}).toSeq
 
     case HorizontalAlignment.Center =>
       bitmapsToCombine.map({bmp =>
         (widthInPixels.toDouble / 2 - bmp.widthInPixels.toDouble / 2).floor.toInt
-      }).toArray
+      }).toSeq
   }
 
   /** A buffer for applying bitmap operations. */
