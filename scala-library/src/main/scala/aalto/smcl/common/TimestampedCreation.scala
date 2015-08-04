@@ -1,7 +1,9 @@
 package aalto.smcl.common
 
 
-import java.util.{Calendar => JCalendar}
+import java.util.Date
+
+import aalto.smcl.platform.DateTimeProvider
 
 
 
@@ -14,6 +16,6 @@ import java.util.{Calendar => JCalendar}
 private[smcl] trait TimestampedCreation {
 
   /** Approximate creation time of this object. */
-  val created = JCalendar.getInstance.getTime
+  val created: Date = DateTimeProvider.currentTime
 
 }
