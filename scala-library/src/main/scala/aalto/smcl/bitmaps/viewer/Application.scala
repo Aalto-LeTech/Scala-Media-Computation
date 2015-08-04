@@ -36,6 +36,9 @@ private[bitmaps] object Application {
   val HandCursor: Cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
 
   // @formatter:on
+
+  aalto.smcl.platform.initialize()
+
 }
 
 

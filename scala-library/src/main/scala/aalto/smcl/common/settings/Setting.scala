@@ -14,9 +14,9 @@ import aalto.smcl.common.ReflectionUtils
  * @param validator       A function literal of type `A => Option[Throwable]` used to validate this [[Setting]].
  * @tparam SettingType    Type of the value contained by this [[Setting]].
  *
- * @author Aleksi Lukkarinen private[smcl]
+ * @author Aleksi Lukkarinen
  */
-final class Setting[SettingType](
+private[smcl] final class Setting[SettingType](
     val key: BaseSettingKeys.Value[SettingType],
     val initialValue: SettingType,
     val validator: SettingType => Option[Throwable]) extends Mutable {

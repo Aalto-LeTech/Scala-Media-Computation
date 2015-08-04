@@ -30,4 +30,14 @@ object TimeStamp {
  *
  * @author Aleksi Lukkarinen
  */
-case class TimeStamp private(underlayingDate: Date) {}
+case class TimeStamp private(underlayingDate: Date) extends Ordered[Date] {
+
+  /**
+   *
+   *
+   * @param that
+   * @return
+   */
+  override def compare(that: Date): Int = underlayingDate.compareTo(that)
+
+}

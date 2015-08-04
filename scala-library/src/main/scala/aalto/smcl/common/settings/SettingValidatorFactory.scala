@@ -36,13 +36,7 @@ object SettingValidatorFactory {
    * @tparam SettingType
    * @return
    */
-  def IsNullValidator[SettingType](
-      errorMessage: String): SettingType => Option[Throwable] = {
-
-    {value =>
-      if (value == null) Option(new IllegalArgumentException(errorMessage))
-      else None
-    }
-  }
+  def IsNullValidator[SettingType](errorMessage: String): SettingType => Option[Throwable] =
+    ConditionFalseValidator({_ == null}, errorMessage)
 
 }

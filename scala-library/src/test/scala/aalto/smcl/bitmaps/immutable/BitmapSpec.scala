@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.immutable
 
 import java.awt.{Graphics2D => JGraphics2D}
 
-import aalto.smcl.common.GS
+import aalto.smcl.common.{TimeStamp, GS}
 import aalto.smcl.bitmaps.ImageSpecBase
 import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
@@ -79,7 +79,7 @@ class BitmapSpec extends ImageSpecBase {
 
     "must get timestamped and be able to tell the time of creation" in {
       val b = Bitmap()
-      assert(b.created.isInstanceOf[java.util.Date])
+      assert(b.created.isInstanceOf[TimeStamp])
       info(s"Timestamp: ${b.created.toString}")
     }
 
