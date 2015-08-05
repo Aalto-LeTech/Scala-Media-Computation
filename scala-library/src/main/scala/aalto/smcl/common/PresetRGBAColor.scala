@@ -69,6 +69,6 @@ class PresetRGBAColor private[common](
   /**
    * Returns a string representation of this [[RGBAColor]].
    */
-  override def toString: String = s"${nameOption.getOrElse(StrNoName)} (${super.toString}})"
+  override def toString: String = s"${nameOption.getOrElse(StrNoName)} (${super.toString})"
 
 }
