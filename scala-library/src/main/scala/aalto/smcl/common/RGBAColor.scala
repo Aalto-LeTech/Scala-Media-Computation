@@ -106,7 +106,8 @@ object RGBAColor {
    * @return
    */
   def apply(pixelInt: Int, nameOption: Option[String]): RGBAColor =
-    RGBAColor(redComponentFrom(pixelInt),
+    RGBAColor(
+      redComponentFrom(pixelInt),
       greenComponentFrom(pixelInt),
       blueComponentFrom(pixelInt),
       transparencyComponentFrom(pixelInt),
@@ -119,7 +120,8 @@ object RGBAColor {
    * @return
    */
   def apply(pixelInt: Int): RGBAColor =
-    RGBAColor(redComponentFrom(pixelInt),
+    RGBAColor(
+      redComponentFrom(pixelInt),
       greenComponentFrom(pixelInt),
       blueComponentFrom(pixelInt),
       transparencyComponentFrom(pixelInt))
