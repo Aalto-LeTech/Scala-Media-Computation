@@ -12,7 +12,7 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateVi
 import aalto.smcl.bitmaps.immutable.{BitmapIdentity, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
-import aalto.smcl.common.{Color, GS, HorizontalAlignment, TimestampedCreation, VerticalAlignment}
+import aalto.smcl.common.{RGBAColor, GS, HorizontalAlignment, TimestampedCreation, VerticalAlignment}
 import aalto.smcl.platform.{PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
 
 
@@ -61,7 +61,7 @@ object Bitmap {
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      initialBackgroundColor: Color = GS.colorFor(DefaultBackground),
+      initialBackgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels > 0, s"Width of the image must be at least 1 pixel (was $widthInPixels)")
@@ -129,7 +129,7 @@ case class Bitmap private(
    * Returns the initial background color of this [[Bitmap]]
    * (may not be the actual background color at a later time).
    */
-  val initialBackgroundColor: Color = operations.initialBackgroundColor()
+  val initialBackgroundColor: RGBAColor = operations.initialBackgroundColor()
 
   /**
    * Applies an [[AbstractSingleSourceOperation]] to this [[Bitmap]].
@@ -186,7 +186,7 @@ case class Bitmap private(
    * @return
    */
   def clear(
-      color: Color = GS.colorFor(DefaultBackground),
+      color: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(Clear(color), viewerHandling)
@@ -208,7 +208,7 @@ case class Bitmap private(
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: Color = GS.colorFor(DefaultPrimary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawLine(
@@ -231,7 +231,7 @@ case class Bitmap private(
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      color: Color = GS.colorFor(DefaultPrimary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawPolyline(
@@ -259,8 +259,8 @@ case class Bitmap private(
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawPolygon(
@@ -289,8 +289,8 @@ case class Bitmap private(
       sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawSquare(
@@ -321,8 +321,8 @@ case class Bitmap private(
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawRectangle(
@@ -355,8 +355,8 @@ case class Bitmap private(
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawRoundedSquare(
@@ -392,8 +392,8 @@ case class Bitmap private(
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawRoundedRectangle(
@@ -423,8 +423,8 @@ case class Bitmap private(
       radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawCircle(
@@ -455,8 +455,8 @@ case class Bitmap private(
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawEllipse(
@@ -491,8 +491,8 @@ case class Bitmap private(
       arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawArc(
@@ -516,7 +516,7 @@ case class Bitmap private(
       bitmapsToCombineWith: Bitmap*)(
       verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
       paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
       AppendHorizontally(bitmapsToCombineWith :+ this)(
@@ -537,7 +537,7 @@ case class Bitmap private(
       bitmapsToCombineWith: Bitmap*)(
       verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
       paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
       AppendHorizontally(this +: bitmapsToCombineWith)(
@@ -558,7 +558,7 @@ case class Bitmap private(
       bitmapsToCombineWith: Bitmap*)(
       horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
       paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
       AppendVertically(bitmapsToCombineWith :+ this)(
@@ -579,7 +579,7 @@ case class Bitmap private(
       bitmapsToCombineWith: Bitmap*)(
       horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
       paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: Color = GS.colorFor(DefaultBackground)): Bitmap = {
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
       AppendVertically(this +: bitmapsToCombineWith)(

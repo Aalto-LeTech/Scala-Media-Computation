@@ -1,7 +1,7 @@
 package aalto.smcl.common.settings
 
 
-import aalto.smcl.common.{Color, ReflectionUtils}
+import aalto.smcl.common.{RGBAColor, ReflectionUtils}
 
 
 
@@ -73,9 +73,9 @@ object BaseSettingKeys {
 
 
   /**
-   * Base class for setting keys of type [[Color]].
+   * Base class for setting keys of type [[RGBAColor]].
    */
-  abstract class ColorSettingKey() extends Value[Color]("color", "colors")
+  abstract class ColorSettingKey() extends Value[RGBAColor]("color", "colors")
 
 
 }

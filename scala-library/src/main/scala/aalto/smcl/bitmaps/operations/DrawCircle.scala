@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.common.ColorOps._
-import aalto.smcl.common.{Color, GS, MetaInformationMap}
+import aalto.smcl.common.{RGBAColor, GS, MetaInformationMap}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -29,8 +29,8 @@ private[bitmaps] case class DrawCircle(
     radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
     hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
     hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: Color = GS.colorFor(DefaultPrimary),
-    fillColor: Color = GS.colorFor(DefaultSecondary))
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
   require(radiusInPixels > 0, s"The radius argument must be greater than zero (was $radiusInPixels).")

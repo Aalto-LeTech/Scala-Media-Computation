@@ -5,7 +5,7 @@ import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.BitmapValidatorFactory
 import aalto.smcl.common.settings.Setting
 import aalto.smcl.common.settings.SettingValidatorFactory._
-import aalto.smcl.common.{Color, GS, HorizontalAlignment, PresetColors, VerticalAlignment}
+import aalto.smcl.common.{RGBAColor, GS, HorizontalAlignment, PresetColors, VerticalAlignment}
 
 
 
@@ -82,17 +82,17 @@ private[bitmaps] object BitmapSettingsInitializer {
       initialValue = 180,
       validator = EmptyValidator)
 
-    GS += new Setting[Color](
+    GS += new Setting[RGBAColor](
       key = DefaultBackground,
       initialValue = PresetColors('white),
       validator = IsNullValidator("Color cannot be null"))
 
-    GS += new Setting[Color](
+    GS += new Setting[RGBAColor](
       key = DefaultPrimary,
       initialValue = PresetColors('black),
       validator = IsNullValidator("Color cannot be null"))
 
-    GS += new Setting[Color](
+    GS += new Setting[RGBAColor](
       key = DefaultSecondary,
       initialValue = PresetColors('black),
       validator = IsNullValidator("Color cannot be null"))

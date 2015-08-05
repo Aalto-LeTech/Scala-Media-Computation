@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.common.ColorOps.RichPixelInt
-import aalto.smcl.common.{Color, GS, MetaInformationMap, _}
+import aalto.smcl.common.{RGBAColor, GS, MetaInformationMap, _}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -29,8 +29,8 @@ private[bitmaps] case class DrawPolygon(
     numberOfCoordinatesToDraw: Int,
     hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
     hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: Color = GS.colorFor(DefaultPrimary),
-    fillColor: Color = GS.colorFor(DefaultSecondary))
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
   require(xCoordinates != null, "The x coordinate argument has to be an Seq[Int] instance (was null).")

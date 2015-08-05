@@ -13,7 +13,7 @@ import aalto.smcl.platform.PlatformColor
  *
  * @author Aleksi Lukkarinen
  */
-object Color {
+object RGBAColor {
 
   /**
    *
@@ -67,12 +67,12 @@ object Color {
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, transparency: Int,
-      nameOption: Option[String] = None): Color = {
+      nameOption: Option[String] = None): RGBAColor = {
 
     val (validRed, validGreen, validBlue, validTransparency, validNameOption) =
       validateColorArguments(red, green, blue, transparency, nameOption)
 
-    new Color(validRed, validGreen, validBlue, validTransparency, validNameOption)
+    new RGBAColor(validRed, validGreen, validBlue, validTransparency, validNameOption)
   }
 
 
@@ -85,8 +85,8 @@ object Color {
    * @param nameOption
    * @return
    */
-  def apply(red: Int, green: Int, blue: Int, nameOption: Option[String]): Color =
-    Color(red, green, blue, MaximumOpaqueness, nameOption)
+  def apply(red: Int, green: Int, blue: Int, nameOption: Option[String]): RGBAColor =
+    RGBAColor(red, green, blue, MaximumOpaqueness, nameOption)
 
   /**
    *
@@ -96,7 +96,7 @@ object Color {
    * @param blue
    * @return
    */
-  def apply(red: Int, green: Int, blue: Int): Color = Color(red, green, blue, MaximumOpaqueness)
+  def apply(red: Int, green: Int, blue: Int): RGBAColor = RGBAColor(red, green, blue, MaximumOpaqueness)
 
   /**
    *
@@ -105,8 +105,8 @@ object Color {
    * @param nameOption
    * @return
    */
-  def apply(pixelInt: Int, nameOption: Option[String]): Color =
-    Color(redComponentFrom(pixelInt),
+  def apply(pixelInt: Int, nameOption: Option[String]): RGBAColor =
+    RGBAColor(redComponentFrom(pixelInt),
       greenComponentFrom(pixelInt),
       blueComponentFrom(pixelInt),
       transparencyComponentFrom(pixelInt),
@@ -118,8 +118,8 @@ object Color {
    * @param pixelInt
    * @return
    */
-  def apply(pixelInt: Int): Color =
-    Color(redComponentFrom(pixelInt),
+  def apply(pixelInt: Int): RGBAColor =
+    RGBAColor(redComponentFrom(pixelInt),
       greenComponentFrom(pixelInt),
       blueComponentFrom(pixelInt),
       transparencyComponentFrom(pixelInt))
@@ -131,8 +131,8 @@ object Color {
    * @return
    */
   private[smcl] def apply(
-      platformColor: PlatformColor): Color =
-    Color(
+      platformColor: PlatformColor): RGBAColor =
+    RGBAColor(
       platformColor.red,
       platformColor.green,
       platformColor.blue,
@@ -147,8 +147,8 @@ object Color {
    */
   private[smcl] def apply(
       platformColor: PlatformColor,
-      nameOption: Option[String]): Color =
-    Color(
+      nameOption: Option[String]): RGBAColor =
+    RGBAColor(
       platformColor.red,
       platformColor.green,
       platformColor.blue,
@@ -169,34 +169,34 @@ object Color {
  *
  * @author Aleksi Lukkarinen
  */
-class Color protected(
+class RGBAColor protected(
     val red: Int,
     val green: Int,
     val blue: Int,
     val transparency: Int,
     val nameOption: Option[String] = None) extends {
 
-  /** Returns `true` if this [[Color]] is provided by SMCL, otherwise `false`. */
+  /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false
 
 } with Immutable with Tokenizable {
 
-  /** This [[Color]] coded into an `Int`. */
+  /** This [[RGBAColor]] coded into an `Int`. */
   val asPixelInt: Int = pixelIntFrom(red, green, blue, transparency)
 
-  /** Returns `true` if this [[Color]] is fully opaque, otherwise `false`. */
+  /** Returns `true` if this [[RGBAColor]] is fully opaque, otherwise `false`. */
   val isOpaque: Boolean = transparency == MaximumOpaqueness
 
-  /** Returns `false` if this [[Color]] is fully opaque, otherwise `true`. */
+  /** Returns `false` if this [[RGBAColor]] is fully opaque, otherwise `true`. */
   val isTransparent: Boolean = !isOpaque
 
-  /** Returns `true` if this [[Color]] is created by the user, otherwise `false`. */
+  /** Returns `true` if this [[RGBAColor]] is created by the user, otherwise `false`. */
   val isUserCreated: Boolean = !isPreset
 
-  /** This [[Color]] represented as a 32-digit binary string of four 8-digit groups. */
+  /** This [[RGBAColor]] represented as a 32-digit binary string of four 8-digit groups. */
   lazy val asBinaryString: String = asPixelInt.toArgbBinaryColorString
 
-  /** This [[Color]] represented as a hexadecimal string. */
+  /** This [[RGBAColor]] represented as a hexadecimal string. */
   lazy val asHexString: String = asPixelInt.toArgbHexColorString
 
   /** Information about this [[AbstractSingleSourceOperation]] instance */
@@ -207,7 +207,7 @@ class Color protected(
     "transparency" -> Option(transparency.toString)))
 
   /**
-   * Returns a string representation of this [[Color]].
+   * Returns a string representation of this [[RGBAColor]].
    */
   override def toString: String =
     s"ARGB: 0x$asHexString -- $transparency - $red - $green - $blue"

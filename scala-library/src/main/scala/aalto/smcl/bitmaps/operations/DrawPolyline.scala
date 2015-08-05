@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.BitmapSettingKeys.DefaultPrimary
 import aalto.smcl.common.ColorOps.RichPixelInt
-import aalto.smcl.common.{Color, GS, MetaInformationMap, _}
+import aalto.smcl.common.{RGBAColor, GS, MetaInformationMap, _}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -25,7 +25,7 @@ private[bitmaps] case class DrawPolyline(
     xCoordinates: Seq[Int],
     yCoordinates: Seq[Int],
     numberOfCoordinatesToDraw: Int,
-    color: Color = GS.colorFor(DefaultPrimary))
+    color: RGBAColor = GS.colorFor(DefaultPrimary))
     extends AbstractSingleSourceOperation with Immutable {
 
   require(xCoordinates != null, "The x coordinate argument has to be an Seq[Int] instance (was null).")

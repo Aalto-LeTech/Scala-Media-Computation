@@ -4,7 +4,7 @@ package aalto.smcl.bitmaps.immutable.primitives
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
-import aalto.smcl.common.{Color, GS}
+import aalto.smcl.common.{RGBAColor, GS}
 
 
 
@@ -31,8 +31,8 @@ object Ellipse {
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      color: Color = GS.colorFor(DefaultPrimary),
-      backgroundColor: Color = GS.colorFor(DefaultBackground),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels > 0, s"Width of the ellipse must be at least 1 pixel (was $widthInPixels)")

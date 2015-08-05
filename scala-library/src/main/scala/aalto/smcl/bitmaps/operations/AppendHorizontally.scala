@@ -21,7 +21,7 @@ private[bitmaps] case class AppendHorizontally(
     bitmapsToCombine: Seq[Bitmap])(
     verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
     paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: Color = GS.colorFor(DefaultBackground))
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
     extends AbstractBufferProviderOperation with Immutable {
 
   require(bitmapsToCombine.nonEmpty,

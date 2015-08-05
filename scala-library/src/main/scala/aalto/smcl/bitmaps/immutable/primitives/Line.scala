@@ -4,7 +4,7 @@ package aalto.smcl.bitmaps.immutable.primitives
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultPrimary}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
-import aalto.smcl.common.{Color, GS}
+import aalto.smcl.common.{RGBAColor, GS}
 
 
 
@@ -37,8 +37,8 @@ object Line {
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: Color = GS.colorFor(DefaultPrimary),
-      backgroundColor: Color = GS.colorFor(DefaultBackground),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(color != null, "The line color argument has to be a Color instance (was null).")

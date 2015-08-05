@@ -2,7 +2,7 @@ package aalto.smcl.common.settings
 
 
 import aalto.smcl.common.settings.BaseSettingKeys.{BooleanSettingKey, ColorSettingKey, EnumSettingKey, IntSettingKey, StringSettingKey}
-import aalto.smcl.common.{Color, ReflectionUtils, _}
+import aalto.smcl.common.{RGBAColor, ReflectionUtils, _}
 
 
 
@@ -101,8 +101,8 @@ class Settings {
    * @param key
    * @return
    */
-  def colorSettingFor(key: ColorSettingKey): Setting[Color] =
-    apply(key).asInstanceOf[Setting[Color]]
+  def colorSettingFor(key: ColorSettingKey): Setting[RGBAColor] =
+    apply(key).asInstanceOf[Setting[RGBAColor]]
 
   /**
    *
@@ -145,7 +145,7 @@ class Settings {
    * @param key
    * @return
    */
-  def colorFor(key: ColorSettingKey): Color = colorSettingFor(key).value
+  def colorFor(key: ColorSettingKey): RGBAColor = colorSettingFor(key).value
 
   /**
    *

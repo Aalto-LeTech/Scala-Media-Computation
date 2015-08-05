@@ -4,7 +4,7 @@ package aalto.smcl.bitmaps.immutable.primitives
 import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
-import aalto.smcl.common.{Color, GS}
+import aalto.smcl.common.{RGBAColor, GS}
 
 
 
@@ -35,8 +35,8 @@ object RRectangle {
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      color: Color = GS.colorFor(DefaultPrimary),
-      backgroundColor: Color = GS.colorFor(DefaultBackground),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels >= 5, s"Width of the rectangle must be at least 5 pixels (was $widthInPixels)")

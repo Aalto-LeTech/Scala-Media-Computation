@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.common.ColorOps.RichPixelInt
-import aalto.smcl.common.{Color, GS, MetaInformationMap}
+import aalto.smcl.common.{RGBAColor, GS, MetaInformationMap}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -33,8 +33,8 @@ private[bitmaps] case class DrawRoundedSquare(
     roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
     hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
     hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: Color = GS.colorFor(DefaultPrimary),
-    fillColor: Color = GS.colorFor(DefaultSecondary))
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
     extends AbstractSingleSourceOperation with Immutable {
 
   require(sideLengthInPixels > 0, s"The side length argument must be greater than zero (was $sideLengthInPixels).")

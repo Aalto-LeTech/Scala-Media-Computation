@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform
 import scala.swing.Graphics2D
 
 import aalto.smcl.bitmaps.BitmapSettingKeys._
-import aalto.smcl.common.{Color, GS}
+import aalto.smcl.common.{RGBAColor, GS}
 
 
 
@@ -47,7 +47,7 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    *
    * @param color
    */
-  def clearUsing(color: Color = GS.colorFor(DefaultBackground)): Unit = {
+  def clearUsing(color: RGBAColor = GS.colorFor(DefaultBackground)): Unit = {
     val oldColor = awtDrawingSurface.getColor
 
     awtDrawingSurface.setColor(PlatformColor(color).awtColor)
@@ -97,8 +97,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary)): Unit = {
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     val oldColor = this.color
 
@@ -145,8 +145,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary)): Unit = {
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     val oldColor = this.color
 
@@ -190,8 +190,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary)): Unit = {
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     val oldColor = this.color
 
@@ -237,8 +237,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary)): Unit = {
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     val oldColor = this.color
 
@@ -275,7 +275,7 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      color: Color = GS.colorFor(DefaultPrimary)): Unit = {
+      color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit = {
 
     val oldColor = this.color
 
@@ -303,8 +303,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
       hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: Color = GS.colorFor(DefaultPrimary),
-      fillColor: Color = GS.colorFor(DefaultSecondary)): Unit = {
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     val oldColor = this.color
 
@@ -337,7 +337,7 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: Color = GS.colorFor(DefaultPrimary)): Unit = {
+      color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit = {
 
     val oldColor = this.color
 
@@ -354,13 +354,13 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    *
    * @return
    */
-  def color: Color = awtDrawingSurface.getColor.toAapplicationColor
+  def color: RGBAColor = awtDrawingSurface.getColor.toAapplicationColor
 
   /**
    *
    *
    * @param value
    */
-  def color_=(value: Color): Unit = awtDrawingSurface.setColor(value.toAwtColor)
+  def color_=(value: RGBAColor): Unit = awtDrawingSurface.setColor(value.toAwtColor)
 
 }

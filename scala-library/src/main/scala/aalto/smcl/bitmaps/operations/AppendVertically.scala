@@ -6,7 +6,7 @@ import scala.collection.mutable.ArrayBuffer
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultHorizontalAlignment, DefaultPaddingInPixels}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.common.ColorOps.RichPixelInt
-import aalto.smcl.common.{Color, GS, HorizontalAlignment, MetaInformationMap}
+import aalto.smcl.common.{RGBAColor, GS, HorizontalAlignment, MetaInformationMap}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -21,7 +21,7 @@ private[bitmaps] case class AppendVertically(
     bitmapsToCombine: Seq[Bitmap])(
     horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
     paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: Color = GS.colorFor(DefaultBackground))
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
     extends AbstractBufferProviderOperation with Immutable {
 
   require(bitmapsToCombine.nonEmpty,

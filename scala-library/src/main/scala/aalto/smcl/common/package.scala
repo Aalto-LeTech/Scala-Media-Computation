@@ -101,12 +101,12 @@ package object common {
    *
    * @param self
    */
-  implicit class RichColor(val self: Color) {
+  implicit class RichColor(val self: RGBAColor) {
 
-    /** This [[Color]] with full opaqueness. */
-    def toOpaqueColor: Color =
+    /** This [[RGBAColor]] with full opaqueness. */
+    def toOpaqueColor: RGBAColor =
       if (self.isOpaque) self
-      else Color(self.red, self.green, self.blue, MaximumOpaqueness, self.nameOption)
+      else RGBAColor(self.red, self.green, self.blue, MaximumOpaqueness, self.nameOption)
 
   }
 

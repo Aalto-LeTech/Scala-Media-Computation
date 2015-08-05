@@ -3,7 +3,7 @@ package aalto.smcl.platform
 
 import java.awt.{Color => AwtColor}
 
-import aalto.smcl.common.Color
+import aalto.smcl.common.RGBAColor
 
 
 
@@ -21,7 +21,7 @@ private[smcl] object PlatformColor {
    * @param applicationColor
    * @return
    */
-  def apply(applicationColor: Color): PlatformColor =
+  def apply(applicationColor: RGBAColor): PlatformColor =
     new PlatformColor(
       applicationColor.red,
       applicationColor.green,
@@ -55,6 +55,6 @@ private[smcl] case class PlatformColor(red: Int, green: Int, blue: Int, transpar
   private[platform] lazy val awtColor = new AwtColor(red, green, blue, transparency)
 
   /** */
-  lazy val applicationColor = Color(red, green, blue, transparency)
+  lazy val applicationColor = RGBAColor(red, green, blue, transparency)
 
 }
