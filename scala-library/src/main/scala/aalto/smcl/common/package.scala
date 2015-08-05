@@ -106,10 +106,46 @@ package object common {
    */
   implicit class RichRGBAColor(val self: RGBAColor) {
 
-    /** This [[RGBAColor]] with full opaqueness. */
+    /**
+     * Returns a new [[RGBAColor]] identical with this one except having full opaqueness.
+     */
     def toOpaqueColor: RGBAColor =
       if (self.isOpaque) self
       else RGBAColor(self.red, self.green, self.blue, MaximumOpaqueness, self.nameOption)
+
+    /**
+     *
+     *
+     * @param shadingFactorInPercents
+     */
+    def shadeBy(shadingFactorInPercents: Double): RGBAColor = {
+      require(shadingFactorInPercents >= 0.0 && shadingFactorInPercents <= 100.0,
+        s"The shading factor must be a Double between 0.0 and 100.0 (was $shadingFactorInPercents)")
+
+      val invertedFactor: Double = 1.0 - (shadingFactorInPercents / 100)
+      val newRed = (invertedFactor * self.red).toInt
+      val newGreen = (invertedFactor * self.green).toInt
+      val newBlue = (invertedFactor * self.blue).toInt
+
+      RGBAColor(newRed, newGreen, newBlue, self.transparency)
+    }
+
+    /**
+     *
+     *
+     * @param tintingFactorInPercents
+     */
+    def tintBy(tintingFactorInPercents: Double): RGBAColor = {
+      require(tintingFactorInPercents >= 0.0 && tintingFactorInPercents <= 100.0,
+        s"The tinting factor must be a Double between 0.0 and 100.0 (was $tintingFactorInPercents)")
+
+      val scaledFactor: Double = tintingFactorInPercents / 100.0
+      val newRed = (self.red + scaledFactor * (MaximumRed - self.red)).toInt
+      val newGreen = (self.green + scaledFactor * (MaximumGreen - self.green)).toInt
+      val newBlue = (self.blue + scaledFactor * (MaximumBlue - self.blue)).toInt
+
+      RGBAColor(newRed, newGreen, newBlue, self.transparency)
+    }
 
   }
 
