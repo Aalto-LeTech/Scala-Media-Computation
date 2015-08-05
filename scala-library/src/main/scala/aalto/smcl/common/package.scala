@@ -104,7 +104,7 @@ package object common {
    *
    * @param self
    */
-  implicit class RichColor(val self: RGBAColor) {
+  implicit class RichRGBAColor(val self: RGBAColor) {
 
     /** This [[RGBAColor]] with full opaqueness. */
     def toOpaqueColor: RGBAColor =
