@@ -1,10 +1,11 @@
 package aalto.smcl.bitmaps.immutable.primitives
 
 
+import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
-import aalto.smcl.common.{RGBAColor, GS}
+import aalto.smcl.common.{GS, RGBAColor}
 
 
 
@@ -16,7 +17,8 @@ import aalto.smcl.common.{RGBAColor, GS}
  */
 object Rectangle {
 
-  aalto.smcl.bitmaps.BitmapSettingsInitializer.perform()
+  SMCL.performInitialization()
+
 
   /**
    * Creates a new empty [[Bitmap]] instance with a rectangle drawn on it.

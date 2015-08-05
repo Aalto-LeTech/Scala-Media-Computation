@@ -3,6 +3,8 @@ package aalto.smcl.platform
 
 import java.awt.Dimension
 
+import aalto.smcl.SMCL
+
 
 
 
@@ -12,6 +14,9 @@ import java.awt.Dimension
  * @author Aleksi Lukkarinen
  */
 object Screen {
+
+  SMCL.performInitialization()
+
 
   /** Dimensions of the screen. */
   private[smcl] val awtDimensions: Dimension = UIProvider.awtToolkit.getScreenSize

@@ -1,6 +1,7 @@
 package aalto.smcl.bitmaps.immutable.primitives
 
 
+import aalto.smcl.SMCL
 import aalto.smcl.common.settings.SettingValidatorFactory.ConditionFalseValidator
 
 
@@ -11,7 +12,10 @@ import aalto.smcl.common.settings.SettingValidatorFactory.ConditionFalseValidato
  *
  * @author Aleksi Lukkarinen
  */
-object BitmapValidatorFactory {
+private[bitmaps] object BitmapValidatorFactory {
+
+  SMCL.performInitialization()
+
 
   /** */
   val MinimumBitmapWidthInPixels: Int = 1

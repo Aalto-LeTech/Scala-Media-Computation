@@ -6,8 +6,9 @@ package aalto.smcl
  *
  * @author Aleksi Lukkarinen
  */
-object Help {
+private[smcl] object Help {
 
+  /** */
   // @formatter:off
   val HelpMsgGeneral =
     s"""

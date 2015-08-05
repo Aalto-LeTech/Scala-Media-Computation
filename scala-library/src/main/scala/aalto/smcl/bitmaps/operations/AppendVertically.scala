@@ -6,7 +6,7 @@ import scala.collection.mutable.ArrayBuffer
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultHorizontalAlignment, DefaultPaddingInPixels}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.common.ColorOps.RichPixelInt
-import aalto.smcl.common.{RGBAColor, GS, HorizontalAlignment, MetaInformationMap}
+import aalto.smcl.common.{GS, HorizontalAlignment, MetaInformationMap, RGBAColor}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 

@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.BitmapSettingKeys.DefaultBackground
-import aalto.smcl.common.{RGBAColor, GS, MetaInformationMap}
+import aalto.smcl.common.{GS, MetaInformationMap, RGBAColor}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 

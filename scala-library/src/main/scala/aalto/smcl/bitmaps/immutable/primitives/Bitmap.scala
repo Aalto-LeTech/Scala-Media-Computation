@@ -6,6 +6,7 @@ import java.awt.geom.AffineTransform
 import scala.collection.mutable
 import scala.ref.WeakReference
 
+import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
@@ -25,7 +26,7 @@ import aalto.smcl.platform.{PlatformBitmapBuffer, PlatformDrawingSurface, Render
  */
 object Bitmap {
 
-  aalto.smcl.bitmaps.BitmapSettingsInitializer.perform()
+  SMCL.performInitialization()
 
 
   /**

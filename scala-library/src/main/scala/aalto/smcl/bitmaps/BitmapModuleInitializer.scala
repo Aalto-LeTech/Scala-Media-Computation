@@ -1,11 +1,12 @@
 package aalto.smcl.bitmaps
 
 
+import aalto.smcl.ModuleInitializer
 import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.BitmapValidatorFactory
 import aalto.smcl.common.settings.Setting
-import aalto.smcl.common.settings.SettingValidatorFactory._
-import aalto.smcl.common.{RGBAColor, GS, HorizontalAlignment, PresetColors, VerticalAlignment}
+import aalto.smcl.common.settings.SettingValidatorFactory.{ConditionFalseValidator, EmptyValidator, IsNullValidator}
+import aalto.smcl.common.{GS, HorizontalAlignment, PresetColors, RGBAColor, VerticalAlignment}
 
 
 
@@ -15,13 +16,12 @@ import aalto.smcl.common.{RGBAColor, GS, HorizontalAlignment, PresetColors, Vert
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] object BitmapSettingsInitializer {
+private[smcl] object BitmapModuleInitializer extends ModuleInitializer {
 
-  /**
-   *
-   */
-  def perform(): Unit = {
-
+  //
+  // Initialize settings
+  //
+  addInitializer {() =>
     GS += new Setting[Boolean](
       key = NewBitmapsAreDisplayedAutomatically,
       initialValue = true,
@@ -106,7 +106,6 @@ private[bitmaps] object BitmapSettingsInitializer {
       key = DefaultVerticalAlignment,
       initialValue = VerticalAlignment.Middle,
       validator = EmptyValidator)
-
   }
 
 }

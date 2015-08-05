@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.BitmapSettingKeys.DefaultPrimary
 import aalto.smcl.common.ColorOps.RichPixelInt
-import aalto.smcl.common.{RGBAColor, GS, MetaInformationMap, _}
+import aalto.smcl.common.{GS, MetaInformationMap, RGBAColor, _}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 

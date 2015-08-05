@@ -2,8 +2,7 @@ package aalto.smcl.bitmaps.viewer
 
 
 import java.awt.geom.AffineTransform
-import java.awt.image.{BufferedImage => JBufferedImage}
-import java.awt.{Color => JColor, Graphics2D => JGraphics2D, RenderingHints}
+import java.awt.{Graphics2D => JGraphics2D, RenderingHints}
 
 import scala.swing._
 import scala.util.Try

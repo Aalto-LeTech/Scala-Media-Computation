@@ -8,6 +8,9 @@ package aalto.smcl
  */
 package object common {
 
+  SMCL.performInitialization()
+
+
   /** An empty string. */
   protected[smcl] val StrEmpty = ""
 

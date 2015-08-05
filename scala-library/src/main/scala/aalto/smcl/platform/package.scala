@@ -15,21 +15,8 @@ import aalto.smcl.common._
  */
 package object platform {
 
-  initialize()
+  SMCL.performInitialization()
 
-
-  /**
-   *
-   */
-  def initialize(): Unit = {
-    initializeLookAndFeel()
-  }
-
-  /**
-   *
-   */
-  private def initializeLookAndFeel(): Unit =
-    UIProvider.tryToInitializeSpecificLookAndFeel(UIProvider.NimbusLookAndFeelName)
 
   /**
    *
@@ -47,6 +34,7 @@ package object platform {
 
   }
 
+
   /**
    *
    *
@@ -61,5 +49,6 @@ package object platform {
     def toOpaqueColor: RGBAColor = PlatformColor(self).applicationColor.toOpaqueColor
 
   }
+
 
 }

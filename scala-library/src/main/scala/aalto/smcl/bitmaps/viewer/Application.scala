@@ -37,8 +37,6 @@ private[bitmaps] object Application {
 
   // @formatter:on
 
-  aalto.smcl.platform.initialize()
-
 }
 
 

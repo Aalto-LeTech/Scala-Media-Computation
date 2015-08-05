@@ -1,12 +1,18 @@
 package aalto.smcl
 
 
+import aalto.smcl.bitmaps.BitmapModuleInitializer
+import aalto.smcl.platform.PlatformModuleInitializer
+
+
+
+
 /**
  * Information and functionality concerning the SMCL as a whole.
  *
  * @author Aleksi Lukkarinen
  */
-object SMCL {
+object SMCL extends ModuleInitializer {
 
   /** Full name of this library. */
   val FullName: String = "Scala Media Computation Library"
@@ -30,26 +36,32 @@ object SMCL {
   val InceptionYear: Int = 2015
 
 
-  // @formatter:off
   /** Short information about SMCL. */
+  // @formatter:off
   private val MsgAboutShort: String =
     s"""
       |$FullName ($AbbreviatedName)
       |Version $VersionString.""".stripMargin
+  // @formatter:on
 
   /** Full informaiton about SMCL. */
+  // @formatter:off
   private val MsgAboutFull: String =
     s"""$MsgAboutShort
        |
        |$AbbreviatedName was originally created by $OriginalAuthorName in $InceptionYear as
        |a part of his Master's Thesis for Aalto University.""".stripMargin
+  // @formatter:on
 
   /** Usage informaiton. */
+  // @formatter:off
   private val MsgUsage: String =
     s"""Help                   SMCL.help
        |General information    SMCL.information""".stripMargin
+  // @formatter:on
 
   /** Welcoming message. */
+  // @formatter:off
   private val MsgWelcoming: String =
     s"""$MsgAboutShort
        |
@@ -83,5 +95,15 @@ object SMCL {
    *
    */
   override def toString: String = s"$FullName ($AbbreviatedName), version $VersionString."
+
+  /**
+   * Calls the initialization routines of every SMCL's module.
+   */
+  addInitializer {() =>
+    PlatformModuleInitializer.performInitialization()
+    BitmapModuleInitializer.performInitialization()
+  }
+
+  performInitialization()
 
 }

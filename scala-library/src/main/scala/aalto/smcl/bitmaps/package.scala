@@ -13,8 +13,7 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap
  */
 package object bitmaps {
 
-  BitmapSettingKeys
-  BitmapSettingsInitializer.perform()
+  SMCL.performInitialization()
 
 
   /** */
