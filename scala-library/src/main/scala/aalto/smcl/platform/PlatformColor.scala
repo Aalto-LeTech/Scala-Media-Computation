@@ -26,7 +26,7 @@ private[smcl] object PlatformColor {
       applicationColor.red,
       applicationColor.green,
       applicationColor.blue,
-      applicationColor.transparency)
+      applicationColor.opacity)
 
   /**
    *
@@ -49,12 +49,12 @@ private[smcl] object PlatformColor {
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] case class PlatformColor(red: Int, green: Int, blue: Int, transparency: Int) {
+private[smcl] case class PlatformColor(red: Int, green: Int, blue: Int, opacity: Int) {
 
   /** */
-  private[platform] lazy val awtColor = new AwtColor(red, green, blue, transparency)
+  private[platform] lazy val awtColor = new AwtColor(red, green, blue, opacity)
 
   /** */
-  lazy val applicationColor = RGBAColor(red, green, blue, transparency)
+  lazy val applicationColor = RGBAColor(red, green, blue, opacity)
 
 }

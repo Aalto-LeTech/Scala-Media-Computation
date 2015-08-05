@@ -51,8 +51,8 @@ private[bitmaps] case class DrawRectangle(
     "height" -> Option(s"$heightInPixels px"),
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
-    "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
+    "color" -> Option(s"0x${color.toPixelInt.toArgbHexColorString}"),
+    "fillColor" -> Option(s"0x${fillColor.toPixelInt.toArgbHexColorString}")))
 
   /**
    * Draws a rectangle onto the given bitmap with the given colors.

@@ -41,11 +41,11 @@ object ColorOps {
   /**
    *
    */
-  def withNewTransparencyComponent(pixelInt: Int, newTransparency: Int): Int = {
-    require(ByteRange.contains(newTransparency),
-      s"'newTransparency' must be between ${ByteRange.start} and ${ByteRange.end} (was $newTransparency)")
+  def withNewOpacityComponent(pixelInt: Int, newOpacity: Int): Int = {
+    require(ByteRange.contains(newOpacity),
+      s"'newOpacity' argument must be between ${ByteRange.start} and ${ByteRange.end} (was $newOpacity)")
 
-    (pixelInt & ~FourthByte) | (newTransparency << ThreeBytes)
+    (pixelInt & ~FourthByte) | (newOpacity << ThreeBytes)
   }
 
   /**
@@ -56,7 +56,7 @@ object ColorOps {
       'red -> redComponentFrom(pixelInt),
       'green -> greenComponentFrom(pixelInt),
       'blue -> blueComponentFrom(pixelInt),
-      'transparency -> transparencyComponentFrom(pixelInt))
+      'opacity -> opacityComponentFrom(pixelInt))
 
   /**
    *
@@ -76,7 +76,7 @@ object ColorOps {
   /**
    *
    */
-  def transparencyComponentFrom(pixelInt: Int): Int = pixelInt >>> ThreeBytes
+  def opacityComponentFrom(pixelInt: Int): Int = pixelInt >>> ThreeBytes
 
   /**
    *
@@ -84,7 +84,7 @@ object ColorOps {
   def pixelIntFrom(red: Int = MinimumRed,
       green: Int = MinimumGreen,
       blue: Int = MinimumBlue,
-      transparency: Int = FullyOpaque): Int = {
+      opacity: Int = FullyOpaque): Int = {
 
     require(ByteRange.contains(red),
       s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
@@ -95,10 +95,10 @@ object ColorOps {
     require(ByteRange.contains(blue),
       s"The 'blue' value must be between ${ByteRange.start} and ${ByteRange.end} (was $blue)")
 
-    require(ByteRange.contains(transparency),
-      s"The transparency value must be between ${ByteRange.start} and ${ByteRange.end} (was $transparency)")
+    require(ByteRange.contains(opacity),
+      s"The opacity value must be between ${ByteRange.start} and ${ByteRange.end} (was $opacity)")
 
-    (transparency << ThreeBytes) | (red << TwoBytes) | (green << OneByte) | blue
+    (opacity << ThreeBytes) | (red << TwoBytes) | (green << OneByte) | blue
   }
 
 
@@ -110,11 +110,11 @@ object ColorOps {
 
     /**
      * Returns an immutable map containing individual color components of this ARGB-style `Int`.
-     * The keys in the map are `'red`, `'green`, `'blue`, and `'transparency`.
+     * The keys in the map are `'red`, `'green`, `'blue`, and `'opacity`.
      *
      * {{{
      * scala> 0x89ABCDEF.colorComponentInts
-     * res0: Map[Symbol,Int] = Map('red -> 171, 'green -> 205, 'blue -> 239, 'transparency -> 137) // 0x89 = 137 etc.
+     * res0: Map[Symbol,Int] = Map('red -> 171, 'green -> 205, 'blue -> 239, 'opacity -> 137) // 0x89 = 137 etc.
      * }}}
      */
     def colorComponentMap: Map[Symbol, Int] = colorComponentsFrom(self)
@@ -135,9 +135,9 @@ object ColorOps {
     def blueComponentInt: Int = blueComponentFrom(self)
 
     /**
-     * Returns the transparency component of this ARGB-style `Int`.
+     * Returns the opacity component of this ARGB-style `Int`.
      */
-    def transparencyComponentInt: Int = transparencyComponentFrom(self)
+    def opacityComponentInt: Int = opacityComponentFrom(self)
 
     /**
      * Displays this `Int` as a zero-padded hexadecimal form.

@@ -38,7 +38,7 @@ private[bitmaps] case class AppendVertically(
   lazy val metaInformation = MetaInformationMap(Map(
     "padding" -> Option(s"$paddingInPixels px"),
     "horizontalAlignment" -> Option(horizontalAlignment.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.asPixelInt.toArgbHexColorString}")))
+    "backgroundColor" -> Option(s"0x${backgroundColor.toPixelInt.toArgbHexColorString}")))
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =

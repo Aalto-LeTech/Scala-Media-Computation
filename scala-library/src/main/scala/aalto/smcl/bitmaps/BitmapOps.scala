@@ -469,14 +469,14 @@ object BitmapOps {
 //  /**
 //   *
 //   */
-//  def setColorComponentsAt(x: Int, y: Int, red: Int, green: Int, blue: Int, transparency: Int): Unit = {
+//  def setColorComponentsAt(x: Int, y: Int, red: Int, green: Int, blue: Int, opacity: Int): Unit = {
 //    require(widthRange.contains(x),
 //      s"The x coordinate must be >= zero and less than the width of the image (was $x)")
 //
 //    require(heightRange.contains(y),
 //      s"The y coordinate must be >= zero and less than the height of the image (was $y)")
 //
-//    buffer.setRGB(x, y, pixelIntFrom(red, green, blue, transparency))
+//    buffer.setRGB(x, y, pixelIntFrom(red, green, blue, opacity))
 //  }
 //
 //  /**
@@ -515,10 +515,10 @@ object BitmapOps {
 //  /**
 //   *
 //   */
-//  def transparencyComponentAt(x: Int, y: Int): Int = transparencyComponentFrom(pixelIntAt(x, y))
+//  def opacityComponentAt(x: Int, y: Int): Int = opacityComponentFrom(pixelIntAt(x, y))
 //
 //  /**
 //   *
 //   */
-//  def transparencyComponentAt_=(x: Int, y: Int, transparency: Int): Unit =
-//    setPixelIntAt(x, y, withNewTransparencyComponent(pixelIntAt(x, y), transparency))
+//  def opacityComponentAt_=(x: Int, y: Int, opacity: Int): Unit =
+//    setPixelIntAt(x, y, withNewOpacityComponent(pixelIntAt(x, y), opacity))

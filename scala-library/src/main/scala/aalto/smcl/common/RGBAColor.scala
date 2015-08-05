@@ -21,12 +21,12 @@ object RGBAColor {
    * @param red
    * @param green
    * @param blue
-   * @param transparency
+   * @param opacity
    * @param nameOption
    * @return
    */
   private[smcl] def validateColorArguments(red: Int, green: Int, blue: Int,
-      transparency: Int, nameOption: Option[String] = None): Tuple5[Int, Int, Int, Int, Option[String]] = {
+      opacity: Int, nameOption: Option[String] = None): Tuple5[Int, Int, Int, Int, Option[String]] = {
 
     require(ByteRange.contains(red),
       s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
@@ -37,8 +37,8 @@ object RGBAColor {
     require(ByteRange.contains(blue),
       s"The 'blue' value must be between ${ByteRange.start} and ${ByteRange.end} (was $blue)")
 
-    require(ByteRange.contains(transparency),
-      s"The transparency value must be between ${ByteRange.start} and ${ByteRange.end} (was $transparency)")
+    require(ByteRange.contains(opacity),
+      s"The opacity value must be between ${ByteRange.start} and ${ByteRange.end} (was $opacity)")
 
     require(nameOption != null, "The nameOption argument must be Option(<name>) or None (was null).")
 
@@ -52,7 +52,7 @@ object RGBAColor {
         resultNameOption = Option(name)
     }
 
-    (red, green, blue, transparency, resultNameOption)
+    (red, green, blue, opacity, resultNameOption)
   }
 
 
@@ -62,17 +62,17 @@ object RGBAColor {
    * @param red
    * @param green
    * @param blue
-   * @param transparency
+   * @param opacity
    * @param nameOption
    * @return
    */
-  def apply(red: Int, green: Int, blue: Int, transparency: Int,
+  def apply(red: Int, green: Int, blue: Int, opacity: Int,
       nameOption: Option[String] = None): RGBAColor = {
 
-    val (validRed, validGreen, validBlue, validTransparency, validNameOption) =
-      validateColorArguments(red, green, blue, transparency, nameOption)
+    val (validRed, validGreen, validBlue, validOpacity, validNameOption) =
+      validateColorArguments(red, green, blue, opacity, nameOption)
 
-    new RGBAColor(validRed, validGreen, validBlue, validTransparency, validNameOption)
+    new RGBAColor(validRed, validGreen, validBlue, validOpacity, validNameOption)
   }
 
 
@@ -86,7 +86,7 @@ object RGBAColor {
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, nameOption: Option[String]): RGBAColor =
-    RGBAColor(red, green, blue, MaximumOpaqueness, nameOption)
+    RGBAColor(red, green, blue, MaximumOpacity, nameOption)
 
   /**
    *
@@ -96,7 +96,7 @@ object RGBAColor {
    * @param blue
    * @return
    */
-  def apply(red: Int, green: Int, blue: Int): RGBAColor = RGBAColor(red, green, blue, MaximumOpaqueness)
+  def apply(red: Int, green: Int, blue: Int): RGBAColor = RGBAColor(red, green, blue, MaximumOpacity)
 
   /**
    *
@@ -110,7 +110,7 @@ object RGBAColor {
       redComponentFrom(pixelInt),
       greenComponentFrom(pixelInt),
       blueComponentFrom(pixelInt),
-      transparencyComponentFrom(pixelInt),
+      opacityComponentFrom(pixelInt),
       nameOption)
 
   /**
@@ -124,7 +124,7 @@ object RGBAColor {
       redComponentFrom(pixelInt),
       greenComponentFrom(pixelInt),
       blueComponentFrom(pixelInt),
-      transparencyComponentFrom(pixelInt))
+      opacityComponentFrom(pixelInt))
 
   /**
    *
@@ -138,7 +138,7 @@ object RGBAColor {
       platformColor.red,
       platformColor.green,
       platformColor.blue,
-      platformColor.transparency)
+      platformColor.opacity)
 
   /**
    *
@@ -154,7 +154,7 @@ object RGBAColor {
       platformColor.red,
       platformColor.green,
       platformColor.blue,
-      platformColor.transparency,
+      platformColor.opacity,
       nameOption)
 
 }
@@ -166,7 +166,7 @@ object RGBAColor {
  * @param red
  * @param green
  * @param blue
- * @param transparency
+ * @param opacity
  * @param nameOption
  *
  * @author Aleksi Lukkarinen
@@ -175,7 +175,7 @@ class RGBAColor protected(
     val red: Int,
     val green: Int,
     val blue: Int,
-    val transparency: Int,
+    val opacity: Int,
     val nameOption: Option[String] = None) extends {
 
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
@@ -184,10 +184,10 @@ class RGBAColor protected(
 } with Immutable with Tokenizable {
 
   /** This [[RGBAColor]] coded into an `Int`. */
-  val asPixelInt: Int = pixelIntFrom(red, green, blue, transparency)
+  val toPixelInt: Int = pixelIntFrom(red, green, blue, opacity)
 
   /** Returns `true` if this [[RGBAColor]] is fully opaque, otherwise `false`. */
-  val isOpaque: Boolean = transparency == MaximumOpaqueness
+  val isOpaque: Boolean = opacity == MaximumOpacity
 
   /** Returns `false` if this [[RGBAColor]] is fully opaque, otherwise `true`. */
   val isTransparent: Boolean = !isOpaque
@@ -196,22 +196,22 @@ class RGBAColor protected(
   val isUserCreated: Boolean = !isPreset
 
   /** This [[RGBAColor]] represented as a 32-digit binary string of four 8-digit groups. */
-  lazy val asBinaryString: String = asPixelInt.toArgbBinaryColorString
+  lazy val toBinaryString: String = toPixelInt.toArgbBinaryColorString
 
   /** This [[RGBAColor]] represented as a hexadecimal string. */
-  lazy val asHexString: String = asPixelInt.toArgbHexColorString
+  lazy val toHexString: String = toPixelInt.toArgbHexColorString
 
   /** Information about this [[AbstractSingleSourceOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "red" -> Option(red.toString),
     "green" -> Option(green.toString),
     "blue" -> Option(blue.toString),
-    "transparency" -> Option(transparency.toString)))
+    "opacity" -> Option(opacity.toString)))
 
   /**
    * Returns a string representation of this [[RGBAColor]].
    */
   override def toString: String =
-    s"ARGB: 0x$asHexString -- $transparency - $red - $green - $blue"
+    s"ARGB: 0x$toHexString -- $opacity - $red - $green - $blue"
 
 }

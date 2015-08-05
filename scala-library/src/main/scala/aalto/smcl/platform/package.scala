@@ -28,9 +28,9 @@ package object platform {
     /** This [[RGBAColor]] as a `java.awt.Color`. */
     def toAwtColor: AwtColor = PlatformColor(self).awtColor
 
-    /** This [[RGBAColor]] as a `java.awt.Color` with full opaqueness. */
+    /** This [[RGBAColor]] as a `java.awt.Color` with full opacity. */
     def toOpaqueAwtColor: AwtColor =
-      PlatformColor(self.toOpaqueColor).awtColor
+      PlatformColor(self.withFullOpacity).awtColor
 
   }
 
@@ -45,10 +45,9 @@ package object platform {
     /** This `java.awt.Color` as a [[RGBAColor]]. */
     def toAapplicationColor: RGBAColor = PlatformColor(self).applicationColor
 
-    /** This `java.awt.Color` as a [[RGBAColor]] with full opaqueness. */
-    def toOpaqueColor: RGBAColor = PlatformColor(self).applicationColor.toOpaqueColor
+    /** This `java.awt.Color` as a [[RGBAColor]] with full opacity. */
+    def withFullOpacity: RGBAColor = PlatformColor(self).applicationColor.withFullOpacity
 
   }
-
 
 }

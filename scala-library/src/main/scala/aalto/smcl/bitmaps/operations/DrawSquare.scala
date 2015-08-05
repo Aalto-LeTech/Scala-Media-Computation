@@ -47,8 +47,8 @@ private[bitmaps] case class DrawSquare(
     "side" -> Option(s"$sideLengthInPixels px"),
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
-    "color" -> Option(s"0x${color.asPixelInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.asPixelInt.toArgbHexColorString}")))
+    "color" -> Option(s"0x${color.toPixelInt.toArgbHexColorString}"),
+    "fillColor" -> Option(s"0x${fillColor.toPixelInt.toArgbHexColorString}")))
 
   /**
    * Draws a square onto the given bitmap with the given colors.

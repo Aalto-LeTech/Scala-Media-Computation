@@ -18,10 +18,10 @@ private[common] object PresetRGBAColor {
    *
    * @return
    */
-  def apply(red: Int, green: Int, blue: Int, transparency: Int,
+  def apply(red: Int, green: Int, blue: Int, opacity: Int,
       nameOption: Option[String] = None): RGBAColor = {
 
-    val args = RGBAColor.validateColorArguments(red, green, blue, transparency, nameOption)
+    val args = RGBAColor.validateColorArguments(red, green, blue, opacity, nameOption)
 
     require(args._5.isDefined,
       "PresetColor instances must be given unique names (was None).")
@@ -38,10 +38,11 @@ private[common] object PresetRGBAColor {
    * @return
    */
   def apply(pixelInt: Int, nameOption: Option[String]): RGBAColor =
-    PresetRGBAColor(redComponentFrom(pixelInt),
+    PresetRGBAColor(
+      redComponentFrom(pixelInt),
       greenComponentFrom(pixelInt),
       blueComponentFrom(pixelInt),
-      transparencyComponentFrom(pixelInt),
+      opacityComponentFrom(pixelInt),
       nameOption)
 }
 
@@ -55,13 +56,13 @@ class PresetRGBAColor private[common](
     override val red: Int,
     override val green: Int,
     override val blue: Int,
-    override val transparency: Int,
+    override val opacity: Int,
     override val nameOption: Option[String] = None) extends {
 
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   override val isPreset: Boolean = true
 
-} with RGBAColor(red, green, blue, transparency, nameOption) with Immutable {
+} with RGBAColor(red, green, blue, opacity, nameOption) with Immutable {
 
   /** Default name for an unnamed preset color. */
   private val StrNoName = "<unnamed preset>"

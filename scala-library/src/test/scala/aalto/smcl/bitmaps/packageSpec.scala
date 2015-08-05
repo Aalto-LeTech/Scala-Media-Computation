@@ -27,8 +27,8 @@ class packageSpec extends ImageSpecBase {
       assert(blueComponentFrom(TEST_PIXEL_INT) === TEST_BLUE_VALUE)
     }
 
-    "transparencyComponentFrom()" in {
-      assert(transparencyComponentFrom(TEST_PIXEL_INT) === TEST_TRANSPARENCY_VALUE)
+    "opacityComponentFrom()" in {
+      assert(opacityComponentFrom(TEST_PIXEL_INT) === TEST_OPACITY_VALUE)
     }
   }
 
@@ -74,16 +74,16 @@ class packageSpec extends ImageSpecBase {
     }
   }
 
-  "withNewTransparencyComponent() must" - {
+  "withNewOpacityComponent() must" - {
     "return an Int representing a pixel value with the right color component updated" in {
-      assert(withNewTransparencyComponent(TEST_PIXEL_INT, 0) === TEST_PIXEL_INT_WITH_ZEROED_TRANSPARENCY)
+      assert(withNewOpacityComponent(TEST_PIXEL_INT, 0) === TEST_PIXEL_INT_WITH_ZEROED_OPACITY)
     }
     "throw an IllegalArgumentException when color component is" - {
-      "less than MIN_OPAQUENESS" in {
-        intercept[IllegalArgumentException] {withNewTransparencyComponent(TEST_PIXEL_INT, MinimumOpaqueness - 1)}
+      "less than MinimumOpacity" in {
+        intercept[IllegalArgumentException] {withNewOpacityComponent(TEST_PIXEL_INT, MinimumOpacity - 1)}
       }
-      "greater than MAX_OPAQUENESS" in {
-        intercept[IllegalArgumentException] {withNewTransparencyComponent(TEST_PIXEL_INT, MaximumOpaqueness + 1)}
+      "greater than MaximumOpacity" in {
+        intercept[IllegalArgumentException] {withNewOpacityComponent(TEST_PIXEL_INT, MaximumOpacity + 1)}
       }
     }
   }
@@ -95,7 +95,7 @@ class packageSpec extends ImageSpecBase {
             'red -> TEST_RED_VALUE,
             'green -> TEST_GREEN_VALUE,
             'blue -> TEST_BLUE_VALUE,
-            'transparency -> TEST_TRANSPARENCY_VALUE))
+            'opacity -> TEST_OPACITY_VALUE))
     }
   }
 
@@ -105,7 +105,7 @@ class packageSpec extends ImageSpecBase {
         TEST_RED_VALUE,
         TEST_GREEN_VALUE,
         TEST_BLUE_VALUE,
-        TEST_TRANSPARENCY_VALUE) === TEST_PIXEL_INT)
+        TEST_OPACITY_VALUE) === TEST_PIXEL_INT)
     }
 
     "throw an IllegalArgumentException when color component" - {
@@ -139,14 +139,14 @@ class packageSpec extends ImageSpecBase {
           pixelIntFrom(blue = MaximumBlue + 1)
         }
       }
-      "transparency is less than MIN_OPAQUENESS" in {
+      "opacity is less than MinimumOpacity" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(transparency = MinimumOpaqueness - 1)
+          pixelIntFrom(opacity = MinimumOpacity - 1)
         }
       }
-      "transparency is greater than MAX_OPAQUENESS" in {
+      "opacity is greater than MaximumOpacity" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(transparency = MaximumOpaqueness + 1)
+          pixelIntFrom(opacity = MaximumOpacity + 1)
         }
       }
     }
@@ -159,7 +159,7 @@ class packageSpec extends ImageSpecBase {
             'red -> TEST_RED_VALUE,
             'green -> TEST_GREEN_VALUE,
             'blue -> TEST_BLUE_VALUE,
-            'transparency -> TEST_TRANSPARENCY_VALUE))
+            'opacity -> TEST_OPACITY_VALUE))
     }
     "red component by invoking redComponentInt()" in {
       assert(TEST_PIXEL_INT.redComponentInt === TEST_RED_VALUE)
@@ -170,8 +170,8 @@ class packageSpec extends ImageSpecBase {
     "blue component by invoking blueComponentInt()" in {
       assert(TEST_PIXEL_INT.blueComponentInt === TEST_BLUE_VALUE)
     }
-    "transparency component by invoking transparencyComponentInt()" in {
-      assert(TEST_PIXEL_INT.transparencyComponentInt === TEST_TRANSPARENCY_VALUE)
+    "opacity component by invoking opacityComponentInt()" in {
+      assert(TEST_PIXEL_INT.opacityComponentInt === TEST_OPACITY_VALUE)
     }
     "hexadecimal representation by invoking toArgbHexColorString()" in {
       assert(TEST_PIXEL_INT.toArgbHexColorString === "ffdcba98")
