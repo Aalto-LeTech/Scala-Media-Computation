@@ -606,9 +606,9 @@ package object common {
      * @return
      */
     def toWeightedGray(
-                        redWeight: Double = 0.33,
-                        greenWeight: Double = 0.33,
-                        blueWeight: Double = 0.33): RGBAColor = {
+      redWeight: Double = 0.33,
+      greenWeight: Double = 0.33,
+      blueWeight: Double = 0.33): RGBAColor = {
 
       require(redWeight >= 0 && greenWeight >= 0 && blueWeight >= 0,
         s"Each of the weights must be >= 0 (were $redWeight, $greenWeight, $blueWeight)")
