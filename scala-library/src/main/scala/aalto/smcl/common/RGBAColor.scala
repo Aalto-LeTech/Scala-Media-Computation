@@ -210,10 +210,10 @@ class RGBAColor protected(
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false
 
-} with Immutable with Tokenizable {
+} with Ordered[RGBAColor] with Immutable with Tokenizable {
 
   /** This [[RGBAColor]] coded into an `Int`. */
-  val toPixelInt: Int = pixelIntFrom(red, green, blue, opacity)
+  lazy val toPixelInt: Int = pixelIntFrom(red, green, blue, opacity)
 
   /** Returns `true` if this [[RGBAColor]] is fully opaque, otherwise `false`. */
   val isOpaque: Boolean = opacity == MaximumOpacity
@@ -236,6 +236,87 @@ class RGBAColor protected(
     "green" -> Option(green.toString),
     "blue" -> Option(blue.toString),
     "opacity" -> Option(opacity.toString)))
+
+  /**
+   *
+   *
+   * @return
+   */
+  def toHueSaturationIntensity: Map[Symbol, Double] = Map(
+    'hue -> toHueInDegrees,
+    'saturation -> toSaturation,
+    'intensity -> toIntensity)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def toHueInDegrees: Double = {
+    import Math._
+
+    def RmG = red - green
+    def RmB = red - blue
+
+    def root = sqrt(RmG * RmG + RmB * (green - blue))
+
+    def angleCandidate = Math.rint(100.0 * toDegrees(acos((RmG + RmB) / (2.0 * root)))) / 100.0
+
+    if (green >= blue) angleCandidate else FullCircleInDegrees - angleCandidate
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def toSaturation: Double = {
+    if (red == 0 && green == 0 && blue == 0)
+      0.0
+    else
+      1.0 - (3.0 * red.min(green).min(blue).toDouble / (red + green + blue).toDouble)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def toIntensity: Double = Math.rint(100 * ((red + green + blue).toDouble / 3.0)) / 100
+
+  /**
+   *
+   *
+   * @return
+   */
+  def toGray: RGBAColor = RGBAColor(toIntensity.toInt, FullyOpaque)
+
+  /**
+   *
+   *
+   * @param that
+   * @return
+   */
+  override def compare(that: RGBAColor): Int =
+    Math.signum(that.toHueInDegrees - this.toHueInDegrees).toInt
+
+  /**
+   *
+   *
+   * @param that
+   * @return
+   */
+  def compareBySaturation(that: RGBAColor): Int =
+    Math.signum(that.toSaturation - this.toSaturation).toInt
+
+  /**
+   *
+   *
+   * @param that
+   * @return
+   */
+  def compareByIntensity(that: RGBAColor): Int =
+    Math.signum(that.toIntensity - this.toIntensity).toInt
 
   /**
    * Returns a string representation of this [[RGBAColor]].

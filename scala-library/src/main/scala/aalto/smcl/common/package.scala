@@ -546,60 +546,6 @@ package object common {
     /**
      *
      *
-     * @return
-     */
-    def toHueSaturationIntensity: Map[Symbol, Double] = Map(
-      'hue -> toHueInDegrees,
-      'saturation -> toSaturation,
-      'intensity -> toIntensity)
-
-    /**
-     *
-     *
-     * @return
-     */
-    def toHueInDegrees: Double = {
-      import Math._
-
-      def RmG = self.red - self.green
-      def RmB = self.red - self.blue
-
-      def root = sqrt(RmG * RmG + RmB * (self.green - self.blue))
-
-      def angleCandidate = Math.rint(100.0 * toDegrees(acos((RmG + RmB) / (2.0 * root)))) / 100.0
-
-      if (self.green >= self.blue) angleCandidate else FullCircleInDegrees - angleCandidate
-    }
-
-    /**
-     *
-     *
-     * @return
-     */
-    def toSaturation: Double = {
-      if (self.red == 0 && self.green == 0 && self.blue == 0)
-        0.0
-      else
-        1.0 - (3.0 * self.red.min(self.green).min(self.blue).toDouble / (self.red + self.green + self.blue).toDouble)
-    }
-
-    /**
-     *
-     *
-     * @return
-     */
-    def toIntensity: Double = Math.rint(100 * ((self.red + self.green + self.blue).toDouble / 3.0)) / 100
-
-    /**
-     *
-     *
-     * @return
-     */
-    def toGray: RGBAColor = RGBAColor(self.toIntensity.toInt, FullyOpaque)
-
-    /**
-     *
-     *
      * @param redWeight
      * @param greenWeight
      * @param blueWeight
