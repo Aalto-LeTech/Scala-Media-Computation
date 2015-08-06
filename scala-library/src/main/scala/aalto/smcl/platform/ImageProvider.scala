@@ -16,7 +16,7 @@ import aalto.smcl.common._
 
 
 /**
- *
+ * private[smcl]
  *
  * @author Aleksi Lukkarinen
  */
@@ -51,7 +51,7 @@ object ImageProvider {
    * @param filePath
    * @return
    */
-  def tryToLoadImagesFromFile(filePath: String): Try[Seq[Try[PlatformBitmapBuffer]]] =
+  def tryToLoadImagesFromFile(filePath: String): Try[Seq[Either[Throwable, PlatformBitmapBuffer]]] =
     Try(loadImagesFromFile(filePath))
 
   /**
@@ -62,7 +62,7 @@ object ImageProvider {
    *
    * @throws SecurityException
    */
-  def loadImagesFromFile(filePath: String): Seq[Try[PlatformBitmapBuffer]] = {
+  def loadImagesFromFile(filePath: String): Seq[Either[Throwable, PlatformBitmapBuffer]] = {
     require(filePath != null, "Path of the image file to be loaded cannot be null.")
 
 
@@ -115,9 +115,9 @@ object ImageProvider {
 
 
     val reader = imageReaders.next()
-    reader.setInput(inputStream, SeekForwardOnly, IgnoreMetadata)
+    reader.setInput(inputStream.get, SeekForwardOnly, IgnoreMetadata)
 
-    val readImages = new ArrayBuffer[Try[PlatformBitmapBuffer]]()
+    val readImages = new ArrayBuffer[Either[Throwable, PlatformBitmapBuffer]]()
     var allImagesRead = false
     var currentImageIndex = reader.getMinIndex
     var readImage: Try[BufferedImage] = null
@@ -125,12 +125,12 @@ object ImageProvider {
       readImage = Try(reader.read(currentImageIndex, imageReadingParams))
 
       if (readImage.isSuccess) {
-        readImages += Try(PlatformBitmapBuffer(readImage.get))
+        readImages += Right(PlatformBitmapBuffer(readImage.get))
       }
       else {
-        readImages.last.failed.get match {
+        readImage.failed.get match {
           case _: IndexOutOfBoundsException => allImagesRead = true
-          case _                            => ()
+          case t: Throwable                 => readImages += Left(t)
         }
       }
 
