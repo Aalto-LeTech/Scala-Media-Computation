@@ -68,6 +68,9 @@ package object common {
   /** The value range that a single unsigned byte can represent. */
   protected[smcl] val ByteRange = 0 to 255
 
+  /** 2 * PI */
+  protected[smcl] val PI2 = 2 * Math.PI
+
   /** Color component value representing minimal amount of red. */
   val MinimumRed: Int = ByteRange.start
 
@@ -86,6 +89,12 @@ package object common {
   /** Color component value representing maximal amount of blue. */
   val MaximumBlue: Int = ByteRange.end
 
+  /** Color component value representing minimal amount of gray. */
+  val MinimumGray: Int = ByteRange.start
+
+  /** Color component value representing maximal amount of gray. */
+  val MaximumGray: Int = ByteRange.end
+
   /** Color component value representing minimal opacity. */
   val MinimumOpacity: Int = ByteRange.start
 
@@ -97,6 +106,9 @@ package object common {
 
   /** Color component value representing minimal opacity. */
   val FullyTransparent: Int = MinimumOpacity
+
+  /** Number of degrees representing a full circle. */
+  val FullCircleInDegrees: Int = 360
 
 
   /**
@@ -207,9 +219,6 @@ package object common {
     }
 
 
-
-
-
     ///////////////////////////////////////////////////////////////////////////////////
     //
     //
@@ -310,10 +319,6 @@ package object common {
     }
 
 
-
-
-
-
     ///////////////////////////////////////////////////////////////////////////////////
     //
     //
@@ -412,10 +417,6 @@ package object common {
 
       RGBAColor(self.red, self.green, newBlue, self.opacity)
     }
-
-
-
-
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -532,10 +533,6 @@ package object common {
     }
 
 
-
-
-
-
     ///////////////////////////////////////////////////////////////////////////////////
     //
     //
@@ -545,6 +542,87 @@ package object common {
     //
     //
     ///////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     *
+     *
+     * @return
+     */
+    def toHueSaturationIntensity: Map[Symbol, Double] = Map(
+      'hue -> toHueInDegrees,
+      'saturation -> toSaturation,
+      'intensity -> toIntensity)
+
+    /**
+     *
+     *
+     * @return
+     */
+    def toHueInDegrees: Double = {
+      import Math._
+
+      def RmG = self.red - self.green
+      def RmB = self.red - self.blue
+
+      def root = sqrt(RmG * RmG + RmB * (self.green - self.blue))
+
+      def angleCandidate = Math.rint(100.0 * toDegrees(acos((RmG + RmB) / (2.0 * root)))) / 100.0
+
+      if (self.green >= self.blue) angleCandidate else FullCircleInDegrees - angleCandidate
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    def toSaturation: Double = {
+      if (self.red == 0 && self.green == 0 && self.blue == 0)
+        0.0
+      else
+        1.0 - (3.0 * self.red.min(self.green).min(self.blue).toDouble / (self.red + self.green + self.blue).toDouble)
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    def toIntensity: Double = Math.rint(100 * ((self.red + self.green + self.blue).toDouble / 3.0)) / 100
+
+    /**
+     *
+     *
+     * @return
+     */
+    def toGray: RGBAColor = RGBAColor(self.toIntensity.toInt, FullyOpaque)
+
+    /**
+     *
+     *
+     * @param redWeight
+     * @param greenWeight
+     * @param blueWeight
+     * @return
+     */
+    def toWeightedGray(
+                        redWeight: Double = 0.33,
+                        greenWeight: Double = 0.33,
+                        blueWeight: Double = 0.33): RGBAColor = {
+
+      require(redWeight >= 0 && greenWeight >= 0 && blueWeight >= 0,
+        s"Each of the weights must be >= 0 (were $redWeight, $greenWeight, $blueWeight)")
+
+      val weightSum = redWeight + greenWeight + blueWeight
+      require(weightSum <= 1.0, s"The sum of the three weights must be <= 1 (was $weightSum)")
+
+      val weightedRed = redWeight * self.red
+      val weightedGreen = greenWeight * self.green
+      val weightedBlue = blueWeight * self.blue
+      val grayIntensity = (weightedRed + weightedGreen + weightedBlue).toInt.min(MaximumGray)
+
+      RGBAColor(grayIntensity, FullyOpaque)
+    }
 
     /**
      *
@@ -563,6 +641,24 @@ package object common {
      */
     def keepingOnlyBlueComponent(): RGBAColor =
       RGBAColor(MinimumRed, MinimumGreen, self.blue, FullyOpaque)
+
+    /**
+     *
+     */
+    def keepingOnlyRedAndGreenComponents(): RGBAColor =
+      RGBAColor(self.red, self.green, MinimumBlue, FullyOpaque)
+
+    /**
+     *
+     */
+    def keepingOnlyRedAndBlueComponents(): RGBAColor =
+      RGBAColor(self.red, MinimumGreen, self.blue, FullyOpaque)
+
+    /**
+     *
+     */
+    def keepingOnlyGreenAndBlueComponents(): RGBAColor =
+      RGBAColor(MinimumRed, self.green, self.blue, FullyOpaque)
 
     /**
      *
@@ -628,5 +724,6 @@ package object common {
     }
 
   }
+
 
 }

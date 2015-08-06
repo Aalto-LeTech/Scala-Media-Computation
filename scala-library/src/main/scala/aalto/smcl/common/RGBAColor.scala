@@ -75,6 +75,20 @@ object RGBAColor {
     new RGBAColor(validRed, validGreen, validBlue, validOpacity, validNameOption)
   }
 
+  /**
+   *
+   *
+   * @param gray
+   * @param opacity
+   * @param nameOption
+   * @return
+   */
+  def apply(gray: Int, opacity: Int, nameOption: Option[String]): RGBAColor = {
+    val (validRed, validGreen, validBlue, validOpacity, validNameOption) =
+      validateColorArguments(gray, gray, gray, opacity, nameOption)
+
+    new RGBAColor(validRed, validGreen, validBlue, validOpacity, validNameOption)
+  }
 
   /**
    *
@@ -97,6 +111,21 @@ object RGBAColor {
    * @return
    */
   def apply(red: Int, green: Int, blue: Int): RGBAColor = RGBAColor(red, green, blue, MaximumOpacity)
+
+  /**
+   *
+   *
+   * @param gray
+   * @param opacity
+   * @return
+   */
+  def apply(gray: Int, opacity: Int): RGBAColor = {
+    val (validRed, validGreen, validBlue, validOpacity, validNameOption) =
+      validateColorArguments(gray, gray, gray, opacity)
+
+    new RGBAColor(validRed, validGreen, validBlue, validOpacity, validNameOption)
+  }
+
 
   /**
    *
