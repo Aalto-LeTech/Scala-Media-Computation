@@ -293,6 +293,48 @@ class RGBAColor protected(
 
   /**
    *
+   */
+  def keepingOnlyRedComponent(): RGBAColor =
+    RGBAColor(red, MinimumGreen, MinimumBlue, FullyOpaque)
+
+  /**
+   *
+   */
+  def keepingOnlyGreenComponent(): RGBAColor =
+    RGBAColor(MinimumRed, green, MinimumBlue, FullyOpaque)
+
+  /**
+   *
+   */
+  def keepingOnlyBlueComponent(): RGBAColor =
+    RGBAColor(MinimumRed, MinimumGreen, blue, FullyOpaque)
+
+  /**
+   *
+   */
+  def keepingOnlyRedAndGreenComponents(): RGBAColor =
+    RGBAColor(red, green, MinimumBlue, FullyOpaque)
+
+  /**
+   *
+   */
+  def keepingOnlyRedAndBlueComponents(): RGBAColor =
+    RGBAColor(red, MinimumGreen, blue, FullyOpaque)
+
+  /**
+   *
+   */
+  def keepingOnlyGreenAndBlueComponents(): RGBAColor =
+    RGBAColor(MinimumRed, green, blue, FullyOpaque)
+
+  /**
+   *
+   */
+  def representingOpacityAsGreyLevel(): RGBAColor =
+    RGBAColor(opacity, opacity, opacity, FullyOpaque)
+
+  /**
+   *
    *
    * @param that
    * @return

@@ -572,48 +572,6 @@ package object common {
 
     /**
      *
-     */
-    def keepingOnlyRedComponent(): RGBAColor =
-      RGBAColor(self.red, MinimumGreen, MinimumBlue, FullyOpaque)
-
-    /**
-     *
-     */
-    def keepingOnlyGreenComponent(): RGBAColor =
-      RGBAColor(MinimumRed, self.green, MinimumBlue, FullyOpaque)
-
-    /**
-     *
-     */
-    def keepingOnlyBlueComponent(): RGBAColor =
-      RGBAColor(MinimumRed, MinimumGreen, self.blue, FullyOpaque)
-
-    /**
-     *
-     */
-    def keepingOnlyRedAndGreenComponents(): RGBAColor =
-      RGBAColor(self.red, self.green, MinimumBlue, FullyOpaque)
-
-    /**
-     *
-     */
-    def keepingOnlyRedAndBlueComponents(): RGBAColor =
-      RGBAColor(self.red, MinimumGreen, self.blue, FullyOpaque)
-
-    /**
-     *
-     */
-    def keepingOnlyGreenAndBlueComponents(): RGBAColor =
-      RGBAColor(MinimumRed, self.green, self.blue, FullyOpaque)
-
-    /**
-     *
-     */
-    def representingOpacityAsGreyLevel(): RGBAColor =
-      RGBAColor(self.opacity, self.opacity, self.opacity, FullyOpaque)
-
-    /**
-     *
      *
      * @param shadingFactorInPercents
      */
