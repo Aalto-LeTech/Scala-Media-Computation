@@ -4,13 +4,15 @@ package aalto.smcl.platform
 import java.awt.image.BufferedImage
 import java.io.{File, IOException}
 import java.util.Locale
-import javax.imageio.ImageIO
+import javax.imageio.{ImageReadParam, ImageIO}
 import javax.imageio.stream.ImageInputStream
-
-import aalto.smcl.common._
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util._
+
+import aalto.smcl.common._
+
+
 
 
 /**
@@ -81,7 +83,7 @@ object ImageProvider {
     }
     require(supportedReadableFileExtensions.contains(extension),
       "Extension of the given file is unknown (the supported ones are " +
-        supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
+          supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
 
 
     val inputStreamTry = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)) recover {
@@ -107,41 +109,78 @@ object ImageProvider {
           readerTry.failed.get)
       }
 
+      val reader = readerTry.get
+
       try {
-        readerTry.get.setInput(inputStreamTry.get)
+        reader.setInput(inputStreamTry.get)
 
         val readImages = new ArrayBuffer[Either[Throwable, PlatformBitmapBuffer]]()
-        val numberOfImagesInFile = readerTry.get.getNumImages(true)
-        var currentImageIndex = readerTry.get.getMinIndex
+        val numberOfImagesInFile = reader.getNumImages(true)
+        var currentImageIndex = reader.getMinIndex
         var readImageTry: Try[BufferedImage] = null
 
         for (currentImageIndex <- currentImageIndex to (currentImageIndex + numberOfImagesInFile - 1)) {
-          val widthTry = Try(readerTry.get.getWidth(currentImageIndex))
+          val widthTry = Try(reader.getWidth(currentImageIndex))
           if (widthTry.isFailure) {
             readImages += Left(widthTry.failed.get)
           }
           else {
-            val heightTry = Try(readerTry.get.getHeight(currentImageIndex))
+            val heightTry = Try(reader.getHeight(currentImageIndex))
             if (heightTry.isFailure) {
               readImages += Left(heightTry.failed.get)
             }
             else {
-              readImageTry = Try(readerTry.get.read(currentImageIndex))
-              if (readImageTry.isFailure) {
-                readImages += Left(readImageTry.failed.get)
+
+              // AL 7.8.2015
+              // This code segment, which loads the image, creates an another ARGB-type buffer and copies the image
+              // into it, should be replaced wit a more memory-efficient course of operation. However, I was unable
+              // to make the ImageIO to load the image straight into an ARGB buffer, and that's why this operation
+              // is handled as can be seen below.
+              if (true) {
+                readImageTry = Try(reader.read(currentImageIndex))
+                if (readImageTry.isFailure) {
+                  readImages += Left(readImageTry.failed.get)
+                }
+                else {
+                  val destinationBuffer = new BufferedImage(
+                    widthTry.get,
+                    heightTry.get,
+                    BufferedImage.TYPE_INT_ARGB)
+
+                  val g2d = destinationBuffer.createGraphics()
+                  g2d.drawImage(readImageTry.get, null, 0, 0)
+                  g2d.dispose()
+
+                  readImages += Right(PlatformBitmapBuffer(destinationBuffer))
+                }
               }
-              else {
+
+              // For example, the following wouldn't work:
+              if (false) {
+                println(s"Possible image types for image $currentImageIndex: ")
+                val types = reader.getImageTypes(currentImageIndex)
+                while (types.hasNext) {
+                  println(types.next().getBufferedImageType)
+                }
+
                 val destinationBuffer = new BufferedImage(
                   widthTry.get,
                   heightTry.get,
                   BufferedImage.TYPE_INT_ARGB)
 
-                val g2d = destinationBuffer.createGraphics()
-                g2d.drawImage(readImageTry.get, null, 0, 0)
-                g2d.dispose()
+                val readParams = new ImageReadParam()
+                readParams.setDestination(destinationBuffer)
+                //readParams.setSourceBands(Array(0, 1, 2))
+                //readParams.setDestinationBands(Array(1, 2, 3))
 
-                readImages += Right(PlatformBitmapBuffer(destinationBuffer))
+
+                readImageTry = Try(reader.read(currentImageIndex, readParams))
+                readImageTry match {
+                  case Success(x) => readImages += Right(PlatformBitmapBuffer(x))
+                  case Failure(t) => readImages += Left(t)
+                }
               }
+
             }
           }
         }
@@ -152,10 +191,12 @@ object ImageProvider {
         readerTry.map(_.dispose())
       }
     }
+
     finally {
       inputStreamTry.map(_.close())
     }
   }
+
 
   /**
    *
