@@ -4,15 +4,13 @@ package aalto.smcl.platform
 import java.awt.image.BufferedImage
 import java.io.{File, IOException}
 import java.util.Locale
+import javax.imageio.ImageIO
 import javax.imageio.stream.ImageInputStream
-import javax.imageio.{ImageIO, ImageReadParam, ImageTypeSpecifier}
-
-import scala.collection.mutable.ArrayBuffer
-import scala.util._
 
 import aalto.smcl.common._
 
-
+import scala.collection.mutable.ArrayBuffer
+import scala.util._
 
 
 /**
@@ -21,12 +19,6 @@ import aalto.smcl.common._
  * @author Aleksi Lukkarinen
  */
 object ImageProvider {
-
-  /** The image file will be read sequentially only once. */
-  val SeekForwardOnly = true
-
-  /** Any metadata in the image file will be ignored. */
-  val IgnoreMetadata = true
 
   /** */
   lazy val supportedReadableMimeTypes: Seq[String] =
@@ -89,55 +81,80 @@ object ImageProvider {
     }
     require(supportedReadableFileExtensions.contains(extension),
       "Extension of the given file is unknown (the supported ones are " +
-          supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
+        supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
 
 
-    val inputStream = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)) recover {
+    val inputStreamTry = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)) recover {
       case caughtException: IOException =>
         throw new RuntimeException(
           "Input stream for the image file could not be created, possibly because a cache file could not be created.",
           caughtException)
     }
-    if (inputStream.get == null) {
+    if (inputStreamTry.get == null) {
       throw new RuntimeException(
         "Input stream for the image file could not be created because a suitable stream provider could not be found.")
     }
 
+    try {
+      val imageReaders = ImageIO.getImageReaders(inputStreamTry.get)
+      if (!imageReaders.hasNext)
+        throw new RuntimeException("A suitable image reader for the given image file could not be found.")
 
-    val imageReaders = ImageIO.getImageReaders(inputStream.get)
-    if (!imageReaders.hasNext)
-      throw new RuntimeException("A suitable image reader for the given image file could not be created.")
-
-
-    val destinationBufferImageType = ImageTypeSpecifier.createFromBufferedImageType(BufferedImage.TYPE_INT_ARGB)
-    val imageReadingParams = new ImageReadParam()
-    imageReadingParams.setDestinationType(destinationBufferImageType)
-
-
-    val reader = imageReaders.next()
-    reader.setInput(inputStream.get, SeekForwardOnly, IgnoreMetadata)
-
-    val readImages = new ArrayBuffer[Either[Throwable, PlatformBitmapBuffer]]()
-    var allImagesRead = false
-    var currentImageIndex = reader.getMinIndex
-    var readImage: Try[BufferedImage] = null
-    while (!allImagesRead) {
-      readImage = Try(reader.read(currentImageIndex, imageReadingParams))
-
-      if (readImage.isSuccess) {
-        readImages += Right(PlatformBitmapBuffer(readImage.get))
+      val readerTry = Try(imageReaders.next())
+      if (readerTry.isFailure) {
+        throw new RuntimeException(
+          "A suitable image reader for the given image file could not be retrieved.",
+          readerTry.failed.get)
       }
-      else {
-        readImage.failed.get match {
-          case _: IndexOutOfBoundsException => allImagesRead = true
-          case t: Throwable                 => readImages += Left(t)
+
+      try {
+        readerTry.get.setInput(inputStreamTry.get)
+
+        val readImages = new ArrayBuffer[Either[Throwable, PlatformBitmapBuffer]]()
+        val numberOfImagesInFile = readerTry.get.getNumImages(true)
+        var currentImageIndex = readerTry.get.getMinIndex
+        var readImageTry: Try[BufferedImage] = null
+
+        for (currentImageIndex <- currentImageIndex to (currentImageIndex + numberOfImagesInFile - 1)) {
+          val widthTry = Try(readerTry.get.getWidth(currentImageIndex))
+          if (widthTry.isFailure) {
+            readImages += Left(widthTry.failed.get)
+          }
+          else {
+            val heightTry = Try(readerTry.get.getHeight(currentImageIndex))
+            if (heightTry.isFailure) {
+              readImages += Left(heightTry.failed.get)
+            }
+            else {
+              readImageTry = Try(readerTry.get.read(currentImageIndex))
+              if (readImageTry.isFailure) {
+                readImages += Left(readImageTry.failed.get)
+              }
+              else {
+                val destinationBuffer = new BufferedImage(
+                  widthTry.get,
+                  heightTry.get,
+                  BufferedImage.TYPE_INT_ARGB)
+
+                val g2d = destinationBuffer.createGraphics()
+                g2d.drawImage(readImageTry.get, null, 0, 0)
+                g2d.dispose()
+
+                readImages += Right(PlatformBitmapBuffer(destinationBuffer))
+              }
+            }
+          }
         }
+
+        readImages.toSeq
       }
-
-      currentImageIndex += 1
+      finally {
+        readerTry.map(_.dispose())
+      }
     }
-
-    readImages.toSeq
+    finally {
+      inputStreamTry.map(_.close())
+    }
   }
 
   /**
