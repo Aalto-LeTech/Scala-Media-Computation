@@ -36,6 +36,12 @@ object BitmapSettingKeys {
   case object DefaultBitmapHeightInPixels extends IntSettingKey
 
   /** */
+  case object BitmapWidthWarningLimitInPixels extends IntSettingKey
+
+  /** */
+  case object BitmapHeightWarningLimitInPixels extends IntSettingKey
+
+  /** */
   case object DefaultRoundingWidthInPixels extends IntSettingKey
 
   /** */

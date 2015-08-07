@@ -13,8 +13,8 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateVi
 import aalto.smcl.bitmaps.immutable.{BitmapIdentity, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
-import aalto.smcl.common.{RGBAColor, GS, HorizontalAlignment, TimestampedCreation, VerticalAlignment}
-import aalto.smcl.platform.{PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
+import aalto.smcl.common.{GS, HorizontalAlignment, RGBAColor, TimestampedCreation, VerticalAlignment}
+import aalto.smcl.platform.{ImageProvider, PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
 
 
 
@@ -57,7 +57,7 @@ object Bitmap {
 
 
   /**
-   * Creates a new empty [[Bitmap]] instance.
+   * Creates a new empty [[aalto.smcl.bitmaps.immutable.primitives.Bitmap]] instance.
    */
   def apply(
       widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -65,8 +65,12 @@ object Bitmap {
       initialBackgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    require(widthInPixels > 0, s"Width of the image must be at least 1 pixel (was $widthInPixels)")
-    require(heightInPixels > 0, s"Height of the image must be at least 1 pixel (was $heightInPixels)")
+    BitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+
+    if (BitmapValidator.warningSizeLimitsAreExceeded(widthInPixels, heightInPixels)) {
+      println("\n\nWarning: The image is larger than the recommended maximum size")
+    }
+
     require(initialBackgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val operationList =
@@ -83,17 +87,79 @@ object Bitmap {
     newBitmap
   }
 
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   * @param viewerHandling
+   * @return
+   */
+  def apply(
+      sourceResourcePath: String,
+      viewerHandling: ViewerUpdateStyle.Value): collection.Seq[Either[Throwable, Bitmap]] = {
+
+    // The ImageProvider is trusted with validation of the source resource path.
+    val loadedBuffersTry =
+      ImageProvider.tryToLoadImagesFromFile(
+        sourceResourcePath,
+        BitmapValidator.MaximumBitmapWidthInPixels,
+        BitmapValidator.MaximumBitmapHeightInPixels)
+
+    if (loadedBuffersTry.isFailure)
+      throw loadedBuffersTry.failed.get
+
+    val bitmapsOrThrowables: collection.Seq[Either[Throwable, Bitmap]] =
+      loadedBuffersTry.get.zipWithIndex.map {
+        case (Left(t), _) =>
+          Left(t)
+
+        case (Right(buffer), index) =>
+          val operationList = BitmapOperationList(LoadedBitmap(buffer, Option(sourceResourcePath), Option(index)))
+          val newBitmap = new Bitmap(operationList, BitmapIdentity())
+
+          if (viewerHandling == UpdateViewerPerDefaults) {
+            if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+              newBitmap.display()
+          }
+
+          Right(newBitmap)
+      }
+
+
+
+    val hasMiscellaneousThrowables = bitmapsOrThrowables.exists {
+      case Left(t) if !t.isInstanceOf[SMCLMaximumBitmapSizeExceededError] => true;
+      case _                                                              => false
+    }
+    if (hasMiscellaneousThrowables) {
+      println("\nWarning: One or more miscellaneous errors occurred during image loading.\n")
+    }
+
+
+    val hasBitmapsExceedingTheSizeWarningLimit = bitmapsOrThrowables.exists {
+      case Right(bitmap)
+        if bitmap.widthInPixels > GS.intFor(BitmapWidthWarningLimitInPixels) &&
+            bitmap.widthInPixels > GS.intFor(BitmapHeightWarningLimitInPixels) => true
+      case _                                                                   => false
+    }
+    if (hasBitmapsExceedingTheSizeWarningLimit) {
+      println("\nWarning: At least one of the bitmaps found from the given resource could not be loaded.\n")
+    }
+
+
+
+
+    bitmapsOrThrowables
+  }
 
   /**
    *
+   *
+   * @param sourceResourcePath
+   * @return
    */
-  //  def apply(sourceFilePath: String): Bitmap = {
-  //
-  //    // TODO: Load image from the given file and init the Bitmap accordingly
-  //    val operationList = BitmapOperationList()
-  //
-  //    new Bitmap(operationList)
-  //  }
+  def apply(sourceResourcePath: String): collection.Seq[Either[Throwable, Bitmap]] =
+    apply(sourceResourcePath, UpdateViewerPerDefaults)
 
 }
 

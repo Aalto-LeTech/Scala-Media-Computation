@@ -4,12 +4,13 @@ package aalto.smcl.platform
 import java.awt.image.BufferedImage
 import java.io.{File, IOException}
 import java.util.Locale
-import javax.imageio.{ImageReadParam, ImageIO}
+import javax.imageio.ImageIO
 import javax.imageio.stream.ImageInputStream
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util._
 
+import aalto.smcl.bitmaps.SMCLMaximumBitmapSizeExceededError
 import aalto.smcl.common._
 
 
@@ -45,8 +46,11 @@ object ImageProvider {
    * @param filePath
    * @return
    */
-  def tryToLoadImagesFromFile(filePath: String): Try[Seq[Either[Throwable, PlatformBitmapBuffer]]] =
-    Try(loadImagesFromFile(filePath))
+  def tryToLoadImagesFromFile(
+      filePath: String,
+      maxWidthInPixels: Int,
+      maxHeightInPixels: Int): Try[Seq[Either[Throwable, PlatformBitmapBuffer]]] =
+    Try(loadImagesFromFile(filePath, maxWidthInPixels, maxHeightInPixels))
 
   /**
    * private[platform]
@@ -56,7 +60,11 @@ object ImageProvider {
    *
    * @throws SecurityException
    */
-  def loadImagesFromFile(filePath: String): Seq[Either[Throwable, PlatformBitmapBuffer]] = {
+  def loadImagesFromFile(
+      filePath: String,
+      maxWidthInPixels: Int,
+      maxHeightInPixels: Int): Seq[Either[Throwable, PlatformBitmapBuffer]] = {
+
     require(filePath != null, "Path of the image file to be loaded cannot be null.")
 
 
@@ -116,7 +124,7 @@ object ImageProvider {
 
         val readImages = new ArrayBuffer[Either[Throwable, PlatformBitmapBuffer]]()
         val numberOfImagesInFile = reader.getNumImages(true)
-        var currentImageIndex = reader.getMinIndex
+        val currentImageIndex = reader.getMinIndex
         var readImageTry: Try[BufferedImage] = null
 
         for (currentImageIndex <- currentImageIndex to (currentImageIndex + numberOfImagesInFile - 1)) {
@@ -130,57 +138,43 @@ object ImageProvider {
               readImages += Left(heightTry.failed.get)
             }
             else {
+              if (widthTry.get > maxWidthInPixels || heightTry.get > maxHeightInPixels) {
+                val newThrowable =
+                  new SMCLMaximumBitmapSizeExceededError(
+                    Option(widthTry.get), Option(heightTry.get),
+                    Option(filePath), Option(currentImageIndex))
 
-              // AL 7.8.2015
-              // This code segment, which loads the image, creates an another ARGB-type buffer and copies the image
-              // into it, should be replaced wit a more memory-efficient course of operation. However, I was unable
-              // to make the ImageIO to load the image straight into an ARGB buffer, and that's why this operation
-              // is handled as can be seen below.
-              if (true) {
+                readImages += Left(newThrowable)
+              }
+              else {
+                // AL 7.8.2015
+                // This code segment, which loads the image, creates an another ARGB-type buffer and copies the image
+                // into it, should be replaced wit a more memory-efficient course of operation. However, I was unable
+                // to make the ImageIO to load the image straight into an ARGB buffer, and that's why this operation
+                // is handled as can be seen below.
+
                 readImageTry = Try(reader.read(currentImageIndex))
                 if (readImageTry.isFailure) {
                   readImages += Left(readImageTry.failed.get)
                 }
                 else {
-                  val destinationBuffer = new BufferedImage(
-                    widthTry.get,
-                    heightTry.get,
-                    BufferedImage.TYPE_INT_ARGB)
+                  if (readImageTry.get.getType != BufferedImage.TYPE_INT_ARGB) {
+                    val destinationBuffer = new BufferedImage(
+                      widthTry.get,
+                      heightTry.get,
+                      BufferedImage.TYPE_INT_ARGB)
 
-                  val g2d = destinationBuffer.createGraphics()
-                  g2d.drawImage(readImageTry.get, null, 0, 0)
-                  g2d.dispose()
+                    val g2d = destinationBuffer.createGraphics()
+                    g2d.drawImage(readImageTry.get, null, 0, 0)
+                    g2d.dispose()
 
-                  readImages += Right(PlatformBitmapBuffer(destinationBuffer))
+                    readImages += Right(PlatformBitmapBuffer(destinationBuffer))
+                  }
+                  else {
+                    readImages += Right(PlatformBitmapBuffer(readImageTry.get))
+                  }
                 }
               }
-
-              // For example, the following wouldn't work:
-              if (false) {
-                println(s"Possible image types for image $currentImageIndex: ")
-                val types = reader.getImageTypes(currentImageIndex)
-                while (types.hasNext) {
-                  println(types.next().getBufferedImageType)
-                }
-
-                val destinationBuffer = new BufferedImage(
-                  widthTry.get,
-                  heightTry.get,
-                  BufferedImage.TYPE_INT_ARGB)
-
-                val readParams = new ImageReadParam()
-                readParams.setDestination(destinationBuffer)
-                //readParams.setSourceBands(Array(0, 1, 2))
-                //readParams.setDestinationBands(Array(1, 2, 3))
-
-
-                readImageTry = Try(reader.read(currentImageIndex, readParams))
-                readImageTry match {
-                  case Success(x) => readImages += Right(PlatformBitmapBuffer(x))
-                  case Failure(t) => readImages += Left(t)
-                }
-              }
-
             }
           }
         }

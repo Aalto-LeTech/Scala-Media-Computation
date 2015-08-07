@@ -22,7 +22,7 @@ private[smcl] final class Setting[SettingType](
     val validator: SettingType => Option[Throwable]) extends Mutable {
 
   if (validator != null)
-    validator(initialValue).foreach {reason => throw new SettingValidationError(key, reason)}
+    validator(initialValue).foreach {reason => throw new SMCLSettingValidationError(key, reason)}
 
   /** Holds the current value of this [[Setting]]. */
   private var _currentValue: SettingType = initialValue
@@ -37,11 +37,11 @@ private[smcl] final class Setting[SettingType](
    * Sets the value of this [[Setting]].
    *
    * @param value                     The new value to be set.
-   * @throws SettingValidationError   Thrown if the validator defined for the setting does not accept the proposed new value.
+   * @throws SMCLSettingValidationError   Thrown if the validator defined for the setting does not accept the proposed new value.
    */
   def value_=(value: SettingType): Unit = {
     validator(initialValue).foreach {
-      reason => throw new SettingValidationError(key, reason)
+      reason => throw new SMCLSettingValidationError(key, reason)
     }
 
     _currentValue = value

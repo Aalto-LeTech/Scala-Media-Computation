@@ -3,6 +3,8 @@ package aalto.smcl.platform
 
 import java.awt.image.BufferedImage
 
+import aalto.smcl.bitmaps.BitmapValidator
+
 
 
 
@@ -21,6 +23,8 @@ private[smcl] object PlatformBitmapBuffer {
    * @return
    */
   def apply(widthInPixels: Int, heightInPixels: Int): PlatformBitmapBuffer = {
+    BitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+
     val newBuffer = new BufferedImage(widthInPixels, heightInPixels, BufferedImage.TYPE_INT_ARGB)
 
     new PlatformBitmapBuffer(newBuffer)
@@ -34,6 +38,8 @@ private[smcl] object PlatformBitmapBuffer {
    */
   def apply(awtBufferedImage: BufferedImage): PlatformBitmapBuffer = {
     require(awtBufferedImage != null, "Provided image buffer cannot be null.")
+
+    BitmapValidator.validateBitmapSize(awtBufferedImage.getWidth, awtBufferedImage.getHeight)
 
     new PlatformBitmapBuffer(awtBufferedImage)
   }

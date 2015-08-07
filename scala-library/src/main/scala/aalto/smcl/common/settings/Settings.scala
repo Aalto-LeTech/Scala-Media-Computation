@@ -55,7 +55,7 @@ class Settings {
    */
   def apply(key: BaseSettingKeys.Value[_]): Setting[_] = {
     if (!_settingMap.contains(key))
-      throw new UninitializedSettingError(key)
+      throw new SMCLUninitializedSettingError(key)
 
     _settingMap(key)
   }

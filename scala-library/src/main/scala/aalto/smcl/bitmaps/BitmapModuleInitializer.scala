@@ -3,7 +3,6 @@ package aalto.smcl.bitmaps
 
 import aalto.smcl.ModuleInitializer
 import aalto.smcl.bitmaps.BitmapSettingKeys._
-import aalto.smcl.bitmaps.immutable.primitives.BitmapValidatorFactory
 import aalto.smcl.common.settings.Setting
 import aalto.smcl.common.settings.SettingValidatorFactory.{ConditionFalseValidator, EmptyValidator, IsNullValidator}
 import aalto.smcl.common.{GS, HorizontalAlignment, PresetColors, RGBAColor, VerticalAlignment}
@@ -45,12 +44,22 @@ private[smcl] object BitmapModuleInitializer extends ModuleInitializer {
     GS += new Setting[Int](
       key = DefaultBitmapWidthInPixels,
       initialValue = 50,
-      validator = BitmapValidatorFactory.BitmapWidthValidator())
+      validator = BitmapValidatorFunctionFactory.BitmapWidthValidator())
 
     GS += new Setting[Int](
       key = DefaultBitmapHeightInPixels,
       initialValue = 50,
-      validator = BitmapValidatorFactory.BitmapHeightValidator())
+      validator = BitmapValidatorFunctionFactory.BitmapHeightValidator())
+
+    GS += new Setting[Int](
+      key = BitmapWidthWarningLimitInPixels,
+      initialValue = 800,
+      validator = BitmapValidatorFunctionFactory.BitmapWidthValidator())
+
+    GS += new Setting[Int](
+      key = BitmapHeightWarningLimitInPixels,
+      initialValue = 800,
+      validator = BitmapValidatorFunctionFactory.BitmapHeightValidator())
 
     GS += new Setting[Int](
       key = DefaultCircleRadiusInPixels,
