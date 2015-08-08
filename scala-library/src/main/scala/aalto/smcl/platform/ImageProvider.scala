@@ -2,6 +2,8 @@ package aalto.smcl.platform
 
 
 import java.io.{File, IOException}
+import java.nio.file.Files
+import java.nio.file.attribute.BasicFileAttributes
 import java.util.Locale
 import javax.imageio.stream.ImageInputStream
 import javax.imageio.{ImageIO, ImageReader}
@@ -13,11 +15,11 @@ import scala.util._
 
 
 /**
- * private[smcl]
+ *
  *
  * @author Aleksi Lukkarinen
  */
-object ImageProvider {
+private[smcl] object ImageProvider {
 
   /** */
   lazy val supportedReadableMimeTypes: Seq[String] =
@@ -41,8 +43,6 @@ object ImageProvider {
    *
    * @param path
    * @return
-   *
-   * @throws SecurityException
    */
   def tryToLoadImagesFromFile(path: String): Try[Seq[Either[Throwable, PlatformBitmapBuffer]]] =
     Try(loadImagesFromFile(path))
@@ -53,6 +53,10 @@ object ImageProvider {
    * @param path
    * @return
    *
+   * @throws SMCLImageInputStreamNotCreatedError
+   * @throws SMCLSuitableImageStreamProviderNotFoundError
+   * @throws SMCLSuitableImageReaderNotFoundError
+   * @throws SMCLImageReaderNotRetrievedError
    * @throws SecurityException
    */
   private def loadImagesFromFile(path: String): Seq[Either[Throwable, PlatformBitmapBuffer]] = {
@@ -64,7 +68,7 @@ object ImageProvider {
 
       try {
         reader.setInput(inputStream)
-        loadImagesFromReader(reader, path)
+        loadImagesFromReader(reader, imagePath)
       }
       finally {
         if (reader != null)
@@ -104,17 +108,13 @@ object ImageProvider {
     reader: ImageReader,
     filePath: String): Either[Throwable, PlatformBitmapBuffer] = {
 
-    val widthTry = Try(reader.getWidth(currentImageIndex))
-    if (widthTry.isFailure)
-      return Left(widthTry.failed.get)
+    val width = Try(reader.getWidth(currentImageIndex)).recover({
+      case e: IOException => return Left(e)
+    }).get
 
-    val width = widthTry.get
-
-    val heightTry = Try(reader.getHeight(currentImageIndex))
-    if (heightTry.isFailure)
-      return Left(heightTry.failed.get)
-
-    val height = heightTry.get
+    val height = Try(reader.getHeight(currentImageIndex)).recover({
+      case e: IOException => return Left(e)
+    }).get
 
     if (BitmapValidator.maximumSizeLimitsAreExceeded(width, height)) {
       val newThrowable =
@@ -134,15 +134,15 @@ object ImageProvider {
       return Left(newThrowable)
     }
 
-    val readImageTry = Try(reader.read(currentImageIndex))
-    if (readImageTry.isFailure)
-      return Left(readImageTry.failed.get)
+    val readImage = Try(reader.read(currentImageIndex)).recover({
+      case e: IOException => return Left(e)
+    }).get
 
-    val platformBitmapBufferTry = Try(PlatformBitmapBuffer(readImageTry.get))
-    if (platformBitmapBufferTry.isFailure)
-      return Left(platformBitmapBufferTry.failed.get)
+    val platformBitmapBuffer = Try(PlatformBitmapBuffer(readImage)).recover({
+      case t: Throwable => return Left(t)
+    }).get
 
-    Right(platformBitmapBufferTry.get)
+    Right(platformBitmapBuffer)
   }
 
 
@@ -151,17 +151,18 @@ object ImageProvider {
    *
    * @param inputStream
    * @return
+   *
+   * @throws SMCLSuitableImageReaderNotFoundError
+   * @throws SMCLImageReaderNotRetrievedError
    */
   private def findSuitableImageReaderFor(inputStream: ImageInputStream): ImageReader = {
     val imageReaders = ImageIO.getImageReaders(inputStream)
     if (!imageReaders.hasNext)
       throw new SMCLSuitableImageReaderNotFoundError()
 
-    val readerTry = Try(imageReaders.next())
-    if (readerTry.isFailure)
-      throw new SMCLImageReaderNotRetrievedError(readerTry.failed.get)
-
-    readerTry.get
+    Try(imageReaders.next()).recover({
+      case t: Throwable => throw new SMCLImageReaderNotRetrievedError(t)
+    }).get
   }
 
   /**
@@ -169,15 +170,19 @@ object ImageProvider {
    *
    * @param imageFile
    * @return
+   *
+   * @throws SMCLImageInputStreamNotCreatedError
+   * @throws SMCLSuitableImageStreamProviderNotFoundError
    */
   private def createImageInputStreamFor(imageFile: File): ImageInputStream = {
-    val inputStreamTry = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)) recover {
-      case caughtException: IOException => throw new SMCLImageInputStreamNotCreatedError(caughtException)
-    }
-    if (inputStreamTry.get == null)
+    val inputStream = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)).recover({
+      case e: IOException => throw new SMCLImageInputStreamNotCreatedError(e)
+    }).get
+
+    if (inputStream == null)
       throw new SMCLSuitableImageStreamProviderNotFoundError()
 
-    inputStreamTry.get
+    inputStream
   }
 
   /**
@@ -185,6 +190,8 @@ object ImageProvider {
    *
    * @param filePath
    * @return
+   *
+   * @throws SecurityException
    */
   private def ensureThatImageFileIsReadableAndSupported(filePath: String): (File, String, String) = {
     require(filePath != null, "Path of the image file to be loaded cannot be null.")
@@ -195,10 +202,18 @@ object ImageProvider {
 
 
     val imageFile = new File(filePath)
-    require(!imageFile.isDirectory, "The specified path points to a folder instead of an image file.")
-    require(imageFile.isFile, "The specified path does not point to a regular image file.")
-    require(imageFile.exists(), "The specified file does not exist.")
-    require(imageFile.length() > 0, "The specified file has no content.")
+    val imageFilePath = imageFile.toPath
+
+    val attributes: BasicFileAttributes =
+      Try(Files.readAttributes(imageFilePath, classOf[BasicFileAttributes])).recover({
+        case t: Throwable => throw new SMCLFileAttributeRetrievalFailedError(t)
+      }).get
+
+    require(!attributes.isDirectory, "The specified path points to a folder instead of an image file.")
+    require(!attributes.isSymbolicLink, "The specified path points to a symbolic link instead of an image file.")
+    require(attributes.isRegularFile, "The specified path does not point to a regular image file.")
+    require(Files.exists(imageFilePath), "The specified file does not exist.")
+    require(attributes.size > 0, "The specified file has no content.")
 
 
     val extension: String = FileUtils.resolveExtensionOf(imageFile.getName)
