@@ -1,19 +1,15 @@
 package aalto.smcl.platform
 
 
-import java.awt.image.BufferedImage
 import java.io.{File, IOException}
 import java.util.Locale
-import javax.imageio.ImageIO
 import javax.imageio.stream.ImageInputStream
+import javax.imageio.{ImageIO, ImageReader}
 
-import scala.collection.mutable.ArrayBuffer
-import scala.util._
-
-import aalto.smcl.bitmaps.SMCLMaximumBitmapSizeExceededError
+import aalto.smcl.bitmaps._
 import aalto.smcl.common._
 
-
+import scala.util._
 
 
 /**
@@ -43,30 +39,155 @@ object ImageProvider {
   /**
    *
    *
-   * @param filePath
-   * @return
-   */
-  def tryToLoadImagesFromFile(
-      filePath: String,
-      maxWidthInPixels: Int,
-      maxHeightInPixels: Int): Try[Seq[Either[Throwable, PlatformBitmapBuffer]]] =
-    Try(loadImagesFromFile(filePath, maxWidthInPixels, maxHeightInPixels))
-
-  /**
-   * private[platform]
-   *
-   * @param filePath
+   * @param path
    * @return
    *
    * @throws SecurityException
    */
-  def loadImagesFromFile(
-      filePath: String,
-      maxWidthInPixels: Int,
-      maxHeightInPixels: Int): Seq[Either[Throwable, PlatformBitmapBuffer]] = {
+  def tryToLoadImagesFromFile(path: String): Try[Seq[Either[Throwable, PlatformBitmapBuffer]]] =
+    Try(loadImagesFromFile(path))
 
+  /**
+   *
+   *
+   * @param path
+   * @return
+   *
+   * @throws SecurityException
+   */
+  private def loadImagesFromFile(path: String): Seq[Either[Throwable, PlatformBitmapBuffer]] = {
+    val (imageFile, imagePath, imageExtension) =
+      ensureThatImageFileIsReadableAndSupported(path)
+
+    EnsureClosingOfAfter(createImageInputStreamFor(imageFile)) { inputStream =>
+      val reader: ImageReader = findSuitableImageReaderFor(inputStream)
+
+      try {
+        reader.setInput(inputStream)
+        loadImagesFromReader(reader, path)
+      }
+      finally {
+        if (reader != null)
+          reader.dispose()
+      }
+    }
+  }
+
+  /**
+   *
+   *
+   * @param filePath
+   * @param reader
+   * @return
+   */
+  private def loadImagesFromReader(
+    reader: ImageReader,
+    filePath: String): Seq[Either[Throwable, PlatformBitmapBuffer]] = {
+
+    val WithSearchingAllowed = true
+    val lastImageIndex = reader.getMinIndex + reader.getNumImages(WithSearchingAllowed) - 1
+    val imageNumberRange = reader.getMinIndex to lastImageIndex
+
+    imageNumberRange.map(loadSingleImageFromReader(_, reader, filePath)).toSeq
+  }
+
+  /**
+   *
+   *
+   * @param currentImageIndex
+   * @param reader
+   * @param filePath
+   * @return
+   */
+  private def loadSingleImageFromReader(
+    currentImageIndex: Int,
+    reader: ImageReader,
+    filePath: String): Either[Throwable, PlatformBitmapBuffer] = {
+
+    val widthTry = Try(reader.getWidth(currentImageIndex))
+    if (widthTry.isFailure)
+      return Left(widthTry.failed.get)
+
+    val width = widthTry.get
+
+    val heightTry = Try(reader.getHeight(currentImageIndex))
+    if (heightTry.isFailure)
+      return Left(heightTry.failed.get)
+
+    val height = heightTry.get
+
+    if (BitmapValidator.maximumSizeLimitsAreExceeded(width, height)) {
+      val newThrowable =
+        new SMCLMaximumBitmapSizeExceededError(
+          Option(width), Option(height),
+          Option(filePath), Option(currentImageIndex))
+
+      return Left(newThrowable)
+    }
+
+    if (BitmapValidator.minimumSizeLimitsAreNotMet(width, height)) {
+      val newThrowable =
+        new SMCLMinimumBitmapSizeNotMetError(
+          Option(width), Option(height),
+          Option(filePath), Option(currentImageIndex))
+
+      return Left(newThrowable)
+    }
+
+    val readImageTry = Try(reader.read(currentImageIndex))
+    if (readImageTry.isFailure)
+      return Left(readImageTry.failed.get)
+
+    val platformBitmapBufferTry = Try(PlatformBitmapBuffer(readImageTry.get))
+    if (platformBitmapBufferTry.isFailure)
+      return Left(platformBitmapBufferTry.failed.get)
+
+    Right(platformBitmapBufferTry.get)
+  }
+
+
+  /**
+   *
+   *
+   * @param inputStream
+   * @return
+   */
+  private def findSuitableImageReaderFor(inputStream: ImageInputStream): ImageReader = {
+    val imageReaders = ImageIO.getImageReaders(inputStream)
+    if (!imageReaders.hasNext)
+      throw new SMCLSuitableImageReaderNotFoundError()
+
+    val readerTry = Try(imageReaders.next())
+    if (readerTry.isFailure)
+      throw new SMCLImageReaderNotRetrievedError(readerTry.failed.get)
+
+    readerTry.get
+  }
+
+  /**
+   *
+   *
+   * @param imageFile
+   * @return
+   */
+  private def createImageInputStreamFor(imageFile: File): ImageInputStream = {
+    val inputStreamTry = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)) recover {
+      case caughtException: IOException => throw new SMCLImageInputStreamNotCreatedError(caughtException)
+    }
+    if (inputStreamTry.get == null)
+      throw new SMCLSuitableImageStreamProviderNotFoundError()
+
+    inputStreamTry.get
+  }
+
+  /**
+   *
+   *
+   * @param filePath
+   * @return
+   */
+  private def ensureThatImageFileIsReadableAndSupported(filePath: String): (File, String, String) = {
     require(filePath != null, "Path of the image file to be loaded cannot be null.")
-
 
     val pathToFile = filePath.trim
     require(!filePath.isEmpty,
@@ -80,117 +201,22 @@ object ImageProvider {
     require(imageFile.length() > 0, "The specified file has no content.")
 
 
-    val extension = {
-      val fileName = imageFile.getName
-      val lastPeriod = fileName.lastIndexOf(StrPeriod)
+    val extension: String = FileUtils.resolveExtensionOf(imageFile.getName)
+    ensureThatFileExtensionIsOfSupportedImageType(extension)
 
-      if (lastPeriod > -1)
-        fileName.substring(lastPeriod + 1).trim.toLowerCase(Locale.getDefault)
-      else
-        StrEmpty
-    }
-    require(supportedReadableFileExtensions.contains(extension),
-      "Extension of the given file is unknown (the supported ones are " +
-          supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
-
-
-    val inputStreamTry = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)) recover {
-      case caughtException: IOException =>
-        throw new RuntimeException(
-          "Input stream for the image file could not be created, possibly because a cache file could not be created.",
-          caughtException)
-    }
-    if (inputStreamTry.get == null) {
-      throw new RuntimeException(
-        "Input stream for the image file could not be created because a suitable stream provider could not be found.")
-    }
-
-    try {
-      val imageReaders = ImageIO.getImageReaders(inputStreamTry.get)
-      if (!imageReaders.hasNext)
-        throw new RuntimeException("A suitable image reader for the given image file could not be found.")
-
-      val readerTry = Try(imageReaders.next())
-      if (readerTry.isFailure) {
-        throw new RuntimeException(
-          "A suitable image reader for the given image file could not be retrieved.",
-          readerTry.failed.get)
-      }
-
-      val reader = readerTry.get
-
-      try {
-        reader.setInput(inputStreamTry.get)
-
-        val readImages = new ArrayBuffer[Either[Throwable, PlatformBitmapBuffer]]()
-        val numberOfImagesInFile = reader.getNumImages(true)
-        val currentImageIndex = reader.getMinIndex
-        var readImageTry: Try[BufferedImage] = null
-
-        for (currentImageIndex <- currentImageIndex to (currentImageIndex + numberOfImagesInFile - 1)) {
-          val widthTry = Try(reader.getWidth(currentImageIndex))
-          if (widthTry.isFailure) {
-            readImages += Left(widthTry.failed.get)
-          }
-          else {
-            val heightTry = Try(reader.getHeight(currentImageIndex))
-            if (heightTry.isFailure) {
-              readImages += Left(heightTry.failed.get)
-            }
-            else {
-              if (widthTry.get > maxWidthInPixels || heightTry.get > maxHeightInPixels) {
-                val newThrowable =
-                  new SMCLMaximumBitmapSizeExceededError(
-                    Option(widthTry.get), Option(heightTry.get),
-                    Option(filePath), Option(currentImageIndex))
-
-                readImages += Left(newThrowable)
-              }
-              else {
-                // AL 7.8.2015
-                // This code segment, which loads the image, creates an another ARGB-type buffer and copies the image
-                // into it, should be replaced wit a more memory-efficient course of operation. However, I was unable
-                // to make the ImageIO to load the image straight into an ARGB buffer, and that's why this operation
-                // is handled as can be seen below.
-
-                readImageTry = Try(reader.read(currentImageIndex))
-                if (readImageTry.isFailure) {
-                  readImages += Left(readImageTry.failed.get)
-                }
-                else {
-                  if (readImageTry.get.getType != BufferedImage.TYPE_INT_ARGB) {
-                    val destinationBuffer = new BufferedImage(
-                      widthTry.get,
-                      heightTry.get,
-                      BufferedImage.TYPE_INT_ARGB)
-
-                    val g2d = destinationBuffer.createGraphics()
-                    g2d.drawImage(readImageTry.get, null, 0, 0)
-                    g2d.dispose()
-
-                    readImages += Right(PlatformBitmapBuffer(destinationBuffer))
-                  }
-                  else {
-                    readImages += Right(PlatformBitmapBuffer(readImageTry.get))
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        readImages.toSeq
-      }
-      finally {
-        readerTry.map(_.dispose())
-      }
-    }
-
-    finally {
-      inputStreamTry.map(_.close())
-    }
+    (imageFile.getAbsoluteFile, imageFile.getAbsolutePath, extension)
   }
 
+  /**
+   *
+   *
+   * @param extension
+   */
+  private def ensureThatFileExtensionIsOfSupportedImageType(extension: String): Unit = {
+    require(supportedReadableFileExtensions.contains(extension),
+      "Extension of the given file is unknown (the supported ones are " +
+        supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
+  }
 
   /**
    *

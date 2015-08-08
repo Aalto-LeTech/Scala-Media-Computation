@@ -1,11 +1,10 @@
 package aalto.smcl.platform
 
 
+import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
 import aalto.smcl.bitmaps.BitmapValidator
-
-
 
 
 /**
@@ -14,6 +13,9 @@ import aalto.smcl.bitmaps.BitmapValidator
  * @author Aleksi Lukkarinen
  */
 private[smcl] object PlatformBitmapBuffer {
+
+  /** */
+  val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB
 
   /**
    *
@@ -25,7 +27,7 @@ private[smcl] object PlatformBitmapBuffer {
   def apply(widthInPixels: Int, heightInPixels: Int): PlatformBitmapBuffer = {
     BitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
-    val newBuffer = new BufferedImage(widthInPixels, heightInPixels, BufferedImage.TYPE_INT_ARGB)
+    val newBuffer = createNormalizedLowLevelBitmapBufferOf(widthInPixels, heightInPixels)
 
     new PlatformBitmapBuffer(newBuffer)
   }
@@ -41,7 +43,50 @@ private[smcl] object PlatformBitmapBuffer {
 
     BitmapValidator.validateBitmapSize(awtBufferedImage.getWidth, awtBufferedImage.getHeight)
 
-    new PlatformBitmapBuffer(awtBufferedImage)
+    val normalizedAwtBuffer = convertToNormalizedLowLevelBitmapBufferIfNecessary(awtBufferedImage)
+
+    new PlatformBitmapBuffer(normalizedAwtBuffer)
+  }
+
+  /**
+   *
+   *
+   * @param width
+   * @param height
+   * @return
+   */
+  private[platform] def createNormalizedLowLevelBitmapBufferOf(width: Int, height: Int) =
+    new BufferedImage(width, height, NormalizedBufferType)
+
+
+  /**
+   *
+   *
+   * @param buffer
+   * @return
+   */
+  private[platform] def convertToNormalizedLowLevelBitmapBufferIfNecessary(
+    buffer: BufferedImage): BufferedImage = {
+
+    var bufferCandidate = buffer
+
+    if (bufferCandidate.getType != NormalizedBufferType) {
+      val newBuffer = createNormalizedLowLevelBitmapBufferOf(
+        bufferCandidate.getWidth, bufferCandidate.getHeight)
+
+      var drawingSurface: Graphics2D = null
+      try {
+        drawingSurface = newBuffer.createGraphics()
+        drawingSurface.drawImage(bufferCandidate, null, 0, 0)
+      }
+      finally {
+        drawingSurface.dispose()
+      }
+
+      bufferCandidate = newBuffer
+    }
+
+    bufferCandidate
   }
 
 }

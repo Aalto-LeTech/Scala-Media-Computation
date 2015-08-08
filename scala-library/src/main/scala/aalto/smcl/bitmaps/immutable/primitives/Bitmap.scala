@@ -17,8 +17,6 @@ import aalto.smcl.common.{GS, HorizontalAlignment, RGBAColor, TimestampedCreatio
 import aalto.smcl.platform.{ImageProvider, PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
 
 
-
-
 /**
  *
  *
@@ -60,10 +58,10 @@ object Bitmap {
    * Creates a new empty [[aalto.smcl.bitmaps.immutable.primitives.Bitmap]] instance.
    */
   def apply(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      initialBackgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    initialBackgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     BitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
@@ -75,7 +73,7 @@ object Bitmap {
 
     val operationList =
       Clear(initialBackgroundColor) +:
-          BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
+        BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
 
     val newBitmap = new Bitmap(operationList, BitmapIdentity())
 
@@ -95,16 +93,11 @@ object Bitmap {
    * @return
    */
   def apply(
-      sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle.Value): collection.Seq[Either[Throwable, Bitmap]] = {
+    sourceResourcePath: String,
+    viewerHandling: ViewerUpdateStyle.Value): collection.Seq[Either[Throwable, Bitmap]] = {
 
     // The ImageProvider is trusted with validation of the source resource path.
-    val loadedBuffersTry =
-      ImageProvider.tryToLoadImagesFromFile(
-        sourceResourcePath,
-        BitmapValidator.MaximumBitmapWidthInPixels,
-        BitmapValidator.MaximumBitmapHeightInPixels)
-
+    val loadedBuffersTry = ImageProvider.tryToLoadImagesFromFile(sourceResourcePath)
     if (loadedBuffersTry.isFailure)
       throw loadedBuffersTry.failed.get
 
@@ -124,30 +117,6 @@ object Bitmap {
 
           Right(newBitmap)
       }
-
-
-
-    val hasMiscellaneousThrowables = bitmapsOrThrowables.exists {
-      case Left(t) if !t.isInstanceOf[SMCLMaximumBitmapSizeExceededError] => true;
-      case _                                                              => false
-    }
-    if (hasMiscellaneousThrowables) {
-      println("\nWarning: One or more miscellaneous errors occurred during image loading.\n")
-    }
-
-
-    val hasBitmapsExceedingTheSizeWarningLimit = bitmapsOrThrowables.exists {
-      case Right(bitmap)
-        if bitmap.widthInPixels > GS.intFor(BitmapWidthWarningLimitInPixels) &&
-            bitmap.widthInPixels > GS.intFor(BitmapHeightWarningLimitInPixels) => true
-      case _                                                                   => false
-    }
-    if (hasBitmapsExceedingTheSizeWarningLimit) {
-      println("\nWarning: At least one of the bitmaps found from the given resource could not be loaded.\n")
-    }
-
-
-
 
     bitmapsOrThrowables
   }
@@ -173,8 +142,8 @@ object Bitmap {
  * @author Aleksi Lukkarinen
  */
 case class Bitmap private(
-    private[bitmaps] val operations: BitmapOperationList,
-    uniqueIdentifier: BitmapIdentity) extends {
+  private[bitmaps] val operations: BitmapOperationList,
+  uniqueIdentifier: BitmapIdentity) extends {
 
   /** Width of this [[Bitmap]]. */
   val widthInPixels: Int = operations.widthInPixels
@@ -187,10 +156,10 @@ case class Bitmap private(
     WeakReference[PlatformBitmapBuffer](null)
 
 } with RenderableBitmap
-       with PixelRectangle
-       with OperableBitmap
-       with Immutable
-       with TimestampedCreation {
+with PixelRectangle
+with OperableBitmap
+with Immutable
+with TimestampedCreation {
 
   /**
    * Returns the initial background color of this [[Bitmap]]
@@ -206,8 +175,8 @@ case class Bitmap private(
    * @return
    */
   private[bitmaps] def apply(
-      newOperation: AbstractSingleSourceOperation,
-      viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
+    newOperation: AbstractSingleSourceOperation,
+    viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
 
     require(newOperation != null, "Operation argument cannot be null.")
 
@@ -229,8 +198,8 @@ case class Bitmap private(
    * @return
    */
   private[bitmaps] def apply(
-      newOperation: AbstractBufferProviderOperation,
-      viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
+    newOperation: AbstractBufferProviderOperation,
+    viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
 
     require(newOperation != null, "Operation argument cannot be null.")
 
@@ -253,8 +222,8 @@ case class Bitmap private(
    * @return
    */
   def clear(
-      color: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    color: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(Clear(color), viewerHandling)
   }
@@ -271,12 +240,12 @@ case class Bitmap private(
    * @return
    */
   def drawLine(
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    fromXInPixels: Int,
+    fromYInPixels: Int,
+    toXInPixels: Int,
+    toYInPixels: Int,
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawLine(
       fromXInPixels, fromYInPixels,
@@ -295,11 +264,11 @@ case class Bitmap private(
    * @return
    */
   def drawPolyline(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
-      numberOfCoordinatesToDraw: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    xCoordinates: Seq[Int],
+    yCoordinates: Seq[Int],
+    numberOfCoordinatesToDraw: Int,
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawPolyline(
       xCoordinates, yCoordinates,
@@ -321,14 +290,14 @@ case class Bitmap private(
    * @return
    */
   def drawPolygon(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
-      numberOfCoordinatesToDraw: Int,
-      hasBorder: Boolean = true,
-      hasFilling: Boolean = false,
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    xCoordinates: Seq[Int],
+    yCoordinates: Seq[Int],
+    numberOfCoordinatesToDraw: Int,
+    hasBorder: Boolean = true,
+    hasFilling: Boolean = false,
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawPolygon(
       xCoordinates, yCoordinates,
@@ -351,14 +320,14 @@ case class Bitmap private(
    * @return
    */
   def drawSquare(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawSquare(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
@@ -382,15 +351,15 @@ case class Bitmap private(
    * @return
    */
   def drawRectangle(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawRectangle(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
@@ -415,16 +384,16 @@ case class Bitmap private(
    * @return
    */
   def drawRoundedSquare(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawRoundedSquare(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
@@ -451,17 +420,17 @@ case class Bitmap private(
    * @return
    */
   def drawRoundedRectangle(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawRoundedRectangle(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
@@ -485,14 +454,14 @@ case class Bitmap private(
    * @return
    */
   def drawCircle(
-      centerXInPixels: Int,
-      centerYInPixels: Int,
-      radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    centerXInPixels: Int,
+    centerYInPixels: Int,
+    radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawCircle(
       centerXInPixels, centerYInPixels,
@@ -516,15 +485,15 @@ case class Bitmap private(
    * @return
    */
   def drawEllipse(
-      centerXInPixels: Int,
-      centerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    centerXInPixels: Int,
+    centerYInPixels: Int,
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawEllipse(
       centerXInPixels, centerYInPixels,
@@ -550,17 +519,17 @@ case class Bitmap private(
    * @return
    */
   def drawArc(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(DrawArc(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
@@ -580,10 +549,10 @@ case class Bitmap private(
    * @return
    */
   def appendOnLeft(
-      bitmapsToCombineWith: Bitmap*)(
-      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
+    bitmapsToCombineWith: Bitmap*)(
+    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
       AppendHorizontally(bitmapsToCombineWith :+ this)(
@@ -601,10 +570,10 @@ case class Bitmap private(
    * @return
    */
   def appendOnRight(
-      bitmapsToCombineWith: Bitmap*)(
-      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
+    bitmapsToCombineWith: Bitmap*)(
+    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
       AppendHorizontally(this +: bitmapsToCombineWith)(
@@ -622,10 +591,10 @@ case class Bitmap private(
    * @return
    */
   def appendOnTop(
-      bitmapsToCombineWith: Bitmap*)(
-      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
+    bitmapsToCombineWith: Bitmap*)(
+    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
       AppendVertically(bitmapsToCombineWith :+ this)(
@@ -643,10 +612,10 @@ case class Bitmap private(
    * @return
    */
   def appendOnBottom(
-      bitmapsToCombineWith: Bitmap*)(
-      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
+    bitmapsToCombineWith: Bitmap*)(
+    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
 
     apply(
       AppendVertically(this +: bitmapsToCombineWith)(
@@ -669,7 +638,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :/\ (other: Bitmap): Bitmap = appendOnTop(other)()
+  def :/\(other: Bitmap): Bitmap = appendOnTop(other)()
 
   /**
    *
@@ -677,7 +646,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :/\ (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other: _*)()
+  def :/\(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other: _*)()
 
   /**
    *
@@ -685,7 +654,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :/\ (other: scala.collection.Traversable[Bitmap]): Bitmap = :/\(other.toSeq)
+  def :/\(other: scala.collection.Traversable[Bitmap]): Bitmap = :/\(other.toSeq)
 
   //-------------------------------
   //
@@ -699,7 +668,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def /\: (other: Bitmap): Bitmap = appendOnTop(other)()
+  def /\:(other: Bitmap): Bitmap = appendOnTop(other)()
 
   /**
    *
@@ -707,7 +676,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def /\: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other: _*)()
+  def /\:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other: _*)()
 
   /**
    *
@@ -715,7 +684,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def /\: (other: scala.collection.Traversable[Bitmap]): Bitmap = /\:(other.toSeq)
+  def /\:(other: scala.collection.Traversable[Bitmap]): Bitmap = /\:(other.toSeq)
 
   //-------------------------------
   //
@@ -729,7 +698,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :\/ (other: Bitmap): Bitmap = appendOnBottom(other)()
+  def :\/(other: Bitmap): Bitmap = appendOnBottom(other)()
 
   /**
    *
@@ -737,7 +706,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :\/ (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other: _*)()
+  def :\/(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other: _*)()
 
   /**
    *
@@ -745,7 +714,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :\/ (other: scala.collection.Traversable[Bitmap]): Bitmap = :\/(other.toSeq)
+  def :\/(other: scala.collection.Traversable[Bitmap]): Bitmap = :\/(other.toSeq)
 
   //-------------------------------
   //
@@ -759,7 +728,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def \/: (other: Bitmap): Bitmap = appendOnBottom(other)()
+  def \/:(other: Bitmap): Bitmap = appendOnBottom(other)()
 
   /**
    *
@@ -767,7 +736,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def \/: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other: _*)()
+  def \/:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other: _*)()
 
   /**
    *
@@ -775,7 +744,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def \/: (other: scala.collection.Traversable[Bitmap]): Bitmap = \/:(other.toSeq)
+  def \/:(other: scala.collection.Traversable[Bitmap]): Bitmap = \/:(other.toSeq)
 
   //-------------------------------
   //
@@ -789,7 +758,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :>> (other: Bitmap): Bitmap = appendOnRight(other)()
+  def :>>(other: Bitmap): Bitmap = appendOnRight(other)()
 
   /**
    *
@@ -797,7 +766,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :>> (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other: _*)()
+  def :>>(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other: _*)()
 
   /**
    *
@@ -805,7 +774,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :>> (other: scala.collection.Traversable[Bitmap]): Bitmap = :>>(other.toSeq)
+  def :>>(other: scala.collection.Traversable[Bitmap]): Bitmap = :>>(other.toSeq)
 
   //-------------------------------
   //
@@ -819,7 +788,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def >>: (other: Bitmap): Bitmap = appendOnRight(other)()
+  def >>:(other: Bitmap): Bitmap = appendOnRight(other)()
 
   /**
    *
@@ -827,7 +796,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def >>: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other: _*)()
+  def >>:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other: _*)()
 
   /**
    *
@@ -835,7 +804,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def >>: (other: scala.collection.Traversable[Bitmap]): Bitmap = >>:(other.toSeq)
+  def >>:(other: scala.collection.Traversable[Bitmap]): Bitmap = >>:(other.toSeq)
 
   //-------------------------------
   //
@@ -849,7 +818,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :<< (other: Bitmap): Bitmap = appendOnLeft(other)()
+  def :<<(other: Bitmap): Bitmap = appendOnLeft(other)()
 
   /**
    *
@@ -857,7 +826,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :<< (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other: _*)()
+  def :<<(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other: _*)()
 
   /**
    *
@@ -865,7 +834,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def :<< (other: scala.collection.Traversable[Bitmap]): Bitmap = :<<(other.toSeq)
+  def :<<(other: scala.collection.Traversable[Bitmap]): Bitmap = :<<(other.toSeq)
 
   //-------------------------------
   //
@@ -879,7 +848,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def <<: (other: Bitmap): Bitmap = appendOnLeft(other)()
+  def <<:(other: Bitmap): Bitmap = appendOnLeft(other)()
 
   /**
    *
@@ -887,7 +856,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def <<: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other: _*)()
+  def <<:(other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other: _*)()
 
   /**
    *
@@ -895,7 +864,7 @@ case class Bitmap private(
    * @param other
    * @return
    */
-  def <<: (other: scala.collection.Traversable[Bitmap]): Bitmap = <<:(other.toSeq)
+  def <<:(other: scala.collection.Traversable[Bitmap]): Bitmap = <<:(other.toSeq)
 
   // ----------------------------------------------------------------------------------------------
 
