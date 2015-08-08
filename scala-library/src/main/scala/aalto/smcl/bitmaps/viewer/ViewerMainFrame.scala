@@ -9,7 +9,7 @@ import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
 
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.common.SwingUtils
+import aalto.smcl.common.{SMCLUnexpectedInternalError, SwingUtils}
 import aalto.smcl.platform.Screen
 
 
@@ -234,8 +234,8 @@ private[bitmaps] class ViewerMainFrame private(
             case (Shift, false)       => ScrollingDirection.Rightwards
 
             case _ =>
-              throw new RuntimeException(
-                "Internal error: Invalid value match when determining scrolling direction.")
+              throw new SMCLUnexpectedInternalError(
+                "Invalid value match when determining scrolling direction.")
           }
 
           adjustScrollBars(Seq(direction), ScrollingMagnitude.Block, Math.abs(rotation))
