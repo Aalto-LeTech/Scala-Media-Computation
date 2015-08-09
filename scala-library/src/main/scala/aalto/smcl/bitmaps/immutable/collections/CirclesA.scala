@@ -7,7 +7,7 @@ import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.PreventViewerUpdates
 import aalto.smcl.bitmaps.immutable.primitives.{Bitmap, Circle}
-import aalto.smcl.common.{RGBAColor, GS}
+import aalto.smcl.common.{GS, RGBAColor}
 
 
 
@@ -31,10 +31,10 @@ object CirclesA {
    * @return
    */
   def apply(
-      collectionSize: Int = 5,
-      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Array[Bitmap] = {
+    collectionSize: Int = 5,
+    diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Array[Bitmap] = {
 
     require(collectionSize >= 0, s"Size of the collection cannot be negative (was $collectionSize)")
 

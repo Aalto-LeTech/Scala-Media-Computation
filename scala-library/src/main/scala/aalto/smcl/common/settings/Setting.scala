@@ -17,12 +17,12 @@ import aalto.smcl.common.ReflectionUtils
  * @author Aleksi Lukkarinen
  */
 private[smcl] final class Setting[SettingType](
-    val key: BaseSettingKeys.Value[SettingType],
-    val initialValue: SettingType,
-    val validator: SettingType => Option[Throwable]) extends Mutable {
+  val key: BaseSettingKeys.Value[SettingType],
+  val initialValue: SettingType,
+  val validator: SettingType => Option[Throwable]) extends Mutable {
 
   if (validator != null)
-    validator(initialValue).foreach {reason => throw new SMCLSettingValidationError(key, reason)}
+    validator(initialValue).foreach { reason => throw new SMCLSettingValidationError(key, reason) }
 
   /** Holds the current value of this [[Setting]]. */
   private var _currentValue: SettingType = initialValue
@@ -57,7 +57,7 @@ private[smcl] final class Setting[SettingType](
    */
   def toToken: String =
     s"[${ReflectionUtils.shortTypeNameOf(this)}; " +
-        s"key: ${key.simpleName}; initial-value: $initialValue; current-value: $value]"
+      s"key: ${key.simpleName}; initial-value: $initialValue; current-value: $value]"
 
   /**
    * Returns a string representation of this [[Setting]].

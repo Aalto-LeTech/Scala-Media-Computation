@@ -7,10 +7,10 @@ package aalto.smcl.bitmaps
  * @author Aleksi Lukkarinen
  */
 final class SMCLMinimumBitmapSizeNotMetError private[smcl](
-    realWidth: Option[Int] = None,
-    realHeight: Option[Int]= None,
-    resourcePath: Option[String]= None,
-    imageIndexInResourceOption: Option[Int]= None) extends {
+  realWidth: Option[Int] = None,
+  realHeight: Option[Int] = None,
+  resourcePath: Option[String] = None,
+  imageIndexInResourceOption: Option[Int] = None) extends {
 
   /** */
   val minimumWidthInPixels = BitmapValidator.MinimumBitmapHeightInPixels
@@ -29,8 +29,8 @@ final class SMCLMinimumBitmapSizeNotMetError private[smcl](
 
     sb ++= "."
 
-    resourcePath.foreach {path => sb ++=  s""" Resource: "$path"."""}
-    imageIndexInResourceOption.foreach {index => sb ++= s""" Index of the image in the resource: $index."""}
+    resourcePath.foreach { path => sb ++= s""" Resource: "$path".""" }
+    imageIndexInResourceOption.foreach { index => sb ++= s""" Index of the image in the resource: $index.""" }
 
     sb.toString()
   }

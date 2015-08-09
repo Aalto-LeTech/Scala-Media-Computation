@@ -27,7 +27,7 @@ private[smcl] trait ModuleInitializer {
     if (!_isInitialized) {
       _isInitialized = true
 
-      _initializers.foreach {f =>
+      _initializers.foreach { f =>
         if (f != null) {
           f()
         }

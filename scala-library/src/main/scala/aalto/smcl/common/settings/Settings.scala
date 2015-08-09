@@ -1,7 +1,7 @@
 package aalto.smcl.common.settings
 
 
-import aalto.smcl.common.settings.BaseSettingKeys.{BooleanSettingKey, ColorSettingKey, EnumSettingKey, IntSettingKey, StringSettingKey}
+import aalto.smcl.common.settings.BaseSettingKeys._
 import aalto.smcl.common.{RGBAColor, ReflectionUtils, _}
 
 
@@ -29,7 +29,7 @@ class Settings {
    *
    * @return
    */
-  def groupedByKeyType() = _settingMap.groupBy[String]({case (key, _) => key.typeNamePlural})
+  def groupedByKeyType() = _settingMap.groupBy[String]({ case (key, _) => key.typeNamePlural })
 
   /**
    *
@@ -37,7 +37,7 @@ class Settings {
    * @param value
    * @return
    */
-  def += (value: Setting[_]): Unit = _settingMap += (value.key -> value)
+  def +=(value: Setting[_]): Unit = _settingMap += (value.key -> value)
 
   /**
    *
@@ -158,7 +158,9 @@ class Settings {
   /**
    *
    */
-  def resetAll(): Unit = _settingMap.values.foreach {_.reset()}
+  def resetAll(): Unit = _settingMap.values.foreach {
+    _.reset()
+  }
 
   /**
    *
@@ -169,10 +171,10 @@ class Settings {
     if (settingGroups.isEmpty)
       println("No settings defined")
 
-    settingGroups.foreach {case (groupKey, group) =>
+    settingGroups.foreach { case (groupKey, group) =>
       println(s"\n${groupKey.capitalize}:")
 
-      group.foreach {case (_, setting) =>
+      group.foreach { case (_, setting) =>
         println(s" - ${setting.key.simpleName}: ${setting.value}")
       }
     }
@@ -185,11 +187,11 @@ class Settings {
     val sb = new StringBuilder(100)
 
     groupedByKeyType()
-        .map({case (groupKey, group) => groupKey + ": " + group.size})
-        .addString(sb,
-          start = StrLeftAngleBracket + ReflectionUtils.shortTypeNameOf(this) + StrSemicolon + StrSpace,
-          sep = StrSemicolon + StrSpace,
-          end = StrRightAngleBracket)
+      .map({ case (groupKey, group) => groupKey + ": " + group.size })
+      .addString(sb,
+        start = StrLeftAngleBracket + ReflectionUtils.shortTypeNameOf(this) + StrSemicolon + StrSpace,
+        sep = StrSemicolon + StrSpace,
+        end = StrRightAngleBracket)
 
     sb.toString()
   }
@@ -208,7 +210,7 @@ class Settings {
 
     sb.append(StrSpace + "containing" + StrSpace)
 
-    val countStrings = groupedByKeyType().map({case (groupKey, group) =>
+    val countStrings = groupedByKeyType().map({ case (groupKey, group) =>
       val typeName = if (group.size == 1) group.head._1.typeNameSingular else group.head._1.typeNamePlural
 
       group.size.toString + StrSpace + typeName

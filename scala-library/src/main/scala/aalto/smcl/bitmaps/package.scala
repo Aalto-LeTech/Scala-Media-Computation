@@ -1,7 +1,11 @@
 package aalto.smcl
 
 
+import scala.language.implicitConversions
+
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+
+
 
 
 /**
@@ -32,7 +36,6 @@ package object bitmaps {
 
 
   /** */
-  private[bitmaps]
   implicit def BitmapCreationStringContextWrapper(sc: StringContext): BitmapCreationStringInterpolator =
     new BitmapCreationStringInterpolator(sc)
 

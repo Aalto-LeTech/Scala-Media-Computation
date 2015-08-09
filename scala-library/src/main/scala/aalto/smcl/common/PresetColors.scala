@@ -161,7 +161,7 @@ object PresetColors extends Map[Symbol, RGBAColor] with Immutable {
    * @tparam T
    * @return
    */
-  override def +[T >: RGBAColor] (kv: (Symbol, T)): Map[Symbol, T] = _colorMap + kv
+  override def +[T >: RGBAColor](kv: (Symbol, T)): Map[Symbol, T] = _colorMap + kv
 
   /**
    *
@@ -184,6 +184,6 @@ object PresetColors extends Map[Symbol, RGBAColor] with Immutable {
    * @param key
    * @return
    */
-  override def - (key: Symbol): Map[Symbol, RGBAColor] = _colorMap - key
+  override def -(key: Symbol): Map[Symbol, RGBAColor] = _colorMap - key
 
 }

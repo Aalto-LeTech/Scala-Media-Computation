@@ -12,7 +12,7 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] abstract class AbstractSingleSourceOperation
-    extends AbstractOperation with Immutable {
+  extends AbstractOperation with Immutable {
 
   /** A buffer for applying bitmap operations. */
   def render(destination: PlatformBitmapBuffer): Unit

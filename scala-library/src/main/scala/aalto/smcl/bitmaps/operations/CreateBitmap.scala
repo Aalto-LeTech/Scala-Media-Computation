@@ -18,9 +18,9 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class CreateBitmap(
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels))
-    extends AbstractBufferProviderOperation with Immutable {
+  widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+  heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels))
+  extends AbstractBufferProviderOperation with Immutable {
 
   /** This [[AbstractBufferProviderOperation]] does not have any child operations. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] = None

@@ -17,6 +17,8 @@ import aalto.smcl.common.{GS, HorizontalAlignment, RGBAColor, TimestampedCreatio
 import aalto.smcl.platform.{ImageProvider, PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
 
 
+
+
 /**
  *
  *

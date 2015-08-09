@@ -8,10 +8,12 @@ import java.util.Locale
 import javax.imageio.stream.ImageInputStream
 import javax.imageio.{ImageIO, ImageReader}
 
+import scala.util._
+
 import aalto.smcl.bitmaps._
 import aalto.smcl.common._
 
-import scala.util._
+
 
 
 /**

@@ -82,9 +82,9 @@ object ColorOps {
    *
    */
   def pixelIntFrom(red: Int = MinimumRed,
-      green: Int = MinimumGreen,
-      blue: Int = MinimumBlue,
-      opacity: Int = FullyOpaque): Int = {
+    green: Int = MinimumGreen,
+    blue: Int = MinimumBlue,
+    opacity: Int = FullyOpaque): Int = {
 
     require(ByteRange.contains(red),
       s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
@@ -159,7 +159,7 @@ object ColorOps {
      */
     def toArgbBinaryColorString: String =
       self.toBinaryString.format("$s%32s").replace(StrSpace, StrZero)
-          .sliding(OneByte, OneByte).mkString(StrSpace)
+        .sliding(OneByte, OneByte).mkString(StrSpace)
 
   }
 

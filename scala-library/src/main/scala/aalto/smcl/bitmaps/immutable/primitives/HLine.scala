@@ -5,7 +5,7 @@ import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBitmapWidthInPixels, DefaultPrimary}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
-import aalto.smcl.common.{RGBAColor, GS}
+import aalto.smcl.common.{GS, RGBAColor}
 
 
 
@@ -29,9 +29,9 @@ object HLine {
    * @return
    */
   def apply(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels > 0, s"Width of the line must be at least 1 pixel (was $widthInPixels)")
     require(color != null, "The color argument has to be a Color instance (was null).")

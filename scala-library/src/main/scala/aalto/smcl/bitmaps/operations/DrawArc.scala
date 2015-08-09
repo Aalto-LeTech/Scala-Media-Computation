@@ -27,17 +27,17 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class DrawArc(
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
-    extends AbstractSingleSourceOperation with Immutable {
+  upperLeftCornerXInPixels: Int,
+  upperLeftCornerYInPixels: Int,
+  widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+  heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+  startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+  arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
+  hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+  hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+  color: RGBAColor = GS.colorFor(DefaultPrimary),
+  fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
+  extends AbstractSingleSourceOperation with Immutable {
 
   require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
   require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")

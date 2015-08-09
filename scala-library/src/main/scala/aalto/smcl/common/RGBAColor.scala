@@ -26,7 +26,7 @@ object RGBAColor {
    * @return
    */
   private[smcl] def validateColorArguments(red: Int, green: Int, blue: Int,
-      opacity: Int, nameOption: Option[String] = None): Tuple5[Int, Int, Int, Int, Option[String]] = {
+    opacity: Int, nameOption: Option[String] = None): Tuple5[Int, Int, Int, Int, Option[String]] = {
 
     require(ByteRange.contains(red),
       s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
@@ -67,7 +67,7 @@ object RGBAColor {
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, opacity: Int,
-      nameOption: Option[String] = None): RGBAColor = {
+    nameOption: Option[String] = None): RGBAColor = {
 
     val (validRed, validGreen, validBlue, validOpacity, validNameOption) =
       validateColorArguments(red, green, blue, opacity, nameOption)
@@ -162,7 +162,7 @@ object RGBAColor {
    * @return
    */
   private[smcl] def apply(
-      platformColor: PlatformColor): RGBAColor =
+    platformColor: PlatformColor): RGBAColor =
     RGBAColor(
       platformColor.red,
       platformColor.green,
@@ -177,8 +177,8 @@ object RGBAColor {
    * @return
    */
   private[smcl] def apply(
-      platformColor: PlatformColor,
-      nameOption: Option[String]): RGBAColor =
+    platformColor: PlatformColor,
+    nameOption: Option[String]): RGBAColor =
     RGBAColor(
       platformColor.red,
       platformColor.green,
@@ -201,11 +201,11 @@ object RGBAColor {
  * @author Aleksi Lukkarinen
  */
 class RGBAColor protected(
-    val red: Int,
-    val green: Int,
-    val blue: Int,
-    val opacity: Int,
-    val nameOption: Option[String] = None) extends {
+  val red: Int,
+  val green: Int,
+  val blue: Int,
+  val opacity: Int,
+  val nameOption: Option[String] = None) extends {
 
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false

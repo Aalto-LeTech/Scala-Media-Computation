@@ -99,7 +99,7 @@ object SMCL extends ModuleInitializer {
   /**
    * Calls the initialization routines of every SMCL's module.
    */
-  addInitializer {() =>
+  addInitializer { () =>
     PlatformModuleInitializer.performInitialization()
     BitmapModuleInitializer.performInitialization()
   }

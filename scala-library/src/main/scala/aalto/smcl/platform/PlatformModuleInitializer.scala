@@ -16,7 +16,7 @@ private[smcl] object PlatformModuleInitializer extends ModuleInitializer {
   //
   // Initialize Look & Feel
   //
-  addInitializer {() =>
+  addInitializer { () =>
     UIProvider.tryToInitializeSpecificLookAndFeel(UIProvider.NimbusLookAndFeelName)
   }
 

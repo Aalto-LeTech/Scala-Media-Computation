@@ -63,7 +63,7 @@ private[viewer] object ZoomFactor {
   def apply(valueInPercents: Int = 100): ZoomFactor = {
     require(validRangeInPercents.contains(valueInPercents),
       s"Zoom factor must be on the valid range from " +
-          "${validRangeInPercents.start} to ${validRangeInPercents.end} (was $valueAsPercents)")
+        "${validRangeInPercents.start} to ${validRangeInPercents.end} (was $valueAsPercents)")
 
     new ZoomFactor(valueInPercents)
   }
@@ -77,7 +77,7 @@ private[viewer] object ZoomFactor {
  * @author Aleksi Lukkarinen
  */
 private[viewer] class ZoomFactor private(val valueInPercents: Int)
-    extends Ordered[ZoomFactor] with Immutable {
+  extends Ordered[ZoomFactor] with Immutable {
 
   private val HUNDRED_AS_DOUBLE: Double = 100.toDouble
 
@@ -89,8 +89,8 @@ private[viewer] class ZoomFactor private(val valueInPercents: Int)
    */
   def adjustByIfPossible(factor: Double): ZoomFactor = {
     val newValue = (factor * valueInPercents).toInt
-        .max(ZoomFactor.validRangeInPercents.start)
-        .min(ZoomFactor.validRangeInPercents.end)
+      .max(ZoomFactor.validRangeInPercents.start)
+      .min(ZoomFactor.validRangeInPercents.end)
 
     new ZoomFactor(newValue)
   }

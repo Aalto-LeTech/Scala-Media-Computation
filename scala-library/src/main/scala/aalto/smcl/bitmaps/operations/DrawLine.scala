@@ -22,12 +22,12 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class DrawLine(
-    fromXInPixels: Int,
-    fromYInPixels: Int,
-    toXInPixels: Int,
-    toYInPixels: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary))
-    extends AbstractSingleSourceOperation with Immutable {
+  fromXInPixels: Int,
+  fromYInPixels: Int,
+  toXInPixels: Int,
+  toYInPixels: Int,
+  color: RGBAColor = GS.colorFor(DefaultPrimary))
+  extends AbstractSingleSourceOperation with Immutable {
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 

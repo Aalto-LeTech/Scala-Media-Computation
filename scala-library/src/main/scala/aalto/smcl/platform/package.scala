@@ -3,7 +3,11 @@ package aalto.smcl
 
 import java.awt.{Color => AwtColor}
 
-import aalto.smcl.common._
+import scala.language.implicitConversions
+
+import aalto.smcl.common.RGBAColor
+
+
 
 
 /**
@@ -17,11 +21,13 @@ package object platform {
 
 
   /** */
-  private[platform] implicit def RGBAColorExtendedWrapper(self: RGBAColor): ExtendedRichRGBAColor =
+  private[platform]
+  implicit def RGBAColorExtendedWrapper(self: RGBAColor): ExtendedRichRGBAColor =
     new ExtendedRichRGBAColor(self)
 
   /** */
-  private[platform] implicit def AwtColorWrapper(self: AwtColor): RichAwtColor =
+  private[platform]
+  implicit def AwtColorWrapper(self: AwtColor): RichAwtColor =
     new RichAwtColor(self)
 
 }

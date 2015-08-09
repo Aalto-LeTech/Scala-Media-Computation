@@ -21,7 +21,13 @@ private[bitmaps] object Application {
 
   // @formatter:off
 
+
+
+
   import aalto.smcl.SMCL
+
+
+
 
   /** Full name of this application. */
   val FullName = s"${SMCL.AbbreviatedName} Bitmap Viewer"
@@ -46,7 +52,7 @@ private[bitmaps] object Application {
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] class Application(val incomingEventStream: Observable[ExternalViewerEvent])
-    extends Observer[ExternalViewerEvent] {
+  extends Observer[ExternalViewerEvent] {
 
   private[this] var _viewers = Map[BitmapIdentity, ViewerMainFrame]()
 
@@ -80,7 +86,9 @@ private[bitmaps] class Application(val incomingEventStream: Observable[ExternalV
       newViewer
     })
 
-    Swing.onEDT {viewer.updateBitmapBuffer(bitmap)}
+    Swing.onEDT {
+      viewer.updateBitmapBuffer(bitmap)
+    }
   }
 
 
@@ -88,8 +96,10 @@ private[bitmaps] class Application(val incomingEventStream: Observable[ExternalV
    *
    */
   private[this] def closeAllViewersWithTheForce(): Unit = {
-    _viewers.values.foreach {viewer =>
-      Swing.onEDT {viewer.forceToClose()}
+    _viewers.values.foreach { viewer =>
+      Swing.onEDT {
+        viewer.forceToClose()
+      }
     }
 
     _viewers = _viewers.empty

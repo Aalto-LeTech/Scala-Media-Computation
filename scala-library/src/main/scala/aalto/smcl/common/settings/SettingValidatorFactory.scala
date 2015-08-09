@@ -20,10 +20,10 @@ object SettingValidatorFactory {
    * @return
    */
   def ConditionFalseValidator[SettingType](
-      testFailingIfTrue: SettingType => Boolean,
-      errorMessage: String): SettingType => Option[Throwable] = {
+    testFailingIfTrue: SettingType => Boolean,
+    errorMessage: String): SettingType => Option[Throwable] = {
 
-    {value =>
+    { value =>
       if (testFailingIfTrue(value)) Option(new IllegalArgumentException(errorMessage))
       else None
     }
@@ -37,6 +37,8 @@ object SettingValidatorFactory {
    * @return
    */
   def IsNullValidator[SettingType](errorMessage: String): SettingType => Option[Throwable] =
-    ConditionFalseValidator({_ == null}, errorMessage)
+    ConditionFalseValidator({
+      _ == null
+    }, errorMessage)
 
 }

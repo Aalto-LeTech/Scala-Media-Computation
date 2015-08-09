@@ -23,16 +23,23 @@ import aalto.smcl.platform.Screen
 private[bitmaps] object ViewerMainFrame {
 
   // @formatter:off
+
+
+
+
   import aalto.smcl.SMCL._
+
+
+
 
   /** */
   val MsgAbout: String =
     s"""Image viewing application of the $FullName.
-      |
-      |Version $VersionString.
-      |
-      |$AbbreviatedName was originally created by $OriginalAuthorName in $InceptionYear as
-      |a part of his Master's Thesis for Aalto University.""".stripMargin
+                                                    |
+                                                    |Version $VersionString.
+                                                                             |
+                                                                             |$AbbreviatedName was originally created by $OriginalAuthorName in $InceptionYear as
+                                                                                                                                                                |a part of his Master's Thesis for Aalto University.""".stripMargin
   // @formatter:on
 
   /** */
@@ -59,12 +66,12 @@ private[bitmaps] object ViewerMainFrame {
    */
   def initialViewAreaSizeFor(bitmap: Bitmap): Dimension = {
     val width = (Screen.width * 0.8).toInt
-        .min((bitmap.widthInPixels * 1.1).toInt)
-        .max(MinimumFrameSize.width)
+      .min((bitmap.widthInPixels * 1.1).toInt)
+      .max(MinimumFrameSize.width)
 
     val height = (Screen.height * 0.8).toInt
-        .min((bitmap.heightInPixels * 1.1).toInt)
-        .max(MinimumFrameSize.height)
+      .min((bitmap.heightInPixels * 1.1).toInt)
+      .max(MinimumFrameSize.height)
 
     new Dimension(width, height)
   }
@@ -78,7 +85,7 @@ private[bitmaps] object ViewerMainFrame {
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] class ViewerMainFrame private(
-    private val _initialPreferredViewAreaSize: Dimension) extends Frame {
+  private val _initialPreferredViewAreaSize: Dimension) extends Frame {
 
   /** */
   private val NoModifiers: Key.Modifiers = 0
@@ -167,31 +174,31 @@ private[bitmaps] class ViewerMainFrame private(
   peer.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
 
   menuBar = MenuBuilder.newMenuBarUsing(_actionMap)
-      .menu("Image", Option(Key.I))
-      .item('copyToClipboard).separator()
-      .item('saveToFile).separator()
-      .item('exitViewer)
-      .defined()
-      .menu("View", Option(Key.V))
-      .item('ZoomIn)
-      .item('ZoomOut).separator()
-      .item('Zoom60Percent)
-      .item('Zoom70Percent)
-      .item('Zoom80Percent)
-      .item('Zoom90Percent)
-      .item('Zoom100Percent)
-      .item('Zoom150Percent)
-      .item('Zoom200Percent)
-      .item('Zoom300Percent)
-      .item('Zoom400Percent)
-      .item('Zoom500Percent)
-      .defined()
-      .menu("Help", Option(Key.H))
-      .item('About)
-      .defined()
-      .get()
+    .menu("Image", Option(Key.I))
+    .item('copyToClipboard).separator()
+    .item('saveToFile).separator()
+    .item('exitViewer)
+    .defined()
+    .menu("View", Option(Key.V))
+    .item('ZoomIn)
+    .item('ZoomOut).separator()
+    .item('Zoom60Percent)
+    .item('Zoom70Percent)
+    .item('Zoom80Percent)
+    .item('Zoom90Percent)
+    .item('Zoom100Percent)
+    .item('Zoom150Percent)
+    .item('Zoom200Percent)
+    .item('Zoom300Percent)
+    .item('Zoom400Percent)
+    .item('Zoom500Percent)
+    .defined()
+    .menu("Help", Option(Key.H))
+    .item('About)
+    .defined()
+    .get()
 
-  val zoomInAction  = _actionMap.get('ZoomIn).get
+  val zoomInAction = _actionMap.get('ZoomIn).get
   val zoomOutAction = _actionMap.get('ZoomOut).get
 
 
@@ -201,7 +208,7 @@ private[bitmaps] class ViewerMainFrame private(
       // For non-sluggish performance, the keyboard processing is done via
       // event listener instead of relying on the Action-class-based accelerators.
       key match {
-        case Key.Plus  => zoomInAction.apply()
+        case Key.Plus => zoomInAction.apply()
         case Key.Minus => zoomOutAction.apply()
 
         case Key.Up | Key.KpUp | Key.Down | Key.KpDown |
@@ -212,7 +219,7 @@ private[bitmaps] class ViewerMainFrame private(
 
           val magnitude = modifiers match {
             case Shift => ScrollingMagnitude.Unit
-            case _     => ScrollingMagnitude.Block
+            case _ => ScrollingMagnitude.Block
           }
 
           adjustScrollBars(directions, magnitude)
@@ -228,10 +235,10 @@ private[bitmaps] class ViewerMainFrame private(
       modifiers match {
         case NoModifiers | Shift =>
           val direction = (modifiers, upOrLeftDirection) match {
-            case (NoModifiers, true)  => ScrollingDirection.Upwards
+            case (NoModifiers, true) => ScrollingDirection.Upwards
             case (NoModifiers, false) => ScrollingDirection.Downwards
-            case (Shift, true)        => ScrollingDirection.Leftwards
-            case (Shift, false)       => ScrollingDirection.Rightwards
+            case (Shift, true) => ScrollingDirection.Leftwards
+            case (Shift, false) => ScrollingDirection.Rightwards
 
             case _ =>
               throw new SMCLUnexpectedInternalError(
@@ -275,38 +282,38 @@ private[bitmaps] class ViewerMainFrame private(
    * @param directions
    */
   def adjustScrollBars(
-      directions: Seq[ScrollingDirection.Value],
-      magnitude: ScrollingMagnitude.Value,
-      steps: Int = 1) = {
+    directions: Seq[ScrollingDirection.Value],
+    magnitude: ScrollingMagnitude.Value,
+    steps: Int = 1) = {
 
     import aalto.smcl.bitmaps.viewer.ScrollingDirection._
 
-    directions.foreach {direction =>
+    directions.foreach { direction =>
       val upOrLeftDirection = direction match {
         case Upwards | Leftwards => true
-        case _                   => false
+        case _ => false
       }
 
       val targetScrollBar = direction match {
         case Upwards | Downwards => verticalSwingScrollbar
-        case _                   => horizontalSwingScrollbar
+        case _ => horizontalSwingScrollbar
       }
 
       val op = upOrLeftDirection match {
         case true => (_: Int) - (_: Int)
-        case _    => (_: Int) + (_: Int)
+        case _ => (_: Int) + (_: Int)
       }
 
       val adjustment = magnitude match {
         case ScrollingMagnitude.Unit => targetScrollBar.getUnitIncrement
-        case _                       => targetScrollBar.getBlockIncrement
+        case _ => targetScrollBar.getBlockIncrement
       }
 
       val newPositionCandidate = op(targetScrollBar.getValue, adjustment)
 
       val newPosition = upOrLeftDirection match {
         case true => newPositionCandidate.max(targetScrollBar.getMinimum)
-        case _    => newPositionCandidate.min(targetScrollBar.getMaximum)
+        case _ => newPositionCandidate.min(targetScrollBar.getMaximum)
       }
 
       targetScrollBar.setValue(newPosition)

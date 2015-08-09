@@ -32,7 +32,7 @@ private[viewer] class AbstractActionMap {
      *
      * @param action
      */
-    def ==> (action: ViewerAction): Unit = _actions = _actions + (self -> action)
+    def ==>(action: ViewerAction): Unit = _actions = _actions + (self -> action)
 
   }
 

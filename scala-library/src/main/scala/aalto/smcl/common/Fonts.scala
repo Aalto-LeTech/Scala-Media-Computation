@@ -27,7 +27,7 @@ object Fonts extends Map[String, Font] with Immutable {
    *
    */
   def initializeFontMap(): Unit = {
-    FontProvider.availableFonts().foreach {font =>
+    FontProvider.availableFonts().foreach { font =>
       _fontMap = _fontMap + (font.getName -> font)
     }
   }
@@ -53,7 +53,7 @@ object Fonts extends Map[String, Font] with Immutable {
    * @param key
    * @return
    */
-  override def - (key: String): Map[String, Font] = _fontMap.-(key)
+  override def -(key: String): Map[String, Font] = _fontMap.-(key)
 
   /**
    *
@@ -62,6 +62,6 @@ object Fonts extends Map[String, Font] with Immutable {
    * @tparam B1
    * @return
    */
-  override def +[B1 >: Font] (kv: (String, B1)): Map[String, B1] = _fontMap + kv
+  override def +[B1 >: Font](kv: (String, B1)): Map[String, B1] = _fontMap + kv
 
 }

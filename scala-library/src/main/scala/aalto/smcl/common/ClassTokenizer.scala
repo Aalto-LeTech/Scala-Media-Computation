@@ -77,8 +77,8 @@ private[smcl] object ClassTokenizer {
   private def appendKvPairsOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
     clazz.metaInformation.foreach {
       case (k: String, Some(v: String)) => s ++= ItemSep ++= escape(k) ++= KeyValueSeparator ++= escape(v)
-      case (k: String, None)            => s ++= ItemSep ++= escape(k)
-      case pair                         => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: $pair")
+      case (k: String, None) => s ++= ItemSep ++= escape(k)
+      case pair => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: $pair")
     }
 
   /**
@@ -94,7 +94,7 @@ private[smcl] object ClassTokenizer {
    */
   private def escape(part: String): String =
     StringUtils.escapeString(part)
-        .replaceAllLiterally(StrColon, StrColonAsUnicode)
-        .replaceAllLiterally(StrSemicolon, StrSemicolonAsUnicode)
+      .replaceAllLiterally(StrColon, StrColonAsUnicode)
+      .replaceAllLiterally(StrSemicolon, StrSemicolonAsUnicode)
 
 }

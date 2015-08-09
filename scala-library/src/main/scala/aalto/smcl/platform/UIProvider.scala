@@ -37,7 +37,7 @@ private[smcl] object UIProvider {
     val lfInfoOption = installedLookAndFeels().find(i => i.getName.equals(name))
 
     try {
-      lfInfoOption.foreach {i => UIManager.setLookAndFeel(i.getClassName)}
+      lfInfoOption.foreach { i => UIManager.setLookAndFeel(i.getClassName) }
       lfInfoOption
     }
     catch {

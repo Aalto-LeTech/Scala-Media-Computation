@@ -32,8 +32,8 @@ private[bitmaps] object BitmapOperationList {
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class BitmapOperationList private(
-    private val bufferProvider: AbstractBufferProviderOperation,
-    private val operations: List[AbstractSingleSourceOperation]) extends Immutable {
+  private val bufferProvider: AbstractBufferProviderOperation,
+  private val operations: List[AbstractSingleSourceOperation]) extends Immutable {
 
   /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
   val widthInPixels: Int = bufferProvider.widthInPixels
@@ -50,7 +50,7 @@ private[bitmaps] case class BitmapOperationList private(
   /**
    * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
-  private[bitmaps] def +: (newOperation: AbstractSingleSourceOperation) = this.add(newOperation)
+  private[bitmaps] def +:(newOperation: AbstractSingleSourceOperation) = this.add(newOperation)
 
   /**
    *
@@ -58,7 +58,7 @@ private[bitmaps] case class BitmapOperationList private(
   def initialBackgroundColor(): RGBAColor =
     operations.lastOption.getOrElse(None) match {
       case Clear(color) => color
-      case _            => PresetColors('white)
+      case _ => PresetColors('white)
     }
 
   /**
@@ -72,11 +72,11 @@ private[bitmaps] case class BitmapOperationList private(
    */
   @tailrec
   private def renderOperations(
-      list: List[AbstractSingleSourceOperation],
-      buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
+    list: List[AbstractSingleSourceOperation],
+    buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
 
     list match {
-      case Nil                => buffer
+      case Nil => buffer
       case theRest :+ theLast =>
         theLast.render(buffer)
         renderOperations(theRest, buffer)

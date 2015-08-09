@@ -13,7 +13,7 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] abstract class AbstractBufferProviderOperation
-    extends AbstractOperation with Immutable {
+  extends AbstractOperation with Immutable {
 
   /** Width of the provided buffer in pixels. */
   def widthInPixels: Int

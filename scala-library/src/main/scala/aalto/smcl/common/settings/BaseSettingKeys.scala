@@ -22,8 +22,8 @@ object BaseSettingKeys {
    * @tparam SettingType
    */
   abstract sealed class Value[SettingType](
-      val typeNameSingular: String,
-      val typeNamePlural: String) {
+    val typeNameSingular: String,
+    val typeNamePlural: String) {
 
     /**
      * Returns full name of this setting key, which equals the full path of this class.

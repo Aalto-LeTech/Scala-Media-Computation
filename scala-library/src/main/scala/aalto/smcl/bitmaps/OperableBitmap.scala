@@ -24,7 +24,7 @@ private[bitmaps] trait OperableBitmap {
    * @return
    */
   private[bitmaps] def apply(
-      operation: AbstractSingleSourceOperation,
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap
+    operation: AbstractSingleSourceOperation,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap
 
 }

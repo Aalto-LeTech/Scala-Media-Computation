@@ -15,12 +15,13 @@ import aalto.smcl.common.{GS, HorizontalAlignment, PresetColors, RGBAColor, Vert
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object BitmapModuleInitializer extends ModuleInitializer {
+private[smcl]
+object BitmapModuleInitializer extends ModuleInitializer {
 
   //
   // Initialize settings
   //
-  addInitializer {() =>
+  addInitializer { () =>
     GS += new Setting[Boolean](
       key = NewBitmapsAreDisplayedAutomatically,
       initialValue = true,
@@ -64,22 +65,30 @@ private[smcl] object BitmapModuleInitializer extends ModuleInitializer {
     GS += new Setting[Int](
       key = DefaultCircleRadiusInPixels,
       initialValue = 10,
-      validator = ConditionFalseValidator[Int]({_ < 1}, "Circle radius must be at least 1 pixel"))
+      validator = ConditionFalseValidator[Int]({
+        _ < 1
+      }, "Circle radius must be at least 1 pixel"))
 
     GS += new Setting[Int](
       key = DefaultRoundingWidthInPixels,
       initialValue = 10,
-      validator = ConditionFalseValidator[Int]({_ < 1}, "Rounding width must be at least 1 pixel"))
+      validator = ConditionFalseValidator[Int]({
+        _ < 1
+      }, "Rounding width must be at least 1 pixel"))
 
     GS += new Setting[Int](
       key = DefaultRoundingHeightInPixels,
       initialValue = 10,
-      validator = ConditionFalseValidator[Int]({_ < 1}, "Rounding height must be at least 1 pixel"))
+      validator = ConditionFalseValidator[Int]({
+        _ < 1
+      }, "Rounding height must be at least 1 pixel"))
 
     GS += new Setting[Int](
       key = DefaultPaddingInPixels,
       initialValue = 5,
-      validator = ConditionFalseValidator[Int]({_ < 0}, "Padding cannot be negative"))
+      validator = ConditionFalseValidator[Int]({
+        _ < 0
+      }, "Padding cannot be negative"))
 
     GS += new Setting[Int](
       key = DefaultArcStartAngleInDegrees,
