@@ -4,8 +4,6 @@ package aalto.smcl
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 
 
-
-
 /**
  *
  *
@@ -33,26 +31,9 @@ package object bitmaps {
   def closeBitmapViewersWithoutSaving(): Unit = _viewerClient.closeAllViewersWithTheForce()
 
 
-  /**
-   * A string interpolator for creating [[Bitmap]] instances.
-   *
-   * @param sc
-   */
-  implicit class BitmapCreationStringInterpolator(val sc: StringContext) extends AnyVal {
-
-    /**
-     *
-     *
-     * @param args
-     * @return
-     */
-    def bmp(args: Any*): Bitmap = {
-      val s = sc.standardInterpolator(StringContext.processEscapes, args)
-
-      // TODO: Replace with real functionality when it is available
-      Bitmap()
-    }
-  }
-
+  /** */
+  private[platform]
+  implicit def BitmapCreationStringContextWrapper(sc: StringContext): BitmapCreationStringInterpolator =
+    new BitmapCreationStringInterpolator(sc)
 
 }
