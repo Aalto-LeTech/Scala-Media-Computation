@@ -10,31 +10,22 @@ final class SMCLMinimumBitmapSizeNotMetError private[smcl](
   realWidth: Option[Int] = None,
   realHeight: Option[Int] = None,
   resourcePath: Option[String] = None,
-  imageIndexInResourceOption: Option[Int] = None) extends {
+  imageIndexInResourceOption: Option[Int] = None) extends RuntimeException({
 
-  /** */
-  val minimumWidthInPixels = BitmapValidator.MinimumBitmapHeightInPixels
+  val sb = new StringBuilder(200)
 
-  /** */
-  val minimumHeightInPixels = BitmapValidator.MinimumBitmapHeightInPixels
+  sb ++= s"The minimum image size of ${BitmapValidator.MinimumBitmapHeightInPixels} x " +
+    s"${BitmapValidator.MinimumBitmapHeightInPixels} px has not been met"
 
-  /** */
-  private[this] val message: String = {
-    val sb = new StringBuilder(200)
+  if (realWidth.isDefined && realHeight.isDefined)
+    sb ++= s"(was ${realWidth.get} x ${realHeight.get}} )"
 
-    sb ++= s"The minimum image size of $minimumWidthInPixels x $minimumHeightInPixels px has not been met"
+  sb ++= "."
 
-    if (realWidth.isDefined && realHeight.isDefined)
-      sb ++= s"(was ${realWidth.get} x ${realHeight.get}} )"
+  resourcePath.foreach { path => sb ++= s""" Resource: "$path".""" }
+  imageIndexInResourceOption.foreach { index => sb ++= s""" Index of the image in the resource: $index.""" }
 
-    sb ++= "."
-
-    resourcePath.foreach { path => sb ++= s""" Resource: "$path".""" }
-    imageIndexInResourceOption.foreach { index => sb ++= s""" Index of the image in the resource: $index.""" }
-
-    sb.toString()
-  }
-
-} with RuntimeException(message) {
+  sb.toString()
+}) {
 
 }
