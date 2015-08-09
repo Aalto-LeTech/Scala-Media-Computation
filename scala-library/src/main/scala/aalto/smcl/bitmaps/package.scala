@@ -32,7 +32,7 @@ package object bitmaps {
 
 
   /** */
-  private[platform]
+  private[bitmaps]
   implicit def BitmapCreationStringContextWrapper(sc: StringContext): BitmapCreationStringInterpolator =
     new BitmapCreationStringInterpolator(sc)
 
