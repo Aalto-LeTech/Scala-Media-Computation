@@ -38,19 +38,14 @@ private[bitmaps] case class AppendHorizontally(
   lazy val metaInformation = MetaInformationMap(Map(
     "padding" -> Option(s"$paddingInPixels px"),
     "verticalAlignment" -> Option(verticalAlignment.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toPixelInt.toArgbHexColorString}")))
+    "backgroundColor" -> Option(s"0x${backgroundColor.toPixelInt.toArgbHexColorString }")))
 
   /** Height of the provided buffer in pixels. */
-  val heightInPixels: Int =
-    childOperationListsOption.get.maxBy({
-      _.heightInPixels
-    }).heightInPixels
+  val heightInPixels: Int = childOperationListsOption.get.maxBy({ _.heightInPixels }).heightInPixels
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =
-    childOperationListsOption.get.foldLeft[Int](0)({
-      _ + _.widthInPixels
-    }) +
+    childOperationListsOption.get.foldLeft[Int](0)({ _ + _.widthInPixels }) +
       (childOperationListsOption.get.length - 1) * paddingInPixels
 
   /** Vertical offsets of the bitmaps to be combined. */
@@ -59,9 +54,7 @@ private[bitmaps] case class AppendHorizontally(
       ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toSeq
 
     case VerticalAlignment.Bottom =>
-      bitmapsToCombine.map({
-        heightInPixels - _.heightInPixels
-      }).toSeq
+      bitmapsToCombine.map({ heightInPixels - _.heightInPixels }).toSeq
 
     case VerticalAlignment.Middle =>
       bitmapsToCombine.map({ bmp =>
