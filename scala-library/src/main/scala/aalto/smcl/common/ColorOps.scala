@@ -427,20 +427,6 @@ object ColorOps {
   /**
    *
    *
-   * @param hueCandidateInDegrees
-   * @return
-   */
-  @inline
-  private def aThirdOfCircleNormalizedHueInDegreesFrom(hueCandidateInDegrees: Double): Double =
-    normalizedHueInDegreesFrom(hueCandidateInDegrees) match {
-      case h: Double if h <= 120 => h
-      case h: Double if h <= 240 => h - 120
-      case h: Double             => h - 240
-    }
-
-  /**
-   *
-   *
    * @param pixelInt
    * @return
    */
@@ -566,7 +552,11 @@ object ColorOps {
     }
 
     val X = {
-      val aThirdOfCircleHue = aThirdOfCircleNormalizedHueInDegreesFrom(hueInDegrees)
+      val aThirdOfCircleHue = normalizedHueInDegreesFrom(hueInDegrees) match {
+        case h: Double if h <= 120 => 0
+        case h: Double if h <= 240 => h - 120
+        case h: Double             => h - 240
+      }
 
       val quotient =
         (saturation * toDegrees(cos(toRadians(aThirdOfCircleHue)))) /
