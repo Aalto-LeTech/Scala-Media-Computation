@@ -127,9 +127,9 @@ object ColorOps {
   @inline
   def rgbaTupleFrom(pixelInt: Int): (Int, Int, Int, Int) =
     (redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt),
-      opacityComponentOf(pixelInt))
+        greenComponentOf(pixelInt),
+        blueComponentOf(pixelInt),
+        opacityComponentOf(pixelInt))
 
   /**
    *
@@ -150,8 +150,8 @@ object ColorOps {
   @inline
   def rgbTupleFrom(pixelInt: Int): (Int, Int, Int) =
     (redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt))
+        greenComponentOf(pixelInt),
+        blueComponentOf(pixelInt))
 
   /**
    *
@@ -164,10 +164,10 @@ object ColorOps {
    */
   @inline
   def pixelIntFrom(
-    red: Int = MinimumRed,
-    green: Int = MinimumGreen,
-    blue: Int = MinimumBlue,
-    opacity: Int = MaximumOpacity): Int = {
+      red: Int = MinimumRed,
+      green: Int = MinimumGreen,
+      blue: Int = MinimumBlue,
+      opacity: Int = MaximumOpacity): Int = {
 
     require(ByteRange.contains(red),
       s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
@@ -211,6 +211,7 @@ object ColorOps {
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
+  @inline
   def isBlack(rgbTuple: (Int, Int, Int)): Boolean =
     (isBlack(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
@@ -225,8 +226,8 @@ object ColorOps {
   @inline
   def isBlack(red: Int, green: Int, blue: Int): Boolean =
     red == MinimumRed.toDouble &&
-      green == MinimumGreen.toDouble &&
-      blue == MinimumBlue.toDouble
+        green == MinimumGreen.toDouble &&
+        blue == MinimumBlue.toDouble
 
   /**
    *
@@ -270,8 +271,8 @@ object ColorOps {
   @inline
   def isWhite(red: Int, green: Int, blue: Int): Boolean =
     red == MaximumRed.toDouble &&
-      green == MaximumGreen.toDouble &&
-      blue == MaximumBlue.toDouble
+        green == MaximumGreen.toDouble &&
+        blue == MaximumBlue.toDouble
 
   /**
    *
@@ -281,7 +282,7 @@ object ColorOps {
    */
   @inline
   def hueInDegreesOf(color: RGBAColor): Double =
-    hueInDegreesFrom(color.red, color.green, color.blue)
+    hueInDegreesFrom(rgbTupleFrom(color))
 
   /**
    *
@@ -291,10 +292,17 @@ object ColorOps {
    */
   @inline
   def hueInDegreesOf(pixelInt: Int): Double =
-    hueInDegreesFrom(
-      redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt))
+    hueInDegreesFrom(rgbTupleFrom(pixelInt))
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  def hueInDegreesFrom(rgbTuple: (Int, Int, Int)): Double =
+    (hueInDegreesFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -326,7 +334,7 @@ object ColorOps {
    */
   @inline
   def saturationOf(color: RGBAColor): Double =
-    saturationFrom(color.red, color.green, color.blue)
+    saturationFrom(rgbTupleFrom(color))
 
   /**
    *
@@ -336,10 +344,17 @@ object ColorOps {
    */
   @inline
   def saturationOf(pixelInt: Int): Double =
-    saturationFrom(
-      redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt))
+    saturationFrom(rgbTupleFrom(pixelInt))
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  def saturationFrom(rgbTuple: (Int, Int, Int)): Double =
+    (saturationFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -365,7 +380,7 @@ object ColorOps {
    */
   @inline
   def intensityOf(color: RGBAColor): Double =
-    intensityFrom(color.red, color.green, color.blue)
+    intensityFrom(rgbTupleFrom(color))
 
   /**
    *
@@ -375,10 +390,17 @@ object ColorOps {
    */
   @inline
   def intensityOf(pixelInt: Int): Double =
-    intensityFrom(
-      redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt))
+    intensityFrom(rgbTupleFrom(pixelInt))
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  def intensityFrom(rgbTuple: (Int, Int, Int)): Double =
+    (intensityFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -399,7 +421,7 @@ object ColorOps {
    * @return
    */
   @inline
-  def normalizedHueInDegreesFrom(hueCandidateInDegrees: Double) =
+  def normalizedHueInDegreesFrom(hueCandidateInDegrees: Double): Double =
     hueCandidateInDegrees % FullCircleInDegrees
 
   /**
@@ -409,18 +431,12 @@ object ColorOps {
    * @return
    */
   @inline
-  private def aThirdOfCircleNormalizedHueInDegreesFrom(hueCandidateInDegrees: Double) = {
-    val normalizedHue = normalizedHueInDegreesFrom(hueCandidateInDegrees)
-
-    if (normalizedHue <= 120)
-      normalizedHue
-    else if (normalizedHue <= 240)
-      normalizedHue - 120
-    else
-      normalizedHue - 240
-
-    //hueCandidateInDegrees % OneThirdOfCircleInDegrees
-  }
+  private def aThirdOfCircleNormalizedHueInDegreesFrom(hueCandidateInDegrees: Double): Double =
+    normalizedHueInDegreesFrom(hueCandidateInDegrees) match {
+      case h: Double if h <= 120 => h
+      case h: Double if h <= 240 => h - 120
+      case h: Double             => h - 240
+    }
 
   /**
    *
@@ -430,10 +446,7 @@ object ColorOps {
    */
   @inline
   def toHsi(pixelInt: Int): (Double, Double, Double) =
-    rgbToHsi(
-      redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt))
+    rgbToHsi(rgbTupleFrom(pixelInt))
 
   /**
    *
@@ -443,7 +456,7 @@ object ColorOps {
    */
   @inline
   def toHsi(color: RGBAColor): (Double, Double, Double) =
-    rgbToHsi(color.red, color.green, color.blue)
+    rgbToHsi(rgbTupleFrom(color))
 
   /**
    *
@@ -453,7 +466,7 @@ object ColorOps {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def rgbToHsi(rgbTuple: (Int, Int, Int) ): (Double, Double, Double) =
+  def rgbToHsi(rgbTuple: (Int, Int, Int)): (Double, Double, Double) =
     (rgbToHsi(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
   /**
@@ -557,7 +570,7 @@ object ColorOps {
 
       val quotient =
         (saturation * toDegrees(cos(toRadians(aThirdOfCircleHue)))) /
-          toDegrees(cos(toRadians(60 - aThirdOfCircleHue)))
+            toDegrees(cos(toRadians(60 - aThirdOfCircleHue)))
 
       intensity * (1 + quotient)
     }
@@ -591,16 +604,22 @@ object ColorOps {
   /**
    *
    *
+   * @param color
+   * @return
+   */
+  @inline
+  def colorComponentMapFrom(color: RGBAColor): Map[Symbol, Double] =
+    colorComponentMapFrom(rgbaTupleFrom(color))
+
+  /**
+   *
+   *
    * @param pixelInt
    * @return
    */
   @inline
   def colorComponentMapFrom(pixelInt: Int): Map[Symbol, Double] =
-    colorComponentMapFrom(
-      redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt),
-      opacityComponentOf(pixelInt))
+    colorComponentMapFrom(rgbaTupleFrom(pixelInt))
 
   /**
    *

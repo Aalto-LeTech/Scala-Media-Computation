@@ -260,84 +260,56 @@ class RGBAColor protected(
     "blue" -> Option(blue.toString),
     "opacity" -> Option(opacity.toString)))
 
-  /**
-   *
-   *
-   * @return
-   */
-  def toHueSaturationIntensity: Map[Symbol, Double] = Map(
-    'hue -> toHueInDegrees,
-    'saturation -> toSaturation,
-    'intensity -> toIntensity)
+  /**  */
+  lazy val toColorComponentMap = ColorOps.colorComponentMapFrom(this)
 
-  /**
-   *
-   *
-   * @return
-   */
-  def toHueInDegrees: Double = ColorOps.hueInDegreesOf(this)
+  /**  */
+  lazy val toHueInDegrees: Double = ColorOps.hueInDegreesOf(this)
 
-  /**
-   *
-   *
-   * @return
-   */
-  def toSaturation: Double = ColorOps.saturationOf(this)
+  /**  */
+  lazy val toSaturation: Double = ColorOps.saturationOf(this)
 
-  /**
-   *
-   *
-   * @return
-   */
-  def toIntensity: Double = ColorOps.intensityOf(this)
+  /**  */
+  lazy val toIntensity: Double = ColorOps.intensityOf(this)
 
-  /**
-   *
-   *
-   * @return
-   */
-  def toGray: RGBAColor = RGBAColor(toIntensity.toInt, FullyOpaque)
+  /**  */
+  lazy val toGray: RGBAColor = RGBAColor(toIntensity.toInt, FullyOpaque)
 
-  /**
-   *
-   */
-  def keepingOnlyRedComponent(): RGBAColor =
+  /**  */
+  lazy val toHsi: (Double, Double, Double) = ColorOps.toHsi(this)
+
+  /**  */
+  lazy val isBlack: Boolean = ColorOps.isBlack(this)
+
+  /**  */
+  lazy val isWhite: Boolean = ColorOps.isWhite(this)
+
+  /**  */
+  lazy val keepingOnlyRedComponent: RGBAColor =
     RGBAColor(red, MinimumGreen, MinimumBlue, FullyOpaque)
 
-  /**
-   *
-   */
-  def keepingOnlyGreenComponent(): RGBAColor =
+  /**  */
+  lazy val keepingOnlyGreenComponent: RGBAColor =
     RGBAColor(MinimumRed, green, MinimumBlue, FullyOpaque)
 
-  /**
-   *
-   */
-  def keepingOnlyBlueComponent(): RGBAColor =
+  /**  */
+  lazy val keepingOnlyBlueComponent: RGBAColor =
     RGBAColor(MinimumRed, MinimumGreen, blue, FullyOpaque)
 
-  /**
-   *
-   */
-  def keepingOnlyRedAndGreenComponents(): RGBAColor =
+  /**  */
+  lazy val keepingOnlyRedAndGreenComponents: RGBAColor =
     RGBAColor(red, green, MinimumBlue, FullyOpaque)
 
-  /**
-   *
-   */
-  def keepingOnlyRedAndBlueComponents(): RGBAColor =
+  /**  */
+  lazy val keepingOnlyRedAndBlueComponents: RGBAColor =
     RGBAColor(red, MinimumGreen, blue, FullyOpaque)
 
-  /**
-   *
-   */
-  def keepingOnlyGreenAndBlueComponents(): RGBAColor =
+  /**  */
+  lazy val keepingOnlyGreenAndBlueComponents: RGBAColor =
     RGBAColor(MinimumRed, green, blue, FullyOpaque)
 
-  /**
-   *
-   */
-  def representingOpacityAsGreyLevel(): RGBAColor =
+  /**  */
+  lazy val representingOpacityAsGreyLevel: RGBAColor =
     RGBAColor(opacity, opacity, opacity, FullyOpaque)
 
   /**
