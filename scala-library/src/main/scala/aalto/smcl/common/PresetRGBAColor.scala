@@ -39,10 +39,10 @@ private[common] object PresetRGBAColor {
    */
   def apply(pixelInt: Int, nameOption: Option[String]): RGBAColor =
     PresetRGBAColor(
-      redComponentFrom(pixelInt),
-      greenComponentFrom(pixelInt),
-      blueComponentFrom(pixelInt),
-      opacityComponentFrom(pixelInt),
+      redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt),
+      opacityComponentOf(pixelInt),
       nameOption)
 }
 

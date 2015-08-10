@@ -10,7 +10,12 @@ object ColorOps {
 
   /**
    *
+   *
+   * @param pixelInt
+   * @param newRed
+   * @return
    */
+  @inline
   def withNewRedComponent(pixelInt: Int, newRed: Int): Int = {
     require(ByteRange.contains(newRed),
       s"'newRed' must be between ${ByteRange.start} and ${ByteRange.end} (was $newRed)")
@@ -20,7 +25,12 @@ object ColorOps {
 
   /**
    *
+   *
+   * @param pixelInt
+   * @param newGreen
+   * @return
    */
+  @inline
   def withNewGreenComponent(pixelInt: Int, newGreen: Int): Int = {
     require(ByteRange.contains(newGreen),
       s"'newGreen' must be between ${ByteRange.start} and ${ByteRange.end} (was $newGreen)")
@@ -30,7 +40,12 @@ object ColorOps {
 
   /**
    *
+   *
+   * @param pixelInt
+   * @param newBlue
+   * @return
    */
+  @inline
   def withNewBlueComponent(pixelInt: Int, newBlue: Int): Int = {
     require(ByteRange.contains(newBlue),
       s"'newBlue' must be between ${ByteRange.start} and ${ByteRange.end} (was $newBlue)")
@@ -40,7 +55,12 @@ object ColorOps {
 
   /**
    *
+   *
+   * @param pixelInt
+   * @param newOpacity
+   * @return
    */
+  @inline
   def withNewOpacityComponent(pixelInt: Int, newOpacity: Int): Int = {
     require(ByteRange.contains(newOpacity),
       s"'newOpacity' argument must be between ${ByteRange.start} and ${ByteRange.end} (was $newOpacity)")
@@ -50,41 +70,104 @@ object ColorOps {
 
   /**
    *
+   *
+   * @param pixelInt
+   * @return
    */
-  def colorComponentsFrom(pixelInt: Int): collection.immutable.Map[Symbol, Int] =
-    collection.immutable.Map[Symbol, Int](
-      'red -> redComponentFrom(pixelInt),
-      'green -> greenComponentFrom(pixelInt),
-      'blue -> blueComponentFrom(pixelInt),
-      'opacity -> opacityComponentFrom(pixelInt))
+  @inline
+  def redComponentOf(pixelInt: Int): Int =
+    (pixelInt & ThirdByte) >>> TwoBytes
 
   /**
    *
+   *
+   * @param pixelInt
+   * @return
    */
-  def redComponentFrom(pixelInt: Int): Int = (pixelInt & ThirdByte) >>> TwoBytes
+  @inline
+  def greenComponentOf(pixelInt: Int): Int =
+    (pixelInt & SecondByte) >>> OneByte
 
   /**
    *
+   *
+   * @param pixelInt
+   * @return
    */
-  def greenComponentFrom(pixelInt: Int): Int = (pixelInt & SecondByte) >>> OneByte
+  @inline
+  def blueComponentOf(pixelInt: Int): Int =
+    pixelInt & FirstByte
 
   /**
    *
+   *
+   * @param pixelInt
+   * @return
    */
-  def blueComponentFrom(pixelInt: Int): Int = pixelInt & FirstByte
+  @inline
+  def opacityComponentOf(pixelInt: Int): Int =
+    pixelInt >>> ThreeBytes
 
   /**
    *
+   *
+   * @param color
+   * @return
    */
-  def opacityComponentFrom(pixelInt: Int): Int = pixelInt >>> ThreeBytes
+  @inline
+  def rgbaTupleFrom(color: RGBAColor): (Int, Int, Int, Int) =
+    (color.red, color.green, color.blue, color.opacity)
 
   /**
    *
+   *
+   * @param pixelInt
+   * @return
    */
-  def pixelIntFrom(red: Int = MinimumRed,
+  @inline
+  def rgbaTupleFrom(pixelInt: Int): (Int, Int, Int, Int) =
+    (redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt),
+      opacityComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param color
+   * @return
+   */
+  @inline
+  def rgbTupleFrom(color: RGBAColor): (Int, Int, Int) =
+    (color.red, color.green, color.blue)
+
+  /**
+   *
+   *
+   * @param pixelInt
+   * @return
+   */
+  @inline
+  def rgbTupleFrom(pixelInt: Int): (Int, Int, Int) =
+    (redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @param opacity
+   * @return
+   */
+  @inline
+  def pixelIntFrom(
+    red: Int = MinimumRed,
     green: Int = MinimumGreen,
     blue: Int = MinimumBlue,
-    opacity: Int = FullyOpaque): Int = {
+    opacity: Int = MaximumOpacity): Int = {
 
     require(ByteRange.contains(red),
       s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
@@ -101,67 +184,476 @@ object ColorOps {
     (opacity << ThreeBytes) | (red << TwoBytes) | (green << OneByte) | blue
   }
 
+  /**
+   *
+   *
+   * @param color
+   * @return
+   */
+  @inline
+  def isBlack(color: RGBAColor): Boolean =
+    isBlack(rgbTupleFrom(color))
 
   /**
-   * Some methods for composing ARGB-style `Int` values as well as
-   * extracting the individual color components from them.
+   *
+   *
+   * @param pixelInt
+   * @return
    */
-  implicit class RichPixelInt(val self: Int) extends AnyVal {
+  @inline
+  def isBlack(pixelInt: Int): Boolean =
+    isBlack(rgbTupleFrom(pixelInt))
 
-    /**
-     * Returns an immutable map containing individual color components of this ARGB-style `Int`.
-     * The keys in the map are `'red`, `'green`, `'blue`, and `'opacity`.
-     *
-     * {{{
-     * scala> 0x89ABCDEF.colorComponentInts
-     * res0: Map[Symbol,Int] = Map('red -> 171, 'green -> 205, 'blue -> 239, 'opacity -> 137) // 0x89 = 137 etc.
-     * }}}
-     */
-    def colorComponentMap: Map[Symbol, Int] = colorComponentsFrom(self)
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  def isBlack(rgbTuple: (Int, Int, Int)): Boolean =
+    (isBlack(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
-    /**
-     * Returns the red color component of this ARGB-style `Int`.
-     */
-    def redComponentInt: Int = redComponentFrom(self)
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def isBlack(red: Int, green: Int, blue: Int): Boolean =
+    red == MinimumRed.toDouble &&
+      green == MinimumGreen.toDouble &&
+      blue == MinimumBlue.toDouble
 
-    /**
-     * Returns the green color component of this ARGB-style `Int`.
-     */
-    def greenComponentInt: Int = greenComponentFrom(self)
+  /**
+   *
+   *
+   * @param color
+   * @return
+   */
+  @inline
+  def isWhite(color: RGBAColor): Boolean =
+    isWhite(rgbTupleFrom(color))
 
-    /**
-     * Returns the blue color component of this ARGB-style `Int`.
-     */
-    def blueComponentInt: Int = blueComponentFrom(self)
+  /**
+   *
+   *
+   * @param pixelInt
+   * @return
+   */
+  @inline
+  def isWhite(pixelInt: Int): Boolean =
+    isWhite(rgbTupleFrom(pixelInt))
 
-    /**
-     * Returns the opacity component of this ARGB-style `Int`.
-     */
-    def opacityComponentInt: Int = opacityComponentFrom(self)
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def isWhite(rgbTuple: (Int, Int, Int)): Boolean =
+    (isWhite(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
-    /**
-     * Displays this `Int` as a zero-padded hexadecimal form.
-     *
-     * {{{
-     * scala> -1985229329.toArgbHexColorString
-     * res0: String = 89abcdef
-     * }}}
-     */
-    def toArgbHexColorString: String = f"$self%08x"
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def isWhite(red: Int, green: Int, blue: Int): Boolean =
+    red == MaximumRed.toDouble &&
+      green == MaximumGreen.toDouble &&
+      blue == MaximumBlue.toDouble
 
-    /**
-     * Displays this `Int` as a zero-padded binary form divided to bytes by spaces.
-     *
-     * {{{
-     * scala> 0x89abcdef.toArgbBinaryColorString
-     * res0: String = 10001001 10101011 11001101 11101111
-     * }}}
-     */
-    def toArgbBinaryColorString: String =
-      self.toBinaryString.format("$s%32s").replace(StrSpace, StrZero)
-        .sliding(OneByte, OneByte).mkString(StrSpace)
+  /**
+   *
+   *
+   * @param color
+   * @return
+   */
+  @inline
+  def hueInDegreesOf(color: RGBAColor): Double =
+    hueInDegreesFrom(color.red, color.green, color.blue)
 
+  /**
+   *
+   *
+   * @param pixelInt
+   * @return
+   */
+  @inline
+  def hueInDegreesOf(pixelInt: Int): Double =
+    hueInDegreesFrom(
+      redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def hueInDegreesFrom(red: Int, green: Int, blue: Int): Double = {
+    import Math._
+
+    def RmG = red - green
+    def RmB = red - blue
+
+    def root = sqrt(RmG * RmG + RmB * (green - blue))
+
+    def angleCandidate = Math.rint(100.0 * toDegrees(acos((RmG + RmB) / (2.0 * root)))) / 100.0
+
+    if (green >= blue) angleCandidate else FullCircleInDegrees - angleCandidate
   }
 
+  /**
+   *
+   *
+   * @param color
+   * @return
+   */
+  @inline
+  def saturationOf(color: RGBAColor): Double =
+    saturationFrom(color.red, color.green, color.blue)
+
+  /**
+   *
+   *
+   * @param pixelInt
+   * @return
+   */
+  @inline
+  def saturationOf(pixelInt: Int): Double =
+    saturationFrom(
+      redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def saturationFrom(red: Int, green: Int, blue: Int): Double = {
+    if (isBlack(red, green, blue))
+      return MinimumSaturation
+
+    1.0 - (3.0 * red.min(green).min(blue).toDouble / (red + green + blue).toDouble)
+  }
+
+  /**
+   *
+   *
+   * @param color
+   * @return
+   */
+  @inline
+  def intensityOf(color: RGBAColor): Double =
+    intensityFrom(color.red, color.green, color.blue)
+
+  /**
+   *
+   *
+   * @param pixelInt
+   * @return
+   */
+  @inline
+  def intensityOf(pixelInt: Int): Double =
+    intensityFrom(
+      redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def intensityFrom(red: Int, green: Int, blue: Int): Double =
+    Math.rint(100 * ((red + green + blue).toDouble / 3.0)) / 100
+
+  /**
+   *
+   *
+   * @param hueCandidateInDegrees
+   * @return
+   */
+  @inline
+  def normalizedHueInDegreesFrom(hueCandidateInDegrees: Double) =
+    hueCandidateInDegrees % FullCircleInDegrees
+
+  /**
+   *
+   *
+   * @param hueCandidateInDegrees
+   * @return
+   */
+  @inline
+  private def aThirdOfCircleNormalizedHueInDegreesFrom(hueCandidateInDegrees: Double) = {
+    val normalizedHue = normalizedHueInDegreesFrom(hueCandidateInDegrees)
+
+    if (normalizedHue <= 120)
+      normalizedHue
+    else if (normalizedHue <= 240)
+      normalizedHue - 120
+    else
+      normalizedHue - 240
+
+    //hueCandidateInDegrees % OneThirdOfCircleInDegrees
+  }
+
+  /**
+   *
+   *
+   * @param pixelInt
+   * @return
+   */
+  @inline
+  def toHsi(pixelInt: Int): (Double, Double, Double) =
+    rgbToHsi(
+      redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param color
+   * @return
+   */
+  @inline
+  def toHsi(color: RGBAColor): (Double, Double, Double) =
+    rgbToHsi(color.red, color.green, color.blue)
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def rgbToHsi(rgbTuple: (Int, Int, Int) ): (Double, Double, Double) =
+    (rgbToHsi(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def rgbToHsi(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
+    val hue = hueInDegreesFrom(red, green, blue)
+    val saturation = saturationFrom(red, green, blue)
+    val intensity = intensityFrom(red, green, blue)
+
+    (hue, saturation, intensity)
+  }
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param intensity
+   * @return
+   */
+  @inline
+  def hsiToColor(hueInDegrees: Double, saturation: Double, intensity: Double): RGBAColor =
+    hsiToColor(hueInDegrees, saturation, intensity, MaximumOpacity)
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param intensity
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def hsiToColor(hueInDegrees: Double, saturation: Double, intensity: Double, opacity: Int): RGBAColor =
+    (RGBAColor.apply(_: Int, _: Int, _: Int, opacity)).tupled.apply(hsiToRgb(hueInDegrees, saturation, intensity))
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param intensity
+   * @return
+   */
+  @inline
+  def hsiToPixelInt(hueInDegrees: Double, saturation: Double, intensity: Double): Int =
+    hsiToPixelInt(hueInDegrees, saturation, intensity, MaximumOpacity)
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param intensity
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def hsiToPixelInt(hueInDegrees: Double, saturation: Double, intensity: Double, opacity: Int): Int =
+    (pixelIntFrom(_: Int, _: Int, _: Int, opacity)).tupled.apply(hsiToRgb(hueInDegrees, saturation, intensity))
+
+  /**
+   *
+   *
+   * @param hsiTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def hsiToRgb(hsiTuple: (Double, Double, Double)): (Int, Int, Int) =
+    (hsiToRgb(_: Double, _: Double, _: Double)).tupled.apply(hsiTuple)
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param intensity
+   * @return
+   */
+  @inline
+  def hsiToRgb(hueInDegrees: Double, saturation: Double, intensity: Double): (Int, Int, Int) = {
+    import Math._
+
+    // Special case
+    if (saturation == 0.0) {
+      val i: Int = round(intensity).toInt
+      return (i, i, i)
+    }
+
+    val X = {
+      val aThirdOfCircleHue = aThirdOfCircleNormalizedHueInDegreesFrom(hueInDegrees)
+
+      val quotient =
+        (saturation * toDegrees(cos(toRadians(aThirdOfCircleHue)))) /
+          toDegrees(cos(toRadians(60 - aThirdOfCircleHue)))
+
+      intensity * (1 + quotient)
+    }
+
+    val Y = intensity - intensity * saturation
+
+    val Z = 3.0 * intensity - X - Y
+
+    val normalizedHue = normalizedHueInDegreesFrom(hueInDegrees)
+
+    var red, green, blue: Int = 0
+    if (normalizedHue <= 120) {
+      red = round(X).toInt
+      green = round(Z).toInt
+      blue = round(Y).toInt
+    }
+    else if (normalizedHue <= 240) {
+      red = round(Y).toInt
+      green = round(X).toInt
+      blue = round(Z).toInt
+    }
+    else {
+      red = round(Z).toInt
+      green = round(Y).toInt
+      blue = round(X).toInt
+    }
+
+    (red, green, blue)
+  }
+
+  /**
+   *
+   *
+   * @param pixelInt
+   * @return
+   */
+  @inline
+  def colorComponentMapFrom(pixelInt: Int): Map[Symbol, Double] =
+    colorComponentMapFrom(
+      redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt),
+      opacityComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def colorComponentMapFrom(rgbTuple: (Int, Int, Int)): Map[Symbol, Double] =
+    (colorComponentMapFrom(_: Int, _: Int, _: Int, MaximumOpacity)).tupled.apply(rgbTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def colorComponentMapFrom(red: Int, green: Int, blue: Int): Map[Symbol, Double] =
+    colorComponentMapFrom(red, green, blue, MaximumOpacity)
+
+  /**
+   *
+   *
+   * @param rgbaTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def colorComponentMapFrom(rgbaTuple: (Int, Int, Int, Int)): Map[Symbol, Double] =
+    (colorComponentMapFrom(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @param opacity
+   * @return
+   */
+  @inline
+  def colorComponentMapFrom(red: Int, green: Int, blue: Int, opacity: Int): Map[Symbol, Double] =
+    Map[Symbol, Double](
+      'red -> red.toDouble,
+      'green -> green.toDouble,
+      'blue -> blue.toDouble,
+      'opacity -> opacity.toDouble,
+      'hue -> hueInDegreesFrom(red, green, blue),
+      'saturation -> saturationFrom(red, green, blue),
+      'intensity -> intensityFrom(red, green, blue))
 
 }

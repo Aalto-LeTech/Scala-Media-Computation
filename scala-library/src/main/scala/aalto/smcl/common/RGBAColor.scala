@@ -136,10 +136,10 @@ object RGBAColor {
    */
   def apply(pixelInt: Int, nameOption: Option[String]): RGBAColor =
     RGBAColor(
-      redComponentFrom(pixelInt),
-      greenComponentFrom(pixelInt),
-      blueComponentFrom(pixelInt),
-      opacityComponentFrom(pixelInt),
+      redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt),
+      opacityComponentOf(pixelInt),
       nameOption)
 
   /**
@@ -150,10 +150,10 @@ object RGBAColor {
    */
   def apply(pixelInt: Int): RGBAColor =
     RGBAColor(
-      redComponentFrom(pixelInt),
-      greenComponentFrom(pixelInt),
-      blueComponentFrom(pixelInt),
-      opacityComponentFrom(pixelInt))
+      redComponentOf(pixelInt),
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt),
+      opacityComponentOf(pixelInt))
 
   /**
    *
@@ -185,6 +185,29 @@ object RGBAColor {
       platformColor.blue,
       platformColor.opacity,
       nameOption)
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param intensity
+   * @return
+   */
+  def fromHsi(hueInDegrees: Double, saturation: Double, intensity: Double): RGBAColor =
+    fromHsi(hueInDegrees, saturation, intensity, MaximumOpacity)
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param intensity
+   * @param opacity
+   * @return
+   */
+  def fromHsi(hueInDegrees: Double, saturation: Double, intensity: Double, opacity: Int): RGBAColor =
+    ColorOps.hsiToColor(hueInDegrees, saturation, intensity, opacity)
 
 }
 
@@ -252,37 +275,21 @@ class RGBAColor protected(
    *
    * @return
    */
-  def toHueInDegrees: Double = {
-    import Math._
-
-    def RmG = red - green
-    def RmB = red - blue
-
-    def root = sqrt(RmG * RmG + RmB * (green - blue))
-
-    def angleCandidate = Math.rint(100.0 * toDegrees(acos((RmG + RmB) / (2.0 * root)))) / 100.0
-
-    if (green >= blue) angleCandidate else FullCircleInDegrees - angleCandidate
-  }
+  def toHueInDegrees: Double = ColorOps.hueInDegreesOf(this)
 
   /**
    *
    *
    * @return
    */
-  def toSaturation: Double = {
-    if (red == 0 && green == 0 && blue == 0)
-      0.0
-    else
-      1.0 - (3.0 * red.min(green).min(blue).toDouble / (red + green + blue).toDouble)
-  }
+  def toSaturation: Double = ColorOps.saturationOf(this)
 
   /**
    *
    *
    * @return
    */
-  def toIntensity: Double = Math.rint(100 * ((red + green + blue).toDouble / 3.0)) / 100
+  def toIntensity: Double = ColorOps.intensityOf(this)
 
   /**
    *

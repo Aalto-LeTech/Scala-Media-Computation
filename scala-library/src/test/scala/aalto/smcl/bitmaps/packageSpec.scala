@@ -16,19 +16,19 @@ class packageSpec extends ImageSpecBase {
 
   "the right color component must be extracted from an Int representing a pixel value by" - {
     "redComponentFrom()" in {
-      assert(redComponentFrom(TEST_PIXEL_INT) === TEST_RED_VALUE)
+      assert(redComponentOf(TEST_PIXEL_INT) === TEST_RED_VALUE)
     }
 
     "greenComponentFrom()" in {
-      assert(greenComponentFrom(TEST_PIXEL_INT) === TEST_GREEN_VALUE)
+      assert(greenComponentOf(TEST_PIXEL_INT) === TEST_GREEN_VALUE)
     }
 
     "blueComponentFrom()" in {
-      assert(blueComponentFrom(TEST_PIXEL_INT) === TEST_BLUE_VALUE)
+      assert(blueComponentOf(TEST_PIXEL_INT) === TEST_BLUE_VALUE)
     }
 
     "opacityComponentFrom()" in {
-      assert(opacityComponentFrom(TEST_PIXEL_INT) === TEST_OPACITY_VALUE)
+      assert(opacityComponentOf(TEST_PIXEL_INT) === TEST_OPACITY_VALUE)
     }
   }
 
@@ -90,7 +90,7 @@ class packageSpec extends ImageSpecBase {
 
   "colorComponentsFrom() must" - {
     "return a map with the right color components of an Int representing a pixel value" in {
-      assert(colorComponentsFrom(TEST_PIXEL_INT) ===
+      assert(colorComponentMapFrom(TEST_PIXEL_INT) ===
           Map[Symbol, Int](
             'red -> TEST_RED_VALUE,
             'green -> TEST_GREEN_VALUE,

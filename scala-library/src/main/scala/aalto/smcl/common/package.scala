@@ -115,8 +115,34 @@ package object common {
   /** Number of degrees representing a full circle. */
   val FullCircleInDegrees: Int = 360
 
+  /** Number of degrees representing a full circle. */
+  val OneThirdOfCircleInDegrees: Int = FullCircleInDegrees / 3
 
-  /** */
+  /** 60 degrees in radians. */
+  val Deg60InRad = Math.PI / 3.0
+
+  /** Color component value representing start of the hue cycle. */
+  val MinimumHue: Double = 0.0
+
+  /** Color component value representing end of the hue cycle. */
+  val MaximumHue: Double = FullCircleInDegrees.toDouble
+
+  /** Color component value representing minimal amount of saturation. */
+  val MinimumSaturation: Double = 0.0
+
+  /** Color component value representing maximal amount of saturation. */
+  val MaximumSaturation: Double = 1.0
+
+  /** Color component value representing minimal amount of intensity. */
+  val MinimumIntensity: Double = ByteRange.start.toDouble
+
+  /** Color component value representing maximal amount of intensity. */
+  val MaximumIntensity: Double = ByteRange.end.toDouble
+
+  /** Application of the RichRGBAColor class. */
   implicit def RGBAColorWrapper(self: RGBAColor): RichRGBAColor = new RichRGBAColor(self)
+
+  /** Application of the RichPixelInt class. */
+  implicit def PixelIntWrapper(self: Int): RichPixelInt = new RichPixelInt(self)
 
 }
