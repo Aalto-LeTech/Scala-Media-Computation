@@ -235,7 +235,12 @@ private[smcl] object ImageProvider {
         supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
   }
 
+
+/* TODO: Later
+
+
   /**
+   *
    *
    *
    * @param url
@@ -255,5 +260,6 @@ private[smcl] object ImageProvider {
 
     null
   }
+*/
 
 }
