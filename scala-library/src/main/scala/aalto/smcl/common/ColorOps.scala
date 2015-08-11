@@ -414,7 +414,7 @@ object ColorOps {
 
     def root = sqrt(RmG * RmG + RmB * (green - blue))
 
-    def angleCandidate = Math.rint(100.0 * toDegrees(acos((RmG + RmB) / (2.0 * root)))) / 100.0
+    def angleCandidate = rint(100.0 * toDegrees(acos((RmG + RmB) / (2.0 * root)))) / 100.0
 
     if (green >= blue) angleCandidate else FullCircleInDegrees - angleCandidate
   }
