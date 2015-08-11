@@ -281,6 +281,49 @@ object ColorOps {
    * @return
    */
   @inline
+  def isGray(color: RGBAColor): Boolean =
+    isGray(rgbTupleFrom(color))
+
+  /**
+   *
+   *
+   * @param pixelInt
+   * @return
+   */
+  @inline
+  def isGray(pixelInt: Int): Boolean =
+    isGray(rgbTupleFrom(pixelInt))
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def isGray(rgbTuple: (Int, Int, Int)): Boolean =
+    (isGray(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def isGray(red: Int, green: Int, blue: Int): Boolean =
+    red == blue && green == blue
+
+  /**
+   *
+   *
+   * @param color
+   * @return
+   */
+  @inline
   def isWhite(color: RGBAColor): Boolean =
     isWhite(rgbTupleFrom(color))
 

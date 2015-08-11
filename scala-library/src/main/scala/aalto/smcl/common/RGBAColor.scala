@@ -394,6 +394,9 @@ class RGBAColor protected(
   lazy val isBlack: Boolean = ColorOps.isBlack(this)
 
   /** */
+  lazy val isGray: Boolean = ColorOps.isGray(this)
+
+  /** */
   lazy val isWhite: Boolean = ColorOps.isWhite(this)
 
   /** */
