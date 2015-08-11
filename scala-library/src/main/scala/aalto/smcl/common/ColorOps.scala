@@ -127,9 +127,38 @@ object ColorOps {
   @inline
   def rgbaTupleFrom(pixelInt: Int): (Int, Int, Int, Int) =
     (redComponentOf(pixelInt),
-        greenComponentOf(pixelInt),
-        blueComponentOf(pixelInt),
-        opacityComponentOf(pixelInt))
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt),
+      opacityComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param rgbaTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def normalizeRgba(rgbaTuple: (Int, Int, Int, Int)): (Double, Double, Double, Double) =
+    (normalizeRgba(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def normalizeRgba(red: Int, green: Int, blue: Int, opacity: Int): (Double, Double, Double, Double) = {
+    def rgbSum: Double = (red + green + blue).toDouble
+
+    (red.toDouble / rgbSum,
+      green.toDouble / rgbSum,
+      blue.toDouble / rgbSum,
+      opacity.toDouble / MaximumOpacity)
+  }
 
   /**
    *
@@ -150,8 +179,34 @@ object ColorOps {
   @inline
   def rgbTupleFrom(pixelInt: Int): (Int, Int, Int) =
     (redComponentOf(pixelInt),
-        greenComponentOf(pixelInt),
-        blueComponentOf(pixelInt))
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def normalizeRgb(rgbTuple: (Int, Int, Int)): (Double, Double, Double) =
+    (normalizeRgb(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def normalizeRgb(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
+    def sum: Double = (red + green + blue).toDouble
+
+    (red.toDouble / sum, green.toDouble / sum, blue.toDouble / sum)
+  }
 
   /**
    *
@@ -164,10 +219,10 @@ object ColorOps {
    */
   @inline
   def pixelIntFrom(
-      red: Int = MinimumRed,
-      green: Int = MinimumGreen,
-      blue: Int = MinimumBlue,
-      opacity: Int = MaximumOpacity): Int = {
+    red: Int = MinimumRed,
+    green: Int = MinimumGreen,
+    blue: Int = MinimumBlue,
+    opacity: Int = MaximumOpacity): Int = {
 
     require(ByteRange.contains(red),
       s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
@@ -226,8 +281,8 @@ object ColorOps {
   @inline
   def isBlack(red: Int, green: Int, blue: Int): Boolean =
     red == MinimumRed.toDouble &&
-        green == MinimumGreen.toDouble &&
-        blue == MinimumBlue.toDouble
+      green == MinimumGreen.toDouble &&
+      blue == MinimumBlue.toDouble
 
   /**
    *
@@ -271,8 +326,8 @@ object ColorOps {
   @inline
   def isWhite(red: Int, green: Int, blue: Int): Boolean =
     red == MaximumRed.toDouble &&
-        green == MaximumGreen.toDouble &&
-        blue == MaximumBlue.toDouble
+      green == MaximumGreen.toDouble &&
+      blue == MaximumBlue.toDouble
 
   /**
    *
@@ -369,7 +424,7 @@ object ColorOps {
     if (isBlack(red, green, blue))
       return MinimumSaturation
 
-    1.0 - (3.0 * red.min(green).min(blue).toDouble / (red + green + blue).toDouble)
+    1.0 - 3.0 * (red.min(green).min(blue) / (red + green + blue))
   }
 
   /**
@@ -551,44 +606,36 @@ object ColorOps {
       return (i, i, i)
     }
 
-    val X = {
-      val aThirdOfCircleHue = normalizedHueInDegreesFrom(hueInDegrees) match {
-        case h: Double if h <= 120 => 0
-        case h: Double if h <= 240 => h - 120
-        case h: Double             => h - 240
+    val normalizedHueInDegrees = normalizedHueInDegreesFrom(hueInDegrees)
+
+    val (aThirdOfCircleHueInDegrees: Double, finalOrder: ((Int, Int, Int) => (Int, Int, Int))) =
+      normalizedHueInDegrees match {
+        case hue: Double if hue <= 120.0 =>
+          (hue,
+            (x: Int, y: Int, z: Int) => (x, z, y))
+
+        case hue: Double if hue <= 240.0 =>
+          (hue - 120.0,
+            (x: Int, y: Int, z: Int) => (y, x, z))
+
+        case hue: Double =>
+          (hue - 240.0,
+            (x: Int, y: Int, z: Int) => (z, y, x))
       }
 
+    val X = {
       val quotient =
-        (saturation * toDegrees(cos(toRadians(aThirdOfCircleHue)))) /
-            toDegrees(cos(toRadians(60 - aThirdOfCircleHue)))
+        (saturation * toDegrees(cos(toRadians(aThirdOfCircleHueInDegrees)))) /
+          toDegrees(cos(toRadians(60.0 - aThirdOfCircleHueInDegrees)))
 
-      intensity * (1 + quotient)
+      round(intensity * (1 + quotient)).toInt
     }
 
-    val Y = intensity - intensity * saturation
+    val Y = round(intensity - intensity * saturation).toInt
 
-    val Z = 3.0 * intensity - X - Y
+    val Z = round(3.0 * intensity - X - Y).toInt
 
-    val normalizedHue = normalizedHueInDegreesFrom(hueInDegrees)
-
-    var red, green, blue: Int = 0
-    if (normalizedHue <= 120) {
-      red = round(X).toInt
-      green = round(Z).toInt
-      blue = round(Y).toInt
-    }
-    else if (normalizedHue <= 240) {
-      red = round(Y).toInt
-      green = round(X).toInt
-      blue = round(Z).toInt
-    }
-    else {
-      red = round(Z).toInt
-      green = round(Y).toInt
-      blue = round(X).toInt
-    }
-
-    (red, green, blue)
+    finalOrder(X, Y, Z)
   }
 
   /**
