@@ -406,6 +406,9 @@ object ColorOps {
 
     ColorValidator.validateRgbColor(red, green, blue)
 
+    if (isGray(red, green, blue))   // Special case
+      return Double.NaN
+
     def RmG = red - green
     def RmB = red - blue
 
@@ -458,7 +461,7 @@ object ColorOps {
   def hsiSaturationFrom(red: Int, green: Int, blue: Int): Double = {
     ColorValidator.validateRgbColor(red, green, blue)
 
-    if (isBlack(red, green, blue))
+    if (isBlack(red, green, blue))                    // Special case
       return ColorValidator.MinimumHsiSaturation
 
     1.0 - 3.0 * (red.min(green).min(blue) / (red + green + blue))
