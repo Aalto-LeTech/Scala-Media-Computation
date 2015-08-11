@@ -21,12 +21,14 @@ private[common] object PresetRGBAColor {
   def apply(red: Int, green: Int, blue: Int, opacity: Int,
     nameOption: Option[String] = None): RGBAColor = {
 
-    val args = RGBAColor.validateColorArguments(red, green, blue, opacity, nameOption)
+    ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
-    require(args._5.isDefined,
+    val resultNameOption = ColorValidator.validateColorNameOption(nameOption)
+
+    require(resultNameOption.isDefined,
       "PresetColor instances must be given unique names (was None).")
 
-    new PresetRGBAColor(args._1, args._2, args._3, args._4, args._5)
+    new PresetRGBAColor(red, green, blue, opacity, resultNameOption)
   }
 
 

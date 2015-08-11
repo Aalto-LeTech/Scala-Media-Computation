@@ -37,6 +37,7 @@ object BitmapValidator {
    * @param actualWidthInPixels
    * @return
    */
+  @inline
   def minimumWidthIsNotMet(actualWidthInPixels: Int): Boolean =
     actualWidthInPixels < MinimumBitmapHeightInPixels
 
@@ -46,6 +47,7 @@ object BitmapValidator {
    * @param actualHeightInPixels
    * @return
    */
+  @inline
   def minimumHeightIsNotMet(actualHeightInPixels: Int): Boolean =
     actualHeightInPixels < MinimumBitmapHeightInPixels
 
@@ -55,6 +57,7 @@ object BitmapValidator {
    * @param actualWidthInPixels
    * @return
    */
+  @inline
   def maximumWidthIsExceeded(actualWidthInPixels: Int): Boolean =
     actualWidthInPixels > MaximumBitmapHeightInPixels
 
@@ -64,6 +67,7 @@ object BitmapValidator {
    * @param actualHeightInPixels
    * @return
    */
+  @inline
   def maximumHeightIsExceeded(actualHeightInPixels: Int): Boolean =
     actualHeightInPixels > MaximumBitmapHeightInPixels
 
@@ -73,6 +77,7 @@ object BitmapValidator {
    * @param actualWidthInPixels
    * @return
    */
+  @inline
   def warningWidthLimitIsExceeded(actualWidthInPixels: Int): Boolean =
     actualWidthInPixels > GS.intFor(BitmapWidthWarningLimitInPixels)
 
@@ -82,6 +87,7 @@ object BitmapValidator {
    * @param actualHeightInPixels
    * @return
    */
+  @inline
   def warningHeightLimitIsExceeded(actualHeightInPixels: Int): Boolean =
     actualHeightInPixels > GS.intFor(BitmapHeightWarningLimitInPixels)
 
@@ -92,6 +98,7 @@ object BitmapValidator {
    * @param actualHeightInPixels
    * @return
    */
+  @inline
   def minimumSizeLimitsAreNotMet(actualWidthInPixels: Int, actualHeightInPixels: Int): Boolean =
     minimumWidthIsNotMet(actualWidthInPixels) || minimumHeightIsNotMet(actualHeightInPixels)
 
@@ -102,6 +109,7 @@ object BitmapValidator {
    * @param actualHeightInPixels
    * @return
    */
+  @inline
   def maximumSizeLimitsAreExceeded(actualWidthInPixels: Int, actualHeightInPixels: Int): Boolean =
     maximumWidthIsExceeded(actualWidthInPixels) || maximumHeightIsExceeded(actualHeightInPixels)
 
@@ -112,9 +120,9 @@ object BitmapValidator {
    * @param actualHeightInPixels
    * @return
    */
+  @inline
   def warningSizeLimitsAreExceeded(actualWidthInPixels: Int, actualHeightInPixels: Int): Boolean =
     warningWidthLimitIsExceeded(actualWidthInPixels) && warningHeightLimitIsExceeded(actualHeightInPixels)
-
 
   /**
    *
@@ -125,6 +133,7 @@ object BitmapValidator {
    * @throws SMCLMinimumBitmapSizeNotMetError
    * @throws SMCLMaximumBitmapSizeExceededError
    */
+  @inline
   def validateBitmapSize(actualWidthInPixels: Int, actualHeightInPixels: Int): Unit = {
     if (minimumSizeLimitsAreNotMet(actualWidthInPixels, actualHeightInPixels)) {
       throw new SMCLMinimumBitmapSizeNotMetError(Option(actualWidthInPixels), Option(actualHeightInPixels))

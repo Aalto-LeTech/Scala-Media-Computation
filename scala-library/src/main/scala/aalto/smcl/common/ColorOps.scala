@@ -17,8 +17,7 @@ object ColorOps {
    */
   @inline
   def withNewRedComponent(pixelInt: Int, newRed: Int): Int = {
-    require(ByteRange.contains(newRed),
-      s"'newRed' must be between ${ByteRange.start} and ${ByteRange.end} (was $newRed)")
+    ColorValidator.validateRgbRedComponent(newRed)
 
     (pixelInt & ~ThirdByte) | (newRed << TwoBytes)
   }
@@ -32,8 +31,7 @@ object ColorOps {
    */
   @inline
   def withNewGreenComponent(pixelInt: Int, newGreen: Int): Int = {
-    require(ByteRange.contains(newGreen),
-      s"'newGreen' must be between ${ByteRange.start} and ${ByteRange.end} (was $newGreen)")
+    ColorValidator.validateRgbGreenComponent(newGreen)
 
     (pixelInt & ~SecondByte) | (newGreen << OneByte)
   }
@@ -47,8 +45,7 @@ object ColorOps {
    */
   @inline
   def withNewBlueComponent(pixelInt: Int, newBlue: Int): Int = {
-    require(ByteRange.contains(newBlue),
-      s"'newBlue' must be between ${ByteRange.start} and ${ByteRange.end} (was $newBlue)")
+    ColorValidator.validateRgbBlueComponent(newBlue)
 
     (pixelInt & ~FirstByte) | newBlue
   }
@@ -62,8 +59,7 @@ object ColorOps {
    */
   @inline
   def withNewOpacityComponent(pixelInt: Int, newOpacity: Int): Int = {
-    require(ByteRange.contains(newOpacity),
-      s"'newOpacity' argument must be between ${ByteRange.start} and ${ByteRange.end} (was $newOpacity)")
+    ColorValidator.validateRgbaOpacityComponent(newOpacity)
 
     (pixelInt & ~FourthByte) | (newOpacity << ThreeBytes)
   }
@@ -127,9 +123,9 @@ object ColorOps {
   @inline
   def rgbaTupleFrom(pixelInt: Int): (Int, Int, Int, Int) =
     (redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt),
-      opacityComponentOf(pixelInt))
+        greenComponentOf(pixelInt),
+        blueComponentOf(pixelInt),
+        opacityComponentOf(pixelInt))
 
   /**
    *
@@ -152,12 +148,14 @@ object ColorOps {
    */
   @inline
   def normalizeRgba(red: Int, green: Int, blue: Int, opacity: Int): (Double, Double, Double, Double) = {
+    ColorValidator.validateRgbaColor(red, green, blue, opacity)
+
     def rgbSum: Double = (red + green + blue).toDouble
 
     (red.toDouble / rgbSum,
-      green.toDouble / rgbSum,
-      blue.toDouble / rgbSum,
-      opacity.toDouble / MaximumOpacity)
+        green.toDouble / rgbSum,
+        blue.toDouble / rgbSum,
+        opacity.toDouble / ColorValidator.MaximumRgbaOpacity)
   }
 
   /**
@@ -179,8 +177,8 @@ object ColorOps {
   @inline
   def rgbTupleFrom(pixelInt: Int): (Int, Int, Int) =
     (redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt))
+        greenComponentOf(pixelInt),
+        blueComponentOf(pixelInt))
 
   /**
    *
@@ -203,6 +201,8 @@ object ColorOps {
    */
   @inline
   def normalizeRgb(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
+    ColorValidator.validateRgbColor(red, green, blue)
+
     def sum: Double = (red + green + blue).toDouble
 
     (red.toDouble / sum, green.toDouble / sum, blue.toDouble / sum)
@@ -219,22 +219,12 @@ object ColorOps {
    */
   @inline
   def pixelIntFrom(
-    red: Int = MinimumRed,
-    green: Int = MinimumGreen,
-    blue: Int = MinimumBlue,
-    opacity: Int = MaximumOpacity): Int = {
+      red: Int = ColorValidator.MinimumRgbRed,
+      green: Int = ColorValidator.MinimumRgbGreen,
+      blue: Int = ColorValidator.MinimumRgbBlue,
+      opacity: Int = ColorValidator.MaximumRgbaOpacity): Int = {
 
-    require(ByteRange.contains(red),
-      s"The 'red' value must be between ${ByteRange.start} and ${ByteRange.end} (was $red)")
-
-    require(ByteRange.contains(green),
-      s"The 'green' value must be between ${ByteRange.start} and ${ByteRange.end} (was $green)")
-
-    require(ByteRange.contains(blue),
-      s"The 'blue' value must be between ${ByteRange.start} and ${ByteRange.end} (was $blue)")
-
-    require(ByteRange.contains(opacity),
-      s"The opacity value must be between ${ByteRange.start} and ${ByteRange.end} (was $opacity)")
+    ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
     (opacity << ThreeBytes) | (red << TwoBytes) | (green << OneByte) | blue
   }
@@ -280,9 +270,9 @@ object ColorOps {
    */
   @inline
   def isBlack(red: Int, green: Int, blue: Int): Boolean =
-    red == MinimumRed.toDouble &&
-      green == MinimumGreen.toDouble &&
-      blue == MinimumBlue.toDouble
+    red == ColorValidator.MinimumRgbRed.toDouble &&
+        green == ColorValidator.MinimumRgbGreen.toDouble &&
+        blue == ColorValidator.MinimumRgbBlue.toDouble
 
   /**
    *
@@ -325,9 +315,9 @@ object ColorOps {
    */
   @inline
   def isWhite(red: Int, green: Int, blue: Int): Boolean =
-    red == MaximumRed.toDouble &&
-      green == MaximumGreen.toDouble &&
-      blue == MaximumBlue.toDouble
+    red == ColorValidator.MaximumRgbRed.toDouble &&
+        green == ColorValidator.MaximumRgbGreen.toDouble &&
+        blue == ColorValidator.MaximumRgbBlue.toDouble
 
   /**
    *
@@ -336,8 +326,8 @@ object ColorOps {
    * @return
    */
   @inline
-  def hueInDegreesOf(color: RGBAColor): Double =
-    hueInDegreesFrom(rgbTupleFrom(color))
+  def hsiHueInDegreesOf(color: RGBAColor): Double =
+    hsiHueInDegreesFrom(rgbTupleFrom(color))
 
   /**
    *
@@ -346,8 +336,8 @@ object ColorOps {
    * @return
    */
   @inline
-  def hueInDegreesOf(pixelInt: Int): Double =
-    hueInDegreesFrom(rgbTupleFrom(pixelInt))
+  def hsiHueInDegreesOf(pixelInt: Int): Double =
+    hsiHueInDegreesFrom(rgbTupleFrom(pixelInt))
 
   /**
    *
@@ -356,8 +346,8 @@ object ColorOps {
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
-  def hueInDegreesFrom(rgbTuple: (Int, Int, Int)): Double =
-    (hueInDegreesFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def hsiHueInDegreesFrom(rgbTuple: (Int, Int, Int)): Double =
+    (hsiHueInDegreesFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -368,8 +358,10 @@ object ColorOps {
    * @return
    */
   @inline
-  def hueInDegreesFrom(red: Int, green: Int, blue: Int): Double = {
+  def hsiHueInDegreesFrom(red: Int, green: Int, blue: Int): Double = {
     import Math._
+
+    ColorValidator.validateRgbColor(red, green, blue)
 
     def RmG = red - green
     def RmB = red - blue
@@ -388,8 +380,8 @@ object ColorOps {
    * @return
    */
   @inline
-  def saturationOf(color: RGBAColor): Double =
-    saturationFrom(rgbTupleFrom(color))
+  def hsiSaturationOf(color: RGBAColor): Double =
+    hsiSaturationFrom(rgbTupleFrom(color))
 
   /**
    *
@@ -398,8 +390,8 @@ object ColorOps {
    * @return
    */
   @inline
-  def saturationOf(pixelInt: Int): Double =
-    saturationFrom(rgbTupleFrom(pixelInt))
+  def hsiSaturationOf(pixelInt: Int): Double =
+    hsiSaturationFrom(rgbTupleFrom(pixelInt))
 
   /**
    *
@@ -408,8 +400,8 @@ object ColorOps {
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
-  def saturationFrom(rgbTuple: (Int, Int, Int)): Double =
-    (saturationFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def hsiSaturationFrom(rgbTuple: (Int, Int, Int)): Double =
+    (hsiSaturationFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -420,9 +412,11 @@ object ColorOps {
    * @return
    */
   @inline
-  def saturationFrom(red: Int, green: Int, blue: Int): Double = {
+  def hsiSaturationFrom(red: Int, green: Int, blue: Int): Double = {
+    ColorValidator.validateRgbColor(red, green, blue)
+
     if (isBlack(red, green, blue))
-      return MinimumSaturation
+      return ColorValidator.MinimumHsiSaturation
 
     1.0 - 3.0 * (red.min(green).min(blue) / (red + green + blue))
   }
@@ -434,8 +428,8 @@ object ColorOps {
    * @return
    */
   @inline
-  def intensityOf(color: RGBAColor): Double =
-    intensityFrom(rgbTupleFrom(color))
+  def hsiIntensityOf(color: RGBAColor): Double =
+    hsiIntensityFrom(rgbTupleFrom(color))
 
   /**
    *
@@ -444,8 +438,8 @@ object ColorOps {
    * @return
    */
   @inline
-  def intensityOf(pixelInt: Int): Double =
-    intensityFrom(rgbTupleFrom(pixelInt))
+  def hsiIntensityOf(pixelInt: Int): Double =
+    hsiIntensityFrom(rgbTupleFrom(pixelInt))
 
   /**
    *
@@ -454,8 +448,8 @@ object ColorOps {
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
-  def intensityFrom(rgbTuple: (Int, Int, Int)): Double =
-    (intensityFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def hsiIntensityFrom(rgbTuple: (Int, Int, Int)): Double =
+    (hsiIntensityFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -466,8 +460,11 @@ object ColorOps {
    * @return
    */
   @inline
-  def intensityFrom(red: Int, green: Int, blue: Int): Double =
+  def hsiIntensityFrom(red: Int, green: Int, blue: Int): Double = {
+    ColorValidator.validateRgbColor(red, green, blue)
+
     Math.rint(100 * ((red + green + blue).toDouble / 3.0)) / 100
+  }
 
   /**
    *
@@ -520,9 +517,11 @@ object ColorOps {
    */
   @inline
   def rgbToHsi(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
-    val hue = hueInDegreesFrom(red, green, blue)
-    val saturation = saturationFrom(red, green, blue)
-    val intensity = intensityFrom(red, green, blue)
+    // The functions below will validate the parameters (three times, actually...)
+
+    val hue = hsiHueInDegreesFrom(red, green, blue)
+    val saturation = hsiSaturationFrom(red, green, blue)
+    val intensity = hsiIntensityFrom(red, green, blue)
 
     (hue, saturation, intensity)
   }
@@ -537,7 +536,7 @@ object ColorOps {
    */
   @inline
   def hsiToColor(hueInDegrees: Double, saturation: Double, intensity: Double): RGBAColor =
-    hsiToColor(hueInDegrees, saturation, intensity, MaximumOpacity)
+    hsiToColor(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity)
 
   /**
    *
@@ -562,7 +561,7 @@ object ColorOps {
    */
   @inline
   def hsiToPixelInt(hueInDegrees: Double, saturation: Double, intensity: Double): Int =
-    hsiToPixelInt(hueInDegrees, saturation, intensity, MaximumOpacity)
+    hsiToPixelInt(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity)
 
   /**
    *
@@ -600,6 +599,8 @@ object ColorOps {
   def hsiToRgb(hueInDegrees: Double, saturation: Double, intensity: Double): (Int, Int, Int) = {
     import Math._
 
+    ColorValidator.validateHsiColor(hueInDegrees, saturation, intensity)
+
     // Special case
     if (saturation == 0.0) {
       val i: Int = round(intensity).toInt
@@ -612,21 +613,21 @@ object ColorOps {
       normalizedHueInDegrees match {
         case hue: Double if hue <= 120.0 =>
           (hue,
-            (x: Int, y: Int, z: Int) => (x, z, y))
+              (x: Int, y: Int, z: Int) => (x, z, y))
 
         case hue: Double if hue <= 240.0 =>
           (hue - 120.0,
-            (x: Int, y: Int, z: Int) => (y, x, z))
+              (x: Int, y: Int, z: Int) => (y, x, z))
 
         case hue: Double =>
           (hue - 240.0,
-            (x: Int, y: Int, z: Int) => (z, y, x))
+              (x: Int, y: Int, z: Int) => (z, y, x))
       }
 
     val X = {
       val quotient =
         (saturation * toDegrees(cos(toRadians(aThirdOfCircleHueInDegrees)))) /
-          toDegrees(cos(toRadians(60.0 - aThirdOfCircleHueInDegrees)))
+            toDegrees(cos(toRadians(60.0 - aThirdOfCircleHueInDegrees)))
 
       round(intensity * (1 + quotient)).toInt
     }
@@ -635,7 +636,16 @@ object ColorOps {
 
     val Z = round(3.0 * intensity - X - Y).toInt
 
-    finalOrder(X, Y, Z)
+    val (red, green, blue) = finalOrder(X, Y, Z)
+
+    if (!ColorValidator.rgbRedComponentIsInRange(red) ||
+        !ColorValidator.rgbGreenComponentIsInRange(green) ||
+        !ColorValidator.rgbBlueComponentIsInRange(blue)) {
+
+      throw new SMCLInvalidHsiValueCombinationError(hueInDegrees, saturation, intensity)
+    }
+
+    (red, green, blue)
   }
 
   /**
@@ -667,7 +677,7 @@ object ColorOps {
   //noinspection ScalaUnnecessaryParentheses
   @inline
   def colorComponentMapFrom(rgbTuple: (Int, Int, Int)): Map[Symbol, Double] =
-    (colorComponentMapFrom(_: Int, _: Int, _: Int, MaximumOpacity)).tupled.apply(rgbTuple)
+    (colorComponentMapFrom(_: Int, _: Int, _: Int, ColorValidator.MaximumRgbaOpacity)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -679,7 +689,7 @@ object ColorOps {
    */
   @inline
   def colorComponentMapFrom(red: Int, green: Int, blue: Int): Map[Symbol, Double] =
-    colorComponentMapFrom(red, green, blue, MaximumOpacity)
+    colorComponentMapFrom(red, green, blue, ColorValidator.MaximumRgbaOpacity)
 
   /**
    *
@@ -708,8 +718,8 @@ object ColorOps {
       'green -> green.toDouble,
       'blue -> blue.toDouble,
       'opacity -> opacity.toDouble,
-      'hue -> hueInDegreesFrom(red, green, blue),
-      'saturation -> saturationFrom(red, green, blue),
-      'intensity -> intensityFrom(red, green, blue))
+      'hsiHue -> hsiHueInDegreesFrom(red, green, blue),
+      'hsiSaturation -> hsiSaturationFrom(red, green, blue),
+      'hsiIntensity -> hsiIntensityFrom(red, green, blue))
 
 }

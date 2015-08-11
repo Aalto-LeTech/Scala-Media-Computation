@@ -76,41 +76,12 @@ package object common {
   /** 2 * PI */
   protected[smcl] val PI2 = 2 * Math.PI
 
-  /** Color component value representing minimal amount of red. */
-  val MinimumRed: Int = ByteRange.start
-
-  /** Color component value representing maximal amount of red. */
-  val MaximumRed: Int = ByteRange.end
-
-  /** Color component value representing minimal amount of green. */
-  val MinimumGreen: Int = ByteRange.start
-
-  /** Color component value representing maximal amount of green. */
-  val MaximumGreen: Int = ByteRange.end
-
-  /** Color component value representing minimal amount of blue. */
-  val MinimumBlue: Int = ByteRange.start
-
-  /** Color component value representing maximal amount of blue. */
-  val MaximumBlue: Int = ByteRange.end
-
-  /** Color component value representing minimal amount of gray. */
-  val MinimumGray: Int = ByteRange.start
-
-  /** Color component value representing maximal amount of gray. */
-  val MaximumGray: Int = ByteRange.end
-
-  /** Color component value representing minimal opacity. */
-  val MinimumOpacity: Int = ByteRange.start
 
   /** Color component value representing maximal opacity. */
-  val MaximumOpacity: Int = ByteRange.end
-
-  /** Color component value representing maximal opacity. */
-  val FullyOpaque: Int = MaximumOpacity
+  val FullyOpaque: Int = ColorValidator.MaximumRgbaOpacity
 
   /** Color component value representing minimal opacity. */
-  val FullyTransparent: Int = MinimumOpacity
+  val FullyTransparent: Int = ColorValidator.MinimumRgbaOpacity
 
   /** Number of degrees representing a full circle. */
   val FullCircleInDegrees: Int = 360
@@ -121,23 +92,6 @@ package object common {
   /** 60 degrees in radians. */
   val Deg60InRad = Math.PI / 3.0
 
-  /** Color component value representing start of the hue cycle. */
-  val MinimumHue: Double = 0.0
-
-  /** Color component value representing end of the hue cycle. */
-  val MaximumHue: Double = FullCircleInDegrees.toDouble
-
-  /** Color component value representing minimal amount of saturation. */
-  val MinimumSaturation: Double = 0.0
-
-  /** Color component value representing maximal amount of saturation. */
-  val MaximumSaturation: Double = 1.0
-
-  /** Color component value representing minimal amount of intensity. */
-  val MinimumIntensity: Double = ByteRange.start.toDouble
-
-  /** Color component value representing maximal amount of intensity. */
-  val MaximumIntensity: Double = ByteRange.end.toDouble
 
   /** Application of the RichRGBAColor class. */
   implicit def RGBAColorWrapper(self: RGBAColor): RichRGBAColor = new RichRGBAColor(self)
