@@ -33,7 +33,7 @@ private[bitmaps] case class AppendVertically(
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(bitmapsToCombine.map(_.operations).toSeq)
 
-  /** Information about this [[AbstractSingleSourceOperation]] instance */
+  /** Information about this [[AbstractBufferProviderOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "padding" -> Option(s"$paddingInPixels px"),
     "horizontalAlignment" -> Option(horizontalAlignment.toString),

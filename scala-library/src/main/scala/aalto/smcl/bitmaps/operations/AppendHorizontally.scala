@@ -5,7 +5,6 @@ import scala.collection.mutable.ArrayBuffer
 
 import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.common.ColorOps._
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
@@ -34,7 +33,7 @@ private[bitmaps] case class AppendHorizontally(
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(bitmapsToCombine.map(_.operations).toSeq)
 
-  /** Information about this [[AbstractSingleSourceOperation]] instance */
+  /** Information about this [[AbstractBufferProviderOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "padding" -> Option(s"$paddingInPixels px"),
     "verticalAlignment" -> Option(verticalAlignment.toString),

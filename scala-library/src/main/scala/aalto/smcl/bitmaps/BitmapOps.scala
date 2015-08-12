@@ -26,9 +26,9 @@ object BitmapOps {
    * @return
    */
   def clear(
-    bmp: OperableBitmap,
-    color: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      color: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap to be cleared cannot be null.")
 
@@ -48,13 +48,13 @@ object BitmapOps {
    * @return
    */
   def drawLine(
-    bmp: OperableBitmap,
-    fromXInPixels: Int,
-    fromYInPixels: Int,
-    toXInPixels: Int,
-    toYInPixels: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      fromXInPixels: Int,
+      fromYInPixels: Int,
+      toXInPixels: Int,
+      toYInPixels: Int,
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -76,12 +76,12 @@ object BitmapOps {
    * @return
    */
   def drawPolyline(
-    bmp: OperableBitmap,
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
-    numberOfCoordinatesToDraw: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
+      numberOfCoordinatesToDraw: Int,
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -106,15 +106,15 @@ object BitmapOps {
    * @return
    */
   def drawPolygon(
-    bmp: OperableBitmap,
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
-    numberOfCoordinatesToDraw: Int,
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
+      numberOfCoordinatesToDraw: Int,
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -140,15 +140,15 @@ object BitmapOps {
    * @return
    */
   def drawSquare(
-    bmp: OperableBitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -175,16 +175,16 @@ object BitmapOps {
    * @return
    */
   def drawRectangle(
-    bmp: OperableBitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -212,17 +212,17 @@ object BitmapOps {
    * @return
    */
   def drawRoundedSquare(
-    bmp: OperableBitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -252,18 +252,18 @@ object BitmapOps {
    * @return
    */
   def drawRoundedRectangle(
-    bmp: OperableBitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -289,15 +289,15 @@ object BitmapOps {
    * @return
    */
   def drawCircle(
-    bmp: OperableBitmap,
-    centerXInPixels: Int,
-    centerYInPixels: Int,
-    radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      centerXInPixels: Int,
+      centerYInPixels: Int,
+      radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -323,16 +323,16 @@ object BitmapOps {
    * @return
    */
   def drawEllipse(
-    bmp: OperableBitmap,
-    centerXInPixels: Int,
-    centerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      centerXInPixels: Int,
+      centerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -361,18 +361,18 @@ object BitmapOps {
    * @return
    */
   def drawArc(
-    bmp: OperableBitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: OperableBitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -394,17 +394,18 @@ object BitmapOps {
    * @return
    */
   def appendHorizontally(
-    bitmapsToCombine: Bitmap*)(
-    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
+      bitmapsToCombine: Bitmap*)(
+      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
 
     bitmapsToCombine.head.apply(
       AppendHorizontally(bitmapsToCombine)(
         verticalAlignment, paddingInPixels, backgroundColor),
-      UpdateViewerPerDefaults)
+      viewerHandling)
   }
 
   /**
@@ -417,17 +418,63 @@ object BitmapOps {
    * @return
    */
   def appendVertically(
-    bitmapsToCombine: Bitmap*)(
-    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Bitmap = {
+      bitmapsToCombine: Bitmap*)(
+      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
 
     bitmapsToCombine.head.apply(
       AppendVertically(bitmapsToCombine)(
         horizontalAlignment, paddingInPixels, backgroundColor),
-      UpdateViewerPerDefaults)
+      viewerHandling)
+  }
+
+  /**
+   * Adds a [[FlipHorizontally]] operation to a given [[OperableBitmap]].
+   *
+   * @param viewerHandling
+   * @return
+   */
+  def flipHorizontally(
+      bmp: OperableBitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(FlipHorizontally(), viewerHandling)
+  }
+
+  /**
+   * Adds a [[FlipVertically]] operation to a given [[OperableBitmap]].
+   *
+   * @param viewerHandling
+   * @return
+   */
+  def flipVertically(
+      bmp: OperableBitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(FlipVertically(), viewerHandling)
+  }
+
+  /**
+   * Adds a [[FlipDiagonally]] operation to a given [[OperableBitmap]].
+   *
+   * @param viewerHandling
+   * @return
+   */
+  def flipDiagonally(
+      bmp: OperableBitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(FlipDiagonally(), viewerHandling)
   }
 
 }

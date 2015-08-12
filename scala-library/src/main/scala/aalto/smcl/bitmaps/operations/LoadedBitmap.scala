@@ -10,10 +10,14 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 /**
  *
  *
+ * @param staticBuffer
+ * @param resourcePathOption
+ * @param bitmapIndexInResourceOption
+ *
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class LoadedBitmap(
-  buffer: PlatformBitmapBuffer,
+  staticBuffer: PlatformBitmapBuffer,
   resourcePathOption: Option[String],
   bitmapIndexInResourceOption: Option[Int])
   extends AbstractBufferProviderOperation with Immutable {
@@ -36,5 +40,14 @@ private[bitmaps] case class LoadedBitmap(
 
   /** Operation streams needed to construct  */
   override def childOperationListsOption: Option[Seq[BitmapOperationList]] = None
+
+  /** A buffer for applying bitmap operations. */
+  override def buffer: PlatformBitmapBuffer = {
+    val newBuffer = PlatformBitmapBuffer(staticBuffer.widthInPixels, staticBuffer.heightInPixels)
+
+    newBuffer.drawingSurface().drawBitmap(staticBuffer, 0, 0)
+
+    newBuffer
+  }
 
 }
