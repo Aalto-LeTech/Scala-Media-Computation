@@ -76,6 +76,9 @@ object ColorValidator {
   /** Color component value representing end of the hue cycle. */
   val MaximumHsiHue: Double = FullCircleInDegrees.toDouble
 
+  /** Color component value representing an undefined hue (at the center of the hue cycle). */
+  val UndefinedHsiHue: Double = Double.NaN
+
   /** Color component value representing minimal amount of saturation. */
   val MinimumHsiSaturation: Double = 0.0
 
@@ -93,6 +96,9 @@ object ColorValidator {
 
   /** Color component value representing end of the hue cycle. */
   val MaximumHsvHue: Double = FullCircleInDegrees.toDouble
+
+  /** Color component value representing an undefined hue (at the center of the hue cycle). */
+  val UndefinedHsvHue: Double = Double.NaN
 
   /** Color component value representing minimal amount of saturation. */
   val MinimumHsvSaturation: Double = 0.0
@@ -515,6 +521,7 @@ object ColorValidator {
    * @param nameOptionCandidate
    * @return
    */
+  @inline
   def validateColorNameOption(nameOptionCandidate: Option[String]): Option[String] = {
     require(nameOptionCandidate != null, "The name option argument must be Option(<name>) or None (was null).")
 

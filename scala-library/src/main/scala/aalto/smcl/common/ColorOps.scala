@@ -477,7 +477,7 @@ object ColorOps {
 
     val hue: Double =
       if (isGray(red, green, blue)) // Not defined for grays
-        Double.NaN
+        ColorValidator.UndefinedHsiHue
       else {
         val RmG = red - green
         val RmB = red - blue
@@ -659,6 +659,7 @@ object ColorOps {
    *
    *
    */
+  @inline
   def rgbToHsv(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
     ColorValidator.validateRgbColor(red, green, blue)
 
@@ -674,7 +675,7 @@ object ColorOps {
 
     val hueInDegrees: Double =
       if (isGray(red, green, blue)) // Not defined for grays
-        Double.NaN
+        ColorValidator.UndefinedHsvHue
       else {
         if (value == red) {
           if (green >= blue)
@@ -699,6 +700,7 @@ object ColorOps {
    * @param value
    * @return
    */
+  @inline
   def hsvToRgb(hue: Double, saturation: Double, value: Double): (Int, Int, Int) = {
     import Math._
 
