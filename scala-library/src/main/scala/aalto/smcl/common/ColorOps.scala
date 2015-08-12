@@ -123,9 +123,9 @@ object ColorOps {
   @inline
   def rgbaTupleFrom(pixelInt: Int): (Int, Int, Int, Int) =
     (redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt),
-      opacityComponentOf(pixelInt))
+        greenComponentOf(pixelInt),
+        blueComponentOf(pixelInt),
+        opacityComponentOf(pixelInt))
 
   /**
    *
@@ -153,9 +153,9 @@ object ColorOps {
     def rgbSum: Double = (red + green + blue).toDouble
 
     (red.toDouble / rgbSum,
-      green.toDouble / rgbSum,
-      blue.toDouble / rgbSum,
-      opacity.toDouble / ColorValidator.MaximumRgbaOpacity)
+        green.toDouble / rgbSum,
+        blue.toDouble / rgbSum,
+        opacity.toDouble / ColorValidator.MaximumRgbaOpacity)
   }
 
   /**
@@ -177,8 +177,8 @@ object ColorOps {
   @inline
   def rgbTupleFrom(pixelInt: Int): (Int, Int, Int) =
     (redComponentOf(pixelInt),
-      greenComponentOf(pixelInt),
-      blueComponentOf(pixelInt))
+        greenComponentOf(pixelInt),
+        blueComponentOf(pixelInt))
 
   /**
    *
@@ -211,6 +211,29 @@ object ColorOps {
   /**
    *
    *
+   * @param rgbaTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def pixelIntFrom(rgbaTuple: (Int, Int, Int, Int)): Int =
+    (pixelIntFrom(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @param opacity
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def pixelIntFrom(rgbTuple: (Int, Int, Int), opacity: Int): Int =
+    (pixelIntFrom(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
+
+  /**
+   *
+   *
    * @param red
    * @param green
    * @param blue
@@ -219,10 +242,10 @@ object ColorOps {
    */
   @inline
   def pixelIntFrom(
-    red: Int = ColorValidator.MinimumRgbRed,
-    green: Int = ColorValidator.MinimumRgbGreen,
-    blue: Int = ColorValidator.MinimumRgbBlue,
-    opacity: Int = ColorValidator.MaximumRgbaOpacity): Int = {
+      red: Int = ColorValidator.MinimumRgbRed,
+      green: Int = ColorValidator.MinimumRgbGreen,
+      blue: Int = ColorValidator.MinimumRgbBlue,
+      opacity: Int = ColorValidator.MaximumRgbaOpacity): Int = {
 
     ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
@@ -317,8 +340,8 @@ object ColorOps {
   @inline
   def isBlack(red: Int, green: Int, blue: Int): Boolean =
     red == ColorValidator.MinimumRgbRed.toDouble &&
-      green == ColorValidator.MinimumRgbGreen.toDouble &&
-      blue == ColorValidator.MinimumRgbBlue.toDouble
+        green == ColorValidator.MinimumRgbGreen.toDouble &&
+        blue == ColorValidator.MinimumRgbBlue.toDouble
 
   /**
    *
@@ -405,8 +428,8 @@ object ColorOps {
   @inline
   def isWhite(red: Int, green: Int, blue: Int): Boolean =
     red == ColorValidator.MaximumRgbRed.toDouble &&
-      green == ColorValidator.MaximumRgbGreen.toDouble &&
-      blue == ColorValidator.MaximumRgbBlue.toDouble
+        green == ColorValidator.MaximumRgbGreen.toDouble &&
+        blue == ColorValidator.MaximumRgbBlue.toDouble
 
   /**
    *
@@ -415,8 +438,15 @@ object ColorOps {
    * @return
    */
   @inline
-  def normalizedHsiHueInDegreesFrom(hueCandidateInDegrees: Double): Double =
-    hueCandidateInDegrees % FullCircleInDegrees
+  def normalizedHsiHueInDegreesFrom(hueCandidateInDegrees: Double): Double = {
+    val modCircle = hueCandidateInDegrees % FullCircleInDegrees
+
+    if (modCircle < 0)
+      return FullCircleInDegrees + modCircle
+
+    modCircle
+  }
+
 
   /**
    *
@@ -587,18 +617,18 @@ object ColorOps {
     val (aThirdOfCircleHueInDegrees: Double, finalOrder: ((Int, Int, Int) => (Int, Int, Int))) =
       if (nHueInDeg <= 120.0)
         (nHueInDeg,
-          (x: Int, y: Int, z: Int) => (x, z, y))
+            (x: Int, y: Int, z: Int) => (x, z, y))
       else if (nHueInDeg <= 240.0)
-        (nHueInDeg - 120.0,
-          (x: Int, y: Int, z: Int) => (y, x, z))
+             (nHueInDeg - 120.0,
+                 (x: Int, y: Int, z: Int) => (y, x, z))
       else
         (nHueInDeg - 240.0,
-          (x: Int, y: Int, z: Int) => (z, y, x))
+            (x: Int, y: Int, z: Int) => (z, y, x))
 
     val X = {
       val quotient =
         (saturation * toDegrees(cos(toRadians(aThirdOfCircleHueInDegrees)))) /
-          toDegrees(cos(toRadians(60.0 - aThirdOfCircleHueInDegrees)))
+            toDegrees(cos(toRadians(60.0 - aThirdOfCircleHueInDegrees)))
 
       round(intensity * (1 + quotient)).toInt
     }
@@ -610,8 +640,8 @@ object ColorOps {
     val (red, green, blue) = finalOrder(X, Y, Z)
 
     if (!ColorValidator.rgbRedComponentIsInRange(red) ||
-      !ColorValidator.rgbGreenComponentIsInRange(green) ||
-      !ColorValidator.rgbBlueComponentIsInRange(blue)) {
+        !ColorValidator.rgbGreenComponentIsInRange(green) ||
+        !ColorValidator.rgbBlueComponentIsInRange(blue)) {
 
       throw new SMCLInvalidHsiValueCombinationError(hueInDegrees, saturation, intensity)
     }
@@ -684,7 +714,7 @@ object ColorOps {
             ((red - blue) / vMinusMinRgb + 5) * 60
         }
         else if (value == green)
-          ((blue - red) / vMinusMinRgb + 2) * 60
+               ((blue - red) / vMinusMinRgb + 2) * 60
         else // value == blue
           ((red - green) / vMinusMinRgb + 4) * 60
       }
@@ -718,15 +748,72 @@ object ColorOps {
     if (K == 0)
       (V, Z, X)
     else if (K == 1)
-      (Y, V, X)
+           (Y, V, X)
     else if (K == 2)
-      (X, V, Z)
+           (X, V, Z)
     else if (K == 3)
-      (X, Y, V)
+           (X, Y, V)
     else if (K == 4)
-      (Z, X, V)
+           (Z, X, V)
     else
       (V, X, Y)
+  }
+
+  /**
+   *
+   *
+   * @param color
+   * @param adjustmentInDegrees
+   * @return
+   */
+  @inline
+  def adjustHueOfRgbByDegrees(color: RGBAColor, adjustmentInDegrees: Double): RGBAColor =
+    RGBAColor(
+      adjustHueOfRgbByDegrees(rgbTupleFrom(color), adjustmentInDegrees),
+      color.opacity,
+      color.nameOption)
+
+  /**
+   *
+   *
+   * @param pixelInt
+   * @param adjustmentInDegrees
+   * @return
+   */
+  @inline
+  def adjustHueOfRgbByDegrees(pixelInt: Int, adjustmentInDegrees: Double): Int =
+    pixelIntFrom(
+      adjustHueOfRgbByDegrees(rgbTupleFrom(pixelInt), adjustmentInDegrees),
+      opacityComponentOf(pixelInt))
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @param adjustmentInDegrees
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def adjustHueOfRgbByDegrees(rgbTuple: (Int, Int, Int), adjustmentInDegrees: Double): (Int, Int, Int) =
+    (adjustHueOfRgbByDegrees(_: Int, _: Int, _: Int, adjustmentInDegrees)).tupled.apply(rgbTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @param adjustmentInDegrees
+   * @return
+   */
+  @inline
+  def adjustHueOfRgbByDegrees(red: Int, green: Int, blue: Int, adjustmentInDegrees: Double): (Int, Int, Int) = {
+    val (originalHue, originalSaturation, originalValue) = rgbToHsv(red, green, blue) // Validates rgb values
+
+    val newHue = originalHue + adjustmentInDegrees
+
+    hsvToRgb(newHue, originalSaturation, originalValue)
   }
 
   /**

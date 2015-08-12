@@ -410,15 +410,24 @@ class RichRGBAColor(val self: RGBAColor) {
   /**
    *
    *
+   * @param adjustmentInDegrees
+   * @return
+   */
+  def adjustHueByDegrees(adjustmentInDegrees: Double): RGBAColor =
+    ColorOps.adjustHueOfRgbByDegrees(self, adjustmentInDegrees)
+
+  /**
+   *
+   *
    * @param redWeight
    * @param greenWeight
    * @param blueWeight
    * @return
    */
   def toWeightedGray(
-    redWeight: Double = 0.33,
-    greenWeight: Double = 0.33,
-    blueWeight: Double = 0.33): RGBAColor = {
+      redWeight: Double = 0.33,
+      greenWeight: Double = 0.33,
+      blueWeight: Double = 0.33): RGBAColor = {
 
     CommonValidators.validateZeroToOneFactor(redWeight, Option("Red weight"))
     CommonValidators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
