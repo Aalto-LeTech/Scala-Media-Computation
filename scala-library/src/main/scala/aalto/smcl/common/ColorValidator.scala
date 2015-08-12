@@ -88,6 +88,24 @@ object ColorValidator {
   /** Color component value representing maximal amount of intensity. */
   val MaximumHsiIntensity: Double = ByteRange.end.toDouble
 
+  /** Color component value representing start of the hue cycle. */
+  val MinimumHsvHue: Double = 0.0
+
+  /** Color component value representing end of the hue cycle. */
+  val MaximumHsvHue: Double = FullCircleInDegrees.toDouble
+
+  /** Color component value representing minimal amount of saturation. */
+  val MinimumHsvSaturation: Double = 0.0
+
+  /** Color component value representing maximal amount of saturation. */
+  val MaximumHsvSaturation: Double = 1.0
+
+  /** Color component value representing minimal amount of intensity. */
+  val MinimumHsvValue: Double = ByteRange.start.toDouble
+
+  /** Color component value representing maximal amount of intensity. */
+  val MaximumHsvValue: Double = ByteRange.end.toDouble
+
   /**
    *
    *
@@ -211,6 +229,26 @@ object ColorValidator {
   /**
    *
    *
+   * @param saturationCandidate
+   * @return
+   */
+  @inline
+  def hsvSaturationComponentIsInRange(saturationCandidate: Double): Boolean =
+    saturationCandidate >= MinimumHsvSaturation && saturationCandidate <= MaximumHsvSaturation
+
+  /**
+   *
+   *
+   * @param valueCandidate
+   * @return
+   */
+  @inline
+  def hsvValueComponentIsInRange(valueCandidate: Double): Boolean =
+    valueCandidate >= MinimumHsvValue && valueCandidate <= MaximumHsvValue
+
+  /**
+   *
+   *
    * @param redCandidate
    *
    * @throws SMCLRgbRedComponentOutOfRangeError
@@ -286,7 +324,7 @@ object ColorValidator {
    * @throws SMCLHsiSaturationComponentOutOfRangeError
    */
   @inline
-  def validateHsiSaturationComponent(saturationCandidate: Int): Unit = {
+  def validateHsiSaturationComponent(saturationCandidate: Double): Unit = {
     if (!hsiSaturationComponentIsInRange(saturationCandidate)) {
       throw new SMCLHsiSaturationComponentOutOfRangeError(saturationCandidate)
     }
@@ -300,9 +338,37 @@ object ColorValidator {
    * @throws SMCLHsiIntensityComponentOutOfRangeError
    */
   @inline
-  def validateHsiIntensityComponent(intensityCandidate: Int): Unit = {
+  def validateHsiIntensityComponent(intensityCandidate: Double): Unit = {
     if (!hsiIntensityComponentIsInRange(intensityCandidate)) {
       throw new SMCLHsiIntensityComponentOutOfRangeError(intensityCandidate)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param saturationCandidate
+   *
+   * @throws SMCLHsvSaturationComponentOutOfRangeError
+   */
+  @inline
+  def validateHsvSaturationComponent(saturationCandidate: Double): Unit = {
+    if (!hsvSaturationComponentIsInRange(saturationCandidate)) {
+      throw new SMCLHsvSaturationComponentOutOfRangeError(saturationCandidate)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param valueCandidate
+   *
+   * @throws SMCLHsvValueComponentOutOfRangeError
+   */
+  @inline
+  def validateHsvValueComponent(valueCandidate: Double): Unit = {
+    if (!hsvValueComponentIsInRange(valueCandidate)) {
+      throw new SMCLHsvValueComponentOutOfRangeError(valueCandidate)
     }
   }
 
@@ -391,8 +457,28 @@ object ColorValidator {
       saturationCandidate: Double,
       intensityCandidate: Double): Unit = {
 
-    hsiSaturationComponentIsInRange(saturationCandidate)
-    hsiIntensityComponentIsInRange(intensityCandidate)
+    validateHsiSaturationComponent(saturationCandidate)
+    validateHsiIntensityComponent(intensityCandidate)
+  }
+
+  /**
+   *
+   *
+   * @param hueCandidate
+   * @param saturationCandidate
+   * @param valueCandidate
+   *
+   * @throws SMCLHsvSaturationComponentOutOfRangeError
+   * @throws SMCLHsvValueComponentOutOfRangeError
+   */
+  @inline
+  def validateHsvColor(
+    hueCandidate: Double,
+    saturationCandidate: Double,
+    valueCandidate: Double): Unit = {
+
+    validateHsvSaturationComponent(saturationCandidate)
+    validateHsvValueComponent(valueCandidate)
   }
 
   /**

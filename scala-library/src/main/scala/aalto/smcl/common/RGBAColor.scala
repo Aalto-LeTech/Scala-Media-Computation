@@ -26,7 +26,7 @@ object RGBAColor {
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, opacity: Int,
-      nameOption: Option[String] = None): RGBAColor = {
+    nameOption: Option[String] = None): RGBAColor = {
 
     ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
@@ -131,7 +131,7 @@ object RGBAColor {
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
-  def apply(rgbTuple: (Int, Int, Int), opacity:Int, nameOption: Option[String]): RGBAColor =
+  def apply(rgbTuple: (Int, Int, Int), opacity: Int, nameOption: Option[String]): RGBAColor =
     (RGBAColor(_: Int, _: Int, _: Int, opacity, nameOption)).tupled.apply(rgbTuple)
 
   /**
@@ -142,7 +142,7 @@ object RGBAColor {
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
-  def apply(rgbTuple: (Int, Int, Int), opacity:Int): RGBAColor =
+  def apply(rgbTuple: (Int, Int, Int), opacity: Int): RGBAColor =
     (RGBAColor(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
 
   /**
@@ -206,14 +206,120 @@ object RGBAColor {
    * @return
    */
   private[smcl] def apply(
-      platformColor: PlatformColor,
-      nameOption: Option[String]): RGBAColor =
+    platformColor: PlatformColor,
+    nameOption: Option[String]): RGBAColor =
     RGBAColor(
       platformColor.red,
       platformColor.green,
       platformColor.blue,
       platformColor.opacity,
       nameOption)
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param value
+   * @return
+   */
+  def fromHsv(hueInDegrees: Double, saturation: Double, value: Double): RGBAColor =
+    fromHsv(hueInDegrees, saturation, value, ColorValidator.MaximumRgbaOpacity)
+
+  /**
+   *
+   *
+   * @param hsvTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  def fromHsv(hsvTuple: (Double, Double, Double)): RGBAColor =
+    (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity)).tupled.apply(hsvTuple)
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param value
+   * @return
+   */
+  def fromHsv(
+    hueInDegrees: Double,
+    saturation: Double,
+    value: Double,
+    nameOption: Option[String]): RGBAColor =
+    fromHsv(hueInDegrees, saturation, value, ColorValidator.MaximumRgbaOpacity, nameOption)
+
+  /**
+   *
+   *
+   * @param hsvTuple
+   * @param nameOption
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  def fromHsv(hsvTuple: (Double, Double, Double), nameOption: Option[String]): RGBAColor =
+    (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity, nameOption)).tupled.apply(hsvTuple)
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param value
+   * @param opacity
+   * @return
+   */
+  def fromHsv(
+    hueInDegrees: Double,
+    saturation: Double,
+    value: Double,
+    opacity: Int): RGBAColor =
+    RGBAColor(ColorOps.hsvToRgb(hueInDegrees, saturation, value), opacity)
+
+  /**
+   *
+   *
+   * @param hsvTuple
+   * @param opacity
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  def fromHsv(hsvTuple: (Double, Double, Double), opacity: Int): RGBAColor =
+    (fromHsv(_: Double, _: Double, _: Double, opacity)).tupled.apply(hsvTuple)
+
+  /**
+   *
+   *
+   * @param hueInDegrees
+   * @param saturation
+   * @param value
+   * @param opacity
+   * @return
+   */
+  def fromHsv(
+    hueInDegrees: Double,
+    saturation: Double,
+    value: Double,
+    opacity: Int,
+    nameOption: Option[String]): RGBAColor =
+    RGBAColor(ColorOps.hsvToRgb(hueInDegrees, saturation, value), opacity, nameOption)
+
+  /**
+   *
+   *
+   * @param hsvTuple
+   * @param opacity
+   * @param nameOption
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  def fromHsv(
+    hsvTuple: (Double, Double, Double),
+    opacity: Int,
+    nameOption: Option[String]): RGBAColor =
+    (fromHsv(_: Double, _: Double, _: Double, opacity, nameOption)).tupled.apply(hsvTuple)
 
   /**
    *
@@ -245,10 +351,10 @@ object RGBAColor {
    * @return
    */
   def fromHsi(
-      hueInDegrees: Double,
-      saturation: Double,
-      intensity: Double,
-      nameOption: Option[String]): RGBAColor =
+    hueInDegrees: Double,
+    saturation: Double,
+    intensity: Double,
+    nameOption: Option[String]): RGBAColor =
     fromHsi(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity, nameOption)
 
   /**
@@ -272,11 +378,11 @@ object RGBAColor {
    * @return
    */
   def fromHsi(
-      hueInDegrees: Double,
-      saturation: Double,
-      intensity: Double,
-      opacity: Int): RGBAColor =
-    RGBAColor(ColorOps.hsiToRgb(hueInDegrees, saturation, intensity))
+    hueInDegrees: Double,
+    saturation: Double,
+    intensity: Double,
+    opacity: Int): RGBAColor =
+    RGBAColor(ColorOps.hsiToRgb(hueInDegrees, saturation, intensity), opacity)
 
   /**
    *
@@ -299,11 +405,11 @@ object RGBAColor {
    * @return
    */
   def fromHsi(
-      hueInDegrees: Double,
-      saturation: Double,
-      intensity: Double,
-      opacity: Int,
-      nameOption: Option[String]): RGBAColor =
+    hueInDegrees: Double,
+    saturation: Double,
+    intensity: Double,
+    opacity: Int,
+    nameOption: Option[String]): RGBAColor =
     RGBAColor(ColorOps.hsiToRgb(hueInDegrees, saturation, intensity), opacity, nameOption)
 
   /**
@@ -316,9 +422,9 @@ object RGBAColor {
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsi(
-      hsiTuple: (Double, Double, Double),
-      opacity: Int,
-      nameOption: Option[String]): RGBAColor =
+    hsiTuple: (Double, Double, Double),
+    opacity: Int,
+    nameOption: Option[String]): RGBAColor =
     (fromHsi(_: Double, _: Double, _: Double, opacity, nameOption)).tupled.apply(hsiTuple)
 
 }
@@ -336,11 +442,11 @@ object RGBAColor {
  * @author Aleksi Lukkarinen
  */
 class RGBAColor protected(
-    val red: Int,
-    val green: Int,
-    val blue: Int,
-    val opacity: Int,
-    val nameOption: Option[String] = None) extends {
+  val red: Int,
+  val green: Int,
+  val blue: Int,
+  val opacity: Int,
+  val nameOption: Option[String] = None) extends {
 
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false
@@ -376,13 +482,8 @@ class RGBAColor protected(
   lazy val toColorComponentMap = ColorOps.colorComponentMapFrom(this)
 
   /** */
-  lazy val toHsiHueInDegrees: Double = ColorOps.hsiHueInDegreesOf(this)
-
-  /** */
-  lazy val toHsiSaturation: Double = ColorOps.hsiSaturationOf(this)
-
-  /** */
-  lazy val toHsiIntensity: Double = ColorOps.hsiIntensityOf(this)
+  lazy val toNormalizedRgbaComponents: (Double, Double, Double, Double) =
+    ColorOps.normalizeRgba(red, green, blue, opacity)
 
   /** */
   lazy val toGray: RGBAColor = RGBAColor(toHsiIntensity.toInt, FullyOpaque)
@@ -391,13 +492,34 @@ class RGBAColor protected(
   lazy val toHsi: (Double, Double, Double) = ColorOps.toHsi(this)
 
   /** */
+  lazy val toHsiHueInDegrees: Double = toHsi._1
+
+  /** */
+  lazy val toHsiSaturation: Double = toHsi._2
+
+  /** */
+  lazy val toHsiIntensity: Double = toHsi._3
+
+  /** */
+  lazy val toHsv: (Double, Double, Double) = ColorOps.toHsv(this)
+
+  /** */
+  lazy val toHsvHueInDegrees: Double = toHsv._1
+
+  /** */
+  lazy val toHsvSaturation: Double = toHsv._2
+
+  /** */
+  lazy val toHsvValue: Double = toHsv._3
+
+  /** */
   lazy val isBlack: Boolean = ColorOps.isBlack(this)
 
   /** */
-  lazy val isGray: Boolean = ColorOps.isGray(this)
+  lazy val isWhite: Boolean = ColorOps.isWhite(this)
 
   /** */
-  lazy val isWhite: Boolean = ColorOps.isWhite(this)
+  lazy val isGray: Boolean = ColorOps.isGray(this)
 
   /** */
   lazy val keepingOnlyRedComponent: RGBAColor =

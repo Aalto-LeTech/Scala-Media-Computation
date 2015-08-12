@@ -123,9 +123,9 @@ object ColorOps {
   @inline
   def rgbaTupleFrom(pixelInt: Int): (Int, Int, Int, Int) =
     (redComponentOf(pixelInt),
-        greenComponentOf(pixelInt),
-        blueComponentOf(pixelInt),
-        opacityComponentOf(pixelInt))
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt),
+      opacityComponentOf(pixelInt))
 
   /**
    *
@@ -153,9 +153,9 @@ object ColorOps {
     def rgbSum: Double = (red + green + blue).toDouble
 
     (red.toDouble / rgbSum,
-        green.toDouble / rgbSum,
-        blue.toDouble / rgbSum,
-        opacity.toDouble / ColorValidator.MaximumRgbaOpacity)
+      green.toDouble / rgbSum,
+      blue.toDouble / rgbSum,
+      opacity.toDouble / ColorValidator.MaximumRgbaOpacity)
   }
 
   /**
@@ -177,8 +177,8 @@ object ColorOps {
   @inline
   def rgbTupleFrom(pixelInt: Int): (Int, Int, Int) =
     (redComponentOf(pixelInt),
-        greenComponentOf(pixelInt),
-        blueComponentOf(pixelInt))
+      greenComponentOf(pixelInt),
+      blueComponentOf(pixelInt))
 
   /**
    *
@@ -219,15 +219,61 @@ object ColorOps {
    */
   @inline
   def pixelIntFrom(
-      red: Int = ColorValidator.MinimumRgbRed,
-      green: Int = ColorValidator.MinimumRgbGreen,
-      blue: Int = ColorValidator.MinimumRgbBlue,
-      opacity: Int = ColorValidator.MaximumRgbaOpacity): Int = {
+    red: Int = ColorValidator.MinimumRgbRed,
+    green: Int = ColorValidator.MinimumRgbGreen,
+    blue: Int = ColorValidator.MinimumRgbBlue,
+    opacity: Int = ColorValidator.MaximumRgbaOpacity): Int = {
 
     ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
     (opacity << ThreeBytes) | (red << TwoBytes) | (green << OneByte) | blue
   }
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def max(rgbTuple: (Int, Int, Int)): Int =
+    (max(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def max(red: Int, green: Int, blue: Int): Int =
+    red.max(green).max(blue)
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def min(rgbTuple: (Int, Int, Int)): Int =
+    (min(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  @inline
+  def min(red: Int, green: Int, blue: Int): Int =
+    red.min(green).min(blue)
 
   /**
    *
@@ -271,8 +317,8 @@ object ColorOps {
   @inline
   def isBlack(red: Int, green: Int, blue: Int): Boolean =
     red == ColorValidator.MinimumRgbRed.toDouble &&
-        green == ColorValidator.MinimumRgbGreen.toDouble &&
-        blue == ColorValidator.MinimumRgbBlue.toDouble
+      green == ColorValidator.MinimumRgbGreen.toDouble &&
+      blue == ColorValidator.MinimumRgbBlue.toDouble
 
   /**
    *
@@ -359,158 +405,8 @@ object ColorOps {
   @inline
   def isWhite(red: Int, green: Int, blue: Int): Boolean =
     red == ColorValidator.MaximumRgbRed.toDouble &&
-        green == ColorValidator.MaximumRgbGreen.toDouble &&
-        blue == ColorValidator.MaximumRgbBlue.toDouble
-
-  /**
-   *
-   *
-   * @param color
-   * @return
-   */
-  @inline
-  def hsiHueInDegreesOf(color: RGBAColor): Double =
-    hsiHueInDegreesFrom(rgbTupleFrom(color))
-
-  /**
-   *
-   *
-   * @param pixelInt
-   * @return
-   */
-  @inline
-  def hsiHueInDegreesOf(pixelInt: Int): Double =
-    hsiHueInDegreesFrom(rgbTupleFrom(pixelInt))
-
-  /**
-   *
-   *
-   * @param rgbTuple
-   * @return
-   */
-  //noinspection ScalaUnnecessaryParentheses
-  def hsiHueInDegreesFrom(rgbTuple: (Int, Int, Int)): Double =
-    (hsiHueInDegreesFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
-
-  /**
-   *
-   *
-   * @param red
-   * @param green
-   * @param blue
-   * @return
-   */
-  @inline
-  def hsiHueInDegreesFrom(red: Int, green: Int, blue: Int): Double = {
-    import Math._
-
-    ColorValidator.validateRgbColor(red, green, blue)
-
-    if (isGray(red, green, blue))   // Special case
-      return Double.NaN
-
-    def RmG = red - green
-    def RmB = red - blue
-
-    def root = sqrt(RmG * RmG + RmB * (green - blue))
-
-    def angleCandidate = rint(100.0 * toDegrees(acos((RmG + RmB) / (2.0 * root)))) / 100.0
-
-    if (green >= blue) angleCandidate else FullCircleInDegrees - angleCandidate
-  }
-
-  /**
-   *
-   *
-   * @param color
-   * @return
-   */
-  @inline
-  def hsiSaturationOf(color: RGBAColor): Double =
-    hsiSaturationFrom(rgbTupleFrom(color))
-
-  /**
-   *
-   *
-   * @param pixelInt
-   * @return
-   */
-  @inline
-  def hsiSaturationOf(pixelInt: Int): Double =
-    hsiSaturationFrom(rgbTupleFrom(pixelInt))
-
-  /**
-   *
-   *
-   * @param rgbTuple
-   * @return
-   */
-  //noinspection ScalaUnnecessaryParentheses
-  def hsiSaturationFrom(rgbTuple: (Int, Int, Int)): Double =
-    (hsiSaturationFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
-
-  /**
-   *
-   *
-   * @param red
-   * @param green
-   * @param blue
-   * @return
-   */
-  @inline
-  def hsiSaturationFrom(red: Int, green: Int, blue: Int): Double = {
-    ColorValidator.validateRgbColor(red, green, blue)
-
-    if (isBlack(red, green, blue))                    // Special case
-      return ColorValidator.MinimumHsiSaturation
-
-    1.0 - 3.0 * (red.min(green).min(blue) / (red + green + blue))
-  }
-
-  /**
-   *
-   *
-   * @param color
-   * @return
-   */
-  @inline
-  def hsiIntensityOf(color: RGBAColor): Double =
-    hsiIntensityFrom(rgbTupleFrom(color))
-
-  /**
-   *
-   *
-   * @param pixelInt
-   * @return
-   */
-  @inline
-  def hsiIntensityOf(pixelInt: Int): Double =
-    hsiIntensityFrom(rgbTupleFrom(pixelInt))
-
-  /**
-   *
-   *
-   * @param rgbTuple
-   * @return
-   */
-  //noinspection ScalaUnnecessaryParentheses
-  def hsiIntensityFrom(rgbTuple: (Int, Int, Int)): Double =
-    (hsiIntensityFrom(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
-
-  /**
-   *
-   *
-   * @param red
-   * @param green
-   * @param blue
-   * @return
-   */
-  @inline
-  def hsiIntensityFrom(red: Int, green: Int, blue: Int): Double = {
-    ColorValidator.validateRgbColor(red, green, blue)
-
-    Math.rint(100 * ((red + green + blue).toDouble / 3.0)) / 100
-  }
+      green == ColorValidator.MaximumRgbGreen.toDouble &&
+      blue == ColorValidator.MaximumRgbBlue.toDouble
 
   /**
    *
@@ -519,8 +415,18 @@ object ColorOps {
    * @return
    */
   @inline
-  def normalizedHueInDegreesFrom(hueCandidateInDegrees: Double): Double =
+  def normalizedHsiHueInDegreesFrom(hueCandidateInDegrees: Double): Double =
     hueCandidateInDegrees % FullCircleInDegrees
+
+  /**
+   *
+   *
+   * @param hueCandidateInDegrees
+   * @return
+   */
+  @inline
+  def normalizedHsvHueInDegreesFrom(hueCandidateInDegrees: Double): Double =
+    normalizedHsiHueInDegreesFrom(hueCandidateInDegrees)
 
   /**
    *
@@ -563,11 +469,34 @@ object ColorOps {
    */
   @inline
   def rgbToHsi(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
-    // The functions below will validate the parameters (three times, actually...)
+    import Math._
 
-    val hue = hsiHueInDegreesFrom(red, green, blue)
-    val saturation = hsiSaturationFrom(red, green, blue)
-    val intensity = hsiIntensityFrom(red, green, blue)
+    ColorValidator.validateRgbColor(red, green, blue)
+
+    val rgbSum: Double = red + green + blue
+
+    val hue: Double =
+      if (isGray(red, green, blue)) // Not defined for grays
+        Double.NaN
+      else {
+        val RmG = red - green
+        val RmB = red - blue
+
+        val root = sqrt(RmG * RmG + RmB * (green - blue))
+
+        val angleCandidate = toDegrees(acos((RmG + RmB) / (2.0 * root)))
+
+        if (green >= blue) angleCandidate else FullCircleInDegrees - angleCandidate
+      }
+
+    val saturation: Double =
+      if (isBlack(red, green, blue))
+        ColorValidator.MinimumHsiSaturation
+      else
+        1.0 - 3.0 * (ColorOps.min(red, green, blue) / rgbSum)
+
+
+    val intensity = rgbSum / 3.0
 
     (hue, saturation, intensity)
   }
@@ -648,32 +577,28 @@ object ColorOps {
     ColorValidator.validateHsiColor(hueInDegrees, saturation, intensity)
 
     // Special case
-    if (saturation == 0.0) {
+    if (saturation == ColorValidator.MinimumHsiSaturation) {
       val i: Int = round(intensity).toInt
       return (i, i, i)
     }
 
-    val normalizedHueInDegrees = normalizedHueInDegreesFrom(hueInDegrees)
+    val nHueInDeg = normalizedHsiHueInDegreesFrom(hueInDegrees)
 
     val (aThirdOfCircleHueInDegrees: Double, finalOrder: ((Int, Int, Int) => (Int, Int, Int))) =
-      normalizedHueInDegrees match {
-        case hue: Double if hue <= 120.0 =>
-          (hue,
-              (x: Int, y: Int, z: Int) => (x, z, y))
-
-        case hue: Double if hue <= 240.0 =>
-          (hue - 120.0,
-              (x: Int, y: Int, z: Int) => (y, x, z))
-
-        case hue: Double =>
-          (hue - 240.0,
-              (x: Int, y: Int, z: Int) => (z, y, x))
-      }
+      if (nHueInDeg <= 120.0)
+        (nHueInDeg,
+          (x: Int, y: Int, z: Int) => (x, z, y))
+      else if (nHueInDeg <= 240.0)
+        (nHueInDeg - 120.0,
+          (x: Int, y: Int, z: Int) => (y, x, z))
+      else
+        (nHueInDeg - 240.0,
+          (x: Int, y: Int, z: Int) => (z, y, x))
 
     val X = {
       val quotient =
         (saturation * toDegrees(cos(toRadians(aThirdOfCircleHueInDegrees)))) /
-            toDegrees(cos(toRadians(60.0 - aThirdOfCircleHueInDegrees)))
+          toDegrees(cos(toRadians(60.0 - aThirdOfCircleHueInDegrees)))
 
       round(intensity * (1 + quotient)).toInt
     }
@@ -685,13 +610,121 @@ object ColorOps {
     val (red, green, blue) = finalOrder(X, Y, Z)
 
     if (!ColorValidator.rgbRedComponentIsInRange(red) ||
-        !ColorValidator.rgbGreenComponentIsInRange(green) ||
-        !ColorValidator.rgbBlueComponentIsInRange(blue)) {
+      !ColorValidator.rgbGreenComponentIsInRange(green) ||
+      !ColorValidator.rgbBlueComponentIsInRange(blue)) {
 
       throw new SMCLInvalidHsiValueCombinationError(hueInDegrees, saturation, intensity)
     }
 
     (red, green, blue)
+  }
+
+  /**
+   *
+   *
+   * @param pixelInt
+   * @return
+   */
+  @inline
+  def toHsv(pixelInt: Int): (Double, Double, Double) =
+    rgbToHsv(rgbTupleFrom(pixelInt))
+
+  /**
+   *
+   *
+   * @param color
+   * @return
+   */
+  @inline
+  def toHsv(color: RGBAColor): (Double, Double, Double) =
+    rgbToHsv(rgbTupleFrom(color))
+
+  /**
+   *
+   *
+   * @param rgbTuple
+   * @return
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  @inline
+  def rgbToHsv(rgbTuple: (Int, Int, Int)): (Double, Double, Double) =
+    (rgbToHsv(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   *
+   *
+   */
+  def rgbToHsv(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
+    ColorValidator.validateRgbColor(red, green, blue)
+
+    val value: Double = max(red, green, blue)
+
+    val vMinusMinRgb: Double = value - min(red, green, blue)
+
+    val saturation: Double =
+      if (isBlack(red, green, blue)) // Defined to be zero for black because the division-by-zero
+        ColorValidator.MinimumHsvSaturation
+      else
+        vMinusMinRgb / value
+
+    val hueInDegrees: Double =
+      if (isGray(red, green, blue)) // Not defined for grays
+        Double.NaN
+      else {
+        if (value == red) {
+          if (green >= blue)
+            ((green - blue) / vMinusMinRgb + 0) * 60
+          else
+            ((red - blue) / vMinusMinRgb + 5) * 60
+        }
+        else if (value == green)
+          ((blue - red) / vMinusMinRgb + 2) * 60
+        else // value == blue
+          ((red - green) / vMinusMinRgb + 4) * 60
+      }
+
+    (hueInDegrees, saturation, value)
+  }
+
+  /**
+   *
+   *
+   * @param hue
+   * @param saturation
+   * @param value
+   * @return
+   */
+  def hsvToRgb(hue: Double, saturation: Double, value: Double): (Int, Int, Int) = {
+    import Math._
+
+    ColorValidator.validateHsvColor(hue, saturation, value)
+
+    val huePer60 = normalizedHsvHueInDegreesFrom(hue) / 60.0
+    val K = floor(huePer60)
+    val T = huePer60 - K
+
+    val V: Int = round(value).toInt
+    val X: Int = round(value * (1.0 - saturation)).toInt
+    val Y: Int = round(value * (1.0 - saturation * T)).toInt
+    val Z: Int = round(value * (1.0 - saturation * (1.0 - T))).toInt
+
+    if (K == 0)
+      (V, Z, X)
+    else if (K == 1)
+      (Y, V, X)
+    else if (K == 2)
+      (X, V, Z)
+    else if (K == 3)
+      (X, Y, V)
+    else if (K == 4)
+      (Z, X, V)
+    else
+      (V, X, Y)
   }
 
   /**
@@ -758,14 +791,21 @@ object ColorOps {
    * @return
    */
   @inline
-  def colorComponentMapFrom(red: Int, green: Int, blue: Int, opacity: Int): Map[Symbol, Double] =
+  def colorComponentMapFrom(red: Int, green: Int, blue: Int, opacity: Int): Map[Symbol, Double] = {
+    val (hsiHue, hsiSaturation, hsiIntensity) = rgbToHsi(red, green, blue)
+    val (hsvHue, hsvSaturation, hsvValue) = rgbToHsv(red, green, blue)
+
     Map[Symbol, Double](
       'red -> red.toDouble,
       'green -> green.toDouble,
       'blue -> blue.toDouble,
       'opacity -> opacity.toDouble,
-      'hsiHue -> hsiHueInDegreesFrom(red, green, blue),
-      'hsiSaturation -> hsiSaturationFrom(red, green, blue),
-      'hsiIntensity -> hsiIntensityFrom(red, green, blue))
+      'hsiHue -> hsiHue,
+      'hsiSaturation -> hsiSaturation,
+      'hsiIntensity -> hsiIntensity,
+      'hsvHue -> hsvHue,
+      'hsvSaturation -> hsvSaturation,
+      'hsvValue -> hsvValue)
+  }
 
 }
