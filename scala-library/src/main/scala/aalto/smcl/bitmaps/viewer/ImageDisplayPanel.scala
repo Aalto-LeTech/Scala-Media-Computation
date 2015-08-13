@@ -7,7 +7,8 @@ import scala.swing._
 import scala.util.Try
 
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.platform.PlatformAffineTransform
+import aalto.smcl.common.AffineTransformation
+import aalto.smcl.platform.{PlatformAffineTransformation, PlatformAffineTransformation$}
 
 
 
@@ -26,7 +27,7 @@ private[bitmaps] class ImageDisplayPanel extends Panel {
   private var _zoomFactor: ZoomFactor = ZoomFactor.Identity
 
   /** */
-  private var _affineTransformation: PlatformAffineTransform = PlatformAffineTransform()
+  private var _zoomingTransformation: AffineTransformation = AffineTransformation()
 
   /**
    *
@@ -49,7 +50,7 @@ private[bitmaps] class ImageDisplayPanel extends Panel {
 
       drawingSurface.drawImage(
         bufferRetrievalTry.get,
-        _affineTransformation.awtAffineTransform,
+        _zoomingTransformation.platformAffineTransform.awtAffineTransformation,
         null)
     }
     finally {
@@ -131,7 +132,7 @@ private[bitmaps] class ImageDisplayPanel extends Panel {
       maximumSize = newSize
     }
 
-    _affineTransformation = _zoomFactor.asAffineTransformation
+    _zoomingTransformation = _zoomFactor.asAffineTransformation
 
     revalidate()
     repaint()

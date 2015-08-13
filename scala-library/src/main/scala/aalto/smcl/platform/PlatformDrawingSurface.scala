@@ -4,7 +4,7 @@ package aalto.smcl.platform
 import scala.swing.Graphics2D
 
 import aalto.smcl.bitmaps.BitmapSettingKeys._
-import aalto.smcl.common.{GS, RGBAColor}
+import aalto.smcl.common.{AffineTransformation, GS, RGBAColor}
 
 
 
@@ -73,15 +73,18 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    *
    *
    * @param bitmap
-   * @param affineTransform
+   * @param transformation
    * @return
    */
   def drawBitmap(
       bitmap: PlatformBitmapBuffer,
-      affineTransform: PlatformAffineTransform): Boolean = {
+      transformation: AffineTransformation): Boolean = {
 
     withDrawingSurface {ds =>
-      ds.drawImage(bitmap.awtBufferedImage, affineTransform.awtAffineTransform, null)
+      ds.drawImage(
+        bitmap.awtBufferedImage,
+        transformation.platformAffineTransform.awtAffineTransformation,
+        null)
     }
   }
 

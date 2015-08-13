@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.common._
-import aalto.smcl.platform.{PlatformAffineTransform, PlatformBitmapBuffer}
+import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
@@ -13,7 +13,7 @@ import aalto.smcl.platform.{PlatformAffineTransform, PlatformBitmapBuffer}
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class FlipDiagonally()
-    extends AbstractOperation with Renderable with Buffered with Immutable {
+  extends AbstractOperation with Renderable with Buffered with Immutable {
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map())
@@ -31,7 +31,7 @@ private[bitmaps] case class FlipDiagonally()
     require(sources.length == 1, s"Flip required exactly one source image (provided: ${sources.length}).")
 
     val transformation =
-      PlatformAffineTransform.forDiagonalFlipOf(
+      AffineTransformation.forDiagonalFlipOf(
         sources(0).widthInPixels,
         sources(0).heightInPixels)
 

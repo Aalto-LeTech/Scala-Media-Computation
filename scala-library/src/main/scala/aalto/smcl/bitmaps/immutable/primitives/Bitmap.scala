@@ -11,8 +11,8 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateVi
 import aalto.smcl.bitmaps.immutable.{BitmapIdentity, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
-import aalto.smcl.common.{GS, HorizontalAlignment, RGBAColor, TimestampedCreation, VerticalAlignment}
-import aalto.smcl.platform.{PlatformAffineTransform, ImageProvider, PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
+import aalto.smcl.common._
+import aalto.smcl.platform.{ImageProvider, PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
 
 
 
@@ -933,13 +933,13 @@ case class Bitmap private(
    * Renders this [[Bitmap]] onto a drawing surface using specified affine transformation.
    *
    * @param drawingSurface
-   * @param affineTransformation
+   * @param transformation
    */
-  def renderOnto(drawingSurface: PlatformDrawingSurface, affineTransformation: PlatformAffineTransform): Unit = {
+  def renderOnto(drawingSurface: PlatformDrawingSurface, transformation: AffineTransformation): Unit = {
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
     val rendition = toRenderedRepresentation
-    drawingSurface.drawBitmap(_renderingBuffer.apply(), affineTransformation)
+    drawingSurface.drawBitmap(_renderingBuffer.apply(), transformation)
   }
 
   /**
