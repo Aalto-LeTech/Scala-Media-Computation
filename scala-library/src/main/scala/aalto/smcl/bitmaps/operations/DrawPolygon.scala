@@ -30,7 +30,7 @@ private[bitmaps] case class DrawPolygon(
   hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
   color: RGBAColor = GS.colorFor(DefaultPrimary),
   fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
-  extends AbstractOperation with RenderableOperation with Immutable {
+  extends AbstractOperation with Renderable with Immutable {
 
   require(xCoordinates != null, "The x coordinate argument has to be an Seq[Int] instance (was null).")
   require(yCoordinates != null, "The y coordinate argument has to be an Seq[Int] instance (was null).")
@@ -49,7 +49,7 @@ private[bitmaps] case class DrawPolygon(
   require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
-  /** Information about this [[RenderableOperation]] instance */
+  /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
     "numberOfCoordinatesPresent" -> Option(numberOfCoordinatesPresent.toString),

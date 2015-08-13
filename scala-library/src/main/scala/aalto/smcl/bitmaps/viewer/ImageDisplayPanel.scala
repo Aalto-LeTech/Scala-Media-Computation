@@ -31,19 +31,30 @@ private[bitmaps] class ImageDisplayPanel extends Panel {
   /**
    *
    *
-   * @param g
+   * @param lowLevelGraphics2D
    */
-  override def paintComponent(g: JGraphics2D): Unit = {
-    super.paintComponent(g)
+  override def paintComponent(lowLevelGraphics2D: JGraphics2D): Unit = {
+    super.paintComponent(lowLevelGraphics2D)
 
-    g.setRenderingHint(
-      RenderingHints.KEY_INTERPOLATION,
-      RenderingHints.VALUE_INTERPOLATION_BICUBIC)
+    val bufferRetrievalTry =
+      Try(_bitmapOption.get.toRenderedRepresentation.awtBufferedImage)
+    if (bufferRetrievalTry.isFailure)
+      return
 
-    g.drawImage(
-      _bitmapOption.get.toRenderedRepresentation.awtBufferedImage,
-      _affineTransformation.awtAffineTransform,
-      null)
+    val drawingSurface = lowLevelGraphics2D.create().asInstanceOf[Graphics2D]
+    try {
+      drawingSurface.setRenderingHint(
+        RenderingHints.KEY_INTERPOLATION,
+        RenderingHints.VALUE_INTERPOLATION_BICUBIC)
+
+      drawingSurface.drawImage(
+        bufferRetrievalTry.get,
+        _affineTransformation.awtAffineTransform,
+        null)
+    }
+    finally {
+      drawingSurface.dispose()
+    }
   }
 
   /**

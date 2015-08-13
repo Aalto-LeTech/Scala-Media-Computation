@@ -25,7 +25,7 @@ private[bitmaps] case class DrawPolyline(
   yCoordinates: Seq[Int],
   numberOfCoordinatesToDraw: Int,
   color: RGBAColor = GS.colorFor(DefaultPrimary))
-  extends AbstractOperation with RenderableOperation with Immutable {
+  extends AbstractOperation with Renderable with Immutable {
 
   require(xCoordinates != null, "The x coordinate argument has to be an Seq[Int] instance (was null).")
   require(yCoordinates != null, "The y coordinate argument has to be an Seq[Int] instance (was null).")
@@ -43,7 +43,7 @@ private[bitmaps] case class DrawPolyline(
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 
-  /** Information about this [[RenderableOperation]] instance */
+  /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
     "numberOfCoordinatesPresent" -> Option(numberOfCoordinatesPresent.toString),

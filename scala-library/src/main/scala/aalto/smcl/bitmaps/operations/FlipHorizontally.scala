@@ -1,8 +1,6 @@
 package aalto.smcl.bitmaps.operations
 
 
-import scala.ref.WeakReference
-
 import aalto.smcl.common._
 import aalto.smcl.platform.{PlatformAffineTransform, PlatformBitmapBuffer}
 
@@ -15,31 +13,33 @@ import aalto.smcl.platform.{PlatformAffineTransform, PlatformBitmapBuffer}
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class FlipHorizontally()
-    extends AbstractOperation with RenderableOperation with Immutable {
+    extends AbstractOperation with Renderable with Buffered with Immutable {
 
-  /** Information about this [[RenderableOperation]] instance */
+  /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map())
 
-  /** Rendering buffer for this operation. */
-  private[this] var _renderingBuffer: WeakReference[PlatformBitmapBuffer] =
-    WeakReference[PlatformBitmapBuffer](null)
 
+  /**
+   * Creates the buffer which contains the results of applying this operation
+   * and which is used as a background for a new buffers provided by this
+   * [[Buffered]].
+   *
+   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @return
+   */
+  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+    require(sources.length == 1, s"Flip required exactly one source image (provided: ${sources.length}).")
+
+    sources(0).createTransfomedVersionWith(
+      PlatformAffineTransform.forHorizontalFlipOf(sources(0).widthInPixels))
+  }
 
   /**
    * Flips the given bitmap horizontally.
    *
    * @param destination
    */
-  override def render(destination: PlatformBitmapBuffer): Unit = {
-    val bufferedFlip: PlatformBitmapBuffer = _renderingBuffer.get getOrElse {
-      val transformation = PlatformAffineTransform.forHorizontalFlipOf(destination.widthInPixels)
-      val newBuffer = destination.createTransfomedVersionWith(transformation)
-      _renderingBuffer = WeakReference(newBuffer)
-
-      newBuffer
-    }
-
-    destination.drawingSurface().drawBitmap(bufferedFlip)
-  }
+  override def render(destination: PlatformBitmapBuffer): Unit =
+    destination.drawingSurface().drawBitmap(getOrCreateStaticBuffer(destination))
 
 }

@@ -20,8 +20,8 @@ private[bitmaps] object BitmapOperationList {
   /**
    * Returns an empty [[BitmapOperationList]].
    */
-  private[bitmaps] def apply(bufferProvider: BufferProviderOperation): BitmapOperationList =
-    new BitmapOperationList(bufferProvider, List[AbstractOperation with RenderableOperation]())
+  private[bitmaps] def apply(bufferProvider: BufferProvider): BitmapOperationList =
+    new BitmapOperationList(bufferProvider, List[AbstractOperation with Renderable]())
 
 }
 
@@ -32,8 +32,8 @@ private[bitmaps] object BitmapOperationList {
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class BitmapOperationList private(
-  private val bufferProvider: BufferProviderOperation,
-  private val operations: List[RenderableOperation]) extends Immutable {
+  private val bufferProvider: BufferProvider,
+  private val operations: List[Renderable]) extends Immutable {
 
   /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
   val widthInPixels: Int = bufferProvider.widthInPixels
@@ -44,13 +44,13 @@ private[bitmaps] case class BitmapOperationList private(
   /**
    * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
-  private[bitmaps] def add(newOperation: RenderableOperation) =
+  private[bitmaps] def add(newOperation: Renderable) =
     BitmapOperationList(bufferProvider, newOperation +: operations)
 
   /**
    * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
-  private[bitmaps] def +:(newOperation: RenderableOperation) = this.add(newOperation)
+  private[bitmaps] def +:(newOperation: Renderable) = this.add(newOperation)
 
   /**
    *
@@ -72,7 +72,7 @@ private[bitmaps] case class BitmapOperationList private(
    */
   @tailrec
   private def renderOperations(
-    list: List[RenderableOperation],
+    list: List[Renderable],
     buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
 
     list match {

@@ -30,7 +30,7 @@ private[bitmaps] case class DrawCircle(
   hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
   color: RGBAColor = GS.colorFor(DefaultPrimary),
   fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
-  extends AbstractOperation with RenderableOperation with Immutable {
+  extends AbstractOperation with Renderable with Immutable {
 
   require(radiusInPixels > 0, s"The radius argument must be greater than zero (was $radiusInPixels).")
   require(color != null, "The line color argument has to be a Color instance (was null).")
@@ -45,7 +45,7 @@ private[bitmaps] case class DrawCircle(
   /** Length of a side of the bounding box of the circle to be drawn. */
   val boundingBoxSideLength: Int = 2 * radiusInPixels
 
-  /** Information about this [[RenderableOperation]] instance */
+  /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),

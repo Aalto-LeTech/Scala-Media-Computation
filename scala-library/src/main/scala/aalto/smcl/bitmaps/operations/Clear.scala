@@ -18,7 +18,7 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  */
 private[bitmaps] case class Clear(
     color: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with RenderableOperation with Immutable {
+    extends AbstractOperation with Renderable with Immutable {
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 

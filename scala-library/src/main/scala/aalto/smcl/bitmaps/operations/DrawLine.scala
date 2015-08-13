@@ -26,11 +26,11 @@ private[bitmaps] case class DrawLine(
   toXInPixels: Int,
   toYInPixels: Int,
   color: RGBAColor = GS.colorFor(DefaultPrimary))
-  extends AbstractOperation with RenderableOperation with Immutable {
+  extends AbstractOperation with Renderable with Immutable {
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 
-  /** Information about this [[RenderableOperation]] instance */
+  /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "fromX" -> Option(s"$fromXInPixels px"),
     "fromY" -> Option(s"$fromYInPixels px"),

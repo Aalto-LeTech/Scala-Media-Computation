@@ -21,7 +21,7 @@ private[bitmaps] case class AppendHorizontally(
     verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
     paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProviderOperation with Immutable {
+    extends AbstractOperation with BufferProvider with Immutable {
 
   require(bitmapsToCombine.nonEmpty,
     "Append operation must be given a non-empty Sequence of Bitmap instances to combine.")
@@ -33,7 +33,7 @@ private[bitmaps] case class AppendHorizontally(
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(bitmapsToCombine.map(_.operations).toSeq)
 
-  /** Information about this [[BufferProviderOperation]] instance */
+  /** Information about this [[BufferProvider]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "padding" -> Option(s"$paddingInPixels px"),
     "verticalAlignment" -> Option(verticalAlignment.toString),
@@ -64,11 +64,11 @@ private[bitmaps] case class AppendHorizontally(
   /**
    * Creates the buffer which contains the results of applying this operation
    * and which is used as a background for a new buffers provided by this
-   * [[BufferProviderOperation]].
+   * [[BufferProvider]].
    *
    * @return
    */
-  override def createStaticBuffer(): _root_.aalto.smcl.platform.PlatformBitmapBuffer = {
+  override def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
     val newBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
     val drawingSurface = newBuffer.drawingSurface()
 
@@ -87,5 +87,16 @@ private[bitmaps] case class AppendHorizontally(
 
     newBuffer
   }
+
+  /**
+   * Returns the buffer from which the provided buffer copies are made.
+   * Users of this trait must provide an implementation, which returns
+   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * the class claiming to provide the buffer.
+   *
+   * @return    bitmap buffer to be made copies of for providees
+   */
+  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+    getOrCreateStaticBuffer()
 
 }

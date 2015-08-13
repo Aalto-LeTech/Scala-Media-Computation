@@ -168,14 +168,14 @@ case class Bitmap private(
   val initialBackgroundColor: RGBAColor = operations.initialBackgroundColor()
 
   /**
-   * Applies an [[RenderableOperation]] to this [[Bitmap]].
+   * Applies an [[Renderable]] to this [[Bitmap]].
    *
    * @param newOperation
    * @param viewerHandling
    * @return
    */
   private[bitmaps] def apply(
-      newOperation: RenderableOperation,
+      newOperation: Renderable,
       viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
 
     require(newOperation != null, "Operation argument cannot be null.")
@@ -191,14 +191,14 @@ case class Bitmap private(
   }
 
   /**
-   * Applies an [[BufferProviderOperation]] to this [[Bitmap]].
+   * Applies an [[BufferProvider]] to this [[Bitmap]].
    *
    * @param newOperation
    * @param viewerHandling
    * @return
    */
   private[bitmaps] def apply(
-      newOperation: BufferProviderOperation,
+      newOperation: BufferProvider,
       viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
 
     require(newOperation != null, "Operation argument cannot be null.")

@@ -38,8 +38,6 @@ private[bitmaps] class ViewerClient {
   def display(sourceBitmap: Bitmap): Unit = {
     require(sourceBitmap != null, "Source bitmap must not be null.")
 
-    println(s"\n\nDisplayed:\n${sourceBitmap.toString}\n\n")
-
     dispatchEvent(DisplayBitmapEvent(sourceBitmap))
   }
 
