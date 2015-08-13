@@ -1,9 +1,6 @@
 package aalto.smcl.platform
 
 
-import java.awt.geom.AffineTransform
-import java.awt.image.BufferedImage
-
 import scala.swing.Graphics2D
 
 import aalto.smcl.bitmaps.BitmapSettingKeys._
@@ -44,13 +41,20 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    *
    * @param color
    */
-  def clearUsing(color: RGBAColor = GS.colorFor(DefaultBackground)): Unit = {
+  def clearUsing(color: RGBAColor = GS.colorFor(DefaultBackground)): Unit =
     withDrawingSurface {ds =>
       ds.setColor(PlatformColor(color).awtColor)
       ds.fillRect(0, 0, owner.widthInPixels, owner.heightInPixels)
     }
-  }
 
+  /**
+   *
+   *
+   * @param bitmap
+   * @return
+   */
+  def drawBitmap(bitmap: PlatformBitmapBuffer): Boolean =
+    drawBitmap(bitmap, 0, 0)
 
   /**
    *
@@ -60,12 +64,10 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param y
    * @return
    */
-  def drawBitmap(bitmap: PlatformBitmapBuffer, x: Int, y: Int): Boolean = {
+  def drawBitmap(bitmap: PlatformBitmapBuffer, x: Int, y: Int): Boolean =
     withDrawingSurface {ds =>
       ds.drawImage(bitmap.awtBufferedImage, x, y, null)
     }
-  }
-
 
   /**
    *
@@ -75,14 +77,13 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @return
    */
   def drawBitmap(
-    bitmap: PlatformBitmapBuffer,
-    affineTransform: AffineTransform): Boolean = {
+      bitmap: PlatformBitmapBuffer,
+      affineTransform: PlatformAffineTransform): Boolean = {
 
     withDrawingSurface {ds =>
-      ds.drawImage(bitmap.awtBufferedImage, affineTransform, null)
+      ds.drawImage(bitmap.awtBufferedImage, affineTransform.awtAffineTransform, null)
     }
   }
-
 
   /**
    *
@@ -97,14 +98,14 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param fillColor
    */
   def drawEllipse(
-    boundingBoxUpperLeftX: Int,
-    boundingBoxUpperLeftY: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      boundingBoxUpperLeftX: Int,
+      boundingBoxUpperLeftY: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     withDrawingSurface {ds =>
       if (hasFilling) {
@@ -138,16 +139,16 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param fillColor
    */
   def drawArc(
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     withDrawingSurface {ds =>
       if (hasFilling) {
@@ -181,14 +182,14 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param fillColor
    */
   def drawRectangle(
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     withDrawingSurface {ds =>
       if (hasFilling) {
@@ -222,16 +223,16 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param fillColor
    */
   def drawRoundedRectangle(
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     withDrawingSurface {ds =>
       if (hasFilling) {
@@ -261,10 +262,10 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param color
    */
   def drawPolyline(
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
-    numberOfCoordinatesToDraw: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit = {
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
+      numberOfCoordinatesToDraw: Int,
+      color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit = {
 
     withDrawingSurface {ds =>
       ds.setColor(color.toAwtColor)
@@ -284,13 +285,13 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param fillColor
    */
   def drawPolygon(
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
-    numberOfCoordinatesToDraw: Int,
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
+      numberOfCoordinatesToDraw: Int,
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
 
     withDrawingSurface {ds =>
       if (hasFilling) {
@@ -315,82 +316,17 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param color
    */
   def drawLine(
-    fromXInPixels: Int,
-    fromYInPixels: Int,
-    toXInPixels: Int,
-    toYInPixels: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit = {
+      fromXInPixels: Int,
+      fromYInPixels: Int,
+      toXInPixels: Int,
+      toYInPixels: Int,
+      color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit = {
 
     withDrawingSurface {ds =>
       ds.setColor(color.toAwtColor)
       ds.drawLine(
         fromXInPixels, fromYInPixels,
         toXInPixels, toYInPixels)
-    }
-  }
-
-  /**
-   *
-   */
-  def flipHorizontally(): Unit = {
-    val (scaleX: Double, scaleY: Double) =
-      if (owner.widthInPixels == owner.heightInPixels)
-        (1.0, 1.0)
-      else if (owner.widthInPixels > owner.heightInPixels) {
-        (owner.heightInPixels.toDouble / owner.widthInPixels, 1.0)
-      }
-      else {
-        (1.0, owner.widthInPixels.toDouble / owner.heightInPixels)
-      }
-
-    val tr: AffineTransform = AffineTransform.getScaleInstance(-1, 1)
-    tr.translate(-owner.widthInPixels, 0)
-
-    val b: BufferedImage = new BufferedImage(owner.widthInPixels, owner.heightInPixels, BufferedImage.TYPE_INT_ARGB)
-    val g = b.createGraphics()
-    g.transform(tr)
-    g.drawImage(owner.awtBufferedImage, 0, 0, null)
-    g.dispose()
-
-    withDrawingSurface {ds =>
-      ds.drawImage(b, null, 0, 0)
-
-      ds.setColor(java.awt.Color.CYAN)
-      ds.fillOval(0, 0, 50, 50)
-      ds.setColor(java.awt.Color.MAGENTA)
-      ds.fillOval(1230, 803, 50, 50)
-    }
-  }
-
-  /**
-   *
-   */
-  def flipVertically(): Unit = {
-    withDrawingSurface {ds =>
-      ds.translate(0, owner.heightInPixels)
-      ds.scale(scaleX, -scaleY)
-      ds.drawImage(owner.awtBufferedImage, null, 0, 0)
-
-      ds.setColor(java.awt.Color.CYAN)
-      ds.fillOval(0, 0, 50, 50)
-      ds.setColor(java.awt.Color.MAGENTA)
-      ds.fillOval(1230, 803, 50, 50)
-    }
-  }
-
-  /**
-   *
-   */
-  def flipDiagonAlley(): Unit = {
-    withDrawingSurface {ds =>
-      ds.translate(owner.widthInPixels, owner.heightInPixels)
-      ds.scale(-scaleX, -scaleY)
-      ds.drawImage(owner.awtBufferedImage, null, 0, 0)
-
-      ds.setColor(java.awt.Color.CYAN)
-      ds.fillOval(0, 0, 50, 50)
-      ds.setColor(java.awt.Color.MAGENTA)
-      ds.fillOval(1230, 803, 50, 50)
     }
   }
 

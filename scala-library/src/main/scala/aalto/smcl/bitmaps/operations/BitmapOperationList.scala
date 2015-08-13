@@ -20,8 +20,8 @@ private[bitmaps] object BitmapOperationList {
   /**
    * Returns an empty [[BitmapOperationList]].
    */
-  private[bitmaps] def apply(bufferProvider: AbstractBufferProviderOperation): BitmapOperationList =
-    new BitmapOperationList(bufferProvider, List[AbstractOperation with AbstractSingleSourceOperation]())
+  private[bitmaps] def apply(bufferProvider: BufferProviderOperation): BitmapOperationList =
+    new BitmapOperationList(bufferProvider, List[AbstractOperation with RenderableOperation]())
 
 }
 
@@ -32,8 +32,8 @@ private[bitmaps] object BitmapOperationList {
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class BitmapOperationList private(
-  private val bufferProvider: AbstractBufferProviderOperation,
-  private val operations: List[AbstractSingleSourceOperation]) extends Immutable {
+  private val bufferProvider: BufferProviderOperation,
+  private val operations: List[RenderableOperation]) extends Immutable {
 
   /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
   val widthInPixels: Int = bufferProvider.widthInPixels
@@ -44,13 +44,13 @@ private[bitmaps] case class BitmapOperationList private(
   /**
    * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
-  private[bitmaps] def add(newOperation: AbstractSingleSourceOperation) =
+  private[bitmaps] def add(newOperation: RenderableOperation) =
     BitmapOperationList(bufferProvider, newOperation +: operations)
 
   /**
    * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
-  private[bitmaps] def +:(newOperation: AbstractSingleSourceOperation) = this.add(newOperation)
+  private[bitmaps] def +:(newOperation: RenderableOperation) = this.add(newOperation)
 
   /**
    *
@@ -65,14 +65,14 @@ private[bitmaps] case class BitmapOperationList private(
    *
    */
   private[bitmaps] def render(): PlatformBitmapBuffer =
-    renderOperations(operations, bufferProvider.buffer)
+    renderOperations(operations, bufferProvider.createNewBuffer)
 
   /**
    *
    */
   @tailrec
   private def renderOperations(
-    list: List[AbstractSingleSourceOperation],
+    list: List[RenderableOperation],
     buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
 
     list match {

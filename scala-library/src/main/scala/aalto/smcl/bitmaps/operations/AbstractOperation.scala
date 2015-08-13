@@ -14,10 +14,7 @@ import aalto.smcl.common.{MetaInformationMap, Tokenizable}
 private[bitmaps] abstract class AbstractOperation
   extends Tokenizable with Immutable {
 
-  /** Operation streams needed to construct  */
-  def childOperationListsOption: Option[Seq[BitmapOperationList]]
-
-  /** Operation streams needed to construct  */
+  /** Information about this [[AbstractOperation]]. */
   def metaInformation: MetaInformationMap
 
 }

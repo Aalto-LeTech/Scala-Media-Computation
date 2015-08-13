@@ -32,7 +32,7 @@ private[bitmaps] case class DrawEllipse(
   hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
   color: RGBAColor = GS.colorFor(DefaultPrimary),
   fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
-  extends AbstractSingleSourceOperation with Immutable {
+  extends AbstractOperation with RenderableOperation with Immutable {
 
   require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
   require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")
@@ -45,10 +45,7 @@ private[bitmaps] case class DrawEllipse(
   /** Y coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
   val boundingBoxUpperLeftY: Int = centerYInPixels - (heightInPixels / 2)
 
-  /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
-  val childOperationListsOption: Option[Seq[BitmapOperationList]] = None
-
-  /** Information about this [[AbstractSingleSourceOperation]] instance */
+  /** Information about this [[RenderableOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),

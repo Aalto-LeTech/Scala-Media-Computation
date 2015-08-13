@@ -1,7 +1,7 @@
 package aalto.smcl.common
 
 
-import aalto.smcl.bitmaps.operations.AbstractSingleSourceOperation
+import aalto.smcl.bitmaps.operations.RenderableOperation
 import aalto.smcl.common.ColorOps._
 import aalto.smcl.platform.PlatformColor
 
@@ -471,7 +471,7 @@ class RGBAColor protected(
   /** This [[RGBAColor]] represented as a hexadecimal string. */
   lazy val toHexString: String = toPixelInt.toArgbHexColorString
 
-  /** Information about this [[AbstractSingleSourceOperation]] instance */
+  /** Information about this [[RenderableOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "red" -> Option(red.toString),
     "green" -> Option(green.toString),

@@ -1,8 +1,10 @@
 package aalto.smcl.bitmaps.operations
 
 
+import scala.ref.WeakReference
+
 import aalto.smcl.common._
-import aalto.smcl.platform.PlatformBitmapBuffer
+import aalto.smcl.platform.{PlatformAffineTransform, PlatformBitmapBuffer}
 
 
 
@@ -13,20 +15,31 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class FlipVertically()
-    extends AbstractSingleSourceOperation with Immutable {
+    extends AbstractOperation with RenderableOperation with Immutable {
 
-  /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
-  val childOperationListsOption: Option[Seq[BitmapOperationList]] = None
-
-  /** Information about this [[AbstractSingleSourceOperation]] instance */
+  /** Information about this [[RenderableOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map())
+
+  /** Rendering buffer for this operation. */
+  private[this] var _renderingBuffer: WeakReference[PlatformBitmapBuffer] =
+    WeakReference[PlatformBitmapBuffer](null)
+
 
   /**
    * Flips the given bitmap vertically.
    *
    * @param destination
    */
-  override def render(destination: PlatformBitmapBuffer): Unit =
-    destination.drawingSurface().flipVertically()
+  override def render(destination: PlatformBitmapBuffer): Unit = {
+    val bufferedFlip: PlatformBitmapBuffer = _renderingBuffer.get getOrElse {
+      val transformation = PlatformAffineTransform.forVerticalFlipOf(destination.heightInPixels)
+      val newBuffer = destination.createTransfomedVersionWith(transformation)
+      _renderingBuffer = WeakReference(newBuffer)
+
+      newBuffer
+    }
+
+    destination.drawingSurface().drawBitmap(bufferedFlip)
+  }
 
 }

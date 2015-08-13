@@ -17,11 +17,11 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class AppendVertically(
-  bitmapsToCombine: Seq[Bitmap])(
-  horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-  paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-  extends AbstractBufferProviderOperation with Immutable {
+    bitmapsToCombine: Seq[Bitmap])(
+    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    extends AbstractOperation with BufferProviderOperation with Immutable {
 
   require(bitmapsToCombine.nonEmpty,
     "Append operation must be given a non-empty Sequence of Bitmap instances to combine.")
@@ -33,19 +33,19 @@ private[bitmaps] case class AppendVertically(
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(bitmapsToCombine.map(_.operations).toSeq)
 
-  /** Information about this [[AbstractBufferProviderOperation]] instance */
+  /** Information about this [[BufferProviderOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "padding" -> Option(s"$paddingInPixels px"),
     "horizontalAlignment" -> Option(horizontalAlignment.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toPixelInt.toArgbHexColorString }")))
+    "backgroundColor" -> Option(s"0x${backgroundColor.toPixelInt.toArgbHexColorString}")))
 
   /** Width of the provided buffer in pixels. */
-  val widthInPixels: Int = childOperationListsOption.get.maxBy({ _.widthInPixels }).widthInPixels
+  val widthInPixels: Int = childOperationListsOption.get.maxBy({_.widthInPixels}).widthInPixels
 
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int =
-    childOperationListsOption.get.foldLeft[Int](0)({ _ + _.heightInPixels }) +
-      (childOperationListsOption.get.length - 1) * paddingInPixels
+    childOperationListsOption.get.foldLeft[Int](0)({_ + _.heightInPixels}) +
+        (childOperationListsOption.get.length - 1) * paddingInPixels
 
   /** Future vertical offsets of the bitmaps to be combined. */
   val horizontalOffsets: Seq[Int] = horizontalAlignment match {
@@ -53,16 +53,22 @@ private[bitmaps] case class AppendVertically(
       ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toSeq
 
     case HorizontalAlignment.Right =>
-      bitmapsToCombine.map({ widthInPixels - _.widthInPixels }).toSeq
+      bitmapsToCombine.map({widthInPixels - _.widthInPixels}).toSeq
 
     case HorizontalAlignment.Center =>
-      bitmapsToCombine.map({ bmp =>
+      bitmapsToCombine.map({bmp =>
         (widthInPixels.toDouble / 2 - bmp.widthInPixels.toDouble / 2).floor.toInt
       }).toSeq
   }
 
-  /** A buffer for applying bitmap operations. */
-  val buffer: PlatformBitmapBuffer = {
+  /**
+   * Creates the buffer which contains the results of applying this operation
+   * and which is used as a background for a new buffers provided by this
+   * [[BufferProviderOperation]].
+   *
+   * @return
+   */
+  override def createStaticBuffer(): PlatformBitmapBuffer = {
     val newBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
     val drawingSurface = newBuffer.drawingSurface()
 
@@ -70,7 +76,7 @@ private[bitmaps] case class AppendVertically(
 
     var yPosition = 0
     var itemNumber = 0
-    childOperationListsOption.get.foreach { opList =>
+    childOperationListsOption.get.foreach {opList =>
       val sourceBuffer = opList.render()
 
       drawingSurface.drawBitmap(sourceBuffer, horizontalOffsets(itemNumber), yPosition)

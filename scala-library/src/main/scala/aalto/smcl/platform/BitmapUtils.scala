@@ -1,7 +1,7 @@
 package aalto.smcl.platform
 
 
-import java.awt.image.{BufferedImage => JBufferedImage, ColorModel => JColorModel, WritableRaster => JWritableRaster}
+import java.awt.image.BufferedImage
 
 
 
@@ -19,8 +19,8 @@ private[platform] object BitmapUtils {
    * @param source
    * @return
    */
-  def deepCopy(source: JBufferedImage): JBufferedImage =
-    new JBufferedImage(
+  def deepCopy(source: BufferedImage): BufferedImage =
+    new BufferedImage(
       source.getColorModel,
       source.copyData(null),
       source.isAlphaPremultiplied,

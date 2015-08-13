@@ -19,6 +19,7 @@ private[smcl] object PlatformBitmapBuffer {
   /** */
   val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB
 
+
   /**
    *
    *
@@ -68,7 +69,7 @@ private[smcl] object PlatformBitmapBuffer {
    * @return
    */
   private[platform] def convertToNormalizedLowLevelBitmapBufferIfNecessary(
-    buffer: BufferedImage): BufferedImage = {
+      buffer: BufferedImage): BufferedImage = {
 
     var bufferCandidate = buffer
 
@@ -109,5 +110,38 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
 
   /** */
   def drawingSurface(): PlatformDrawingSurface = PlatformDrawingSurface(this)
+
+  /**
+   *
+   *
+   * @param affineTransform
+   * @return
+   */
+  def createTransfomedVersionWith(affineTransform: PlatformAffineTransform): PlatformBitmapBuffer = {
+    val newBuffer = emptyAlike()
+
+    newBuffer.drawingSurface().use[Unit] {ds =>
+      ds.transform(affineTransform.awtAffineTransform)
+      ds.drawImage(awtBufferedImage, 0, 0, null)
+    }
+
+    newBuffer
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def copy(): PlatformBitmapBuffer =
+    PlatformBitmapBuffer(BitmapUtils.deepCopy(awtBufferedImage))
+
+  /**
+   *
+   *
+   * @return
+   */
+  def emptyAlike(): PlatformBitmapBuffer =
+    PlatformBitmapBuffer(widthInPixels, heightInPixels)
 
 }

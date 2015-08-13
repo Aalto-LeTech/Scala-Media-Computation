@@ -1,8 +1,6 @@
 package aalto.smcl.bitmaps.immutable.primitives
 
 
-import java.awt.geom.AffineTransform
-
 import scala.collection.mutable
 import scala.ref.WeakReference
 
@@ -14,7 +12,7 @@ import aalto.smcl.bitmaps.immutable.{BitmapIdentity, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
 import aalto.smcl.common.{GS, HorizontalAlignment, RGBAColor, TimestampedCreation, VerticalAlignment}
-import aalto.smcl.platform.{ImageProvider, PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
+import aalto.smcl.platform.{PlatformAffineTransform, ImageProvider, PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
 
 
 
@@ -170,14 +168,14 @@ case class Bitmap private(
   val initialBackgroundColor: RGBAColor = operations.initialBackgroundColor()
 
   /**
-   * Applies an [[AbstractSingleSourceOperation]] to this [[Bitmap]].
+   * Applies an [[RenderableOperation]] to this [[Bitmap]].
    *
    * @param newOperation
    * @param viewerHandling
    * @return
    */
   private[bitmaps] def apply(
-      newOperation: AbstractSingleSourceOperation,
+      newOperation: RenderableOperation,
       viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
 
     require(newOperation != null, "Operation argument cannot be null.")
@@ -193,14 +191,14 @@ case class Bitmap private(
   }
 
   /**
-   * Applies an [[AbstractBufferProviderOperation]] to this [[Bitmap]].
+   * Applies an [[BufferProviderOperation]] to this [[Bitmap]].
    *
    * @param newOperation
    * @param viewerHandling
    * @return
    */
   private[bitmaps] def apply(
-      newOperation: AbstractBufferProviderOperation,
+      newOperation: BufferProviderOperation,
       viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
 
     require(newOperation != null, "Operation argument cannot be null.")
@@ -214,6 +212,21 @@ case class Bitmap private(
     }
 
     newBitmap
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def aspectRatio(): (Double, Double) = {
+    if (widthInPixels == heightInPixels)
+      return (1.0, 1.0)
+
+    if (widthInPixels > heightInPixels)
+      return (heightInPixels.toDouble / widthInPixels, 1.0)
+
+    (1.0, widthInPixels.toDouble / heightInPixels)
   }
 
   /**
@@ -922,7 +935,7 @@ case class Bitmap private(
    * @param drawingSurface
    * @param affineTransformation
    */
-  def renderOnto(drawingSurface: PlatformDrawingSurface, affineTransformation: AffineTransform): Unit = {
+  def renderOnto(drawingSurface: PlatformDrawingSurface, affineTransformation: PlatformAffineTransform): Unit = {
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
     val rendition = toRenderedRepresentation

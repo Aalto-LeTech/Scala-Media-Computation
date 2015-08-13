@@ -2,7 +2,6 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels}
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.common.{GS, MetaInformationMap}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
@@ -18,22 +17,25 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class CreateBitmap(
-  widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-  heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels))
-  extends AbstractBufferProviderOperation with Immutable {
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels))
+    extends AbstractOperation with BufferProviderOperation with Immutable {
 
-  /** This [[AbstractBufferProviderOperation]] does not have any child operations. */
-  val childOperationListsOption: Option[Seq[BitmapOperationList]] = None
-
-  /** Information about this [[AbstractBufferProviderOperation]] instance */
+  /** Information about this [[BufferProviderOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "width" -> Option("${widthInPixels} px"),
     "height" -> Option("${heightInPixels} px")
   ))
 
+
   /**
-   * Returns a new bitmap buffer of a size given to this [[Bitmap]] instance.
+   * Creates the buffer which contains the results of applying this operation
+   * and which is used as a background for a new buffers provided by this
+   * [[BufferProviderOperation]].
+   *
+   * @return
    */
-  def buffer: PlatformBitmapBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
+  override def createStaticBuffer(): PlatformBitmapBuffer =
+    PlatformBitmapBuffer(widthInPixels, heightInPixels)
 
 }

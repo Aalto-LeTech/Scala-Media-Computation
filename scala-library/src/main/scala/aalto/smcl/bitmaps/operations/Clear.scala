@@ -17,13 +17,10 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class Clear(
-  color: RGBAColor = GS.colorFor(DefaultBackground))
-  extends AbstractSingleSourceOperation with Immutable {
+    color: RGBAColor = GS.colorFor(DefaultBackground))
+    extends AbstractOperation with RenderableOperation with Immutable {
 
   require(color != null, "The color argument has to be a Color instance (was null).")
-
-  /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
-  val childOperationListsOption: Option[Seq[BitmapOperationList]] = None
 
   /** Information about this operation instance */
   lazy val metaInformation = MetaInformationMap(Map(

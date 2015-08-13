@@ -36,7 +36,7 @@ private[bitmaps] case class DrawRoundedRectangle(
   hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
   color: RGBAColor = GS.colorFor(DefaultPrimary),
   fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
-  extends AbstractSingleSourceOperation with Immutable {
+  extends AbstractOperation with RenderableOperation with Immutable {
 
   require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
   require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")
@@ -45,10 +45,7 @@ private[bitmaps] case class DrawRoundedRectangle(
   require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
-  /** This [[AbstractSingleSourceOperation]] does not have any child operations. */
-  val childOperationListsOption: Option[Seq[BitmapOperationList]] = None
-
-  /** Information about this [[AbstractSingleSourceOperation]] instance */
+  /** Information about this [[RenderableOperation]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),

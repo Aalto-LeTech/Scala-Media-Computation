@@ -1,13 +1,13 @@
 package aalto.smcl.bitmaps.viewer
 
 
-import java.awt.geom.AffineTransform
 import java.awt.{Graphics2D => JGraphics2D, RenderingHints}
 
 import scala.swing._
 import scala.util.Try
 
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.platform.PlatformAffineTransform
 
 
 
@@ -26,7 +26,7 @@ private[bitmaps] class ImageDisplayPanel extends Panel {
   private var _zoomFactor: ZoomFactor = ZoomFactor.Identity
 
   /** */
-  private var _affineTransformation: AffineTransform = new AffineTransform()
+  private var _affineTransformation: PlatformAffineTransform = PlatformAffineTransform()
 
   /**
    *
@@ -42,7 +42,7 @@ private[bitmaps] class ImageDisplayPanel extends Panel {
 
     g.drawImage(
       _bitmapOption.get.toRenderedRepresentation.awtBufferedImage,
-      _affineTransformation,
+      _affineTransformation.awtAffineTransform,
       null)
   }
 
