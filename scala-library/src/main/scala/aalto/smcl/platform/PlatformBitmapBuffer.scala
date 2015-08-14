@@ -2,7 +2,7 @@ package aalto.smcl.platform
 
 
 import java.awt.Graphics2D
-import java.awt.image.BufferedImage
+import java.awt.image.{AffineTransformOp, BufferedImage}
 
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.common.AffineTransformation
@@ -119,14 +119,15 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def createTransfomedVersionWith(transformation: AffineTransformation): PlatformBitmapBuffer = {
-    val newBuffer = emptyAlike()
+    val operation = new AffineTransformOp(
+      transformation.platformAffineTransform.awtAffineTransformation,
+      AffineTransformOp.TYPE_NEAREST_NEIGHBOR)
 
-    newBuffer.drawingSurface().use[Unit] {ds =>
-      ds.transform(transformation.platformAffineTransform.awtAffineTransformation)
-      ds.drawImage(awtBufferedImage, 0, 0, null)
-    }
+    val newLowLevelBitmap = operation.filter(
+        awtBufferedImage,
+        emptyAlike().awtBufferedImage)
 
-    newBuffer
+    PlatformBitmapBuffer(newLowLevelBitmap)
   }
 
   /**
