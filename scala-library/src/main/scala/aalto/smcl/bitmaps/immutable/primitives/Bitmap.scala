@@ -8,7 +8,7 @@ import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
-import aalto.smcl.bitmaps.immutable.{BitmapIdentity, PixelRectangle}
+import aalto.smcl.bitmaps.immutable.{ConvolutionKernel, BitmapIdentity, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
 import aalto.smcl.common._
@@ -241,6 +241,20 @@ case class Bitmap private(
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     apply(Clear(color), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param kernel
+   * @param viewerHandling
+   * @return
+   */
+  def convolveWith(
+    kernel: ConvolutionKernel,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(ConvolveWithCustomKernel(kernel), viewerHandling)
   }
 
   /**

@@ -56,4 +56,12 @@ case class ConvolutionKernel private(matrix: Seq[Seq[Float]]) extends Immutable 
   /** The data of this [[ConvolutionKernel]] instance as an `Array` of `Floats`. */
   lazy val toRowMajorArray: Array[Float] = matrix.flatten.toArray
 
+  /**
+   *
+   *
+   * @return
+   */
+  override def toString: String =
+    matrix.map(_.mkString("[", ", ", "]")).mkString("[", ", ", "]")
+
 }

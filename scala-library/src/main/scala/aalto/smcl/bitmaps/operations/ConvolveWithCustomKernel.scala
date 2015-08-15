@@ -1,6 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.bitmaps.immutable.ConvolutionKernel
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
@@ -8,15 +9,17 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 /**
- * Operation to flip a bitmap vertically.
+ * Operation to apply a custom convolution filter to a bitmap.
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class FlipVertically()
+private[bitmaps] case class ConvolveWithCustomKernel(kernel: ConvolutionKernel)
   extends AbstractOperation with OneSourceFilter with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map())
+  lazy val metaInformation = MetaInformationMap(Map(
+    "kernel" -> Option(kernel.toString)
+  ))
 
 
   /**
@@ -30,8 +33,7 @@ private[bitmaps] case class FlipVertically()
   override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
     require(sources.length == 1, s"Flip required exactly one source image (provided: ${sources.length}).")
 
-    sources(0).createTransfomedVersionWith(
-      AffineTransformation.forVerticalFlipOf(sources(0).heightInPixels))
+    sources(0).createFilteredVersionWith(kernel)
   }
 
 }

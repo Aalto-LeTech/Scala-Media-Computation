@@ -2,6 +2,7 @@ package aalto.smcl.bitmaps
 
 
 import aalto.smcl.bitmaps.BitmapSettingKeys._
+import aalto.smcl.bitmaps.immutable.ConvolutionKernel
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
@@ -17,6 +18,24 @@ import aalto.smcl.common.{GS, HorizontalAlignment, RGBAColor, VerticalAlignment}
  * @author Aleksi Lukkarinen
  */
 object BitmapOps {
+
+  /**
+   * Adds a [[ConvolveWithCustomKernel]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param kernel
+   * @param viewerHandling
+   * @return
+   */
+  def convolveWith(
+    bmp: OperableBitmap,
+    kernel: ConvolutionKernel,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap to be cleared cannot be null.")
+
+    bmp.apply(ConvolveWithCustomKernel(kernel), viewerHandling)
+  }
 
   /**
    * Adds a [[Clear]] operation to a given [[OperableBitmap]].

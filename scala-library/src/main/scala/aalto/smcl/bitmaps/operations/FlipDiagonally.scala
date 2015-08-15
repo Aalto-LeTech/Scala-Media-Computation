@@ -13,7 +13,7 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class FlipDiagonally()
-  extends AbstractOperation with Renderable with Buffered with Immutable {
+  extends AbstractOperation with OneSourceFilter with Immutable {
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map())
@@ -37,13 +37,5 @@ private[bitmaps] case class FlipDiagonally()
 
     sources(0).createTransfomedVersionWith(transformation)
   }
-
-  /**
-   * Flips the given bitmap diagonally.
-   *
-   * @param destination
-   */
-  override def render(destination: PlatformBitmapBuffer): Unit =
-    destination.drawingSurface().drawBitmap(getOrCreateStaticBuffer(destination))
 
 }
