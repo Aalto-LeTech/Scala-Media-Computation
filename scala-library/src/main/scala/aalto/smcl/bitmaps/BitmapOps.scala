@@ -483,7 +483,7 @@ object BitmapOps {
 //  /**
 //   *
 //   */
-//  def pixelIntAt(x: Int, y: Int): Int = {
+//  def rgbaIntAt(x: Int, y: Int): Int = {
 //    require(widthRange.contains(x),
 //      s"The x coordinate must be >= zero and less than the width of the image (was $x)")
 //
@@ -497,20 +497,20 @@ object BitmapOps {
 //   *
 //   */
 //  def colorComponentsAt(x: Int, y: Int): collection.immutable.Map[Symbol, Int] = {
-//    colorComponentsFrom(pixelIntAt(x, y))
+//    colorComponentsFrom(argbIntAt(x, y))
 //  }
 //
 //  /**
 //   *
 //   */
-//  def setPixelIntAt(x: Int, y: Int, pixelInt: Int): Unit = {
+//  def setargbIntAt(x: Int, y: Int, argbInt: Int): Unit = {
 //    require(widthRange.contains(x),
 //      s"The x coordinate must be >= zero and less than the width of the image (was $x)")
 //
 //    require(heightRange.contains(y),
 //      s"The y coordinate must be >= zero and less than the height of the image (was $y)")
 //
-//    buffer.setRGB(x, y, pixelInt)
+//    buffer.setRGB(x, y, argbInt)
 //  }
 //
 //  /**
@@ -523,49 +523,49 @@ object BitmapOps {
 //    require(heightRange.contains(y),
 //      s"The y coordinate must be >= zero and less than the height of the image (was $y)")
 //
-//    buffer.setRGB(x, y, pixelIntFrom(red, green, blue, opacity))
+//    buffer.setRGB(x, y, argbIntFrom(red, green, blue, opacity))
 //  }
 //
 //  /**
 //   *
 //   */
-//  def redComponentAt(x: Int, y: Int): Int = redComponentFrom(pixelIntAt(x, y))
+//  def redComponentAt(x: Int, y: Int): Int = redComponentFrom(argbIntAt(x, y))
 //
 //  /**
 //   *
 //   */
 //  def setRedComponentAt(x: Int, y: Int, red: Int): Unit =
-//    setPixelIntAt(x, y, withNewRedComponent(pixelIntAt(x, y), red))
+//    setargbIntAt(x, y, withNewRedComponent(argbIntAt(x, y), red))
 //
 //  /**
 //   *
 //   */
-//  def greenComponentAt(x: Int, y: Int): Int = greenComponentFrom(pixelIntAt(x, y))
+//  def greenComponentAt(x: Int, y: Int): Int = greenComponentFrom(argbIntAt(x, y))
 //
 //  /**
 //   *
 //   */
 //  def setGreenComponentAt(x: Int, y: Int, green: Int): Unit =
-//    setPixelIntAt(x, y, withNewGreenComponent(pixelIntAt(x, y), green))
+//    setargbIntAt(x, y, withNewGreenComponent(argbIntAt(x, y), green))
 //
 //  /**
 //   *
 //   */
-//  def blueComponentAt(x: Int, y: Int): Int = blueComponentFrom(pixelIntAt(x, y))
+//  def blueComponentAt(x: Int, y: Int): Int = blueComponentFrom(argbIntAt(x, y))
 //
 //  /**
 //   *
 //   */
 //  def setBlueComponentAt(x: Int, y: Int, blue: Int): Unit =
-//    setPixelIntAt(x, y, withNewBlueComponent(pixelIntAt(x, y), blue))
+//    setargbIntAt(x, y, withNewBlueComponent(argbIntAt(x, y), blue))
 //
 //  /**
 //   *
 //   */
-//  def opacityComponentAt(x: Int, y: Int): Int = opacityComponentFrom(pixelIntAt(x, y))
+//  def opacityComponentAt(x: Int, y: Int): Int = opacityComponentFrom(argbIntAt(x, y))
 //
 //  /**
 //   *
 //   */
 //  def opacityComponentAt_=(x: Int, y: Int, opacity: Int): Unit =
-//    setPixelIntAt(x, y, withNewOpacityComponent(pixelIntAt(x, y), opacity))
+//    setargbIntAt(x, y, withNewOpacityComponent(argbIntAt(x, y), opacity))

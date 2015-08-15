@@ -11,98 +11,98 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @param newRed
    * @return
    */
   @inline
-  def withNewRedComponent(pixelInt: Int, newRed: Int): Int = {
+  def withNewRedComponent(argbInt: Int, newRed: Int): Int = {
     ColorValidator.validateRgbRedComponent(newRed)
 
-    (pixelInt & ~ThirdByte) | (newRed << TwoBytes)
+    (argbInt & ~ThirdByte) | (newRed << TwoBytes)
   }
 
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @param newGreen
    * @return
    */
   @inline
-  def withNewGreenComponent(pixelInt: Int, newGreen: Int): Int = {
+  def withNewGreenComponent(argbInt: Int, newGreen: Int): Int = {
     ColorValidator.validateRgbGreenComponent(newGreen)
 
-    (pixelInt & ~SecondByte) | (newGreen << OneByte)
+    (argbInt & ~SecondByte) | (newGreen << OneByte)
   }
 
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @param newBlue
    * @return
    */
   @inline
-  def withNewBlueComponent(pixelInt: Int, newBlue: Int): Int = {
+  def withNewBlueComponent(argbInt: Int, newBlue: Int): Int = {
     ColorValidator.validateRgbBlueComponent(newBlue)
 
-    (pixelInt & ~FirstByte) | newBlue
+    (argbInt & ~FirstByte) | newBlue
   }
 
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @param newOpacity
    * @return
    */
   @inline
-  def withNewOpacityComponent(pixelInt: Int, newOpacity: Int): Int = {
+  def withNewOpacityComponent(argbInt: Int, newOpacity: Int): Int = {
     ColorValidator.validateRgbaOpacityComponent(newOpacity)
 
-    (pixelInt & ~FourthByte) | (newOpacity << ThreeBytes)
+    (argbInt & ~FourthByte) | (newOpacity << ThreeBytes)
   }
 
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def redComponentOf(pixelInt: Int): Int =
-    (pixelInt & ThirdByte) >>> TwoBytes
+  def redComponentOf(argbInt: Int): Int =
+    (argbInt & ThirdByte) >>> TwoBytes
 
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def greenComponentOf(pixelInt: Int): Int =
-    (pixelInt & SecondByte) >>> OneByte
+  def greenComponentOf(argbInt: Int): Int =
+    (argbInt & SecondByte) >>> OneByte
 
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def blueComponentOf(pixelInt: Int): Int =
-    pixelInt & FirstByte
+  def blueComponentOf(argbInt: Int): Int =
+    argbInt & FirstByte
 
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def opacityComponentOf(pixelInt: Int): Int =
-    pixelInt >>> ThreeBytes
+  def opacityComponentOf(argbInt: Int): Int =
+    argbInt >>> ThreeBytes
 
   /**
    *
@@ -117,15 +117,15 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def rgbaTupleFrom(pixelInt: Int): (Int, Int, Int, Int) =
-    (redComponentOf(pixelInt),
-        greenComponentOf(pixelInt),
-        blueComponentOf(pixelInt),
-        opacityComponentOf(pixelInt))
+  def rgbaTupleFrom(argbInt: Int): (Int, Int, Int, Int) =
+    (redComponentOf(argbInt),
+        greenComponentOf(argbInt),
+        blueComponentOf(argbInt),
+        opacityComponentOf(argbInt))
 
   /**
    *
@@ -171,14 +171,14 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def rgbTupleFrom(pixelInt: Int): (Int, Int, Int) =
-    (redComponentOf(pixelInt),
-        greenComponentOf(pixelInt),
-        blueComponentOf(pixelInt))
+  def rgbTupleFrom(argbInt: Int): (Int, Int, Int) =
+    (redComponentOf(argbInt),
+        greenComponentOf(argbInt),
+        blueComponentOf(argbInt))
 
   /**
    *
@@ -216,8 +216,8 @@ object ColorOps {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def pixelIntFrom(rgbaTuple: (Int, Int, Int, Int)): Int =
-    (pixelIntFrom(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+  def argbIntFrom(rgbaTuple: (Int, Int, Int, Int)): Int =
+    (argbIntFrom(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
 
   /**
    *
@@ -228,8 +228,8 @@ object ColorOps {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def pixelIntFrom(rgbTuple: (Int, Int, Int), opacity: Int): Int =
-    (pixelIntFrom(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
+  def argbIntFrom(rgbTuple: (Int, Int, Int), opacity: Int): Int =
+    (argbIntFrom(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -241,7 +241,7 @@ object ColorOps {
    * @return
    */
   @inline
-  def pixelIntFrom(
+  def argbIntFrom(
       red: Int = ColorValidator.MinimumRgbRed,
       green: Int = ColorValidator.MinimumRgbGreen,
       blue: Int = ColorValidator.MinimumRgbBlue,
@@ -311,12 +311,12 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def isBlack(pixelInt: Int): Boolean =
-    isBlack(rgbTupleFrom(pixelInt))
+  def isBlack(argbInt: Int): Boolean =
+    isBlack(rgbTupleFrom(argbInt))
 
   /**
    *
@@ -356,12 +356,12 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def isGray(pixelInt: Int): Boolean =
-    isGray(rgbTupleFrom(pixelInt))
+  def isGray(argbInt: Int): Boolean =
+    isGray(rgbTupleFrom(argbInt))
 
   /**
    *
@@ -399,12 +399,12 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def isWhite(pixelInt: Int): Boolean =
-    isWhite(rgbTupleFrom(pixelInt))
+  def isWhite(argbInt: Int): Boolean =
+    isWhite(rgbTupleFrom(argbInt))
 
   /**
    *
@@ -461,12 +461,12 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def toHsi(pixelInt: Int): (Double, Double, Double) =
-    rgbToHsi(rgbTupleFrom(pixelInt))
+  def toHsi(argbInt: Int): (Double, Double, Double) =
+    rgbToHsi(rgbTupleFrom(argbInt))
 
   /**
    *
@@ -565,8 +565,8 @@ object ColorOps {
    * @return
    */
   @inline
-  def hsiToPixelInt(hueInDegrees: Double, saturation: Double, intensity: Double): Int =
-    hsiToPixelInt(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity)
+  def hsiToargbInt(hueInDegrees: Double, saturation: Double, intensity: Double): Int =
+    hsiToargbInt(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity)
 
   /**
    *
@@ -578,8 +578,8 @@ object ColorOps {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def hsiToPixelInt(hueInDegrees: Double, saturation: Double, intensity: Double, opacity: Int): Int =
-    (pixelIntFrom(_: Int, _: Int, _: Int, opacity)).tupled.apply(hsiToRgb(hueInDegrees, saturation, intensity))
+  def hsiToargbInt(hueInDegrees: Double, saturation: Double, intensity: Double, opacity: Int): Int =
+    (argbIntFrom(_: Int, _: Int, _: Int, opacity)).tupled.apply(hsiToRgb(hueInDegrees, saturation, intensity))
 
   /**
    *
@@ -652,12 +652,12 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def toHsv(pixelInt: Int): (Double, Double, Double) =
-    rgbToHsv(rgbTupleFrom(pixelInt))
+  def toHsv(argbInt: Int): (Double, Double, Double) =
+    rgbToHsv(rgbTupleFrom(argbInt))
 
   /**
    *
@@ -776,15 +776,15 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @param adjustmentInDegrees
    * @return
    */
   @inline
-  def adjustHueOfRgbByDegrees(pixelInt: Int, adjustmentInDegrees: Double): Int =
-    pixelIntFrom(
-      adjustHueOfRgbByDegrees(rgbTupleFrom(pixelInt), adjustmentInDegrees),
-      opacityComponentOf(pixelInt))
+  def adjustHueOfRgbByDegrees(argbInt: Int, adjustmentInDegrees: Double): Int =
+    argbIntFrom(
+      adjustHueOfRgbByDegrees(rgbTupleFrom(argbInt), adjustmentInDegrees),
+      opacityComponentOf(argbInt))
 
   /**
    *
@@ -829,12 +829,12 @@ object ColorOps {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
   @inline
-  def colorComponentMapFrom(pixelInt: Int): Map[Symbol, Double] =
-    colorComponentMapFrom(rgbaTupleFrom(pixelInt))
+  def colorComponentMapFrom(argbInt: Int): Map[Symbol, Double] =
+    colorComponentMapFrom(rgbaTupleFrom(argbInt))
 
   /**
    *

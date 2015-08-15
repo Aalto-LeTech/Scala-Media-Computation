@@ -96,7 +96,7 @@ package object common {
   /** Application of the RichRGBAColor class. */
   implicit def RGBAColorWrapper(self: RGBAColor): RichRGBAColor = new RichRGBAColor(self)
 
-  /** Application of the RichPixelInt class. */
-  implicit def PixelIntWrapper(self: Int): RichPixelInt = new RichPixelInt(self)
+  /** Application of the RichArgbInt class. */
+  implicit def ARGBIntWrapper(self: Int): RichARGBInt = new RichARGBInt(self)
 
 }

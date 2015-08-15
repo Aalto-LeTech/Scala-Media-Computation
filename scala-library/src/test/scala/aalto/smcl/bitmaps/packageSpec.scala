@@ -99,9 +99,9 @@ class packageSpec extends ImageSpecBase {
     }
   }
 
-  "pixelIntFrom() must" - {
-    "compose the right pixel Int value based on given color components" in {
-      assert(pixelIntFrom(
+  "argbIntFrom() must" - {
+    "compose the right argbInt value based on given color components" in {
+      assert(argbIntFrom(
         TEST_RED_VALUE,
         TEST_GREEN_VALUE,
         TEST_BLUE_VALUE,
@@ -111,48 +111,48 @@ class packageSpec extends ImageSpecBase {
     "throw an IllegalArgumentException when color component" - {
       "'red' is less than MIN_RED" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(red = ColorValidator.MinimumRgbRed - 1)
+          argbIntFrom(red = ColorValidator.MinimumRgbRed - 1)
         }
       }
       "'red' is greater than MAX_RED" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(red = ColorValidator.MaximumRgbRed + 1)
+          argbIntFrom(red = ColorValidator.MaximumRgbRed + 1)
         }
       }
       "'green' is less than MIN_GREEN" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(green = ColorValidator.MinimumRgbGreen - 1)
+          argbIntFrom(green = ColorValidator.MinimumRgbGreen - 1)
         }
       }
       "'green' is greater than MAX_GREEN" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(green = ColorValidator.MaximumRgbGreen + 1)
+          argbIntFrom(green = ColorValidator.MaximumRgbGreen + 1)
         }
       }
       "'blue' is less than MIN_BLUE" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(blue = ColorValidator.MinimumRgbBlue - 1)
+          argbIntFrom(blue = ColorValidator.MinimumRgbBlue - 1)
         }
       }
       "'blue' is greater than MAX_BLUE" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(blue = ColorValidator.MaximumRgbBlue + 1)
+          argbIntFrom(blue = ColorValidator.MaximumRgbBlue + 1)
         }
       }
       "opacity is less than MinimumOpacity" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(opacity = ColorValidator.MinimumRgbaOpacity - 1)
+          argbIntFrom(opacity = ColorValidator.MinimumRgbaOpacity - 1)
         }
       }
       "opacity is greater than MaximumOpacity" in {
         intercept[IllegalArgumentException] {
-          pixelIntFrom(opacity = ColorValidator.MaximumRgbaOpacity + 1)
+          argbIntFrom(opacity = ColorValidator.MaximumRgbaOpacity + 1)
         }
       }
     }
   }
 
-  "implicit class PixelInt must return the correct" - {
+  "implicit class argbInt must return the correct" - {
     "color component map by invoking colorComponentInts()" in {
       assert(TEST_PIXEL_INT.colorComponentMap ===
           Map[Symbol, Int](

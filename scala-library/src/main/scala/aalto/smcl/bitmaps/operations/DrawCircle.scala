@@ -52,8 +52,8 @@ private[bitmaps] case class DrawCircle(
     "radius" -> Option(s"$radiusInPixels px"),
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
-    "color" -> Option(s"0x${color.toPixelInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.toPixelInt.toArgbHexColorString}")))
+    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}"),
+    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")))
 
   /**
    * Draws a circle onto the given bitmap with the given colors.

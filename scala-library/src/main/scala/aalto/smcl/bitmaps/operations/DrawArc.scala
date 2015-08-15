@@ -53,8 +53,8 @@ private[bitmaps] case class DrawArc(
     "arcAngle" -> Option(s"${arcAngleInDegrees.toString} deg"),
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
-    "color" -> Option(s"0x${color.toPixelInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.toPixelInt.toArgbHexColorString}")))
+    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}"),
+    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")))
 
   /**
    * Draws an arc onto the given bitmap with the given colors.

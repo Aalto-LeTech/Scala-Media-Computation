@@ -10,7 +10,7 @@ package aalto.smcl.common
  *
  * @author Aleksi Lukkarinen
  */
-class RichPixelInt(val self: Int) extends AnyVal {
+class RichARGBInt(val self: Int) extends AnyVal {
 
   /**
    * Returns an immutable map containing individual color components of this ARGB-style `Int`.

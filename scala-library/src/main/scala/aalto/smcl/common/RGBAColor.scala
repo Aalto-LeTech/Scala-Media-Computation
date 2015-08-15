@@ -2,7 +2,7 @@ package aalto.smcl.common
 
 
 import aalto.smcl.bitmaps.operations.Renderable
-import aalto.smcl.common.ColorOps._
+import aalto.smcl.common.ColorOps.argbIntFrom
 import aalto.smcl.platform.PlatformColor
 
 
@@ -169,21 +169,21 @@ object RGBAColor {
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @param nameOption
    * @return
    */
-  def apply(pixelInt: Int, nameOption: Option[String]): RGBAColor =
-    RGBAColor(ColorOps.rgbaTupleFrom(pixelInt), nameOption)
+  def apply(argbInt: Int, nameOption: Option[String]): RGBAColor =
+    RGBAColor(ColorOps.rgbaTupleFrom(argbInt), nameOption)
 
   /**
    *
    *
-   * @param pixelInt
+   * @param argbInt
    * @return
    */
-  def apply(pixelInt: Int): RGBAColor =
-    RGBAColor(ColorOps.rgbaTupleFrom(pixelInt))
+  def apply(argbInt: Int): RGBAColor =
+    RGBAColor(ColorOps.rgbaTupleFrom(argbInt))
 
   /**
    *
@@ -454,7 +454,7 @@ class RGBAColor protected(
 } with Ordered[RGBAColor] with Immutable with Tokenizable {
 
   /** This [[RGBAColor]] coded into an `Int`. */
-  lazy val toPixelInt: Int = pixelIntFrom(red, green, blue, opacity)
+  lazy val toArgbInt: Int = argbIntFrom(red, green, blue, opacity)
 
   /** Returns `true` if this [[RGBAColor]] is fully opaque, otherwise `false`. */
   val isOpaque: Boolean = opacity == ColorValidator.MaximumRgbaOpacity
@@ -466,10 +466,10 @@ class RGBAColor protected(
   val isUserCreated: Boolean = !isPreset
 
   /** This [[RGBAColor]] represented as a 32-digit binary string of four 8-digit groups. */
-  lazy val toBinaryString: String = toPixelInt.toArgbBinaryColorString
+  lazy val toBinaryString: String = toArgbInt.toArgbBinaryColorString
 
   /** This [[RGBAColor]] represented as a hexadecimal string. */
-  lazy val toHexString: String = toPixelInt.toArgbHexColorString
+  lazy val toHexString: String = toArgbInt.toArgbHexColorString
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

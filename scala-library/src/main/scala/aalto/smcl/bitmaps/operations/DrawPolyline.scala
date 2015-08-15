@@ -48,7 +48,7 @@ private[bitmaps] case class DrawPolyline(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
     "numberOfCoordinatesPresent" -> Option(numberOfCoordinatesPresent.toString),
     "numberOfCoordinatesToDraw" -> Option(numberOfCoordinatesToDraw.toString),
-    "color" -> Option(s"0x${color.toPixelInt.toArgbHexColorString}")))
+    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}")))
 
   /**
    * Draws a polyline onto the given bitmap with the given colors.

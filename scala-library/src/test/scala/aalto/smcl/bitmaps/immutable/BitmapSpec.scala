@@ -3,10 +3,10 @@ package aalto.smcl.bitmaps.immutable
 
 import java.awt.{Graphics2D => JGraphics2D}
 
-import aalto.smcl.common.{TimeStamp, GS}
-import aalto.smcl.bitmaps.ImageSpecBase
 import aalto.smcl.bitmaps.BitmapSettingKeys._
+import aalto.smcl.bitmaps.ImageSpecBase
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.common.{GS, TimeStamp}
 
 
 /**
@@ -97,7 +97,7 @@ class BitmapSpec extends ImageSpecBase {
     //      val b = newSmallDefaultImmutableTestImage
     //
     //      for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
-    //        assert(b.pixelIntAt(x, y) === 0xFFFFFFFF)
+    //        assert(b.argbIntAt(x, y) === 0xFFFFFFFF)
     //      }
     //    }
     //
@@ -105,7 +105,7 @@ class BitmapSpec extends ImageSpecBase {
     //      val b = Bitmap(initialBackgroundColorOption = Option[Int](TEST_PIXEL_INT))
     //
     //      for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
-    //        assert(b.pixelIntAt(x, y) === TEST_PIXEL_INT)
+    //        assert(b.argbIntAt(x, y) === TEST_PIXEL_INT)
     //      }
     //    }
     //
@@ -113,14 +113,14 @@ class BitmapSpec extends ImageSpecBase {
     //      val testColors = Table("c", 0xFF9EADBC, 0xFF000000, 0xFF123456)
     //
     //      forAll(testColors) { c =>
-    //        info(s"testing pixelInt value: 0x${c.toArgbHexColorString}  (${c})")
+    //        info(s"testing argbInt value: 0x${c.toArgbHexColorString}  (${c})")
     //
     //        val b = Bitmap()
     //
     //        b.clear(Option(c))
     //
     //        for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
-    //          b.pixelIntAt(x, y) shouldEqual c
+    //          b.argbIntAt(x, y) shouldEqual c
     //        }
     //      }
     //    }
@@ -129,14 +129,14 @@ class BitmapSpec extends ImageSpecBase {
     //      val testColors = Table("c", 0xFF9EADBC, 0xFF000000, 0xFF123456)
     //
     //      forAll(testColors) { c =>
-    //        info(s"testing pixelInt value: 0x${c.toArgbHexColorString}  (${c})")
+    //        info(s"testing argbInt value: 0x${c.toArgbHexColorString}  (${c})")
     //
     //        val b = Bitmap(initialBackgroundColorOption = Option(c))
     //
     //        b.clear()
     //
     //        for (y <- b.heightRange; x <- b.widthRange) { // -- DEBUG -- info(s"(${x},${y})")
-    //          b.pixelIntAt(x, y) shouldEqual c
+    //          b.argbIntAt(x, y) shouldEqual c
     //        }
     //      }
     //    }

@@ -24,7 +24,7 @@ private[bitmaps] case class Clear(
 
   /** Information about this operation instance */
   lazy val metaInformation = MetaInformationMap(Map(
-    "background-color" -> Option("0x${_color.asPixelInt.toArgbHexColorString}")))
+    "background-color" -> Option("0x${_color.asArgbInt.toArgbHexColorString}")))
 
   /**
    * Clears the given bitmap with the given color.

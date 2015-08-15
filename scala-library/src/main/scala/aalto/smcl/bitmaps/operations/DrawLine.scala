@@ -36,7 +36,7 @@ private[bitmaps] case class DrawLine(
     "fromY" -> Option(s"$fromYInPixels px"),
     "toX" -> Option(s"$toXInPixels px"),
     "toY" -> Option(s"$toYInPixels px"),
-    "color" -> Option(s"0x${color.toPixelInt.toArgbHexColorString}")))
+    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}")))
 
   /**
    * Draws a line onto the given bitmap with the given colors.
