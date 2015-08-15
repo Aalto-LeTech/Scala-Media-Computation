@@ -483,7 +483,7 @@ object BitmapOps {
 //  /**
 //   *
 //   */
-//  def rgbaIntAt(x: Int, y: Int): Int = {
+//  def argbIntAt(x: Int, y: Int): Int = {
 //    require(widthRange.contains(x),
 //      s"The x coordinate must be >= zero and less than the width of the image (was $x)")
 //
