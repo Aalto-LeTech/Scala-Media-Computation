@@ -28,7 +28,7 @@ private[bitmaps] case class FlipVertically()
    * @return
    */
   override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
-    require(sources.length == 1, s"Flip required exactly one source image (provided: ${sources.length}).")
+    require(sources.length == 1, s"Flip requires exactly one source image (provided: ${sources.length}).")
 
     sources(0).createTransfomedVersionWith(
       AffineTransformation.forVerticalFlipOf(sources(0).heightInPixels))

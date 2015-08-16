@@ -6,7 +6,7 @@ import java.awt.image._
 
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.bitmaps.immutable.ConvolutionKernel
-import aalto.smcl.common.{AffineTransformation, GS}
+import aalto.smcl.common._
 import aalto.smcl.platform.PlatformSettingKeys.PlatformBitmapInterpolationMethod
 
 
@@ -140,6 +140,23 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
   def createFilteredVersionWith(kernel: ConvolutionKernel): PlatformBitmapBuffer = {
     val lowLevelKernel = new Kernel(kernel.width, kernel.height, kernel.toRowMajorArray)
     val operation = new ConvolveOp(lowLevelKernel)
+
+    val newLowLevelBitmap = operation.filter(
+      awtBufferedImage,
+      emptyAlike().awtBufferedImage)
+
+    PlatformBitmapBuffer(newLowLevelBitmap)
+  }
+
+  /**
+   *
+   *
+   * @param translator
+   * @return
+   */
+  def createFilteredVersionWith(translator: RGBAComponentTranslationTable): PlatformBitmapBuffer = {
+    val lowLevelLookupTable = new ShortLookupTable(0, translator.toArray)
+    val operation = new LookupOp(lowLevelLookupTable, null)
 
     val newLowLevelBitmap = operation.filter(
       awtBufferedImage,

@@ -31,7 +31,7 @@ private[bitmaps] case class ConvolveWithCustomKernel(kernel: ConvolutionKernel)
    * @return
    */
   override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
-    require(sources.length == 1, s"Flip required exactly one source image (provided: ${sources.length}).")
+    require(sources.length == 1, s"Convolution requires exactly one source image (provided: ${sources.length}).")
 
     sources(0).createFilteredVersionWith(kernel)
   }

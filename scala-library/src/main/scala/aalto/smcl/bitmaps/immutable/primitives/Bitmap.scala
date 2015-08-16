@@ -260,6 +260,28 @@ case class Bitmap private(
   /**
    *
    *
+   * @param translator
+   * @param viewerHandling
+   * @return
+   */
+  def filterWith(
+    translator: RGBAComponentTranslationTable,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(FilterWithComponentTranslationTable(translator), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def toNegative(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(Negate(), viewerHandling)
+
+  /**
+   *
+   *
    * @param fromXInPixels
    * @param fromYInPixels
    * @param toXInPixels

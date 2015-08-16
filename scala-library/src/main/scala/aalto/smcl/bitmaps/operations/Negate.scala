@@ -1,6 +1,5 @@
 package aalto.smcl.bitmaps.operations
 
-
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
@@ -8,15 +7,16 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 /**
- * Operation to flip a bitmap horizontally.
+ * Operation to create a negative of a bitmap.
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class FlipHorizontally()
+private[bitmaps] case class Negate()
   extends AbstractOperation with OneSourceFilter with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map())
+  lazy val metaInformation = MetaInformationMap(Map(
+  ))
 
 
   /**
@@ -28,10 +28,10 @@ private[bitmaps] case class FlipHorizontally()
    * @return
    */
   override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
-    require(sources.length == 1, s"Flip requires exactly one source image (provided: ${sources.length}).")
+    require(sources.length == 1,
+      s"Negative creation requires exactly one source image (provided: ${sources.length}).")
 
-    sources(0).createTransfomedVersionWith(
-      AffineTransformation.forHorizontalFlipOf(sources(0).widthInPixels))
+    sources(0).createFilteredVersionWith(RGBAComponentTranslationTable.forNegation)
   }
 
 }
