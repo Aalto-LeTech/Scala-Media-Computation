@@ -71,6 +71,126 @@ object BitmapOps {
     bmp.apply(Negate(), viewerHandling)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  def negateRedComponent(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(NegateRedComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateGreenComponent(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(NegateGreenComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateBlueComponent(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(NegateBlueComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateRedAndGreenComponents(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(NegateRedAndGreenComponents(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateRedAndBlueComponents(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(NegateRedAndBlueComponents(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateGreenAndBlueComponents(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(NegateGreenAndBlueComponents(), viewerHandling)
+
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyRedComponent(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(KeepOnlyRedComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyGreenComponent(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(KeepOnlyGreenComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyBlueComponent(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(KeepOnlyBlueComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyRedAndGreenComponents(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(KeepOnlyRedAndGreenComponents(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyRedAndBlueComponents(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(KeepOnlyRedAndBlueComponents(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyGreenAndBlueComponents(
+    bmp: OperableBitmap,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    bmp.apply(KeepOnlyGreenAndBlueComponents(), viewerHandling)
 
   /**
    * Adds a [[Clear]] operation to a given [[OperableBitmap]].

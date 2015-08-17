@@ -276,8 +276,105 @@ case class Bitmap private(
    *
    * @return
    */
-  def toNegative(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def negate(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
     apply(Negate(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateRedComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(NegateRedComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateGreenComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(NegateGreenComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateBlueComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(NegateBlueComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateRedAndGreenComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(NegateRedAndGreenComponents(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateRedAndBlueComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(NegateRedAndBlueComponents(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def negateGreenAndBlueComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(NegateGreenAndBlueComponents(), viewerHandling)
+
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyRedComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(KeepOnlyRedComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyGreenComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(KeepOnlyGreenComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyBlueComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(KeepOnlyBlueComponent(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyRedAndGreenComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(KeepOnlyRedAndGreenComponents(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyRedAndBlueComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(KeepOnlyRedAndBlueComponents(), viewerHandling)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def keepOnlyGreenAndBlueComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    apply(KeepOnlyGreenAndBlueComponents(), viewerHandling)
 
   /**
    *

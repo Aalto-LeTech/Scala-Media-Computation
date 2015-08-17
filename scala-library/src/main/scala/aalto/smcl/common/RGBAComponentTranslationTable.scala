@@ -65,6 +65,108 @@ object RGBAComponentTranslationTable {
     }
   }
 
+  /** */
+  lazy val forNegatingRed: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      ((ColorValidator.MaximumRgbRed - index).toShort,
+        index,
+        index,
+        ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forNegatingRedAndGreen: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      ((ColorValidator.MaximumRgbRed - index).toShort,
+        (ColorValidator.MaximumRgbGreen - index).toShort,
+        index,
+        ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forNegatingGreen: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      (index,
+        (ColorValidator.MaximumRgbGreen - index).toShort,
+        index,
+        ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forNegatingGreenAndBlue: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      (index,
+        (ColorValidator.MaximumRgbGreen - index).toShort,
+        (ColorValidator.MaximumRgbBlue - index).toShort,
+        ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forNegatingBlue: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      (index,
+        index,
+        (ColorValidator.MaximumRgbBlue - index).toShort,
+        ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forNegatingRedAndBlue: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      ((ColorValidator.MaximumRgbRed - index).toShort,
+        index,
+        (ColorValidator.MaximumRgbBlue - index).toShort,
+        ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forKeepingOnlyRed: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      (index, 0, 0, ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forKeepingOnlyRedAndGreen: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      (index, index, 0, ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forKeepingOnlyGreen: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      (0, index, 0, ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forKeepingOnlyGreenAndBlue: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      (0, index, index, ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forKeepingOnlyBlue: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      (0, 0, index, ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
+  /** */
+  lazy val forKeepingOnlyRedAndBlue: RGBAComponentTranslationTable = {
+    RGBAComponentTranslationTable {index =>
+      (index, 0, index, ColorValidator.MaximumRgbaOpacity.toShort)
+    }
+  }
+
 }
 
 
