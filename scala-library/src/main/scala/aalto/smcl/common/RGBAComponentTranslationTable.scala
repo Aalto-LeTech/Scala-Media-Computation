@@ -167,6 +167,23 @@ object RGBAComponentTranslationTable {
     }
   }
 
+  /**
+   *
+   *
+   * @param strengthAsPercentage
+   * @return
+   */
+  def forPosterization(strengthAsPercentage: Int): RGBAComponentTranslationTable = {
+    CommonValidators.validatePercentage(strengthAsPercentage, Option("Strength"))
+
+    val divisor = strengthAsPercentage + 1
+
+    RGBAComponentTranslationTable {index =>
+      val v = (index - index % divisor).toShort
+      (v, v, v, index)
+    }
+  }
+
 }
 
 

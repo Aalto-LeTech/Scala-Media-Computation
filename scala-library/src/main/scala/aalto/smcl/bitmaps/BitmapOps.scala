@@ -74,123 +74,211 @@ object BitmapOps {
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def negateRedComponent(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(NegateRedComponent(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def negateGreenComponent(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(NegateGreenComponent(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def negateBlueComponent(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(NegateBlueComponent(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def negateRedAndGreenComponents(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(NegateRedAndGreenComponents(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def negateRedAndBlueComponents(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(NegateRedAndBlueComponents(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def negateGreenAndBlueComponents(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
-    bmp.apply(NegateGreenAndBlueComponents(), viewerHandling)
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(NegateGreenAndBlueComponents(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def keepOnlyRedComponent(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(KeepOnlyRedComponent(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def keepOnlyGreenComponent(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(KeepOnlyGreenComponent(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def keepOnlyBlueComponent(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(KeepOnlyBlueComponent(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def keepOnlyRedAndGreenComponents(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(KeepOnlyRedAndGreenComponents(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def keepOnlyRedAndBlueComponents(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(KeepOnlyRedAndBlueComponents(), viewerHandling)
+  }
 
   /**
    *
    *
+   * @param bmp
+   * @param viewerHandling
    * @return
    */
   def keepOnlyGreenAndBlueComponents(
     bmp: OperableBitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.apply(KeepOnlyGreenAndBlueComponents(), viewerHandling)
+  }
+
+  /**
+   * Adds a [[Posterize]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param strengthAsPercentage
+   * @param viewerHandling
+   */
+  def posterize(
+    bmp: OperableBitmap,
+    strengthAsPercentage: Int,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap to be cleared cannot be null.")
+
+    bmp.apply(Posterize(strengthAsPercentage), viewerHandling)
+  }
 
   /**
    * Adds a [[Clear]] operation to a given [[OperableBitmap]].
