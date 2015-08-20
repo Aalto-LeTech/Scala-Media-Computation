@@ -11,6 +11,7 @@ import aalto.smcl.platform.PlatformSettingKeys.PlatformBitmapInterpolationMethod
 
 
 
+
 /**
  *
  *
@@ -21,6 +22,8 @@ private[smcl] object PlatformBitmapBuffer {
   /** */
   val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB
 
+  /** */
+  val OneByOneSpecimen = PlatformBitmapBuffer(1, 1)
 
   /**
    *
@@ -71,7 +74,7 @@ private[smcl] object PlatformBitmapBuffer {
    * @return
    */
   private[platform] def convertToNormalizedLowLevelBitmapBufferIfNecessary(
-      buffer: BufferedImage): BufferedImage = {
+    buffer: BufferedImage): BufferedImage = {
 
     var bufferCandidate = buffer
 
@@ -125,8 +128,8 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
       GS.enumSettingFor[BitmapInterpolationMethod.Value](PlatformBitmapInterpolationMethod).value.id)
 
     val newLowLevelBitmap = operation.filter(
-        awtBufferedImage,
-        emptyAlike().awtBufferedImage)
+      awtBufferedImage,
+      emptyAlike().awtBufferedImage)
 
     PlatformBitmapBuffer(newLowLevelBitmap)
   }

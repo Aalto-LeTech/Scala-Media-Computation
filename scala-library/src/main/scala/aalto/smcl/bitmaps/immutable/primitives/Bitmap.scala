@@ -3,11 +3,11 @@ package aalto.smcl.bitmaps.immutable.primitives
 
 import scala.collection.mutable
 import scala.ref.WeakReference
+import scala.swing._
 
 import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys._
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.bitmaps.immutable.{BitmapIdentity, ConvolutionKernel, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
@@ -27,32 +27,26 @@ object Bitmap {
   SMCL.performInitialization()
 
 
+
   /**
-   *
+   * Creates a new empty [[aalto.smcl.bitmaps.immutable.primitives.Bitmap]] instance.
    */
-  object ViewerUpdateStyle {
+  def apply(
+    textToRender: String,
+    font: Font,
+    viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
 
+    val newBitmap = new Bitmap(
+      BitmapOperationList(CreateText(textToRender, font)),
+      BitmapIdentity())
 
-    /**
-     *
-     */
-    abstract sealed class Value
+    if (viewerHandling == UpdateViewerPerDefaults) {
+      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+        newBitmap.display()
+    }
 
-
-    /**
-     *
-     */
-    case object UpdateViewerPerDefaults extends Value
-
-
-    /**
-     *
-     */
-    case object PreventViewerUpdates extends Value
-
-
+    newBitmap
   }
-
 
   /**
    * Creates a new empty [[aalto.smcl.bitmaps.immutable.primitives.Bitmap]] instance.
@@ -73,7 +67,7 @@ object Bitmap {
 
     val operationList =
       Clear(initialBackgroundColor) +:
-        BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
+        BitmapOperationList(CreateEmptyBitmap(widthInPixels, heightInPixels))
 
     val newBitmap = new Bitmap(operationList, BitmapIdentity())
 

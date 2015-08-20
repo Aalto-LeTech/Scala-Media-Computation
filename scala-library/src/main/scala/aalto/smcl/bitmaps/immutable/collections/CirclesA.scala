@@ -5,7 +5,7 @@ import scala.collection.mutable
 
 import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary}
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.PreventViewerUpdates
+import aalto.smcl.bitmaps.ViewerUpdateStyle.PreventViewerUpdates
 import aalto.smcl.bitmaps.immutable.primitives.{Bitmap, Circle}
 import aalto.smcl.common.{GS, RGBAColor}
 

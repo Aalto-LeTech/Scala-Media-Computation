@@ -45,8 +45,7 @@ private[bitmaps] case class LoadedBitmap(
    *
    * @return
    */
-  override def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer =
-    bitmap.copy()
+  override def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = bitmap
 
   /**
    * Returns the buffer from which the provided buffer copies are made.
