@@ -65,7 +65,7 @@ private[bitmaps] case class BitmapOperationList private(
    *
    */
   private[bitmaps] def render(): PlatformBitmapBuffer =
-    renderOperations(operations, bufferProvider.createNewBuffer)
+    renderOperations(operations, bufferProvider.createNewBuffer())
 
   /**
    *

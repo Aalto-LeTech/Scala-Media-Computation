@@ -31,7 +31,7 @@ private[bitmaps] case class AppendHorizontally(
 
   /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
-    Option(bitmapsToCombine.map(_.operations).toSeq)
+    Option(bitmapsToCombine.map(_.operations))
 
   /** Information about this [[BufferProvider]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
@@ -53,12 +53,12 @@ private[bitmaps] case class AppendHorizontally(
       ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toSeq
 
     case VerticalAlignment.Bottom =>
-      bitmapsToCombine.map({heightInPixels - _.heightInPixels}).toSeq
+      bitmapsToCombine.map({heightInPixels - _.heightInPixels})
 
     case VerticalAlignment.Middle =>
       bitmapsToCombine.map({bmp =>
         (heightInPixels.toDouble / 2 - bmp.heightInPixels.toDouble / 2).floor.toInt
-      }).toSeq
+      })
   }
 
   /**

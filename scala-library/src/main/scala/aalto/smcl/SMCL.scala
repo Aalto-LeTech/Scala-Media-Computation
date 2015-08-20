@@ -29,12 +29,34 @@ object SMCL extends ModuleInitializer {
   /** Full version identifier of this library. */
   val VersionString: String = s"$VersionMajor.$VersionMinor"
 
-  /** Name of this library's original author. */
-  val OriginalAuthorName: String = "Aleksi Lukkarinen"
+  /** Name of this library's original developer organization. */
+  val OriginalDeveloperOrganizationName: String = "Aalto University"
+
+  /** Country of this library's original developer organization. */
+  val OriginalDeveloperOrganizationCountry: String = "Finland"
+
+  /** First name of this library's original developer. */
+  val OriginalDeveloperFirstName: String = "Aleksi"
+
+  /** Last name of this library's original developer. */
+  val OriginalDeveloperLastName: String = "Lukkarinen"
+
+  /** Full name of this library's original developer. */
+  val OriginalDeveloperFullName: String =
+    "$OriginalAuthorFirstName $OriginalAuthorLastName"
 
   /** Inception year of this library. */
   val InceptionYear: Int = 2015
 
+  /** Short information about SMCL. */
+  // @formatter:off
+  val Description: String =
+    s"""$AbbreviatedName is a class libary created to support Scala-based
+       |media-oriented introductory programming teaching. It was originally
+       |created by $OriginalDeveloperFullName in $InceptionYear as a part
+       |of his Master's Thesis for $OriginalDeveloperOrganizationName,
+       |$OriginalDeveloperOrganizationCountry.""".stripMargin
+  // @formatter:on
 
   /** Short information about SMCL. */
   // @formatter:off
@@ -49,8 +71,7 @@ object SMCL extends ModuleInitializer {
   private val MsgAboutFull: String =
     s"""$MsgAboutShort
        |
-       |$AbbreviatedName was originally created by $OriginalAuthorName in $InceptionYear as
-       |a part of his Master's Thesis for Aalto University.""".stripMargin
+       |$Description""".stripMargin
   // @formatter:on
 
   /** Usage informaiton. */

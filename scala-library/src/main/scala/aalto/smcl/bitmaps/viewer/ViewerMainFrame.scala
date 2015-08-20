@@ -31,7 +31,7 @@ private[bitmaps] object ViewerMainFrame {
        |
        |Version $VersionString.
        |
-       |$AbbreviatedName was originally created by $OriginalAuthorName in $InceptionYear as
+       |$AbbreviatedName was originally created by $OriginalDeveloperFullName in $InceptionYear as
        |a part of his Master's Thesis for Aalto University.""".stripMargin
   // @formatter:on
 
