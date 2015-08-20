@@ -16,7 +16,7 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class CreateBitmap(
+private[bitmaps] case class CreateEmptyBitmap(
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels))
     extends AbstractOperation with BufferProvider with Immutable {
