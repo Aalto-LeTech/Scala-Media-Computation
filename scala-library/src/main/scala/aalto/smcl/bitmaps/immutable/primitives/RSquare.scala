@@ -3,8 +3,8 @@ package aalto.smcl.bitmaps.immutable.primitives
 
 import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary, DefaultRoundingHeightInPixels, DefaultRoundingWidthInPixels}
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
+import aalto.smcl.bitmaps.ViewerUpdateStyle
+import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.common.{GS, RGBAColor}
 
 

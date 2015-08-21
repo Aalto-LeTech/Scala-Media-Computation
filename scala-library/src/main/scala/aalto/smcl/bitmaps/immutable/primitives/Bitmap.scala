@@ -1,22 +1,18 @@
 package aalto.smcl.bitmaps.immutable.primitives
 
 
-import java.awt.image.BufferedImage
-import java.util.Date
-
 import scala.collection.mutable
 import scala.ref.WeakReference
 
+import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys._
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.bitmaps.immutable.{BitmapIdentity, ConvolutionKernel, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
 import aalto.smcl.common._
 import aalto.smcl.interfaces._
 import aalto.smcl.platform.{ImageProvider, PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
-import aalto.smcl.{MetaInterfaceBase, SMCL}
 
 
 
@@ -29,33 +25,6 @@ import aalto.smcl.{MetaInterfaceBase, SMCL}
 object Bitmap {
 
   SMCL.performInitialization()
-
-
-  /**
-   *
-   */
-  object ViewerUpdateStyle {
-
-
-    /**
-     *
-     */
-    abstract sealed class Value
-
-
-    /**
-     *
-     */
-    case object UpdateViewerPerDefaults extends Value
-
-
-    /**
-     *
-     */
-    case object PreventViewerUpdates extends Value
-
-
-  }
 
 
   /**

@@ -2,10 +2,9 @@ package aalto.smcl.bitmaps
 
 
 import aalto.smcl.bitmaps.BitmapSettingKeys._
+import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.bitmaps.immutable.ConvolutionKernel
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.common._
 
