@@ -33,7 +33,7 @@ private[bitmaps] case class Scale(
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString)
   ))
 
-  /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
+  /** The [[BitmapOperationList]] instance resulting the bitmap to be scaled. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(Seq(sourceBitmap.operations))
 
