@@ -2,12 +2,15 @@ package aalto.smcl.platform
 
 
 import java.awt.Graphics2D
+import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 
+import aalto.smcl.bitmaps.BitmapSettingKeys.DefaultBackground
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.bitmaps.immutable.ConvolutionKernel
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformSettingKeys.PlatformBitmapInterpolationMethod
+
 
 
 
@@ -71,7 +74,7 @@ private[smcl] object PlatformBitmapBuffer {
    * @return
    */
   private[platform] def convertToNormalizedLowLevelBitmapBufferIfNecessary(
-      buffer: BufferedImage): BufferedImage = {
+    buffer: BufferedImage): BufferedImage = {
 
     var bufferCandidate = buffer
 
@@ -117,18 +120,73 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    *
    *
    * @param transformation
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
    * @return
    */
-  def createTransfomedVersionWith(transformation: AffineTransformation): PlatformBitmapBuffer = {
-    val operation = new AffineTransformOp(
-      transformation.platformAffineTransform.awtAffineTransformation,
-      GS.enumSettingFor[BitmapInterpolationMethod.Value](PlatformBitmapInterpolationMethod).value.id)
+  def createTransfomedVersionWith(
+    transformation: AffineTransformation,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
 
-    val newLowLevelBitmap = operation.filter(
-        awtBufferedImage,
-        emptyAlike().awtBufferedImage)
+    val globalInterpolationMethod =
+      GS.enumSettingFor[BitmapInterpolationMethod.Value](PlatformBitmapInterpolationMethod).value.id
 
-    PlatformBitmapBuffer(newLowLevelBitmap)
+    var resultingImageWidth: Int = awtBufferedImage.getWidth
+    var resultingImageHeight: Int = awtBufferedImage.getHeight
+    val lowLevelTransformation = transformation.platformAffineTransform.awtAffineTransformation
+    val transformedContentBoundaries: Rectangle2D =
+      new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
+        .getBounds2D(awtBufferedImage)
+
+    if (resizeCanvasBasedOnTransformation) {
+      val offsetLeft = -transformedContentBoundaries.getMinX
+      val offsetTop = -transformedContentBoundaries.getMinY
+      val offsetRight = transformedContentBoundaries.getMaxX - awtBufferedImage.getWidth
+      val offsetBottom = transformedContentBoundaries.getMaxY - awtBufferedImage.getHeight
+
+      if (offsetTop > 0 || offsetLeft > 0) {
+        val translationToBringTheRotatedBitmapFullyVisible =
+          AffineTransform.getTranslateInstance(offsetLeft, offsetTop)
+
+        lowLevelTransformation preConcatenate translationToBringTheRotatedBitmapFullyVisible
+      }
+
+      resultingImageWidth = Math.round(awtBufferedImage.getWidth + offsetLeft + offsetRight).toInt
+      resultingImageHeight = Math.round(awtBufferedImage.getHeight + offsetTop + offsetBottom).toInt
+    }
+
+    val finalTransformOperation = new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
+    val resultingBuffer: PlatformBitmapBuffer = PlatformBitmapBuffer(resultingImageWidth, resultingImageHeight)
+
+    resultingBuffer drawingSurface() clearUsing backgroundColor
+
+    finalTransformOperation.filter(awtBufferedImage, resultingBuffer.awtBufferedImage)
+
+    resultingBuffer
+  }
+
+  /**
+   *
+   *
+   * @param minX
+   * @param minY
+   * @param maxX
+   * @param maxY
+   * @return
+   */
+  def boundaryOverflowsForLTRB(
+    minX: Double,
+    minY: Double,
+    maxX: Double,
+    maxY: Double): (Double, Double, Double, Double) = {
+
+    val overflowLeft = if (minX < 0) -minX else 0
+    val overflowTop = if (minY < 0) -minY else 0
+    val overflowRight = if (maxX > awtBufferedImage.getWidth) maxX - awtBufferedImage.getWidth else 0
+    val overflowBottom = if (maxY > awtBufferedImage.getHeight) maxY - awtBufferedImage.getHeight else 0
+
+    (overflowLeft, overflowTop, overflowRight, overflowBottom)
   }
 
   /**

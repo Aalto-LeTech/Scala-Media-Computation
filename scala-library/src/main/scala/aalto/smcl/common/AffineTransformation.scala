@@ -66,7 +66,89 @@ object AffineTransformation {
    * @return
    */
   def forFreeRotationOf(angleInDegrees: Double): AffineTransformation =
-    AffineTransformation().rotate(angleInDegrees)
+    AffineTransformation().rotateDegs(angleInDegrees)
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   * @param anchorX
+   * @param anchorY
+   * @return
+   */
+  def forFreeRotationOfAround(
+    angleInDegrees: Double,
+    anchorX: Double,
+    anchorY: Double): AffineTransformation = {
+
+    AffineTransformation().rotateDegsAround(angleInDegrees, anchorX, anchorY)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def forRotationOf90DegsCw(): AffineTransformation =
+    AffineTransformation().rotate90DegsCw()
+
+  /**
+   *
+   *
+   * @param anchorX
+   * @param anchorY
+   * @return
+   */
+  def forRotationOf90DegsCwAround(
+    anchorX: Double,
+    anchorY: Double): AffineTransformation = {
+
+    AffineTransformation().rotate90DegsCwAround(anchorX, anchorY)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def forRotationOf90DegsCcw(): AffineTransformation =
+    AffineTransformation().rotate90DegsCcw()
+
+  /**
+   *
+   *
+   * @param anchorX
+   * @param anchorY
+   * @return
+   */
+  def forRotationOf90DegsCcwAround(
+    anchorX: Double,
+    anchorY: Double): AffineTransformation = {
+
+    AffineTransformation().rotate90DegsCcwAround(anchorX, anchorY)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def forRotationOf180Degs(): AffineTransformation =
+    AffineTransformation().rotate180Degs()
+
+  /**
+   *
+   *
+   * @param anchorX
+   * @param anchorY
+   * @return
+   */
+  def forRotationOf180DegsAround(
+    anchorX: Double,
+    anchorY: Double): AffineTransformation = {
+
+    AffineTransformation().rotate180DegsAround(anchorX, anchorY)
+  }
 
 }
 
@@ -87,6 +169,7 @@ case class AffineTransformation private(
    *
    * @param factorX
    * @param factorY
+   * @return
    */
   def scale(factorX: Double, factorY: Double): AffineTransformation =
     AffineTransformation(platformAffineTransform.copy().scale(factorX, factorY))
@@ -94,19 +177,111 @@ case class AffineTransformation private(
   /**
    *
    *
-   * @param amountX
-   * @param amountY
+   * @param amountXInPixels
+   * @param amountYInPixels
+   * @return
    */
-  def translate(amountX: Double, amountY: Double): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy().translate(amountX, amountY))
+  def translate(amountXInPixels: Double, amountYInPixels: Double): AffineTransformation =
+    AffineTransformation(platformAffineTransform.copy().translate(amountXInPixels, amountYInPixels))
 
   /**
    *
    *
    * @param angleInDegrees
+   * @return
    */
-  def rotate(angleInDegrees: Double): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy().rotate(angleInDegrees))
+  def rotateDegs(angleInDegrees: Double): AffineTransformation =
+    AffineTransformation(platformAffineTransform.copy().rotateDegs(angleInDegrees))
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   * @param anchorXInPixels
+   * @param anchorYInPixels
+   * @return
+   */
+  def rotateDegsAround(
+    angleInDegrees: Double,
+    anchorXInPixels: Double,
+    anchorYInPixels: Double): AffineTransformation = {
+
+    AffineTransformation(
+      platformAffineTransform.copy().rotateDegsAround(
+        angleInDegrees, anchorXInPixels, anchorYInPixels))
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def rotate90DegsCw(): AffineTransformation =
+    AffineTransformation(platformAffineTransform.copy().rotate90DegsCw())
+
+  /**
+   *
+   *
+   * @param anchorXInPixels
+   * @param anchorYInPixels
+   * @return
+   */
+  def rotate90DegsCwAround(
+    anchorXInPixels: Double,
+    anchorYInPixels: Double): AffineTransformation = {
+
+    AffineTransformation(
+      platformAffineTransform.copy().rotate90DegsCwAround(
+        anchorXInPixels, anchorYInPixels))
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def rotate90DegsCcw(): AffineTransformation =
+    AffineTransformation(platformAffineTransform.copy().rotate90DegsCcw())
+
+  /**
+   *
+   *
+   * @param anchorXInPixels
+   * @param anchorYInPixels
+   * @return
+   */
+  def rotate90DegsCcwAround(
+    anchorXInPixels: Double,
+    anchorYInPixels: Double): AffineTransformation = {
+
+    AffineTransformation(
+      platformAffineTransform.copy().rotate90DegsCcwAround(
+        anchorXInPixels, anchorYInPixels))
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def rotate180Degs(): AffineTransformation =
+    AffineTransformation(platformAffineTransform.copy().rotate180Degs())
+
+  /**
+   *
+   *
+   * @param anchorXInPixels
+   * @param anchorYInPixels
+   * @return
+   */
+  def rotate180DegsAround(
+    anchorXInPixels: Double,
+    anchorYInPixels: Double): AffineTransformation = {
+
+    AffineTransformation(
+      platformAffineTransform.copy().rotate180DegsAround(
+        anchorXInPixels, anchorYInPixels))
+  }
 
   /**
    *

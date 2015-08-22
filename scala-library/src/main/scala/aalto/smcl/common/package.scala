@@ -89,9 +89,17 @@ package object common {
   /** Number of degrees representing a full circle. */
   val OneThirdOfCircleInDegrees: Int = FullCircleInDegrees / 3
 
+  /** Number of degrees representing a half of a circle. */
+  val OneHalfOfCircleInDegrees: Int = 180
+
+  /** Number of degrees representing a quarter of a circle in the clockwise direction. */
+  val OneQuarterOfCircleInDegreesClockwise: Int = -90
+
+  /** Number of degrees representing a quarter of a circle in the counter-clockwise direction. */
+  val OneQuarterOfCircleInDegreesCounterClockwise: Int = 90
+
   /** 60 degrees in radians. */
   val Deg60InRad = Math.PI / 3.0
-
 
   /** Application of the RichRGBAColor class. */
   implicit def RGBAColorWrapper(self: RGBAColor): RichRGBAColor = new RichRGBAColor(self)

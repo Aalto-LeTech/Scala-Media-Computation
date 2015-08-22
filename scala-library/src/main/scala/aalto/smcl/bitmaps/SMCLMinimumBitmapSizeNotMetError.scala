@@ -18,7 +18,7 @@ final class SMCLMinimumBitmapSizeNotMetError private[smcl](
     s"${BitmapValidator.MinimumBitmapHeightInPixels} px has not been met"
 
   if (realWidth.isDefined && realHeight.isDefined)
-    sb ++= s"(was ${realWidth.get} x ${realHeight.get}} )"
+    sb ++= s" (was ${realWidth.get} x ${realHeight.get})"
 
   sb ++= "."
 

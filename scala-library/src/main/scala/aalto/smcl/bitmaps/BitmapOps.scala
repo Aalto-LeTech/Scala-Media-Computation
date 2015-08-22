@@ -696,6 +696,7 @@ object BitmapOps {
   /**
    * Adds a [[FlipHorizontally]] operation to a given [[OperableBitmap]].
    *
+   * @param bmp
    * @param viewerHandling
    * @return
    */
@@ -711,6 +712,7 @@ object BitmapOps {
   /**
    * Adds a [[FlipVertically]] operation to a given [[OperableBitmap]].
    *
+   * @param bmp
    * @param viewerHandling
    * @return
    */
@@ -726,6 +728,7 @@ object BitmapOps {
   /**
    * Adds a [[FlipDiagonally]] operation to a given [[OperableBitmap]].
    *
+   * @param bmp
    * @param viewerHandling
    * @return
    */
@@ -736,6 +739,152 @@ object BitmapOps {
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
     bmp.apply(FlipDiagonally(), viewerHandling)
+  }
+
+  /**
+   * Adds a [[Rotate]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param angleInDegrees
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def rotateDegs(
+    bmp: Bitmap,
+    angleInDegrees: Double,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(
+      Rotate(
+        bmp,
+        angleInDegrees,
+        resizeCanvasBasedOnTransformation,
+        backgroundColor),
+      viewerHandling)
+  }
+
+  /**
+   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap -90 degrees.
+   *
+   * @param bmp
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def rotate90DegsCw(
+    bmp: Bitmap,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap ={
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(
+      Rotate(
+        bmp,
+        OneQuarterOfCircleInDegreesClockwise,
+        resizeCanvasBasedOnTransformation,
+        backgroundColor),
+      viewerHandling)
+  }
+
+  /**
+   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap 90 degrees.
+   *
+   * @param bmp
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def rotate90DegsCcw(
+    bmp: Bitmap,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(
+      Rotate(
+        bmp,
+        OneQuarterOfCircleInDegreesCounterClockwise,
+        resizeCanvasBasedOnTransformation,
+        backgroundColor),
+      viewerHandling)
+  }
+
+  /**
+   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap 180 degrees.
+   *
+   * @param bmp
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def rotate180Degs(
+    bmp: Bitmap,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(
+      Rotate(
+        bmp,
+        OneHalfOfCircleInDegrees,
+        resizeCanvasBasedOnTransformation,
+        backgroundColor),
+      viewerHandling)
+  }
+
+  /**
+   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap -90 degrees.
+   *
+   * @param bmp
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def turn(
+    bmp: Bitmap,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    rotate90DegsCw(bmp, resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
+  }
+
+  /**
+   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap 90 degrees.
+   *
+   * @param bmp
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def unturn(
+    bmp: Bitmap,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    rotate90DegsCcw(bmp, resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
 
 }
