@@ -670,6 +670,16 @@ object BitmapOps {
   }
 
   /**
+   * Adds a [[AppendHorizontally]] operation to a given [[OperableBitmap]].
+   *
+   * @param bitmapLeft
+   * @param bitmapRight
+   * @return
+   */
+  def sew(bitmapLeft: Bitmap, bitmapRight: Bitmap): Bitmap =
+    appendHorizontally(bitmapLeft, bitmapRight)(VerticalAlignment.Middle)
+
+  /**
    * Adds a [[AppendVertically]] operation to a given [[OperableBitmap]].
    *
    * @param bitmapsToCombine
@@ -692,6 +702,16 @@ object BitmapOps {
         horizontalAlignment, paddingInPixels, backgroundColor),
       viewerHandling)
   }
+
+  /**
+   * Adds a [[AppendVertically]] operation to a given [[OperableBitmap]].
+   *
+   * @param bitmapTop
+   * @param bitmapBottom
+   * @return
+   */
+  def pile(bitmapTop: Bitmap, bitmapBottom: Bitmap): Bitmap =
+    appendVertically(bitmapTop, bitmapBottom)(HorizontalAlignment.Center)
 
   /**
    * Adds a [[FlipHorizontally]] operation to a given [[OperableBitmap]].
@@ -782,7 +802,7 @@ object BitmapOps {
     bmp: Bitmap,
     resizeCanvasBasedOnTransformation: Boolean = true,
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap ={
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 

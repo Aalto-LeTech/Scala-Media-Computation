@@ -733,6 +733,15 @@ with MetaInterfacer {
   /**
    *
    *
+   * @param bitmap
+   * @return
+   */
+  def sewOnLeftOf(bitmap: Bitmap) =
+    appendOnRight(bitmap)(VerticalAlignment.Middle)
+
+  /**
+   *
+   *
    * @param bitmapsToCombineWith
    * @param horizontalAlignment
    * @param paddingInPixels
@@ -751,6 +760,15 @@ with MetaInterfacer {
         horizontalAlignment, paddingInPixels, backgroundColor),
       viewerHandling)
   }
+
+  /**
+   *
+   *
+   * @param bitmap
+   * @return
+   */
+  def pileOnTopOf(bitmap: Bitmap) =
+    appendOnBottom(bitmap)(HorizontalAlignment.Center)
 
   /**
    *
