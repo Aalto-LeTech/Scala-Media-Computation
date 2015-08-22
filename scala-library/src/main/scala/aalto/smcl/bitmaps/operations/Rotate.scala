@@ -26,7 +26,7 @@ private[bitmaps] case class Rotate(
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
     "angle" -> Option(s"$angleInDegrees deg"),
-    "preventClipping" -> Option(resizeCanvasBasedOnTransformation.toString),
+    "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString),
     "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
   ))
 
