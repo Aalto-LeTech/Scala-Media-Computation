@@ -11,8 +11,8 @@ The main level folders in this repository are as follows:
 
 | Path | Description |
 | ---- | ----------- |
-| `scala-library` | The *Scala Media Computation Library* source code. |
-
+| `scala-library`     | The *Scala Media Computation Library* source code. |
+| `public-interfaces` | Source code for the public (metadata) interfaces of SMCL. |
 
 
 ## Making a Local Copy
