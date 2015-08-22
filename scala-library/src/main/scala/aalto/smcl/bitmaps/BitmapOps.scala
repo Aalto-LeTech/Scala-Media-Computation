@@ -907,6 +907,36 @@ object BitmapOps {
     rotate90DegsCcw(bmp, resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
 
+  /**
+   * Adds a [[Scale]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param scalingFactorX
+   * @param scalingFactorY
+   * @param preventClipping
+   * @param viewerHandling
+   * @return
+   */
+  def scale(
+    bmp: Bitmap,
+    scalingFactorX: Double = 1.0,
+    scalingFactorY: Double = 1.0,
+    preventClipping: Boolean = true,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    bmp.apply(Scale(bmp, scalingFactorX, scalingFactorY, preventClipping), viewerHandling)
+  }
+
+  /**
+   * Adds a [[Scale]] operation to a given [[OperableBitmap]].
+   *
+   * @param bmp
+   * @param scalingFactor
+   * @return
+   */
+  def scale(bmp: Bitmap, scalingFactor: Double): Bitmap =
+    scale(bmp, scalingFactor, scalingFactor)
+
 }
 
 

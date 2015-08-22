@@ -840,6 +840,33 @@ with MetaInterfacer {
   /**
    *
    *
+   * @param scalingFactorX
+   * @param scalingFactorY
+   * @param preventClipping
+   * @param viewerHandling
+   * @return
+   */
+  def scale(
+    scalingFactorX: Double = 1.0,
+    scalingFactorY: Double = 1.0,
+    preventClipping: Boolean = true,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(Scale(this, scalingFactorX, scalingFactorY, preventClipping), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param scalingFactor
+   * @return
+   */
+  def scale(scalingFactor: Double): Bitmap =
+    scale(scalingFactor, scalingFactor)
+
+  /**
+   *
+   *
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
