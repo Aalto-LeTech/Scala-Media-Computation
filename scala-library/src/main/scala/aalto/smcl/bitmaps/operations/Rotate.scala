@@ -30,7 +30,7 @@ private[bitmaps] case class Rotate(
     "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
   ))
 
-  /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
+  /** The [[BitmapOperationList]] instance resulting the bitmap to be rotated. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(Seq(sourceBitmap.operations))
 
