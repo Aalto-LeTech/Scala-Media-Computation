@@ -130,7 +130,6 @@ case class Bitmap private(
 
 } with RenderableBitmap
 with PixelRectangle
-with OperableBitmap
 with Immutable
 with TimestampedCreation
 with MetaInterfacer {
@@ -390,7 +389,7 @@ with MetaInterfacer {
     strengthAsPercentage: Int,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(Posterize(strengthAsPercentage))
+    apply(Posterize(strengthAsPercentage), viewerHandling)
   }
 
   /**
@@ -412,10 +411,14 @@ with MetaInterfacer {
     color: RGBAColor = GS.colorFor(DefaultPrimary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawLine(
-      fromXInPixels, fromYInPixels,
-      toXInPixels, toYInPixels,
-      color), viewerHandling)
+    apply(
+      DrawLine(
+        fromXInPixels,
+        fromYInPixels,
+        toXInPixels,
+        toYInPixels,
+        color),
+      viewerHandling)
   }
 
   /**
@@ -435,10 +438,13 @@ with MetaInterfacer {
     color: RGBAColor = GS.colorFor(DefaultPrimary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawPolyline(
-      xCoordinates, yCoordinates,
-      numberOfCoordinatesToDraw,
-      color), viewerHandling)
+    apply(
+      DrawPolyline(
+        xCoordinates,
+        yCoordinates,
+        numberOfCoordinatesToDraw,
+        color),
+      viewerHandling)
   }
 
   /**
@@ -464,11 +470,16 @@ with MetaInterfacer {
     fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawPolygon(
-      xCoordinates, yCoordinates,
-      numberOfCoordinatesToDraw,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    apply(
+      DrawPolygon(
+        xCoordinates,
+        yCoordinates,
+        numberOfCoordinatesToDraw,
+        hasBorder,
+        hasFilling,
+        color,
+        fillColor),
+      viewerHandling)
   }
 
   /**
@@ -494,11 +505,16 @@ with MetaInterfacer {
     fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawSquare(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      sideLengthInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    apply(
+      DrawSquare(
+        upperLeftCornerXInPixels,
+        upperLeftCornerYInPixels,
+        sideLengthInPixels,
+        hasBorder,
+        hasFilling,
+        color,
+        fillColor),
+      viewerHandling)
   }
 
   /**
@@ -526,11 +542,17 @@ with MetaInterfacer {
     fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawRectangle(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      widthInPixels, heightInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    apply(
+      DrawRectangle(
+        upperLeftCornerXInPixels,
+        upperLeftCornerYInPixels,
+        widthInPixels,
+        heightInPixels,
+        hasBorder,
+        hasFilling,
+        color,
+        fillColor),
+      viewerHandling)
   }
 
   /**
@@ -560,12 +582,18 @@ with MetaInterfacer {
     fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawRoundedSquare(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      sideLengthInPixels,
-      roundingWidthInPixels, roundingHeightInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    apply(
+      DrawRoundedSquare(
+        upperLeftCornerXInPixels,
+        upperLeftCornerYInPixels,
+        sideLengthInPixels,
+        roundingWidthInPixels,
+        roundingHeightInPixels,
+        hasBorder,
+        hasFilling,
+        color,
+        fillColor),
+      viewerHandling)
   }
 
   /**
@@ -597,12 +625,19 @@ with MetaInterfacer {
     fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawRoundedRectangle(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      widthInPixels, heightInPixels,
-      roundingWidthInPixels, roundingHeightInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    apply(
+      DrawRoundedRectangle(
+        upperLeftCornerXInPixels,
+        upperLeftCornerYInPixels,
+        widthInPixels,
+        heightInPixels,
+        roundingWidthInPixels,
+        roundingHeightInPixels,
+        hasBorder,
+        hasFilling,
+        color,
+        fillColor),
+      viewerHandling)
   }
 
   /**
@@ -628,11 +663,16 @@ with MetaInterfacer {
     fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawCircle(
-      centerXInPixels, centerYInPixels,
-      radiusInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    apply(
+      DrawCircle(
+        centerXInPixels,
+        centerYInPixels,
+        radiusInPixels,
+        hasBorder,
+        hasFilling,
+        color,
+        fillColor),
+      viewerHandling)
   }
 
   /**
@@ -660,11 +700,17 @@ with MetaInterfacer {
     fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawEllipse(
-      centerXInPixels, centerYInPixels,
-      widthInPixels, heightInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    apply(
+      DrawEllipse(
+        centerXInPixels,
+        centerYInPixels,
+        widthInPixels,
+        heightInPixels,
+        hasBorder,
+        hasFilling,
+        color,
+        fillColor),
+      viewerHandling)
   }
 
   /**
@@ -696,12 +742,19 @@ with MetaInterfacer {
     fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(DrawArc(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      widthInPixels, heightInPixels,
-      startAngleInDegrees, arcAngleInDegrees,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    apply(
+      DrawArc(
+        upperLeftCornerXInPixels,
+        upperLeftCornerYInPixels,
+        widthInPixels,
+        heightInPixels,
+        startAngleInDegrees,
+        arcAngleInDegrees,
+        hasBorder,
+        hasFilling,
+        color,
+        fillColor),
+      viewerHandling)
   }
 
   /**
@@ -722,7 +775,9 @@ with MetaInterfacer {
 
     apply(
       AppendHorizontally(bitmapsToCombineWith :+ this)(
-        verticalAlignment, paddingInPixels, backgroundColor),
+        verticalAlignment,
+        paddingInPixels,
+        backgroundColor),
       viewerHandling)
   }
 
@@ -744,7 +799,9 @@ with MetaInterfacer {
 
     apply(
       AppendHorizontally(this +: bitmapsToCombineWith)(
-        verticalAlignment, paddingInPixels, backgroundColor),
+        verticalAlignment,
+        paddingInPixels,
+        backgroundColor),
       viewerHandling)
   }
 
@@ -775,7 +832,9 @@ with MetaInterfacer {
 
     apply(
       AppendVertically(bitmapsToCombineWith :+ this)(
-        horizontalAlignment, paddingInPixels, backgroundColor),
+        horizontalAlignment,
+        paddingInPixels,
+        backgroundColor),
       viewerHandling)
   }
 
@@ -806,7 +865,9 @@ with MetaInterfacer {
 
     apply(
       AppendVertically(this +: bitmapsToCombineWith)(
-        horizontalAlignment, paddingInPixels, backgroundColor),
+        horizontalAlignment,
+        paddingInPixels,
+        backgroundColor),
       viewerHandling)
   }
 

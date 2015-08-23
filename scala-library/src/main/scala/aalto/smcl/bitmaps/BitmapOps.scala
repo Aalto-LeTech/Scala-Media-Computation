@@ -12,14 +12,14 @@ import aalto.smcl.common._
 
 
 /**
- * Provides a way to add bitmap operations into [[OperableBitmap]] instances.
+ * Provides a way to add bitmap operations into [[Bitmap]] instances.
  *
  * @author Aleksi Lukkarinen
  */
 object BitmapOps {
 
   /**
-   * Adds a [[ConvolveWithCustomKernel]] operation to a given [[OperableBitmap]].
+   * Adds a [[ConvolveWithCustomKernel]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param kernel
@@ -27,7 +27,7 @@ object BitmapOps {
    * @return
    */
   def convolveWith(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     kernel: ConvolutionKernel,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -37,7 +37,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[FilterWithComponentTranslationTable]] operation to a given [[OperableBitmap]].
+   * Adds a [[FilterWithComponentTranslationTable]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param translator
@@ -45,7 +45,7 @@ object BitmapOps {
    * @return
    */
   def filterWith(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     translator: RGBAComponentTranslationTable,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -55,14 +55,14 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Negate]] operation to a given [[OperableBitmap]].
+   * Adds a [[Negate]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param viewerHandling
    * @return
    */
   def toNegative(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -78,7 +78,7 @@ object BitmapOps {
    * @return
    */
   def negateRedComponent(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -94,7 +94,7 @@ object BitmapOps {
    * @return
    */
   def negateGreenComponent(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -110,7 +110,7 @@ object BitmapOps {
    * @return
    */
   def negateBlueComponent(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -126,7 +126,7 @@ object BitmapOps {
    * @return
    */
   def negateRedAndGreenComponents(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -142,7 +142,7 @@ object BitmapOps {
    * @return
    */
   def negateRedAndBlueComponents(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -158,7 +158,7 @@ object BitmapOps {
    * @return
    */
   def negateGreenAndBlueComponents(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -174,7 +174,7 @@ object BitmapOps {
    * @return
    */
   def keepOnlyRedComponent(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -190,7 +190,7 @@ object BitmapOps {
    * @return
    */
   def keepOnlyGreenComponent(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -206,7 +206,7 @@ object BitmapOps {
    * @return
    */
   def keepOnlyBlueComponent(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -222,7 +222,7 @@ object BitmapOps {
    * @return
    */
   def keepOnlyRedAndGreenComponents(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -238,7 +238,7 @@ object BitmapOps {
    * @return
    */
   def keepOnlyRedAndBlueComponents(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -254,7 +254,7 @@ object BitmapOps {
    * @return
    */
   def keepOnlyGreenAndBlueComponents(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -263,14 +263,14 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Posterize]] operation to a given [[OperableBitmap]].
+   * Adds a [[Posterize]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param strengthAsPercentage
    * @param viewerHandling
    */
   def posterize(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     strengthAsPercentage: Int,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -280,14 +280,14 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Clear]] operation to a given [[OperableBitmap]].
+   * Adds a [[Clear]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param color
    * @return
    */
   def clear(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     color: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -297,7 +297,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawLine]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawLine]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param fromXInPixels
@@ -309,7 +309,7 @@ object BitmapOps {
    * @return
    */
   def drawLine(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     fromXInPixels: Int,
     fromYInPixels: Int,
     toXInPixels: Int,
@@ -326,7 +326,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawPolyline]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawPolyline]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param xCoordinates
@@ -337,7 +337,7 @@ object BitmapOps {
    * @return
    */
   def drawPolyline(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     xCoordinates: Seq[Int],
     yCoordinates: Seq[Int],
     numberOfCoordinatesToDraw: Int,
@@ -353,7 +353,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawPolygon]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawPolygon]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param xCoordinates
@@ -367,7 +367,7 @@ object BitmapOps {
    * @return
    */
   def drawPolygon(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     xCoordinates: Seq[Int],
     yCoordinates: Seq[Int],
     numberOfCoordinatesToDraw: Int,
@@ -387,7 +387,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawSquare]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawSquare]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param upperLeftCornerXInPixels
@@ -401,7 +401,7 @@ object BitmapOps {
    * @return
    */
   def drawSquare(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     upperLeftCornerXInPixels: Int,
     upperLeftCornerYInPixels: Int,
     sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -421,7 +421,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawRectangle]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawRectangle]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param upperLeftCornerXInPixels
@@ -436,7 +436,7 @@ object BitmapOps {
    * @return
    */
   def drawRectangle(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     upperLeftCornerXInPixels: Int,
     upperLeftCornerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -457,7 +457,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawRoundedSquare]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawRoundedSquare]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param upperLeftCornerXInPixels
@@ -473,7 +473,7 @@ object BitmapOps {
    * @return
    */
   def drawRoundedSquare(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     upperLeftCornerXInPixels: Int,
     upperLeftCornerYInPixels: Int,
     sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -496,7 +496,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawRoundedRectangle]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawRoundedRectangle]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param upperLeftCornerXInPixels
@@ -513,7 +513,7 @@ object BitmapOps {
    * @return
    */
   def drawRoundedRectangle(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     upperLeftCornerXInPixels: Int,
     upperLeftCornerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -537,7 +537,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawCircle]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawCircle]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param centerXInPixels
@@ -550,7 +550,7 @@ object BitmapOps {
    * @return
    */
   def drawCircle(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     centerXInPixels: Int,
     centerYInPixels: Int,
     radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
@@ -570,7 +570,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawEllipse]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawEllipse]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param centerXInPixels
@@ -584,7 +584,7 @@ object BitmapOps {
    * @return
    */
   def drawEllipse(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     centerXInPixels: Int,
     centerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -605,7 +605,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[DrawArc]] operation to a given [[OperableBitmap]].
+   * Adds a [[DrawArc]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param upperLeftCornerXInPixels
@@ -622,7 +622,7 @@ object BitmapOps {
    * @return
    */
   def drawArc(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     upperLeftCornerXInPixels: Int,
     upperLeftCornerYInPixels: Int,
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
@@ -646,7 +646,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[AppendHorizontally]] operation to a given [[OperableBitmap]].
+   * Adds a [[AppendHorizontally]] operation to a given [[Bitmap]].
    *
    * @param bitmapsToCombine
    * @param verticalAlignment
@@ -670,7 +670,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[AppendHorizontally]] operation to a given [[OperableBitmap]].
+   * Adds a [[AppendHorizontally]] operation to a given [[Bitmap]].
    *
    * @param bitmapLeft
    * @param bitmapRight
@@ -680,7 +680,7 @@ object BitmapOps {
     appendHorizontally(bitmapLeft, bitmapRight)(VerticalAlignment.Middle)
 
   /**
-   * Adds a [[AppendVertically]] operation to a given [[OperableBitmap]].
+   * Adds a [[AppendVertically]] operation to a given [[Bitmap]].
    *
    * @param bitmapsToCombine
    * @param horizontalAlignment
@@ -704,7 +704,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[AppendVertically]] operation to a given [[OperableBitmap]].
+   * Adds a [[AppendVertically]] operation to a given [[Bitmap]].
    *
    * @param bitmapTop
    * @param bitmapBottom
@@ -714,14 +714,14 @@ object BitmapOps {
     appendVertically(bitmapTop, bitmapBottom)(HorizontalAlignment.Center)
 
   /**
-   * Adds a [[FlipHorizontally]] operation to a given [[OperableBitmap]].
+   * Adds a [[FlipHorizontally]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param viewerHandling
    * @return
    */
   def flipHorizontally(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -730,14 +730,14 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[FlipVertically]] operation to a given [[OperableBitmap]].
+   * Adds a [[FlipVertically]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param viewerHandling
    * @return
    */
   def flipVertically(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -746,14 +746,14 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[FlipDiagonally]] operation to a given [[OperableBitmap]].
+   * Adds a [[FlipDiagonally]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param viewerHandling
    * @return
    */
   def flipDiagonally(
-    bmp: OperableBitmap,
+    bmp: Bitmap,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -762,7 +762,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Rotate]] operation to a given [[OperableBitmap]].
+   * Adds a [[Rotate]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param angleInDegrees
@@ -790,7 +790,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap -90 degrees.
+   * Adds a [[Rotate]] operation to a given [[Bitmap]] for rotating that bitmap -90 degrees.
    *
    * @param bmp
    * @param resizeCanvasBasedOnTransformation
@@ -816,7 +816,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap 90 degrees.
+   * Adds a [[Rotate]] operation to a given [[Bitmap]] for rotating that bitmap 90 degrees.
    *
    * @param bmp
    * @param resizeCanvasBasedOnTransformation
@@ -842,7 +842,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap 180 degrees.
+   * Adds a [[Rotate]] operation to a given [[Bitmap]] for rotating that bitmap 180 degrees.
    *
    * @param bmp
    * @param resizeCanvasBasedOnTransformation
@@ -868,7 +868,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap -90 degrees.
+   * Adds a [[Rotate]] operation to a given [[Bitmap]] for rotating that bitmap -90 degrees.
    *
    * @param bmp
    * @param resizeCanvasBasedOnTransformation
@@ -888,7 +888,7 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Rotate]] operation to a given [[OperableBitmap]] for rotating that bitmap 90 degrees.
+   * Adds a [[Rotate]] operation to a given [[Bitmap]] for rotating that bitmap 90 degrees.
    *
    * @param bmp
    * @param resizeCanvasBasedOnTransformation
