@@ -13,16 +13,16 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * Operation to scale a bitmap.
  *
  * @param sourceBitmap
- * @param scalingFactorX
- * @param scalingFactorY
+ * @param scalingFactorVertical
+ * @param scalingFactorHorizontal
  * @param resizeCanvasBasedOnTransformation
  *
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class Scale(
   sourceBitmap: Bitmap,
-  scalingFactorX: Double = 1.0,
-  scalingFactorY: Double = 1.0,
+  scalingFactorVertical: Double = 1.0,
+  scalingFactorHorizontal: Double = 1.0,
   resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations))
   extends AbstractOperation with BufferProvider with Immutable {
 
@@ -30,8 +30,8 @@ private[bitmaps] case class Scale(
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
-    "scalingFactorX" -> Option(scalingFactorX.toString),
-    "scalingFactorY" -> Option(scalingFactorY.toString),
+    "scalingFactorX" -> Option(scalingFactorVertical.toString),
+    "scalingFactorY" -> Option(scalingFactorHorizontal.toString),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString)
   ))
 
@@ -48,7 +48,7 @@ private[bitmaps] case class Scale(
    */
   override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
     sources(0).createTransfomedVersionWith(
-      AffineTransformation.forFreeScalingOf(scalingFactorX, scalingFactorY),
+      AffineTransformation.forFreeScalingOf(scalingFactorVertical, scalingFactorHorizontal),
       resizeCanvasBasedOnTransformation)
   }
 
