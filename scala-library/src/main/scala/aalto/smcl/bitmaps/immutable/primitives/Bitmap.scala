@@ -157,7 +157,7 @@ with MetaInterfacer {
     val newBitmap = copy(operations = newOperation +: operations)
 
     if (viewerHandling == UpdateViewerPerDefaults) {
-      if (GS.isTrueThat(DisplayBitmapsAutomaticallyAfterOperations))
+      if (GS.isTrueThat(BitmapsAreDisplayedAutomaticallyAfterOperations))
         newBitmap.display()
     }
 
@@ -181,7 +181,7 @@ with MetaInterfacer {
     val newBitmap = copy(operations = newOperationList)
 
     if (viewerHandling == UpdateViewerPerDefaults) {
-      if (GS.isTrueThat(DisplayBitmapsAutomaticallyAfterOperations))
+      if (GS.isTrueThat(BitmapsAreDisplayedAutomaticallyAfterOperations))
         newBitmap.display()
     }
 

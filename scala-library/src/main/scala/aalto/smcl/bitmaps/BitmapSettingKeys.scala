@@ -21,7 +21,7 @@ object BitmapSettingKeys {
   case object NewBitmapsAreDisplayedAutomatically extends BooleanSettingKey
 
   /** */
-  case object DisplayBitmapsAutomaticallyAfterOperations extends BooleanSettingKey
+  case object BitmapsAreDisplayedAutomaticallyAfterOperations extends BooleanSettingKey
 
   /** */
   case object ShapesHaveBordersByDefault extends BooleanSettingKey

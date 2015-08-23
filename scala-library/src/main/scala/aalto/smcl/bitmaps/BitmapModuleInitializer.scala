@@ -28,7 +28,7 @@ object BitmapModuleInitializer extends ModuleInitializer {
       validator = EmptyValidator)
 
     GS += new Setting[Boolean](
-      key = DisplayBitmapsAutomaticallyAfterOperations,
+      key = BitmapsAreDisplayedAutomaticallyAfterOperations,
       initialValue = true,
       validator = EmptyValidator)
 
