@@ -40,8 +40,10 @@ private[smcl] final class Setting[SettingType](
    * @throws SMCLSettingValidationError   Thrown if the validator defined for the setting does not accept the proposed new value.
    */
   def value_=(value: SettingType): Unit = {
-    validator(initialValue).foreach {
-      reason => throw new SMCLSettingValidationError(key, reason)
+    if (validator != null) {
+      validator(initialValue).foreach {
+        reason => throw new SMCLSettingValidationError(key, reason)
+      }
     }
 
     _currentValue = value
