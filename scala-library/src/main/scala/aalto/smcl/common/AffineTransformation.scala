@@ -62,6 +62,16 @@ object AffineTransformation {
   /**
    *
    *
+   * @param amountX
+   * @param amountY
+   * @return
+   */
+  def forFreeShearingOf(amountX: Double, amountY: Double): AffineTransformation =
+    AffineTransformation().shear(amountX, amountY)
+
+  /**
+   *
+   *
    * @param angleInDegrees
    * @return
    */

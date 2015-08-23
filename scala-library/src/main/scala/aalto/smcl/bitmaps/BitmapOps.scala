@@ -908,12 +908,12 @@ object BitmapOps {
   }
 
   /**
-   * Adds a [[Scale]] operation to a given [[OperableBitmap]].
+   * Adds a [[Scale]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param scalingFactorX
    * @param scalingFactorY
-   * @param preventClipping
+   * @param resizeCanvasBasedOnTransformation
    * @param viewerHandling
    * @return
    */
@@ -921,14 +921,16 @@ object BitmapOps {
     bmp: Bitmap,
     scalingFactorX: Double = 1.0,
     scalingFactorY: Double = 1.0,
-    preventClipping: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = true,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    bmp.apply(Scale(bmp, scalingFactorX, scalingFactorY, preventClipping), viewerHandling)
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(Scale(bmp, scalingFactorX, scalingFactorY, resizeCanvasBasedOnTransformation), viewerHandling)
   }
 
   /**
-   * Adds a [[Scale]] operation to a given [[OperableBitmap]].
+   * Adds a [[Scale]] operation to a given [[Bitmap]].
    *
    * @param bmp
    * @param scalingFactor
@@ -936,6 +938,97 @@ object BitmapOps {
    */
   def scale(bmp: Bitmap, scalingFactor: Double): Bitmap =
     scale(bmp, scalingFactor, scalingFactor)
+
+  /**
+   * Adds a [[Shear]] operation to a given [[Bitmap]].
+   *
+   * @param bmp
+   * @param shearingFactorHorizontal
+   * @param shearingFactorVertical
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def shear(
+    bmp: Bitmap,
+    shearingFactorHorizontal: Double = 1.0,
+    shearingFactorVertical: Double = 1.0,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.apply(
+      Shear(
+        bmp,
+        shearingFactorHorizontal,
+        shearingFactorVertical,
+        resizeCanvasBasedOnTransformation,
+        backgroundColor),
+      viewerHandling)
+  }
+
+  /**
+   * Adds a [[Shear]] operation to a given [[Bitmap]].
+   *
+   * @param bmp
+   * @param shearingFactor
+   * @return
+   */
+  def shear(bmp: Bitmap, shearingFactor: Double): Bitmap =
+    shear(bmp, shearingFactor, shearingFactor)
+
+  /**
+   * Adds a [[Shear]] operation to a given [[Bitmap]].
+   *
+   * @param bmp
+   * @param shearingFactor
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def shearHorizontally(
+    bmp: Bitmap,
+    shearingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    shear(
+      bmp = bmp,
+      shearingFactorHorizontal = shearingFactor,
+      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
+      backgroundColor = backgroundColor,
+      viewerHandling = viewerHandling)
+  }
+
+  /**
+   * Adds a [[Shear]] operation to a given [[Bitmap]].
+   *
+   * @param bmp
+   * @param shearingFactor
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def shearVertically(
+    bmp: Bitmap,
+    shearingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    shear(
+      bmp = bmp,
+      shearingFactorVertical = shearingFactor,
+      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
+      backgroundColor = backgroundColor,
+      viewerHandling = viewerHandling)
+  }
 
 }
 

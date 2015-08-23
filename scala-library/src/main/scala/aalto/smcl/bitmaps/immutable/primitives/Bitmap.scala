@@ -822,24 +822,6 @@ with MetaInterfacer {
   /**
    *
    *
-   * @param angleInDegrees
-   * @param preventClipping
-   * @param backgroundColor
-   * @param viewerHandling
-   * @return
-   */
-  def rotateDegs(
-    angleInDegrees: Double,
-    preventClipping: Boolean = true,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
-
-    apply(Rotate(this, angleInDegrees, preventClipping, backgroundColor), viewerHandling)
-  }
-
-  /**
-   *
-   *
    * @param scalingFactorX
    * @param scalingFactorY
    * @param preventClipping
@@ -863,6 +845,106 @@ with MetaInterfacer {
    */
   def scale(scalingFactor: Double): Bitmap =
     scale(scalingFactor, scalingFactor)
+
+  // TODO: Add methods scaleHorizontally() and scaleVertically()
+
+  /**
+   *
+   *
+   * @param shearingFactorHorizontal
+   * @param shearingFactorVertical
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def shear(
+    shearingFactorHorizontal: Double = 1.0,
+    shearingFactorVertical: Double = 1.0,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(
+      Shear(
+        this,
+        shearingFactorHorizontal,
+        shearingFactorVertical,
+        resizeCanvasBasedOnTransformation,
+        backgroundColor),
+      viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param shearingFactor
+   * @return
+   */
+  def shear(shearingFactor: Double): Bitmap =
+    shear(shearingFactor, shearingFactor)
+
+  /**
+   *
+   *
+   * @param shearingFactor
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def shearHorizontally(
+    shearingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    shear(
+      shearingFactorHorizontal = shearingFactor,
+      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
+      backgroundColor = backgroundColor,
+      viewerHandling = viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param shearingFactor
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def shearVertically(
+    shearingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    shear(
+      shearingFactorVertical = shearingFactor,
+      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
+      backgroundColor = backgroundColor,
+      viewerHandling = viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   * @param resizeCanvasBasedOnTransformation
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def rotateDegs(
+    angleInDegrees: Double,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(Rotate(this, angleInDegrees, resizeCanvasBasedOnTransformation, backgroundColor), viewerHandling)
+  }
 
   /**
    *
@@ -933,33 +1015,33 @@ with MetaInterfacer {
   /**
    *
    *
-   * @param preventClipping
+   * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
    * @return
    */
   def turn(
-    preventClipping: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = true,
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    rotate90DegsCw(preventClipping, backgroundColor, viewerHandling)
+    rotate90DegsCw(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
 
   /**
    *
    *
-   * @param preventClipping
+   * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
    * @return
    */
   def unturn(
-    preventClipping: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = true,
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    rotate90DegsCcw(preventClipping, backgroundColor, viewerHandling)
+    rotate90DegsCcw(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
 
 
