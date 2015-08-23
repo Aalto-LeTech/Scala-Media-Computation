@@ -24,12 +24,12 @@ object BitmapModuleInitializer extends ModuleInitializer {
   addInitializer { () =>
     GS += new Setting[Boolean](
       key = NewBitmapsAreDisplayedAutomatically,
-      initialValue = true,
+      initialValue = false,
       validator = EmptyValidator)
 
     GS += new Setting[Boolean](
       key = BitmapsAreDisplayedAutomaticallyAfterOperations,
-      initialValue = true,
+      initialValue = false,
       validator = EmptyValidator)
 
     GS += new Setting[Boolean](
