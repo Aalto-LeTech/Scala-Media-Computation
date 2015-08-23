@@ -49,7 +49,7 @@ object Circle {
 
     val radius = (imageSide - 2) / 2
 
-    newBitmap.drawCircle(
+    val newCircle = newBitmap.drawCircle(
       centerXInPixels = radius + 1,
       centerYInPixels = radius + 1,
       radiusInPixels = radius,
@@ -61,10 +61,10 @@ object Circle {
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
-        newBitmap.display()
+        newCircle.display()
     }
 
-    newBitmap
+    newCircle
   }
 
 }

@@ -51,7 +51,7 @@ object RSquare {
       backgroundColor,
       viewerHandling = PreventViewerUpdates)
 
-    newBitmap.drawRoundedRectangle(
+    val newRSquare = newBitmap.drawRoundedRectangle(
       0, 0,
       sideLengthInPixels - 1, sideLengthInPixels - 1,
       roundingWidthInPixels, roundingHeightInPixels,
@@ -63,10 +63,10 @@ object RSquare {
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
-        newBitmap.display()
+        newRSquare.display()
     }
 
-    newBitmap
+    newRSquare
   }
 
 }

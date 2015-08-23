@@ -63,14 +63,14 @@ object Line {
       else
         (0, bitmapHeight - 1, bitmapWidth - 1, 0)
 
-    newBitmap.drawLine(x0, y0, x1, y1, color, PreventViewerUpdates)
+    val newLine = newBitmap.drawLine(x0, y0, x1, y1, color, PreventViewerUpdates)
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
-        newBitmap.display()
+        newLine.display()
     }
 
-    newBitmap
+    newLine
   }
 
 }

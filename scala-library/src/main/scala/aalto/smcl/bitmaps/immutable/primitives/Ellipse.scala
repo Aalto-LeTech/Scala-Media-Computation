@@ -56,7 +56,7 @@ object Ellipse {
     val ellipseCenterX = (ellipseWidth / 2) + 1
     val ellipseCenterY = (ellipseHeight / 2) + 1
 
-    newBitmap.drawEllipse(
+    val newEllipse = newBitmap.drawEllipse(
       ellipseCenterX, ellipseCenterY,
       ellipseWidth, ellipseHeight,
       hasBorder = true,
@@ -67,10 +67,10 @@ object Ellipse {
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
-        newBitmap.display()
+        newEllipse.display()
     }
 
-    newBitmap
+    newEllipse
   }
 
 }

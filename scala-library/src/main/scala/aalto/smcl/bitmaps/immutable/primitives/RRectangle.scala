@@ -54,7 +54,7 @@ object RRectangle {
       backgroundColor,
       viewerHandling = PreventViewerUpdates)
 
-    newBitmap.drawRoundedRectangle(
+    val newRRectangle = newBitmap.drawRoundedRectangle(
       0, 0,
       widthInPixels - 1, heightInPixels - 1,
       roundingWidthInPixels, roundingHeightInPixels,
@@ -66,10 +66,10 @@ object RRectangle {
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
-        newBitmap.display()
+        newRRectangle.display()
     }
 
-    newBitmap
+    newRRectangle
   }
 
 }
