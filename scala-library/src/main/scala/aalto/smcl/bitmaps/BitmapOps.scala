@@ -911,22 +911,28 @@ object BitmapOps {
    * Adds a [[Scale]] operation to a given [[Bitmap]].
    *
    * @param bmp
-   * @param scalingFactorX
-   * @param scalingFactorY
+   * @param scalingFactorHorizontal
+   * @param scalingFactorVertical
    * @param resizeCanvasBasedOnTransformation
    * @param viewerHandling
    * @return
    */
   def scale(
     bmp: Bitmap,
-    scalingFactorX: Double = 1.0,
-    scalingFactorY: Double = 1.0,
+    scalingFactorHorizontal: Double = 1.0,
+    scalingFactorVertical: Double = 1.0,
     resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(Scale(bmp, scalingFactorX, scalingFactorY, resizeCanvasBasedOnTransformation), viewerHandling)
+    bmp.apply(
+      Scale(
+        bmp,
+        scalingFactorHorizontal,
+        scalingFactorVertical,
+        resizeCanvasBasedOnTransformation),
+      viewerHandling)
   }
 
   /**
@@ -938,6 +944,50 @@ object BitmapOps {
    */
   def scale(bmp: Bitmap, scalingFactor: Double): Bitmap =
     scale(bmp, scalingFactor, scalingFactor)
+
+  /**
+   * Adds a [[Scale]] operation to a given [[Bitmap]].
+   *
+   * @param bmp
+   * @param scalingFactor
+   * @param resizeCanvasBasedOnTransformation
+   * @param viewerHandling
+   * @return
+   */
+  def scaleHorizontally(
+    bmp: Bitmap,
+    scalingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    scale(
+      bmp,
+      scalingFactorHorizontal = scalingFactor,
+      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
+      viewerHandling = viewerHandling)
+  }
+
+  /**
+   * Adds a [[Scale]] operation to a given [[Bitmap]].
+   *
+   * @param bmp
+   * @param scalingFactor
+   * @param resizeCanvasBasedOnTransformation
+   * @param viewerHandling
+   * @return
+   */
+  def scaleVertically(
+    bmp: Bitmap,
+    scalingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    scale(
+      bmp,
+      scalingFactorVertical = scalingFactor,
+      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
+      viewerHandling = viewerHandling)
+  }
 
   /**
    * Adds a [[Shear]] operation to a given [[Bitmap]].

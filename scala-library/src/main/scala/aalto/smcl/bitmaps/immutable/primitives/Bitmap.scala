@@ -822,19 +822,25 @@ with MetaInterfacer {
   /**
    *
    *
-   * @param scalingFactorX
-   * @param scalingFactorY
-   * @param preventClipping
+   * @param scalingFactorHorizontal
+   * @param scalingFactorVertical
+   * @param resizeCanvasBasedOnTransformation
    * @param viewerHandling
    * @return
    */
   def scale(
-    scalingFactorX: Double = 1.0,
-    scalingFactorY: Double = 1.0,
-    preventClipping: Boolean = true,
+    scalingFactorHorizontal: Double = 1.0,
+    scalingFactorVertical: Double = 1.0,
+    resizeCanvasBasedOnTransformation: Boolean = true,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(Scale(this, scalingFactorX, scalingFactorY, preventClipping), viewerHandling)
+    apply(
+      Scale(
+        this,
+        scalingFactorHorizontal,
+        scalingFactorVertical,
+        resizeCanvasBasedOnTransformation),
+      viewerHandling)
   }
 
   /**
@@ -846,7 +852,43 @@ with MetaInterfacer {
   def scale(scalingFactor: Double): Bitmap =
     scale(scalingFactor, scalingFactor)
 
-  // TODO: Add methods scaleHorizontally() and scaleVertically()
+  /**
+   *
+   *
+   * @param scalingFactor
+   * @param resizeCanvasBasedOnTransformation
+   * @param viewerHandling
+   * @return
+   */
+  def scaleHorizontally(
+    scalingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    scale(
+      scalingFactorHorizontal = scalingFactor,
+      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
+      viewerHandling = viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param scalingFactor
+   * @param resizeCanvasBasedOnTransformation
+   * @param viewerHandling
+   * @return
+   */
+  def scaleVertically(
+    scalingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    scale(
+      scalingFactorVertical = scalingFactor,
+      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
+      viewerHandling = viewerHandling)
+  }
 
   /**
    *
@@ -943,7 +985,13 @@ with MetaInterfacer {
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(Rotate(this, angleInDegrees, resizeCanvasBasedOnTransformation, backgroundColor), viewerHandling)
+    apply(
+      Rotate(
+        this,
+        angleInDegrees,
+        resizeCanvasBasedOnTransformation,
+        backgroundColor),
+      viewerHandling)
   }
 
   /**
