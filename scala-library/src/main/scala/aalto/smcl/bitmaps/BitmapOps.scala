@@ -19,7 +19,7 @@ import aalto.smcl.common._
 object BitmapOps {
 
   /**
-   * Adds a [[ConvolveWithCustomKernel]] operation to a given [[Bitmap]].
+   *
    *
    * @param bmp
    * @param kernel
@@ -33,11 +33,11 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(ConvolveWithCustomKernel(kernel), viewerHandling)
+    bmp.convolveWith(kernel, viewerHandling)
   }
 
   /**
-   * Adds a [[FilterWithComponentTranslationTable]] operation to a given [[Bitmap]].
+   *
    *
    * @param bmp
    * @param translator
@@ -51,11 +51,11 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(FilterWithComponentTranslationTable(translator), viewerHandling)
+    bmp.filterWith(translator, viewerHandling)
   }
 
   /**
-   * Adds a [[Negate]] operation to a given [[Bitmap]].
+   *
    *
    * @param bmp
    * @param viewerHandling
@@ -67,7 +67,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(Negate(), viewerHandling)
+    bmp.negate(viewerHandling)
   }
 
   /**
@@ -83,7 +83,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(NegateRedComponent(), viewerHandling)
+    bmp.negateRedComponent(viewerHandling)
   }
 
   /**
@@ -99,7 +99,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(NegateGreenComponent(), viewerHandling)
+    bmp.negateGreenComponent(viewerHandling)
   }
 
   /**
@@ -115,7 +115,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(NegateBlueComponent(), viewerHandling)
+    bmp.negateBlueComponent(viewerHandling)
   }
 
   /**
@@ -131,7 +131,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(NegateRedAndGreenComponents(), viewerHandling)
+    bmp.negateRedAndGreenComponents(viewerHandling)
   }
 
   /**
@@ -147,7 +147,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(NegateRedAndBlueComponents(), viewerHandling)
+    bmp.negateRedAndBlueComponents(viewerHandling)
   }
 
   /**
@@ -163,7 +163,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(NegateGreenAndBlueComponents(), viewerHandling)
+    bmp.negateGreenAndBlueComponents(viewerHandling)
   }
 
   /**
@@ -179,7 +179,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(KeepOnlyRedComponent(), viewerHandling)
+    bmp.keepOnlyRedComponent(viewerHandling)
   }
 
   /**
@@ -195,7 +195,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(KeepOnlyGreenComponent(), viewerHandling)
+    bmp.keepOnlyGreenComponent(viewerHandling)
   }
 
   /**
@@ -211,7 +211,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(KeepOnlyBlueComponent(), viewerHandling)
+    bmp.keepOnlyBlueComponent(viewerHandling)
   }
 
   /**
@@ -227,7 +227,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(KeepOnlyRedAndGreenComponents(), viewerHandling)
+    bmp.keepOnlyRedAndGreenComponents(viewerHandling)
   }
 
   /**
@@ -243,7 +243,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(KeepOnlyRedAndBlueComponents(), viewerHandling)
+    bmp.keepOnlyRedAndBlueComponents(viewerHandling)
   }
 
   /**
@@ -259,7 +259,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(KeepOnlyGreenAndBlueComponents(), viewerHandling)
+    bmp.keepOnlyGreenAndBlueComponents(viewerHandling)
   }
 
   /**
@@ -276,7 +276,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap to be cleared cannot be null.")
 
-    bmp.apply(Posterize(strengthAsPercentage), viewerHandling)
+    bmp.posterize(strengthAsPercentage, viewerHandling)
   }
 
   /**
@@ -293,7 +293,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap to be cleared cannot be null.")
 
-    bmp.apply(Clear(color), viewerHandling)
+    bmp.clear(color, viewerHandling)
   }
 
   /**
@@ -319,10 +319,13 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawLine(
-      fromXInPixels, fromYInPixels,
-      toXInPixels, toYInPixels,
-      color), viewerHandling)
+    bmp.drawLine(
+      fromXInPixels,
+      fromYInPixels,
+      toXInPixels,
+      toYInPixels,
+      color,
+      viewerHandling)
   }
 
   /**
@@ -346,10 +349,12 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawPolyline(
-      xCoordinates, yCoordinates,
+    bmp.drawPolyline(
+      xCoordinates,
+      yCoordinates,
       numberOfCoordinatesToDraw,
-      color), viewerHandling)
+      color,
+      viewerHandling)
   }
 
   /**
@@ -379,11 +384,15 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawPolygon(
-      xCoordinates, yCoordinates,
+    bmp.drawPolygon(
+      xCoordinates,
+      yCoordinates,
       numberOfCoordinatesToDraw,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+      hasBorder,
+      hasFilling,
+      color,
+      fillColor,
+      viewerHandling)
   }
 
   /**
@@ -413,11 +422,15 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawSquare(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+    bmp.drawSquare(
+      upperLeftCornerXInPixels,
+      upperLeftCornerYInPixels,
       sideLengthInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+      hasBorder,
+      hasFilling,
+      color,
+      fillColor,
+      viewerHandling)
   }
 
   /**
@@ -449,11 +462,16 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawRectangle(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      widthInPixels, heightInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    bmp.drawRectangle(
+      upperLeftCornerXInPixels,
+      upperLeftCornerYInPixels,
+      widthInPixels,
+      heightInPixels,
+      hasBorder,
+      hasFilling,
+      color,
+      fillColor,
+      viewerHandling)
   }
 
   /**
@@ -487,12 +505,17 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawRoundedSquare(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
+    bmp.drawRoundedSquare(
+      upperLeftCornerXInPixels,
+      upperLeftCornerYInPixels,
       sideLengthInPixels,
-      roundingWidthInPixels, roundingHeightInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+      roundingWidthInPixels,
+      roundingHeightInPixels,
+      hasBorder,
+      hasFilling,
+      color,
+      fillColor,
+      viewerHandling)
   }
 
   /**
@@ -528,12 +551,18 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawRoundedRectangle(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      widthInPixels, heightInPixels,
-      roundingWidthInPixels, roundingHeightInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    bmp.drawRoundedRectangle(
+      upperLeftCornerXInPixels,
+      upperLeftCornerYInPixels,
+      widthInPixels,
+      heightInPixels,
+      roundingWidthInPixels,
+      roundingHeightInPixels,
+      hasBorder,
+      hasFilling,
+      color,
+      fillColor,
+      viewerHandling)
   }
 
   /**
@@ -562,11 +591,15 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawCircle(
-      centerXInPixels, centerYInPixels,
+    bmp.drawCircle(
+      centerXInPixels,
+      centerYInPixels,
       radiusInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+      hasBorder,
+      hasFilling,
+      color,
+      fillColor,
+      viewerHandling)
   }
 
   /**
@@ -597,11 +630,16 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawEllipse(
-      centerXInPixels, centerYInPixels,
-      widthInPixels, heightInPixels,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    bmp.drawEllipse(
+      centerXInPixels,
+      centerYInPixels,
+      widthInPixels,
+      heightInPixels,
+      hasBorder,
+      hasFilling,
+      color,
+      fillColor,
+      viewerHandling)
   }
 
   /**
@@ -637,12 +675,18 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(DrawArc(
-      upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-      widthInPixels, heightInPixels,
-      startAngleInDegrees, arcAngleInDegrees,
-      hasBorder, hasFilling,
-      color, fillColor), viewerHandling)
+    bmp.drawArc(
+      upperLeftCornerXInPixels,
+      upperLeftCornerYInPixels,
+      widthInPixels,
+      heightInPixels,
+      startAngleInDegrees,
+      arcAngleInDegrees,
+      hasBorder,
+      hasFilling,
+      color,
+      fillColor,
+      viewerHandling)
   }
 
   /**
@@ -663,9 +707,10 @@ object BitmapOps {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
 
-    bitmapsToCombine.head.apply(
-      AppendHorizontally(bitmapsToCombine)(
-        verticalAlignment, paddingInPixels, backgroundColor),
+    bitmapsToCombine.head.appendOnRight(bitmapsToCombine.tail: _*)(
+      verticalAlignment,
+      paddingInPixels,
+      backgroundColor,
       viewerHandling)
   }
 
@@ -697,9 +742,10 @@ object BitmapOps {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
 
-    bitmapsToCombine.head.apply(
-      AppendVertically(bitmapsToCombine)(
-        horizontalAlignment, paddingInPixels, backgroundColor),
+    bitmapsToCombine.head.appendOnBottom(bitmapsToCombine.tail: _*)(
+      horizontalAlignment,
+      paddingInPixels,
+      backgroundColor,
       viewerHandling)
   }
 
@@ -726,7 +772,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(FlipHorizontally(), viewerHandling)
+    bmp.flipHorizontally(viewerHandling)
   }
 
   /**
@@ -742,7 +788,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(FlipVertically(), viewerHandling)
+    bmp.flipVertically(viewerHandling)
   }
 
   /**
@@ -758,7 +804,7 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(FlipDiagonally(), viewerHandling)
+    bmp.flipDiagonally(viewerHandling)
   }
 
   /**
@@ -780,12 +826,10 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(
-      Rotate(
-        bmp,
-        angleInDegrees,
-        resizeCanvasBasedOnTransformation,
-        backgroundColor),
+    bmp.rotateDegs(
+      angleInDegrees,
+      resizeCanvasBasedOnTransformation,
+      backgroundColor,
       viewerHandling)
   }
 
@@ -806,12 +850,9 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(
-      Rotate(
-        bmp,
-        OneQuarterOfCircleInDegreesClockwise,
-        resizeCanvasBasedOnTransformation,
-        backgroundColor),
+    bmp.rotate90DegsCw(
+      resizeCanvasBasedOnTransformation,
+      backgroundColor,
       viewerHandling)
   }
 
@@ -832,12 +873,9 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(
-      Rotate(
-        bmp,
-        OneQuarterOfCircleInDegreesCounterClockwise,
-        resizeCanvasBasedOnTransformation,
-        backgroundColor),
+    bmp.rotate90DegsCcw(
+      resizeCanvasBasedOnTransformation,
+      backgroundColor,
       viewerHandling)
   }
 
@@ -858,12 +896,9 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(
-      Rotate(
-        bmp,
-        OneHalfOfCircleInDegrees,
-        resizeCanvasBasedOnTransformation,
-        backgroundColor),
+    bmp.rotate180Degs(
+      resizeCanvasBasedOnTransformation,
+      backgroundColor,
       viewerHandling)
   }
 
@@ -884,7 +919,10 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    rotate90DegsCw(bmp, resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
+    bmp.rotate90DegsCw(
+      resizeCanvasBasedOnTransformation,
+      backgroundColor,
+      viewerHandling)
   }
 
   /**
@@ -904,7 +942,10 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    rotate90DegsCcw(bmp, resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
+    bmp.rotate90DegsCcw(
+      resizeCanvasBasedOnTransformation,
+      backgroundColor,
+      viewerHandling)
   }
 
   /**
@@ -926,12 +967,10 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(
-      Scale(
-        bmp,
-        scalingFactorHorizontal,
-        scalingFactorVertical,
-        resizeCanvasBasedOnTransformation),
+    bmp.scale(
+      scalingFactorHorizontal,
+      scalingFactorVertical,
+      resizeCanvasBasedOnTransformation,
       viewerHandling)
   }
 
@@ -943,7 +982,7 @@ object BitmapOps {
    * @return
    */
   def scale(bmp: Bitmap, scalingFactor: Double): Bitmap =
-    scale(bmp, scalingFactor, scalingFactor)
+    bmp.scale(scalingFactor)
 
   /**
    * Adds a [[Scale]] operation to a given [[Bitmap]].
@@ -960,11 +999,10 @@ object BitmapOps {
     resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    scale(
-      bmp,
-      scalingFactorHorizontal = scalingFactor,
-      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
-      viewerHandling = viewerHandling)
+    bmp.scaleHorizontally(
+      scalingFactor,
+      resizeCanvasBasedOnTransformation,
+      viewerHandling)
   }
 
   /**
@@ -982,11 +1020,10 @@ object BitmapOps {
     resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    scale(
-      bmp,
-      scalingFactorVertical = scalingFactor,
-      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
-      viewerHandling = viewerHandling)
+    bmp.scaleVertically(
+      scalingFactor,
+      resizeCanvasBasedOnTransformation,
+      viewerHandling)
   }
 
   /**
@@ -1010,13 +1047,11 @@ object BitmapOps {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.apply(
-      Shear(
-        bmp,
-        shearingFactorHorizontal,
-        shearingFactorVertical,
-        resizeCanvasBasedOnTransformation,
-        backgroundColor),
+    bmp.shear(
+      shearingFactorHorizontal,
+      shearingFactorVertical,
+      resizeCanvasBasedOnTransformation,
+      backgroundColor,
       viewerHandling)
   }
 
@@ -1028,7 +1063,7 @@ object BitmapOps {
    * @return
    */
   def shear(bmp: Bitmap, shearingFactor: Double): Bitmap =
-    shear(bmp, shearingFactor, shearingFactor)
+    bmp.shear(shearingFactor)
 
   /**
    * Adds a [[Shear]] operation to a given [[Bitmap]].
@@ -1047,12 +1082,11 @@ object BitmapOps {
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    shear(
-      bmp = bmp,
-      shearingFactorHorizontal = shearingFactor,
-      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
-      backgroundColor = backgroundColor,
-      viewerHandling = viewerHandling)
+    bmp.shearHorizontally(
+      shearingFactor,
+      resizeCanvasBasedOnTransformation,
+      backgroundColor,
+      viewerHandling)
   }
 
   /**
@@ -1072,12 +1106,11 @@ object BitmapOps {
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    shear(
-      bmp = bmp,
-      shearingFactorVertical = shearingFactor,
-      resizeCanvasBasedOnTransformation = resizeCanvasBasedOnTransformation,
-      backgroundColor = backgroundColor,
-      viewerHandling = viewerHandling)
+    bmp.shearVertically(
+      shearingFactor,
+      resizeCanvasBasedOnTransformation,
+      backgroundColor,
+      viewerHandling)
   }
 
 }
