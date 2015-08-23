@@ -42,6 +42,11 @@ object BitmapModuleInitializer extends ModuleInitializer {
       initialValue = false,
       validator = EmptyValidator)
 
+    GS += new Setting[Boolean](
+      key = CanvasesAreResizedBasedOnTransformations,
+      initialValue = true,
+      validator = EmptyValidator)
+
     GS += new Setting[Int](
       key = DefaultBitmapWidthInPixels,
       initialValue = 50,

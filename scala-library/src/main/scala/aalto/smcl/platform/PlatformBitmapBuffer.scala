@@ -5,7 +5,7 @@ import java.awt.Graphics2D
 import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 
-import aalto.smcl.bitmaps.BitmapSettingKeys.DefaultBackground
+import aalto.smcl.bitmaps.BitmapSettingKeys.{CanvasesAreResizedBasedOnTransformations, DefaultBackground}
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.bitmaps.immutable.ConvolutionKernel
 import aalto.smcl.common._
@@ -126,7 +126,7 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    */
   def createTransfomedVersionWith(
     transformation: AffineTransformation,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
 
     val globalInterpolationMethod =

@@ -774,7 +774,7 @@ object BitmapOps {
   def rotateDegs(
     bmp: Bitmap,
     angleInDegrees: Double,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -800,7 +800,7 @@ object BitmapOps {
    */
   def rotate90DegsCw(
     bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -826,7 +826,7 @@ object BitmapOps {
    */
   def rotate90DegsCcw(
     bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -852,7 +852,7 @@ object BitmapOps {
    */
   def rotate180Degs(
     bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -878,7 +878,7 @@ object BitmapOps {
    */
   def turn(
     bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -898,7 +898,7 @@ object BitmapOps {
    */
   def unturn(
     bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -921,7 +921,7 @@ object BitmapOps {
     bmp: Bitmap,
     scalingFactorX: Double = 1.0,
     scalingFactorY: Double = 1.0,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -952,9 +952,9 @@ object BitmapOps {
    */
   def shear(
     bmp: Bitmap,
-    shearingFactorHorizontal: Double = 1.0,
-    shearingFactorVertical: Double = 1.0,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    shearingFactorHorizontal: Double = 0.0,
+    shearingFactorVertical: Double = 0.0,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -993,7 +993,7 @@ object BitmapOps {
   def shearHorizontally(
     bmp: Bitmap,
     shearingFactor: Double,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1018,7 +1018,7 @@ object BitmapOps {
   def shearVertically(
     bmp: Bitmap,
     shearingFactor: Double,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 

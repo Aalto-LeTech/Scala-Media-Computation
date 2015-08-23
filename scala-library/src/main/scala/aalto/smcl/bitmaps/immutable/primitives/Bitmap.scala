@@ -859,9 +859,9 @@ with MetaInterfacer {
    * @return
    */
   def shear(
-    shearingFactorHorizontal: Double = 1.0,
-    shearingFactorVertical: Double = 1.0,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    shearingFactorHorizontal: Double = 0.0,
+    shearingFactorVertical: Double = 0.0,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -895,7 +895,7 @@ with MetaInterfacer {
    */
   def shearHorizontally(
     shearingFactor: Double,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -917,7 +917,7 @@ with MetaInterfacer {
    */
   def shearVertically(
     shearingFactor: Double,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -939,7 +939,7 @@ with MetaInterfacer {
    */
   def rotateDegs(
     angleInDegrees: Double,
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -955,7 +955,7 @@ with MetaInterfacer {
    * @return
    */
   def rotate90DegsCw(
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -977,7 +977,7 @@ with MetaInterfacer {
    * @return
    */
   def rotate90DegsCcw(
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -999,7 +999,7 @@ with MetaInterfacer {
    * @return
    */
   def rotate180Degs(
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1021,7 +1021,7 @@ with MetaInterfacer {
    * @return
    */
   def turn(
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1037,7 +1037,7 @@ with MetaInterfacer {
    * @return
    */
   def unturn(
-    resizeCanvasBasedOnTransformation: Boolean = true,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
