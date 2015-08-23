@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.immutable.primitives
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary}
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.ViewerUpdateStyle
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.common.{GS, RGBAColor}
@@ -57,7 +57,14 @@ object Circle {
       hasFilling = true,
       color = color,
       fillColor = color,
-      viewerHandling)
+      viewerHandling = PreventViewerUpdates)
+
+    if (viewerHandling == UpdateViewerPerDefaults) {
+      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+        newBitmap.display()
+    }
+
+    newBitmap
   }
 
 }

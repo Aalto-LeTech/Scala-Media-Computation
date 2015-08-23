@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.immutable.primitives
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultPrimary}
+import aalto.smcl.bitmaps.BitmapSettingKeys.{NewBitmapsAreDisplayedAutomatically, DefaultBackground, DefaultPrimary}
 import aalto.smcl.bitmaps.ViewerUpdateStyle
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.common.{GS, RGBAColor}
@@ -63,7 +63,14 @@ object Line {
       else
         (0, bitmapHeight - 1, bitmapWidth - 1, 0)
 
-    newBitmap.drawLine(x0, y0, x1, y1, color, viewerHandling)
+    newBitmap.drawLine(x0, y0, x1, y1, color, PreventViewerUpdates)
+
+    if (viewerHandling == UpdateViewerPerDefaults) {
+      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+        newBitmap.display()
+    }
+
+    newBitmap
   }
 
 }

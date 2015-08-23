@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.immutable.primitives
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBackground, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary}
+import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.ViewerUpdateStyle
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.common.{GS, RGBAColor}
@@ -63,7 +63,14 @@ object Ellipse {
       hasFilling = true,
       color = color,
       fillColor = color,
-      viewerHandling)
+      PreventViewerUpdates)
+
+    if (viewerHandling == UpdateViewerPerDefaults) {
+      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+        newBitmap.display()
+    }
+
+    newBitmap
   }
 
 }

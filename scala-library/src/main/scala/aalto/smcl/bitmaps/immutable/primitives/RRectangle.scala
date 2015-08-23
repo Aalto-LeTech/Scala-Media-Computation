@@ -62,8 +62,14 @@ object RRectangle {
       hasFilling = true,
       color = color,
       fillColor = color,
-      viewerHandling)
+      PreventViewerUpdates)
 
+    if (viewerHandling == UpdateViewerPerDefaults) {
+      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+        newBitmap.display()
+    }
+
+    newBitmap
   }
 
 }
