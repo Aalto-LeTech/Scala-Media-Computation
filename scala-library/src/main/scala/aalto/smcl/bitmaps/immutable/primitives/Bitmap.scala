@@ -6,7 +6,7 @@ import scala.ref.WeakReference
 
 import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.BitmapSettingKeys._
-import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.bitmaps.immutable.{BitmapIdentity, ConvolutionKernel, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
@@ -165,6 +165,15 @@ with MetaInterfacer {
   }
 
   /**
+   * Applies an [[Renderable]] to this [[Bitmap]] without displaying the resulting bitmap.
+   *
+   * @param newOperation
+   * @return
+   */
+  private[bitmaps] def applyInitialization(newOperation: Renderable): Bitmap =
+    apply(newOperation, PreventViewerUpdates)
+
+  /**
    * Applies an [[BufferProvider]] to this [[Bitmap]].
    *
    * @param newOperation
@@ -187,6 +196,15 @@ with MetaInterfacer {
 
     newBitmap
   }
+
+  /**
+   * Applies an [[BufferProvider]] to this [[Bitmap]] without displaying the resulting bitmap.
+   *
+   * @param newOperation
+   * @return
+   */
+  private[bitmaps] def applyInitialization(newOperation: BufferProvider): Bitmap =
+    apply(newOperation, PreventViewerUpdates)
 
   /**
    *
