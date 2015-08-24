@@ -5,7 +5,6 @@ import scala.collection.mutable
 import scala.ref.WeakReference
 
 import aalto.smcl.SMCL
-import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.bitmaps.immutable.{BitmapIdentity, ConvolutionKernel, PixelRectangle}
 import aalto.smcl.bitmaps.operations._

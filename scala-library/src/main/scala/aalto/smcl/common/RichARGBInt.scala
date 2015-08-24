@@ -1,7 +1,6 @@
 package aalto.smcl.common
 
 
-
 /**
  * Some methods for composing ARGB-style `Int` values as well as
  * extracting the individual color components from them.
@@ -22,27 +21,27 @@ class RichARGBInt(val self: Int) extends AnyVal {
    * }}}
    */
   // TODO: Update the example in the comment!!!!
-  def colorComponentMap: Map[Symbol, Double] = ColorOps.colorComponentMapFrom(self)
+  def colorComponentMap: Map[Symbol, Double] = colorComponentMapFrom(self)
 
   /**
    * Returns the red color component of this ARGB-style `Int`.
    */
-  def redComponentInt: Int = ColorOps.redComponentOf(self)
+  def redComponentInt: Int = redComponentOf(self)
 
   /**
    * Returns the green color component of this ARGB-style `Int`.
    */
-  def greenComponentInt: Int = ColorOps.greenComponentOf(self)
+  def greenComponentInt: Int = greenComponentOf(self)
 
   /**
    * Returns the blue color component of this ARGB-style `Int`.
    */
-  def blueComponentInt: Int = ColorOps.blueComponentOf(self)
+  def blueComponentInt: Int = blueComponentOf(self)
 
   /**
    * Returns the opacity component of this ARGB-style `Int`.
    */
-  def opacityComponentInt: Int = ColorOps.opacityComponentOf(self)
+  def opacityComponentInt: Int = opacityComponentOf(self)
 
   /**
    * Displays this `Int` as a zero-padded hexadecimal form.
@@ -64,6 +63,6 @@ class RichARGBInt(val self: Int) extends AnyVal {
    */
   def toArgbBinaryColorString: String =
     self.toBinaryString.format("$s%32s").replace(StrSpace, StrZero)
-      .sliding(OneByte, OneByte).mkString(StrSpace)
+        .sliding(OneByte, OneByte).mkString(StrSpace)
 
 }

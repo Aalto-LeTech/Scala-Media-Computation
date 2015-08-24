@@ -11,7 +11,7 @@ import scala.language.implicitConversions
  *
  * @author Aleksi Lukkarinen
  */
-package object common {
+package object common extends ColorOps {
 
   SMCL.performInitialization()
 

@@ -12,7 +12,7 @@ import aalto.smcl.common.{HorizontalAlignment, VerticalAlignment}
  *
  * @author Aleksi Lukkarinen
  */
-object BitmapSettingKeys {
+trait BitmapSettingKeys {
 
 
   // @formatter:off

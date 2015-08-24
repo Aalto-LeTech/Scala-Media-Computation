@@ -2,7 +2,6 @@ package aalto.smcl.bitmaps
 
 
 import aalto.smcl.common._
-import aalto.smcl.common.ColorOps._
 
 
 

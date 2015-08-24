@@ -2,7 +2,6 @@ package aalto.smcl.bitmaps
 
 
 import aalto.smcl.ModuleInitializer
-import aalto.smcl.bitmaps.BitmapSettingKeys._
 import aalto.smcl.common.settings.Setting
 import aalto.smcl.common.settings.SettingValidatorFactory.{ConditionFalseValidator, EmptyValidator, IsNullValidator}
 import aalto.smcl.common.{GS, HorizontalAlignment, PresetColors, RGBAColor, VerticalAlignment}

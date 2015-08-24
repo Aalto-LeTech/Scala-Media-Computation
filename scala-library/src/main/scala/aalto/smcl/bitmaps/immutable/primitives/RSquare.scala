@@ -2,9 +2,8 @@ package aalto.smcl.bitmaps.immutable.primitives
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.bitmaps.BitmapSettingKeys._
-import aalto.smcl.bitmaps.ViewerUpdateStyle
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
+import aalto.smcl.bitmaps.{ViewerUpdateStyle, _}
 import aalto.smcl.common.{GS, RGBAColor}
 
 
@@ -32,12 +31,12 @@ object RSquare {
    * @return
    */
   def apply(
-    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(sideLengthInPixels >= 5, s"Side length of the square must be at least 5 pixels (was $sideLengthInPixels)")
     require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")

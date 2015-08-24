@@ -13,7 +13,7 @@ import aalto.smcl.bitmaps.immutable.primitives.Bitmap
  *
  * @author Aleksi Lukkarinen
  */
-package object bitmaps {
+package object bitmaps extends BitmapSettingKeys with BitmapOps {
 
   SMCL.performInitialization()
 

@@ -2,9 +2,8 @@ package aalto.smcl.bitmaps.immutable.primitives
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.bitmaps.BitmapSettingKeys.{NewBitmapsAreDisplayedAutomatically, DefaultBackground, DefaultPrimary}
-import aalto.smcl.bitmaps.ViewerUpdateStyle
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
+import aalto.smcl.bitmaps.{ViewerUpdateStyle, _}
 import aalto.smcl.common.{GS, RGBAColor}
 
 
@@ -35,13 +34,13 @@ object Line {
    * @return
    */
   def apply(
-    fromXInPixels: Int,
-    fromYInPixels: Int,
-    toXInPixels: Int,
-    toYInPixels: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      fromXInPixels: Int,
+      fromYInPixels: Int,
+      toXInPixels: Int,
+      toYInPixels: Int,
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(color != null, "The line color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")

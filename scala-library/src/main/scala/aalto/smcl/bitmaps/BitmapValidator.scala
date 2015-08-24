@@ -2,7 +2,6 @@ package aalto.smcl.bitmaps
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.bitmaps.BitmapSettingKeys.{BitmapHeightWarningLimitInPixels, BitmapWidthWarningLimitInPixels}
 import aalto.smcl.common.GS
 
 

@@ -15,7 +15,7 @@ trait RGBAColorTranslator {
    * @return
    */
   def translate(color: RGBAColor): RGBAColor =
-    RGBAColor(translate(ColorOps.rgbaTupleFrom(color)))
+    RGBAColor(translate(rgbaTupleFrom(color)))
 
   /**
    *
@@ -24,7 +24,7 @@ trait RGBAColorTranslator {
    * @return
    */
   def translate(argbInt: Int): Int =
-    ColorOps.argbIntFrom(translate(ColorOps.rgbaTupleFrom(argbInt)))
+    argbIntFrom(translate(rgbaTupleFrom(argbInt)))
 
   /**
    *

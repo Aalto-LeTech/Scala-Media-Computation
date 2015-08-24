@@ -414,7 +414,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @return
    */
   def adjustHueByDegrees(adjustmentInDegrees: Double): RGBAColor =
-    ColorOps.adjustHueOfRgbByDegrees(self, adjustmentInDegrees)
+    adjustHueOfRgbByDegrees(self, adjustmentInDegrees)
 
   /**
    *

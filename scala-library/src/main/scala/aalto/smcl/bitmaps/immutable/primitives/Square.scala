@@ -2,9 +2,8 @@ package aalto.smcl.bitmaps.immutable.primitives
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.bitmaps.BitmapSettingKeys.{DefaultBitmapWidthInPixels, DefaultPrimary}
-import aalto.smcl.bitmaps.ViewerUpdateStyle
 import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
+import aalto.smcl.bitmaps.{ViewerUpdateStyle, _}
 import aalto.smcl.common.{GS, RGBAColor}
 
 
@@ -29,9 +28,9 @@ object Square {
    * @return
    */
   def apply(
-    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(sideLengthInPixels > 0, s"Side length of the square must be at least 1 pixel (was $sideLengthInPixels)")
     require(color != null, "The color argument has to be a Color instance (was null).")

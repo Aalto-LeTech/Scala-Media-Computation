@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.BitmapSettingKeys._
+import aalto.smcl.bitmaps._
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
@@ -26,17 +26,17 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class DrawRoundedRectangle(
-  upperLeftCornerXInPixels: Int,
-  upperLeftCornerYInPixels: Int,
-  widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-  heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-  roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-  roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-  hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-  hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-  color: RGBAColor = GS.colorFor(DefaultPrimary),
-  fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
-  extends AbstractOperation with Renderable with Immutable {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
+    extends AbstractOperation with Renderable with Immutable {
 
   require(widthInPixels > 0, s"The width argument must be greater than zero (was $widthInPixels).")
   require(heightInPixels > 0, s"The height argument must be greater than zero (was $heightInPixels).")

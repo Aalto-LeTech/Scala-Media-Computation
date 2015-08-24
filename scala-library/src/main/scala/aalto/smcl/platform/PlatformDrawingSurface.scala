@@ -3,7 +3,7 @@ package aalto.smcl.platform
 
 import scala.swing.Graphics2D
 
-import aalto.smcl.bitmaps.BitmapSettingKeys._
+import aalto.smcl.bitmaps._
 import aalto.smcl.common.{AffineTransformation, GS, RGBAColor}
 
 

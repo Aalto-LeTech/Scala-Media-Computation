@@ -1,8 +1,8 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.BitmapSettingKeys.{CanvasesAreResizedBasedOnTransformations, DefaultBackground}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.bitmaps.{CanvasesAreResizedBasedOnTransformations, DefaultBackground}
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
@@ -20,12 +20,12 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class Shear(
-  sourceBitmap: Bitmap,
-  shearingFactorHorizontal: Double = 0.0,
-  shearingFactorVertical: Double = 0.0,
-  resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-  extends AbstractOperation with BufferProvider with Immutable {
+    sourceBitmap: Bitmap,
+    shearingFactorHorizontal: Double = 0.0,
+    shearingFactorVertical: Double = 0.0,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    extends AbstractOperation with BufferProvider with Immutable {
 
   require(sourceBitmap != null, s"Shearing requires exactly one source image (was null).")
 

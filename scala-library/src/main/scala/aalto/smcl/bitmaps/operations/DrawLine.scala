@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.BitmapSettingKeys.DefaultPrimary
+import aalto.smcl.bitmaps.DefaultPrimary
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
@@ -21,12 +21,12 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class DrawLine(
-  fromXInPixels: Int,
-  fromYInPixels: Int,
-  toXInPixels: Int,
-  toYInPixels: Int,
-  color: RGBAColor = GS.colorFor(DefaultPrimary))
-  extends AbstractOperation with Renderable with Immutable {
+    fromXInPixels: Int,
+    fromYInPixels: Int,
+    toXInPixels: Int,
+    toYInPixels: Int,
+    color: RGBAColor = GS.colorFor(DefaultPrimary))
+    extends AbstractOperation with Renderable with Immutable {
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 

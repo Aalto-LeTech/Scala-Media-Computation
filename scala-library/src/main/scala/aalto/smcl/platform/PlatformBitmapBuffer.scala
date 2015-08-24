@@ -5,9 +5,8 @@ import java.awt.Graphics2D
 import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 
-import aalto.smcl.bitmaps.BitmapSettingKeys.{CanvasesAreResizedBasedOnTransformations, DefaultBackground}
-import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.bitmaps.immutable.ConvolutionKernel
+import aalto.smcl.bitmaps.{BitmapValidator, CanvasesAreResizedBasedOnTransformations, DefaultBackground}
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformSettingKeys.PlatformBitmapInterpolationMethod
 
@@ -74,7 +73,7 @@ private[smcl] object PlatformBitmapBuffer {
    * @return
    */
   private[platform] def convertToNormalizedLowLevelBitmapBufferIfNecessary(
-    buffer: BufferedImage): BufferedImage = {
+      buffer: BufferedImage): BufferedImage = {
 
     var bufferCandidate = buffer
 
@@ -125,9 +124,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def createTransfomedVersionWith(
-    transformation: AffineTransformation,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
+      transformation: AffineTransformation,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
 
     val globalInterpolationMethod =
       GS.enumSettingFor[BitmapInterpolationMethod.Value](PlatformBitmapInterpolationMethod).value.id
@@ -137,7 +136,7 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     val lowLevelTransformation = transformation.platformAffineTransform.awtAffineTransformation
     val transformedContentBoundaries: Rectangle2D =
       new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
-        .getBounds2D(awtBufferedImage)
+          .getBounds2D(awtBufferedImage)
 
     if (resizeCanvasBasedOnTransformation) {
       val offsetLeft = -transformedContentBoundaries.getMinX
@@ -159,7 +158,7 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     val finalTransformOperation = new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
     val resultingBuffer: PlatformBitmapBuffer = PlatformBitmapBuffer(resultingImageWidth, resultingImageHeight)
 
-    resultingBuffer drawingSurface() clearUsing backgroundColor
+    resultingBuffer drawingSurface () clearUsing backgroundColor
 
     finalTransformOperation.filter(awtBufferedImage, resultingBuffer.awtBufferedImage)
 
@@ -176,10 +175,10 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def boundaryOverflowsForLTRB(
-    minX: Double,
-    minY: Double,
-    maxX: Double,
-    maxY: Double): (Double, Double, Double, Double) = {
+      minX: Double,
+      minY: Double,
+      maxX: Double,
+      maxY: Double): (Double, Double, Double, Double) = {
 
     val overflowLeft = if (minX < 0) -minX else 0
     val overflowTop = if (minY < 0) -minY else 0

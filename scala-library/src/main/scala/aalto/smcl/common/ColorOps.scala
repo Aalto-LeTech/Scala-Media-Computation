@@ -1,12 +1,17 @@
 package aalto.smcl.common
 
 
+import aalto.smcl.common
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-object ColorOps {
+trait ColorOps {
 
   /**
    *
@@ -523,7 +528,7 @@ object ColorOps {
       if (isBlack(red, green, blue))
         ColorValidator.MinimumHsiSaturation
       else
-        1.0 - 3.0 * (ColorOps.min(red, green, blue) / rgbSum)
+        1.0 - 3.0 * (common.min(red, green, blue) / rgbSum)
 
 
     val intensity = rgbSum / 3.0

@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import scala.collection.mutable.ArrayBuffer
 
-import aalto.smcl.bitmaps.BitmapSettingKeys._
+import aalto.smcl.bitmaps._
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformBitmapBuffer

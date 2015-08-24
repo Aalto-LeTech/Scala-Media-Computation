@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.BitmapSettingKeys.CanvasesAreResizedBasedOnTransformations
+import aalto.smcl.bitmaps.CanvasesAreResizedBasedOnTransformations
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformBitmapBuffer
@@ -20,11 +20,11 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class Scale(
-  sourceBitmap: Bitmap,
-  scalingFactorVertical: Double = 1.0,
-  scalingFactorHorizontal: Double = 1.0,
-  resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations))
-  extends AbstractOperation with BufferProvider with Immutable {
+    sourceBitmap: Bitmap,
+    scalingFactorVertical: Double = 1.0,
+    scalingFactorHorizontal: Double = 1.0,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations))
+    extends AbstractOperation with BufferProvider with Immutable {
 
   require(sourceBitmap != null, s"Scaling requires exactly one source image (was null).")
 

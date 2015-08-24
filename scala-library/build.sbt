@@ -56,13 +56,13 @@ libraryDependencies ++= (scalaBinaryVersion.value match {
 })
 // @formatter:on
 
+// import aalto.smcl.common.ColorOps._
+// import aalto.smcl.bitmaps.BitmapOps._
 
 initialCommands in console :=
     """import aalto.smcl._
       |import aalto.smcl.common._
-      |import aalto.smcl.common.ColorOps._
       |import aalto.smcl.bitmaps._
-      |import aalto.smcl.bitmaps.BitmapOps._
       |import aalto.smcl.bitmaps.immutable._
       |import aalto.smcl.bitmaps.immutable.primitives._
       |import aalto.smcl.bitmaps.immutable.collections._

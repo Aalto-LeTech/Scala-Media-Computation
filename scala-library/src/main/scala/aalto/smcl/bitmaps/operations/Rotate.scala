@@ -1,8 +1,8 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.BitmapSettingKeys.{CanvasesAreResizedBasedOnTransformations, DefaultBackground}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.bitmaps.{CanvasesAreResizedBasedOnTransformations, DefaultBackground}
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
@@ -15,11 +15,11 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class Rotate(
-  sourceBitmap: Bitmap,
-  angleInDegrees: Double,
-  resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-  extends AbstractOperation with BufferProvider with Immutable {
+    sourceBitmap: Bitmap,
+    angleInDegrees: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    extends AbstractOperation with BufferProvider with Immutable {
 
   require(sourceBitmap != null, s"Rotation requires exactly one source image (was null).")
 
