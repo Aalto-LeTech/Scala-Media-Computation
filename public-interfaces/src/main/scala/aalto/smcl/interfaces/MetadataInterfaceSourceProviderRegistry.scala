@@ -11,12 +11,12 @@ import scala.collection.mutable
  *
  * @author Aleksi Lukkarinen
  */
-class MetadataInterfaceSourceProviderRegistry private[interfaces] () {
+class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
 
   /** */
   private[this] val _registry =
     new mutable.HashMap[Class[_], mutable.Set[MetadataInterfaceSourceProvider]]
-      with mutable.MultiMap[Class[_], MetadataInterfaceSourceProvider]
+        with mutable.MultiMap[Class[_], MetadataInterfaceSourceProvider]
 
 
   /**
@@ -25,8 +25,11 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces] () {
    * @param interestingObject
    * @return
    */
-  def queryProvidersFor(interestingObject: Any): Seq[MetadataInterfaceSourceProvider] =
-    _registry(interestingObject.getClass).toSeq
+  def queryProvidersFor(interestingObject: Any): Option[Set[MetadataInterfaceSourceProvider]] =
+    _registry.get(interestingObject.getClass) match {
+      case Some(s: mutable.Set[MetadataInterfaceSourceProvider]) => Some(s.toSet)
+      case _                                                     => None
+    }
 
   /**
    *
@@ -49,9 +52,9 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces] () {
   private[smcl] def unregisterProvider(provider: MetadataInterfaceSourceProvider): Unit = {
     require(provider != null, "The source argument cannot be null.")
 
-    _registry.keys.foreach { clazz =>
-        if (_registry.entryExists(clazz, _ == provider))
-          _registry.removeBinding(clazz, provider)
+    _registry.keys.foreach {clazz =>
+      if (_registry.entryExists(clazz, _ == provider))
+        _registry.removeBinding(clazz, provider)
     }
   }
 

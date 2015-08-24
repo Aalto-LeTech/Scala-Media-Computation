@@ -14,6 +14,6 @@ trait MetadataInterfaceSourceProvider {
    * @param interestingObject
    * @return
    */
-  def querySourceFor(interestingObject: Any): Any
+  def querySourceFor(interestingObject: Any): Option[Any]
 
 }
