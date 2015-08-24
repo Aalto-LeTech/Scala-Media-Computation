@@ -10,7 +10,6 @@ import aalto.smcl.bitmaps.immutable.{BitmapIdentity, ConvolutionKernel, PixelRec
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer, _}
 import aalto.smcl.common._
-import aalto.smcl.interfaces._
 import aalto.smcl.platform.{ImageProvider, PlatformBitmapBuffer, PlatformDrawingSurface, RenderableBitmap}
 
 
@@ -130,8 +129,7 @@ case class Bitmap private(
 } with RenderableBitmap
 with PixelRectangle
 with Immutable
-with TimestampedCreation
-with MetaInterfacer {
+with TimestampedCreation {
 
   /**
    * Returns the initial background color of this [[Bitmap]]
@@ -1501,12 +1499,5 @@ with MetaInterfacer {
 
     this
   }
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def metaInterfaces(): AnyRef = BitmapMetaInterface(this)
 
 }

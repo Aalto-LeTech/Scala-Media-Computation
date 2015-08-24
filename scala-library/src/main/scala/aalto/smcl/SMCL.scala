@@ -2,6 +2,7 @@ package aalto.smcl
 
 
 import aalto.smcl.bitmaps.BitmapModuleInitializer
+import aalto.smcl.bitmaps.metadata.MetadataModuleInitializer
 import aalto.smcl.platform.PlatformModuleInitializer
 
 
@@ -123,6 +124,7 @@ object SMCL extends ModuleInitializer {
   addInitializer { () =>
     PlatformModuleInitializer.performInitialization()
     BitmapModuleInitializer.performInitialization()
+    MetadataModuleInitializer.performInitialization()
   }
 
   performInitialization()
