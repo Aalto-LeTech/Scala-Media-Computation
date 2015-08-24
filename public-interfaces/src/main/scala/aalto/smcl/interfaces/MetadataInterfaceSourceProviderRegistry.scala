@@ -22,11 +22,11 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces] () {
   /**
    *
    *
-   * @param clazz
+   * @param interestingObject
    * @return
    */
-  def queryProvidersFor(clazz: Class[_]): Seq[MetadataInterfaceSourceProvider] =
-    _registry(clazz).toSeq
+  def queryProvidersFor(interestingObject: Any): Seq[MetadataInterfaceSourceProvider] =
+    _registry(interestingObject.getClass).toSeq
 
   /**
    *

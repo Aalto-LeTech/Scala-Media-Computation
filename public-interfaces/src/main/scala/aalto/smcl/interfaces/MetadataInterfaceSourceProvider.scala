@@ -11,9 +11,9 @@ trait MetadataInterfaceSourceProvider {
   /**
    *
    *
-   * @param clazz
+   * @param interestingObject
    * @return
    */
-  def querySourceFor(clazz: Class[_]): Any
+  def querySourceFor(interestingObject: Any): Any
 
 }
