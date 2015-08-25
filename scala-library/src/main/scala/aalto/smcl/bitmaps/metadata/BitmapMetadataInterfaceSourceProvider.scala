@@ -20,10 +20,14 @@ class BitmapMetadataInterfaceSourceProvider extends MetadataInterfaceSourceProvi
    * @param interestingObject
    * @return
    */
-  override def querySourceFor(interestingObject: Any): Option[Any] =
-    interestingObject match {
-      case b: Bitmap => Some(BitmapMetadataSource(b))
-      case _         => None
+  override def querySourceFor(interestingObject: Any): Option[Any] = {
+    interestingObject.getClass match {
+      case b if b.isAssignableFrom(Bitmap().getClass) =>
+        Some(BitmapMetadataSource(interestingObject.asInstanceOf[Bitmap]))
+
+      case _ => None
     }
+
+  }
 
 }

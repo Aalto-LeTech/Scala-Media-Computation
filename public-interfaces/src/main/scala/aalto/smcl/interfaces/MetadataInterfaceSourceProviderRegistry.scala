@@ -16,7 +16,7 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
   /** */
   private[this] val _registry =
     new mutable.HashMap[Class[_], mutable.Set[MetadataInterfaceSourceProvider]]
-        with mutable.MultiMap[Class[_], MetadataInterfaceSourceProvider]
+      with mutable.MultiMap[Class[_], MetadataInterfaceSourceProvider]
 
 
   /**
@@ -25,20 +25,23 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
    * @param interestingObject
    * @return
    */
-  def queryProvidersFor(interestingObject: Any): Option[Set[MetadataInterfaceSourceProvider]] =
-    _registry.get(interestingObject.getClass) match {
-      case Some(s: mutable.Set[MetadataInterfaceSourceProvider]) => Some(s.toSet)
-      case _                                                     => None
-    }
+  def queryProvidersFor(interestingObject: Any): Option[Set[MetadataInterfaceSourceProvider]] = {
+    val clazz: Class[_] = interestingObject.getClass
+    val searchResult = _registry.get(clazz)
+    if (searchResult.isEmpty)
+      return None
+
+    Some(searchResult.get.toSet)
+  }
 
   /**
    *
    *
-   * @param clazz
    * @param provider
    */
-  private[smcl] def registerProvider(clazz: Class[_], provider: MetadataInterfaceSourceProvider): Unit = {
-    require(clazz != null, "The class argument cannot be null.")
+  private[smcl] def registerProvider(
+    clazz: Class[_],
+    provider: MetadataInterfaceSourceProvider): Unit = {
     require(provider != null, "The provider argument cannot be null.")
 
     _registry.addBinding(clazz, provider)
@@ -52,9 +55,9 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
   private[smcl] def unregisterProvider(provider: MetadataInterfaceSourceProvider): Unit = {
     require(provider != null, "The source argument cannot be null.")
 
-    _registry.keys.foreach {clazz =>
-      if (_registry.entryExists(clazz, _ == provider))
-        _registry.removeBinding(clazz, provider)
+    _registry.keys.foreach {classId =>
+      if (_registry.entryExists(classId, _ == provider))
+        _registry.removeBinding(classId, provider)
     }
   }
 

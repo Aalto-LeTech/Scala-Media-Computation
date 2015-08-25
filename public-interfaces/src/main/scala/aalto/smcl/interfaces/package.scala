@@ -9,7 +9,7 @@ package aalto.smcl
 package object interfaces {
 
   /** Global registry for metadata providers. */
-  val GlobalMetadataInterfaceSourceRegistry =
+  val GlobalMetadataInterfaceSourceProviderRegistry =
     new MetadataInterfaceSourceProviderRegistry()
 
 }
