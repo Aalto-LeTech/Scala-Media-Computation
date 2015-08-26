@@ -106,7 +106,7 @@ object BitmapModuleInitializer extends ModuleInitializer {
 
     GS += new Setting[RGBAColor](
       key = DefaultBackground,
-      initialValue = PresetColors('white),
+      initialValue = PresetColors('white).withAbsoluteOpacity(0),
       validator = IsNullValidator("Color cannot be null"))
 
     GS += new Setting[RGBAColor](
