@@ -1,6 +1,8 @@
 package aalto.smcl.platform
 
 
+import java.awt.AlphaComposite
+
 import scala.swing.Graphics2D
 
 import aalto.smcl.bitmaps._
@@ -41,11 +43,18 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    *
    * @param color
    */
-  def clearUsing(color: RGBAColor = GS.colorFor(DefaultBackground)): Unit =
+  def clearUsing(
+      color: RGBAColor = GS.colorFor(DefaultBackground),
+      useSourceColorLiterally: Boolean = false): Unit = {
+
     withDrawingSurface {ds =>
+      if (useSourceColorLiterally)
+        ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
+
       ds.setColor(PlatformColor(color).awtColor)
       ds.fillRect(0, 0, owner.widthInPixels, owner.heightInPixels)
     }
+  }
 
   /**
    *

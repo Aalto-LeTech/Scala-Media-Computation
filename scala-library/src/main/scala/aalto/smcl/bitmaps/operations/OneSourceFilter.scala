@@ -1,6 +1,8 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.bitmaps.DefaultBackground
+import aalto.smcl.common.GS
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -19,6 +21,12 @@ trait OneSourceFilter extends Renderable with Buffered {
    *
    * @param destination
    */
-  def render(destination: PlatformBitmapBuffer): Unit =
-    destination.drawingSurface().drawBitmap(getOrCreateStaticBuffer(destination))
+  def render(destination: PlatformBitmapBuffer): Unit = {
+    val filteredBitmap = getOrCreateStaticBuffer(destination)
+
+    val ds = destination.drawingSurface()
+    ds.clearUsing(GS.colorFor(DefaultBackground), useSourceColorLiterally = true)
+    ds.drawBitmap(filteredBitmap)
+  }
+
 }

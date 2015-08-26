@@ -5,8 +5,8 @@ import java.awt.Graphics2D
 import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 
+import aalto.smcl.bitmaps._
 import aalto.smcl.bitmaps.immutable.ConvolutionKernel
-import aalto.smcl.bitmaps.{BitmapValidator, CanvasesAreResizedBasedOnTransformations, DefaultBackground}
 import aalto.smcl.common._
 import aalto.smcl.platform.PlatformSettingKeys.PlatformBitmapInterpolationMethod
 
