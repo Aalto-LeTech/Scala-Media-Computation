@@ -75,14 +75,14 @@ object BitmapModuleInitializer extends ModuleInitializer {
 
     GS += new Setting[Int](
       key = DefaultRoundingWidthInPixels,
-      initialValue = 10,
+      initialValue = 20,
       validator = ConditionFalseValidator[Int]({
         _ < 1
       }, "Rounding width must be at least 1 pixel"))
 
     GS += new Setting[Int](
       key = DefaultRoundingHeightInPixels,
-      initialValue = 10,
+      initialValue = 20,
       validator = ConditionFalseValidator[Int]({
         _ < 1
       }, "Rounding height must be at least 1 pixel"))
