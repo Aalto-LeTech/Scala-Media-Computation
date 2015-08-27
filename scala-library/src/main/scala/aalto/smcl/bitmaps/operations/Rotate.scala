@@ -12,6 +12,11 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 /**
  * Operation to rotate a bitmap around its center.
  *
+ * @param sourceBitmap
+ * @param angleInDegrees
+ * @param resizeCanvasBasedOnTransformation
+ * @param backgroundColor
+ *
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class Rotate(

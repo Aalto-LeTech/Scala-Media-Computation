@@ -9,6 +9,8 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 /**
  * Operation to apply a color component translation table to a bitmap.
  *
+ * @param translator
+ *
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class FilterWithComponentTranslationTable(translator: RGBAComponentTranslationTable)

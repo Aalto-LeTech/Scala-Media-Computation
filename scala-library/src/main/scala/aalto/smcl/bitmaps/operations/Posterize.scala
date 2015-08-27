@@ -7,7 +7,9 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 /**
- * Operation to create a negative of a bitmap.
+ * Operation to posterize a bitmap, i.e. to reduce the amount of its colors.
+ *
+ * @param strengthAsPercentage
  *
  * @author Aleksi Lukkarinen
  */

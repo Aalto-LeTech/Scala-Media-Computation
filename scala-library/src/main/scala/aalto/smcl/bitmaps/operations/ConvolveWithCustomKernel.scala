@@ -11,6 +11,8 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 /**
  * Operation to apply a custom convolution filter to a bitmap.
  *
+ * @param kernel
+ *
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class ConvolveWithCustomKernel(kernel: ConvolutionKernel)

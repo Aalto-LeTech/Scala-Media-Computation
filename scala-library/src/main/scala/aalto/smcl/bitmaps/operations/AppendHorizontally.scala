@@ -14,6 +14,11 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 /**
  * Operation to append bitmaps horizontally next to each other.
  *
+ * @param bitmapsToCombine
+ * @param verticalAlignment
+ * @param paddingInPixels
+ * @param backgroundColor
+ *
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class AppendHorizontally(
