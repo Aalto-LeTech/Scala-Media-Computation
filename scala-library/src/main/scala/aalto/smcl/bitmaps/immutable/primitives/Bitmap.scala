@@ -1224,6 +1224,54 @@ case class Bitmap private(
     rotate90DegsCcw(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
 
+  /**
+   *
+   *
+   * @param numberOfReplicas
+   * @param paddingInPixels
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def replicateHorizontally(
+      numberOfReplicas: Int,
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(
+      ReplicateHorizontally(
+        this,
+        numberOfReplicas,
+        paddingInPixels,
+        backgroundColor),
+      viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param numberOfReplicas
+   * @param paddingInPixels
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def replicateVertically(
+      numberOfReplicas: Int,
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(
+      ReplicateVertically(
+        this,
+        numberOfReplicas,
+        paddingInPixels,
+        backgroundColor),
+      viewerHandling)
+  }
+
 
   // ----------------------------------------------------------------------------------------------
 

@@ -1013,8 +1013,11 @@ trait BitmapOps {
    * @param scalingFactor
    * @return
    */
-  def scale(bmp: Bitmap, scalingFactor: Double): Bitmap =
+  def scale(bmp: Bitmap, scalingFactor: Double): Bitmap = {
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.scale(scalingFactor)
+  }
 
   /**
    * Adds a [[Scale]] operation to a given [[Bitmap]].
@@ -1094,8 +1097,12 @@ trait BitmapOps {
    * @param shearingFactor
    * @return
    */
-  def shear(bmp: Bitmap, shearingFactor: Double): Bitmap =
+  def shear(bmp: Bitmap, shearingFactor: Double): Bitmap = {
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.shear(shearingFactor)
+  }
+
 
   /**
    * Adds a [[Shear]] operation to a given [[Bitmap]].
@@ -1113,6 +1120,8 @@ trait BitmapOps {
       resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
       backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
     bmp.shearHorizontally(
       shearingFactor,
@@ -1138,9 +1147,64 @@ trait BitmapOps {
       backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
     bmp.shearVertically(
       shearingFactor,
       resizeCanvasBasedOnTransformation,
+      backgroundColor,
+      viewerHandling)
+  }
+
+
+  /**
+   * Adds a [[ReplicateHorizontally]] operation to a given [[Bitmap]].
+   *
+   * @param bmp
+   * @param numberOfReplicas
+   * @param paddingInPixels
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def replicateHorizontally(
+      bmp: Bitmap,
+      numberOfReplicas: Int,
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.replicateHorizontally(
+      numberOfReplicas,
+      paddingInPixels,
+      backgroundColor,
+      viewerHandling)
+  }
+
+  /**
+   * Adds a [[ReplicateVertically]] operation to a given [[Bitmap]].
+   *
+   * @param bmp
+   * @param numberOfReplicas
+   * @param paddingInPixels
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def replicateVertically(
+      bmp: Bitmap,
+      numberOfReplicas: Int,
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.replicateVertically(
+      numberOfReplicas,
+      paddingInPixels,
       backgroundColor,
       viewerHandling)
   }

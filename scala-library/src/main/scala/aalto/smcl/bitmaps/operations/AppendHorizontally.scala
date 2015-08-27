@@ -47,6 +47,8 @@ private[bitmaps] case class AppendHorizontally(
     childOperationListsOption.get.foldLeft[Int](0)({_ + _.widthInPixels}) +
         (childOperationListsOption.get.length - 1) * paddingInPixels
 
+  BitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
+
   /** Vertical offsets of the bitmaps to be combined. */
   val verticalOffsets: Seq[Int] = verticalAlignment match {
     case VerticalAlignment.Top =>

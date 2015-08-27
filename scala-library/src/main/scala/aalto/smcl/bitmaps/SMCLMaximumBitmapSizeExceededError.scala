@@ -15,10 +15,10 @@ final class SMCLMaximumBitmapSizeExceededError private[smcl](
   val sb = new StringBuilder(200)
 
   sb ++= s"The maximum image size of ${BitmapValidator.MaximumBitmapWidthInPixels} x " +
-    s"${BitmapValidator.MaximumBitmapHeightInPixels} px has been exceeded"
+    s"${BitmapValidator.MaximumBitmapHeightInPixels} px has been exceeded "
 
   if (realWidth.isDefined && realHeight.isDefined)
-    sb ++= s"(was ${realWidth.get} x ${realHeight.get}} )"
+    sb ++= s"(was ${realWidth.get} x ${realHeight.get})"
 
   sb ++= "."
 
