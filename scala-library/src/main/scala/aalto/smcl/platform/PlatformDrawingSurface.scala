@@ -6,7 +6,7 @@ import java.awt.AlphaComposite
 import scala.swing.Graphics2D
 
 import aalto.smcl.bitmaps._
-import aalto.smcl.common.{AffineTransformation, GS, RGBAColor}
+import aalto.smcl.common.{ColorValidator, AffineTransformation, GS, RGBAColor}
 
 
 
@@ -71,12 +71,48 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    * @param bitmap
    * @param x
    * @param y
+   * @param opacity
    * @return
    */
-  def drawBitmap(bitmap: PlatformBitmapBuffer, x: Int, y: Int): Boolean =
+  def drawBitmap(
+      bitmap: PlatformBitmapBuffer,
+      x: Int,
+      y: Int,
+      opacity: Int = ColorValidator.MaximumRgbaOpacity): Boolean = {
+
+    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumRgbaOpacity
+
     withDrawingSurface {ds =>
+      ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
+
       ds.drawImage(bitmap.awtBufferedImage, x, y, null)
     }
+  }
+
+  /**
+   *
+   *
+   * @param bitmap
+   * @param transformation
+   * @param opacity
+   * @return
+   */
+  def drawBitmap(
+      bitmap: PlatformBitmapBuffer,
+      transformation: AffineTransformation,
+      opacity: Int): Boolean = {
+
+    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumRgbaOpacity
+
+    withDrawingSurface {ds =>
+      ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
+
+      ds.drawImage(
+        bitmap.awtBufferedImage,
+        transformation.platformAffineTransform.awtAffineTransformation,
+        null)
+    }
+  }
 
   /**
    *
@@ -87,15 +123,8 @@ private[smcl] class PlatformDrawingSurface private(val owner: PlatformBitmapBuff
    */
   def drawBitmap(
       bitmap: PlatformBitmapBuffer,
-      transformation: AffineTransformation): Boolean = {
-
-    withDrawingSurface {ds =>
-      ds.drawImage(
-        bitmap.awtBufferedImage,
-        transformation.platformAffineTransform.awtAffineTransformation,
-        null)
-    }
-  }
+      transformation: AffineTransformation): Boolean =
+    drawBitmap(bitmap, transformation, ColorValidator.MaximumRgbaOpacity)
 
   /**
    *

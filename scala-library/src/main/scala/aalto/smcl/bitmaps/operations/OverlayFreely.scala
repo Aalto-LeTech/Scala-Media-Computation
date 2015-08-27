@@ -21,16 +21,19 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class OverlayFreely(
-  bottomBitmap: Bitmap,
-  topBitmap: Bitmap,
-  topBitmapUpperLeftX: Int,
-  topBitmapUpperLeftY: Int,
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-  extends AbstractOperation with BufferProvider with Immutable {
+    bottomBitmap: Bitmap,
+    topBitmap: Bitmap,
+    topBitmapUpperLeftX: Int,
+    topBitmapUpperLeftY: Int,
+    topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    extends AbstractOperation with BufferProvider with Immutable {
 
   require(bottomBitmap != null, "The lower bitmap argument has to be a Bitmap instance (was null).")
   require(topBitmap != null, "The upper bitmap argument has to be a Bitmap instance (was null).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
+
+  ColorValidator.validateRgbaOpacityComponent(topBitmapOpacity)
 
   /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
@@ -45,14 +48,14 @@ private[bitmaps] case class OverlayFreely(
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =
     if (topBitmapUpperLeftX < 0)
-      bottomBitmap.widthInPixels - topBitmapUpperLeftX
+      (bottomBitmap.widthInPixels - topBitmapUpperLeftX).max(topBitmap.widthInPixels)
     else
       bottomBitmap.widthInPixels.max(topBitmapUpperLeftX + topBitmap.widthInPixels)
 
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int =
     if (topBitmapUpperLeftY < 0)
-      bottomBitmap.heightInPixels - topBitmapUpperLeftY
+      (bottomBitmap.heightInPixels - topBitmapUpperLeftY).max(topBitmap.heightInPixels)
     else
       bottomBitmap.heightInPixels.max(topBitmapUpperLeftY + topBitmap.heightInPixels)
 
@@ -93,7 +96,7 @@ private[bitmaps] case class OverlayFreely(
     val topBuffer = topBitmap.toRenderedRepresentation
 
     drawingSurface.drawBitmap(bottomBuffer, bottomX, bottomY)
-    drawingSurface.drawBitmap(topBuffer, topX, topY)
+    drawingSurface.drawBitmap(topBuffer, topX, topY, topBitmapOpacity)
 
     newBuffer
   }
