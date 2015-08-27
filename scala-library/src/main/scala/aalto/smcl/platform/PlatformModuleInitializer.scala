@@ -23,7 +23,7 @@ private[smcl] object PlatformModuleInitializer extends ModuleInitializer {
   addInitializer {() =>
     GS += new Setting[BitmapInterpolationMethod.Value](
       key = PlatformBitmapInterpolationMethod,
-      initialValue = BitmapInterpolationMethod.Bicubic,
+      initialValue = BitmapInterpolationMethod.NearestNeighbor,
       validator = EmptyValidator)
   }
 
