@@ -43,6 +43,7 @@ private[bitmaps] case class OverlayFreely(
   lazy val metaInformation = MetaInformationMap(Map(
     "topBitmapUpperLeftX" -> Option(s"$topBitmapUpperLeftX px"),
     "topBitmapUpperLeftY" -> Option(s"$topBitmapUpperLeftY px"),
+    "topBitmapOpacity" -> Option(topBitmapOpacity.toString),
     "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")))
 
   /** Width of the provided buffer in pixels. */
