@@ -8,7 +8,6 @@ import scala.util.Try
 
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.common.AffineTransformation
-import aalto.smcl.platform.{PlatformAffineTransformation, PlatformAffineTransformation$}
 
 
 

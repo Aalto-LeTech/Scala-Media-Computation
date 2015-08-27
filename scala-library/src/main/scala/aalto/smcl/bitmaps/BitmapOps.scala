@@ -55,6 +55,34 @@ trait BitmapOps {
     bmp.filterWith(translator, viewerHandling)
   }
 
+
+  /**
+   *
+   *
+   * @param bitmapsToOverlayFromBottomToTop
+   * @param horizontalAlignment
+   * @param verticalAlignment
+   * @param opacityForAllBitmaps
+   * @param backgroundColor
+   * @param viewerHandling
+   * @return
+   */
+  def overlayPerAlignments(
+      bitmapsToOverlayFromBottomToTop: Bitmap*)(
+      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+      opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    bitmapsToOverlayFromBottomToTop.head.overlayPerAlignments(bitmapsToOverlayFromBottomToTop.tail: _*)(
+      horizontalAlignment,
+      verticalAlignment,
+      opacityForAllBitmaps,
+      backgroundColor,
+      viewerHandling)
+  }
+
   /**
    *
    *

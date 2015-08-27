@@ -810,6 +810,121 @@ case class Bitmap private(
       viewerHandling)
   }
 
+
+
+  // ----------------------------------------------------------------------------------------------
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :|++| (other: Bitmap): Bitmap =
+    overlayPerAlignments(this, other)(HorizontalAlignment.Left, VerticalAlignment.Top)
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :|+*| (other: Bitmap): Bitmap =
+    overlayPerAlignments(this, other)(HorizontalAlignment.Left, VerticalAlignment.Middle)
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :|+-| (other: Bitmap): Bitmap =
+    overlayPerAlignments(this, other)(HorizontalAlignment.Left, VerticalAlignment.Bottom)
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :|*+| (other: Bitmap): Bitmap =
+    overlayPerAlignments(this, other)(HorizontalAlignment.Center, VerticalAlignment.Top)
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :|**| (other: Bitmap): Bitmap =
+    overlayPerAlignments(this, other)(HorizontalAlignment.Center, VerticalAlignment.Middle)
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :|*-| (other: Bitmap): Bitmap =
+    overlayPerAlignments(this, other)(HorizontalAlignment.Center, VerticalAlignment.Bottom)
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :|-+| (other: Bitmap): Bitmap =
+    overlayPerAlignments(this, other)(HorizontalAlignment.Right, VerticalAlignment.Top)
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :|-*| (other: Bitmap): Bitmap =
+    overlayPerAlignments(this, other)(HorizontalAlignment.Right, VerticalAlignment.Middle)
+
+  /**
+   *
+   *
+   * @param other
+   * @return
+   */
+  def :|--| (other: Bitmap): Bitmap =
+    overlayPerAlignments(this, other)(HorizontalAlignment.Right, VerticalAlignment.Bottom)
+
+  // ----------------------------------------------------------------------------------------------
+
+
+
+  /**
+   *
+   *
+   * @param bitmapsToLayOverThisFromBottomToTop
+   * @param horizontalAlignment
+   * @param verticalAlignment
+   * @param opacityForAllBitmaps
+   * @param backgroundColor
+   * @return
+   */
+  def overlayPerAlignments(
+      bitmapsToLayOverThisFromBottomToTop: Bitmap*)(
+      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+      opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(
+      OverlayPerAlignments(this +: bitmapsToLayOverThisFromBottomToTop)(
+        horizontalAlignment,
+        verticalAlignment,
+        opacityForAllBitmaps),
+      viewerHandling)
+  }
+
   /**
    *
    *
