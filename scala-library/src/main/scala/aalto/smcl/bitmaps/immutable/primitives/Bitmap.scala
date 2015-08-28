@@ -817,6 +817,19 @@ case class Bitmap private(
       viewerHandling)
   }
 
+  /**
+   *
+   *
+   * @param colorToTrim
+   * @param viewerHandling
+   * @return
+   */
+  def trim(
+      colorToTrim: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(Trim(this, colorToTrim), viewerHandling)
+  }
 
 
   // ----------------------------------------------------------------------------------------------

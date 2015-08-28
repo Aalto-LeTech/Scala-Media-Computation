@@ -56,6 +56,22 @@ trait BitmapOps {
   }
 
   /**
+   *
+   *
+   * @param bmp
+   * @param colorToTrim
+   */
+  def trim(
+      bmp: Bitmap,
+      colorToTrim: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.trim(colorToTrim, viewerHandling)
+  }
+
+  /**
    * Adds a [[OverlayFreely]] operation to a given [[Bitmap]].
    *
    * @param bottomBitmap

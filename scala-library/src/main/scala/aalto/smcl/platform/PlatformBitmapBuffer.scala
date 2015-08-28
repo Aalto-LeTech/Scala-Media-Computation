@@ -1,9 +1,9 @@
 package aalto.smcl.platform
 
 
-import java.awt.Graphics2D
 import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
+import java.awt.{AlphaComposite, Graphics2D}
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.bitmaps.immutable.ConvolutionKernel
@@ -62,8 +62,25 @@ private[smcl] object PlatformBitmapBuffer {
    * @param height
    * @return
    */
-  private[platform] def createNormalizedLowLevelBitmapBufferOf(width: Int, height: Int) =
-    new BufferedImage(width, height, NormalizedBufferType)
+  private[platform] def createNormalizedLowLevelBitmapBufferOf(
+      width: Int,
+      height: Int): BufferedImage = {
+
+    val newBuffer = new BufferedImage(width, height, NormalizedBufferType)
+
+    var drawingSurface: Graphics2D = null
+    try {
+      drawingSurface = newBuffer.createGraphics()
+      drawingSurface.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
+      drawingSurface.setColor(GS.colorFor(DefaultBackground).toAwtColor)
+      drawingSurface.fillRect(0, 0, width, height)
+    }
+    finally {
+      drawingSurface.dispose()
+    }
+
+    newBuffer
+  }
 
 
   /**
@@ -114,6 +131,138 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
 
   /** */
   def drawingSurface(): PlatformDrawingSurface = PlatformDrawingSurface(this)
+
+  /**
+   *
+   *
+   * @param colorToTrim
+   * @return
+   */
+  def trim(colorToTrim: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
+    val IdxRed = 0
+    val IdxGreen = 1
+    val IdxBlue = 2
+    val IdxOpacity = 3
+
+    val sourceRaster: Raster = awtBufferedImage.getData
+    val rasterWidth = sourceRaster.getWidth
+    val rasterHeight = sourceRaster.getHeight
+
+    var pixel = Array(0, 0, 0, 0)
+    val red = colorToTrim.red
+    val green = colorToTrim.green
+    val blue = colorToTrim.blue
+    val opacity = colorToTrim.opacity
+
+    // Check for "empty" columns on the left edge (and also if the raster is fully "empty")
+    var row = 0
+    var column = 0
+    var deviationFound: Boolean = false
+    while (column < rasterWidth && !deviationFound) {
+      while (row < rasterHeight && !deviationFound) {
+        pixel = sourceRaster.getPixel(column, row, pixel)
+        if (pixel(IdxRed) != red
+            || pixel(IdxGreen) != green
+            || pixel(IdxBlue) != blue
+            || pixel(IdxOpacity) != opacity) {
+
+          deviationFound = true
+        }
+
+        row += 1
+      }
+
+      column += 1
+      row = 0
+    }
+    if (column >= rasterWidth && !deviationFound) {
+      // Raster was fully "empty" ==> return 1 x 1 bitmap
+      return PlatformBitmapBuffer(1, 1)
+    }
+
+    val firstNonEmptyColumn = column - 1
+
+    // At this point, we know that the raster was not fully "empty", which means that there has to be at least one
+    // deviating pixel. Consequently, the following loops have to stop before crossing the opposite edge of the raster.
+
+
+    // Check for "empty" columns on the right edge
+    row = 0
+    column = rasterWidth - 1
+    deviationFound = false
+    while (column >= 0 && !deviationFound) {
+      while (row < rasterHeight && !deviationFound) {
+        pixel = sourceRaster.getPixel(column, row, pixel)
+        if (pixel(IdxRed) != red
+            || pixel(IdxGreen) != green
+            || pixel(IdxBlue) != blue
+            || pixel(IdxOpacity) != opacity) {
+
+          deviationFound = true
+        }
+
+        row += 1
+      }
+
+      column -= 1
+      row = 0
+    }
+
+    val lastNonEmptyColumn = column + 1
+
+    // Check for "empty" rows on the top edge
+    row = 0
+    column = 0
+    deviationFound = false
+    while (row < rasterHeight && !deviationFound) {
+      while (column < rasterWidth && !deviationFound) {
+        pixel = sourceRaster.getPixel(column, row, pixel)
+        if (pixel(IdxRed) != red
+            || pixel(IdxGreen) != green
+            || pixel(IdxBlue) != blue
+            || pixel(IdxOpacity) != opacity) {
+
+          deviationFound = true
+        }
+
+        column += 1
+      }
+
+      row += 1
+      column = 0
+    }
+
+    val firstNonEmptyRow = row - 1
+
+
+    // Check for "empty" rows on the bottom edge
+    row = rasterHeight - 1
+    column = 0
+    deviationFound = false
+    while (row >= 0 && !deviationFound) {
+      while (column < rasterWidth && !deviationFound) {
+        pixel = sourceRaster.getPixel(column, row, pixel)
+        if (pixel(IdxRed) != red
+            || pixel(IdxGreen) != green
+            || pixel(IdxBlue) != blue
+            || pixel(IdxOpacity) != opacity) {
+
+          deviationFound = true
+        }
+
+        column += 1
+      }
+
+      row -= 1
+      column = 0
+    }
+
+    val lastNonEmptyRow = row + 1
+
+
+    // Return a copy of the non-empty portion of the source bitmap
+    copyPortion(firstNonEmptyColumn, firstNonEmptyRow, lastNonEmptyColumn, lastNonEmptyRow)
+  }
 
   /**
    *
@@ -229,6 +378,41 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    */
   def copy(): PlatformBitmapBuffer =
     PlatformBitmapBuffer(BitmapUtils.deepCopy(awtBufferedImage))
+
+  /**
+   *
+   *
+   * @param topLeftX
+   * @param topLeftY
+   * @param bottomRightX
+   * @param bottomRightY
+   * @return
+   */
+  def copyPortion(
+      topLeftX: Int,
+      topLeftY: Int,
+      bottomRightX: Int,
+      bottomRightY: Int): PlatformBitmapBuffer = {
+
+    val width = bottomRightX - topLeftX + 1
+    val height = bottomRightY - topLeftY + 1
+
+    val sourceBufferArea =
+      awtBufferedImage.getSubimage(topLeftX, topLeftY, width, height)
+
+    val newBuffer = PlatformBitmapBuffer.createNormalizedLowLevelBitmapBufferOf(width, height)
+
+    var drawingSurface: Graphics2D = null
+    try {
+      drawingSurface = newBuffer.createGraphics()
+      drawingSurface.drawImage(sourceBufferArea, null, 0, 0)
+    }
+    finally {
+      drawingSurface.dispose()
+    }
+
+    PlatformBitmapBuffer(newBuffer)
+  }
 
   /**
    *

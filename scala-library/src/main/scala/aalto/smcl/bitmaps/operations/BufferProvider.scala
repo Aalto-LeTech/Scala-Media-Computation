@@ -39,7 +39,10 @@ private[bitmaps] trait BufferProvider extends Buffered {
    *
    * @return
    */
-  final def createNewBuffer(): PlatformBitmapBuffer =
-    provideNewBufferToBeCopiedForProvidees().copy()
+  final def createNewBuffer(): PlatformBitmapBuffer = {
+    val templateBuffer = provideNewBufferToBeCopiedForProvidees()
+
+    templateBuffer.copy()
+  }
 
 }
