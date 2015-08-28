@@ -28,6 +28,7 @@ private[bitmaps] case class Shear(
     extends AbstractOperation with BufferProvider with Immutable {
 
   require(sourceBitmap != null, s"Shearing requires exactly one source image (was null).")
+  require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
