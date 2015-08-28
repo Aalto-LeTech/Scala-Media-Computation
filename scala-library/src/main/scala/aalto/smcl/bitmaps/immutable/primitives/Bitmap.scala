@@ -762,7 +762,7 @@ case class Bitmap private(
    * @param topBitmapUpperLeftY
    * @param backgroundColor
    */
-  def layFreelyUnder(
+  def underlayBehind(
       topBitmap: Bitmap,
       topBitmapUpperLeftX: Int,
       topBitmapUpperLeftY: Int,
@@ -791,7 +791,7 @@ case class Bitmap private(
    * @param viewerHandling
    * @return
    */
-  def layFreelyOverAt(
+  def overlayOn(
       bottomBitmap: Bitmap,
       upperLeftX: Int,
       upperLeftY: Int,
