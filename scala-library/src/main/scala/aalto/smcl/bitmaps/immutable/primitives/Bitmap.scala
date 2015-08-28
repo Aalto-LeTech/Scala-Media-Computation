@@ -271,6 +271,13 @@ case class Bitmap private(
   /**
    *
    *
+   * @return
+   */
+  def unary_~(): Bitmap = negate()
+
+  /**
+   *
+   *
    * @param viewerHandling
    * @return
    */
