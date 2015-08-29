@@ -62,13 +62,42 @@ trait BitmapOps {
    * @param colorToTrim
    */
   def trim(
-      bmp: Bitmap,
-      colorToTrim: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    bmp: Bitmap,
+    colorToTrim: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
     bmp.trim(colorToTrim, viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param bmp
+   * @param windowTopLeftX
+   * @param windowTopLeftY
+   * @param windowBottomRightX
+   * @param windowBottomRightY
+   * @param viewerHandling
+   * @return
+   */
+  def crop(
+    bmp: Bitmap,
+    windowTopLeftX: Int,
+    windowTopLeftY: Int,
+    windowBottomRightX: Int,
+    windowBottomRightY: Int,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.crop(
+      windowTopLeftX,
+      windowTopLeftY,
+      windowBottomRightX,
+      windowBottomRightY,
+      viewerHandling)
   }
 
   /**
