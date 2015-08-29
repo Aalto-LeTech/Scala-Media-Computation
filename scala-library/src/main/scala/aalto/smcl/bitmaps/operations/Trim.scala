@@ -10,7 +10,8 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 /**
- * Operation to trim bitmap, i.e. remove empty rows and columns of pixels) from its edges.
+ * Operation to trim a bitmap, i.e. to remove "empty" horizontal
+ * and vertical slices of pixels from its edges.
  *
  * @param sourceBitmap
  * @param colorToTrim
