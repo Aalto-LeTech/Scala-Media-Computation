@@ -76,7 +76,6 @@ package object common extends ColorOps {
   /** 2 * PI */
   protected[smcl] val PI2 = 2 * Math.PI
 
-
   /** Color component value representing maximal opacity. */
   val FullyOpaque: Int = ColorValidator.MaximumRgbaOpacity
 

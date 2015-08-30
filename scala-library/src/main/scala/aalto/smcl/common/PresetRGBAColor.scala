@@ -1,12 +1,20 @@
 package aalto.smcl.common
 
 
+import aalto.smcl.SMCL
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-private[common] object PresetRGBAColor {
+private[smcl] object PresetRGBAColor {
+
+  SMCL.performInitialization()
+
 
   /**
    *

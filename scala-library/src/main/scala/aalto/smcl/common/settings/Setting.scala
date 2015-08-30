@@ -1,6 +1,7 @@
 package aalto.smcl.common.settings
 
 
+import aalto.smcl.SMCL
 import aalto.smcl.common.ReflectionUtils
 
 
@@ -21,8 +22,11 @@ private[smcl] final class Setting[SettingType](
   val initialValue: SettingType,
   val validator: SettingType => Option[Throwable]) extends Mutable {
 
+  SMCL.performInitialization()
+
+
   if (validator != null)
-    validator(initialValue).foreach { reason => throw new SMCLSettingValidationError(key, reason) }
+    validator(initialValue).foreach {reason => throw new SMCLSettingValidationError(key, reason)}
 
   /** Holds the current value of this [[Setting]]. */
   private var _currentValue: SettingType = initialValue

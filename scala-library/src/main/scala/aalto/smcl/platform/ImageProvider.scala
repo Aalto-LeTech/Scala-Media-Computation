@@ -10,6 +10,7 @@ import javax.imageio.{ImageIO, ImageReader}
 
 import scala.util._
 
+import aalto.smcl.SMCL
 import aalto.smcl.bitmaps._
 import aalto.smcl.common._
 
@@ -22,6 +23,9 @@ import aalto.smcl.common._
  * @author Aleksi Lukkarinen
  */
 private[smcl] object ImageProvider {
+
+  SMCL.performInitialization()
+
 
   /** */
   lazy val supportedReadableMimeTypes: Seq[String] =
@@ -65,7 +69,7 @@ private[smcl] object ImageProvider {
     val (imageFile, imagePath, imageExtension) =
       ensureThatImageFileIsReadableAndSupported(path)
 
-    EnsureClosingOfAfter(createImageInputStreamFor(imageFile)) { inputStream =>
+    EnsureClosingOfAfter(createImageInputStreamFor(imageFile)) {inputStream =>
       val reader: ImageReader = findSuitableImageReaderFor(inputStream)
 
       try {
@@ -236,30 +240,30 @@ private[smcl] object ImageProvider {
   }
 
 
-/* TODO: Later
+  /* TODO: Later
 
 
-  /**
-   *
-   *
-   *
-   * @param url
-   * @return
-   */
-  def tryToLoadImageFromURL(url: String): Try[PlatformBitmapBuffer] =
-    Try(loadImageFromUrl(url))
+    /**
+     *
+     *
+     *
+     * @param url
+     * @return
+     */
+    def tryToLoadImageFromURL(url: String): Try[PlatformBitmapBuffer] =
+      Try(loadImageFromUrl(url))
 
-  /**
-   *
-   *
-   * @param url
-   * @return
-   */
-  private[platform] def loadImageFromUrl(url: String): PlatformBitmapBuffer = {
-    val imageResource = new File(url)
+    /**
+     *
+     *
+     * @param url
+     * @return
+     */
+    private[platform] def loadImageFromUrl(url: String): PlatformBitmapBuffer = {
+      val imageResource = new File(url)
 
-    null
-  }
-*/
+      null
+    }
+  */
 
 }

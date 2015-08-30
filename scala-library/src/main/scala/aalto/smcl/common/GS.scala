@@ -1,6 +1,7 @@
 package aalto.smcl.common
 
 
+import aalto.smcl.SMCL
 import aalto.smcl.common.settings.Settings
 
 
@@ -11,4 +12,8 @@ import aalto.smcl.common.settings.Settings
  *
  * @author Aleksi Lukkarinen
  */
-object GS extends Settings {}
+object GS extends Settings {
+
+  SMCL.performInitialization()
+
+}

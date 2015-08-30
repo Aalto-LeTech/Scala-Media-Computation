@@ -3,6 +3,7 @@ package aalto.smcl.common
 
 import java.util.Date
 
+import aalto.smcl.SMCL
 import aalto.smcl.platform.DateTimeProvider
 
 
@@ -14,6 +15,9 @@ import aalto.smcl.platform.DateTimeProvider
  * @author Aleksi Lukkarinen
  */
 object TimeStamp {
+
+  SMCL.performInitialization()
+
 
   /**
    *

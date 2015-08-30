@@ -1,12 +1,20 @@
 package aalto.smcl.common
 
 
+import aalto.smcl.SMCL
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 private[smcl] object CommonValidators {
+
+  SMCL.performInitialization()
+
 
   /** */
   val MinimumPercentage: Double = 0.0

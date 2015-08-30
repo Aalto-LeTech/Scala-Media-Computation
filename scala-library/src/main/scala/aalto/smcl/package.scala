@@ -9,4 +9,6 @@ package aalto
  */
 package object smcl {
 
+  SMCL.performInitialization()
+
 }

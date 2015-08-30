@@ -1,6 +1,9 @@
 package aalto.smcl.common
 
 
+import aalto.smcl.SMCL
+
+
 
 
 /**
@@ -9,6 +12,9 @@ package aalto.smcl.common
  * @author Aleksi Lukkarinen
  */
 object ColorValidator {
+
+  SMCL.performInitialization()
+
 
   /** Color component value representing minimal amount of red. */
   val MinimumRgbRed: Int = ByteRange.start

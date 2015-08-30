@@ -1,6 +1,11 @@
 package aalto.smcl.platform
 
 
+import aalto.smcl.SMCL
+
+
+
+
 /**
  * This object provides a way to mimic Java's resource-related `try` facility. The given resource has to implement
  * Java's `AutoCloseable` interface, which enables this class to ensure that the `close()` method of the reserved
@@ -9,6 +14,9 @@ package aalto.smcl.platform
  * @author Aleksi Lukkarinen
  */
 object EnsureClosingOfAfter {
+
+  SMCL.performInitialization()
+
 
   /**
    *

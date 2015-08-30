@@ -3,6 +3,8 @@ package aalto.smcl.common
 
 import scala.reflect.runtime.universe.{Constant, Literal}
 
+import aalto.smcl.SMCL
+
 
 
 
@@ -12,6 +14,9 @@ import scala.reflect.runtime.universe.{Constant, Literal}
  * @author Aleksi Lukkarinen
  */
 private[smcl] object StringUtils {
+
+  SMCL.performInitialization()
+
 
   /**
    * Returns Scala's standard escaped representation of a given string.

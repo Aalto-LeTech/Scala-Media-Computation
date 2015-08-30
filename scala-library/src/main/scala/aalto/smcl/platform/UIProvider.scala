@@ -4,6 +4,8 @@ package aalto.smcl.platform
 import java.awt.{GraphicsEnvironment, Toolkit}
 import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}
 
+import aalto.smcl.SMCL
+
 
 
 
@@ -13,6 +15,9 @@ import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}
  * @author Aleksi Lukkarinen
  */
 private[smcl] object UIProvider {
+
+  SMCL.performInitialization()
+
 
   /** */
   private[platform] val NimbusLookAndFeelName = "Nimbus"

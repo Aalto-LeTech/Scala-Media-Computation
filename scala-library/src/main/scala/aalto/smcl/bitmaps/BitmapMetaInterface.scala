@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.MetaInterfaceBase
+import aalto.smcl.{SMCL, MetaInterfaceBase}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.common.AffineTransformation
 import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
@@ -19,6 +19,9 @@ case class BitmapMetaInterface(relatedBitmap: Bitmap)
             with ResourceMetadataSource
             with StaticGeneralBitmapSource
             with StaticThumbnailBitmapSource {
+
+  SMCL.performInitialization()
+
 
   // @formatter:off
   import java.awt.image.{AffineTransformOp, BufferedImage}

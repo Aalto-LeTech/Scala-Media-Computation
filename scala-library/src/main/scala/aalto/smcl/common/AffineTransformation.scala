@@ -1,6 +1,7 @@
 package aalto.smcl.common
 
 
+import aalto.smcl.SMCL
 import aalto.smcl.platform.PlatformAffineTransformation
 
 
@@ -12,6 +13,9 @@ import aalto.smcl.platform.PlatformAffineTransformation
  * @author Aleksi Lukkarinen
  */
 object AffineTransformation {
+
+  SMCL.performInitialization()
+
 
   /**
    *

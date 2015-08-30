@@ -1,6 +1,7 @@
 package aalto.smcl.common.settings
 
 
+import aalto.smcl.SMCL
 import aalto.smcl.common.settings.BaseSettingKeys._
 import aalto.smcl.common.{RGBAColor, ReflectionUtils, _}
 
@@ -13,6 +14,9 @@ import aalto.smcl.common.{RGBAColor, ReflectionUtils, _}
  * @author Aleksi Lukkarinen
  */
 class Settings {
+
+  SMCL.performInitialization()
+
 
   /** */
   private[this] val _settingMap =
@@ -158,13 +162,6 @@ class Settings {
   /**
    *
    */
-  def resetAll(): Unit = _settingMap.values.foreach {
-    _.reset()
-  }
-
-  /**
-   *
-   */
   def list(): Unit = {
     val settingGroups = groupedByKeyType()
 
@@ -178,6 +175,13 @@ class Settings {
         println(s" - ${setting.key.simpleName}: ${setting.value}")
       }
     }
+  }
+
+  /**
+   *
+   */
+  def resetAll(): Unit = _settingMap.values.foreach {
+    _.reset()
   }
 
   /**

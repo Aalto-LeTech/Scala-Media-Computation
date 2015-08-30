@@ -1,6 +1,7 @@
 package aalto.smcl.common.settings
 
 
+import aalto.smcl.SMCL
 import aalto.smcl.common.{RGBAColor, ReflectionUtils}
 
 
@@ -12,6 +13,8 @@ import aalto.smcl.common.{RGBAColor, ReflectionUtils}
  * @author Aleksi Lukkarinen
  */
 object BaseSettingKeys {
+
+  SMCL.performInitialization()
 
 
   /**

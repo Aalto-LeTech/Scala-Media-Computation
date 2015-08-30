@@ -1,12 +1,21 @@
 package aalto.smcl.bitmaps.immutable
 
 
+import aalto.smcl.SMCL
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 object ConvolutionKernel {
+
+  SMCL.performInitialization()
+
+
 
   /**
    *

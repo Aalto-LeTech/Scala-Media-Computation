@@ -8,6 +8,9 @@ package aalto.smcl
  */
 private[smcl] object Help {
 
+  SMCL.performInitialization()
+
+
   /** */
   // @formatter:off
   val HelpMsgGeneral =

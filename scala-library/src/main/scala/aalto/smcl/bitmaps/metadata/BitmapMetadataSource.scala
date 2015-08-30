@@ -4,7 +4,7 @@ package aalto.smcl.bitmaps.metadata
 import java.awt.image.BufferedImage
 import java.util.Date
 
-import aalto.smcl.MetaInterfaceBase
+import aalto.smcl.{SMCL, MetaInterfaceBase}
 import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 
@@ -21,6 +21,9 @@ case class BitmapMetadataSource(relatedBitmap: Bitmap)
             with ResourceMetadataSource
             with StaticGeneralBitmapSource
             with StaticThumbnailBitmapSource {
+
+  SMCL.performInitialization()
+
 
   /** Number of bitmaps provided per Bitmap instance by this metadata source. */
   val OneBitmap = 1

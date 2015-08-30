@@ -1,6 +1,11 @@
 package aalto.smcl.common
 
 
+import aalto.smcl.SMCL
+
+
+
+
 /**
  * Creates formal-like textual tokens representing classes. A class to
  * be tokenized has to provide the information necessary for tokenization.
@@ -20,6 +25,9 @@ package aalto.smcl.common
  * @author Aleksi Lukkarinen
  */
 private[smcl] object ClassTokenizer {
+
+  SMCL.performInitialization()
+
 
   /** Initial capacity of the `StringBuilder` class used for tokenization. */
   private val InitialStringbuilderCapacityInChars = 200
@@ -77,8 +85,8 @@ private[smcl] object ClassTokenizer {
   private def appendKvPairsOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
     clazz.metaInformation.foreach {
       case (k: String, Some(v: String)) => s ++= ItemSep ++= escape(k) ++= KeyValueSeparator ++= escape(v)
-      case (k: String, None) => s ++= ItemSep ++= escape(k)
-      case pair => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: $pair")
+      case (k: String, None)            => s ++= ItemSep ++= escape(k)
+      case pair                         => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: $pair")
     }
 
   /**

@@ -3,7 +3,7 @@ package aalto.smcl.common
 
 import aalto.smcl
 import aalto.smcl.bitmaps.operations.Renderable
-import aalto.smcl.common
+import aalto.smcl.{SMCL, common}
 import aalto.smcl.platform.PlatformColor
 
 
@@ -15,6 +15,9 @@ import aalto.smcl.platform.PlatformColor
  * @author Aleksi Lukkarinen
  */
 object RGBAColor {
+
+  SMCL.performInitialization()
+
 
   /**
    *

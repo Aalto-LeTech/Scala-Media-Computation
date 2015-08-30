@@ -1,6 +1,11 @@
 package aalto.smcl.common
 
 
+import aalto.smcl.SMCL
+
+
+
+
 /**
  *
  *
@@ -8,8 +13,11 @@ package aalto.smcl.common
  */
 object PresetColors extends Map[Symbol, RGBAColor] with Immutable {
 
+  SMCL.performInitialization()
+
+
   /** */
-  private[this] val _colorMap = Map[Symbol, RGBAColor](
+  private[this] lazy val _colorMap = Map[Symbol, RGBAColor](
     'aliceBlue -> PresetRGBAColor(0xfff0f8ff, Option("alice blue")),
     'amethyst -> PresetRGBAColor(0xff9966cc, Option("amethyst")),
     'antiqueWhite -> PresetRGBAColor(0xfffaebd7, Option("antique white")),

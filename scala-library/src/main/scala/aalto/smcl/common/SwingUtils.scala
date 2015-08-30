@@ -4,6 +4,8 @@ package aalto.smcl.common
 import scala.swing.Dialog
 import scala.swing.Dialog.{Message, Options}
 
+import aalto.smcl.SMCL
+
 
 
 
@@ -13,6 +15,9 @@ import scala.swing.Dialog.{Message, Options}
  * @author Aleksi Lukkarinen
  */
 private[smcl] object SwingUtils {
+
+  SMCL.performInitialization()
+
 
   /**
    *

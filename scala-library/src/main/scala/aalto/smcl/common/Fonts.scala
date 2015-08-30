@@ -4,6 +4,7 @@ package aalto.smcl.common
 import scala.collection.immutable.HashMap
 import scala.swing.Font
 
+import aalto.smcl.SMCL
 import aalto.smcl.platform.FontProvider
 
 
@@ -16,6 +17,9 @@ import aalto.smcl.platform.FontProvider
  */
 object Fonts extends Map[String, Font] with Immutable {
 
+  SMCL.performInitialization()
+
+
   /** */
   private[this] var _fontMap: Map[String, Font] = new HashMap[String, Font]()
 
@@ -27,7 +31,7 @@ object Fonts extends Map[String, Font] with Immutable {
    *
    */
   def initializeFontMap(): Unit = {
-    FontProvider.availableFonts().foreach { font =>
+    FontProvider.availableFonts().foreach {font =>
       _fontMap = _fontMap + (font.getName -> font)
     }
   }

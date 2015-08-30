@@ -1,12 +1,20 @@
 package aalto.smcl.common.settings
 
 
+import aalto.smcl.SMCL
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 object SettingValidatorFactory {
+
+  SMCL.performInitialization()
+
 
   /** */
   val EmptyValidator = null
@@ -23,7 +31,7 @@ object SettingValidatorFactory {
     testFailingIfTrue: SettingType => Boolean,
     errorMessage: String): SettingType => Option[Throwable] = {
 
-    { value =>
+    {value =>
       if (testFailingIfTrue(value)) Option(new IllegalArgumentException(errorMessage))
       else None
     }

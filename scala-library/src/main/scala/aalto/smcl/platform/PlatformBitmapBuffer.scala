@@ -5,6 +5,7 @@ import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 import java.awt.{AlphaComposite, Graphics2D}
 
+import aalto.smcl.SMCL
 import aalto.smcl.bitmaps._
 import aalto.smcl.bitmaps.immutable.ConvolutionKernel
 import aalto.smcl.common._
@@ -19,6 +20,9 @@ import aalto.smcl.platform.PlatformSettingKeys.PlatformBitmapInterpolationMethod
  * @author Aleksi Lukkarinen
  */
 private[smcl] object PlatformBitmapBuffer {
+
+  SMCL.performInitialization()
+
 
   /** */
   val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB

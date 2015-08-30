@@ -3,6 +3,8 @@ package aalto.smcl.common
 
 import scala.reflect.runtime.universe.{ClassSymbol, Mirror, Symbol, runtimeMirror => apiRuntimeMirror}
 
+import aalto.smcl.SMCL
+
 
 
 
@@ -12,6 +14,9 @@ import scala.reflect.runtime.universe.{ClassSymbol, Mirror, Symbol, runtimeMirro
  * @author Aleksi Lukkarinen
  */
 private[smcl] object ReflectionUtils {
+
+  SMCL.performInitialization()
+
 
   /**
    * Returns a runtime mirror.
