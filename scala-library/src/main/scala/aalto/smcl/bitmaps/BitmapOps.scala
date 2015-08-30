@@ -101,6 +101,38 @@ trait BitmapOps {
   }
 
   /**
+   *
+   *
+   * @param bmp
+   * @param extraPixelsOntoLeftEdge
+   * @param extraPixelsOntoTopEdge
+   * @param extraPixelsOntoRightEdge
+   * @param extraPixelsOntoBottomEdge
+   * @param color
+   * @param viewerHandling
+   * @return
+   */
+  def augmentCanvas(
+    bmp: Bitmap,
+    extraPixelsOntoLeftEdge: Int = 0,
+    extraPixelsOntoTopEdge: Int = 0,
+    extraPixelsOntoRightEdge: Int = 0,
+    extraPixelsOntoBottomEdge: Int = 0,
+    color: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.augmentCanvas(
+      extraPixelsOntoLeftEdge,
+      extraPixelsOntoTopEdge,
+      extraPixelsOntoRightEdge,
+      extraPixelsOntoBottomEdge,
+      color,
+      viewerHandling)
+  }
+
+  /**
    * Adds a [[OverlayFreely]] operation to a given [[Bitmap]].
    *
    * @param bottomBitmap

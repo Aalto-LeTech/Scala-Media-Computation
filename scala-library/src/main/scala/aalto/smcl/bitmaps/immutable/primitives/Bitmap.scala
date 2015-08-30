@@ -805,6 +805,36 @@ with TimestampedCreation {
   /**
    *
    *
+   * @param extraPixelsOntoLeftEdge
+   * @param extraPixelsOntoTopEdge
+   * @param extraPixelsOntoRightEdge
+   * @param extraPixelsOntoBottomEdge
+   * @param color
+   * @param viewerHandling
+   * @return
+   */
+  def augmentCanvas(
+    extraPixelsOntoLeftEdge: Int = 0,
+    extraPixelsOntoTopEdge: Int = 0,
+    extraPixelsOntoRightEdge: Int = 0,
+    extraPixelsOntoBottomEdge: Int = 0,
+    color: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
+    apply(
+      AugmentCanvas(
+        this,
+        extraPixelsOntoLeftEdge,
+        extraPixelsOntoTopEdge,
+        extraPixelsOntoRightEdge,
+        extraPixelsOntoBottomEdge,
+        color),
+      viewerHandling)
+  }
+
+  /**
+   *
+   *
    * @param topBitmap
    * @param topBitmapUpperLeftX
    * @param topBitmapUpperLeftY
