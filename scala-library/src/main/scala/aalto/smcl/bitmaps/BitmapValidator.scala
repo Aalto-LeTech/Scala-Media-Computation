@@ -1,8 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.SMCL
-import aalto.smcl.common.GS
+import aalto.smcl.GS
 
 
 
@@ -12,10 +11,7 @@ import aalto.smcl.common.GS
  *
  * @author Aleksi Lukkarinen
  */
-object BitmapValidator {
-
-  SMCL.performInitialization()
-
+class BitmapValidator private[bitmaps]() {
 
   /** */
   val MinimumBitmapWidthInPixels: Int = 1

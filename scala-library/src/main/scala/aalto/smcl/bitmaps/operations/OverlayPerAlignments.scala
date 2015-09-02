@@ -3,9 +3,10 @@ package aalto.smcl.bitmaps.operations
 
 import scala.collection.mutable.ArrayBuffer
 
+import aalto.smcl.GS
 import aalto.smcl.bitmaps._
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.common._
+import aalto.smcl.colors.{ColorValidator, RGBAColor, _}
+import aalto.smcl.infrastructure.{HorizontalAlignment, MetaInformationMap, VerticalAlignment}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -53,7 +54,7 @@ private[bitmaps] case class OverlayPerAlignments(
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int = childOperationListsOption.get.maxBy({_.heightInPixels}).heightInPixels
 
-  /** Future horizontal offsets of the bitmaps to be overlayed. */
+  /** Future horizontal offsets of the bitmaps to be overlaid. */
   val horizontalOffsets: Seq[Int] = horizontalAlignment match {
     case HorizontalAlignment.Left =>
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0)
@@ -69,7 +70,7 @@ private[bitmaps] case class OverlayPerAlignments(
       })
   }
 
-  /** Future vertical offsets of the bitmaps to be overlayed. */
+  /** Future vertical offsets of the bitmaps to be overlaid. */
   val verticalOffsets: Seq[Int] = verticalAlignment match {
     case VerticalAlignment.Top =>
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0).toSeq

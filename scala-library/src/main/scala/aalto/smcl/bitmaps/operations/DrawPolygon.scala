@@ -1,8 +1,10 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.GS
 import aalto.smcl.bitmaps._
-import aalto.smcl.common._
+import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.infrastructure._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -10,7 +12,7 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 
 /**
  * Operation to draw a polygon with given colors. If a color is not given, the default primary/secondary
- * color will be used, as defined in the [[aalto.smcl.common.GS]]. The resulting polyline will be automatically closed.
+ * color will be used, as defined in the [[aalto.smcl.GS]]. The resulting polyline will be automatically closed.
  *
  * @param xCoordinates
  * @param yCoordinates

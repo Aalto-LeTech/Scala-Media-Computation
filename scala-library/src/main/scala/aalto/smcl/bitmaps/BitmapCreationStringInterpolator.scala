@@ -1,15 +1,12 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-
-
-
-
 /**
- * A string interpolator for creating [[Bitmap]] instances.
+ * A string interpolator for creating [[aalto.smcl.bitmaps.Bitmap]] instances.
  *
  * @param sc
+ *
+ * @author Aleksi Lukkarinen
  */
 class BitmapCreationStringInterpolator(val sc: StringContext) extends AnyVal {
 

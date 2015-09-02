@@ -8,8 +8,8 @@ import scala.swing._
 import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
 
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.common.{SMCLUnexpectedInternalError, SwingUtils}
+import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.infrastructure.{SMCLUnexpectedInternalError, SwingUtils}
 import aalto.smcl.platform.Screen
 
 

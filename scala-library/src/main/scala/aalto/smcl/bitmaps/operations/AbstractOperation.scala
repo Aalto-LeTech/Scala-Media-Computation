@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.common.{MetaInformationMap, Tokenizable}
+import aalto.smcl.infrastructure.{MetaInformationMap, Tokenizable}
 
 
 

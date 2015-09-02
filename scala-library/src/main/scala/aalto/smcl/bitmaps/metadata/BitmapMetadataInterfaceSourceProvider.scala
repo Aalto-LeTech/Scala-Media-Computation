@@ -1,8 +1,7 @@
 package aalto.smcl.bitmaps.metadata
 
 
-import aalto.smcl.SMCL
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
 
 
@@ -13,10 +12,8 @@ import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
  *
  * @author Aleksi Lukkarinen
  */
-class BitmapMetadataInterfaceSourceProvider extends MetadataInterfaceSourceProvider {
-
-  SMCL.performInitialization()
-
+private[metadata]
+class BitmapMetadataInterfaceSourceProvider() extends MetadataInterfaceSourceProvider {
 
   /**
    *

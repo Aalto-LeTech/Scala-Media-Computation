@@ -14,7 +14,8 @@ trait RenderableBitmap {
   def renderOnto(platformDrawingSurface: PlatformDrawingSurface, x: Int, y: Int): Unit
 
   /**
-   * Returns an instance of Java's [[PlatformBitmapBuffer]] representing this [[RenderableBitmap]].
+   * Returns an instance of Java's [[aalto.smcl.platform.PlatformBitmapBuffer]]
+   * representing this [[RenderableBitmap]].
    */
   def toRenderedRepresentation: PlatformBitmapBuffer
 

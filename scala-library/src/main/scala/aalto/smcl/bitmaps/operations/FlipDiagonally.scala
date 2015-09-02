@@ -2,6 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.common._
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -35,7 +36,7 @@ private[bitmaps] case class FlipDiagonally()
         sources(0).widthInPixels,
         sources(0).heightInPixels)
 
-    sources(0).createTransfomedVersionWith(transformation)
+    sources(0).createTransformedVersionWith(transformation)
   }
 
 }

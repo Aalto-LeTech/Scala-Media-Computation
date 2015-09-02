@@ -1,8 +1,10 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.GS
 import aalto.smcl.bitmaps._
-import aalto.smcl.common._
+import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -10,7 +12,7 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 
 /**
  * Operation to draw an arc with given colors. If a color is not given, the default
- * primary/secondary colors will be used, as defined in the [[GS]].
+ * primary/secondary colors will be used, as defined in the [[aalto.smcl.GS]].
  *
  * @param upperLeftCornerXInPixels
  * @param upperLeftCornerYInPixels
@@ -31,7 +33,7 @@ private[bitmaps] case class DrawArc(
     widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
     heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
     startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDgrees),
+    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDegrees),
     hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
     hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
     color: RGBAColor = GS.colorFor(DefaultPrimary),

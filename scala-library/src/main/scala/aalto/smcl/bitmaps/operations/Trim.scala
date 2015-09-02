@@ -1,9 +1,10 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.DefaultBackground
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.common._
+import aalto.smcl.GS
+import aalto.smcl.bitmaps.{Bitmap, DefaultBackground}
+import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 

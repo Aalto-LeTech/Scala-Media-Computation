@@ -2,6 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.common._
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -30,7 +31,7 @@ private[bitmaps] case class FlipHorizontally()
   override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
     require(sources.length == 1, s"Flip requires exactly one source image (provided: ${sources.length}).")
 
-    sources(0).createTransfomedVersionWith(
+    sources(0).createTransformedVersionWith(
       AffineTransformation.forHorizontalFlipOf(sources(0).widthInPixels))
   }
 

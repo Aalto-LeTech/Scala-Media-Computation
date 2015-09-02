@@ -1,8 +1,9 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.immutable.ConvolutionKernel
+import aalto.smcl.bitmaps.ConvolutionKernel
 import aalto.smcl.common._
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 

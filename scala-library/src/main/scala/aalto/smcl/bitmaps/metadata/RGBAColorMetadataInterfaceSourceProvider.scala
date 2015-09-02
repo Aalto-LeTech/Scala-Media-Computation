@@ -1,8 +1,7 @@
 package aalto.smcl.bitmaps.metadata
 
 
-import aalto.smcl.SMCL
-import aalto.smcl.common.{PresetRGBAColor, RGBAColor}
+import aalto.smcl.colors.{PresetRGBAColor, RGBAColor}
 import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
 
 
@@ -13,10 +12,8 @@ import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
  *
  * @author Aleksi Lukkarinen
  */
-class RGBAColorMetadataInterfaceSourceProvider extends MetadataInterfaceSourceProvider {
-
-  SMCL.performInitialization()
-
+private[metadata]
+class RGBAColorMetadataInterfaceSourceProvider() extends MetadataInterfaceSourceProvider {
 
   /** */
   private[this] val _rgbaColorClass = RGBAColor(0).getClass
@@ -35,7 +32,7 @@ class RGBAColorMetadataInterfaceSourceProvider extends MetadataInterfaceSourcePr
     val c = interestingObject.getClass
 
     if (c.isAssignableFrom(_rgbaColorClass)
-      || c.isAssignableFrom(_presetRGBAColorClass)) {
+        || c.isAssignableFrom(_presetRGBAColorClass)) {
 
       return Some(RGBAColorMetadataSource(interestingObject.asInstanceOf[RGBAColor]))
     }

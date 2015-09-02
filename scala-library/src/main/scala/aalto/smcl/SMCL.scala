@@ -2,7 +2,7 @@ package aalto.smcl
 
 
 import aalto.smcl.bitmaps.BitmapModuleInitializer
-import aalto.smcl.bitmaps.metadata.MetadataModuleInitializer
+import aalto.smcl.bitmaps.metadata.BitmapMetadataModuleInitializer
 import aalto.smcl.platform.PlatformModuleInitializer
 
 
@@ -52,7 +52,7 @@ object SMCL extends ModuleInitializer {
   /** Short information about SMCL. */
   // @formatter:off
   val Description: String =
-    s"""$AbbreviatedName is a class libary created to support Scala-based
+    s"""$AbbreviatedName is a class library created to support Scala-based
        |media-oriented introductory programming teaching. It was originally
        |created by $OriginalDeveloperFullName in $InceptionYear as a part
        |of his Master's Thesis for $OriginalDeveloperOrganizationName,
@@ -67,7 +67,7 @@ object SMCL extends ModuleInitializer {
       |Version $VersionString.""".stripMargin
   // @formatter:on
 
-  /** Full informaiton about SMCL. */
+  /** Full information about SMCL. */
   // @formatter:off
   private val MsgAboutFull: String =
     s"""$MsgAboutShort
@@ -75,7 +75,7 @@ object SMCL extends ModuleInitializer {
        |$Description""".stripMargin
   // @formatter:on
 
-  /** Usage informaiton. */
+  /** Usage information. */
   // @formatter:off
   private val MsgUsage: String =
     s"""Help                   SMCL.help
@@ -102,16 +102,9 @@ object SMCL extends ModuleInitializer {
   def information(): Unit = println(MsgAboutFull)
 
   /**
-   * Calls the help provider to print help with no given search terms.
-   */
-  def help(): Unit = Help.onTopic(Seq())
-
-  /**
-   * Calls the help provider to print help on the given search terms.
    *
-   * @param terms
    */
-  def help(terms: String*): Unit = Help.onTopic(terms)
+  def init(): Unit = performInitialization()
 
   /**
    *
@@ -124,7 +117,7 @@ object SMCL extends ModuleInitializer {
   addInitializer { () =>
     PlatformModuleInitializer.performInitialization()
     BitmapModuleInitializer.performInitialization()
-    MetadataModuleInitializer.performInitialization()
+    BitmapMetadataModuleInitializer.performInitialization()
   }
 
   performInitialization()

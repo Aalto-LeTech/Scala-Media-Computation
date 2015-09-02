@@ -5,11 +5,10 @@ import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 import java.awt.{AlphaComposite, Graphics2D}
 
-import aalto.smcl.SMCL
 import aalto.smcl.bitmaps._
-import aalto.smcl.bitmaps.immutable.ConvolutionKernel
+import aalto.smcl.colors.{RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common._
-import aalto.smcl.platform.PlatformSettingKeys.PlatformBitmapInterpolationMethod
+import aalto.smcl.{GS, SMCL}
 
 
 
@@ -62,22 +61,22 @@ private[smcl] object PlatformBitmapBuffer {
   /**
    *
    *
-   * @param width
-   * @param height
+   * @param widthInPixels
+   * @param heightInPixels
    * @return
    */
   private[platform] def createNormalizedLowLevelBitmapBufferOf(
-    width: Int,
-    height: Int): BufferedImage = {
+      widthInPixels: Int,
+      heightInPixels: Int): BufferedImage = {
 
-    val newBuffer = new BufferedImage(width, height, NormalizedBufferType)
+    val newBuffer = new BufferedImage(widthInPixels, heightInPixels, NormalizedBufferType)
 
     var drawingSurface: Graphics2D = null
     try {
       drawingSurface = newBuffer.createGraphics()
       drawingSurface.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
       drawingSurface.setColor(GS.colorFor(DefaultBackground).toAwtColor)
-      drawingSurface.fillRect(0, 0, width, height)
+      drawingSurface.fillRect(0, 0, widthInPixels, heightInPixels)
     }
     finally {
       drawingSurface.dispose()
@@ -94,7 +93,7 @@ private[smcl] object PlatformBitmapBuffer {
    * @return
    */
   private[platform] def convertToNormalizedLowLevelBitmapBufferIfNecessary(
-    buffer: BufferedImage): BufferedImage = {
+      buffer: BufferedImage): BufferedImage = {
 
     var bufferCandidate = buffer
 
@@ -166,9 +165,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
       while (row < rasterHeight && !deviationFound) {
         pixel = sourceRaster.getPixel(column, row, pixel)
         if (pixel(IdxRed) != red
-          || pixel(IdxGreen) != green
-          || pixel(IdxBlue) != blue
-          || pixel(IdxOpacity) != opacity) {
+            || pixel(IdxGreen) != green
+            || pixel(IdxBlue) != blue
+            || pixel(IdxOpacity) != opacity) {
 
           deviationFound = true
         }
@@ -198,9 +197,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
       while (row < rasterHeight && !deviationFound) {
         pixel = sourceRaster.getPixel(column, row, pixel)
         if (pixel(IdxRed) != red
-          || pixel(IdxGreen) != green
-          || pixel(IdxBlue) != blue
-          || pixel(IdxOpacity) != opacity) {
+            || pixel(IdxGreen) != green
+            || pixel(IdxBlue) != blue
+            || pixel(IdxOpacity) != opacity) {
 
           deviationFound = true
         }
@@ -222,9 +221,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
       while (column < rasterWidth && !deviationFound) {
         pixel = sourceRaster.getPixel(column, row, pixel)
         if (pixel(IdxRed) != red
-          || pixel(IdxGreen) != green
-          || pixel(IdxBlue) != blue
-          || pixel(IdxOpacity) != opacity) {
+            || pixel(IdxGreen) != green
+            || pixel(IdxBlue) != blue
+            || pixel(IdxOpacity) != opacity) {
 
           deviationFound = true
         }
@@ -247,9 +246,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
       while (column < rasterWidth && !deviationFound) {
         pixel = sourceRaster.getPixel(column, row, pixel)
         if (pixel(IdxRed) != red
-          || pixel(IdxGreen) != green
-          || pixel(IdxBlue) != blue
-          || pixel(IdxOpacity) != opacity) {
+            || pixel(IdxGreen) != green
+            || pixel(IdxBlue) != blue
+            || pixel(IdxOpacity) != opacity) {
 
           deviationFound = true
         }
@@ -276,10 +275,10 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @param backgroundColor
    * @return
    */
-  def createTransfomedVersionWith(
-    transformation: AffineTransformation,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
+  def createTransformedVersionWith(
+      transformation: AffineTransformation,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
 
     val globalInterpolationMethod =
       GS.enumSettingFor[BitmapInterpolationMethod.Value](PlatformBitmapInterpolationMethod).value.id
@@ -289,7 +288,7 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     val lowLevelTransformation = transformation.platformAffineTransform.awtAffineTransformation
     val transformedContentBoundaries: Rectangle2D =
       new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
-        .getBounds2D(awtBufferedImage)
+          .getBounds2D(awtBufferedImage)
 
     if (resizeCanvasBasedOnTransformation) {
       val offsetLeft = -transformedContentBoundaries.getMinX
@@ -311,7 +310,7 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     val finalTransformOperation = new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
     val resultingBuffer: PlatformBitmapBuffer = PlatformBitmapBuffer(resultingImageWidth, resultingImageHeight)
 
-    resultingBuffer drawingSurface() clearUsing backgroundColor
+    resultingBuffer drawingSurface () clearUsing backgroundColor
 
     finalTransformOperation.filter(awtBufferedImage, resultingBuffer.awtBufferedImage)
 
@@ -328,10 +327,10 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def boundaryOverflowsForLTRB(
-    minX: Double,
-    minY: Double,
-    maxX: Double,
-    maxY: Double): (Double, Double, Double, Double) = {
+      minX: Double,
+      minY: Double,
+      maxX: Double,
+      maxY: Double): (Double, Double, Double, Double) = {
 
     val overflowLeft = if (minX < 0) -minX else 0
     val overflowTop = if (minY < 0) -minY else 0
@@ -393,10 +392,10 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def copyPortionXYXY(
-    topLeftX: Int,
-    topLeftY: Int,
-    bottomRightX: Int,
-    bottomRightY: Int): PlatformBitmapBuffer = {
+      topLeftX: Int,
+      topLeftY: Int,
+      bottomRightX: Int,
+      bottomRightY: Int): PlatformBitmapBuffer = {
 
     val (x0, x1) =
       if (topLeftX > bottomRightX)
@@ -426,10 +425,10 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def copyPortionXYWH(
-    topLeftX: Int,
-    topLeftY: Int,
-    width: Int,
-    height: Int): PlatformBitmapBuffer = {
+      topLeftX: Int,
+      topLeftY: Int,
+      width: Int,
+      height: Int): PlatformBitmapBuffer = {
 
     val sourceBufferArea =
       awtBufferedImage.getSubimage(topLeftX, topLeftY, width, height)

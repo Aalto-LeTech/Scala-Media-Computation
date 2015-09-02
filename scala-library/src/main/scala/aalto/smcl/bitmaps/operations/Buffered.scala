@@ -48,7 +48,7 @@ trait Buffered {
    * and which is used as a background for a new buffers provided by this
    * [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources     possible [[aalto.smcl.platform.PlatformBitmapBuffer]] instances used as sources
    * @return
    */
   protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer

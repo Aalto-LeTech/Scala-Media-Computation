@@ -1,8 +1,9 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.common.{PresetColors, RGBAColor}
+import scala.annotation.tailrec
+
+import aalto.smcl.colors.{PresetColors, RGBAColor}
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -30,8 +31,8 @@ private[bitmaps] object BitmapOperationList {
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class BitmapOperationList private(
-  private val bufferProvider: BufferProvider,
-  private val operations: List[Renderable]) extends Immutable {
+    private val bufferProvider: BufferProvider,
+    private val operations: List[Renderable]) extends Immutable {
 
   /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
   val widthInPixels: Int = bufferProvider.widthInPixels
@@ -40,15 +41,15 @@ private[bitmaps] case class BitmapOperationList private(
   val heightInPixels: Int = bufferProvider.heightInPixels
 
   /**
-   * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
+   * Adds a new [[aalto.smcl.bitmaps.Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
   private[bitmaps] def add(newOperation: Renderable) =
     BitmapOperationList(bufferProvider, newOperation +: operations)
 
   /**
-   * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
+   * Adds a new [[aalto.smcl.bitmaps.Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
-  private[bitmaps] def +:(newOperation: Renderable) = this.add(newOperation)
+  private[bitmaps] def +: (newOperation: Renderable) = this.add(newOperation)
 
   /**
    *
@@ -56,7 +57,7 @@ private[bitmaps] case class BitmapOperationList private(
   def initialBackgroundColor(): RGBAColor =
     operations.lastOption.getOrElse(None) match {
       case Clear(color) => color
-      case _ => PresetColors('white)
+      case _            => PresetColors('white)
     }
 
   /**
@@ -73,13 +74,13 @@ private[bitmaps] case class BitmapOperationList private(
   /**
    *
    */
-  //@tailrec
+  @tailrec
   private def renderOperations(
-    list: List[Renderable],
-    buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
+      list: List[Renderable],
+      buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
 
     list match {
-      case Nil => buffer
+      case Nil                => buffer
       case theRest :+ theLast =>
         theLast.render(buffer)
         renderOperations(theRest, buffer)

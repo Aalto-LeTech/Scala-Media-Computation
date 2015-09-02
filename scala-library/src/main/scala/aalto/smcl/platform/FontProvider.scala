@@ -3,8 +3,6 @@ package aalto.smcl.platform
 
 import scala.swing.Font
 
-import aalto.smcl.SMCL
-
 
 
 
@@ -13,10 +11,7 @@ import aalto.smcl.SMCL
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object FontProvider {
-
-  SMCL.performInitialization()
-
+private[smcl] class FontProvider private[platform]() {
 
   /**
    *

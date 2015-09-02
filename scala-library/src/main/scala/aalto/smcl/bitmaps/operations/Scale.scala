@@ -1,9 +1,10 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.CanvasesAreResizedBasedOnTransformations
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.GS
+import aalto.smcl.bitmaps.{Bitmap, CanvasesAreResizedBasedOnTransformations}
 import aalto.smcl.common._
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -47,7 +48,7 @@ private[bitmaps] case class Scale(
    * @return
    */
   override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
-    sources(0).createTransfomedVersionWith(
+    sources(0).createTransformedVersionWith(
       AffineTransformation.forFreeScalingOf(scalingFactorVertical, scalingFactorHorizontal),
       resizeCanvasBasedOnTransformation)
   }

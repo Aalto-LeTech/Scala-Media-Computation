@@ -1,11 +1,9 @@
 package aalto.smcl.platform
 
 
-import aalto.smcl.ModuleInitializer
-import aalto.smcl.common.GS
-import aalto.smcl.common.settings.Setting
-import aalto.smcl.common.settings.SettingValidatorFactory._
-import aalto.smcl.platform.PlatformSettingKeys.PlatformBitmapInterpolationMethod
+import aalto.smcl.infrastructure.settings.Setting
+import aalto.smcl.infrastructure.settings.SettingValidatorFactory._
+import aalto.smcl.{GS, ModuleInitializer}
 
 
 

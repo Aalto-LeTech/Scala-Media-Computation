@@ -1,8 +1,8 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.common._
+import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -20,12 +20,12 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class Crop(
-  sourceBitmap: Bitmap,
-  windowTopLeftX: Int,
-  windowTopLeftY: Int,
-  windowBottomRightX: Int,
-  windowBottomRightY: Int)
-  extends AbstractOperation with BufferProvider with Immutable {
+    sourceBitmap: Bitmap,
+    windowTopLeftX: Int,
+    windowTopLeftY: Int,
+    windowBottomRightX: Int,
+    windowBottomRightY: Int)
+    extends AbstractOperation with BufferProvider with Immutable {
 
   require(sourceBitmap != null, s"Cropping requires exactly one source image (was null).")
 

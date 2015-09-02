@@ -4,11 +4,11 @@ package aalto.smcl.bitmaps.metadata
 import java.awt.image.BufferedImage
 import java.util.Date
 
+import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.bitmaps.ViewerUpdateStyle.PreventViewerUpdates
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.common.{PresetColors, RGBAColor}
+import aalto.smcl.colors.{PresetColors, RGBAColor}
 import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource}
-import aalto.smcl.{MetaInterfaceBase, SMCL}
+import aalto.smcl.{GS, MetaInterfaceBase}
 
 
 
@@ -18,13 +18,11 @@ import aalto.smcl.{MetaInterfaceBase, SMCL}
  *
  * @author Aleksi Lukkarinen
  */
+private[metadata]
 case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
-  extends MetaInterfaceBase
-  with ResourceMetadataSource
-  with StaticGeneralBitmapSource {
-
-  SMCL.performInitialization()
-
+    extends MetaInterfaceBase
+            with ResourceMetadataSource
+            with StaticGeneralBitmapSource {
 
   /** General bitmaps */
   private[this] val _generalBitmaps =
@@ -52,7 +50,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
   def validateBitmapNumber(bitmapNumber: Int): Unit = {
     require(GeneralBitmapIndices.contains(bitmapNumber),
       s"This resource supports ${numberOfGeneralBitmaps()} bitmaps " +
-        s"(indices $FirstBitmapIndex to $LastBitmapIndex).")
+          s"(indices $FirstBitmapIndex to $LastBitmapIndex).")
   }
 
 
@@ -88,9 +86,11 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    * @return
    */
   def createSingleColorTile(): Bitmap = {
+    val tileSideLength = GS.intFor(ColorVisualizationTileSideLengthInPixels)
+
     var colorTile = Bitmap(
-      widthInPixels = 80,
-      heightInPixels = 80,
+      widthInPixels = tileSideLength,
+      heightInPixels = tileSideLength,
       viewerHandling = PreventViewerUpdates)
 
     colorTile = colorTile.drawRectangle(
@@ -108,12 +108,16 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
 
   /**
    *
+   *
+   * @param backgroundColor
    * @return
    */
   def createDoubleColorTile(backgroundColor: RGBAColor): Bitmap = {
+    val tileSideLength = GS.intFor(ColorVisualizationTileSideLengthInPixels)
+
     var colorTile = Bitmap(
-      widthInPixels = 80,
-      heightInPixels = 80,
+      widthInPixels = tileSideLength,
+      heightInPixels = tileSideLength,
       viewerHandling = PreventViewerUpdates)
 
     colorTile = colorTile.drawRectangle(0, 0, colorTile.widthInPixels, colorTile.heightInPixels,

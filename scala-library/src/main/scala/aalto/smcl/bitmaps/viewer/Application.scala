@@ -7,8 +7,8 @@ import scala.swing.Swing
 
 import rx.lang.scala.{Observable, Observer}
 
+import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.bitmaps.immutable.BitmapIdentity
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
 import aalto.smcl.bitmaps.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
 
 
@@ -52,7 +52,7 @@ private[bitmaps] object Application {
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] class Application(val incomingEventStream: Observable[ExternalViewerEvent])
-  extends Observer[ExternalViewerEvent] {
+    extends Observer[ExternalViewerEvent] {
 
   private[this] var _viewers = Map[BitmapIdentity, ViewerMainFrame]()
 
@@ -96,7 +96,7 @@ private[bitmaps] class Application(val incomingEventStream: Observable[ExternalV
    *
    */
   private[this] def closeAllViewersWithTheForce(): Unit = {
-    _viewers.values.foreach { viewer =>
+    _viewers.values.foreach {viewer =>
       Swing.onEDT {
         viewer.forceToClose()
       }

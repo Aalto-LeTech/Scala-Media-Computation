@@ -3,8 +3,6 @@ package aalto.smcl.platform
 
 import java.awt.image.BufferedImage
 
-import aalto.smcl.SMCL
-
 
 
 
@@ -14,9 +12,6 @@ import aalto.smcl.SMCL
  * @author Aleksi Lukkarinen
  */
 private[platform] object BitmapUtils {
-
-  SMCL.performInitialization()
-
 
   /**
    *

@@ -1,16 +1,18 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.GS
 import aalto.smcl.bitmaps.DefaultBackground
-import aalto.smcl.common.{GS, MetaInformationMap, RGBAColor}
+import aalto.smcl.colors.RGBAColor
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 
 
 /**
- * Operation to clear a bitmap with a given color. If a color is not given, the default background color will be used,
- * as defined in the [[aalto.smcl.common.GS]].
+ * Operation to clear a bitmap with a given color. If a color is not given,
+ * the default background color will be used, as defined in the [[aalto.smcl.GS]].
  *
  * @param color
  *

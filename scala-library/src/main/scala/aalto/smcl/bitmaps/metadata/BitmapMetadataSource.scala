@@ -4,8 +4,8 @@ package aalto.smcl.bitmaps.metadata
 import java.awt.image.BufferedImage
 import java.util.Date
 
-import aalto.smcl.{SMCL, MetaInterfaceBase}
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.MetaInterfaceBase
+import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 
 
@@ -16,13 +16,12 @@ import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource,
  *
  * @author Aleksi Lukkarinen
  */
+private[metadata]
 case class BitmapMetadataSource(relatedBitmap: Bitmap)
     extends MetaInterfaceBase
             with ResourceMetadataSource
             with StaticGeneralBitmapSource
             with StaticThumbnailBitmapSource {
-
-  SMCL.performInitialization()
 
 
   /** Number of bitmaps provided per Bitmap instance by this metadata source. */
@@ -85,7 +84,7 @@ case class BitmapMetadataSource(relatedBitmap: Bitmap)
   override def resourceTimestampOption(bitmapNumber: Int = FirstImageIndex): Option[Date] = {
     validateBitmapNumber(bitmapNumber)
 
-    Some(relatedBitmap.created.underlayingDate)
+    Some(relatedBitmap.created.underlyingDate)
   }
 
   /**
@@ -153,6 +152,8 @@ case class BitmapMetadataSource(relatedBitmap: Bitmap)
       maximumHeightInPixels: Int): Option[BufferedImage] = {
 
     validateBitmapNumber(thumbnailNumber)
+
+    // TODO: After Bitmap can tell a suitable scaling factor for a given target size and has scaling operation, refactor the following code to utilize them
 
     var buffer = relatedBitmap.toRenderedRepresentation.awtBufferedImage
 

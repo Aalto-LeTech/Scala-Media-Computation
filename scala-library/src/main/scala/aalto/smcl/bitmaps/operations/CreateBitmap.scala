@@ -1,8 +1,9 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.GS
 import aalto.smcl.bitmaps.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels}
-import aalto.smcl.common.{GS, MetaInformationMap}
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 

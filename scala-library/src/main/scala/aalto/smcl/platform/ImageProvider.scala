@@ -10,9 +10,8 @@ import javax.imageio.{ImageIO, ImageReader}
 
 import scala.util._
 
-import aalto.smcl.SMCL
 import aalto.smcl.bitmaps._
-import aalto.smcl.common._
+import aalto.smcl.infrastructure._
 
 
 
@@ -22,10 +21,7 @@ import aalto.smcl.common._
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object ImageProvider {
-
-  SMCL.performInitialization()
-
+private[smcl] class ImageProvider private[platform]() {
 
   /** */
   lazy val supportedReadableMimeTypes: Seq[String] =
@@ -91,8 +87,8 @@ private[smcl] object ImageProvider {
    * @return
    */
   private def loadImagesFromReader(
-    reader: ImageReader,
-    filePath: String): Seq[Either[Throwable, PlatformBitmapBuffer]] = {
+      reader: ImageReader,
+      filePath: String): Seq[Either[Throwable, PlatformBitmapBuffer]] = {
 
     val WithSearchingAllowed = true
     val lastImageIndex = reader.getMinIndex + reader.getNumImages(WithSearchingAllowed) - 1
@@ -110,9 +106,9 @@ private[smcl] object ImageProvider {
    * @return
    */
   private def loadSingleImageFromReader(
-    currentImageIndex: Int,
-    reader: ImageReader,
-    filePath: String): Either[Throwable, PlatformBitmapBuffer] = {
+      currentImageIndex: Int,
+      reader: ImageReader,
+      filePath: String): Either[Throwable, PlatformBitmapBuffer] = {
 
     val width = Try(reader.getWidth(currentImageIndex)).recover({
       case e: IOException => return Left(e)
@@ -236,7 +232,7 @@ private[smcl] object ImageProvider {
   private def ensureThatFileExtensionIsOfSupportedImageType(extension: String): Unit = {
     require(supportedReadableFileExtensions.contains(extension),
       "Extension of the given file is unknown (the supported ones are " +
-        supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
+          supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
   }
 
 

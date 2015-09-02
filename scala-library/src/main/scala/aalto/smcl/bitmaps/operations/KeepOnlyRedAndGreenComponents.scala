@@ -1,6 +1,9 @@
 package aalto.smcl.bitmaps.operations
 
+
+import aalto.smcl.colors.RGBAComponentTranslationTable
 import aalto.smcl.common._
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 

@@ -1,8 +1,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.common.settings.BaseSettingKeys._
-import aalto.smcl.common.{HorizontalAlignment, VerticalAlignment}
+import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
+import aalto.smcl.infrastructure.settings.BaseSettingKeys._
 
 
 
@@ -57,7 +57,7 @@ trait BitmapSettingKeys {
   case object DefaultArcStartAngleInDegrees extends IntSettingKey
 
   /** */
-  case object DefaultArcAngleInDgrees extends IntSettingKey
+  case object DefaultArcAngleInDegrees extends IntSettingKey
 
   /** */
   case object DefaultPaddingInPixels extends IntSettingKey

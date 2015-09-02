@@ -3,8 +3,6 @@ package aalto.smcl.platform
 
 import java.util.{Calendar, Date}
 
-import aalto.smcl.SMCL
-
 
 
 
@@ -13,10 +11,7 @@ import aalto.smcl.SMCL
  *
  * @author Aleksi Lukkarinen
  */
-object DateTimeProvider {
-
-  SMCL.performInitialization()
-
+class DateTimeProvider private[platform]() {
 
   /**
    *

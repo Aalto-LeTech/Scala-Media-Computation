@@ -5,7 +5,7 @@ import scala.collection.mutable
 import scala.swing.event.Key
 import scala.swing.{Component, Menu, MenuBar, MenuItem, Separator}
 
-import aalto.smcl.common._
+import aalto.smcl.infrastructure._
 
 
 
@@ -38,7 +38,7 @@ private[viewer] object MenuBuilder {
  * @author Aleksi Lukkarinen
  */
 private[viewer] class MenuBuilder private(
-  private val _actionMap: AbstractActionMap) {
+    private val _actionMap: AbstractActionMap) {
 
   /** */
   private val _parents = new mutable.Stack[Component]()
@@ -74,9 +74,9 @@ private[viewer] class MenuBuilder private(
     mnemonicOption.map(menu.mnemonic = _)
 
     _parents.top match {
-      case m: Menu => m.contents += menu
+      case m: Menu    => m.contents += menu
       case m: MenuBar => m.contents += menu
-      case _ => throw new IllegalStateException(
+      case _          => throw new IllegalStateException(
         "This MenuBuilder instance is corrupted (the top element was not Menu or MenuBar).")
     }
 
@@ -107,7 +107,7 @@ private[viewer] class MenuBuilder private(
 
     _parents.top match {
       case m: Menu => m.contents += new MenuItem(action)
-      case _ => throw new IllegalStateException(
+      case _       => throw new IllegalStateException(
         "This MenuBuilder instance is corrupted (the top element was not Menu).")
     }
 
@@ -130,7 +130,7 @@ private[viewer] class MenuBuilder private(
 
     _parents.top match {
       case m: Menu => m.contents += new Separator
-      case _ => throw new IllegalStateException(
+      case _       => throw new IllegalStateException(
         "This MenuBuilder instance is corrupted (the top element was not Menu).")
     }
 
@@ -167,7 +167,7 @@ private[viewer] class MenuBuilder private(
       throw new IllegalStateException("This MenuBuilder has already returned its product.")
 
     if (_parents.size > 1)
-      throw new IllegalStateException("Building of the current menu is not finised yet.")
+      throw new IllegalStateException("Building of the current menu is not finished yet.")
 
     if (_parents.size < 1 || !_parents.top.isInstanceOf[MenuBar])
       throw new IllegalStateException("This MenuBuilder instance is corrupted (there is no MenuBar to return).")

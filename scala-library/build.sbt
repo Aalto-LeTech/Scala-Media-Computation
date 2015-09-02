@@ -1,6 +1,7 @@
 name := "smcl-scala-library"
 
-version := "0.1"
+version := "0.1-SNAPSHOT"
+isSnapshot := true
 
 organization := "aalto.smcl"
 
@@ -12,14 +13,11 @@ startYear := Some(2015)
 
 description :=
     """Scala Media Computation Library is a media computation
-      |library for Scala-based introductory programming teaching.
-      |""".stripMargin
+      |library for Scala-based introductory programming teaching.""".stripMargin
 
 
 
 scalaVersion := "2.11.7"
-
-crossScalaVersions := Seq("2.10.5")
 
 
 //
@@ -35,15 +33,6 @@ crossScalaVersions := Seq("2.10.5")
 
 // @formatter:off
 libraryDependencies ++= (scalaBinaryVersion.value match {
-  case "2.10" => Seq(
-    "io.reactivex"              % "rxscala_2.10"                % "0.25.0"                  withSources() withJavadoc(),
-    "org.scala-lang.modules"    % "scala-swing_2.10"            % "2.0.0-M2"                withSources() withJavadoc(),
-    // No separate scala-reflect
-    "org.scalatest"             % "scalatest_2.10"              % "3.0.0-M7"  % "test"      withSources() withJavadoc(),
-    "org.scalacheck"            % "scalacheck_2.10"             % "1.12.4"    % "test"      withSources() withJavadoc(),
-    // No separate scala-xml
-    "aalto.smcl"                % "smcl-public-interfaces_2.10" % "1.0-SNAPSHOT"            withSources() withJavadoc()
-  )
   case "2.11" => Seq(
     "io.reactivex"              % "rxscala_2.11"                % "0.25.0"                  withSources() withJavadoc(),
     "org.scala-lang.modules"    % "scala-swing_2.11"            % "2.0.0-M2"                withSources() withJavadoc(),
@@ -58,14 +47,11 @@ libraryDependencies ++= (scalaBinaryVersion.value match {
 
 initialCommands in console :=
     """import aalto.smcl._
+      |import aalto.smcl.infrastructure._
+      |import aalto.smcl.platform._
       |import aalto.smcl.common._
-      |import aalto.smcl.bitmaps._
-      |import aalto.smcl.bitmaps.immutable._
-      |import aalto.smcl.bitmaps.immutable.primitives._
-      |import aalto.smcl.bitmaps.immutable.collections._
-      |
-      |
-      |SMCL.welcomingMessage""".stripMargin
+      |import aalto.smcl.colors._
+      |import aalto.smcl.bitmaps._""".stripMargin
 
 
 scalacOptions ++= Seq(

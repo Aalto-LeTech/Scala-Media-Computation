@@ -4,7 +4,7 @@ package aalto.smcl.platform
 import java.awt.{Color => AwtColor}
 
 import aalto.smcl.SMCL
-import aalto.smcl.common.RGBAColor
+import aalto.smcl.colors.RGBAColor
 
 
 

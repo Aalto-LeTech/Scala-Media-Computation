@@ -1,8 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.SMCL
-import aalto.smcl.common.settings.SettingValidatorFactory.ConditionFalseValidator
+import aalto.smcl.infrastructure.settings.SettingValidatorFactory._
 
 
 
@@ -12,10 +11,7 @@ import aalto.smcl.common.settings.SettingValidatorFactory.ConditionFalseValidato
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] object BitmapValidatorFunctionFactory {
-
-  SMCL.performInitialization()
-
+private[bitmaps] class BitmapValidatorFunctionFactory {
 
   /**
    *

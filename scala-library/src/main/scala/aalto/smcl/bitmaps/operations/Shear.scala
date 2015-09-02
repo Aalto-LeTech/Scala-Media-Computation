@@ -1,9 +1,11 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
-import aalto.smcl.bitmaps.{CanvasesAreResizedBasedOnTransformations, DefaultBackground}
-import aalto.smcl.common._
+import aalto.smcl.GS
+import aalto.smcl.bitmaps.{Bitmap, CanvasesAreResizedBasedOnTransformations, DefaultBackground}
+import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.common.AffineTransformation
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -50,7 +52,7 @@ private[bitmaps] case class Shear(
    * @return
    */
   override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
-    sources(0).createTransfomedVersionWith(
+    sources(0).createTransformedVersionWith(
       AffineTransformation.forFreeShearingOf(shearingFactorHorizontal, shearingFactorVertical),
       resizeCanvasBasedOnTransformation,
       backgroundColor)

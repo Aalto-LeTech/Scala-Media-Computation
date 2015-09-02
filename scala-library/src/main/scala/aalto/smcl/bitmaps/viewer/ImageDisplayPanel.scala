@@ -6,7 +6,7 @@ import java.awt.{Graphics2D => JGraphics2D, RenderingHints}
 import scala.swing._
 import scala.util.Try
 
-import aalto.smcl.bitmaps.immutable.primitives.Bitmap
+import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.common.AffineTransformation
 
 

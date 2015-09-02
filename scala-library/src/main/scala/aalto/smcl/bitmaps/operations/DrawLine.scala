@@ -1,8 +1,10 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.GS
 import aalto.smcl.bitmaps.DefaultPrimary
-import aalto.smcl.common._
+import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.infrastructure.MetaInformationMap
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -10,7 +12,7 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 
 /**
  * Operation to draw a line with given color. If the color is not given, the default
- * primary color will be used, as defined in the [[GS]].
+ * primary color will be used, as defined in the [[aalto.smcl.GS]].
  *
  * @param fromXInPixels
  * @param fromYInPixels

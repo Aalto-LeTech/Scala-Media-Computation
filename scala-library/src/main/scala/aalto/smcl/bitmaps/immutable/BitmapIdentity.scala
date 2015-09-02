@@ -1,7 +1,6 @@
 package aalto.smcl.bitmaps.immutable
 
 
-import aalto.smcl.SMCL
 import aalto.smcl.platform.UniqueIdProvider
 
 
@@ -13,9 +12,6 @@ import aalto.smcl.platform.UniqueIdProvider
  * @author Aleksi Lukkarinen
  */
 object BitmapIdentity {
-
-  SMCL.performInitialization()
-
 
   /**
    *

@@ -1,8 +1,10 @@
 package aalto.smcl.bitmaps.operations
 
 
+import aalto.smcl.GS
 import aalto.smcl.bitmaps.DefaultPrimary
-import aalto.smcl.common._
+import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.infrastructure._
 import aalto.smcl.platform.PlatformBitmapBuffer
 
 
@@ -10,8 +12,8 @@ import aalto.smcl.platform.PlatformBitmapBuffer
 
 /**
  * Operation to draw a polyline with given color. If the color is not given, the default primary color
- * will be used, as defined in the [[aalto.smcl.common.GS]]. If the start and end points do not point to the same pixel,
- * the resulting polyline will not be closed.
+ * will be used, as defined in the [[aalto.smcl.infrastructure.GS]]. If the start and end points do not
+ * point to the same pixel, the resulting polyline will not be closed.
  *
  * @param xCoordinates
  * @param yCoordinates

@@ -1,10 +1,11 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.ModuleInitializer
-import aalto.smcl.common.settings.Setting
-import aalto.smcl.common.settings.SettingValidatorFactory.{ConditionFalseValidator, EmptyValidator, IsNullValidator}
-import aalto.smcl.common.{GS, HorizontalAlignment, PresetColors, RGBAColor, VerticalAlignment}
+import aalto.smcl.{GS, ModuleInitializer}
+import aalto.smcl.colors.{RGBAColor, PresetColors}
+import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
+import aalto.smcl.infrastructure.settings.Setting
+import aalto.smcl.infrastructure.settings.SettingValidatorFactory._
 
 
 
@@ -20,7 +21,7 @@ object BitmapModuleInitializer extends ModuleInitializer {
   //
   // Initialize settings
   //
-  addInitializer { () =>
+  addInitializer {() =>
     GS += new Setting[Boolean](
       key = NewBitmapsAreDisplayedAutomatically,
       initialValue = false,
@@ -100,7 +101,7 @@ object BitmapModuleInitializer extends ModuleInitializer {
       validator = EmptyValidator)
 
     GS += new Setting[Int](
-      key = DefaultArcAngleInDgrees,
+      key = DefaultArcAngleInDegrees,
       initialValue = 180,
       validator = EmptyValidator)
 

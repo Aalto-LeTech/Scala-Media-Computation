@@ -2,7 +2,8 @@ package aalto.smcl.platform
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.common.settings.BaseSettingKeys._
+import aalto.smcl.infrastructure.settings.BaseSettingKeys
+import BaseSettingKeys._
 
 
 
@@ -12,7 +13,7 @@ import aalto.smcl.common.settings.BaseSettingKeys._
  *
  * @author Aleksi Lukkarinen
  */
-object PlatformSettingKeys {
+trait PlatformSettingKeys {
 
   SMCL.performInitialization()
 

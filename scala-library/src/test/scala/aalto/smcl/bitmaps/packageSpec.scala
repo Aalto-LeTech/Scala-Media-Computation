@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.common._
+import aalto.smcl.colors.{ColorValidator, _}
 
 
 
