@@ -24,7 +24,7 @@ class Settings {
    *
    * @return
    */
-  def all() = _settingMap.asInstanceOf[Map[BaseSettingKeys.Value[_], Setting[_]]]
+  def all() = _settingMap.toMap
 
   /**
    *

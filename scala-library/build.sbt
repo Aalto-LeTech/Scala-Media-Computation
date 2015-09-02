@@ -51,7 +51,8 @@ initialCommands in console :=
       |import aalto.smcl.platform._
       |import aalto.smcl.common._
       |import aalto.smcl.colors._
-      |import aalto.smcl.bitmaps._""".stripMargin
+      |import aalto.smcl.bitmaps._
+      |import aalto.smcl.bitmaps.metadata._""".stripMargin
 
 
 scalacOptions ++= Seq(

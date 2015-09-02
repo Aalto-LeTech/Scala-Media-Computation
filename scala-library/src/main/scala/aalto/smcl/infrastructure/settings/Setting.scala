@@ -45,7 +45,7 @@ private[smcl] final class Setting[SettingType](
    */
   def value_=(value: SettingType): Unit = {
     if (validator != null) {
-      validator(initialValue).foreach {
+      validator(value).foreach {
         reason => throw new SMCLSettingValidationError(key, reason)
       }
     }

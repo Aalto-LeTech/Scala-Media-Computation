@@ -5,7 +5,6 @@ import scala.language.implicitConversions
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.bitmaps.immutable._
-import aalto.smcl.bitmaps.metadata.BitmapMetadataSettingKeys
 import aalto.smcl.colors.RGBAColor
 
 
@@ -16,7 +15,7 @@ import aalto.smcl.colors.RGBAColor
  *
  * @author Aleksi Lukkarinen
  */
-package object bitmaps extends BitmapSettingKeys with BitmapMetadataSettingKeys with BitmapOperations {
+package object bitmaps extends BitmapSettingKeys with BitmapOperations {
 
   SMCL.performInitialization()
 
