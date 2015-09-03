@@ -11,9 +11,9 @@ import scala.language.implicitConversions
  *
  * @author Aleksi Lukkarinen
  */
-package object colors extends ColorOperations {
+package object colors extends ColorOperationsAPI {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 
   /** Color component value representing maximal opacity. */

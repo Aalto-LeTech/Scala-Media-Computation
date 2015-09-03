@@ -13,7 +13,7 @@ import aalto.smcl.interfaces.ProviderMetadataSource
  */
 private[smcl] class MetaInterfaceBase() extends ProviderMetadataSource with Immutable {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 
   /**

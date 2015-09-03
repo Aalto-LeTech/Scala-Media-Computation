@@ -12,7 +12,7 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-trait ColorOperations {
+trait ColorOperationsAPI {
 
   /**
    *

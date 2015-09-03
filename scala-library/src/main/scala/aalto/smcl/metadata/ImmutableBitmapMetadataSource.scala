@@ -1,5 +1,4 @@
-package aalto.smcl.bitmaps.metadata
-
+package aalto.smcl.metadata
 
 import java.awt.image.BufferedImage
 import java.util.Date
@@ -17,7 +16,7 @@ import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource,
  * @author Aleksi Lukkarinen
  */
 private[metadata]
-case class BitmapMetadataSource(relatedBitmap: Bitmap)
+case class ImmutableBitmapMetadataSource(relatedBitmap: Bitmap)
     extends MetaInterfaceBase
             with ResourceMetadataSource
             with StaticGeneralBitmapSource

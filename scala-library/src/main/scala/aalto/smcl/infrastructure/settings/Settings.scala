@@ -114,7 +114,6 @@ class Settings {
   def enumSettingFor[A](key: EnumSettingKey[A]): Setting[A] =
     apply(key).asInstanceOf[Setting[A]]
 
-
   /**
    *
    *
@@ -122,7 +121,6 @@ class Settings {
    * @return
    */
   def isTrueThat(key: BooleanSettingKey): Boolean = booleanSettingFor(key).value
-
 
   /**
    *

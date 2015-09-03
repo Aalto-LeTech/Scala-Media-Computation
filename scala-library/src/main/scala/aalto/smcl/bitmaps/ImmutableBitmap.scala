@@ -1,17 +1,17 @@
 package aalto.smcl.bitmaps
 
+
 import scala.collection.mutable
 import scala.ref.WeakReference
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
-import aalto.smcl.bitmaps.immutable.{BitmapIdentity, PixelRectangle}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common._
 import aalto.smcl.infrastructure._
 import aalto.smcl.platform._
-import aalto.smcl.{GS, SMCL}
+import aalto.smcl.{ModuleInitializationPhase, GS, SMCL}
 
 
 
@@ -23,7 +23,8 @@ import aalto.smcl.{GS, SMCL}
  */
 object ImmutableBitmap {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
+
 
 
   /**

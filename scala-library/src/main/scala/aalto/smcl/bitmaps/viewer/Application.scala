@@ -7,8 +7,7 @@ import scala.swing.Swing
 
 import rx.lang.scala.{Observable, Observer}
 
-import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.bitmaps.immutable.BitmapIdentity
+import aalto.smcl.bitmaps.{BitmapIdentity, Bitmap}
 import aalto.smcl.bitmaps.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
 
 

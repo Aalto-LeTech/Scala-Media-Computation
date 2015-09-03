@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.viewer.events
 
 
-import aalto.smcl.SMCL
+import aalto.smcl.{ModuleInitializationPhase, SMCL}
 
 
 
@@ -13,6 +13,6 @@ import aalto.smcl.SMCL
  */
 package object external {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 }

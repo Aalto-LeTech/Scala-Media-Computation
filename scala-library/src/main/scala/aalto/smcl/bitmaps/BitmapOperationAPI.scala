@@ -16,7 +16,7 @@ import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
  *
  * @author Aleksi Lukkarinen
  */
-trait BitmapOperations {
+private[bitmaps] trait BitmapOperationAPI {
 
   /**
    *

@@ -1,5 +1,4 @@
-package aalto.smcl.bitmaps.metadata
-
+package aalto.smcl.metadata
 
 import aalto.smcl.colors.{PresetRGBAColor, RGBAColor}
 import aalto.smcl.interfaces.MetadataInterfaceSourceProvider

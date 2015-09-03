@@ -17,7 +17,7 @@ import aalto.smcl.colors.RGBAColor
  */
 package object platform extends PlatformSettingKeys {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 
   /** */

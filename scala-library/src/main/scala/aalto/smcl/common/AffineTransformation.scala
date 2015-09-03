@@ -1,7 +1,7 @@
 package aalto.smcl.common
 
 
-import aalto.smcl.SMCL
+import aalto.smcl.{ModuleInitializationPhase, SMCL}
 import aalto.smcl.platform.PlatformAffineTransformation
 
 
@@ -14,7 +14,7 @@ import aalto.smcl.platform.PlatformAffineTransformation
  */
 object AffineTransformation {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 
   /**

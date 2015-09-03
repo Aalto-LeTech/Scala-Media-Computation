@@ -8,7 +8,7 @@ import java.awt.{AlphaComposite, Graphics2D}
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common._
-import aalto.smcl.{GS, SMCL}
+import aalto.smcl.{ModuleInitializationPhase, GS, SMCL}
 
 
 
@@ -20,7 +20,7 @@ import aalto.smcl.{GS, SMCL}
  */
 private[smcl] object PlatformBitmapBuffer {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 
   /** */

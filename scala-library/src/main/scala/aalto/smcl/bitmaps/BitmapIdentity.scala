@@ -1,5 +1,4 @@
-package aalto.smcl.bitmaps.immutable
-
+package aalto.smcl.bitmaps
 
 import aalto.smcl.platform.UniqueIdProvider
 

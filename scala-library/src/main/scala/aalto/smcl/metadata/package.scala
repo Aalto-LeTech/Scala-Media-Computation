@@ -1,17 +1,15 @@
 package aalto.smcl
 
 
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-package object common {
+package object metadata extends MetadataSettingKeys {
 
   SMCL.performInitialization(ModuleInitializationPhase.Early)
-
-
-  /** */
-  lazy val Fonts: Fonts = new Fonts()
 
 }

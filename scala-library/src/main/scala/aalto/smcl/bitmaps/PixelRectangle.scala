@@ -1,4 +1,4 @@
-package aalto.smcl.bitmaps.immutable
+package aalto.smcl.bitmaps
 
 
 import scala.swing.Dimension
@@ -11,7 +11,7 @@ import scala.swing.Dimension
  *
  * @author Aleksi Lukkarinen
  */
-trait PixelRectangle {
+private[bitmaps] trait PixelRectangle {
 
   /** Width of this rectangle in pixels. */
   def widthInPixels: Int

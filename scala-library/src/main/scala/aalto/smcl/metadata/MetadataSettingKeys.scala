@@ -1,7 +1,6 @@
-package aalto.smcl.bitmaps.metadata
+package aalto.smcl.metadata
 
-
-import aalto.smcl.infrastructure.settings.BaseSettingKeys.IntSettingKey
+import aalto.smcl.infrastructure.settings.BaseSettingKeys._
 
 
 
@@ -11,7 +10,8 @@ import aalto.smcl.infrastructure.settings.BaseSettingKeys.IntSettingKey
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] trait BitmapMetadataSettingKeys {
+trait MetadataSettingKeys {
+
 
   // @formatter:off
 

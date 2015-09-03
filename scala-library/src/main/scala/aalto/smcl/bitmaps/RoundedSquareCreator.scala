@@ -1,8 +1,8 @@
-package aalto.smcl.bitmaps.immutable
+package aalto.smcl.bitmaps
+
 
 import aalto.smcl.GS
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
-import aalto.smcl.bitmaps.{ViewerUpdateStyle, _}
 import aalto.smcl.colors.RGBAColor
 
 

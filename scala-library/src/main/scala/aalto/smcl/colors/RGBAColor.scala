@@ -3,7 +3,7 @@ package aalto.smcl.colors
 
 import aalto.smcl.infrastructure.{MetaInformationMap, Tokenizable}
 import aalto.smcl.platform.PlatformColor
-import aalto.smcl.{SMCL, colors}
+import aalto.smcl.{ModuleInitializationPhase, SMCL, colors}
 
 
 
@@ -15,7 +15,7 @@ import aalto.smcl.{SMCL, colors}
  */
 object RGBAColor {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 
   /**

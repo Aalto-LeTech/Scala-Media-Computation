@@ -8,6 +8,9 @@ package aalto.smcl
  */
 package object infrastructure extends Constants {
 
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
+
+
   /** */
   lazy val ClassTokenizer: ClassTokenizer = new ClassTokenizer()
 

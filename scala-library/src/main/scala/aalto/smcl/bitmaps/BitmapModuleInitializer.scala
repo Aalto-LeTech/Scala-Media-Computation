@@ -1,11 +1,11 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.{GS, ModuleInitializer}
-import aalto.smcl.colors.{RGBAColor, PresetColors}
-import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
+import aalto.smcl.colors.{PresetColors, RGBAColor}
 import aalto.smcl.infrastructure.settings.Setting
 import aalto.smcl.infrastructure.settings.SettingValidatorFactory._
+import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
+import aalto.smcl.{ModuleInitializationPhase, GS, ModuleInitializer}
 
 
 
@@ -21,7 +21,7 @@ object BitmapModuleInitializer extends ModuleInitializer {
   //
   // Initialize settings
   //
-  addInitializer {() =>
+  addInitializer(ModuleInitializationPhase.Early) {() =>
     GS += new Setting[Boolean](
       key = NewBitmapsAreDisplayedAutomatically,
       initialValue = false,

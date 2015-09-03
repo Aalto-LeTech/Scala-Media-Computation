@@ -2,7 +2,7 @@ package aalto.smcl
 
 
 import aalto.smcl.bitmaps.BitmapModuleInitializer
-import aalto.smcl.bitmaps.metadata.BitmapMetadataModuleInitializer
+import aalto.smcl.metadata.MetadataModuleInitializer
 import aalto.smcl.platform.PlatformModuleInitializer
 
 
@@ -104,22 +104,17 @@ object SMCL extends ModuleInitializer {
   /**
    *
    */
-  def init(): Unit = performInitialization()
-
-  /**
-   *
-   */
   override def toString: String = s"$FullName ($AbbreviatedName), version $VersionString."
 
   /**
    * Calls the initialization routines of every SMCL's module.
    */
-  addInitializer { () =>
-    PlatformModuleInitializer.performInitialization()
-    BitmapModuleInitializer.performInitialization()
-    BitmapMetadataModuleInitializer.performInitialization()
+  addInitializer(ModuleInitializationPhase.Early) {() =>
+    PlatformModuleInitializer.performInitialization(ModuleInitializationPhase.Early)
+    BitmapModuleInitializer.performInitialization(ModuleInitializationPhase.Early)
+    MetadataModuleInitializer.performInitialization(ModuleInitializationPhase.Early)
   }
 
-  performInitialization()
+  performInitialization(ModuleInitializationPhase.Early)
 
 }

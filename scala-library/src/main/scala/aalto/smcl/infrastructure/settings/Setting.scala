@@ -1,7 +1,7 @@
 package aalto.smcl.infrastructure.settings
 
 
-import aalto.smcl.SMCL
+import aalto.smcl.{ModuleInitializationPhase, SMCL}
 import aalto.smcl.infrastructure.ReflectionUtils
 
 
@@ -22,7 +22,7 @@ private[smcl] final class Setting[SettingType](
     val initialValue: SettingType,
     val validator: SettingType => Option[Throwable]) extends Mutable {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 
   if (validator != null)

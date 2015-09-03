@@ -19,6 +19,6 @@ package object smcl {
   object GS extends Settings
 
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 }

@@ -1,7 +1,7 @@
 package aalto.smcl.platform
 
 
-import aalto.smcl.SMCL
+import aalto.smcl.{ModuleInitializationPhase, SMCL}
 import aalto.smcl.infrastructure.settings.BaseSettingKeys
 import BaseSettingKeys._
 
@@ -15,7 +15,7 @@ import BaseSettingKeys._
  */
 trait PlatformSettingKeys {
 
-  SMCL.performInitialization()
+  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 
   // @formatter:off

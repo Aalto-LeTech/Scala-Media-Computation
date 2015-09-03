@@ -1,9 +1,9 @@
-package aalto.smcl.bitmaps.immutable
+package aalto.smcl.bitmaps
+
 
 import scala.collection.mutable
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
-import aalto.smcl.bitmaps._
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.{GS, bitmaps}
 

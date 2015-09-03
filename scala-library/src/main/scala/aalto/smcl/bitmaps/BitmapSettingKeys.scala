@@ -12,7 +12,7 @@ import aalto.smcl.infrastructure.settings.BaseSettingKeys._
  *
  * @author Aleksi Lukkarinen
  */
-trait BitmapSettingKeys {
+private[bitmaps] trait BitmapSettingKeys {
 
 
   // @formatter:off

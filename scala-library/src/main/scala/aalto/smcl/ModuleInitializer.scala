@@ -3,6 +3,8 @@ package aalto.smcl
 
 import scala.collection.mutable
 
+import aalto.smcl.ModuleInitializationPhase.ModuleInitializationPhase
+
 
 
 
@@ -14,20 +16,35 @@ import scala.collection.mutable
 private[smcl] trait ModuleInitializer {
 
   /** */
-  private[this] var _isInitialized: Boolean = false
+  private[this] val _startedInitializationPhases: mutable.Set[ModuleInitializationPhase] =
+    mutable.Set[ModuleInitializationPhase]()
 
   /** */
-  private[this] val _initializers: mutable.ArrayBuffer[(() => Unit)] =
+  private[this] val _earlyInitializers: mutable.ArrayBuffer[(() => Unit)] =
+    new mutable.ArrayBuffer[(() => Unit)]()
+
+  /** */
+  private[this] val _lateInitializers: mutable.ArrayBuffer[(() => Unit)] =
     new mutable.ArrayBuffer[(() => Unit)]()
 
   /**
    *
+   *
+   * @param phase
    */
-  def performInitialization(): Unit = {
-    if (!_isInitialized) {
-      _isInitialized = true
+  def performInitialization(phase: ModuleInitializationPhase): Unit = {
+    if (!_startedInitializationPhases.contains(phase)) {
+      _startedInitializationPhases += phase
 
-      _initializers.foreach { f =>
+      var initializers: mutable.ArrayBuffer[(() => Unit)] = null
+
+      import aalto.smcl.ModuleInitializationPhase._
+      phase match {
+        case Early => initializers = _earlyInitializers
+        case Late  => initializers = _lateInitializers
+      }
+
+      initializers.foreach {f =>
         if (f != null) {
           f()
         }
@@ -39,14 +56,23 @@ private[smcl] trait ModuleInitializer {
    *
    *
    * @param initializer
+   * @param phase
    */
-  def addInitializer(initializer: () => Unit): Unit = {
-    if (_isInitialized) {
+  def addInitializer(
+      phase: ModuleInitializationPhase)(
+      initializer: () => Unit): Unit = {
+
+    if (_startedInitializationPhases.contains(phase)) {
       throw new IllegalStateException(
-        "New initializers cannot be added, because this module initializer has already been triggered.")
+        "New initializers cannot be added to the specified phase, because initialization of " +
+            "the phase has already been triggered for this module.")
     }
 
-    _initializers += initializer
+    import aalto.smcl.ModuleInitializationPhase._
+    phase match {
+      case Early => _earlyInitializers += initializer
+      case Late  => _lateInitializers += initializer
+    }
   }
 
 }

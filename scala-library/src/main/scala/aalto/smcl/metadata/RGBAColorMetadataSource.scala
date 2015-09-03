@@ -1,5 +1,4 @@
-package aalto.smcl.bitmaps.metadata
-
+package aalto.smcl.metadata
 
 import java.awt.image.BufferedImage
 import java.util.Date
