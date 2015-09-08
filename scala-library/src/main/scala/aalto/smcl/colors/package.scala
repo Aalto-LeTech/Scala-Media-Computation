@@ -3,6 +3,8 @@ package aalto.smcl
 
 import scala.language.implicitConversions
 
+import aalto.smcl.init.InitializableModule
+
 
 
 
@@ -11,10 +13,7 @@ import scala.language.implicitConversions
  *
  * @author Aleksi Lukkarinen
  */
-package object colors extends ColorOperationsAPI {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
+package object colors extends ColorOperationsAPI with InitializableModule {
 
   /** Color component value representing maximal opacity. */
   val FullyOpaque: Int = ColorValidator.MaximumRgbaOpacity

@@ -3,7 +3,8 @@ package aalto.smcl.platform
 
 import aalto.smcl.infrastructure.settings.Setting
 import aalto.smcl.infrastructure.settings.SettingValidatorFactory._
-import aalto.smcl.{ModuleInitializationPhase, GS, ModuleInitializer}
+import aalto.smcl.init.{ModuleInitializer, ModuleInitializationPhase}
+import aalto.smcl.GS
 
 
 

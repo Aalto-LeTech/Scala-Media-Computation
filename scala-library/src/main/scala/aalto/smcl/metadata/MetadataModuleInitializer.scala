@@ -5,8 +5,9 @@ import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{PresetRGBAColor, RGBAColor}
 import aalto.smcl.infrastructure.settings.SettingValidatorFactory._
 import aalto.smcl.infrastructure.settings._
+import aalto.smcl.init.{ModuleInitializer, ModuleInitializationPhase}
 import aalto.smcl.interfaces.{GlobalMetadataInterfaceSourceProviderRegistry, MetadataInterfaceSourceProvider}
-import aalto.smcl.{GS, ModuleInitializationPhase, ModuleInitializer}
+import aalto.smcl.GS
 
 
 

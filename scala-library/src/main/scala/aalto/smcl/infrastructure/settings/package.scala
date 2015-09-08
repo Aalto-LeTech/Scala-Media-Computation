@@ -1,6 +1,9 @@
 package aalto.smcl.infrastructure
 
 
+import aalto.smcl.init.InitializableModule
+
+
 
 
 /**
@@ -8,7 +11,7 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-package object settings {
+package object settings extends InitializableModule {
 
   /** */
   lazy val BaseSettingKeys: BaseSettingKeys = new BaseSettingKeys()

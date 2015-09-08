@@ -8,7 +8,8 @@ import scala.swing.Graphics2D
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{ColorValidator, RGBAColor}
 import aalto.smcl.common.AffineTransformation
-import aalto.smcl.{ModuleInitializationPhase, GS, SMCL}
+import aalto.smcl.init.ModuleInitializationPhase
+import aalto.smcl.{GS, SMCL}
 
 
 

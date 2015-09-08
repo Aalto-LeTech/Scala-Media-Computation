@@ -37,6 +37,7 @@ libraryDependencies ++= (scalaBinaryVersion.value match {
     "io.reactivex"              % "rxscala_2.11"                % "0.25.0"                  withSources() withJavadoc(),
     "org.scala-lang.modules"    % "scala-swing_2.11"            % "2.0.0-M2"                withSources() withJavadoc(),
     "org.scala-lang"            % "scala-reflect"               % "2.11.7"                  withSources() withJavadoc(),
+    "org.scala-lang"            % "scala-compiler"              % "2.11.7"                  withSources() withJavadoc(),
     "org.scalatest"             % "scalatest_2.11"              % "3.0.0-M7"  % "test"      withSources() withJavadoc(),
     "org.scalacheck"            % "scalacheck_2.11"             % "1.12.4"    % "test"      withSources() withJavadoc(),
     "org.scala-lang.modules"    % "scala-xml_2.11"              % "1.0.4"                   withSources() withJavadoc(),

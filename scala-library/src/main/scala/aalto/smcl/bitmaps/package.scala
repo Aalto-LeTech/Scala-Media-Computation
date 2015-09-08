@@ -3,6 +3,8 @@ package aalto.smcl
 
 import scala.language.implicitConversions
 
+import aalto.smcl.init.InitializableModule
+
 
 
 
@@ -14,10 +16,8 @@ import scala.language.implicitConversions
 package object bitmaps
     extends BitmapSettingKeys
             with BitmapOperationAPI
-            with ShapeCreationAPI {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
+            with ShapeCreationAPI
+            with InitializableModule {
 
   /** */
   type Bitmap = ImmutableBitmap

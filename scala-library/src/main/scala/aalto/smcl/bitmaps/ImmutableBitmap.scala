@@ -10,8 +10,9 @@ import aalto.smcl.bitmaps.{display => displayInViewer}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common._
 import aalto.smcl.infrastructure._
+import aalto.smcl.init.ModuleInitializationPhase
 import aalto.smcl.platform._
-import aalto.smcl.{ModuleInitializationPhase, GS, SMCL}
+import aalto.smcl.{GS, SMCL}
 
 
 

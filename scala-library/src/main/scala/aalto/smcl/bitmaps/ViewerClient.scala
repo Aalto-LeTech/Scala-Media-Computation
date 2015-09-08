@@ -5,10 +5,11 @@ import scala.swing.Dialog
 
 import rx.lang.scala.{JavaConversions, Subject}
 
-import aalto.smcl.{ModuleInitializationPhase, SMCL}
+import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.viewer.Application
 import aalto.smcl.bitmaps.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
 import aalto.smcl.infrastructure.SwingUtils
+import aalto.smcl.init.ModuleInitializationPhase
 
 
 

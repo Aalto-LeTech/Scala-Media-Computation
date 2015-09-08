@@ -1,4 +1,4 @@
-package aalto.smcl
+package aalto.smcl.init
 
 
 /**

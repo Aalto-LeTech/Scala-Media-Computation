@@ -6,6 +6,7 @@ import java.awt.{Color => AwtColor}
 import scala.language.implicitConversions
 
 import aalto.smcl.colors.RGBAColor
+import aalto.smcl.init.InitializableModule
 
 
 
@@ -15,10 +16,7 @@ import aalto.smcl.colors.RGBAColor
  *
  * @author Aleksi Lukkarinen
  */
-package object platform extends PlatformSettingKeys {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
+package object platform extends PlatformSettingKeys with InitializableModule {
 
   /** */
   private[platform]

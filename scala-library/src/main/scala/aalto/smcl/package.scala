@@ -2,6 +2,7 @@ package aalto
 
 
 import aalto.smcl.infrastructure.settings.Settings
+import aalto.smcl.init.InitializableModule
 
 
 
@@ -12,13 +13,11 @@ import aalto.smcl.infrastructure.settings.Settings
  *
  * @author Aleksi Lukkarinen
  */
-package object smcl {
+package object smcl extends InitializableModule {
 
 
   /** Global settings storage. */
   object GS extends Settings
 
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 }

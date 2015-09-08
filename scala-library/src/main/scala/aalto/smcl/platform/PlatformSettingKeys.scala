@@ -1,9 +1,10 @@
 package aalto.smcl.platform
 
 
-import aalto.smcl.{ModuleInitializationPhase, SMCL}
+import aalto.smcl.SMCL
 import aalto.smcl.infrastructure.settings.BaseSettingKeys
 import BaseSettingKeys._
+import aalto.smcl.init.ModuleInitializationPhase
 
 
 

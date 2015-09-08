@@ -1,9 +1,9 @@
-package aalto.smcl
+package aalto.smcl.init
 
 
 import scala.collection.mutable
 
-import aalto.smcl.ModuleInitializationPhase.ModuleInitializationPhase
+import aalto.smcl.init.ModuleInitializationPhase._
 
 
 
@@ -38,10 +38,11 @@ private[smcl] trait ModuleInitializer {
 
       var initializers: mutable.ArrayBuffer[(() => Unit)] = null
 
-      import aalto.smcl.ModuleInitializationPhase._
-      phase match {
-        case Early => initializers = _earlyInitializers
-        case Late  => initializers = _lateInitializers
+      {
+        phase match {
+          case Early => initializers = _earlyInitializers
+          case Late  => initializers = _lateInitializers
+        }
       }
 
       initializers.foreach {f =>
@@ -68,10 +69,11 @@ private[smcl] trait ModuleInitializer {
             "the phase has already been triggered for this module.")
     }
 
-    import aalto.smcl.ModuleInitializationPhase._
-    phase match {
-      case Early => _earlyInitializers += initializer
-      case Late  => _lateInitializers += initializer
+    {
+      phase match {
+        case Early => _earlyInitializers += initializer
+        case Late  => _lateInitializers += initializer
+      }
     }
   }
 

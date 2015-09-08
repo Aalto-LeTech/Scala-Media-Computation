@@ -1,6 +1,9 @@
 package aalto.smcl
 
 
+import aalto.smcl.init.InitializableModule
+
+
 
 
 /**
@@ -8,8 +11,6 @@ package aalto.smcl
  *
  * @author Aleksi Lukkarinen
  */
-package object metadata extends MetadataSettingKeys {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
+package object metadata extends MetadataSettingKeys with InitializableModule {
 
 }

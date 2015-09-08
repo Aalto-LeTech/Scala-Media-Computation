@@ -1,7 +1,8 @@
 package aalto.smcl.colors
 
 
-import aalto.smcl.{ModuleInitializationPhase, SMCL}
+import aalto.smcl.SMCL
+import aalto.smcl.init.ModuleInitializationPhase
 
 
 
