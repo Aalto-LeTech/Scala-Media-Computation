@@ -14,6 +14,13 @@ import aalto.smcl.metadata.MetadataSettingKeys
 package object init extends MetadataSettingKeys with InitializableModule {
 
   /** */
+  type PathString = String
+
+
+  /** */
   val ClassInfoProvider: ClassInfoProvider = new ClassInfoProvider()
+
+  /** */
+  val LibraryInitializer: LibraryInitializer = new LibraryInitializer()
 
 }

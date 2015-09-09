@@ -6,7 +6,7 @@ package aalto.smcl.init
  *
  * @author Aleksi Lukkarinen
  */
-object ModuleInitializationPhase extends Enumeration {
+private[smcl] object ModuleInitializationPhase extends Enumeration {
 
   /** Type alias for this enumeration. */
   type ModuleInitializationPhase = Value

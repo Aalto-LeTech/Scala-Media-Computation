@@ -11,7 +11,7 @@ import aalto.smcl.SMCL
  *
  * @author Aleksi Lukkarinen
  */
-trait InitializableModule {
+private[smcl] trait InitializableModule {
 
   /**
    *

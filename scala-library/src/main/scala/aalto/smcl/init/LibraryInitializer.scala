@@ -6,6 +6,20 @@ package aalto.smcl.init
  *
  * @author Aleksi Lukkarinen
  */
-object LibraryInitializer {
+//private[smcl]
+class LibraryInitializer {
+/*
+  /**
+   *
+   *
+   * @return
+   */
+  def findModuleInitializerClasses: Seq[Class[InitializableModule]] = {
+    val classFiles = ClassInfoProvider.resolveApplicationClassFiles()
 
+    //getClass.getClassLoader.loadClass()
+
+    //classFiles.map{}
+  }
+*/
 }
