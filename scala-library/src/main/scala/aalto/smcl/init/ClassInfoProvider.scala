@@ -29,12 +29,12 @@ class ClassInfoProvider {
   type RealPathExtensionString = PathString
 
   /** */
-  //private val SmclJarName: String = "resources.jar"
+  //private val SmclJarName: String = "rt.jar"
   private val SmclJarName: String = "smcl-scala-library_2.11-0.1-SNAPSHOT.jar"
 
   /** */
   private val SmclClassRootIdentifyingPackagePath =
-    Seq("aalto", "smcl", "init").mkString(File.separator, File.separator, "")
+    Seq("aalto", "smcl").mkString(File.separator)
 
   /** */
   private val ClassFileExtension: String = ".class"
@@ -93,7 +93,7 @@ class ClassInfoProvider {
    * @return
    */
   protected def resolveScalaClasspath0(nscSettings: Settings): Seq[PathString] =
-    new PathResolver(nscSettings).resultAsURLs.map(_.getPath.trim)
+    new PathResolver(nscSettings).resultAsURLs.map(_.getPath.trim).sorted
 
 
   /**
@@ -103,7 +103,7 @@ class ClassInfoProvider {
    */
   def resolveJavaClasspath(): Seq[PathString] =
     resolveSystemProperty(SystemPropertyNameClassPath).fold(Seq[PathString]()) {path =>
-      path.split(File.pathSeparator).map(_.trim).toList.toSeq
+      path.split(File.pathSeparator).map(_.trim).toList.sorted.toSeq
     }
 
   /**
@@ -127,11 +127,37 @@ class ClassInfoProvider {
   def printClasspath(): Unit = {
     val classpath = resolveClasspath()
 
-    if (classpath.isEmpty)
+    if (classpath.isEmpty) {
       println(MessageUnableToResolveClasspath)
-    else
-      classpath.foreach(println(_))
+      return
+    }
+
+    classpath.foreach(println)
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  private def hasClassExtension(path: String): Boolean =
+    path.endsWith(ClassFileExtension)
+
+  /**
+   *
+   *
+   * @return
+   */
+  private def hasClassExtension(path: Path): Boolean =
+    hasClassExtension(path.toFile.getCanonicalPath)
+
+  /**
+   *
+   *
+   * @param f
+   * @return
+   */
+  private def isNotReadableFile(f: File): Boolean = !f.isFile || !f.canRead
 
   /**
    *
@@ -142,12 +168,11 @@ class ClassInfoProvider {
     resolveClasspath().find(_.endsWith(SmclJarName)).fold[Option[File]](None) {path =>
       val jarFile: File = new File(path)
 
-      if (!jarFile.isFile || !jarFile.canRead)
+      if (isNotReadableFile(jarFile))
         return None
 
       Some(jarFile)
     }
-
 
   /**
    *
@@ -156,11 +181,34 @@ class ClassInfoProvider {
    */
   def resolveApplicationJarContents(): Seq[PathString] =
     resolveApplicationJarPath().fold[Seq[PathString]](Seq[PathString]()) {file =>
-      val jar = new JarFile(file)
-
-      JavaConverters.enumerationAsScalaIteratorConverter(jar.entries())
-        .asScala.toSeq.map {_.getName.trim}
+      JavaConverters.enumerationAsScalaIteratorConverter(new JarFile(file).entries())
+          .asScala.map(_.getName.trim).toIndexedSeq.toList.sorted
     }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def resolveApplicationJarClasses(): Seq[PathString] =
+    resolveApplicationJarContents().filter(hasClassExtension)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def printApplicationJarClasses(): Unit =
+    resolveApplicationJarClasses().foreach(println)
+
+  /**
+   *
+   *
+   * @param f
+   * @return
+   */
+  private def representsReadableDirectory(f: File) =
+    f.isDirectory && f.canRead
 
   /**
    *
@@ -171,7 +219,7 @@ class ClassInfoProvider {
     resolveSystemProperty(SystemPropertyNameUserDir).fold[Option[File]](None) {path =>
       val userDirFile = new File(path)
 
-      if (!userDirFile.isDirectory || !userDirFile.canRead)
+      if (!representsReadableDirectory(userDirFile))
         return None
 
       Some(userDirFile)
@@ -185,13 +233,13 @@ class ClassInfoProvider {
   def resolveSbtConsoleTimeApplicationClassRootFolders(): Seq[File] =
     resolveUserDir().fold[Seq[File]](Seq[File]()) {dir =>
       val targetPathFile = new File(dir.getAbsolutePath + File.separator + "target")
-      if (!targetPathFile.isDirectory || !targetPathFile.canRead)
+      if (!representsReadableDirectory(targetPathFile))
         return Seq[File]()
 
       val subDirFileList = targetPathFile.listFiles(new FileFilter() {
 
         override def accept(file: File): Boolean =
-          file.isDirectory && file.canRead && file.getName.startsWith("scala")
+          representsReadableDirectory(file) && file.getName.startsWith("scala")
 
       })
 
@@ -202,28 +250,18 @@ class ClassInfoProvider {
       subDirFileList.foreach {subDir =>
         val rootPathCandidateFile = new File(subDir.getCanonicalPath + File.separator + "classes")
 
-        if (rootPathCandidateFile.isDirectory && rootPathCandidateFile.canRead) {
+        if (representsReadableDirectory(rootPathCandidateFile)) {
           val testPackagePathFile = new File(
-            rootPathCandidateFile.getCanonicalPath + SmclClassRootIdentifyingPackagePath)
+            rootPathCandidateFile.getCanonicalPath + File.separator +
+                SmclClassRootIdentifyingPackagePath + File.separator)
 
-          if (testPackagePathFile.isDirectory && testPackagePathFile.canRead)
+          if (representsReadableDirectory(testPackagePathFile))
             foundPathFiles += rootPathCandidateFile
         }
       }
 
-      if (foundPathFiles.isEmpty)
-        return Seq[File]()
-
-      foundPathFiles.toList.toSeq
+      foundPathFiles.toList.sorted.toSeq
     }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def hasClassExtension(path: Path): Boolean =
-    path.toFile.getCanonicalPath.endsWith(ClassfileExtension)
 
   /**
    *
@@ -237,8 +275,8 @@ class ClassInfoProvider {
       Files.walkFileTree(rootFolderFile.toPath, new SimpleFileVisitor[Path]() {
 
         override def visitFile(
-          contentFilePath: Path,
-          attributes: BasicFileAttributes): FileVisitResult = {
+            contentFilePath: Path,
+            attributes: BasicFileAttributes): FileVisitResult = {
 
           if (attributes.isRegularFile && hasClassExtension(contentFilePath))
             acceptedFiles += contentFilePath.toString
@@ -255,13 +293,21 @@ class ClassInfoProvider {
    *
    * @return
    */
+  def resolveSbtConsoleTimeApplicationClassRootFoldersClasses(): Seq[PathString] =
+    resolveSbtConsoleTimeApplicationClassRootFoldersContents().filter(hasClassExtension)
+
+  /**
+   *
+   *
+   * @return
+   */
   def resolveApplicationClassFiles(): Seq[File] = {
-    var foundFilePaths = resolveApplicationJarContents()
+    var foundFilePaths = resolveApplicationJarClasses()
 
     if (foundFilePaths.isEmpty)
       foundFilePaths = resolveSbtConsoleTimeApplicationClassRootFoldersContents()
 
-    foundFilePaths.map(new File(_))
+    foundFilePaths.map(new File(_)).sorted
   }
 
   /**
@@ -270,24 +316,76 @@ class ClassInfoProvider {
   def printApplicationClassFiles(): Unit = {
     val files = resolveApplicationClassFiles()
 
-    if (files.isEmpty)
+    if (files.isEmpty) {
       println(MessageUnableToResolveClassfiles)
-    else
-      files.foreach(println(_))
+      return
+    }
+
+    files.foreach(println)
+  }
+
+  /**
+   *
+   *
+   * @param classFile
+   * @return
+   */
+  private def resolveFullClassNameFrom(classFile: File): Option[String] = {
+    val path = classFile.getCanonicalPath
+    if (path.length < 1)
+      return None
+
+    var classRootPosition = path.lastIndexOf(SmclClassRootIdentifyingPackagePath + File.separator)
+    if (classRootPosition < 0)
+      return None
+
+    val extensionPosition = path.lastIndexOf(ClassFileExtension)
+    if (extensionPosition < 0)
+      return None
+
+    if (classRootPosition >= extensionPosition)
+      return None
+
+    val strippedPath = path.substring(classRootPosition, extensionPosition)
+    if (strippedPath.length < 1)
+      return None
+
+    val className = strippedPath.replaceAll(File.separator, ".")
+
+    Some(className)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def resolveApplicationClassNames(): Seq[String] =
+    resolveApplicationClassFiles().flatMap(resolveFullClassNameFrom).sorted
+
+  /**
+   *
+   */
+  def printApplicationClassNames(): Unit = {
+    val names = resolveApplicationClassNames()
+
+    if (names.isEmpty) {
+      println(MessageUnableToResolveClassfiles)
+      return
+    }
+
+    names.foreach(println)
   }
 
   /**
    *
    */
   def loadApplicationClasses(): Seq[Class[_]] =
-    resolveApplicationClassFiles().map {file =>
-      val path = file.getCanonicalPath
-      val extensionPosition = path.indexOf(
-
-      )
+    resolveApplicationClassFiles().map {
+      file =>
 
 
-      new Class()
+        new Object().getClass
     }
 
 }
