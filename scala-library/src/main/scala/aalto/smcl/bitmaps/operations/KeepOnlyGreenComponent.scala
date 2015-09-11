@@ -2,8 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.colors.RGBAComponentTranslationTable
-import aalto.smcl.common._
-import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap}
+import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
 
 
 
@@ -14,7 +13,7 @@ import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap}
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class KeepOnlyGreenComponent()
-  extends AbstractOperation with OneSourceFilter with Immutable {
+    extends AbstractOperation with OneSourceFilter with Immutable {
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

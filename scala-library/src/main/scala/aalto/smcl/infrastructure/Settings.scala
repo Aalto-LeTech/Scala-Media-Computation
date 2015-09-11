@@ -1,5 +1,6 @@
 package aalto.smcl.infrastructure
 
+
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure.BaseSettingKeys._
 
@@ -36,7 +37,7 @@ class Settings {
    * @param value
    * @return
    */
-  def +=(value: Setting[_]): Unit = _settingMap += (value.key -> value)
+  def += (value: Setting[_]): Unit = _settingMap += (value.key -> value)
 
   /**
    *
@@ -184,11 +185,11 @@ class Settings {
     val sb = new StringBuilder(100)
 
     groupedByKeyType()
-      .map({case (groupKey, group) => groupKey + ": " + group.size})
-      .addString(sb,
-        start = StrLeftAngleBracket + ReflectionUtils.shortTypeNameOf(this) + StrSemicolon + StrSpace,
-        sep = StrSemicolon + StrSpace,
-        end = StrRightAngleBracket)
+        .map({case (groupKey, group) => groupKey + ": " + group.size})
+        .addString(sb,
+          start = StrLeftAngleBracket + ReflectionUtils.shortTypeNameOf(this) + StrSemicolon + StrSpace,
+          sep = StrSemicolon + StrSpace,
+          end = StrRightAngleBracket)
 
     sb.toString()
   }

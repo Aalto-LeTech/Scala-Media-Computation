@@ -1,8 +1,6 @@
 package aalto.smcl.infrastructure
 
 
-
-
 /**
  * Ensures that a bitmap can be rendered onto drawing surfaces.
  *

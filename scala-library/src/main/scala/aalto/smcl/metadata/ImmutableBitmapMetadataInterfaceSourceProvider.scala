@@ -1,5 +1,6 @@
 package aalto.smcl.metadata
 
+
 import aalto.smcl.bitmaps.{Bitmap, ImmutableBitmap}
 import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
 

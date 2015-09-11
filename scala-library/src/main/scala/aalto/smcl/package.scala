@@ -1,7 +1,7 @@
 package aalto
 
 
-import aalto.smcl.infrastructure.{Settings, InitializableModule}
+import aalto.smcl.infrastructure.{InitializableModule, Settings}
 
 
 

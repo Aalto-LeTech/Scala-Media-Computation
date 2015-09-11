@@ -1,5 +1,6 @@
 package aalto.smcl.infrastructure
 
+
 import java.awt.{Color => AwtColor}
 
 import aalto.smcl.colors.RGBAColor

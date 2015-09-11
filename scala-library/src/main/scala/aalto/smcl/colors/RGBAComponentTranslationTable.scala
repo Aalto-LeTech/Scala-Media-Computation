@@ -1,5 +1,6 @@
 package aalto.smcl.colors
 
+
 import aalto.smcl.SMCL
 import aalto.smcl.infrastructure._
 

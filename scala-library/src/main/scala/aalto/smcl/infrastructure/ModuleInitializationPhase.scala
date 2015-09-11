@@ -1,8 +1,6 @@
 package aalto.smcl.infrastructure
 
 
-
-
 /**
  * Initialization phases.
  *

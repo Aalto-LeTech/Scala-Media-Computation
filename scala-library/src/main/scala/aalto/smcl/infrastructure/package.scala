@@ -20,7 +20,6 @@ package object infrastructure extends InfrastructureSettingKeys with Constants w
   SMCL.performInitialization(ModuleInitializationPhase.Early)
 
 
-
   /** */
   type PathString = String
 

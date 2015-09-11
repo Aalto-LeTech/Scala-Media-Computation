@@ -1,12 +1,13 @@
 package aalto.smcl.colors
 
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 final class SMCLInvalidColorWeightCombinationError private[smcl](private val detailMessage: String, cause: Throwable)
-  extends RuntimeException(detailMessage, cause) {
+    extends RuntimeException(detailMessage, cause) {
 
   /**
    *

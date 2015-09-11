@@ -109,7 +109,7 @@ class ClassProvider {
    */
   def resolveJavaClasspath(): Seq[PathString] =
     resolveSystemProperty(SystemPropertyNameClassPath)
-      .fold(Seq[PathString]())(parseClassPathString)
+        .fold(Seq[PathString]())(parseClassPathString)
 
   /**
    *
@@ -163,7 +163,7 @@ class ClassProvider {
   def resolveApplicationJarContents(): Seq[PathString] =
     resolveApplicationJarPath().fold[Seq[PathString]](Seq[PathString]()) {file =>
       JavaConverters.enumerationAsScalaIteratorConverter(new JarFile(file).entries())
-        .asScala.map(_.getName.trim).toIndexedSeq.toList.sorted
+          .asScala.map(_.getName.trim).toIndexedSeq.toList.sorted
     }
 
   /**
@@ -225,7 +225,7 @@ class ClassProvider {
         if (representsReadableDirectory(rootPathCandidateFile)) {
           val testPackagePathFile = new File(
             rootPathCandidateFile.getCanonicalPath + File.separator +
-              SmclClassRootIdentifyingPackagePath + File.separator)
+                SmclClassRootIdentifyingPackagePath + File.separator)
 
           if (representsReadableDirectory(testPackagePathFile))
             foundPathFiles += rootPathCandidateFile
@@ -247,8 +247,8 @@ class ClassProvider {
       Files.walkFileTree(rootFolderFile.toPath, new SimpleFileVisitor[Path]() {
 
         override def visitFile(
-          contentFilePath: Path,
-          attributes: BasicFileAttributes): FileVisitResult = {
+            contentFilePath: Path,
+            attributes: BasicFileAttributes): FileVisitResult = {
 
           if (attributes.isRegularFile && hasClassExtension(contentFilePath))
             acceptedFiles += contentFilePath.toString

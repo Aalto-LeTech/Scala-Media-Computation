@@ -58,13 +58,13 @@ private[smcl] trait ModuleInitializer {
    * @param phase
    */
   def addInitializer(
-    phase: ModuleInitializationPhase)(
-    initializer: () => Unit): Unit = {
+      phase: ModuleInitializationPhase)(
+      initializer: () => Unit): Unit = {
 
     if (_startedInitializationPhases.contains(phase)) {
       throw new IllegalStateException(
         "New initializers cannot be added to the specified phase, because initialization of " +
-          "the phase has already been triggered for this module.")
+            "the phase has already been triggered for this module.")
     }
 
     phase match {

@@ -1,5 +1,6 @@
 package aalto.smcl.infrastructure
 
+
 /**
  *
  *
@@ -7,18 +8,19 @@ package aalto.smcl.infrastructure
  */
 //private[smcl]
 class LibraryInitializer {
-/*
-  /**
-   *
-   *
-   * @return
-   */
-  def findModuleInitializerClasses: Seq[Class[InitializableModule]] = {
-    val classFiles = ClassInfoProvider.resolveApplicationClassFiles()
 
-    //getClass.getClassLoader.loadClass()
+  /*
+    /**
+     *
+     *
+     * @return
+     */
+    def findModuleInitializerClasses: Seq[Class[InitializableModule]] = {
+      val classFiles = ClassInfoProvider.resolveApplicationClassFiles()
 
-    //classFiles.map{}
-  }
-*/
+      //getClass.getClassLoader.loadClass()
+
+      //classFiles.map{}
+    }
+  */
 }

@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap}
+import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
 
 
 
