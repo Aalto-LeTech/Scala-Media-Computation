@@ -2,7 +2,7 @@ package aalto.smcl.colors
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.init.ModuleInitializationPhase
+import aalto.smcl.infrastructure.ModuleInitializationPhase
 
 
 

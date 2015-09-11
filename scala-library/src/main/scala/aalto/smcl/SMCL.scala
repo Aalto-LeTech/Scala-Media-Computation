@@ -2,9 +2,8 @@ package aalto.smcl
 
 
 import aalto.smcl.bitmaps.BitmapModuleInitializer
-import aalto.smcl.init.{ModuleInitializer, ModuleInitializationPhase}
+import aalto.smcl.infrastructure.{InfrastructureModuleInitializer, ModuleInitializationPhase, ModuleInitializer}
 import aalto.smcl.metadata.MetadataModuleInitializer
-import aalto.smcl.platform.PlatformModuleInitializer
 
 
 
@@ -115,7 +114,7 @@ object SMCL extends ModuleInitializer {
      * Calls the early-initialization routines of every SMCL's module.
      */
     addInitializer(Early) {() =>
-      PlatformModuleInitializer.performInitialization(Early)
+      InfrastructureModuleInitializer.performInitialization(Early)
       BitmapModuleInitializer.performInitialization(Early)
     }
 

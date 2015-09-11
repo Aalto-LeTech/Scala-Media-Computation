@@ -5,7 +5,6 @@ import aalto.smcl.GS
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
-import aalto.smcl.platform.PlatformBitmapBuffer
 
 
 

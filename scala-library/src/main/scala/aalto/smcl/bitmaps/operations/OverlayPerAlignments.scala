@@ -6,8 +6,7 @@ import scala.collection.mutable.ArrayBuffer
 import aalto.smcl.GS
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{ColorValidator, RGBAColor, _}
-import aalto.smcl.infrastructure.{HorizontalAlignment, MetaInformationMap, VerticalAlignment}
-import aalto.smcl.platform.PlatformBitmapBuffer
+import aalto.smcl.infrastructure._
 
 
 
@@ -23,12 +22,12 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class OverlayPerAlignments(
-    bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
-    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-    opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+  bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
+  horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+  verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+  opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation with BufferProvider with Immutable {
 
   require(bitmapsToOverlayFromBottomToTop.nonEmpty,
     "Overlay operation must be given a non-empty Sequence of Bitmap instances to overlay.")
@@ -60,14 +59,14 @@ private[bitmaps] case class OverlayPerAlignments(
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0)
 
     case HorizontalAlignment.Right =>
-      bitmapsToOverlayFromBottomToTop.map({widthInPixels - _.widthInPixels})
+      bitmapsToOverlayFromBottomToTop map {widthInPixels - _.widthInPixels}
 
     case HorizontalAlignment.Center =>
       val canvasWidth = widthInPixels.toDouble / 2
 
-      bitmapsToOverlayFromBottomToTop.map({bmp =>
+      bitmapsToOverlayFromBottomToTop map {bmp =>
         (canvasWidth - bmp.widthInPixels.toDouble / 2).floor.toInt
-      })
+      }
   }
 
   /** Future vertical offsets of the bitmaps to be overlaid. */
@@ -76,14 +75,14 @@ private[bitmaps] case class OverlayPerAlignments(
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0).toSeq
 
     case VerticalAlignment.Bottom =>
-      bitmapsToOverlayFromBottomToTop.map({heightInPixels - _.heightInPixels})
+      bitmapsToOverlayFromBottomToTop map {heightInPixels - _.heightInPixels}
 
     case VerticalAlignment.Middle =>
       val canvasMiddle = heightInPixels.toDouble / 2
 
-      bitmapsToOverlayFromBottomToTop.map({bmp =>
+      bitmapsToOverlayFromBottomToTop map {bmp =>
         (canvasMiddle - bmp.heightInPixels.toDouble / 2).floor.toInt
-      })
+      }
   }
 
   /**

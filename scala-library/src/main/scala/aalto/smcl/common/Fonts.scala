@@ -4,7 +4,7 @@ package aalto.smcl.common
 import scala.collection.immutable.HashMap
 import scala.swing.Font
 
-import aalto.smcl.platform.FontProvider
+import aalto.smcl.infrastructure.FontProvider
 
 
 
@@ -53,7 +53,7 @@ class Fonts private[common]() extends Map[String, Font] with Immutable {
    * @param key
    * @return
    */
-  override def - (key: String): Map[String, Font] = _fontMap.-(key)
+  override def -(key: String): Map[String, Font] = _fontMap.-(key)
 
   /**
    *
@@ -62,6 +62,6 @@ class Fonts private[common]() extends Map[String, Font] with Immutable {
    * @tparam B1
    * @return
    */
-  override def +[B1 >: Font] (kv: (String, B1)): Map[String, B1] = _fontMap + kv
+  override def +[B1 >: Font](kv: (String, B1)): Map[String, B1] = _fontMap + kv
 
 }

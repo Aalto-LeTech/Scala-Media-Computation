@@ -1,13 +1,14 @@
 package aalto.smcl.metadata
 
 
+import scala.language.implicitConversions
+
+import aalto.smcl.GS
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{PresetRGBAColor, RGBAColor}
-import aalto.smcl.infrastructure.settings.SettingValidatorFactory._
-import aalto.smcl.infrastructure.settings._
-import aalto.smcl.init.{ModuleInitializer, ModuleInitializationPhase}
+import aalto.smcl.infrastructure.SettingValidatorFactory._
+import aalto.smcl.infrastructure.{ModuleInitializationPhase, ModuleInitializer, Setting}
 import aalto.smcl.interfaces.{GlobalMetadataInterfaceSourceProviderRegistry, MetadataInterfaceSourceProvider}
-import aalto.smcl.GS
 
 
 
@@ -44,8 +45,7 @@ object MetadataModuleInitializer extends ModuleInitializer {
       Bitmap().getClass -> bitmapProvider,
       ImmutableBitmap().getClass -> bitmapProvider,
       RGBAColor(0).getClass -> rgbaColorProvider,
-      PresetRGBAColor(0, Option("<dummy>")).getClass -> rgbaColorProvider
-    )
+      PresetRGBAColor(0, Option("<dummy>")).getClass -> rgbaColorProvider)
 
     _providerMap.foreach {case (clazz, provider) =>
       GlobalMetadataInterfaceSourceProviderRegistry.registerProvider(clazz, provider)
@@ -53,3 +53,4 @@ object MetadataModuleInitializer extends ModuleInitializer {
   }
 
 }
+

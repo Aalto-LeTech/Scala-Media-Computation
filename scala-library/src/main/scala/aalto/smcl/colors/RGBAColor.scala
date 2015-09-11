@@ -1,9 +1,7 @@
 package aalto.smcl.colors
 
 
-import aalto.smcl.infrastructure.{MetaInformationMap, Tokenizable}
-import aalto.smcl.init.ModuleInitializationPhase
-import aalto.smcl.platform.PlatformColor
+import aalto.smcl.infrastructure._
 import aalto.smcl.{SMCL, colors}
 
 

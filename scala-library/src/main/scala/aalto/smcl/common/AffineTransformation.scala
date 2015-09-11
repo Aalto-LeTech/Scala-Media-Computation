@@ -2,8 +2,7 @@ package aalto.smcl.common
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.init.ModuleInitializationPhase
-import aalto.smcl.platform.PlatformAffineTransformation
+import aalto.smcl.infrastructure.{PlatformAffineTransformation, ModuleInitializationPhase}
 
 
 

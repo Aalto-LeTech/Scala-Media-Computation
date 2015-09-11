@@ -1,8 +1,8 @@
 package aalto.smcl.bitmaps
 
 
+import aalto.smcl.infrastructure.BaseSettingKeys._
 import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
-import aalto.smcl.infrastructure.settings.BaseSettingKeys._
 
 
 

@@ -2,8 +2,6 @@ package aalto.smcl.infrastructure
 
 import java.util.Date
 
-import aalto.smcl.platform.DateTimeProvider
-
 
 
 

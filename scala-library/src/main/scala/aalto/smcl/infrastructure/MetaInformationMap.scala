@@ -53,21 +53,25 @@ private[smcl] class MetaInformationMap private(private val content: Map[String, 
   /**
    *
    */
-  def size: Int = content.size
+  def size: Int =
+    content.size
 
   /**
    *
    */
-  def keyValuePairs: Seq[(String, Option[String])] = content.toSeq
+  def keyValuePairs: Seq[(String, Option[String])] =
+    content.toSeq
 
   /**
    *
    */
-  def get(key: String): Option[String] = content.get(key).get
+  def get(key: String): Option[String] =
+    content.get(key).get
 
   /**
    *
    */
-  def foreach[T](f: ((String, Option[String])) => T): Unit = content.foreach(f)
+  def foreach[T](f: ((String, Option[String])) => T): Unit =
+    content foreach f
 
 }

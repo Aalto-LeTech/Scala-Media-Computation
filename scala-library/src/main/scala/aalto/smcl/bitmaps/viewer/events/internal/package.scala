@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.viewer.events
 
 
-import aalto.smcl.init.InitializableModule
+import aalto.smcl.infrastructure.InitializableModule
 
 
 

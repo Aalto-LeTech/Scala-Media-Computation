@@ -3,8 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.colors.RGBAComponentTranslationTable
 import aalto.smcl.common._
-import aalto.smcl.infrastructure.{MetaInformationMap, CommonValidators}
-import aalto.smcl.platform.PlatformBitmapBuffer
+import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap, CommonValidators}
 
 
 

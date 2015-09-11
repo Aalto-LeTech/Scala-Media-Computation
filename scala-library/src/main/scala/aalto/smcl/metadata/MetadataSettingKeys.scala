@@ -1,6 +1,7 @@
 package aalto.smcl.metadata
 
-import aalto.smcl.infrastructure.settings.BaseSettingKeys._
+
+import aalto.smcl.infrastructure.BaseSettingKeys._
 
 
 

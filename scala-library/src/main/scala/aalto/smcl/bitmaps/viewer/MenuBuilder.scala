@@ -38,7 +38,7 @@ private[viewer] object MenuBuilder {
  * @author Aleksi Lukkarinen
  */
 private[viewer] class MenuBuilder private(
-    private val _actionMap: AbstractActionMap) {
+  private val _actionMap: AbstractActionMap) {
 
   /** */
   private val _parents = new mutable.Stack[Component]()
@@ -71,7 +71,7 @@ private[viewer] class MenuBuilder private(
       throw new IllegalStateException("This MenuBuilder instance is corrupted (no MenuBar exist).")
 
     val menu = new Menu(trimmedName)
-    mnemonicOption.map(menu.mnemonic = _)
+    mnemonicOption foreach {menu.mnemonic = _}
 
     _parents.top match {
       case m: Menu    => m.contents += menu

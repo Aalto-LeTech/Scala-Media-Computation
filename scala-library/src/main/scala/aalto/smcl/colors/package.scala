@@ -3,7 +3,7 @@ package aalto.smcl
 
 import scala.language.implicitConversions
 
-import aalto.smcl.init.InitializableModule
+import aalto.smcl.infrastructure.InitializableModule
 
 
 

@@ -6,8 +6,7 @@ import scala.collection.mutable.ArrayBuffer
 import aalto.smcl.GS
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
-import aalto.smcl.infrastructure.{MetaInformationMap, VerticalAlignment}
-import aalto.smcl.platform.PlatformBitmapBuffer
+import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap, VerticalAlignment}
 
 
 
@@ -23,11 +22,11 @@ import aalto.smcl.platform.PlatformBitmapBuffer
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class AppendHorizontally(
-    bitmapsToCombine: Seq[Bitmap])(
-    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+  bitmapsToCombine: Seq[Bitmap])(
+  verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+  paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation with BufferProvider with Immutable {
 
   require(bitmapsToCombine.nonEmpty,
     "Append operation must be given a non-empty Sequence of Bitmap instances to combine.")
@@ -51,7 +50,7 @@ private[bitmaps] case class AppendHorizontally(
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =
     childOperationListsOption.get.foldLeft[Int](0)({_ + _.widthInPixels}) +
-        (childOperationListsOption.get.length - 1) * paddingInPixels
+      (childOperationListsOption.get.length - 1) * paddingInPixels
 
   BitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
 
@@ -61,12 +60,12 @@ private[bitmaps] case class AppendHorizontally(
       ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toSeq
 
     case VerticalAlignment.Bottom =>
-      bitmapsToCombine.map({heightInPixels - _.heightInPixels})
+      bitmapsToCombine map {heightInPixels - _.heightInPixels}
 
     case VerticalAlignment.Middle =>
-      bitmapsToCombine.map({bmp =>
+      bitmapsToCombine map {bmp =>
         (heightInPixels.toDouble / 2 - bmp.heightInPixels.toDouble / 2).floor.toInt
-      })
+      }
   }
 
   /**
@@ -80,7 +79,7 @@ private[bitmaps] case class AppendHorizontally(
     val newBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
     val drawingSurface = newBuffer.drawingSurface()
 
-    drawingSurface.clearUsing(backgroundColor)
+    drawingSurface clearUsing backgroundColor
 
     var xPosition = 0
     var itemNumber = 0

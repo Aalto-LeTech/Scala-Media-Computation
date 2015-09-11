@@ -1,6 +1,7 @@
 package aalto.smcl.bitmaps
 
-import aalto.smcl.platform.UniqueIdProvider
+
+import aalto.smcl.infrastructure.UniqueIdProvider
 
 
 

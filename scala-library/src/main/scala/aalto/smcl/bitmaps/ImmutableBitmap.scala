@@ -10,8 +10,6 @@ import aalto.smcl.bitmaps.{display => displayInViewer}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common._
 import aalto.smcl.infrastructure._
-import aalto.smcl.init.ModuleInitializationPhase
-import aalto.smcl.platform._
 import aalto.smcl.{GS, SMCL}
 
 
@@ -32,10 +30,10 @@ object ImmutableBitmap {
    * Creates a new empty [[ImmutableBitmap]] instance.
    */
   def apply(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      initialBackgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    initialBackgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     BitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
@@ -47,7 +45,7 @@ object ImmutableBitmap {
 
     val operationList =
       Clear(initialBackgroundColor) +:
-          BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
+        BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
 
     val newBitmap = new ImmutableBitmap(operationList, BitmapIdentity())
 
@@ -67,8 +65,8 @@ object ImmutableBitmap {
    * @return
    */
   def apply(
-      sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle.Value): collection.Seq[Either[Throwable, ImmutableBitmap]] = {
+    sourceResourcePath: String,
+    viewerHandling: ViewerUpdateStyle.Value): collection.Seq[Either[Throwable, ImmutableBitmap]] = {
 
     // The ImageProvider is trusted with validation of the source resource path.
     val loadedBuffersTry = ImageProvider.tryToLoadImagesFromFile(sourceResourcePath)
@@ -116,8 +114,8 @@ object ImmutableBitmap {
  * @author Aleksi Lukkarinen
  */
 case class ImmutableBitmap private(
-    private[bitmaps] val operations: BitmapOperationList,
-    uniqueIdentifier: BitmapIdentity) extends {
+  private[bitmaps] val operations: BitmapOperationList,
+  uniqueIdentifier: BitmapIdentity) extends {
 
   /** Width of this [[ImmutableBitmap]]. */
   val widthInPixels: Int = operations.widthInPixels
@@ -130,9 +128,9 @@ case class ImmutableBitmap private(
     WeakReference[PlatformBitmapBuffer](null)
 
 } with RenderableBitmap
-       with PixelRectangle
-       with Immutable
-       with TimestampedCreation {
+with PixelRectangle
+with Immutable
+with TimestampedCreation {
 
   /**
    * Returns the initial background color of this [[ImmutableBitmap]]
@@ -148,8 +146,8 @@ case class ImmutableBitmap private(
    * @return
    */
   private[bitmaps] def apply(
-      newOperation: Renderable,
-      viewerHandling: ViewerUpdateStyle.Value): ImmutableBitmap = {
+    newOperation: Renderable,
+    viewerHandling: ViewerUpdateStyle.Value): ImmutableBitmap = {
 
     require(newOperation != null, "Operation argument cannot be null.")
 
@@ -180,8 +178,8 @@ case class ImmutableBitmap private(
    * @return
    */
   private[bitmaps] def apply(
-      newOperation: BufferProvider,
-      viewerHandling: ViewerUpdateStyle.Value): ImmutableBitmap = {
+    newOperation: BufferProvider,
+    viewerHandling: ViewerUpdateStyle.Value): ImmutableBitmap = {
 
     require(newOperation != null, "Operation argument cannot be null.")
 
@@ -228,8 +226,8 @@ case class ImmutableBitmap private(
    * @return
    */
   def clear(
-      color: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    color: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(Clear(color), viewerHandling)
   }
@@ -242,8 +240,8 @@ case class ImmutableBitmap private(
    * @return
    */
   def convolveWith(
-      kernel: ConvolutionKernel,
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    kernel: ConvolutionKernel,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(ConvolveWithCustomKernel(kernel), viewerHandling)
   }
@@ -256,8 +254,8 @@ case class ImmutableBitmap private(
    * @return
    */
   def filterWith(
-      translator: RGBAComponentTranslationTable,
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    translator: RGBAComponentTranslationTable,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(FilterWithComponentTranslationTable(translator), viewerHandling)
   }
@@ -393,8 +391,8 @@ case class ImmutableBitmap private(
    * @param viewerHandling
    */
   def posterize(
-      strengthAsPercentage: Int,
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    strengthAsPercentage: Int,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(Posterize(strengthAsPercentage), viewerHandling)
   }
@@ -411,12 +409,12 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawLine(
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    fromXInPixels: Int,
+    fromYInPixels: Int,
+    toXInPixels: Int,
+    toYInPixels: Int,
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawLine(
@@ -439,11 +437,11 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawPolyline(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
-      numberOfCoordinatesToDraw: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    xCoordinates: Seq[Int],
+    yCoordinates: Seq[Int],
+    numberOfCoordinatesToDraw: Int,
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawPolyline(
@@ -468,14 +466,14 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawPolygon(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
-      numberOfCoordinatesToDraw: Int,
-      hasBorder: Boolean = true,
-      hasFilling: Boolean = false,
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    xCoordinates: Seq[Int],
+    yCoordinates: Seq[Int],
+    numberOfCoordinatesToDraw: Int,
+    hasBorder: Boolean = true,
+    hasFilling: Boolean = false,
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawPolygon(
@@ -503,14 +501,14 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawSquare(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawSquare(
@@ -539,15 +537,15 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawRectangle(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawRectangle(
@@ -578,16 +576,16 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawRoundedSquare(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawRoundedSquare(
@@ -620,17 +618,17 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawRoundedRectangle(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawRoundedRectangle(
@@ -661,14 +659,14 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawCircle(
-      centerXInPixels: Int,
-      centerYInPixels: Int,
-      radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    centerXInPixels: Int,
+    centerYInPixels: Int,
+    radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawCircle(
@@ -697,15 +695,15 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawEllipse(
-      centerXInPixels: Int,
-      centerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    centerXInPixels: Int,
+    centerYInPixels: Int,
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawEllipse(
@@ -737,17 +735,17 @@ case class ImmutableBitmap private(
    * @return
    */
   def drawArc(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDegrees),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    upperLeftCornerXInPixels: Int,
+    upperLeftCornerYInPixels: Int,
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDegrees),
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       DrawArc(
@@ -772,8 +770,8 @@ case class ImmutableBitmap private(
    * @return
    */
   def trim(
-      colorToTrim: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    colorToTrim: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(Trim(this, colorToTrim), viewerHandling)
   }
@@ -789,11 +787,11 @@ case class ImmutableBitmap private(
    * @return
    */
   def crop(
-      windowTopLeftX: Int,
-      windowTopLeftY: Int,
-      windowBottomRightX: Int,
-      windowBottomRightY: Int,
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    windowTopLeftX: Int,
+    windowTopLeftY: Int,
+    windowBottomRightX: Int,
+    windowBottomRightY: Int,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       Crop(
@@ -817,12 +815,12 @@ case class ImmutableBitmap private(
    * @return
    */
   def augmentCanvas(
-      extraPixelsOntoLeftEdge: Int = 0,
-      extraPixelsOntoTopEdge: Int = 0,
-      extraPixelsOntoRightEdge: Int = 0,
-      extraPixelsOntoBottomEdge: Int = 0,
-      color: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    extraPixelsOntoLeftEdge: Int = 0,
+    extraPixelsOntoTopEdge: Int = 0,
+    extraPixelsOntoRightEdge: Int = 0,
+    extraPixelsOntoBottomEdge: Int = 0,
+    color: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       AugmentCanvas(
@@ -844,12 +842,12 @@ case class ImmutableBitmap private(
    * @param backgroundColor
    */
   def underlayBehind(
-      topBitmap: ImmutableBitmap,
-      topBitmapUpperLeftX: Int,
-      topBitmapUpperLeftY: Int,
-      topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    topBitmap: ImmutableBitmap,
+    topBitmapUpperLeftX: Int,
+    topBitmapUpperLeftY: Int,
+    topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       OverlayFreely(
@@ -873,12 +871,12 @@ case class ImmutableBitmap private(
    * @return
    */
   def overlayOn(
-      bottomBitmap: ImmutableBitmap,
-      upperLeftX: Int,
-      upperLeftY: Int,
-      opacity: Int = ColorValidator.MaximumRgbaOpacity,
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    bottomBitmap: ImmutableBitmap,
+    upperLeftX: Int,
+    upperLeftY: Int,
+    opacity: Int = ColorValidator.MaximumRgbaOpacity,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       OverlayFreely(
@@ -900,7 +898,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :|++| (other: ImmutableBitmap): ImmutableBitmap =
+  def :|++|(other: ImmutableBitmap): ImmutableBitmap =
     overlayPerAlignments(this, other)(HorizontalAlignment.Left, VerticalAlignment.Top)
 
   /**
@@ -909,7 +907,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :|+*| (other: ImmutableBitmap): ImmutableBitmap =
+  def :|+*|(other: ImmutableBitmap): ImmutableBitmap =
     overlayPerAlignments(this, other)(HorizontalAlignment.Left, VerticalAlignment.Middle)
 
   /**
@@ -918,7 +916,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :|+-| (other: ImmutableBitmap): ImmutableBitmap =
+  def :|+-|(other: ImmutableBitmap): ImmutableBitmap =
     overlayPerAlignments(this, other)(HorizontalAlignment.Left, VerticalAlignment.Bottom)
 
   /**
@@ -927,7 +925,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :|*+| (other: ImmutableBitmap): ImmutableBitmap =
+  def :|*+|(other: ImmutableBitmap): ImmutableBitmap =
     overlayPerAlignments(this, other)(HorizontalAlignment.Center, VerticalAlignment.Top)
 
   /**
@@ -936,7 +934,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :|**| (other: ImmutableBitmap): ImmutableBitmap =
+  def :|**|(other: ImmutableBitmap): ImmutableBitmap =
     overlayPerAlignments(this, other)(HorizontalAlignment.Center, VerticalAlignment.Middle)
 
   /**
@@ -945,7 +943,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :|*-| (other: ImmutableBitmap): ImmutableBitmap =
+  def :|*-|(other: ImmutableBitmap): ImmutableBitmap =
     overlayPerAlignments(this, other)(HorizontalAlignment.Center, VerticalAlignment.Bottom)
 
   /**
@@ -954,7 +952,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :|-+| (other: ImmutableBitmap): ImmutableBitmap =
+  def :|-+|(other: ImmutableBitmap): ImmutableBitmap =
     overlayPerAlignments(this, other)(HorizontalAlignment.Right, VerticalAlignment.Top)
 
   /**
@@ -963,7 +961,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :|-*| (other: ImmutableBitmap): ImmutableBitmap =
+  def :|-*|(other: ImmutableBitmap): ImmutableBitmap =
     overlayPerAlignments(this, other)(HorizontalAlignment.Right, VerticalAlignment.Middle)
 
   /**
@@ -972,7 +970,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :|--| (other: ImmutableBitmap): ImmutableBitmap =
+  def :|--|(other: ImmutableBitmap): ImmutableBitmap =
     overlayPerAlignments(this, other)(HorizontalAlignment.Right, VerticalAlignment.Bottom)
 
   // ----------------------------------------------------------------------------------------------
@@ -989,12 +987,12 @@ case class ImmutableBitmap private(
    * @return
    */
   def overlayPerAlignments(
-      bitmapsToLayOverThisFromBottomToTop: ImmutableBitmap*)(
-      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-      opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    bitmapsToLayOverThisFromBottomToTop: ImmutableBitmap*)(
+    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+    opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       OverlayPerAlignments(this +: bitmapsToLayOverThisFromBottomToTop)(
@@ -1014,11 +1012,11 @@ case class ImmutableBitmap private(
    * @return
    */
   def appendOnLeft(
-      bitmapsToCombineWith: ImmutableBitmap*)(
-      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    bitmapsToCombineWith: ImmutableBitmap*)(
+    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       AppendHorizontally(bitmapsToCombineWith :+ this)(
@@ -1038,11 +1036,11 @@ case class ImmutableBitmap private(
    * @return
    */
   def appendOnRight(
-      bitmapsToCombineWith: ImmutableBitmap*)(
-      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    bitmapsToCombineWith: ImmutableBitmap*)(
+    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       AppendHorizontally(this +: bitmapsToCombineWith)(
@@ -1071,11 +1069,11 @@ case class ImmutableBitmap private(
    * @return
    */
   def appendOnTop(
-      bitmapsToCombineWith: ImmutableBitmap*)(
-      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    bitmapsToCombineWith: ImmutableBitmap*)(
+    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       AppendVertically(bitmapsToCombineWith :+ this)(
@@ -1104,11 +1102,11 @@ case class ImmutableBitmap private(
    * @return
    */
   def appendOnBottom(
-      bitmapsToCombineWith: ImmutableBitmap*)(
-      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    bitmapsToCombineWith: ImmutableBitmap*)(
+    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       AppendVertically(this +: bitmapsToCombineWith)(
@@ -1155,10 +1153,10 @@ case class ImmutableBitmap private(
    * @return
    */
   def scale(
-      scalingFactorHorizontal: Double = 1.0,
-      scalingFactorVertical: Double = 1.0,
-      resizeCanvasBasedOnTransformation: Boolean = true,
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    scalingFactorHorizontal: Double = 1.0,
+    scalingFactorVertical: Double = 1.0,
+    resizeCanvasBasedOnTransformation: Boolean = true,
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       Scale(
@@ -1187,9 +1185,9 @@ case class ImmutableBitmap private(
    * @return
    */
   def scaleHorizontally(
-      scalingFactor: Double,
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    scalingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     scale(
       scalingFactorHorizontal = scalingFactor,
@@ -1206,9 +1204,9 @@ case class ImmutableBitmap private(
    * @return
    */
   def scaleVertically(
-      scalingFactor: Double,
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    scalingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     scale(
       scalingFactorVertical = scalingFactor,
@@ -1227,11 +1225,11 @@ case class ImmutableBitmap private(
    * @return
    */
   def shear(
-      shearingFactorHorizontal: Double = 0.0,
-      shearingFactorVertical: Double = 0.0,
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    shearingFactorHorizontal: Double = 0.0,
+    shearingFactorVertical: Double = 0.0,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       Shear(
@@ -1262,10 +1260,10 @@ case class ImmutableBitmap private(
    * @return
    */
   def shearHorizontally(
-      shearingFactor: Double,
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    shearingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     shear(
       shearingFactorHorizontal = shearingFactor,
@@ -1284,10 +1282,10 @@ case class ImmutableBitmap private(
    * @return
    */
   def shearVertically(
-      shearingFactor: Double,
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    shearingFactor: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     shear(
       shearingFactorVertical = shearingFactor,
@@ -1306,10 +1304,10 @@ case class ImmutableBitmap private(
    * @return
    */
   def rotateDegs(
-      angleInDegrees: Double,
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    angleInDegrees: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       Rotate(
@@ -1329,9 +1327,9 @@ case class ImmutableBitmap private(
    * @return
    */
   def rotate90DegsCw(
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       Rotate(
@@ -1351,9 +1349,9 @@ case class ImmutableBitmap private(
    * @return
    */
   def rotate90DegsCcw(
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       Rotate(
@@ -1373,9 +1371,9 @@ case class ImmutableBitmap private(
    * @return
    */
   def rotate180Degs(
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       Rotate(
@@ -1395,9 +1393,9 @@ case class ImmutableBitmap private(
    * @return
    */
   def turn(
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     rotate90DegsCw(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
@@ -1411,9 +1409,9 @@ case class ImmutableBitmap private(
    * @return
    */
   def unturn(
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     rotate90DegsCcw(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
@@ -1428,10 +1426,10 @@ case class ImmutableBitmap private(
    * @return
    */
   def replicateHorizontally(
-      numberOfReplicas: Int,
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    numberOfReplicas: Int,
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       ReplicateHorizontally(
@@ -1452,10 +1450,10 @@ case class ImmutableBitmap private(
    * @return
    */
   def replicateVertically(
-      numberOfReplicas: Int,
-      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+    numberOfReplicas: Int,
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(
       ReplicateVertically(
@@ -1481,7 +1479,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :/\ (other: ImmutableBitmap): ImmutableBitmap = appendOnTop(other)()
+  def :/\(other: ImmutableBitmap): ImmutableBitmap = appendOnTop(other)()
 
   /**
    *
@@ -1489,7 +1487,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :/\ (other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnTop(other: _*)()
+  def :/\(other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnTop(other: _*)()
 
   /**
    *
@@ -1497,7 +1495,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :/\ (other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = :/\(other.toSeq)
+  def :/\(other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = :/\(other.toSeq)
 
   //-------------------------------
   //
@@ -1511,7 +1509,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def /\: (other: ImmutableBitmap): ImmutableBitmap = appendOnTop(other)()
+  def /\:(other: ImmutableBitmap): ImmutableBitmap = appendOnTop(other)()
 
   /**
    *
@@ -1519,7 +1517,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def /\: (other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnTop(other: _*)()
+  def /\:(other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnTop(other: _*)()
 
   /**
    *
@@ -1527,7 +1525,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def /\: (other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = /\:(other.toSeq)
+  def /\:(other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = /\:(other.toSeq)
 
   //-------------------------------
   //
@@ -1541,7 +1539,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :\/ (other: ImmutableBitmap): ImmutableBitmap = appendOnBottom(other)()
+  def :\/(other: ImmutableBitmap): ImmutableBitmap = appendOnBottom(other)()
 
   /**
    *
@@ -1549,7 +1547,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :\/ (other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnBottom(other: _*)()
+  def :\/(other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnBottom(other: _*)()
 
   /**
    *
@@ -1557,7 +1555,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :\/ (other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = :\/(other.toSeq)
+  def :\/(other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = :\/(other.toSeq)
 
   //-------------------------------
   //
@@ -1571,7 +1569,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def \/: (other: ImmutableBitmap): ImmutableBitmap = appendOnBottom(other)()
+  def \/:(other: ImmutableBitmap): ImmutableBitmap = appendOnBottom(other)()
 
   /**
    *
@@ -1579,7 +1577,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def \/: (other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnBottom(other: _*)()
+  def \/:(other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnBottom(other: _*)()
 
   /**
    *
@@ -1587,7 +1585,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def \/: (other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = \/:(other.toSeq)
+  def \/:(other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = \/:(other.toSeq)
 
   //-------------------------------
   //
@@ -1601,7 +1599,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :>> (other: ImmutableBitmap): ImmutableBitmap = appendOnRight(other)()
+  def :>>(other: ImmutableBitmap): ImmutableBitmap = appendOnRight(other)()
 
   /**
    *
@@ -1609,7 +1607,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :>> (other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnRight(other: _*)()
+  def :>>(other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnRight(other: _*)()
 
   /**
    *
@@ -1617,7 +1615,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :>> (other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = :>>(other.toSeq)
+  def :>>(other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = :>>(other.toSeq)
 
   //-------------------------------
   //
@@ -1631,7 +1629,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def >>: (other: ImmutableBitmap): ImmutableBitmap = appendOnRight(other)()
+  def >>:(other: ImmutableBitmap): ImmutableBitmap = appendOnRight(other)()
 
   /**
    *
@@ -1639,7 +1637,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def >>: (other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnRight(other: _*)()
+  def >>:(other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnRight(other: _*)()
 
   /**
    *
@@ -1647,7 +1645,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def >>: (other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = >>:(other.toSeq)
+  def >>:(other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = >>:(other.toSeq)
 
   //-------------------------------
   //
@@ -1661,7 +1659,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :<< (other: ImmutableBitmap): ImmutableBitmap = appendOnLeft(other)()
+  def :<<(other: ImmutableBitmap): ImmutableBitmap = appendOnLeft(other)()
 
   /**
    *
@@ -1669,7 +1667,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :<< (other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnLeft(other: _*)()
+  def :<<(other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnLeft(other: _*)()
 
   /**
    *
@@ -1677,7 +1675,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def :<< (other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = :<<(other.toSeq)
+  def :<<(other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = :<<(other.toSeq)
 
   //-------------------------------
   //
@@ -1691,7 +1689,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def <<: (other: ImmutableBitmap): ImmutableBitmap = appendOnLeft(other)()
+  def <<:(other: ImmutableBitmap): ImmutableBitmap = appendOnLeft(other)()
 
   /**
    *
@@ -1699,7 +1697,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def <<: (other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnLeft(other: _*)()
+  def <<:(other: scala.collection.Seq[ImmutableBitmap]): ImmutableBitmap = appendOnLeft(other: _*)()
 
   /**
    *
@@ -1707,7 +1705,7 @@ case class ImmutableBitmap private(
    * @param other
    * @return
    */
-  def <<: (other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = <<:(other.toSeq)
+  def <<:(other: scala.collection.Traversable[ImmutableBitmap]): ImmutableBitmap = <<:(other.toSeq)
 
   // ----------------------------------------------------------------------------------------------
 

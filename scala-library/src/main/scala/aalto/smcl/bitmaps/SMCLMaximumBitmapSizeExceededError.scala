@@ -22,8 +22,8 @@ final class SMCLMaximumBitmapSizeExceededError private[smcl](
 
   sb ++= "."
 
-  resourcePath.foreach { path => sb ++= s""" Resource: "$path".""" }
-  imageIndexInResourceOption.foreach { index => sb ++= s""" Index of the image in the resource: $index.""" }
+  resourcePath.foreach(path => sb ++= s""" Resource: "$path".""")
+  imageIndexInResourceOption.foreach(index => sb ++= s""" Index of the image in the resource: $index.""")
 
   sb.toString()
 }) {

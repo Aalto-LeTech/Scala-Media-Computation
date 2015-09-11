@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.infrastructure.settings.SettingValidatorFactory._
+import aalto.smcl.infrastructure.SettingValidatorFactory._
 
 
 

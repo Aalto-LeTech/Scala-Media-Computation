@@ -8,8 +8,7 @@ import rx.lang.scala.{JavaConversions, Subject}
 import aalto.smcl.SMCL
 import aalto.smcl.bitmaps.viewer.Application
 import aalto.smcl.bitmaps.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
-import aalto.smcl.infrastructure.SwingUtils
-import aalto.smcl.init.ModuleInitializationPhase
+import aalto.smcl.infrastructure.{ModuleInitializationPhase, SwingUtils}
 
 
 

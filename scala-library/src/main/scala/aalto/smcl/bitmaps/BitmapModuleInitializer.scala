@@ -1,12 +1,10 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.colors.{PresetColors, RGBAColor}
-import aalto.smcl.infrastructure.settings.Setting
-import aalto.smcl.infrastructure.settings.SettingValidatorFactory._
-import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
-import aalto.smcl.init.{ModuleInitializer, ModuleInitializationPhase}
 import aalto.smcl.GS
+import aalto.smcl.colors.{PresetColors, RGBAColor}
+import aalto.smcl.infrastructure.SettingValidatorFactory._
+import aalto.smcl.infrastructure._
 
 
 

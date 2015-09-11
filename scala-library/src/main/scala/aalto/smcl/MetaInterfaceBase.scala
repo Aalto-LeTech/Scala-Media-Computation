@@ -1,7 +1,7 @@
 package aalto.smcl
 
 
-import aalto.smcl.init.ModuleInitializationPhase
+import aalto.smcl.infrastructure.ModuleInitializationPhase
 import aalto.smcl.interfaces.ProviderMetadataSource
 
 

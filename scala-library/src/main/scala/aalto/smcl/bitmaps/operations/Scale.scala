@@ -4,8 +4,7 @@ package aalto.smcl.bitmaps.operations
 import aalto.smcl.GS
 import aalto.smcl.bitmaps.{Bitmap, CanvasesAreResizedBasedOnTransformations}
 import aalto.smcl.common._
-import aalto.smcl.infrastructure.MetaInformationMap
-import aalto.smcl.platform.PlatformBitmapBuffer
+import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap}
 
 
 

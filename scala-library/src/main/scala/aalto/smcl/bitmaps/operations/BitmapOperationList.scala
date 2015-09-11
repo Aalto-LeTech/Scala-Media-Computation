@@ -4,7 +4,7 @@ package aalto.smcl.bitmaps.operations
 import scala.annotation.tailrec
 
 import aalto.smcl.colors.{PresetColors, RGBAColor}
-import aalto.smcl.platform.PlatformBitmapBuffer
+import aalto.smcl.infrastructure.PlatformBitmapBuffer
 
 
 
