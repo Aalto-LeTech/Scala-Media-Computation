@@ -1,7 +1,7 @@
 package aalto
 
 
-import aalto.smcl.infrastructure.{InitializableModule, Settings}
+import aalto.smcl.infrastructure.LibraryInitializer
 
 
 
@@ -12,11 +12,8 @@ import aalto.smcl.infrastructure.{InitializableModule, Settings}
  *
  * @author Aleksi Lukkarinen
  */
-package object smcl extends InitializableModule {
+package object smcl {
 
-
-  /** Global settings storage. */
-  object GS extends Settings
-
+  LibraryInitializer.performInitialization()
 
 }

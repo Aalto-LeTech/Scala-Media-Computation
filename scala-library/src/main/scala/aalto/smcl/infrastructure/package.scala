@@ -15,9 +15,9 @@ import aalto.smcl.colors.RGBAColor
  *
  * @author Aleksi Lukkarinen
  */
-package object infrastructure extends InfrastructureSettingKeys with Constants with InitializableModule {
+package object infrastructure extends InfrastructureSettingKeys with Constants {
 
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
+  LibraryInitializer.performInitialization()
 
 
   /** */
@@ -49,6 +49,9 @@ package object infrastructure extends InfrastructureSettingKeys with Constants w
   /** */
   private[smcl]
   lazy val FontProvider: FontProvider = new FontProvider()
+
+  /** Global settings storage. */
+  lazy val GS: Settings = new Settings()
 
   /** */
   private[smcl]

@@ -1,7 +1,7 @@
 package aalto.smcl
 
 
-import aalto.smcl.infrastructure.ModuleInitializationPhase
+import aalto.smcl.infrastructure.LibraryInitializer
 import aalto.smcl.interfaces.ProviderMetadataSource
 
 
@@ -14,7 +14,7 @@ import aalto.smcl.interfaces.ProviderMetadataSource
  */
 private[smcl] class MetaInterfaceBase() extends ProviderMetadataSource with Immutable {
 
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
+  LibraryInitializer.performInitialization()
 
 
   /**

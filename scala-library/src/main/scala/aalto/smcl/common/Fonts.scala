@@ -27,7 +27,7 @@ class Fonts private[common]() extends Map[String, Font] with Immutable {
    *
    */
   def initializeFontMap(): Unit = {
-    FontProvider.availableFonts().foreach {font =>
+    FontProvider.availableFonts() foreach {font =>
       _fontMap = _fontMap + (font.getName -> font)
     }
   }

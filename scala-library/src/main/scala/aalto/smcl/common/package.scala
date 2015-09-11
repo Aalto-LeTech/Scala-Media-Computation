@@ -1,7 +1,7 @@
 package aalto.smcl
 
 
-import aalto.smcl.infrastructure.InitializableModule
+import aalto.smcl.infrastructure.LibraryInitializer
 
 
 
@@ -11,7 +11,10 @@ import aalto.smcl.infrastructure.InitializableModule
  *
  * @author Aleksi Lukkarinen
  */
-package object common extends InitializableModule {
+package object common {
+
+  LibraryInitializer.performInitialization()
+
 
   /** */
   lazy val Fonts: Fonts = new Fonts()

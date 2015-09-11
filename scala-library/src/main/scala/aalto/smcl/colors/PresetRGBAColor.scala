@@ -1,21 +1,12 @@
 package aalto.smcl.colors
 
 
-import aalto.smcl.SMCL
-import aalto.smcl.infrastructure.ModuleInitializationPhase
-
-
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 private[smcl] object PresetRGBAColor {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
 
   /**
    *

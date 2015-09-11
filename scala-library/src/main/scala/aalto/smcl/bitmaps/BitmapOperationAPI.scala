@@ -1,10 +1,9 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.GS
 import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
-import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
+import aalto.smcl.infrastructure.{GS, HorizontalAlignment, VerticalAlignment}
 
 
 

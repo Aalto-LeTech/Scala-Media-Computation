@@ -3,7 +3,7 @@ package aalto.smcl.infrastructure
 
 import scala.collection.mutable
 
-import aalto.smcl.infrastructure.ModuleInitializationPhase._
+import aalto.smcl.infrastructure.PackageInitializationPhase._
 
 
 
@@ -13,11 +13,11 @@ import aalto.smcl.infrastructure.ModuleInitializationPhase._
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] trait ModuleInitializer {
+private[smcl] trait PackageInitializerBase {
 
   /** */
-  private[this] val _startedInitializationPhases: mutable.Set[ModuleInitializationPhase] =
-    mutable.Set[ModuleInitializationPhase]()
+  private[this] val _startedInitializationPhases: mutable.Set[PackageInitializationPhase] =
+    mutable.Set[PackageInitializationPhase]()
 
   /** */
   private[this] val _earlyInitializers: mutable.ArrayBuffer[(() => Unit)] =
@@ -32,9 +32,11 @@ private[smcl] trait ModuleInitializer {
    *
    * @param phase
    */
-  def performInitialization(phase: ModuleInitializationPhase): Unit = {
+  def performInitialization(phase: PackageInitializationPhase): Unit = {
     if (!_startedInitializationPhases.contains(phase)) {
       _startedInitializationPhases += phase
+
+      println(s"${phase.toString.capitalize} init: ${getClass.getName}")
 
       var initializers: mutable.ArrayBuffer[(() => Unit)] = null
 
@@ -58,13 +60,13 @@ private[smcl] trait ModuleInitializer {
    * @param phase
    */
   def addInitializer(
-      phase: ModuleInitializationPhase)(
+      phase: PackageInitializationPhase)(
       initializer: () => Unit): Unit = {
 
     if (_startedInitializationPhases.contains(phase)) {
       throw new IllegalStateException(
         "New initializers cannot be added to the specified phase, because initialization of " +
-            "the phase has already been triggered for this module.")
+            "the phase has already been triggered for this package.")
     }
 
     phase match {

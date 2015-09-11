@@ -1,7 +1,6 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.GS
 import aalto.smcl.colors.{PresetColors, RGBAColor}
 import aalto.smcl.infrastructure.SettingValidatorFactory._
 import aalto.smcl.infrastructure._
@@ -14,13 +13,18 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
+@InitializablePackage(dependsOnPackages = Array(
+  "aalto.smcl.infrastructure",
+  "aalto.smcl.common",
+  "aalto.smcl.colors"
+))
 private[smcl]
-object BitmapModuleInitializer extends ModuleInitializer {
+class PackageInitializer extends PackageInitializerBase {
 
   //
   // Initialize settings
   //
-  addInitializer(ModuleInitializationPhase.Early) {() =>
+  addInitializer(PackageInitializationPhase.Early) {() =>
     GS += new Setting[Boolean](
       key = NewBitmapsAreDisplayedAutomatically,
       initialValue = false,

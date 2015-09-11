@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.GS
+import aalto.smcl.infrastructure.GS
 
 
 

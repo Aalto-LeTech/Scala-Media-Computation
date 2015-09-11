@@ -95,7 +95,7 @@ private[bitmaps] class Application(val incomingEventStream: Observable[ExternalV
    *
    */
   private[this] def closeAllViewersWithTheForce(): Unit = {
-    _viewers.values.foreach {viewer =>
+    _viewers.values foreach {viewer =>
       Swing.onEDT {
         viewer.forceToClose()
       }

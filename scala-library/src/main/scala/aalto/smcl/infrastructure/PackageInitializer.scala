@@ -1,7 +1,6 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.GS
 import aalto.smcl.infrastructure.SettingValidatorFactory._
 
 
@@ -12,12 +11,14 @@ import aalto.smcl.infrastructure.SettingValidatorFactory._
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object InfrastructureModuleInitializer extends ModuleInitializer {
+@InitializablePackage(dependsOnPackages = Array[String]())
+private[smcl]
+class PackageInitializer extends PackageInitializerBase {
 
   //
   // Initialize settings
   //
-  addInitializer(ModuleInitializationPhase.Early) {() =>
+  addInitializer(PackageInitializationPhase.Early) {() =>
     GS += new Setting[BitmapInterpolationMethod.Value](
       key = PlatformBitmapInterpolationMethod,
       initialValue = BitmapInterpolationMethod.NearestNeighbor,
@@ -27,7 +28,7 @@ private[smcl] object InfrastructureModuleInitializer extends ModuleInitializer {
   //
   // Initialize Look & Feel
   //
-  addInitializer(ModuleInitializationPhase.Early) {() =>
+  addInitializer(PackageInitializationPhase.Early) {() =>
     UIProvider.tryToInitializeSpecificLookAndFeel(UIProvider.NimbusLookAndFeelName)
   }
 

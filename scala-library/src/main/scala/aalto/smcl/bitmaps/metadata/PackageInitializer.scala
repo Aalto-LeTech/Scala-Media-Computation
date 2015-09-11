@@ -1,13 +1,12 @@
-package aalto.smcl.metadata
+package aalto.smcl.bitmaps.metadata
 
 
 import scala.language.implicitConversions
 
-import aalto.smcl.GS
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{PresetRGBAColor, RGBAColor}
 import aalto.smcl.infrastructure.SettingValidatorFactory._
-import aalto.smcl.infrastructure.{ModuleInitializationPhase, ModuleInitializer, Setting}
+import aalto.smcl.infrastructure.{GS, InitializablePackage, PackageInitializationPhase, PackageInitializerBase, Setting}
 import aalto.smcl.interfaces.{GlobalMetadataInterfaceSourceProviderRegistry, MetadataInterfaceSourceProvider}
 
 
@@ -18,13 +17,19 @@ import aalto.smcl.interfaces.{GlobalMetadataInterfaceSourceProviderRegistry, Met
  *
  * @author Aleksi Lukkarinen
  */
+@InitializablePackage(dependsOnPackages = Array(
+  "aalto.smcl.infrastructure",
+  "aalto.smcl.common",
+  "aalto.smcl.colors",
+  "aalto.smcl.bitmaps"
+))
 private[smcl]
-object MetadataModuleInitializer extends ModuleInitializer {
+class PackageInitializer extends PackageInitializerBase {
 
   //
   // Initialize settings
   //
-  addInitializer(ModuleInitializationPhase.Early) {() =>
+  addInitializer(PackageInitializationPhase.Early) {() =>
     GS += new Setting[Int](
       key = ColorVisualizationTileSideLengthInPixels,
       initialValue = 80,
@@ -37,7 +42,7 @@ object MetadataModuleInitializer extends ModuleInitializer {
   //
   // Register metadata source providers
   //
-  addInitializer(ModuleInitializationPhase.Late) {() =>
+  addInitializer(PackageInitializationPhase.Late) {() =>
     val bitmapProvider = new ImmutableBitmapMetadataInterfaceSourceProvider()
     val rgbaColorProvider = new RGBAColorMetadataInterfaceSourceProvider()
 
@@ -47,10 +52,9 @@ object MetadataModuleInitializer extends ModuleInitializer {
       RGBAColor(0).getClass -> rgbaColorProvider,
       PresetRGBAColor(0, Option("<dummy>")).getClass -> rgbaColorProvider)
 
-    _providerMap.foreach {case (clazz, provider) =>
+    _providerMap foreach {case (clazz, provider) =>
       GlobalMetadataInterfaceSourceProviderRegistry.registerProvider(clazz, provider)
     }
   }
 
 }
-

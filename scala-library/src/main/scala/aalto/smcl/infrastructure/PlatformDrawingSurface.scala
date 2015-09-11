@@ -8,7 +8,6 @@ import scala.swing.Graphics2D
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{ColorValidator, RGBAColor}
 import aalto.smcl.common.AffineTransformation
-import aalto.smcl.{GS, SMCL}
 
 
 
@@ -19,9 +18,6 @@ import aalto.smcl.{GS, SMCL}
  * @author Aleksi Lukkarinen
  */
 private[smcl] object PlatformDrawingSurface {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
 
   /**
    *

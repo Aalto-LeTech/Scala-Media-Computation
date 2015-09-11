@@ -3,10 +3,9 @@ package aalto.smcl.bitmaps.operations
 
 import scala.collection.mutable.ArrayBuffer
 
-import aalto.smcl.GS
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
-import aalto.smcl.infrastructure.{HorizontalAlignment, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure.{GS, HorizontalAlignment, MetaInformationMap, PlatformBitmapBuffer}
 
 
 
@@ -83,7 +82,7 @@ private[bitmaps] case class AppendVertically(
 
     var yPosition = 0
     var itemNumber = 0
-    childOperationListsOption.get.foreach {opList =>
+    childOperationListsOption.get foreach {opList =>
       val sourceBuffer = opList.render()
 
       drawingSurface.drawBitmap(sourceBuffer, horizontalOffsets(itemNumber), yPosition)

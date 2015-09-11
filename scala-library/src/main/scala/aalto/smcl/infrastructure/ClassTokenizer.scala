@@ -75,7 +75,7 @@ private[smcl] class ClassTokenizer private[infrastructure]() {
    * @param s       the `StringBuilder` instance to be used
    */
   private def appendKvPairsOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
-    clazz.metaInformation.foreach {
+    clazz.metaInformation foreach {
       case (k: String, Some(v: String)) => s ++= ItemSep ++= escape(k) ++= KeyValueSeparator ++= escape(v)
       case (k: String, None)            => s ++= ItemSep ++= escape(k)
       case pair                         => throw new IllegalArgumentException(s"Invalid MetaInformationMap data: $pair")

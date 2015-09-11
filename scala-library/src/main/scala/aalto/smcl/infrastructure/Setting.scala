@@ -1,11 +1,6 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.SMCL
-
-
-
-
 /**
  * Represents a single setting of a specific type.
  *
@@ -21,11 +16,8 @@ private[smcl] final class Setting[SettingType](
     val initialValue: SettingType,
     val validator: SettingType => Option[Throwable]) extends Mutable {
 
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
-
   if (validator != null)
-    validator(initialValue).foreach {reason => throw new SMCLSettingValidationError(key, reason)}
+    validator(initialValue) foreach {reason => throw new SMCLSettingValidationError(key, reason)}
 
   /** Holds the current value of this [[Setting]]. */
   private var _currentValue: SettingType = initialValue
@@ -44,7 +36,7 @@ private[smcl] final class Setting[SettingType](
    */
   def value_=(value: SettingType): Unit = {
     if (validator != null) {
-      validator(value).foreach {
+      validator(value) foreach {
         reason => throw new SMCLSettingValidationError(key, reason)
       }
     }

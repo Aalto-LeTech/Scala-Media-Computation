@@ -44,14 +44,6 @@ class ClassProvider {
   private val SystemPropertyNameUserDir: String = "user.dir"
 
   /** */
-  private val MessageUnableToResolveClasspath: String =
-    "<unable to resolve current classpath>"
-
-  /** */
-  private val MessageUnableToResolveClassfiles: String =
-    "<unable to resolve current classfiles>"
-
-  /** */
   private[this] val _classloader = getClass.getClassLoader
 
   /**
@@ -129,16 +121,8 @@ class ClassProvider {
   /**
    *
    */
-  def printClasspath(): Unit = {
-    val classpath = resolveClasspath()
-
-    if (classpath.isEmpty) {
-      println(MessageUnableToResolveClasspath)
-      return
-    }
-
-    classpath.foreach(println)
-  }
+  def printClasspath(): Unit =
+    resolveClasspath() foreach println
 
   /**
    *
@@ -172,7 +156,7 @@ class ClassProvider {
    * @return
    */
   def resolveApplicationJarClasses(): Seq[PathString] =
-    resolveApplicationJarContents().filter(hasClassExtension)
+    resolveApplicationJarContents() filter hasClassExtension
 
   /**
    *
@@ -180,7 +164,7 @@ class ClassProvider {
    * @return
    */
   def printApplicationJarClasses(): Unit =
-    resolveApplicationJarClasses().foreach(println)
+    resolveApplicationJarClasses() foreach println
 
   /**
    *
@@ -215,11 +199,13 @@ class ClassProvider {
 
       })
 
+      // TODO: Modify to use only classes compiled for the correct Scala version (there might be classes for several versions)
+
       if (subDirFileList.isEmpty)
         return Seq[File]()
 
       val foundPathFiles = new ArrayBuffer[File]()
-      subDirFileList.foreach {subDir =>
+      subDirFileList foreach {subDir =>
         val rootPathCandidateFile = new File(subDir.getCanonicalPath + File.separator + "classes")
 
         if (representsReadableDirectory(rootPathCandidateFile)) {
@@ -285,16 +271,8 @@ class ClassProvider {
   /**
    *
    */
-  def printApplicationClassFiles(): Unit = {
-    val files = resolveApplicationClassFiles()
-
-    if (files.isEmpty) {
-      println(MessageUnableToResolveClassfiles)
-      return
-    }
-
-    files.foreach(println)
-  }
+  def printApplicationClassFiles(): Unit =
+    resolveApplicationClassFiles() foreach println
 
   /**
    *
@@ -307,7 +285,7 @@ class ClassProvider {
     if (path.length < 1)
       return None
 
-    var classRootPosition = path.lastIndexOf(SmclClassRootIdentifyingPackagePath + File.separator)
+    val classRootPosition = path.lastIndexOf(SmclClassRootIdentifyingPackagePath + File.separator)
     if (classRootPosition < 0)
       return None
 
@@ -338,26 +316,31 @@ class ClassProvider {
   /**
    *
    */
-  def printApplicationClassNames(): Unit = {
-    val names = resolveApplicationClassNames()
+  def printApplicationClassNames(): Unit =
+    resolveApplicationClassNames() foreach println
 
-    if (names.isEmpty) {
-      println(MessageUnableToResolveClassfiles)
-      return
-    }
+  /**
+   *
+   *
+   * @param className
+   * @return
+   */
+  def load(className: String): Class[_] =
+    _classloader loadClass className
 
-    names.foreach(println)
-  }
+  /**
+   *
+   *
+   * @param classNames
+   * @return
+   */
+  def load(classNames: Seq[String]): Seq[Class[_]] =
+    classNames map _classloader.loadClass
 
   /**
    *
    */
   def loadApplicationClasses(): Seq[Class[_]] =
-    resolveApplicationClassFiles() map {
-      file =>
-
-
-        new Object().getClass
-    }
+    resolveApplicationClassNames().map(load).sortBy(_.toString)
 
 }

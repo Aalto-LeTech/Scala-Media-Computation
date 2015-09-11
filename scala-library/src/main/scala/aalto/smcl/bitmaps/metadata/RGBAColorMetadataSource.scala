@@ -1,14 +1,15 @@
-package aalto.smcl.metadata
+package aalto.smcl.bitmaps.metadata
 
 
 import java.awt.image.BufferedImage
 import java.util.Date
 
+import aalto.smcl.MetaInterfaceBase
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.bitmaps.ViewerUpdateStyle.PreventViewerUpdates
 import aalto.smcl.colors.{PresetColors, RGBAColor}
+import aalto.smcl.infrastructure.GS
 import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource}
-import aalto.smcl.{GS, MetaInterfaceBase}
 
 
 

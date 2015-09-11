@@ -3,9 +3,10 @@ package aalto.smcl.bitmaps
 
 import scala.collection.mutable
 
+import aalto.smcl.bitmaps
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.{GS, bitmaps}
+import aalto.smcl.infrastructure.GS
 
 
 

@@ -1,7 +1,6 @@
 package aalto.smcl.colors
 
 
-import aalto.smcl.SMCL
 import aalto.smcl.infrastructure._
 
 
@@ -13,9 +12,6 @@ import aalto.smcl.infrastructure._
  * @author Aleksi Lukkarinen
  */
 object RGBAComponentTranslationTable {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
 
   /**
    *

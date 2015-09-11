@@ -3,10 +3,9 @@ package aalto.smcl.bitmaps.operations
 
 import scala.collection.mutable.ArrayBuffer
 
-import aalto.smcl.GS
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{ColorValidator, RGBAColor, _}
-import aalto.smcl.infrastructure._
+import aalto.smcl.infrastructure.{GS, _}
 
 
 
@@ -22,12 +21,12 @@ import aalto.smcl.infrastructure._
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class OverlayPerAlignments(
-  bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
-  horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-  verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-  opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-  extends AbstractOperation with BufferProvider with Immutable {
+    bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
+    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+    opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    extends AbstractOperation with BufferProvider with Immutable {
 
   require(bitmapsToOverlayFromBottomToTop.nonEmpty,
     "Overlay operation must be given a non-empty Sequence of Bitmap instances to overlay.")

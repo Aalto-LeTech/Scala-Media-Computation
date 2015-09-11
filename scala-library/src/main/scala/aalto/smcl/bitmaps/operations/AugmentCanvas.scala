@@ -1,10 +1,9 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.GS
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
 
 
 

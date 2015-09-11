@@ -8,7 +8,6 @@ import java.awt.{AlphaComposite, Graphics2D}
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common._
-import aalto.smcl.{GS, SMCL}
 
 
 
@@ -19,9 +18,6 @@ import aalto.smcl.{GS, SMCL}
  * @author Aleksi Lukkarinen
  */
 private[smcl] object PlatformBitmapBuffer {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
 
   /** */
   val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB

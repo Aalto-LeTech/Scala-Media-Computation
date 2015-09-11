@@ -3,8 +3,6 @@ package aalto.smcl.infrastructure
 
 import java.awt.geom.{AffineTransform => AwtAffineTransformation}
 
-import aalto.smcl.SMCL
-
 
 
 
@@ -14,9 +12,6 @@ import aalto.smcl.SMCL
  * @author Aleksi Lukkarinen
  */
 private[smcl] object PlatformAffineTransformation {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
 
   /**
    *

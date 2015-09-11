@@ -8,9 +8,8 @@ import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerP
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
-import aalto.smcl.common._
+import aalto.smcl.common.AffineTransformation
 import aalto.smcl.infrastructure._
-import aalto.smcl.{GS, SMCL}
 
 
 
@@ -21,9 +20,6 @@ import aalto.smcl.{GS, SMCL}
  * @author Aleksi Lukkarinen
  */
 object ImmutableBitmap {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
 
   /**
    * Creates a new empty [[ImmutableBitmap]] instance.

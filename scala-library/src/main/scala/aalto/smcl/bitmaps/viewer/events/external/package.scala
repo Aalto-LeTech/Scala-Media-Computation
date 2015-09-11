@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.viewer.events
 
 
-import aalto.smcl.infrastructure.InitializableModule
+import aalto.smcl.infrastructure.LibraryInitializer
 
 
 
@@ -11,6 +11,8 @@ import aalto.smcl.infrastructure.InitializableModule
  *
  * @author Aleksi Lukkarinen
  */
-package object external extends InitializableModule {
+package object external {
+
+  LibraryInitializer.performInitialization()
 
 }

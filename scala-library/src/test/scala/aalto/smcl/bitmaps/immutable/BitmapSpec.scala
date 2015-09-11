@@ -3,10 +3,8 @@ package aalto.smcl.bitmaps.immutable
 
 import java.awt.{Graphics2D => JGraphics2D}
 
-import aalto.smcl.GS
 import aalto.smcl.bitmaps._
-import aalto.smcl.bitmaps.ImageSpecBase
-import aalto.smcl.infrastructure.TimeStamp
+import aalto.smcl.infrastructure.{GS, TimeStamp}
 
 
 

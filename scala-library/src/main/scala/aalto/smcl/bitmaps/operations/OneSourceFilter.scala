@@ -1,9 +1,8 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.GS
 import aalto.smcl.bitmaps.DefaultBackground
-import aalto.smcl.infrastructure.PlatformBitmapBuffer
+import aalto.smcl.infrastructure.{GS, PlatformBitmapBuffer}
 
 
 

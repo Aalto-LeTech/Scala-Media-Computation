@@ -162,10 +162,10 @@ class Settings {
     if (settingGroups.isEmpty)
       println("No settings defined")
 
-    settingGroups.foreach {case (groupKey, group) =>
+    settingGroups foreach {case (groupKey, group) =>
       println(s"\n${groupKey.capitalize}:")
 
-      group.foreach {case (_, setting) =>
+      group foreach {case (_, setting) =>
         println(s" - ${setting.key.simpleName}: ${setting.value}")
       }
     }
@@ -174,9 +174,10 @@ class Settings {
   /**
    *
    */
-  def resetAll(): Unit = _settingMap.values.foreach {
-    _.reset()
-  }
+  def resetAll(): Unit =
+    _settingMap.values foreach {
+      _.reset()
+    }
 
   /**
    *

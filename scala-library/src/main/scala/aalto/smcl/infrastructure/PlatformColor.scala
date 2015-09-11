@@ -3,7 +3,6 @@ package aalto.smcl.infrastructure
 
 import java.awt.{Color => AwtColor}
 
-import aalto.smcl.SMCL
 import aalto.smcl.colors.RGBAColor
 
 
@@ -15,9 +14,6 @@ import aalto.smcl.colors.RGBAColor
  * @author Aleksi Lukkarinen
  */
 private[smcl] object PlatformColor {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
 
   /**
    *

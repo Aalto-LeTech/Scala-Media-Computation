@@ -1,11 +1,6 @@
 package aalto.smcl
 
 
-import aalto.smcl.bitmaps.BitmapModuleInitializer
-import aalto.smcl.infrastructure.{InfrastructureModuleInitializer, ModuleInitializationPhase, ModuleInitializer}
-import aalto.smcl.metadata.MetadataModuleInitializer
-
-
 
 
 /**
@@ -13,7 +8,7 @@ import aalto.smcl.metadata.MetadataModuleInitializer
  *
  * @author Aleksi Lukkarinen
  */
-object SMCL extends ModuleInitializer {
+object SMCL {
 
   /** Full name of this library. */
   val FullName: String = "Scala Media Computation Library"
@@ -105,27 +100,5 @@ object SMCL extends ModuleInitializer {
    *
    */
   override def toString: String = s"$FullName ($AbbreviatedName), version $VersionString."
-
-
-  {
-    import ModuleInitializationPhase._
-
-    /**
-     * Calls the early-initialization routines of every SMCL's module.
-     */
-    addInitializer(Early) {() =>
-      InfrastructureModuleInitializer.performInitialization(Early)
-      BitmapModuleInitializer.performInitialization(Early)
-    }
-
-    /**
-     * Calls the late-initialization routines of every SMCL's module.
-     */
-    addInitializer(Late) {() =>
-      MetadataModuleInitializer.performInitialization(Early)
-    }
-
-    performInitialization(Early)
-  }
 
 }

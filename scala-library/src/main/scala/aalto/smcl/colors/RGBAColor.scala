@@ -1,8 +1,8 @@
 package aalto.smcl.colors
 
 
+import aalto.smcl.colors
 import aalto.smcl.infrastructure._
-import aalto.smcl.{SMCL, colors}
 
 
 
@@ -13,9 +13,6 @@ import aalto.smcl.{SMCL, colors}
  * @author Aleksi Lukkarinen
  */
 object RGBAColor {
-
-  SMCL.performInitialization(ModuleInitializationPhase.Early)
-
 
   /**
    *

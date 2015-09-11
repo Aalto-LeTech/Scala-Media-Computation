@@ -281,7 +281,7 @@ private[bitmaps] class ViewerMainFrame private(
 
     import aalto.smcl.bitmaps.viewer.ScrollingDirection._
 
-    directions.foreach {direction =>
+    directions foreach {direction =>
       val upOrLeftDirection = direction match {
         case Upwards | Leftwards => true
         case _                   => false

@@ -11,7 +11,8 @@ import aalto.smcl.infrastructure.LibraryInitializer
  *
  * @author Aleksi Lukkarinen
  */
-package object operations {
+
+package object metadata extends MetadataSettingKeys {
 
   LibraryInitializer.performInitialization()
 

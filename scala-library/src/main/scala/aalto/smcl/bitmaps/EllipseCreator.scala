@@ -1,9 +1,9 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.GS
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.colors.RGBAColor
+import aalto.smcl.infrastructure.GS
 
 
 
