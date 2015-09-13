@@ -15,9 +15,10 @@ import aalto.smcl.colors.RGBAColor
  *
  * @author Aleksi Lukkarinen
  */
-package object infrastructure extends InfrastructureSettingKeys with Constants {
-
-  LibraryInitializer.performInitialization()
+package object infrastructure
+  extends InfrastructureSettingKeys
+  with Constants
+  with LibraryInitializationInvoker {
 
 
   /** */

@@ -300,7 +300,7 @@ class ClassProvider {
     if (strippedPath.length < 1)
       return None
 
-    val className = strippedPath.replaceAll(File.separator, ".")
+    val className = strippedPath.replaceAllLiterally(File.separator, ".")
 
     Some(className)
   }

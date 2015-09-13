@@ -3,7 +3,7 @@ package aalto.smcl
 
 import scala.language.implicitConversions
 
-import aalto.smcl.infrastructure.LibraryInitializer
+import aalto.smcl.infrastructure.LibraryInitializationInvoker
 
 
 
@@ -13,9 +13,9 @@ import aalto.smcl.infrastructure.LibraryInitializer
  *
  * @author Aleksi Lukkarinen
  */
-package object colors extends ColorOperationsAPI {
-
-  LibraryInitializer.performInitialization()
+package object colors
+  extends ColorOperationsAPI
+  with LibraryInitializationInvoker {
 
 
   /** Color component value representing maximal opacity. */

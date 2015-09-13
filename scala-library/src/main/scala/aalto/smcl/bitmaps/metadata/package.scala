@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.infrastructure.LibraryInitializer
+import aalto.smcl.infrastructure.LibraryInitializationInvoker
 
 
 
@@ -11,9 +11,8 @@ import aalto.smcl.infrastructure.LibraryInitializer
  *
  * @author Aleksi Lukkarinen
  */
-
-package object metadata extends MetadataSettingKeys {
-
-  LibraryInitializer.performInitialization()
+package object metadata
+  extends MetadataSettingKeys
+  with LibraryInitializationInvoker {
 
 }

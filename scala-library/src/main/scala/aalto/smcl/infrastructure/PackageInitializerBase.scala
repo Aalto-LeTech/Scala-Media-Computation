@@ -36,7 +36,7 @@ private[smcl] trait PackageInitializerBase {
     if (!_startedInitializationPhases.contains(phase)) {
       _startedInitializationPhases += phase
 
-      println(s"${phase.toString.capitalize} init: ${getClass.getName}")
+      // -- DEBUG -- println(s"${phase.toString.capitalize} init: ${getClass.getName}")
 
       var initializers: mutable.ArrayBuffer[(() => Unit)] = null
 

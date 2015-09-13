@@ -1,7 +1,7 @@
 package aalto
 
 
-import aalto.smcl.infrastructure.LibraryInitializer
+import aalto.smcl.infrastructure.LibraryInitializationInvoker
 
 
 
@@ -12,8 +12,6 @@ import aalto.smcl.infrastructure.LibraryInitializer
  *
  * @author Aleksi Lukkarinen
  */
-package object smcl {
-
-  LibraryInitializer.performInitialization()
+package object smcl extends LibraryInitializationInvoker {
 
 }

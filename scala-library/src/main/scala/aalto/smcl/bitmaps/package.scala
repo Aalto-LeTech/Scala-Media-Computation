@@ -3,7 +3,7 @@ package aalto.smcl
 
 import scala.language.implicitConversions
 
-import aalto.smcl.infrastructure.LibraryInitializer
+import aalto.smcl.infrastructure.LibraryInitializationInvoker
 
 
 
@@ -14,12 +14,10 @@ import aalto.smcl.infrastructure.LibraryInitializer
  * @author Aleksi Lukkarinen
  */
 package object bitmaps
-    extends BitmapSettingKeys
-            with BitmapOperationAPI
-            with ShapeCreationAPI {
-
-  LibraryInitializer.performInitialization()
-
+  extends BitmapSettingKeys
+  with BitmapOperationAPI
+  with ShapeCreationAPI
+  with LibraryInitializationInvoker {
 
   /** */
   type Bitmap = ImmutableBitmap

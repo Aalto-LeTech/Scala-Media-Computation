@@ -13,12 +13,11 @@ import aalto.smcl.infrastructure.PackageInitializationPhase.PackageInitializatio
  *
  * @author Aleksi Lukkarinen
  */
-//private[smcl]
+private[infrastructure]
 class LibraryInitializer {
 
   /** */
-  private[this] val _startedInitializationPhases: mutable.Set[PackageInitializationPhase] =
-    mutable.Set[PackageInitializationPhase]()
+  private[this] var _initializationStarted: Boolean = false
 
   /** */
   private val PackageInitializerClassName: String = "PackageInitializer"
@@ -49,7 +48,23 @@ class LibraryInitializer {
    * @return
    */
   def resolvePackageInitializerClassNames(): Seq[String] =
-    resolveNamesOfApplicationPackagesContainingClasses().map(_ + StrPeriod + PackageInitializerClassName)
+    resolvePackageInitializerClassNamesFrom(resolveNamesOfApplicationPackagesContainingClasses())
+
+  /**
+   *
+   *
+   * @return
+   */
+  def resolvePackageInitializerClassNameFrom(fullPackageName: String): String =
+    fullPackageName + StrPeriod + PackageInitializerClassName
+
+  /**
+   *
+   *
+   * @return
+   */
+  def resolvePackageInitializerClassNamesFrom(packages: Seq[String]): Seq[String] =
+    packages map resolvePackageInitializerClassNameFrom
 
   /**
    *
@@ -60,90 +75,117 @@ class LibraryInitializer {
   /**
    *
    *
-   * @return
+   * @param clazz
    */
-  def loadPackageInitializerClasses(): Seq[(Class[_], Seq[String])] = {
-    val classes = resolvePackageInitializerClassNames() map ClassProvider.load
-    val dependencies = classes map {clazz =>
-      val packageAnnotation: InitializablePackage = clazz.getAnnotation(classOf[InitializablePackage])
-      if (packageAnnotation == null) {
-        throw new IllegalStateException(s"Class ${clazz.getName} is missing the InitializablePackage annotation.")
-      }
-
-      packageAnnotation.dependsOnPackages().toList.toSeq
+  private def getPackageAnnotationOf(clazz: Class[PackageInitializerBase]): InitializablePackage = {
+    val packageAnnotation = clazz.getAnnotation(classOf[InitializablePackage])
+    if (packageAnnotation == null) {
+      throw new RuntimeException(
+        s"Class ${clazz.getName} is missing the InitializablePackage annotation.")
     }
 
-    classes zip dependencies
+    packageAnnotation
+  }
+
+
+  /**
+   *
+   *
+   * @param clazz
+   * @param dependencies
+   */
+  case class PackageInitializerClass(
+    clazz: Class[PackageInitializerBase],
+    dependencies: Seq[Class[PackageInitializerBase]]) {}
+
+
+  /**
+   *
+   *
+   * @return
+   */
+  def loadPackageInitializerClasses(): Seq[PackageInitializerClass] = {
+    val packages = resolveNamesOfApplicationPackagesContainingClasses()
+    val classes = resolvePackageInitializerClassNamesFrom(packages) map {
+      ClassProvider.load(_).asInstanceOf[Class[PackageInitializerBase]]
+    }
+
+    val nameToClassMap: mutable.Map[String, Class[PackageInitializerBase]] =
+      mutable.Map[String, Class[PackageInitializerBase]]()
+    classes foreach {clazz =>
+      nameToClassMap += (clazz.getName -> clazz)
+    }
+
+    for {
+      initializerClass <- classes
+      packageDependencies = getPackageAnnotationOf(initializerClass).dependsOnPackages() map {_.trim}
+      dependencyClasses = packageDependencies map {declaredPackage =>
+        if (!packages.contains(declaredPackage)) {
+          throw new RuntimeException(
+            s"Dependency $declaredPackage of class ${initializerClass.getName} cannot be found.")
+        }
+
+        nameToClassMap(resolvePackageInitializerClassNameFrom(declaredPackage))
+      }
+    } yield PackageInitializerClass(initializerClass, dependencyClasses.toSeq)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def resolveInitializationOrder(): Seq[Class[PackageInitializerBase]] = {
+    val dependencyResolver = new PackageInitializerDependencyResolver()
+    for {initializer <- loadPackageInitializerClasses()} {
+      if (initializer.dependencies.isEmpty) {
+        dependencyResolver.addDependency(initializer.clazz, None)
+      }
+      else {
+        for (destinationClass <- initializer.dependencies)
+          dependencyResolver.addDependency(initializer.clazz, Some(destinationClass))
+      }
+    }
+
+    dependencyResolver.resolveInitializationOrder()
   }
 
   /**
    *
    */
-  def performInitialization(): Unit =
-    PackageInitializationPhase.values foreach performInitialization
+  def printInitializationOrder(): Unit =
+    resolveInitializationOrder() foreach println
+
+  /**
+   *
+   */
+  def performInitialization(phase: PackageInitializationPhase): Unit = {
+    if (_initializationStarted)
+      return
+
+    _initializationStarted = true
+
+    for {
+      clazz <- resolveInitializationOrder()
+      method = clazz.getMethod(PackageInitializerMethodName, classOf[PackageInitializationPhase])
+      instance = clazz.newInstance()
+    } invokeInitializer(instance, method, phase)
+  }
 
   /**
    *
    *
+   * @param instance
+   * @param method
    * @param phase
    */
-  private def performInitialization(phase: PackageInitializationPhase): Unit = {
-//    if (!_startedInitializationPhases.contains(phase)) {
-//      _startedInitializationPhases += phase
-//
-//      loadPackageInitializerClasses() foreach {case (clazz, dependencies) =>
-//        val method = clazz.getMethod(PackageInitializerMethodName, classOf[PackageInitializationPhase])
-//        val instance = clazz.newInstance()
-//
-//        method.invoke(instance, phase)
-//      }
-//    }
+  @inline
+  protected def invokeInitializer(
+    instance: PackageInitializerBase,
+    method: java.lang.reflect.Method,
+    phase: PackageInitializationPhase): Unit = {
+
+    method.invoke(instance, phase)
   }
 
 }
-
-
-//.filter(clazz =>
-//clazz.getInterfaces.exists(_.getName == "aalto.smcl.infrastructure.InitializablePackage") && clazz.getName != "aalto.smcl.infrastructure.InitializablePackage")
-//.map(_.asInstanceOf[Class[InitializablePackage]]).sortBy(_.toString)
-
-
-///**
-// *
-// *
-// * @author Aleksi Lukkarinen
-// */
-//private[smcl] trait InitializablePackage {
-//
-//  /**
-//   *
-//   *
-//   * @param body
-//   */
-//  def delayedInit(body: => Unit): Unit = {
-//    body
-//
-//    SMCL.performInitialization(Early)
-//    SMCL.performInitialization(Late)
-//  }
-//
-//}
-
-
-//trait Initializable[T] extends T {
-//  def early() : T
-//
-//  early()
-//
-//}
-//
-//class A extends Initializable[A] {
-//
-//
-//  def early(): Unit = {
-//
-//  }
-//
-//}
-
-

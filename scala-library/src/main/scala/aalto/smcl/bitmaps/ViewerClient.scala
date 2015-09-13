@@ -7,7 +7,7 @@ import rx.lang.scala.{JavaConversions, Subject}
 
 import aalto.smcl.bitmaps.viewer.Application
 import aalto.smcl.bitmaps.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
-import aalto.smcl.infrastructure.{LibraryInitializer, SwingUtils}
+import aalto.smcl.infrastructure.SwingUtils
 
 
 
@@ -18,9 +18,6 @@ import aalto.smcl.infrastructure.{LibraryInitializer, SwingUtils}
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] class ViewerClient {
-
-  LibraryInitializer.performInitialization()
-
 
   /** */
   private val _outgoingEventSubject = Subject[ExternalViewerEvent]()
