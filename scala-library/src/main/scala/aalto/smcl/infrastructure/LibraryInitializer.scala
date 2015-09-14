@@ -98,8 +98,8 @@ class LibraryInitializer {
    * @param dependencies
    */
   case class PackageInitializerClass(
-    clazz: Class[PackageInitializerBase],
-    dependencies: Seq[Class[PackageInitializerBase]]) {}
+      clazz: Class[PackageInitializerBase],
+      dependencies: Seq[Class[PackageInitializerBase]]) {}
 
 
   /**
@@ -163,8 +163,8 @@ class LibraryInitializer {
    *
    */
   def performInitialization(
-    initiator: LibraryInitializationInvoker,
-    phase: PackageInitializationPhase): Unit = {
+      initiator: LibraryInitializationInvoker,
+      phase: PackageInitializationPhase): Unit = {
 
     if (_initializationInitiatorOption.isDefined) {
       if (!_initializationInitiatorOption.contains(initiator))
@@ -195,9 +195,9 @@ class LibraryInitializer {
    */
   @inline
   protected def invokeInitializer(
-    instance: PackageInitializerBase,
-    method: java.lang.reflect.Method,
-    phase: PackageInitializationPhase): Unit = {
+      instance: PackageInitializerBase,
+      method: java.lang.reflect.Method,
+      phase: PackageInitializationPhase): Unit = {
 
     method.invoke(instance, phase)
   }

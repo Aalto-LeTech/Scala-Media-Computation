@@ -17,9 +17,9 @@ import aalto.smcl.colors.RGBAColor
  * @author Aleksi Lukkarinen
  */
 package object infrastructure
-  extends InfrastructureSettingKeys
-  with Constants
-  with LibraryInitializationInvoker {
+    extends InfrastructureSettingKeys
+            with Constants
+            with LibraryInitializationInvoker {
 
 
   /** */
@@ -27,15 +27,15 @@ package object infrastructure
 
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val BaseSettingKeys: BaseSettingKeys = new BaseSettingKeys()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val ClassProvider: ClassProvider = new ClassProvider()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val ClassTokenizer: ClassTokenizer = new ClassTokenizer()
 
   /** */
@@ -45,7 +45,7 @@ package object infrastructure
   lazy val DateTimeProvider: DateTimeProvider = new DateTimeProvider()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val FileUtils: FileUtils = new FileUtils()
 
   /** */
@@ -60,34 +60,34 @@ package object infrastructure
   lazy val ImageProvider: ImageProvider = new ImageProvider()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val LibraryInitializer: LibraryInitializer = new LibraryInitializer()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val ReflectionUtils: ReflectionUtils = new ReflectionUtils()
 
   /** */
   lazy val Screen: Screen = new Screen()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val SettingValidatorFactory: SettingValidatorFactory = new SettingValidatorFactory()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val StringUtils: StringUtils = new StringUtils()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val SwingUtils: SwingUtils = new SwingUtils()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val UIProvider: UIProvider = new UIProvider()
 
   /** */
-  //private[smcl]
+  private[smcl]
   lazy val UniqueIdProvider: UniqueIdProvider = new UniqueIdProvider()
 
 

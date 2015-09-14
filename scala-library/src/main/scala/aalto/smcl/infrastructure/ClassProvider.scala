@@ -21,7 +21,7 @@ import aalto.smcl.infrastructure.FileUtils._
  *
  * @author Aleksi Lukkarinen
  */
-//private[smcl]
+private[smcl]
 class ClassProvider {
 
   /** */
@@ -94,7 +94,7 @@ class ClassProvider {
    */
   def resolveJavaClasspath(): Seq[PathString] =
     resolveSystemProperty(SystemPropertyNameClassPath)
-      .fold(Seq[PathString]())(parseClassPathString)
+        .fold(Seq[PathString]())(parseClassPathString)
 
   /**
    *
@@ -143,7 +143,7 @@ class ClassProvider {
     if (url == null)
       return None
 
-    Try(new File(url.toURI)).filter(representsReadableFile).toOption
+    Try(new File(url.toURI)).filter(representsReadableFile).filter(hasJarExtension).toOption
   }
 
   /**
@@ -153,7 +153,7 @@ class ClassProvider {
    */
   def resolveApplicationJarPathFromJVM(): Option[File] =
     resolveApplicationJarPathViaProtectionDomain() orElse
-      resolveApplicationJarPathAsResource()
+        resolveApplicationJarPathAsResource()
 
   /**
    *
@@ -162,7 +162,7 @@ class ClassProvider {
    */
   def resolveApplicationJarPath(): Option[File] =
     resolveApplicationJarPathFromJVM() orElse
-      resolveApplicationJarPathFromClassPath()
+        resolveApplicationJarPathFromClassPath()
 
   /**
    *
@@ -174,7 +174,7 @@ class ClassProvider {
       Try(new JarFile(file)) match {
         case Success(jarFile) =>
           JavaConverters.enumerationAsScalaIteratorConverter(jarFile.entries())
-            .asScala.map(_.getName.trim).toIndexedSeq.toList.sorted
+              .asScala.map(_.getName.trim).toIndexedSeq.toList.sorted
 
         case Failure(_) => Seq[PathString]()
       }
@@ -236,7 +236,7 @@ class ClassProvider {
         if (representsReadableDirectory(rootPathCandidateFile)) {
           val testPackagePathFile = new File(
             rootPathCandidateFile.getCanonicalPath + File.separator +
-              SmclClassRootIdentifyingPackagePath + File.separator)
+                SmclClassRootIdentifyingPackagePath + File.separator)
 
           if (representsReadableDirectory(testPackagePathFile))
             foundPathFiles += rootPathCandidateFile
@@ -258,8 +258,8 @@ class ClassProvider {
       Files.walkFileTree(rootFolderFile.toPath, new SimpleFileVisitor[Path]() {
 
         override def visitFile(
-          contentFilePath: Path,
-          attributes: BasicFileAttributes): FileVisitResult = {
+            contentFilePath: Path,
+            attributes: BasicFileAttributes): FileVisitResult = {
 
           if (attributes.isRegularFile && hasClassExtension(contentFilePath))
             acceptedFiles += contentFilePath.toString
@@ -286,7 +286,7 @@ class ClassProvider {
    */
   def resolveApplicationClassFiles(): Seq[File] = {
     var foundFilePaths = resolveApplicationJarClasses() orIfEmpty
-      resolveSbtConsoleTimeApplicationClassRootFoldersContents() orForEmpty {
+        resolveSbtConsoleTimeApplicationClassRootFoldersContents() orForEmpty {
 
       throw new RuntimeException("Unable to resolve application class files.")
     }

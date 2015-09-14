@@ -18,6 +18,9 @@ private[smcl] class FileUtils {
   /** */
   val ClassFileExtension: String = ".class"
 
+  /** */
+  val JarFileExtension: String = ".jar"
+
 
   /**
    *
@@ -78,6 +81,30 @@ private[smcl] class FileUtils {
    */
   def hasClassExtension(path: Path): Boolean =
     hasClassExtension(path.toFile.getCanonicalPath)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def hasJarExtension(path: String): Boolean =
+    path.endsWith(JarFileExtension)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def hasJarExtension(path: File): Boolean =
+    hasJarExtension(path.getCanonicalPath)
+
+  /**
+   *
+   *
+   * @return
+   */
+  def hasJarExtension(path: Path): Boolean =
+    hasJarExtension(path.toFile.getCanonicalPath)
 
   /**
    *
