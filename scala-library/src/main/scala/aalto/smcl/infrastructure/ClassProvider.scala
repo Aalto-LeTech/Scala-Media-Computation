@@ -9,6 +9,7 @@ import java.util.jar.JarFile
 import scala.collection.JavaConverters
 import scala.collection.mutable.ArrayBuffer
 import scala.tools.util.PathResolver
+import scala.util.{Failure, Success, Try}
 
 import aalto.smcl.infrastructure.FileUtils._
 
@@ -51,22 +52,14 @@ class ClassProvider {
    *
    * @return
    */
-  protected def resolveSystemProperty(name: String): Option[String] = {
+  def resolveSystemProperty(name: String): Option[String] = {
     require(name != null, "Name of the property must not be null or able to be trimmed to an empty string (was null)")
 
     val trimmedName = name.trim
     require(trimmedName.length > 0,
       "Name of the property must not be able to be trimmed to an empty string (was effectively a zero-length string)")
 
-    val property = scala.sys.props(trimmedName)
-    if (property == null)
-      return None
-
-    val trimmedProperty = property.trim
-    if (trimmedProperty.length < 1)
-      return None
-
-    Some(trimmedProperty)
+    scala.sys.props.get(trimmedName) map (_.trim) filter (_.length > 0)
   }
 
   /**
@@ -101,22 +94,15 @@ class ClassProvider {
    */
   def resolveJavaClasspath(): Seq[PathString] =
     resolveSystemProperty(SystemPropertyNameClassPath)
-        .fold(Seq[PathString]())(parseClassPathString)
+      .fold(Seq[PathString]())(parseClassPathString)
 
   /**
    *
    *
    * @return
    */
-  def resolveClasspath(): Seq[PathString] = {
-    var classPath = resolveScalaClasspath()
-
-    if (classPath.isEmpty) {
-      classPath = resolveJavaClasspath()
-    }
-
-    classPath
-  }
+  def resolveClasspath(): Seq[PathString] =
+    resolveScalaClasspath() orIfEmpty resolveJavaClasspath()
 
   /**
    *
@@ -129,15 +115,54 @@ class ClassProvider {
    *
    * @return
    */
-  def resolveApplicationJarPath(): Option[File] =
+  def resolveApplicationJarPathFromClassPath(): Option[File] =
     resolveClasspath().find(_.endsWith(SmclJarName)).fold[Option[File]](None) {path =>
-      val jarFile: File = new File(path)
-
-      if (doesNotRepresentReadableFile(jarFile))
-        return None
-
-      Some(jarFile)
+      Try(new File(path)).filter(representsReadableFile).toOption
     }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def resolveApplicationJarPathViaProtectionDomain(): Option[File] =
+    Try(this.getClass.getProtectionDomain).toOption flatMap {domain =>
+      Try(new File(domain.getCodeSource.getLocation.toURI)).filter(representsReadableFile).toOption
+    }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def resolveApplicationJarPathAsResource(): Option[File] = {
+    val clazz = getClass
+    val classFileName = clazz.getSimpleName + ClassFileExtension
+
+    val url = clazz.getResource(classFileName)
+    if (url == null)
+      return None
+
+    Try(new File(url.toURI)).filter(representsReadableFile).toOption
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def resolveApplicationJarPathFromJVM(): Option[File] =
+    resolveApplicationJarPathViaProtectionDomain() orElse
+      resolveApplicationJarPathAsResource()
+
+  /**
+   *
+   *
+   * @return
+   */
+  def resolveApplicationJarPath(): Option[File] =
+    resolveApplicationJarPathFromJVM() orElse
+      resolveApplicationJarPathFromClassPath()
 
   /**
    *
@@ -146,8 +171,13 @@ class ClassProvider {
    */
   def resolveApplicationJarContents(): Seq[PathString] =
     resolveApplicationJarPath().fold[Seq[PathString]](Seq[PathString]()) {file =>
-      JavaConverters.enumerationAsScalaIteratorConverter(new JarFile(file).entries())
-          .asScala.map(_.getName.trim).toIndexedSeq.toList.sorted
+      Try(new JarFile(file)) match {
+        case Success(jarFile) =>
+          JavaConverters.enumerationAsScalaIteratorConverter(jarFile.entries())
+            .asScala.map(_.getName.trim).toIndexedSeq.toList.sorted
+
+        case Failure(_) => Seq[PathString]()
+      }
     }
 
   /**
@@ -173,12 +203,7 @@ class ClassProvider {
    */
   def resolveUserDir(): Option[File] =
     resolveSystemProperty(SystemPropertyNameUserDir).fold[Option[File]](None) {path =>
-      val userDirFile = new File(path)
-
-      if (doesNotRepresentReadableDirectory(userDirFile))
-        return None
-
-      Some(userDirFile)
+      Try(new File(path)).filter(representsReadableDirectory).toOption
     }
 
   /**
@@ -199,7 +224,7 @@ class ClassProvider {
 
       })
 
-      // TODO: Modify to use only classes compiled for the correct Scala version (there might be classes for several versions)
+      // TODO: Modify to use only classes compiled for the correct Scala version (there might be classes for several versions under the 'target' folder)
 
       if (subDirFileList.isEmpty)
         return Seq[File]()
@@ -211,7 +236,7 @@ class ClassProvider {
         if (representsReadableDirectory(rootPathCandidateFile)) {
           val testPackagePathFile = new File(
             rootPathCandidateFile.getCanonicalPath + File.separator +
-                SmclClassRootIdentifyingPackagePath + File.separator)
+              SmclClassRootIdentifyingPackagePath + File.separator)
 
           if (representsReadableDirectory(testPackagePathFile))
             foundPathFiles += rootPathCandidateFile
@@ -233,8 +258,8 @@ class ClassProvider {
       Files.walkFileTree(rootFolderFile.toPath, new SimpleFileVisitor[Path]() {
 
         override def visitFile(
-            contentFilePath: Path,
-            attributes: BasicFileAttributes): FileVisitResult = {
+          contentFilePath: Path,
+          attributes: BasicFileAttributes): FileVisitResult = {
 
           if (attributes.isRegularFile && hasClassExtension(contentFilePath))
             acceptedFiles += contentFilePath.toString
@@ -252,7 +277,7 @@ class ClassProvider {
    * @return
    */
   def resolveSbtConsoleTimeApplicationClassRootFoldersClasses(): Seq[PathString] =
-    resolveSbtConsoleTimeApplicationClassRootFoldersContents().filter(hasClassExtension)
+    resolveSbtConsoleTimeApplicationClassRootFoldersContents() filter hasClassExtension
 
   /**
    *
@@ -260,12 +285,13 @@ class ClassProvider {
    * @return
    */
   def resolveApplicationClassFiles(): Seq[File] = {
-    var foundFilePaths = resolveApplicationJarClasses()
+    var foundFilePaths = resolveApplicationJarClasses() orIfEmpty
+      resolveSbtConsoleTimeApplicationClassRootFoldersContents() orForEmpty {
 
-    if (foundFilePaths.isEmpty)
-      foundFilePaths = resolveSbtConsoleTimeApplicationClassRootFoldersContents()
+      throw new RuntimeException("Unable to resolve application class files.")
+    }
 
-    foundFilePaths.map(new File(_)).sorted
+    foundFilePaths.flatMap(path => Try(new File(path)).toOption).sorted
   }
 
   /**
@@ -341,6 +367,8 @@ class ClassProvider {
    *
    */
   def loadApplicationClasses(): Seq[Class[_]] =
-    resolveApplicationClassNames().map(load).sortBy(_.toString)
+    resolveApplicationClassNames() map load sortBy (_.toString) orForEmpty {
+      throw new RuntimeException("Unable to load application classes.")
+    }
 
 }

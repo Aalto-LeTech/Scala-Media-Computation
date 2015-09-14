@@ -52,6 +52,8 @@ class PackageInitializerDependencyResolver() {
   def resolveInitializationOrder(): Seq[Class[PackageInitializerBase]] = {
     throwExceptionIfCircularDependenciesFound()
 
+    // -- DEBUG -- println(_dependencyGraph)
+
     _dependencyGraph.componentTraverser().topologicalSort.reverse
   }
 

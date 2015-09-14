@@ -16,8 +16,11 @@ import aalto.smcl.infrastructure.PackageInitializationPhase.PackageInitializatio
 private[infrastructure]
 class LibraryInitializer {
 
+  private[this] var _initializationInitiatorOption: Option[LibraryInitializationInvoker] = None
+
   /** */
-  private[this] var _initializationStarted: Boolean = false
+  private[this] val _startedInitializationPhases: mutable.Set[PackageInitializationPhase] =
+    mutable.Set[PackageInitializationPhase]()
 
   /** */
   private val PackageInitializerClassName: String = "PackageInitializer"
@@ -159,11 +162,22 @@ class LibraryInitializer {
   /**
    *
    */
-  def performInitialization(phase: PackageInitializationPhase): Unit = {
-    if (_initializationStarted)
+  def performInitialization(
+    initiator: LibraryInitializationInvoker,
+    phase: PackageInitializationPhase): Unit = {
+
+    if (_initializationInitiatorOption.isDefined) {
+      if (!_initializationInitiatorOption.contains(initiator))
+        return
+    }
+    else {
+      _initializationInitiatorOption = Some(initiator)
+    }
+
+    if (_startedInitializationPhases.contains(phase))
       return
 
-    _initializationStarted = true
+    _startedInitializationPhases += phase
 
     for {
       clazz <- resolveInitializationOrder()

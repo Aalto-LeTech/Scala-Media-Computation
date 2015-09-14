@@ -26,27 +26,27 @@ class RichARGBInt(val self: Int) extends AnyVal {
    * }}}
    */
   // TODO: Update the example in the comment!!!!
-  def colorComponentMap: Map[Symbol, Double] = colorComponentMapFrom(self)
+  final def colorComponentMap: Map[Symbol, Double] = colorComponentMapFrom(self)
 
   /**
    * Returns the red color component of this ARGB-style `Int`.
    */
-  def redComponentInt: Int = redComponentOf(self)
+  final def redComponentInt: Int = redComponentOf(self)
 
   /**
    * Returns the green color component of this ARGB-style `Int`.
    */
-  def greenComponentInt: Int = greenComponentOf(self)
+  final def greenComponentInt: Int = greenComponentOf(self)
 
   /**
    * Returns the blue color component of this ARGB-style `Int`.
    */
-  def blueComponentInt: Int = blueComponentOf(self)
+  final def blueComponentInt: Int = blueComponentOf(self)
 
   /**
    * Returns the opacity component of this ARGB-style `Int`.
    */
-  def opacityComponentInt: Int = opacityComponentOf(self)
+  final def opacityComponentInt: Int = opacityComponentOf(self)
 
   /**
    * Displays this `Int` as a zero-padded hexadecimal form.
@@ -56,7 +56,7 @@ class RichARGBInt(val self: Int) extends AnyVal {
    * res0: String = 89abcdef
    * }}}
    */
-  def toArgbHexColorString: String = f"$self%08x"
+  final def toArgbHexColorString: String = f"$self%08x"
 
   /**
    * Displays this `Int` as a zero-padded binary form divided to bytes by spaces.
@@ -66,7 +66,7 @@ class RichARGBInt(val self: Int) extends AnyVal {
    * res0: String = 10001001 10101011 11001101 11101111
    * }}}
    */
-  def toArgbBinaryColorString: String =
+  final def toArgbBinaryColorString: String =
     self.toBinaryString.format("$s%32s").replace(StrSpace, StrZero)
         .sliding(OneByte, OneByte).mkString(StrSpace)
 
