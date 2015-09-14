@@ -48,9 +48,16 @@ class PackageInitializer extends PackageInitializerBase {
 
     val _providerMap = Map[Class[_], MetadataInterfaceSourceProvider](
       Bitmap().getClass -> bitmapProvider,
+
       ImmutableBitmap().getClass -> bitmapProvider,
+
       RGBAColor(0).getClass -> rgbaColorProvider,
-      PresetRGBAColor(0, Option("<dummy>")).getClass -> rgbaColorProvider)
+
+      PresetRGBAColor(0, Option("<dummy>")).getClass -> rgbaColorProvider,
+
+      new BitmapLoadingResult(Seq(Right((0, null)))).getClass ->
+        new BitmapLoadingResultMetadataInterfaceSourceProvider()
+    )
 
     _providerMap foreach {case (clazz, provider) =>
       GlobalMetadataInterfaceSourceProviderRegistry.registerProvider(clazz, provider)

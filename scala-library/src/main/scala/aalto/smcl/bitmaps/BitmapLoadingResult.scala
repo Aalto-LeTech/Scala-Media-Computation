@@ -53,12 +53,12 @@ case class BitmapLoadingResult(
   /**
    *
    */
-  val failedIndices: Seq[Int] = throwables map (_._1)
+  val failedOriginalIndices: Seq[Int] = throwables map (_._1)
 
   /**
    *
    */
-  val succeededIndices: Seq[Int] = bitmaps map (_._1)
+  val succeededOriginalIndices: Seq[Int] = bitmaps map (_._1)
 
   /**
    *
