@@ -61,17 +61,17 @@ object ImmutableBitmap {
    */
   def apply(
       sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle.Value): collection.Seq[Either[Throwable, ImmutableBitmap]] = {
+      viewerHandling: ViewerUpdateStyle.Value): BitmapLoadingResult = {
 
     // The ImageProvider is trusted with validation of the source resource path.
     val loadedBuffersTry = ImageProvider.tryToLoadImagesFromFile(sourceResourcePath)
     if (loadedBuffersTry.isFailure)
       throw loadedBuffersTry.failed.get
 
-    val bitmapsOrThrowables: collection.Seq[Either[Throwable, ImmutableBitmap]] =
-      loadedBuffersTry.get.zipWithIndex.map {
-        case (Left(t), _) =>
-          Left(t)
+    val bitmapsOrThrowables: collection.Seq[Either[(Int, Throwable), (Int, Bitmap)]] =
+      loadedBuffersTry.get.zipWithIndex map {
+        case (Left(throwable), index) =>
+          Left((index, throwable))
 
         case (Right(buffer), index) =>
           val operationList = BitmapOperationList(LoadedBitmap(buffer, Option(sourceResourcePath), Option(index)))
@@ -82,10 +82,10 @@ object ImmutableBitmap {
               newBitmap.display()
           }
 
-          Right(newBitmap)
+          Right((index, newBitmap))
       }
 
-    bitmapsOrThrowables
+    BitmapLoadingResult(bitmapsOrThrowables)
   }
 
   /**
@@ -94,7 +94,7 @@ object ImmutableBitmap {
    * @param sourceResourcePath
    * @return
    */
-  def apply(sourceResourcePath: String): collection.Seq[Either[Throwable, ImmutableBitmap]] =
+  def apply(sourceResourcePath: String): BitmapLoadingResult =
     apply(sourceResourcePath, UpdateViewerPerDefaults)
 
 }

@@ -18,10 +18,10 @@ class BitmapCreationStringInterpolator(val sc: StringContext) extends AnyVal {
    *
    * @author Aleksi Lukkarinen
    */
-  def bmpf(args: Any*): Seq[Either[Throwable, Bitmap]] = {
-    val s = sc.standardInterpolator(StringContext.processEscapes, args)
+  def bmpf(args: Any*): BitmapLoadingResult = {
+    val pathStringCandidate = sc.standardInterpolator(StringContext.processEscapes, args)
 
-    Bitmap(s)
+    Bitmap(pathStringCandidate)
   }
 
 }
