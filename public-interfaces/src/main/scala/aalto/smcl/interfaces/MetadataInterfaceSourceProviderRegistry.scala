@@ -25,13 +25,20 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
    * @param interestingObject
    * @return
    */
-  def queryProvidersFor(interestingObject: Any): Option[Set[MetadataInterfaceSourceProvider]] = {
-    val clazz: Class[_] = interestingObject.getClass
-    val searchResult = _registry.get(clazz)
-    if (searchResult.isEmpty)
-      return None
+  def queryProvidersFor(interestingObject: Any): Set[MetadataInterfaceSourceProvider] = {
+    val searchResult = mutable.Set[MetadataInterfaceSourceProvider]()
 
-    Some(searchResult.get.toSet)
+    var clazz: Class[_] = interestingObject.getClass
+    while (clazz != null) {
+      _registry.get(clazz).foreach { searchResult ++= _ }
+
+      for (interface <- clazz.getInterfaces)
+        _registry.get(interface).foreach { searchResult ++= _ }
+
+      clazz = clazz.getSuperclass
+    }
+
+    searchResult.toSet
   }
 
   /**
