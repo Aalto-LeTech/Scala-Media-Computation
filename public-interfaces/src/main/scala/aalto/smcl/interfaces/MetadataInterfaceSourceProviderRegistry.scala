@@ -29,7 +29,9 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
     val resultSet = mutable.Set[MetadataInterfaceSourceProvider]()
     val searchQueue = mutable.Queue[Class[_]](interestingObject.getClass)
 
-    searchQueue foreach {clazz =>
+    while (searchQueue.nonEmpty) {
+      val clazz = searchQueue.dequeue()
+
       _registry.get(clazz).foreach {resultSet ++= _}
 
       searchQueue.enqueue(clazz.getInterfaces:_*)
