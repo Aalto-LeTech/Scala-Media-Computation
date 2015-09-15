@@ -16,7 +16,7 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
   /** */
   private[this] val _registry =
     new mutable.HashMap[Class[_], mutable.Set[MetadataInterfaceSourceProvider]]
-      with mutable.MultiMap[Class[_], MetadataInterfaceSourceProvider]
+        with mutable.MultiMap[Class[_], MetadataInterfaceSourceProvider]
 
 
   /**
@@ -26,19 +26,20 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
    * @return
    */
   def queryProvidersFor(interestingObject: Any): Set[MetadataInterfaceSourceProvider] = {
-    val searchResult = mutable.Set[MetadataInterfaceSourceProvider]()
+    val resultSet = mutable.Set[MetadataInterfaceSourceProvider]()
+    val searchQueue = mutable.Queue[Class[_]](interestingObject.getClass)
 
-    var clazz: Class[_] = interestingObject.getClass
-    while (clazz != null) {
-      _registry.get(clazz).foreach { searchResult ++= _ }
+    searchQueue foreach {clazz =>
+      _registry.get(clazz).foreach {resultSet ++= _}
 
-      for (interface <- clazz.getInterfaces)
-        _registry.get(interface).foreach { searchResult ++= _ }
+      searchQueue.enqueue(clazz.getInterfaces:_*)
 
-      clazz = clazz.getSuperclass
+      val superClass = clazz.getSuperclass.asInstanceOf[Class[_]]
+      if (superClass != null)
+        searchQueue.enqueue(superClass)
     }
 
-    searchResult.toSet
+    resultSet.toSet
   }
 
   /**
@@ -47,8 +48,8 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
    * @param provider
    */
   private[smcl] def registerProvider(
-    clazz: Class[_],
-    provider: MetadataInterfaceSourceProvider): Unit = {
+      clazz: Class[_],
+      provider: MetadataInterfaceSourceProvider): Unit = {
     require(provider != null, "The provider argument cannot be null.")
 
     _registry.addBinding(clazz, provider)

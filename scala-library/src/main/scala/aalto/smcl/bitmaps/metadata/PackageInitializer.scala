@@ -1,6 +1,7 @@
 package aalto.smcl.bitmaps.metadata
 
 
+import scala.collection.GenTraversableLike
 import scala.language.implicitConversions
 
 import aalto.smcl.bitmaps._
@@ -56,7 +57,9 @@ class PackageInitializer extends PackageInitializerBase {
       PresetRGBAColor(0, Option("<dummy>")).getClass -> rgbaColorProvider,
 
       new BitmapLoadingResult(Seq(Right((0, null)))).getClass ->
-        new BitmapLoadingResultMetadataInterfaceSourceProvider()
+        new BitmapLoadingResultMetadataInterfaceSourceProvider(),
+
+      classOf[GenTraversableLike[_, _]] -> new GenTraversableLikeMetadataInterfaceSourceProvider()
     )
 
     _providerMap foreach {case (clazz, provider) =>
