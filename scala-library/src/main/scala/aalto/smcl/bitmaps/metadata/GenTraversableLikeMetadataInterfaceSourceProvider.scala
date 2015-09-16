@@ -29,7 +29,7 @@ class GenTraversableLikeMetadataInterfaceSourceProvider() extends MetadataInterf
   override def querySourceFor(interestingObject: Any): Option[Any] = {
     val c = interestingObject.getClass
 
-    if (c.isAssignableFrom(_genTaversableLikeClass)) {
+    if (_genTaversableLikeClass.isAssignableFrom(c)) {
       return Some(GenTraversableLikeMetadataSource(interestingObject.asInstanceOf[GenTraversableLike[_, _]]))
     }
 

@@ -28,7 +28,7 @@ class BitmapLoadingResultMetadataInterfaceSourceProvider() extends MetadataInter
   override def querySourceFor(interestingObject: Any): Option[Any] = {
     val c = interestingObject.getClass
 
-    if (c.isAssignableFrom(_bitmapLoadingResultClass)) {
+    if (_bitmapLoadingResultClass.isAssignableFrom(c)) {
       return Some(BitmapLoadingResultMetadataSource(interestingObject.asInstanceOf[BitmapLoadingResult]))
     }
 

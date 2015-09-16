@@ -31,9 +31,7 @@ class RGBAColorMetadataInterfaceSourceProvider() extends MetadataInterfaceSource
   override def querySourceFor(interestingObject: Any): Option[Any] = {
     val c = interestingObject.getClass
 
-    if (c.isAssignableFrom(_rgbaColorClass)
-        || c.isAssignableFrom(_presetRGBAColorClass)) {
-
+    if (_rgbaColorClass.isAssignableFrom(c)) {
       return Some(RGBAColorMetadataSource(interestingObject.asInstanceOf[RGBAColor]))
     }
 

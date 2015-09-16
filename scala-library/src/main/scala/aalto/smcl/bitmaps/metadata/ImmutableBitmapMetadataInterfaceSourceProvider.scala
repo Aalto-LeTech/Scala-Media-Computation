@@ -31,9 +31,7 @@ class ImmutableBitmapMetadataInterfaceSourceProvider() extends MetadataInterface
   override def querySourceFor(interestingObject: Any): Option[Any] = {
     val c = interestingObject.getClass
 
-    if (c.isAssignableFrom(_bitmapClass)
-        || c.isAssignableFrom(_immutableBitmapClass)) {
-
+    if (_immutableBitmapClass.isAssignableFrom(c)) {
       return Some(ImmutableBitmapMetadataSource(interestingObject.asInstanceOf[ImmutableBitmap]))
     }
 
