@@ -7,7 +7,7 @@ import scala.ref.WeakReference
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer}
-import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
+import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponent, RGBAComponentTranslationTable}
 import aalto.smcl.common.AffineTransformation
 import aalto.smcl.infrastructure._
 
@@ -259,6 +259,7 @@ case class ImmutableBitmap private(
    *
    *
    * @param function
+   * @param viewerHandling
    * @return
    */
   def iteratePixelsWith(

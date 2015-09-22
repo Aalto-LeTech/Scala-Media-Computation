@@ -58,6 +58,7 @@ private[bitmaps] trait BitmapOperationAPI {
    *
    * @param bmp
    * @param function
+   * @param viewerHandling
    * @return
    */
   def iteratePixelsWith(
@@ -75,6 +76,8 @@ private[bitmaps] trait BitmapOperationAPI {
    *
    * @param bmp
    * @param colorToTrim
+   * @param viewerHandling
+   * @return
    */
   def trim(
       bmp: Bitmap,
