@@ -75,6 +75,60 @@ private[bitmaps] trait BitmapOperationAPI {
    *
    *
    * @param bmp
+   * @param viewerHandling
+   * @return
+   */
+  def convertToGrayscaleByLuminocity(
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.convertToGrayscaleByLuminocity(viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param bmp
+   * @param viewerHandling
+   * @return
+   */
+  def convertToGrayscaleByLightness(
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.convertToGrayscaleByLightness(viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param bmp
+   * @param redWeight
+   * @param greenWeight
+   * @param blueWeight
+   * @param viewerHandling
+   * @return
+   */
+  def convertToGrayscale(
+      bmp: Bitmap,
+      redWeight: Double,
+      greenWeight: Double,
+      blueWeight: Double,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.convertToGrayscale(redWeight, greenWeight, blueWeight, viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param bmp
    * @param colorToTrim
    * @param viewerHandling
    * @return

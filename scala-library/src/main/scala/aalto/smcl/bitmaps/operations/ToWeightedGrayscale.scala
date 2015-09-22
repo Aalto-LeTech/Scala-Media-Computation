@@ -1,22 +1,36 @@
 package aalto.smcl.bitmaps.operations
 
-import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
+
+import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.{CommonValidators, MetaInformationMap, PlatformBitmapBuffer}
 
 
 
 
 /**
- * Operation to process bitmap's colors by iterating them with a given color-altering function.
+ * Operation to convert bitmap's colors into grayscale using given component weights.
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class ToWeightedGrayscale(function: (Int, Int, Int, Int) => (Int, Int, Int, Int))
+private[bitmaps] case class ToWeightedGrayscale(
+    redWeight: Double,
+    greenWeight: Double,
+    blueWeight: Double)
     extends AbstractOperation with OneSourceFilter with Immutable {
+
+  CommonValidators.validateZeroToOneFactor(redWeight, Option("Red weight"))
+  CommonValidators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
+  CommonValidators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
+
+  ColorValidator.validateRgbColorWeightCombination(redWeight, greenWeight, blueWeight)
+
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
+    "redWeight" -> Option(redWeight.toString),
+    "greenWeight" -> Option(greenWeight.toString),
+    "blueWeight" -> Option(blueWeight.toString)
   ))
-
 
   /**
    * Creates the buffer which contains the results of applying this operation
@@ -28,9 +42,13 @@ private[bitmaps] case class ToWeightedGrayscale(function: (Int, Int, Int, Int) =
    */
   override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
     require(sources.length == 1,
-      s"Pixel iteration requires exactly one source image (provided: ${sources.length}).")
+      s"Grayscale conversion requires exactly one source image (provided: ${sources.length}).")
 
-    sources(0).iteratePixelsWith(function)
+    sources(0).iteratePixelsWith {(red, green, blue, opacity) =>
+      val intensity = (redWeight * red + greenWeight * green + blueWeight * blue).toInt
+
+      (intensity, intensity, intensity, opacity)
+    }
   }
 
 }

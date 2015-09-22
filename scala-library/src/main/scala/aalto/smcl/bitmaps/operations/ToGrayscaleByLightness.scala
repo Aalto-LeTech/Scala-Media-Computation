@@ -6,28 +6,15 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
 
 
 /**
- * Operation to convert bitmap's colors into grayscale by luminocity.
+ * Operation to convert bitmap's colors into grayscale by lightness.
  *
  * @author Aleksi Lukkarinen
  */
 private[bitmaps] case class ToGrayscaleByLightness()
     extends AbstractOperation with OneSourceFilter with Immutable {
 
-  /** */
-  private val StandardRedWeight: Double = 0.21
-
-  /** */
-  private val StandardGreenWeight: Double = 0.72
-
-  /** */
-  private val StandardBlueWeight: Double = 0.07
-
-
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
-    "redWeight" -> Option(StandardRedWeight.toString),
-    "greenWeight" -> Option(StandardGreenWeight.toString),
-    "blueWeight" -> Option(StandardBlueWeight.toString)
   ))
 
 
@@ -44,10 +31,7 @@ private[bitmaps] case class ToGrayscaleByLightness()
       s"Grayscale conversion requires exactly one source image (provided: ${sources.length}).")
 
     sources(0).iteratePixelsWith {(red, green, blue, opacity) =>
-      val intensity = (
-          StandardRedWeight * red +
-              StandardGreenWeight * green +
-              StandardBlueWeight * blue).toInt
+      val intensity = ((Math.max(red, green).max(blue) + Math.min(red, green).min(blue)) / 2.0).toInt
 
       (intensity, intensity, intensity, opacity)
     }

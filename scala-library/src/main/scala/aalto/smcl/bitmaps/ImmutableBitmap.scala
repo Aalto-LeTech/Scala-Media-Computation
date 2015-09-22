@@ -7,7 +7,7 @@ import scala.ref.WeakReference
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{display => displayInViewer}
-import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponent, RGBAComponentTranslationTable}
+import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common.AffineTransformation
 import aalto.smcl.infrastructure._
 
@@ -267,6 +267,48 @@ case class ImmutableBitmap private(
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(IteratePixels(function), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param viewerHandling
+   * @return
+   */
+  def convertToGrayscaleByLuminocity(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+
+    apply(ToGrayscaleByLuminocity(), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param viewerHandling
+   * @return
+   */
+  def convertToGrayscaleByLightness(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+
+    apply(ToGrayscaleByLightness(), viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param redWeight
+   * @param greenWeight
+   * @param blueWeight
+   * @param viewerHandling
+   * @return
+   */
+  def convertToGrayscale(
+      redWeight: Double,
+      greenWeight: Double,
+      blueWeight: Double,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+
+    apply(ToWeightedGrayscale(redWeight, greenWeight, blueWeight), viewerHandling)
   }
 
   /**

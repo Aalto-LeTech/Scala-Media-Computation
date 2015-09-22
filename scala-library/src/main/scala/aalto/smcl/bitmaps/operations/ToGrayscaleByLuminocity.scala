@@ -1,32 +1,36 @@
 package aalto.smcl.bitmaps.operations
 
-import aalto.smcl.colors.ColorValidator
-import aalto.smcl.infrastructure.{CommonValidators, MetaInformationMap, PlatformBitmapBuffer}
+
+import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
 
 
 
 
 /**
- * Operation to convert bitmap's colors into grayscale using given component weights.
+ * Operation to convert bitmap's colors into grayscale by luminocity.
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class ToGrayscaleByLuminocity(
-    redWeight: Double,
-    greenWeight: Double,
-    blueWeight: Double)
+private[bitmaps] case class ToGrayscaleByLuminocity()
     extends AbstractOperation with OneSourceFilter with Immutable {
 
-  CommonValidators.validateZeroToOneFactor(redWeight, Option("Red weight"))
-  CommonValidators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
-  CommonValidators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
+  /** */
+  private val StandardRedWeight: Double = 0.21
 
-  ColorValidator.validateRgbColorWeightCombination(redWeight, greenWeight, blueWeight)
+  /** */
+  private val StandardGreenWeight: Double = 0.72
+
+  /** */
+  private val StandardBlueWeight: Double = 0.07
 
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(
+    "redWeight" -> Option(StandardRedWeight.toString),
+    "greenWeight" -> Option(StandardGreenWeight.toString),
+    "blueWeight" -> Option(StandardBlueWeight.toString)
   ))
+
 
   /**
    * Creates the buffer which contains the results of applying this operation
@@ -41,7 +45,10 @@ private[bitmaps] case class ToGrayscaleByLuminocity(
       s"Grayscale conversion requires exactly one source image (provided: ${sources.length}).")
 
     sources(0).iteratePixelsWith {(red, green, blue, opacity) =>
-      val intensity = (redWeight * red + greenWeight * green + blueWeight * blue).toInt
+      val intensity = (
+          StandardRedWeight * red +
+              StandardGreenWeight * green +
+              StandardBlueWeight * blue).toInt
 
       (intensity, intensity, intensity, opacity)
     }
