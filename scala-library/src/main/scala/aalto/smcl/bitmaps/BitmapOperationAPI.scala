@@ -57,6 +57,23 @@ private[bitmaps] trait BitmapOperationAPI {
    *
    *
    * @param bmp
+   * @param function
+   * @return
+   */
+  def iteratePixelsWith(
+      bmp: Bitmap,
+      function: (Int, Int, Int, Int) => (Int, Int, Int, Int),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+
+    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
+
+    bmp.iteratePixelsWith(function, viewerHandling)
+  }
+
+  /**
+   *
+   *
+   * @param bmp
    * @param colorToTrim
    */
   def trim(
