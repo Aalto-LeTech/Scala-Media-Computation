@@ -453,6 +453,20 @@ class ColorValidator private[colors]() {
   /**
    *
    *
+   * @param rgbaTuple
+   *
+   * @throws SMCLRgbRedComponentOutOfRangeError
+   * @throws SMCLRgbGreenComponentOutOfRangeError
+   * @throws SMCLRgbBlueComponentOutOfRangeError
+   * @throws SMCLRgbaOpacityComponentOutOfRangeError
+   */
+  //noinspection ScalaUnnecessaryParentheses
+  def validateRgbaColor(rgbaTuple: (Int, Int, Int, Int)): Unit =
+    (validateRgbaColor(_:Int, _:Int, _:Int, _:Int)).tupled.apply(rgbaTuple)
+
+  /**
+   *
+   *
    * @param hueCandidate
    * @param saturationCandidate
    * @param intensityCandidate

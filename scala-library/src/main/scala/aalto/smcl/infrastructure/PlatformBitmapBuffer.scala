@@ -5,8 +5,10 @@ import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 import java.awt.{AlphaComposite, Graphics2D}
 
+import scala.util.Try
+
 import aalto.smcl.bitmaps._
-import aalto.smcl.colors.{RGBAColor, RGBAComponentTranslationTable}
+import aalto.smcl.colors._
 import aalto.smcl.common._
 
 
@@ -261,6 +263,53 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
 
     // Return a copy of the non-empty portion of the source bitmap
     copyPortionXYXY(firstNonEmptyColumn, firstNonEmptyRow, lastNonEmptyColumn, lastNonEmptyRow)
+  }
+
+  /**
+   *
+   *
+   * @param function
+   * @return
+   */
+  def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): PlatformBitmapBuffer = {
+    val newBuffer = copyPortionXYWH(0, 0, widthInPixels, heightInPixels)
+
+    val raster = newBuffer.awtBufferedImage.getRaster
+    val rgbaComponentFlatArray: Array[Int] = raster.getPixels(
+      0, 0, widthInPixels, heightInPixels,
+      null.asInstanceOf[Array[Int]])
+
+    var index: Int = 0
+    val resultRgbaTuplesTry = Try {
+      while (index < rgbaComponentFlatArray.length) {
+        val (newRed, newGreen, newBlue, newOpacity) = function(
+          rgbaComponentFlatArray(index),
+          rgbaComponentFlatArray(index + 1),
+          rgbaComponentFlatArray(index + 2),
+          rgbaComponentFlatArray(index + 3))
+
+        ColorValidator.validateRgbaColor(newRed, newGreen, newBlue, newOpacity)
+
+        rgbaComponentFlatArray(index) = newRed
+        rgbaComponentFlatArray(index + 1) = newGreen
+        rgbaComponentFlatArray(index + 2) = newBlue
+        rgbaComponentFlatArray(index + 3) = newOpacity
+
+        index += 4
+      }
+    }
+
+    if (resultRgbaTuplesTry.isFailure) {
+      throw new SMCLFunctionExecutionError(
+        "The given pixel iteration function did not get executed correctly (see the chained exceptions)",
+        resultRgbaTuplesTry.failed.get
+      )
+    }
+
+    raster.setPixels(0, 0, widthInPixels, heightInPixels, rgbaComponentFlatArray)
+    newBuffer.awtBufferedImage.setData(raster)
+
+    newBuffer
   }
 
   /**

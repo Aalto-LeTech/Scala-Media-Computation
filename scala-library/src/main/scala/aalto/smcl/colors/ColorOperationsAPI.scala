@@ -255,7 +255,10 @@ trait ColorOperationsAPI {
 
     ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
-    (opacity << ThreeBytes) | (red << TwoBytes) | (green << OneByte) | blue
+    ((opacity & FirstByte) << ThreeBytes) |
+        ((red & FirstByte) << TwoBytes) |
+        ((green & FirstByte) << OneByte) |
+        (blue & FirstByte)
   }
 
   /**

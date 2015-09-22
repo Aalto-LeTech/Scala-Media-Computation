@@ -258,6 +258,19 @@ case class ImmutableBitmap private(
   /**
    *
    *
+   * @param function
+   * @return
+   */
+  def iteratePixelsWith(
+      function: (Int, Int, Int, Int) => (Int, Int, Int, Int),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+
+    apply(IteratePixels(function), viewerHandling)
+  }
+
+  /**
+   *
+   *
    * @param viewerHandling
    * @return
    */

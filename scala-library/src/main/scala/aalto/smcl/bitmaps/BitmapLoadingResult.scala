@@ -33,12 +33,22 @@ case class BitmapLoadingResult(
   /**
    *
    */
-  val throwables: Seq[(Int, Throwable)] = throwablesTemp map (_.left.get)
+  val throwablesWithIndices: Seq[(Int, Throwable)] = throwablesTemp map (_.left.get)
 
   /**
    *
    */
-  val bitmaps: Seq[(Int, Bitmap)] = bitmapsTemp map (_.right.get)
+  val throwables: Seq[Throwable] = throwablesWithIndices map (_._2)
+
+  /**
+   *
+   */
+  val bitmapsWithIndices: Seq[(Int, Bitmap)] = bitmapsTemp map (_.right.get)
+
+  /**
+   *
+   */
+  val bitmaps: Seq[Bitmap] = bitmapsWithIndices map (_._2)
 
   /**
    *
@@ -53,12 +63,12 @@ case class BitmapLoadingResult(
   /**
    *
    */
-  val failedOriginalIndices: Seq[Int] = throwables map (_._1)
+  val failedOriginalIndices: Seq[Int] = throwablesWithIndices map (_._1)
 
   /**
    *
    */
-  val succeededOriginalIndices: Seq[Int] = bitmaps map (_._1)
+  val succeededOriginalIndices: Seq[Int] = bitmapsWithIndices map (_._1)
 
   /**
    *

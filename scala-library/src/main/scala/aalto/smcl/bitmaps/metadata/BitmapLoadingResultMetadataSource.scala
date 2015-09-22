@@ -42,7 +42,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
   override def resourceIdOption(bitmapNumber: Int = 0): Option[String] = {
     validateBitmapNumber(bitmapNumber)
 
-    Some(relatedBitmapLoadingResult.bitmaps(bitmapNumber)._2.uniqueIdentifier.identity)
+    Some(relatedBitmapLoadingResult.bitmaps(bitmapNumber).uniqueIdentifier.identity)
   }
 
   /**
@@ -78,7 +78,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
   override def resourceTimestampOption(bitmapNumber: Int = 0): Option[Date] = {
     validateBitmapNumber(bitmapNumber)
 
-    Some(relatedBitmapLoadingResult.bitmaps(bitmapNumber)._2.created.underlyingDate)
+    Some(relatedBitmapLoadingResult.bitmaps(bitmapNumber).created.underlyingDate)
   }
 
   /**
@@ -114,7 +114,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
   override def generalBitmapOption(bitmapNumber: Int = 0): Option[BufferedImage] = {
     validateBitmapNumber(bitmapNumber)
 
-    Some(relatedBitmapLoadingResult.bitmaps(bitmapNumber)._2.toRenderedRepresentation.awtBufferedImage)
+    Some(relatedBitmapLoadingResult.bitmaps(bitmapNumber).toRenderedRepresentation.awtBufferedImage)
   }
 
   /**
@@ -130,7 +130,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    * @return
    */
   override def generalBitmapsOption(): Option[Seq[BufferedImage]] =
-    Some(relatedBitmapLoadingResult.bitmaps map (_._2.toRenderedRepresentation.awtBufferedImage))
+    Some(relatedBitmapLoadingResult.bitmaps map (_.toRenderedRepresentation.awtBufferedImage))
 
   /**
    *
@@ -149,7 +149,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
 
     // TODO: After Bitmap can tell a suitable scaling factor for a given target size and has scaling operation, refactor the following code to utilize them
 
-    val bitmap = relatedBitmapLoadingResult.bitmaps(thumbnailNumber)._2
+    val bitmap = relatedBitmapLoadingResult.bitmaps(thumbnailNumber)
     var buffer = bitmap.toRenderedRepresentation.awtBufferedImage
 
     if (bitmap.widthInPixels > maximumWidthInPixels
