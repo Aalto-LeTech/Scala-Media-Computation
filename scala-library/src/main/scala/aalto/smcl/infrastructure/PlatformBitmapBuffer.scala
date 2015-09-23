@@ -125,13 +125,28 @@ private[smcl] object PlatformBitmapBuffer {
 private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedImage) {
 
   /** */
+  private[this] lazy val _raster = awtBufferedImage.getRaster
+
+  /** */
+  private[this] lazy val __getSamples =
+    _raster.getSamples(0, 0, widthInPixels, heightInPixels, _: Int, null.asInstanceOf[Array[Int]])
+
+  /** */
+  private[this] lazy val __setSamples =
+    _raster.setSamples(0, 0, widthInPixels, heightInPixels, _: Int, _: Array[Int])
+
+  /** */
   lazy val widthInPixels: Int = awtBufferedImage.getWidth
 
   /** */
   lazy val heightInPixels: Int = awtBufferedImage.getHeight
 
   /** */
+  lazy val areaInPixels: Int = heightInPixels * widthInPixels
+
+  /** */
   def drawingSurface(): PlatformDrawingSurface = PlatformDrawingSurface(this)
+
 
   /**
    *
@@ -140,14 +155,10 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def trim(colorToTrim: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
-    val IdxRed = 0
-    val IdxGreen = 1
-    val IdxBlue = 2
-    val IdxOpacity = 3
-
-    val sourceRaster: Raster = awtBufferedImage.getData
-    val rasterWidth = sourceRaster.getWidth
-    val rasterHeight = sourceRaster.getHeight
+    val IdxRed = RGBASampleBand.Red.id
+    val IdxGreen = RGBASampleBand.Green.id
+    val IdxBlue = RGBASampleBand.Blue.id
+    val IdxOpacity = RGBASampleBand.Opacity.id
 
     var pixel = Array(0, 0, 0, 0)
     val red = colorToTrim.red
@@ -159,9 +170,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     var row = 0
     var column = 0
     var deviationFound: Boolean = false
-    while (column < rasterWidth && !deviationFound) {
-      while (row < rasterHeight && !deviationFound) {
-        pixel = sourceRaster.getPixel(column, row, pixel)
+    while (column < widthInPixels && !deviationFound) {
+      while (row < heightInPixels && !deviationFound) {
+        pixel = _raster.getPixel(column, row, pixel)
         if (pixel(IdxRed) != red
             || pixel(IdxGreen) != green
             || pixel(IdxBlue) != blue
@@ -176,7 +187,7 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
       column += 1
       row = 0
     }
-    if (column >= rasterWidth && !deviationFound) {
+    if (column >= widthInPixels && !deviationFound) {
       // Raster was fully "empty" ==> return 1 x 1 bitmap
       return PlatformBitmapBuffer(1, 1)
     }
@@ -189,11 +200,11 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
 
     // Check for "empty" columns on the right edge
     row = 0
-    column = rasterWidth - 1
+    column = widthInPixels - 1
     deviationFound = false
     while (column >= 0 && !deviationFound) {
-      while (row < rasterHeight && !deviationFound) {
-        pixel = sourceRaster.getPixel(column, row, pixel)
+      while (row < heightInPixels && !deviationFound) {
+        pixel = _raster.getPixel(column, row, pixel)
         if (pixel(IdxRed) != red
             || pixel(IdxGreen) != green
             || pixel(IdxBlue) != blue
@@ -215,9 +226,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     row = 0
     column = 0
     deviationFound = false
-    while (row < rasterHeight && !deviationFound) {
-      while (column < rasterWidth && !deviationFound) {
-        pixel = sourceRaster.getPixel(column, row, pixel)
+    while (row < heightInPixels && !deviationFound) {
+      while (column < widthInPixels && !deviationFound) {
+        pixel = _raster.getPixel(column, row, pixel)
         if (pixel(IdxRed) != red
             || pixel(IdxGreen) != green
             || pixel(IdxBlue) != blue
@@ -237,12 +248,12 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
 
 
     // Check for "empty" rows on the bottom edge
-    row = rasterHeight - 1
+    row = heightInPixels - 1
     column = 0
     deviationFound = false
     while (row >= 0 && !deviationFound) {
-      while (column < rasterWidth && !deviationFound) {
-        pixel = sourceRaster.getPixel(column, row, pixel)
+      while (column < widthInPixels && !deviationFound) {
+        pixel = _raster.getPixel(column, row, pixel)
         if (pixel(IdxRed) != red
             || pixel(IdxGreen) != green
             || pixel(IdxBlue) != blue
@@ -274,28 +285,25 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
   def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): PlatformBitmapBuffer = {
     val newBuffer = copyPortionXYWH(0, 0, widthInPixels, heightInPixels)
 
-    val raster = newBuffer.awtBufferedImage.getRaster
-    val rgbaComponentFlatArray: Array[Int] = raster.getPixels(
-      0, 0, widthInPixels, heightInPixels,
-      null.asInstanceOf[Array[Int]])
+    val (reds, greens, blues, opacities) = newBuffer.colorComponentArrays()
 
     var index: Int = 0
     val resultRgbaTuplesTry = Try {
-      while (index < rgbaComponentFlatArray.length) {
+      while (index < reds.length) {
         val (newRed, newGreen, newBlue, newOpacity) = function(
-          rgbaComponentFlatArray(index),
-          rgbaComponentFlatArray(index + 1),
-          rgbaComponentFlatArray(index + 2),
-          rgbaComponentFlatArray(index + 3))
+          reds(index),
+          greens(index),
+          blues(index),
+          opacities(index))
 
         ColorValidator.validateRgbaColor(newRed, newGreen, newBlue, newOpacity)
 
-        rgbaComponentFlatArray(index) = newRed
-        rgbaComponentFlatArray(index + 1) = newGreen
-        rgbaComponentFlatArray(index + 2) = newBlue
-        rgbaComponentFlatArray(index + 3) = newOpacity
+        reds(index) = newRed
+        greens(index) = newGreen
+        blues(index) = newBlue
+        opacities(index) = newOpacity
 
-        index += 4
+        index += 1
       }
     }
 
@@ -306,10 +314,59 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
       )
     }
 
-    raster.setPixels(0, 0, widthInPixels, heightInPixels, rgbaComponentFlatArray)
-    newBuffer.awtBufferedImage.setData(raster)
-
+    newBuffer.setColorComponentArrays(reds, greens, blues, opacities)
     newBuffer
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def colorComponentArrays(): (Array[Int], Array[Int], Array[Int], Array[Int]) = {
+    import aalto.smcl.colors.RGBASampleBand._
+
+    (__getSamples(Red.id), __getSamples(Green.id), __getSamples(Blue.id), __getSamples(Opacity.id))
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def setColorComponentArrays(
+      reds: Array[Int],
+      greens: Array[Int],
+      blues: Array[Int],
+      opacities: Array[Int]): Unit = {
+
+    if (reds.length != areaInPixels)
+      throw new SMCLInvalidColorComponentArrayLengthError(
+        "Expected length for the given red RGBA component array is " +
+            s"$areaInPixels, but actually was ${reds.length}")
+
+    if (greens.length != areaInPixels)
+      throw new SMCLInvalidColorComponentArrayLengthError(
+        "Expected length for the given green RGBA component array is " +
+            s"$areaInPixels, but actually was ${greens.length}")
+
+    if (blues.length != areaInPixels)
+      throw new SMCLInvalidColorComponentArrayLengthError(
+        "Expected length for the given blue RGBA component array is " +
+            s"$areaInPixels, but actually was ${blues.length}")
+
+    if (opacities.length != areaInPixels)
+      throw new SMCLInvalidColorComponentArrayLengthError(
+        "Expected length for the given opacity RGBA component array is " +
+            s"$areaInPixels, but actually was ${opacities.length}")
+
+
+    import aalto.smcl.colors.RGBASampleBand._
+
+    __setSamples(Red.id, reds)
+    __setSamples(Green.id, greens)
+    __setSamples(Blue.id, blues)
+    __setSamples(Opacity.id, opacities)
   }
 
   /**
