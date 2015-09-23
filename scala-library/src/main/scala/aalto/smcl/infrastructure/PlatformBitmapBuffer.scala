@@ -125,17 +125,6 @@ private[smcl] object PlatformBitmapBuffer {
 private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedImage) {
 
   /** */
-  private[this] lazy val _raster = awtBufferedImage.getRaster
-
-  /** */
-  private[this] lazy val __getSamples =
-    _raster.getSamples(0, 0, widthInPixels, heightInPixels, _: Int, null.asInstanceOf[Array[Int]])
-
-  /** */
-  private[this] lazy val __setSamples =
-    _raster.setSamples(0, 0, widthInPixels, heightInPixels, _: Int, _: Array[Int])
-
-  /** */
   lazy val widthInPixels: Int = awtBufferedImage.getWidth
 
   /** */
@@ -155,16 +144,12 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def trim(colorToTrim: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
-    val IdxRed = RGBASampleBand.Red.id
-    val IdxGreen = RGBASampleBand.Green.id
-    val IdxBlue = RGBASampleBand.Blue.id
-    val IdxOpacity = RGBASampleBand.Opacity.id
+    val (reds, greens, blues, opacities) = colorComponentArrays()
 
-    var pixel = Array(0, 0, 0, 0)
-    val red = colorToTrim.red
-    val green = colorToTrim.green
-    val blue = colorToTrim.blue
-    val opacity = colorToTrim.opacity
+    val redToTrim = colorToTrim.red
+    val greenToTrim = colorToTrim.green
+    val blueToTrim = colorToTrim.blue
+    val opacityToTrim = colorToTrim.opacity
 
     // Check for "empty" columns on the left edge (and also if the raster is fully "empty")
     var row = 0
@@ -172,11 +157,12 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     var deviationFound: Boolean = false
     while (column < widthInPixels && !deviationFound) {
       while (row < heightInPixels && !deviationFound) {
-        pixel = _raster.getPixel(column, row, pixel)
-        if (pixel(IdxRed) != red
-            || pixel(IdxGreen) != green
-            || pixel(IdxBlue) != blue
-            || pixel(IdxOpacity) != opacity) {
+        val linearPos = (row * widthInPixels) + column
+
+        if (reds(linearPos) != redToTrim
+            || greens(linearPos) != greenToTrim
+            || blues(linearPos) != blueToTrim
+            || opacities(linearPos) != opacityToTrim) {
 
           deviationFound = true
         }
@@ -204,11 +190,12 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     deviationFound = false
     while (column >= 0 && !deviationFound) {
       while (row < heightInPixels && !deviationFound) {
-        pixel = _raster.getPixel(column, row, pixel)
-        if (pixel(IdxRed) != red
-            || pixel(IdxGreen) != green
-            || pixel(IdxBlue) != blue
-            || pixel(IdxOpacity) != opacity) {
+        val linearPos = (row * widthInPixels) + column
+
+        if (reds(linearPos) != redToTrim
+            || greens(linearPos) != greenToTrim
+            || blues(linearPos) != blueToTrim
+            || opacities(linearPos) != opacityToTrim) {
 
           deviationFound = true
         }
@@ -228,11 +215,12 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     deviationFound = false
     while (row < heightInPixels && !deviationFound) {
       while (column < widthInPixels && !deviationFound) {
-        pixel = _raster.getPixel(column, row, pixel)
-        if (pixel(IdxRed) != red
-            || pixel(IdxGreen) != green
-            || pixel(IdxBlue) != blue
-            || pixel(IdxOpacity) != opacity) {
+        val linearPos = (row * widthInPixels) + column
+
+        if (reds(linearPos) != redToTrim
+            || greens(linearPos) != greenToTrim
+            || blues(linearPos) != blueToTrim
+            || opacities(linearPos) != opacityToTrim) {
 
           deviationFound = true
         }
@@ -253,11 +241,12 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     deviationFound = false
     while (row >= 0 && !deviationFound) {
       while (column < widthInPixels && !deviationFound) {
-        pixel = _raster.getPixel(column, row, pixel)
-        if (pixel(IdxRed) != red
-            || pixel(IdxGreen) != green
-            || pixel(IdxBlue) != blue
-            || pixel(IdxOpacity) != opacity) {
+        val linearPos = (row * widthInPixels) + column
+
+        if (reds(linearPos) != redToTrim
+            || greens(linearPos) != greenToTrim
+            || blues(linearPos) != blueToTrim
+            || opacities(linearPos) != opacityToTrim) {
 
           deviationFound = true
         }
@@ -326,7 +315,12 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
   def colorComponentArrays(): (Array[Int], Array[Int], Array[Int], Array[Int]) = {
     import aalto.smcl.colors.RGBASampleBand._
 
-    (__getSamples(Red.id), __getSamples(Green.id), __getSamples(Blue.id), __getSamples(Opacity.id))
+    val getSamples =
+      awtBufferedImage.getRaster.getSamples(
+        0, 0, widthInPixels, heightInPixels, _: Int,
+        null.asInstanceOf[Array[Int]])
+
+    (getSamples(Red.id), getSamples(Green.id), getSamples(Blue.id), getSamples(Opacity.id))
   }
 
   /**
@@ -363,10 +357,15 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
 
     import aalto.smcl.colors.RGBASampleBand._
 
-    __setSamples(Red.id, reds)
-    __setSamples(Green.id, greens)
-    __setSamples(Blue.id, blues)
-    __setSamples(Opacity.id, opacities)
+    val raster = awtBufferedImage.getRaster
+    val setSamples = raster.setSamples(0, 0, widthInPixels, heightInPixels, _: Int, _: Array[Int])
+
+    setSamples(Red.id, reds)
+    setSamples(Green.id, greens)
+    setSamples(Blue.id, blues)
+    setSamples(Opacity.id, opacities)
+
+    awtBufferedImage.setData(raster)
   }
 
   /**

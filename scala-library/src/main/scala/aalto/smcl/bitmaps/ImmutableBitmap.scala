@@ -277,7 +277,7 @@ case class ImmutableBitmap private(
    */
   private[smcl] def applyPixelSnapshot(
       snapshotBuffer: PlatformBitmapBuffer,
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Unit = {
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(ApplyPixelSnapshot(snapshotBuffer), viewerHandling)
   }

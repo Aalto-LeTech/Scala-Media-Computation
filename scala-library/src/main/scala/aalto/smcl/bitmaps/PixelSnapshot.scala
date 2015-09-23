@@ -29,6 +29,18 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap) {
   private[this] var (_reds, _greens, _blues, _opacities) =
     buffer.colorComponentArrays()
 
+  /** */
+  private[bitmaps] def reds(): Array[Int] = _reds
+
+  /** */
+  private[bitmaps] def greens(): Array[Int] = _greens
+
+  /** */
+  private[bitmaps] def blues(): Array[Int] = _blues
+
+  /** */
+  private[bitmaps] def opacities(): Array[Int] = _opacities
+
 
   /**
    *
@@ -135,7 +147,7 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap) {
   /**
    *
    */
-  def apply(): Unit = {
+  def apply(): ImmutableBitmap = {
     buffer.setColorComponentArrays(_reds, _greens, _blues, _opacities)
 
     relatedBitmap.applyPixelSnapshot(buffer)
@@ -148,29 +160,6 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap) {
    * @param y
    * @return
    */
-  def pixel(x: Int, y: Int) = new {
-
-    require(x >= 0 && x < widthInPixels, s"Given x coordinate $x is outside of the bitmap.")
-    require(y >= 0 && y < heightInPixels, s"Given y coordinate $y is outside of the bitmap.")
-
-    private[this] val linearPosition: Int = (y * widthInPixels + x) - 1
-
-    def red(): Int = _reds(linearPosition)
-
-    def red_=(value: Int): Unit = _reds(linearPosition) = value
-
-    def green(): Int = _greens(linearPosition)
-
-    def green_=(value: Int): Unit = _greens(linearPosition) = value
-
-    def blue(): Int = _blues(linearPosition)
-
-    def blue_=(value: Int): Unit = _blues(linearPosition) = value
-
-    def opacity(): Int = _opacities(linearPosition)
-
-    def opacity_=(value: Int): Unit = _opacities(linearPosition) = value
-
-  }
+  def pixel(x: Int, y: Int) = new Pixel(this, x, y)
 
 }
