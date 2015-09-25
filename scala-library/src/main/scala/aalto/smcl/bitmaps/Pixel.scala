@@ -5,17 +5,23 @@ package aalto.smcl.bitmaps
  *
  *
  * @param relatedPixelSnapshot
- * @param x
- * @param y
+ * @param currentXInPixels
+ * @param currentYInPixels
  *
  * @author Aleksi Lukkarinen
  */
-case class Pixel private[bitmaps](relatedPixelSnapshot: PixelSnapshot, x: Int, y: Int) {
+case class Pixel private[bitmaps](
+  relatedPixelSnapshot: PixelSnapshot,
+  MinXInPixels: Int,
+  MaxXInPixels: Int,
+  MinYInPixels: Int,
+  MaxYInPixels: Int,
+  currentXInPixels: Int,
+  currentYInPixels: Int) {
 
-  require(x >= 0 && x < relatedPixelSnapshot.widthInPixels, s"Given x coordinate $x is outside of the bitmap.")
-  require(y >= 0 && y < relatedPixelSnapshot.heightInPixels, s"Given y coordinate $y is outside of the bitmap.")
-
-  private[this] val linearPosition: Int = y * relatedPixelSnapshot.widthInPixels + x
+  /** */
+  private[this] lazy val linearPosition: Int =
+    currentYInPixels * (MaxXInPixels - MinXInPixels + 1) + currentXInPixels
 
 
   /**
@@ -77,5 +83,13 @@ case class Pixel private[bitmaps](relatedPixelSnapshot: PixelSnapshot, x: Int, y
    */
   def opacity_=(value: Int): Unit =
     relatedPixelSnapshot.opacities()(linearPosition) = value
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def toString: String =
+    s"Pixel($currentXInPixels, $currentYInPixels): $red - $green - $blue - $opacity"
 
 }

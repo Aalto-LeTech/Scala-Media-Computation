@@ -11,16 +11,14 @@ import aalto.smcl.infrastructure.{PlatformBitmapBuffer, SMCLInvalidColorComponen
  *
  * @author Aleksi Lukkarinen
  */
-class PixelSnapshot private[smcl](relatedBitmap: Bitmap) {
+class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
+  extends Iterable[Pixel] with PixelRectangle {
 
   /** */
   val widthInPixels: Int = relatedBitmap.widthInPixels
 
   /** */
   val heightInPixels: Int = relatedBitmap.heightInPixels
-
-  /** */
-  val areaInPixels: Int = relatedBitmap.areaInPixels
 
   /** */
   private[this] val buffer: PlatformBitmapBuffer =
@@ -113,30 +111,30 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap) {
    * @return
    */
   def setComponentArrays(
-      reds: Array[Int],
-      greens: Array[Int],
-      blues: Array[Int],
-      opacities: Array[Int]): Unit = {
+    reds: Array[Int],
+    greens: Array[Int],
+    blues: Array[Int],
+    opacities: Array[Int]): Unit = {
 
     if (reds.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given red RGBA component array is " +
-            s"$areaInPixels, but actually was ${reds.length}")
+          s"$areaInPixels, but actually was ${reds.length}")
 
     if (greens.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given green RGBA component array is " +
-            s"$areaInPixels, but actually was ${greens.length}")
+          s"$areaInPixels, but actually was ${greens.length}")
 
     if (blues.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given blue RGBA component array is " +
-            s"$areaInPixels, but actually was ${blues.length}")
+          s"$areaInPixels, but actually was ${blues.length}")
 
     if (opacities.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given opacity RGBA component array is " +
-            s"$areaInPixels, but actually was ${opacities.length}")
+          s"$areaInPixels, but actually was ${opacities.length}")
 
     setRedComponentArray(reds)
     setGreenComponentArray(greens)
@@ -160,6 +158,45 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap) {
    * @param y
    * @return
    */
-  def pixel(x: Int, y: Int) = new Pixel(this, x, y)
+  def pixel(x: Int, y: Int) = new Pixel(
+    this,
+    0, widthInPixels - 1,
+    0, heightInPixels - 1,
+    x, y)
 
+  /**
+   *
+   * @return
+   */
+  override def iterator: Iterator[Pixel] =
+    new PixelSnapshotDownwardsRightwardsIterator(this)
+
+  /**
+   *
+   * @return
+   */
+  def downwardsLeftwardsIterator: Iterator[Pixel] =
+    new PixelSnapshotDownwardsLeftwardsIterator(this)
+
+  /**
+   *
+   * @return
+   */
+  def upwardsRightwardsIterator: Iterator[Pixel] =
+    new PixelSnapshotUpwardsRightwardsIterator(this)
+
+  /**
+   *
+   * @return
+   */
+  def upwardsLeftwardsIterator: Iterator[Pixel] =
+    new PixelSnapshotUpwardsLeftwardsIterator(this)
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def toString(): String =
+    s"PixelSnapshot $widthInPixels x $heightInPixels"
 }
