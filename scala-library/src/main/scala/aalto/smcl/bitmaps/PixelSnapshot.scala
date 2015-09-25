@@ -182,8 +182,29 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    *
    * @return
    */
-  def upwardsRightwardsIterator: Iterator[Pixel] =
-    new PixelSnapshotUpwardsRightwardsIterator(this)
+  def leftwardsDownwardsIterator: Iterator[Pixel] =
+    new PixelSnapshotLeftwardsDownwardsIterator(this)
+
+  /**
+   *
+   * @return
+   */
+  def leftwardsUpwardsIterator: Iterator[Pixel] =
+    new PixelSnapshotLeftwardsUpwardsIterator(this)
+
+  /**
+   *
+   * @return
+   */
+  def rightwardsDownwardsIterator: Iterator[Pixel] =
+    new PixelSnapshotRightwardsDownwardsIterator(this)
+
+  /**
+   *
+   * @return
+   */
+  def rightwardsUpwardsIterator: Iterator[Pixel] =
+    new PixelSnapshotRightwardsUpwardsIterator(this)
 
   /**
    *
@@ -191,6 +212,13 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    */
   def upwardsLeftwardsIterator: Iterator[Pixel] =
     new PixelSnapshotUpwardsLeftwardsIterator(this)
+
+  /**
+   *
+   * @return
+   */
+  def upwardsRightwardsIterator: Iterator[Pixel] =
+    new PixelSnapshotUpwardsRightwardsIterator(this)
 
   /**
    *
