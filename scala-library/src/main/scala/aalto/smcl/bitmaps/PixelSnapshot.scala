@@ -169,7 +169,7 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    * @return
    */
   override def iterator: Iterator[Pixel] =
-    new PixelSnapshotDownwardsRightwardsIterator(this)
+    new PixelSnapshotRightwardsDownwardsIterator(this)
 
   /**
    *
@@ -196,8 +196,8 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    *
    * @return
    */
-  def rightwardsDownwardsIterator: Iterator[Pixel] =
-    new PixelSnapshotRightwardsDownwardsIterator(this)
+  def downwardsRightwardsIterator: Iterator[Pixel] =
+    new PixelSnapshotDownwardsRightwardsIterator(this)
 
   /**
    *
@@ -227,4 +227,5 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    */
   override def toString(): String =
     s"PixelSnapshot $widthInPixels x $heightInPixels"
+
 }

@@ -1,6 +1,5 @@
 package aalto.smcl.bitmaps
 
-
 import scala.collection.AbstractIterator
 
 
@@ -49,11 +48,11 @@ class PixelSnapshotUpwardsLeftwardsIterator(
    *
    */
   private def advance(): Unit = {
-    if (_currentXInPixels > MinXInPixels)
-      _currentXInPixels -= 1
-    else {
-      _currentXInPixels = MaxXInPixels
+    if (_currentYInPixels > MinYInPixels)
       _currentYInPixels -= 1
+    else {
+      _currentYInPixels = MaxYInPixels
+      _currentXInPixels -= 1
     }
   }
 
