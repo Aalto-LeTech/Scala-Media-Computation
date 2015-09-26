@@ -168,56 +168,56 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    *
    * @return
    */
-  override def iterator: Iterator[Pixel] =
+  override def iterator: PixelSnapshotRightwardsDownwardsIterator =
     new PixelSnapshotRightwardsDownwardsIterator(this)
 
   /**
    *
    * @return
    */
-  def downwardsLeftwardsIterator: Iterator[Pixel] =
+  def downwardsLeftwardsIterator: PixelSnapshotDownwardsLeftwardsIterator =
     new PixelSnapshotDownwardsLeftwardsIterator(this)
 
   /**
    *
    * @return
    */
-  def leftwardsDownwardsIterator: Iterator[Pixel] =
+  def leftwardsDownwardsIterator: PixelSnapshotLeftwardsDownwardsIterator =
     new PixelSnapshotLeftwardsDownwardsIterator(this)
 
   /**
    *
    * @return
    */
-  def leftwardsUpwardsIterator: Iterator[Pixel] =
+  def leftwardsUpwardsIterator: PixelSnapshotLeftwardsUpwardsIterator =
     new PixelSnapshotLeftwardsUpwardsIterator(this)
 
   /**
    *
    * @return
    */
-  def downwardsRightwardsIterator: Iterator[Pixel] =
+  def downwardsRightwardsIterator: PixelSnapshotDownwardsRightwardsIterator =
     new PixelSnapshotDownwardsRightwardsIterator(this)
 
   /**
    *
    * @return
    */
-  def rightwardsUpwardsIterator: Iterator[Pixel] =
+  def rightwardsUpwardsIterator: PixelSnapshotRightwardsUpwardsIterator =
     new PixelSnapshotRightwardsUpwardsIterator(this)
 
   /**
    *
    * @return
    */
-  def upwardsLeftwardsIterator: Iterator[Pixel] =
+  def upwardsLeftwardsIterator: PixelSnapshotUpwardsLeftwardsIterator =
     new PixelSnapshotUpwardsLeftwardsIterator(this)
 
   /**
    *
    * @return
    */
-  def upwardsRightwardsIterator: Iterator[Pixel] =
+  def upwardsRightwardsIterator: PixelSnapshotUpwardsRightwardsIterator =
     new PixelSnapshotUpwardsRightwardsIterator(this)
 
   /**

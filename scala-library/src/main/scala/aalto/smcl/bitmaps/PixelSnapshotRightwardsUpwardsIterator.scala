@@ -39,21 +39,42 @@ class PixelSnapshotRightwardsUpwardsIterator(
   private var _currentYInPixels: Int = MaxYInPixels
 
   /** */
+  private var _rowHasChanged: Boolean = false
+
+  /**
+   *
+   *
+   * @return
+   */
   private def currentXInPixels: Int = _currentXInPixels
 
-  /** */
+  /**
+   *
+   *
+   * @return
+   */
   private def currentYInPixels: Int = _currentYInPixels
+
+  /**
+   *
+   *
+   * @return
+   */
+  def rowHasChanged: Boolean = hasNext && _rowHasChanged
 
 
   /**
    *
    */
   private def advance(): Unit = {
-    if (_currentXInPixels < MaxXInPixels)
+    if (_currentXInPixels < MaxXInPixels) {
       _currentXInPixels += 1
+      _rowHasChanged = false
+    }
     else {
       _currentXInPixels = MinXInPixels
       _currentYInPixels -= 1
+      _rowHasChanged = true
     }
   }
 
