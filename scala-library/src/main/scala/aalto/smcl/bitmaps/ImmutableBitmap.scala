@@ -1,8 +1,8 @@
 package aalto.smcl.bitmaps
 
 
-import scala.collection.mutable
-import scala.ref.WeakReference
+import java.io.File
+import javax.imageio.ImageIO
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.bitmaps.operations._
@@ -10,6 +10,10 @@ import aalto.smcl.bitmaps.{display => displayInViewer}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common.AffineTransformation
 import aalto.smcl.infrastructure._
+
+import scala.collection.mutable
+import scala.ref.WeakReference
+import scala.util.{Failure, Success, Try}
 
 
 
@@ -202,6 +206,22 @@ with TimestampedCreation {
    */
   private[bitmaps] def applyInitialization(newOperation: BufferProvider): ImmutableBitmap =
     apply(newOperation, PreventViewerUpdates)
+
+
+  def saveTo(filename: String): String = {
+    val destFile = new File(filename)
+
+    if (destFile.exists())
+      return "Error: The given file exists."
+
+    val bitmap = toRenderedRepresentation.awtBufferedImage
+    val savingResult = Try(ImageIO.write(bitmap, "png", destFile))
+
+    savingResult match {
+      case Failure(t: Throwable) => s"Error: ${t.getMessage}"
+      case Success(x) => "Save successful."
+    }
+  }
 
   /**
    *
