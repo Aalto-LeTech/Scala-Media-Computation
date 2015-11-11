@@ -11,8 +11,10 @@ import aalto.smcl.infrastructure.{MetaInformationMap, Tokenizable}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] abstract class AbstractOperation
-    extends Tokenizable with Immutable {
+private[bitmaps]
+abstract class AbstractOperation
+  extends Tokenizable
+  with Immutable {
 
   /** Information about this [[AbstractOperation]]. */
   def metaInformation: MetaInformationMap

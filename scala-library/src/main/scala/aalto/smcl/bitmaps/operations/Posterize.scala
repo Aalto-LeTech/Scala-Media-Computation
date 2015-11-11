@@ -2,8 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.colors.RGBAComponentTranslationTable
-import aalto.smcl.common._
-import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap, CommonValidators}
+import aalto.smcl.infrastructure._
 
 
 
@@ -15,10 +14,13 @@ import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap, Comm
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class Posterize(strengthAsPercentage: Int)
-  extends AbstractOperation with OneSourceFilter with Immutable {
+private[bitmaps]
+case class Posterize(strengthAsPercentage: Int)
+  extends AbstractOperation
+  with OneSourceFilter
+  with Immutable {
 
-  CommonValidators.validatePercentage(strengthAsPercentage, Option("Strength"))
+  new CommonValidators().validatePercentage(strengthAsPercentage, Option("Strength"))
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

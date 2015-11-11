@@ -6,8 +6,7 @@ import scala.language.implicitConversions
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{PresetRGBAColor, RGBAColor}
-import aalto.smcl.infrastructure.SettingValidatorFactory._
-import aalto.smcl.infrastructure.{GS, InitializablePackage, PackageInitializationPhase, PackageInitializerBase, Setting}
+import aalto.smcl.infrastructure._
 import aalto.smcl.interfaces.{GlobalMetadataInterfaceSourceProviderRegistry, MetadataInterfaceSourceProvider}
 
 
@@ -34,7 +33,7 @@ class PackageInitializer extends PackageInitializerBase {
     GS += new Setting[Int](
       key = ColorVisualizationTileSideLengthInPixels,
       initialValue = 80,
-      validator = ConditionFalseValidator[Int]({
+      validator = new SettingValidatorFactory().conditionFalseValidator[Int]({
         _ < 20
       }, "Side length of color visualization tiles' must be at least 20 pixels"))
   }

@@ -6,7 +6,8 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object PackageInitializationPhase extends Enumeration {
+private[smcl]
+object PackageInitializationPhase extends Enumeration {
 
   /** Type alias for this enumeration. */
   type PackageInitializationPhase = Value

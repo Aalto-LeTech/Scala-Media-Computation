@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -20,14 +20,17 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class AugmentCanvas(
-    sourceBitmap: Bitmap,
-    extraPixelsOntoLeftEdge: Int = 0,
-    extraPixelsOntoTopEdge: Int = 0,
-    extraPixelsOntoRightEdge: Int = 0,
-    extraPixelsOntoBottomEdge: Int = 0,
-    color: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class AugmentCanvas(
+  sourceBitmap: Bitmap,
+  extraPixelsOntoLeftEdge: Int = 0,
+  extraPixelsOntoTopEdge: Int = 0,
+  extraPixelsOntoRightEdge: Int = 0,
+  extraPixelsOntoBottomEdge: Int = 0,
+  color: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(sourceBitmap != null, s"Cropping requires exactly one source image (was null).")
 

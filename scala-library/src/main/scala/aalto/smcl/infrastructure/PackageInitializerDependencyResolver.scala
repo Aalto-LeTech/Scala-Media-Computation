@@ -13,7 +13,7 @@ import scalax.collection.mutable.Graph
  *
  * @author Aleksi Lukkarinen
  */
-// private[infrastructure]
+private[infrastructure]
 class PackageInitializerDependencyResolver() {
 
   /** */

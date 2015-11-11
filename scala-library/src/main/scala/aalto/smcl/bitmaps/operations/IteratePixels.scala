@@ -11,8 +11,11 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class IteratePixels(function: (Int, Int, Int, Int) => (Int, Int, Int, Int))
-    extends AbstractOperation with OneSourceFilter with Immutable {
+private[bitmaps]
+case class IteratePixels(function: (Int, Int, Int, Int) => (Int, Int, Int, Int))
+  extends AbstractOperation
+  with OneSourceFilter
+  with Immutable {
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

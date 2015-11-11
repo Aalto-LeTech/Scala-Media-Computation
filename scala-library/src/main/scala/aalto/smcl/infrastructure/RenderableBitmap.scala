@@ -8,6 +8,7 @@ package aalto.smcl.infrastructure
  */
 trait RenderableBitmap {
 
+
   /**
    * Renders this [[RenderableBitmap]] onto a drawing surface.
    */

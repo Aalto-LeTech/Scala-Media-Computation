@@ -9,8 +9,7 @@ import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.infrastructure.Screen
-import aalto.smcl.infrastructure.{SMCLUnexpectedInternalError, SwingUtils}
+import aalto.smcl.infrastructure._
 
 
 
@@ -20,7 +19,8 @@ import aalto.smcl.infrastructure.{SMCLUnexpectedInternalError, SwingUtils}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] object ViewerMainFrame {
+private[bitmaps]
+object ViewerMainFrame {
 
   // @formatter:off
   import aalto.smcl.SMCL._
@@ -58,13 +58,15 @@ private[bitmaps] object ViewerMainFrame {
    * @return
    */
   def initialViewAreaSizeFor(bitmap: Bitmap): Dimension = {
-    val width = (Screen.width * 0.8).toInt
-        .min((bitmap.widthInPixels * 1.1).toInt)
-        .max(MinimumFrameSize.width)
+    val screen = new Screen()
 
-    val height = (Screen.height * 0.8).toInt
-        .min((bitmap.heightInPixels * 1.1).toInt)
-        .max(MinimumFrameSize.height)
+    val width = (screen.width * 0.8).toInt
+      .min((bitmap.widthInPixels * 1.1).toInt)
+      .max(MinimumFrameSize.width)
+
+    val height = (screen.height * 0.8).toInt
+      .min((bitmap.heightInPixels * 1.1).toInt)
+      .max(MinimumFrameSize.height)
 
     new Dimension(width, height)
   }
@@ -77,8 +79,10 @@ private[bitmaps] object ViewerMainFrame {
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class ViewerMainFrame private(
-    private val _initialPreferredViewAreaSize: Dimension) extends Frame {
+private[bitmaps]
+class ViewerMainFrame private(
+  private val _initialPreferredViewAreaSize: Dimension)
+  extends Frame {
 
   /** */
   private val NoModifiers: Key.Modifiers = 0
@@ -167,31 +171,31 @@ private[bitmaps] class ViewerMainFrame private(
   peer.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
 
   menuBar = MenuBuilder.newMenuBarUsing(_actionMap)
-      .menu("Image", Option(Key.I))
-      .item('copyToClipboard).separator()
-      .item('saveToFile).separator()
-      .item('exitViewer)
-      .defined()
-      .menu("View", Option(Key.V))
-      .item('ZoomIn)
-      .item('ZoomOut).separator()
-      .item('Zoom60Percent)
-      .item('Zoom70Percent)
-      .item('Zoom80Percent)
-      .item('Zoom90Percent)
-      .item('Zoom100Percent)
-      .item('Zoom150Percent)
-      .item('Zoom200Percent)
-      .item('Zoom300Percent)
-      .item('Zoom400Percent)
-      .item('Zoom500Percent)
-      .defined()
-      .menu("Help", Option(Key.H))
-      .item('About)
-      .defined()
-      .get()
+    .menu("Image", Option(Key.I))
+    .item('copyToClipboard).separator()
+    .item('saveToFile).separator()
+    .item('exitViewer)
+    .defined()
+    .menu("View", Option(Key.V))
+    .item('ZoomIn)
+    .item('ZoomOut).separator()
+    .item('Zoom60Percent)
+    .item('Zoom70Percent)
+    .item('Zoom80Percent)
+    .item('Zoom90Percent)
+    .item('Zoom100Percent)
+    .item('Zoom150Percent)
+    .item('Zoom200Percent)
+    .item('Zoom300Percent)
+    .item('Zoom400Percent)
+    .item('Zoom500Percent)
+    .defined()
+    .menu("Help", Option(Key.H))
+    .item('About)
+    .defined()
+    .get()
 
-  val zoomInAction  = _actionMap.get('ZoomIn).get
+  val zoomInAction = _actionMap.get('ZoomIn).get
   val zoomOutAction = _actionMap.get('ZoomOut).get
 
 
@@ -275,9 +279,9 @@ private[bitmaps] class ViewerMainFrame private(
    * @param directions
    */
   def adjustScrollBars(
-      directions: Seq[ScrollingDirection.Value],
-      magnitude: ScrollingMagnitude.Value,
-      steps: Int = 1) = {
+    directions: Seq[ScrollingDirection.Value],
+    magnitude: ScrollingMagnitude.Value,
+    steps: Int = 1) = {
 
     import aalto.smcl.bitmaps.viewer.ScrollingDirection._
 
@@ -413,7 +417,7 @@ private[bitmaps] class ViewerMainFrame private(
    * @return
    */
   def shouldCloseBasedOn(result: Dialog.Result.Value): Boolean =
-    SwingUtils.yesNoDialogResultAsBoolean(result)
+    new SwingUtils().yesNoDialogResultAsBoolean(result)
 
   /**
    *

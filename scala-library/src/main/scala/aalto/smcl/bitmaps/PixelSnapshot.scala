@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.infrastructure.{PlatformBitmapBuffer, SMCLInvalidColorComponentArrayLengthError}
+import aalto.smcl.infrastructure.{PlatformBitmapBuffer, SMCLInitializationInvoker, SMCLInvalidColorComponentArrayLengthError}
 
 
 
@@ -12,7 +12,13 @@ import aalto.smcl.infrastructure.{PlatformBitmapBuffer, SMCLInvalidColorComponen
  * @author Aleksi Lukkarinen
  */
 class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
-  extends Iterable[Pixel] with PixelRectangle {
+  extends Iterable[Pixel]
+  with PixelRectangle
+  with SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /** */
   val widthInPixels: Int = relatedBitmap.widthInPixels

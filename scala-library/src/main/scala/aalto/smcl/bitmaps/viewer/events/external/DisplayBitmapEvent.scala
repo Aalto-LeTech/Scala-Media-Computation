@@ -13,7 +13,9 @@ import aalto.smcl.bitmaps.Bitmap
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class DisplayBitmapEvent(bitmap: Bitmap)
-    extends ExternalViewerEvent with Immutable {
+private[bitmaps]
+case class DisplayBitmapEvent(bitmap: Bitmap)
+  extends ExternalViewerEvent
+  with Immutable {
 
 }

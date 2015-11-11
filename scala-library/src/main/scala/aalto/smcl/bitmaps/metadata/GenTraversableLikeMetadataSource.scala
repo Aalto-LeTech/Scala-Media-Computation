@@ -7,8 +7,8 @@ import java.util.Date
 import scala.collection.GenTraversableLike
 import scala.collection.mutable.ArrayBuffer
 
-import aalto.smcl.MetaInterfaceBase
 import aalto.smcl.bitmaps.{Bitmap, ImmutableBitmap}
+import aalto.smcl.infrastructure.{MetaInterfaceBase, SMCLInitializationInvoker}
 import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 
 
@@ -21,10 +21,10 @@ import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource,
  */
 private[metadata]
 case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _])
-    extends MetaInterfaceBase
-            with ResourceMetadataSource
-            with StaticGeneralBitmapSource
-            with StaticThumbnailBitmapSource {
+  extends MetaInterfaceBase
+  with ResourceMetadataSource
+  with StaticGeneralBitmapSource
+  with StaticThumbnailBitmapSource {
 
   /** */
   private[this] val _bitmaps = ArrayBuffer[Bitmap]()
@@ -162,9 +162,9 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    * @return
    */
   override def thumbnailBitmapOption(
-      thumbnailNumber: Int = 0,
-      maximumWidthInPixels: Int,
-      maximumHeightInPixels: Int): Option[BufferedImage] = {
+    thumbnailNumber: Int = 0,
+    maximumWidthInPixels: Int,
+    maximumHeightInPixels: Int): Option[BufferedImage] = {
 
     validateBitmapNumber(thumbnailNumber)
 
@@ -174,7 +174,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
     var buffer = bitmap.toRenderedRepresentation.awtBufferedImage
 
     if (bitmap.widthInPixels > maximumWidthInPixels
-        || bitmap.heightInPixels > maximumHeightInPixels) {
+      || bitmap.heightInPixels > maximumHeightInPixels) {
 
       val scalingFactor =
         if (bitmap.widthInPixels > maximumWidthInPixels)
@@ -196,8 +196,8 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    * @return
    */
   override def thumbnailBitmapsOption(
-      maximumWidthInPixels: Int,
-      maximumHeightInPixels: Int): Option[Seq[BufferedImage]] = {
+    maximumWidthInPixels: Int,
+    maximumHeightInPixels: Int): Option[Seq[BufferedImage]] = {
 
     Some(_bitmaps.indices.map(thumbnailBitmapOption(_: Int, maximumWidthInPixels, maximumHeightInPixels).get))
   }

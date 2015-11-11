@@ -6,7 +6,7 @@ import scala.collection.mutable
 import aalto.smcl.bitmaps
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.GS
+import aalto.smcl.infrastructure.{GS, SMCLInitializationInvoker}
 
 
 
@@ -16,7 +16,13 @@ import aalto.smcl.infrastructure.GS
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class CircleCreator {
+private[bitmaps]
+class CircleCreator
+  extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /**
    * Creates a new empty [[Bitmap]] instance with a circle drawn on it.
@@ -28,10 +34,10 @@ private[bitmaps] class CircleCreator {
    * @return
    */
   def createOne(
-      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(diameter > 0, s"Diameter of the circle must be at least 1 pixel (was $diameter)")
     require(color != null, "The circle color argument has to be a Color instance (was null).")
@@ -75,10 +81,10 @@ private[bitmaps] class CircleCreator {
    * @return
    */
   def createArrayOf(
-      collectionSize: Int = 5,
-      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Array[Bitmap] = {
+    collectionSize: Int = 5,
+    diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Array[Bitmap] = {
 
     require(collectionSize >= 0, s"Size of the collection cannot be negative (was $collectionSize)")
 

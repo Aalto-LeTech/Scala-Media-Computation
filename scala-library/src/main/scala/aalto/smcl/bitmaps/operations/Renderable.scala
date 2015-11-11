@@ -11,9 +11,9 @@ import aalto.smcl.infrastructure.PlatformBitmapBuffer
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] trait Renderable {
+private[bitmaps]
+trait Renderable {
   this: AbstractOperation =>
-
 
   /**
    * Renders this operation to the destination buffer.

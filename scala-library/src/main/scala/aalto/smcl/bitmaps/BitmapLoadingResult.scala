@@ -1,13 +1,22 @@
 package aalto.smcl.bitmaps
 
 
+import aalto.smcl.infrastructure.SMCLInitializationInvoker
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 case class BitmapLoadingResult(
-    lowLevelResult: collection.Seq[Either[(Int, Throwable), (Int, Bitmap)]]) {
+  lowLevelResult: collection.Seq[Either[(Int, Throwable), (Int, Bitmap)]])
+  extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
 
 
   /**
@@ -16,7 +25,7 @@ case class BitmapLoadingResult(
    * @param index
    * @param bitmap
    */
-  case class LoadedBitmap(index: Int, bitmap: Bitmap) {}
+  case class LoadedBitmap(index: Int, bitmap: Bitmap) extends SMCLInitializationInvoker {}
 
 
   /**
@@ -25,7 +34,7 @@ case class BitmapLoadingResult(
    * @param index
    * @param cause
    */
-  case class FailedLoad(index: Int, cause: Throwable) {}
+  case class FailedLoad(index: Int, cause: Throwable) extends SMCLInitializationInvoker {}
 
 
   private[this] val (throwablesTemp, bitmapsTemp) = lowLevelResult partition (_.isLeft)

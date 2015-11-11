@@ -1,13 +1,15 @@
 package aalto.smcl.bitmaps.viewer
 
 
+
+
 /**
  * Represents directions for scrolling with scrollbars.
  *
  * @author Aleksi Lukkarinen
  */
-private[viewer] object ScrollingDirection {
-
+private[viewer]
+object ScrollingDirection {
 
   /** Type of all directions. */
   trait Value
@@ -27,6 +29,5 @@ private[viewer] object ScrollingDirection {
 
   /** Rightward direction. */
   case object Rightwards extends Value
-
 
 }

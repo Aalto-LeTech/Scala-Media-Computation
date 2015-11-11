@@ -12,8 +12,8 @@ import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] trait BitmapSettingKeys {
-
+private[bitmaps]
+trait BitmapSettingKeys {
 
   // @formatter:off
 

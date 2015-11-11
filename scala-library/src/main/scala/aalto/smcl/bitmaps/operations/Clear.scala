@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.DefaultBackground
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -16,9 +16,12 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class Clear(
-    color: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with Renderable with Immutable {
+private[bitmaps]
+case class Clear(
+  color: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation
+  with Renderable
+  with Immutable {
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 

@@ -6,7 +6,8 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object MetaInformationMap {
+private[smcl]
+object MetaInformationMap {
 
   // Messages
   private val MsgCannotBeNull =
@@ -47,8 +48,10 @@ private[smcl] object MetaInformationMap {
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class MetaInformationMap private(private val content: Map[String, Option[String]])
-    extends Immutable {
+private[smcl]
+class MetaInformationMap private(private val content: Map[String, Option[String]])
+  extends Immutable {
+
 
   /**
    *

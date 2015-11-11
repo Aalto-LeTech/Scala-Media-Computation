@@ -1,13 +1,15 @@
 package aalto.smcl.bitmaps.viewer
 
 
+
+
 /**
  * Represents magnitudes of scrolling for scrollbars.
  *
  * @author Aleksi Lukkarinen
  */
-private[viewer] object ScrollingMagnitude {
-
+private[viewer]
+object ScrollingMagnitude {
 
   /** Type of all magnitudes. */
   trait Value
@@ -19,6 +21,5 @@ private[viewer] object ScrollingMagnitude {
 
   /** Block magnitude. */
   case object Block extends Value
-
 
 }

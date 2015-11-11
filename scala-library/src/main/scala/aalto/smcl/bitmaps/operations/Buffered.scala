@@ -16,7 +16,6 @@ import aalto.smcl.infrastructure.PlatformBitmapBuffer
 trait Buffered {
   this: AbstractOperation =>
 
-
   /** Rendering buffer for this operation. */
   private[this] var _staticBuffer: WeakReference[PlatformBitmapBuffer] =
     WeakReference[PlatformBitmapBuffer](null)

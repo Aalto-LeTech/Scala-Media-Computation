@@ -13,7 +13,8 @@ import aalto.smcl.common.AffineTransformation
  *
  * @author Aleksi Lukkarinen
  */
-private[viewer] object ZoomFactor {
+private[viewer]
+object ZoomFactor {
 
   /** */
   val validRangeInPercents: Range.Inclusive = 10 to 500
@@ -76,8 +77,11 @@ private[viewer] object ZoomFactor {
  *
  * @author Aleksi Lukkarinen
  */
-private[viewer] class ZoomFactor private(val valueInPercents: Int)
-  extends Ordered[ZoomFactor] with Immutable {
+private[viewer]
+class ZoomFactor private(val valueInPercents: Int)
+  extends Ordered[ZoomFactor]
+  with Immutable {
+
 
   private val HUNDRED_AS_DOUBLE: Double = 100.toDouble
 

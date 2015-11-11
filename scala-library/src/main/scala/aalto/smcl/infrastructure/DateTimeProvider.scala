@@ -11,7 +11,8 @@ import java.util.{Calendar, Date}
  *
  * @author Aleksi Lukkarinen
  */
-class DateTimeProvider private[infrastructure]() {
+class DateTimeProvider private[infrastructure]()
+  extends SMCLInitializationInvoker {
 
   /**
    *

@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap}
+import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer, SMCLInitializationInvoker}
 
 
 
@@ -15,11 +15,14 @@ import aalto.smcl.infrastructure.{PlatformBitmapBuffer, MetaInformationMap}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class LoadedBitmap(
+private[bitmaps]
+case class LoadedBitmap(
   bitmap: PlatformBitmapBuffer,
   resourcePathOption: Option[String],
   bitmapIndexInResourceOption: Option[Int])
-  extends AbstractOperation with BufferProvider with Immutable {
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(resourcePathOption != null, "The resource path argument has to be a String or None (was null).")
   require(bitmapIndexInResourceOption != null, "The bitmap index argument has to be an Int or None (was null).")

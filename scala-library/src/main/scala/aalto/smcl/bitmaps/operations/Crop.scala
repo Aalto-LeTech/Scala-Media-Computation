@@ -18,13 +18,16 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class Crop(
-    sourceBitmap: Bitmap,
-    windowTopLeftX: Int,
-    windowTopLeftY: Int,
-    windowBottomRightX: Int,
-    windowBottomRightY: Int)
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class Crop(
+  sourceBitmap: Bitmap,
+  windowTopLeftX: Int,
+  windowTopLeftY: Int,
+  windowBottomRightX: Int,
+  windowBottomRightY: Int)
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(sourceBitmap != null, s"Cropping requires exactly one source image (was null).")
 

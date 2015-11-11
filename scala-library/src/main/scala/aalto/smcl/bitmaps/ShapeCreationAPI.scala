@@ -13,7 +13,9 @@ import aalto.smcl.infrastructure.GS
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] trait ShapeCreationAPI {
+private[bitmaps]
+trait ShapeCreationAPI {
+
 
   /** */
   private[this] lazy val _circleCreator: CircleCreator = new CircleCreator()
@@ -28,10 +30,10 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def circle(
-      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     _circleCreator.createOne(diameter, color, backgroundColor, viewerHandling)
   }
@@ -46,10 +48,10 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def circleArray(
-      collectionSize: Int = 5,
-      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Array[Bitmap] = {
+    collectionSize: Int = 5,
+    diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Array[Bitmap] = {
 
     _circleCreator.createArrayOf(collectionSize, diameter, color, backgroundColor)
   }
@@ -64,10 +66,10 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def circleSeq(
-      collectionSize: Int = 5,
-      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Seq[Bitmap] = {
+    collectionSize: Int = 5,
+    diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Seq[Bitmap] = {
 
     _circleCreator.createArrayOf(collectionSize, diameter, color, backgroundColor).toSeq
   }
@@ -87,11 +89,11 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def ellipse(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     _ellipseCreator.createOne(
       widthInPixels,
@@ -114,9 +116,9 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def hLine(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     _horizontalLineCreator.createOne(widthInPixels, color, viewerHandling)
   }
@@ -138,13 +140,13 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def line(
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    fromXInPixels: Int,
+    fromYInPixels: Int,
+    toXInPixels: Int,
+    toYInPixels: Int,
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     _lineCreator.createOne(
       fromXInPixels,
@@ -171,10 +173,10 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def rectangle(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     _rectangleCreator.createOne(widthInPixels, heightInPixels, color, viewerHandling)
   }
@@ -196,13 +198,13 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def rRectangle(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     _roundedRectangleCreator.createOne(
       widthInPixels,
@@ -231,12 +233,12 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def rSquare(
-      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     _roundedSquareCreator.createOne(
       sideLengthInPixels,
@@ -261,9 +263,9 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def square(
-      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     _squareCreator.createOne(sideLengthInPixels, color, viewerHandling)
   }
@@ -281,9 +283,9 @@ private[bitmaps] trait ShapeCreationAPI {
    * @return
    */
   def vLine(
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     _verticalLineCreator.createOne(heightInPixels, color, viewerHandling)
   }

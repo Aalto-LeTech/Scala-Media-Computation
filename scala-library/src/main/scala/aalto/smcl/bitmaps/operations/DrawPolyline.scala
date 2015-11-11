@@ -20,12 +20,15 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class DrawPolyline(
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
-    numberOfCoordinatesToDraw: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary))
-    extends AbstractOperation with Renderable with Immutable {
+private[bitmaps]
+case class DrawPolyline(
+  xCoordinates: Seq[Int],
+  yCoordinates: Seq[Int],
+  numberOfCoordinatesToDraw: Int,
+  color: RGBAColor = GS.colorFor(DefaultPrimary))
+  extends AbstractOperation
+  with Renderable
+  with Immutable {
 
   require(xCoordinates != null, "The x coordinate argument has to be an Seq[Int] instance (was null).")
   require(yCoordinates != null, "The y coordinate argument has to be an Seq[Int] instance (was null).")
@@ -39,7 +42,7 @@ private[bitmaps] case class DrawPolyline(
 
   require(numberOfCoordinatesToDraw <= numberOfCoordinatesPresent,
     s"The coordinate sequences do not contain the requested amount of coordinate pairs " +
-        s"(only $numberOfCoordinatesPresent pairs present, $numberOfCoordinatesToDraw requested).")
+      s"(only $numberOfCoordinatesPresent pairs present, $numberOfCoordinatesToDraw requested).")
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 

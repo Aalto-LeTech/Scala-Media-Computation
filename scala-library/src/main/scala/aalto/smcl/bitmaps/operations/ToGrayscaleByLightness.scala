@@ -1,6 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
-import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
+
+import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer, SMCLInitializationInvoker}
 
 
 
@@ -10,8 +11,12 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class ToGrayscaleByLightness()
-    extends AbstractOperation with OneSourceFilter with Immutable {
+private[bitmaps]
+case class ToGrayscaleByLightness()
+  extends AbstractOperation
+  with OneSourceFilter
+  with Immutable
+  with SMCLInitializationInvoker {
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

@@ -1,11 +1,6 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.infrastructure.SettingValidatorFactory._
-
-
-
-
 /**
  *
  *
@@ -13,7 +8,9 @@ import aalto.smcl.infrastructure.SettingValidatorFactory._
  */
 @InitializablePackage(dependsOnPackages = Array[String]())
 private[smcl]
-class PackageInitializer extends PackageInitializerBase {
+class PackageInitializer
+  extends PackageInitializerBase {
+
 
   //
   // Initialize settings
@@ -22,14 +19,14 @@ class PackageInitializer extends PackageInitializerBase {
     GS += new Setting[BitmapInterpolationMethod.Value](
       key = PlatformBitmapInterpolationMethod,
       initialValue = BitmapInterpolationMethod.NearestNeighbor,
-      validator = EmptyValidator)
+      validator = new SettingValidatorFactory().EmptyValidator)
   }
 
   //
   // Initialize Look & Feel
   //
   addInitializer(PackageInitializationPhase.Early) {() =>
-    UIProvider.tryToInitializeSpecificLookAndFeel(UIProvider.NimbusLookAndFeelName)
+    new UIProvider().tryToInitializeSpecificLookAndFeel(new UIProvider().NimbusLookAndFeelName)
   }
 
 }

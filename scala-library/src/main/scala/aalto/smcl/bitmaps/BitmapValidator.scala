@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.infrastructure.GS
+import aalto.smcl.infrastructure.{GS, SMCLInitializationInvoker}
 
 
 
@@ -11,7 +11,12 @@ import aalto.smcl.infrastructure.GS
  *
  * @author Aleksi Lukkarinen
  */
-class BitmapValidator private[bitmaps]() {
+class BitmapValidator private[bitmaps]()
+  extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /** */
   val MinimumBitmapWidthInPixels: Int = 1

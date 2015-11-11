@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{ColorValidator, RGBAColor, _}
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -19,14 +19,17 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class OverlayFreely(
-    bottomBitmap: Bitmap,
-    topBitmap: Bitmap,
-    topBitmapUpperLeftX: Int,
-    topBitmapUpperLeftY: Int,
-    topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class OverlayFreely(
+  bottomBitmap: Bitmap,
+  topBitmap: Bitmap,
+  topBitmapUpperLeftX: Int,
+  topBitmapUpperLeftY: Int,
+  topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(bottomBitmap != null, "The lower bitmap argument has to be a Bitmap instance (was null).")
   require(topBitmap != null, "The upper bitmap argument has to be a Bitmap instance (was null).")

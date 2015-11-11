@@ -4,7 +4,7 @@ package aalto.smcl.bitmaps.operations
 import aalto.smcl.bitmaps.{Bitmap, CanvasesAreResizedBasedOnTransformations, DefaultBackground}
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.common.AffineTransformation
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -19,13 +19,16 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class Shear(
-    sourceBitmap: Bitmap,
-    shearingFactorHorizontal: Double = 0.0,
-    shearingFactorVertical: Double = 0.0,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class Shear(
+  sourceBitmap: Bitmap,
+  shearingFactorHorizontal: Double = 0.0,
+  shearingFactorVertical: Double = 0.0,
+  resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(sourceBitmap != null, s"Shearing requires exactly one source image (was null).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")

@@ -11,10 +11,14 @@ import java.awt.Dimension
  *
  * @author Aleksi Lukkarinen
  */
-class Screen private[infrastructure]() {
+class Screen() extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /** Dimensions of the screen. */
-  private[smcl] val awtDimensions: Dimension = UIProvider.awtToolkit.getScreenSize
+  private[smcl] val awtDimensions: Dimension = new UIProvider().awtToolkit.getScreenSize
 
   /** Width of the screen. */
   val width = awtDimensions.width
@@ -29,6 +33,6 @@ class Screen private[infrastructure]() {
   val area = width * height
 
   /** Resolution of the screen. */
-  val resolution: Int = UIProvider.awtToolkit.getScreenResolution
+  val resolution: Int = new UIProvider().awtToolkit.getScreenResolution
 
 }

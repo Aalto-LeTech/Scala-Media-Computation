@@ -1,7 +1,7 @@
-package aalto.smcl
+package aalto.smcl.infrastructure
 
 
-import aalto.smcl.infrastructure.LibraryInitializationInvoker
+import aalto.smcl._
 import aalto.smcl.interfaces.ProviderMetadataSource
 
 
@@ -12,10 +12,10 @@ import aalto.smcl.interfaces.ProviderMetadataSource
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class MetaInterfaceBase()
+private[smcl]
+class MetaInterfaceBase()
   extends ProviderMetadataSource
-  with Immutable
-  with LibraryInitializationInvoker {
+  with Immutable {
 
   /**
    *

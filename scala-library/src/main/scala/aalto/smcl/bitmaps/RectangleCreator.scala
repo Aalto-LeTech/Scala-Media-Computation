@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.GS
+import aalto.smcl.infrastructure.{GS, SMCLInitializationInvoker}
 
 
 
@@ -13,7 +13,12 @@ import aalto.smcl.infrastructure.GS
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class RectangleCreator private[bitmaps]() {
+private[bitmaps]
+class RectangleCreator private[bitmaps]()
+  extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
 
 
   /**
@@ -26,10 +31,10 @@ private[bitmaps] class RectangleCreator private[bitmaps]() {
    * @return
    */
   def createOne(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels > 0, s"Width of the rectangle must be at least 1 pixel (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the rectangle must be at least 1 pixel (was $heightInPixels)")

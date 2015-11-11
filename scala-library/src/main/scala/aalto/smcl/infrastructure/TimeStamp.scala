@@ -11,14 +11,15 @@ import java.util.Date
  *
  * @author Aleksi Lukkarinen
  */
-object TimeStamp {
+object TimeStamp
+  extends SMCLInitializationInvoker {
 
   /**
    *
    *
    * @return
    */
-  def apply(): TimeStamp = new TimeStamp(DateTimeProvider.currentTime)
+  def apply(): TimeStamp = new TimeStamp(new DateTimeProvider().currentTime)
 
 }
 
@@ -28,7 +29,8 @@ object TimeStamp {
  *
  * @author Aleksi Lukkarinen
  */
-case class TimeStamp private(underlyingDate: Date) extends Ordered[Date] {
+case class TimeStamp private(underlyingDate: Date)
+  extends Ordered[Date] {
 
   /**
    *

@@ -1,14 +1,15 @@
 package aalto.smcl.infrastructure
 
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 final class SMCLUninitializedSettingError private[smcl](settingKey: BaseSettingKeys.Value[_], cause: Throwable)
-    extends RuntimeException(
-      s"""No setting with name "${settingKey.toString}" is initialized.""",
-      cause) {
+  extends RuntimeException(
+    s"""No setting with name "${settingKey.toString}" is initialized.""",
+    cause) {
 
   /**
    *

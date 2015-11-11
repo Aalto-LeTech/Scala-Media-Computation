@@ -13,7 +13,8 @@ import java.util.Locale
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class FileUtils {
+private[smcl]
+class FileUtils {
 
   /** */
   val ClassFileExtension: String = ".class"

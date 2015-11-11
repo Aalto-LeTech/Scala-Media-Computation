@@ -11,10 +11,17 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] final class Setting[SettingType](
-    val key: BaseSettingKeys.Value[SettingType],
-    val initialValue: SettingType,
-    val validator: SettingType => Option[Throwable]) extends Mutable {
+private[smcl]
+final class Setting[SettingType](
+  val key: BaseSettingKeys.Value[SettingType],
+  val initialValue: SettingType,
+  val validator: SettingType => Option[Throwable])
+  extends Mutable
+  with SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   if (validator != null)
     validator(initialValue) foreach {reason => throw new SMCLSettingValidationError(key, reason)}
@@ -53,8 +60,8 @@ private[smcl] final class Setting[SettingType](
    * Returns a formalized token representation of this [[Setting]].
    */
   def toToken: String =
-    s"[${ReflectionUtils.shortTypeNameOf(this)}; " +
-        s"key: ${key.simpleName}; initial-value: $initialValue; current-value: $value]"
+    s"[${new ReflectionUtils().shortTypeNameOf(this)}; " +
+      s"key: ${key.simpleName}; initial-value: $initialValue; current-value: $value]"
 
   /**
    * Returns a string representation of this [[Setting]].

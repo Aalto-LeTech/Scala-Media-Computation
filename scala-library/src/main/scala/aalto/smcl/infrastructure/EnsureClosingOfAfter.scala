@@ -10,6 +10,7 @@ package aalto.smcl.infrastructure
  */
 object EnsureClosingOfAfter {
 
+
   /**
    *
    *
@@ -20,8 +21,8 @@ object EnsureClosingOfAfter {
    * @return
    */
   def apply[ResourceType <: AutoCloseable, ReturnType](
-      resourceToBeUsed: ResourceType)(
-      workUnit: ResourceType => ReturnType): ReturnType = {
+    resourceToBeUsed: ResourceType)(
+    workUnit: ResourceType => ReturnType): ReturnType = {
 
     var memorizedThrowable: Throwable = null
 

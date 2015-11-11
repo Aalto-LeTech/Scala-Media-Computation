@@ -7,7 +7,7 @@ import rx.lang.scala.{JavaConversions, Subject}
 
 import aalto.smcl.bitmaps.viewer.Application
 import aalto.smcl.bitmaps.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
-import aalto.smcl.infrastructure.SwingUtils
+import aalto.smcl.infrastructure.{SMCLInitializationInvoker, SwingUtils}
 
 
 
@@ -17,7 +17,12 @@ import aalto.smcl.infrastructure.SwingUtils
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class ViewerClient {
+private[bitmaps]
+class ViewerClient extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /** */
   private val _outgoingEventSubject = Subject[ExternalViewerEvent]()
@@ -28,6 +33,7 @@ private[bitmaps] class ViewerClient {
 
   /** */
   private val _viewerApplication = new Application(_observableOutgoingEventSubject)
+
 
   /**
    *
@@ -54,7 +60,7 @@ private[bitmaps] class ViewerClient {
    * @return
    */
   def shouldCloseBasedOn(result: Dialog.Result.Value): Boolean =
-    SwingUtils.yesNoDialogResultAsBoolean(result)
+    new SwingUtils().yesNoDialogResultAsBoolean(result)
 
   /**
    *
@@ -62,7 +68,7 @@ private[bitmaps] class ViewerClient {
    * @return
    */
   def closingAllViewersMessageBoxResult(): Dialog.Result.Value = {
-    SwingUtils.showParentlessYesNoQuestionDialog(
+    new SwingUtils().showParentlessYesNoQuestionDialog(
       "Do you really want to close all bitmap viewers without saving?\nALL unsaved bitmaps will be LOST.",
       "SMCL")
   }

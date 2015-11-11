@@ -12,7 +12,9 @@ import scala.swing.event.{Key, WindowClosing}
  *
  * @author Aleksi Lukkarinen
  */
-private[viewer] class ActionMap(val relatedMainFrame: ViewerMainFrame) extends AbstractActionMap {
+private[viewer]
+class ActionMap(val relatedMainFrame: ViewerMainFrame)
+  extends AbstractActionMap {
 
   'copyToClipboard ==>
     ViewerAction("Copy to Clipboard", Option(Key.C), Option((Key.C, Control))) {

@@ -8,7 +8,9 @@ package aalto.smcl.bitmaps
  *
  * @author Aleksi Lukkarinen
  */
-class BitmapCreationStringInterpolator(val sc: StringContext) extends AnyVal {
+class BitmapCreationStringInterpolator(val sc: StringContext)
+  extends AnyVal {
+
 
   /**
    * Loads bitmaps from a file.

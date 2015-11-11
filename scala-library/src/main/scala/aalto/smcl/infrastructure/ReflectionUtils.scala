@@ -11,7 +11,8 @@ import scala.reflect.runtime.universe.{ClassSymbol, Mirror, Symbol, runtimeMirro
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class ReflectionUtils {
+private[smcl]
+class ReflectionUtils {
 
   /**
    * Returns a runtime mirror.

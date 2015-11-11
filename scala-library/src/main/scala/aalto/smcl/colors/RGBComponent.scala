@@ -1,12 +1,16 @@
 package aalto.smcl.colors
 
 
+
+
 /**
  * Components of a RGB color.
  *
  * @author Aleksi Lukkarinen
  */
-object RGBComponent extends Enumeration {
+object RGBComponent
+  extends Enumeration {
+
 
   /** Type alias for this enumeration. */
   type RGBAComponent = Value

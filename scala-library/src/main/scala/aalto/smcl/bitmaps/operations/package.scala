@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.infrastructure.LibraryInitializationInvoker
+import aalto.smcl.infrastructure.SMCLInitializationInvoker
 
 
 
@@ -11,6 +11,10 @@ import aalto.smcl.infrastructure.LibraryInitializationInvoker
  *
  * @author Aleksi Lukkarinen
  */
-package object operations extends LibraryInitializationInvoker {
+package object operations extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
 }

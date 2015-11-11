@@ -13,7 +13,8 @@ import aalto.smcl.infrastructure.PackageInitializationPhase._
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] trait PackageInitializerBase {
+private[smcl]
+trait PackageInitializerBase {
 
   /** */
   private[this] val _startedInitializationPhases: mutable.Set[PackageInitializationPhase] =
@@ -60,13 +61,13 @@ private[smcl] trait PackageInitializerBase {
    * @param phase
    */
   def addInitializer(
-      phase: PackageInitializationPhase)(
-      initializer: () => Unit): Unit = {
+    phase: PackageInitializationPhase)(
+    initializer: () => Unit): Unit = {
 
     if (_startedInitializationPhases.contains(phase)) {
       throw new IllegalStateException(
         "New initializers cannot be added to the specified phase, because initialization of " +
-            "the phase has already been triggered for this package.")
+          "the phase has already been triggered for this package.")
     }
 
     phase match {

@@ -11,7 +11,13 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-class RGBATranslationTableValidator private[colors]() {
+class RGBATranslationTableValidator private[colors]()
+  extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
+
 
   /**
    *
@@ -287,10 +293,10 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateSeparateDimensions(
-      reds: Seq[Short],
-      greens: Seq[Short],
-      blues: Seq[Short],
-      opacities: Seq[Short]): Unit = {
+    reds: Seq[Short],
+    greens: Seq[Short],
+    blues: Seq[Short],
+    opacities: Seq[Short]): Unit = {
 
     validateRedDimension(reds)
     validateGreenDimension(greens)
@@ -305,7 +311,7 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateFunctionProvidedComponents(
-      rgbaTuple: (Short, Short, Short, Short)): Unit = {
+    rgbaTuple: (Short, Short, Short, Short)): Unit = {
 
     validateFunctionProvidedRedComponent(rgbaTuple._1)
     validateFunctionProvidedGreenComponent(rgbaTuple._2)

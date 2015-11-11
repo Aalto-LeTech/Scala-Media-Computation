@@ -1,6 +1,9 @@
 package aalto.smcl.bitmaps
 
+
 import scala.collection.AbstractIterator
+
+import aalto.smcl.infrastructure.SMCLInitializationInvoker
 
 
 
@@ -10,8 +13,13 @@ import scala.collection.AbstractIterator
  *
  * @author Aleksi Lukkarinen
  */
-class PixelSnapshotUpwardsRightwardsIterator(
-  val relatedPixelSnapshot: PixelSnapshot) extends AbstractIterator[Pixel] {
+class PixelSnapshotUpwardsRightwardsIterator(val relatedPixelSnapshot: PixelSnapshot)
+  extends AbstractIterator[Pixel]
+  with SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /** */
   lazy val widthInPixels: Int = relatedPixelSnapshot.widthInPixels

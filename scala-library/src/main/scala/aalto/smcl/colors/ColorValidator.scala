@@ -11,7 +11,11 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-class ColorValidator private[colors]() {
+class ColorValidator() extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /** Color component value representing minimal amount of red. */
   val MinimumRgbRed: Int = ByteRange.start
@@ -441,10 +445,10 @@ class ColorValidator private[colors]() {
    */
   @inline
   def validateRgbaColor(
-      redCandidate: Int,
-      greenCandidate: Int,
-      blueCandidate: Int,
-      opacityCandidate: Int): Unit = {
+    redCandidate: Int,
+    greenCandidate: Int,
+    blueCandidate: Int,
+    opacityCandidate: Int): Unit = {
 
     validateRgbColor(redCandidate, greenCandidate, blueCandidate)
     validateRgbaOpacityComponent(opacityCandidate)
@@ -462,7 +466,7 @@ class ColorValidator private[colors]() {
    */
   //noinspection ScalaUnnecessaryParentheses
   def validateRgbaColor(rgbaTuple: (Int, Int, Int, Int)): Unit =
-    (validateRgbaColor(_:Int, _:Int, _:Int, _:Int)).tupled.apply(rgbaTuple)
+    (validateRgbaColor(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
 
   /**
    *
@@ -476,9 +480,9 @@ class ColorValidator private[colors]() {
    */
   @inline
   def validateHsiColor(
-      hueCandidate: Double,
-      saturationCandidate: Double,
-      intensityCandidate: Double): Unit = {
+    hueCandidate: Double,
+    saturationCandidate: Double,
+    intensityCandidate: Double): Unit = {
 
     validateHsiSaturationComponent(saturationCandidate)
     validateHsiIntensityComponent(intensityCandidate)
@@ -496,9 +500,9 @@ class ColorValidator private[colors]() {
    */
   @inline
   def validateHsvColor(
-      hueCandidate: Double,
-      saturationCandidate: Double,
-      valueCandidate: Double): Unit = {
+    hueCandidate: Double,
+    saturationCandidate: Double,
+    valueCandidate: Double): Unit = {
 
     validateHsvSaturationComponent(saturationCandidate)
     validateHsvValueComponent(valueCandidate)
@@ -515,9 +519,9 @@ class ColorValidator private[colors]() {
    */
   @inline
   def validateRgbColorWeightCombination(
-      redWeightCandidate: Double,
-      greenWeightCandidate: Double,
-      blueWeightCandidate: Double): Unit = {
+    redWeightCandidate: Double,
+    greenWeightCandidate: Double,
+    blueWeightCandidate: Double): Unit = {
 
     val weightSum = redWeightCandidate + greenWeightCandidate + blueWeightCandidate
 

@@ -15,7 +15,8 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-private[viewer] object MenuBuilder {
+private[viewer]
+object MenuBuilder {
 
   /**
    *
@@ -37,7 +38,8 @@ private[viewer] object MenuBuilder {
  *
  * @author Aleksi Lukkarinen
  */
-private[viewer] class MenuBuilder private(
+private[viewer]
+class MenuBuilder private(
   private val _actionMap: AbstractActionMap) {
 
   /** */

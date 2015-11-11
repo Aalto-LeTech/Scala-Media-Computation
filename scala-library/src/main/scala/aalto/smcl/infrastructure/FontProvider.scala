@@ -11,7 +11,8 @@ import scala.swing.Font
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class FontProvider private[infrastructure]() {
+private[smcl]
+class FontProvider() {
 
   /**
    *
@@ -19,6 +20,6 @@ private[smcl] class FontProvider private[infrastructure]() {
    * @return
    */
   def availableFonts(): Seq[Font] =
-    UIProvider.awtGraphEnv.getAllFonts.toSeq
+    new UIProvider().awtGraphEnv.getAllFonts.toSeq
 
 }

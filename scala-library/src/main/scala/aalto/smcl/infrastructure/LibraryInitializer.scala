@@ -14,9 +14,9 @@ import aalto.smcl.infrastructure.PackageInitializationPhase.PackageInitializatio
  * @author Aleksi Lukkarinen
  */
 private[infrastructure]
-class LibraryInitializer {
+object LibraryInitializer {
 
-  private[this] var _initializationInitiatorOption: Option[LibraryInitializationInvoker] = None
+  private[this] var _initializationInitiatorOption: Option[AnyRef] = None
 
   /** */
   private[this] val _startedInitializationPhases: mutable.Set[PackageInitializationPhase] =
@@ -28,6 +28,10 @@ class LibraryInitializer {
   /** */
   private val PackageInitializerMethodName: String = "performInitialization"
 
+  /** */
+  private val _classProvider: ClassProvider = new ClassProvider()
+
+
 
   /**
    *
@@ -35,7 +39,7 @@ class LibraryInitializer {
    * @return
    */
   def resolveNamesOfApplicationPackagesContainingClasses(): Seq[String] =
-    ClassProvider.loadApplicationClasses().map(_.getName).map(name =>
+    _classProvider.loadApplicationClasses().map(_.getName).map(name =>
       name.substring(0, name.lastIndexOf(StrPeriod))
     ).distinct
 
@@ -98,8 +102,8 @@ class LibraryInitializer {
    * @param dependencies
    */
   case class PackageInitializerClass(
-      clazz: Class[PackageInitializerBase],
-      dependencies: Seq[Class[PackageInitializerBase]]) {}
+    clazz: Class[PackageInitializerBase],
+    dependencies: Seq[Class[PackageInitializerBase]]) {}
 
 
   /**
@@ -110,7 +114,7 @@ class LibraryInitializer {
   def loadPackageInitializerClasses(): Seq[PackageInitializerClass] = {
     val packages = resolveNamesOfApplicationPackagesContainingClasses()
     val classes = resolvePackageInitializerClassNamesFrom(packages) map {
-      ClassProvider.load(_).asInstanceOf[Class[PackageInitializerBase]]
+      _classProvider.load(_).asInstanceOf[Class[PackageInitializerBase]]
     }
 
     val nameToClassMap: mutable.Map[String, Class[PackageInitializerBase]] =
@@ -163,8 +167,8 @@ class LibraryInitializer {
    *
    */
   def performInitialization(
-      initiator: LibraryInitializationInvoker,
-      phase: PackageInitializationPhase): Unit = {
+    initiator: SMCLInitializationInvoker,
+    phase: PackageInitializationPhase): Unit = {
 
     if (_initializationInitiatorOption.isDefined) {
       if (!_initializationInitiatorOption.contains(initiator))
@@ -195,9 +199,9 @@ class LibraryInitializer {
    */
   @inline
   protected def invokeInitializer(
-      instance: PackageInitializerBase,
-      method: java.lang.reflect.Method,
-      phase: PackageInitializationPhase): Unit = {
+    instance: PackageInitializerBase,
+    method: java.lang.reflect.Method,
+    phase: PackageInitializationPhase): Unit = {
 
     method.invoke(instance, phase)
   }

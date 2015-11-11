@@ -12,7 +12,9 @@ import aalto.smcl.infrastructure.{GS, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-trait OneSourceFilter extends Renderable with Buffered {
+trait OneSourceFilter
+  extends Renderable
+  with Buffered {
   this: AbstractOperation =>
 
   /**

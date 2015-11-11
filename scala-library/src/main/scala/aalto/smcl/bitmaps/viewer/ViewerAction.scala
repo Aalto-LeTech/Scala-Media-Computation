@@ -9,7 +9,8 @@ import scala.swing.event.Key
 
 
 
-private[viewer] object ViewerAction {
+private[viewer]
+object ViewerAction {
 
   def apply(title: String,
     mnemonicOption: Option[Key.Value] = None,
@@ -30,12 +31,14 @@ private[viewer] object ViewerAction {
  * @param acceleratorOption
  * @param applyAction
  */
-private[viewer] class ViewerAction(
+private[viewer]
+class ViewerAction(
   override val title: String,
   private val mnemonicOption: Option[Key.Value] = None,
   private val acceleratorOption: Option[(Key.Value, Key.Modifiers)] = None,
   applyAction: => Unit)
-  extends Action(title) {
+  extends Action(title)  {
+
 
   mnemonic = mnemonicOption.fold(0) {
     _.id

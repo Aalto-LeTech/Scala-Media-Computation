@@ -14,8 +14,11 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class ConvolveWithCustomKernel(kernel: ConvolutionKernel)
-    extends AbstractOperation with OneSourceFilter with Immutable {
+private[bitmaps]
+case class ConvolveWithCustomKernel(kernel: ConvolutionKernel)
+  extends AbstractOperation
+  with OneSourceFilter
+  with Immutable {
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

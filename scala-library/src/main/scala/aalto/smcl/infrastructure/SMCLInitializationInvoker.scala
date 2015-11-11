@@ -13,14 +13,16 @@ import aalto.smcl.infrastructure.PackageInitializationPhase._
  */
 //noinspection ScalaDeprecation
 @SuppressWarnings(Array("deprecation"))
-trait LibraryInitializationInvoker extends DelayedInit {
+trait SMCLInitializationInvoker
+  extends DelayedInit {
+
 
   /**
    *
    *
    * @param body
    */
-  def delayedInit(body: => Unit): Unit = {
+  override def delayedInit(body: => Unit): Unit = {
     LibraryInitializer.performInitialization(this, Early)
 
     body

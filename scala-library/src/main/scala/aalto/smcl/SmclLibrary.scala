@@ -1,6 +1,9 @@
 package aalto.smcl
 
 
+import aalto.smcl.infrastructure.SMCLInitializationInvoker
+
+
 
 
 /**
@@ -8,7 +11,11 @@ package aalto.smcl
  *
  * @author Aleksi Lukkarinen
  */
-object SMCL {
+class SMCLLibrary extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /** Full name of this library. */
   val FullName: String = "Scala Media Computation Library"

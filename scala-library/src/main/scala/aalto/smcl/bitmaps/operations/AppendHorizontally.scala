@@ -5,7 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer, VerticalAlignment}
+import aalto.smcl.infrastructure._
 
 
 
@@ -20,12 +20,15 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer, 
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class AppendHorizontally(
-    bitmapsToCombine: Seq[Bitmap])(
-    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class AppendHorizontally(
+  bitmapsToCombine: Seq[Bitmap])(
+  verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+  paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(bitmapsToCombine.nonEmpty,
     "Append operation must be given a non-empty Sequence of Bitmap instances to combine.")
@@ -49,7 +52,7 @@ private[bitmaps] case class AppendHorizontally(
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =
     childOperationListsOption.get.foldLeft[Int](0)({_ + _.widthInPixels}) +
-        (childOperationListsOption.get.length - 1) * paddingInPixels
+      (childOperationListsOption.get.length - 1) * paddingInPixels
 
   BitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
 

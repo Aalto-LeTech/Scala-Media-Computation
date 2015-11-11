@@ -14,12 +14,14 @@ import aalto.smcl.infrastructure.PlatformBitmapBuffer
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] object BitmapOperationList {
+private[bitmaps]
+object BitmapOperationList {
 
   /**
    * Returns an empty [[BitmapOperationList]].
    */
-  private[bitmaps] def apply(bufferProvider: BufferProvider): BitmapOperationList =
+  private[bitmaps]
+  def apply(bufferProvider: BufferProvider): BitmapOperationList =
     new BitmapOperationList(bufferProvider, List[AbstractOperation with Renderable]())
 
 }
@@ -30,9 +32,11 @@ private[bitmaps] object BitmapOperationList {
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class BitmapOperationList private(
-    private val bufferProvider: BufferProvider,
-    private val operations: List[Renderable]) extends Immutable {
+private[bitmaps]
+case class BitmapOperationList private(
+  private val bufferProvider: BufferProvider,
+  private val operations: List[Renderable])
+  extends Immutable {
 
   /** Width of the bitmap produced by the content of this [[BitmapOperationList]]. */
   val widthInPixels: Int = bufferProvider.widthInPixels
@@ -49,7 +53,7 @@ private[bitmaps] case class BitmapOperationList private(
   /**
    * Adds a new [[aalto.smcl.bitmaps.Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
-  private[bitmaps] def +: (newOperation: Renderable) = this.add(newOperation)
+  private[bitmaps] def +:(newOperation: Renderable) = this.add(newOperation)
 
   /**
    *
@@ -76,8 +80,8 @@ private[bitmaps] case class BitmapOperationList private(
    */
   @tailrec
   private def renderOperations(
-      list: List[Renderable],
-      buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
+    list: List[Renderable],
+    buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
 
     list match {
       case Nil                => buffer

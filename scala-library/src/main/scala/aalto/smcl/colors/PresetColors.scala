@@ -1,12 +1,25 @@
 package aalto.smcl.colors
 
 
+import aalto.smcl.infrastructure.SMCLInitializationInvoker
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-class PresetColors private[colors]() extends Map[Symbol, RGBAColor] with Immutable {
+class PresetColors private[colors]()
+  extends Map[Symbol, RGBAColor]
+  with Immutable
+  with SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
+
 
   /** */
   private[this] lazy val _colorMap = Map[Symbol, RGBAColor](
@@ -161,7 +174,7 @@ class PresetColors private[colors]() extends Map[Symbol, RGBAColor] with Immutab
    * @tparam T
    * @return
    */
-  override def +[T >: RGBAColor] (kv: (Symbol, T)): Map[Symbol, T] = _colorMap + kv
+  override def +[T >: RGBAColor](kv: (Symbol, T)): Map[Symbol, T] = _colorMap + kv
 
   /**
    *
@@ -184,6 +197,6 @@ class PresetColors private[colors]() extends Map[Symbol, RGBAColor] with Immutab
    * @param key
    * @return
    */
-  override def - (key: Symbol): Map[Symbol, RGBAColor] = _colorMap - key
+  override def -(key: Symbol): Map[Symbol, RGBAColor] = _colorMap - key
 
 }

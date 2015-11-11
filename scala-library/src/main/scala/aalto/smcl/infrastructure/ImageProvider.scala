@@ -20,7 +20,8 @@ import aalto.smcl.bitmaps._
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class ImageProvider private[infrastructure]() {
+private[smcl]
+class ImageProvider() {
 
   /** */
   lazy val supportedReadableMimeTypes: Seq[String] =
@@ -217,7 +218,7 @@ private[smcl] class ImageProvider private[infrastructure]() {
     require(attributes.size > 0, "The specified file has no content.")
 
 
-    val extension: String = FileUtils.resolveExtensionOf(imageFile.getName)
+    val extension: String = new FileUtils().resolveExtensionOf(imageFile.getName)
     ensureThatFileExtensionIsOfSupportedImageType(extension)
 
     (imageFile.getAbsoluteFile, imageFile.getAbsolutePath, extension)

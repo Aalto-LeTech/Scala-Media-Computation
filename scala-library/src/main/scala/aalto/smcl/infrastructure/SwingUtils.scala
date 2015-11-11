@@ -12,7 +12,8 @@ import scala.swing.Dialog.{Message, Options}
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class SwingUtils private[infrastructure]() {
+private[smcl]
+class SwingUtils() {
 
   /**
    *

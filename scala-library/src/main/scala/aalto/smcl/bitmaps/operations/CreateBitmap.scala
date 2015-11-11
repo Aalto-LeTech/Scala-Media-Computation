@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels}
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -15,10 +15,13 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class CreateBitmap(
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels))
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class CreateBitmap(
+  widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+  heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels))
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   /** Information about this [[BufferProvider]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

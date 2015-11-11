@@ -11,8 +11,11 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class ToGrayscaleByLuminocity()
-    extends AbstractOperation with OneSourceFilter with Immutable {
+private[bitmaps]
+case class ToGrayscaleByLuminocity()
+  extends AbstractOperation
+  with OneSourceFilter
+  with Immutable {
 
   /** */
   private val StandardRedWeight: Double = 0.21
@@ -46,9 +49,9 @@ private[bitmaps] case class ToGrayscaleByLuminocity()
 
     sources(0).iteratePixelsWith {(red, green, blue, opacity) =>
       val intensity = (
-          StandardRedWeight * red +
-              StandardGreenWeight * green +
-              StandardBlueWeight * blue).toInt
+        StandardRedWeight * red +
+          StandardGreenWeight * green +
+          StandardBlueWeight * blue).toInt
 
       (intensity, intensity, intensity, opacity)
     }

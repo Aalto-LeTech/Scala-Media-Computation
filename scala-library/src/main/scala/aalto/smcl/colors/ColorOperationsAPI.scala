@@ -12,7 +12,9 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
+private[colors]
 trait ColorOperationsAPI {
+
 
   /**
    *
@@ -129,9 +131,9 @@ trait ColorOperationsAPI {
   @inline
   def rgbaTupleFrom(argbInt: Int): (Int, Int, Int, Int) =
     (redComponentOf(argbInt),
-        greenComponentOf(argbInt),
-        blueComponentOf(argbInt),
-        opacityComponentOf(argbInt))
+      greenComponentOf(argbInt),
+      blueComponentOf(argbInt),
+      opacityComponentOf(argbInt))
 
   /**
    *
@@ -159,9 +161,9 @@ trait ColorOperationsAPI {
     def rgbSum: Double = (red + green + blue).toDouble
 
     (red.toDouble / rgbSum,
-        green.toDouble / rgbSum,
-        blue.toDouble / rgbSum,
-        opacity.toDouble / ColorValidator.MaximumRgbaOpacity)
+      green.toDouble / rgbSum,
+      blue.toDouble / rgbSum,
+      opacity.toDouble / ColorValidator.MaximumRgbaOpacity)
   }
 
   /**
@@ -183,8 +185,8 @@ trait ColorOperationsAPI {
   @inline
   def rgbTupleFrom(argbInt: Int): (Int, Int, Int) =
     (redComponentOf(argbInt),
-        greenComponentOf(argbInt),
-        blueComponentOf(argbInt))
+      greenComponentOf(argbInt),
+      blueComponentOf(argbInt))
 
   /**
    *
@@ -248,17 +250,17 @@ trait ColorOperationsAPI {
    */
   @inline
   def argbIntFrom(
-      red: Int = ColorValidator.MinimumRgbRed,
-      green: Int = ColorValidator.MinimumRgbGreen,
-      blue: Int = ColorValidator.MinimumRgbBlue,
-      opacity: Int = ColorValidator.MaximumRgbaOpacity): Int = {
+    red: Int = ColorValidator.MinimumRgbRed,
+    green: Int = ColorValidator.MinimumRgbGreen,
+    blue: Int = ColorValidator.MinimumRgbBlue,
+    opacity: Int = ColorValidator.MaximumRgbaOpacity): Int = {
 
     ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
     ((opacity & FirstByte) << ThreeBytes) |
-        ((red & FirstByte) << TwoBytes) |
-        ((green & FirstByte) << OneByte) |
-        (blue & FirstByte)
+      ((red & FirstByte) << TwoBytes) |
+      ((green & FirstByte) << OneByte) |
+      (blue & FirstByte)
   }
 
   /**
@@ -349,8 +351,8 @@ trait ColorOperationsAPI {
   @inline
   def isBlack(red: Int, green: Int, blue: Int): Boolean =
     red == ColorValidator.MinimumRgbRed.toDouble &&
-        green == ColorValidator.MinimumRgbGreen.toDouble &&
-        blue == ColorValidator.MinimumRgbBlue.toDouble
+      green == ColorValidator.MinimumRgbGreen.toDouble &&
+      blue == ColorValidator.MinimumRgbBlue.toDouble
 
   /**
    *
@@ -437,8 +439,8 @@ trait ColorOperationsAPI {
   @inline
   def isWhite(red: Int, green: Int, blue: Int): Boolean =
     red == ColorValidator.MaximumRgbRed.toDouble &&
-        green == ColorValidator.MaximumRgbGreen.toDouble &&
-        blue == ColorValidator.MaximumRgbBlue.toDouble
+      green == ColorValidator.MaximumRgbGreen.toDouble &&
+      blue == ColorValidator.MaximumRgbBlue.toDouble
 
   /**
    *
@@ -626,18 +628,18 @@ trait ColorOperationsAPI {
     val (aThirdOfCircleHueInDegrees: Double, finalOrder: ((Int, Int, Int) => (Int, Int, Int))) =
       if (nHueInDeg <= 120.0)
         (nHueInDeg,
-            (x: Int, y: Int, z: Int) => (x, z, y))
+          (x: Int, y: Int, z: Int) => (x, z, y))
       else if (nHueInDeg <= 240.0)
-             (nHueInDeg - 120.0,
-                 (x: Int, y: Int, z: Int) => (y, x, z))
+        (nHueInDeg - 120.0,
+          (x: Int, y: Int, z: Int) => (y, x, z))
       else
         (nHueInDeg - 240.0,
-            (x: Int, y: Int, z: Int) => (z, y, x))
+          (x: Int, y: Int, z: Int) => (z, y, x))
 
     val X = {
       val quotient =
         (saturation * toDegrees(cos(toRadians(aThirdOfCircleHueInDegrees)))) /
-            toDegrees(cos(toRadians(60.0 - aThirdOfCircleHueInDegrees)))
+          toDegrees(cos(toRadians(60.0 - aThirdOfCircleHueInDegrees)))
 
       round(intensity * (1 + quotient)).toInt
     }
@@ -649,8 +651,8 @@ trait ColorOperationsAPI {
     val (red, green, blue) = finalOrder(X, Y, Z)
 
     if (!ColorValidator.rgbRedComponentIsInRange(red) ||
-        !ColorValidator.rgbGreenComponentIsInRange(green) ||
-        !ColorValidator.rgbBlueComponentIsInRange(blue)) {
+      !ColorValidator.rgbGreenComponentIsInRange(green) ||
+      !ColorValidator.rgbBlueComponentIsInRange(blue)) {
 
       throw new SMCLInvalidHsiValueCombinationError(hueInDegrees, saturation, intensity)
     }
@@ -723,7 +725,7 @@ trait ColorOperationsAPI {
             ((red - blue) / vMinusMinRgb + 5) * 60
         }
         else if (value == green)
-               ((blue - red) / vMinusMinRgb + 2) * 60
+          ((blue - red) / vMinusMinRgb + 2) * 60
         else // value == blue
           ((red - green) / vMinusMinRgb + 4) * 60
       }
@@ -757,13 +759,13 @@ trait ColorOperationsAPI {
     if (K == 0)
       (V, Z, X)
     else if (K == 1)
-           (Y, V, X)
+      (Y, V, X)
     else if (K == 2)
-           (X, V, Z)
+      (X, V, Z)
     else if (K == 3)
-           (X, Y, V)
+      (X, Y, V)
     else if (K == 4)
-           (Z, X, V)
+      (Z, X, V)
     else
       (V, X, Y)
   }

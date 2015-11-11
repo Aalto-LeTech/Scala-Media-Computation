@@ -1,7 +1,7 @@
 package aalto.smcl.common
 
 
-import aalto.smcl.infrastructure.PlatformAffineTransformation
+import aalto.smcl.infrastructure.{PlatformAffineTransformation, SMCLInitializationInvoker}
 
 
 
@@ -11,7 +11,13 @@ import aalto.smcl.infrastructure.PlatformAffineTransformation
  *
  * @author Aleksi Lukkarinen
  */
-object AffineTransformation {
+object AffineTransformation
+  extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
+
 
   /**
    *
@@ -87,9 +93,9 @@ object AffineTransformation {
    * @return
    */
   def forFreeRotationOfAround(
-      angleInDegrees: Double,
-      anchorX: Double,
-      anchorY: Double): AffineTransformation = {
+    angleInDegrees: Double,
+    anchorX: Double,
+    anchorY: Double): AffineTransformation = {
 
     AffineTransformation().rotateDegsAround(angleInDegrees, anchorX, anchorY)
   }
@@ -110,8 +116,8 @@ object AffineTransformation {
    * @return
    */
   def forRotationOf90DegsCwAround(
-      anchorX: Double,
-      anchorY: Double): AffineTransformation = {
+    anchorX: Double,
+    anchorY: Double): AffineTransformation = {
 
     AffineTransformation().rotate90DegsCwAround(anchorX, anchorY)
   }
@@ -132,8 +138,8 @@ object AffineTransformation {
    * @return
    */
   def forRotationOf90DegsCcwAround(
-      anchorX: Double,
-      anchorY: Double): AffineTransformation = {
+    anchorX: Double,
+    anchorY: Double): AffineTransformation = {
 
     AffineTransformation().rotate90DegsCcwAround(anchorX, anchorY)
   }
@@ -154,8 +160,8 @@ object AffineTransformation {
    * @return
    */
   def forRotationOf180DegsAround(
-      anchorX: Double,
-      anchorY: Double): AffineTransformation = {
+    anchorX: Double,
+    anchorY: Double): AffineTransformation = {
 
     AffineTransformation().rotate180DegsAround(anchorX, anchorY)
   }
@@ -169,7 +175,7 @@ object AffineTransformation {
  * @author Aleksi Lukkarinen
  */
 case class AffineTransformation private(
-    private[smcl] val platformAffineTransform: PlatformAffineTransformation) {
+  private[smcl] val platformAffineTransform: PlatformAffineTransformation) {
 
   require(platformAffineTransform != null, "Platform transformation argument cannot be null.")
 
@@ -212,9 +218,9 @@ case class AffineTransformation private(
    * @return
    */
   def rotateDegsAround(
-      angleInDegrees: Double,
-      anchorXInPixels: Double,
-      anchorYInPixels: Double): AffineTransformation = {
+    angleInDegrees: Double,
+    anchorXInPixels: Double,
+    anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
       platformAffineTransform.copy().rotateDegsAround(
@@ -237,8 +243,8 @@ case class AffineTransformation private(
    * @return
    */
   def rotate90DegsCwAround(
-      anchorXInPixels: Double,
-      anchorYInPixels: Double): AffineTransformation = {
+    anchorXInPixels: Double,
+    anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
       platformAffineTransform.copy().rotate90DegsCwAround(
@@ -261,8 +267,8 @@ case class AffineTransformation private(
    * @return
    */
   def rotate90DegsCcwAround(
-      anchorXInPixels: Double,
-      anchorYInPixels: Double): AffineTransformation = {
+    anchorXInPixels: Double,
+    anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
       platformAffineTransform.copy().rotate90DegsCcwAround(
@@ -285,8 +291,8 @@ case class AffineTransformation private(
    * @return
    */
   def rotate180DegsAround(
-      anchorXInPixels: Double,
-      anchorYInPixels: Double): AffineTransformation = {
+    anchorXInPixels: Double,
+    anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
       platformAffineTransform.copy().rotate180DegsAround(

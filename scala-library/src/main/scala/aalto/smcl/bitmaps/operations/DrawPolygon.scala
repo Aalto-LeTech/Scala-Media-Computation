@@ -22,15 +22,18 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class DrawPolygon(
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
-    numberOfCoordinatesToDraw: Int,
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
-    extends AbstractOperation with Renderable with Immutable {
+private[bitmaps]
+case class DrawPolygon(
+  xCoordinates: Seq[Int],
+  yCoordinates: Seq[Int],
+  numberOfCoordinatesToDraw: Int,
+  hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+  hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+  color: RGBAColor = GS.colorFor(DefaultPrimary),
+  fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
+  extends AbstractOperation
+  with Renderable
+  with Immutable {
 
   require(xCoordinates != null, "The x coordinate argument has to be an Seq[Int] instance (was null).")
   require(yCoordinates != null, "The y coordinate argument has to be an Seq[Int] instance (was null).")
@@ -44,7 +47,7 @@ private[bitmaps] case class DrawPolygon(
 
   require(numberOfCoordinatesToDraw <= numberOfCoordinatesPresent,
     s"The coordinate sequences do not contain the requested amount of coordinate pairs " +
-        s"(only $numberOfCoordinatesPresent pairs present, $numberOfCoordinatesToDraw requested).")
+      s"(only $numberOfCoordinatesPresent pairs present, $numberOfCoordinatesToDraw requested).")
 
   require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")

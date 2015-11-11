@@ -7,23 +7,23 @@ package aalto.smcl.infrastructure
  * @author Aleksi Lukkarinen
  */
 final class SMCLUnexpectedInternalError private[smcl](private val detailMessage: String, cause: Throwable)
-    extends {
+  extends {
 
-      val message: String = {
-        val sb = new StringBuilder(200)
+    val message: String = {
+      val sb = new StringBuilder(200)
 
-        sb ++= "Unfortunately an unexpected internal error occurred"
+      sb ++= "Unfortunately an unexpected internal error occurred"
 
-        if (detailMessage.nonEmpty)
-          sb ++= s": $detailMessage"
+      if (detailMessage.nonEmpty)
+        sb ++= s": $detailMessage"
 
-        sb ++= "."
+      sb ++= "."
 
-        sb.toString()
-      }
+      sb.toString()
+    }
 
-    } with RuntimeException(message, cause) {
-
+  }
+  with RuntimeException(message, cause) {
 
   /**
    *

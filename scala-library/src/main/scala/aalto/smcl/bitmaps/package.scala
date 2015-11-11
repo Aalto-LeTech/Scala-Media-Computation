@@ -1,9 +1,9 @@
 package aalto.smcl
 
 
-import scala.language.implicitConversions
+import aalto.smcl.infrastructure.SMCLInitializationInvoker
 
-import aalto.smcl.infrastructure.LibraryInitializationInvoker
+import scala.language.implicitConversions
 
 
 
@@ -17,7 +17,11 @@ package object bitmaps
   extends BitmapSettingKeys
   with BitmapOperationAPI
   with ShapeCreationAPI
-  with LibraryInitializationInvoker {
+  with SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /** */
   type Bitmap = ImmutableBitmap

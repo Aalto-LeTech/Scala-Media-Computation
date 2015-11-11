@@ -18,6 +18,7 @@ import aalto.smcl.infrastructure.{InitializablePackage, PackageInitializerBase}
   "aalto.smcl.bitmaps"
 ))
 private[smcl]
-class PackageInitializer extends PackageInitializerBase {
+class PackageInitializer
+  extends PackageInitializerBase {
 
 }

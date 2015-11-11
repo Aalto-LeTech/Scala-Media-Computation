@@ -4,7 +4,7 @@ package aalto.smcl.bitmaps.operations
 import aalto.smcl.bitmaps.{Bitmap, CanvasesAreResizedBasedOnTransformations, DefaultBackground}
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.common.AffineTransformation
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -19,12 +19,15 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class Rotate(
-    sourceBitmap: Bitmap,
-    angleInDegrees: Double,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class Rotate(
+  sourceBitmap: Bitmap,
+  angleInDegrees: Double,
+  resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(sourceBitmap != null, s"Rotation requires exactly one source image (was null).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")

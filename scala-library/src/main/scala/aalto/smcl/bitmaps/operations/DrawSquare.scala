@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -22,15 +22,18 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class DrawSquare(
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
-    extends AbstractOperation with Renderable with Immutable {
+private[bitmaps]
+case class DrawSquare(
+  upperLeftCornerXInPixels: Int,
+  upperLeftCornerYInPixels: Int,
+  sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+  hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+  hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+  color: RGBAColor = GS.colorFor(DefaultPrimary),
+  fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
+  extends AbstractOperation
+  with Renderable
+  with Immutable {
 
   require(sideLengthInPixels > 0, s"The side length argument must be greater than zero (was $sideLengthInPixels).")
   require(color != null, "The line color argument has to be a Color instance (was null).")

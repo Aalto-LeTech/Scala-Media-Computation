@@ -12,7 +12,8 @@ import aalto.smcl.infrastructure.PlatformBitmapBuffer
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] trait BufferProvider extends Buffered {
+private[bitmaps]
+trait BufferProvider extends Buffered {
   this: AbstractOperation =>
 
 

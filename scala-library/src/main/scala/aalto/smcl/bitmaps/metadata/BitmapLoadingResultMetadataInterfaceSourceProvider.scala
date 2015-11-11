@@ -13,7 +13,9 @@ import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
  * @author Aleksi Lukkarinen
  */
 private[metadata]
-class BitmapLoadingResultMetadataInterfaceSourceProvider() extends MetadataInterfaceSourceProvider {
+class BitmapLoadingResultMetadataInterfaceSourceProvider()
+  extends MetadataInterfaceSourceProvider {
+
 
   /** */
   private[this] val _bitmapLoadingResultClass = new BitmapLoadingResult(Seq(Right((0, null)))).getClass

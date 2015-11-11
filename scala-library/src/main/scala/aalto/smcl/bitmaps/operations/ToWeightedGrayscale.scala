@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.colors.ColorValidator
-import aalto.smcl.infrastructure.{CommonValidators, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -12,17 +12,21 @@ import aalto.smcl.infrastructure.{CommonValidators, MetaInformationMap, Platform
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class ToWeightedGrayscale(
-    redWeight: Double,
-    greenWeight: Double,
-    blueWeight: Double)
-    extends AbstractOperation with OneSourceFilter with Immutable {
+private[bitmaps]
+case class ToWeightedGrayscale(
+  redWeight: Double,
+  greenWeight: Double,
+  blueWeight: Double)
+  extends AbstractOperation
+  with OneSourceFilter
+  with Immutable {
 
-  CommonValidators.validateZeroToOneFactor(redWeight, Option("Red weight"))
-  CommonValidators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
-  CommonValidators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
+  val validators = new CommonValidators()
+  validators.validateZeroToOneFactor(redWeight, Option("Red weight"))
+  validators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
+  validators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
 
-  ColorValidator.validateRgbColorWeightCombination(redWeight, greenWeight, blueWeight)
+  new ColorValidator().validateRgbColorWeightCombination(redWeight, greenWeight, blueWeight)
 
 
   /** Information about this [[Renderable]] instance */

@@ -16,7 +16,9 @@ import aalto.smcl.colors.RGBAColor
  * @author Aleksi Lukkarinen
  */
 private[infrastructure]
-class RichAwtColor(val self: AwtColor) {
+class RichAwtColor(val self: AwtColor)
+  extends SMCLInitializationInvoker {
+
 
   /** This `java.awt.Color` as a [[RGBAColor]]. */
   final def toApplicationColor: RGBAColor = PlatformColor(self).applicationColor

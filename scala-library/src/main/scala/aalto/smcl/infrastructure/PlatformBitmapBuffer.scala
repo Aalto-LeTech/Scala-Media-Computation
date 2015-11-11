@@ -19,7 +19,8 @@ import aalto.smcl.common._
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object PlatformBitmapBuffer {
+private[smcl]
+object PlatformBitmapBuffer {
 
   /** */
   val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB
@@ -64,8 +65,8 @@ private[smcl] object PlatformBitmapBuffer {
    * @return
    */
   private[infrastructure] def createNormalizedLowLevelBitmapBufferOf(
-      widthInPixels: Int,
-      heightInPixels: Int): BufferedImage = {
+    widthInPixels: Int,
+    heightInPixels: Int): BufferedImage = {
 
     val newBuffer = new BufferedImage(widthInPixels, heightInPixels, NormalizedBufferType)
 
@@ -91,7 +92,7 @@ private[smcl] object PlatformBitmapBuffer {
    * @return
    */
   private[infrastructure] def convertToNormalizedLowLevelBitmapBufferIfNecessary(
-      buffer: BufferedImage): BufferedImage = {
+    buffer: BufferedImage): BufferedImage = {
 
     var bufferCandidate = buffer
 
@@ -122,7 +123,8 @@ private[smcl] object PlatformBitmapBuffer {
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedImage) {
+private[smcl]
+class PlatformBitmapBuffer private(val awtBufferedImage: BufferedImage) {
 
   /** */
   lazy val widthInPixels: Int = awtBufferedImage.getWidth
@@ -160,9 +162,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
         val linearPos = (row * widthInPixels) + column
 
         if (reds(linearPos) != redToTrim
-            || greens(linearPos) != greenToTrim
-            || blues(linearPos) != blueToTrim
-            || opacities(linearPos) != opacityToTrim) {
+          || greens(linearPos) != greenToTrim
+          || blues(linearPos) != blueToTrim
+          || opacities(linearPos) != opacityToTrim) {
 
           deviationFound = true
         }
@@ -193,9 +195,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
         val linearPos = (row * widthInPixels) + column
 
         if (reds(linearPos) != redToTrim
-            || greens(linearPos) != greenToTrim
-            || blues(linearPos) != blueToTrim
-            || opacities(linearPos) != opacityToTrim) {
+          || greens(linearPos) != greenToTrim
+          || blues(linearPos) != blueToTrim
+          || opacities(linearPos) != opacityToTrim) {
 
           deviationFound = true
         }
@@ -218,9 +220,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
         val linearPos = (row * widthInPixels) + column
 
         if (reds(linearPos) != redToTrim
-            || greens(linearPos) != greenToTrim
-            || blues(linearPos) != blueToTrim
-            || opacities(linearPos) != opacityToTrim) {
+          || greens(linearPos) != greenToTrim
+          || blues(linearPos) != blueToTrim
+          || opacities(linearPos) != opacityToTrim) {
 
           deviationFound = true
         }
@@ -244,9 +246,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
         val linearPos = (row * widthInPixels) + column
 
         if (reds(linearPos) != redToTrim
-            || greens(linearPos) != greenToTrim
-            || blues(linearPos) != blueToTrim
-            || opacities(linearPos) != opacityToTrim) {
+          || greens(linearPos) != greenToTrim
+          || blues(linearPos) != blueToTrim
+          || opacities(linearPos) != opacityToTrim) {
 
           deviationFound = true
         }
@@ -329,30 +331,30 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def setColorComponentArrays(
-      reds: Array[Int],
-      greens: Array[Int],
-      blues: Array[Int],
-      opacities: Array[Int]): Unit = {
+    reds: Array[Int],
+    greens: Array[Int],
+    blues: Array[Int],
+    opacities: Array[Int]): Unit = {
 
     if (reds.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given red RGBA component array is " +
-            s"$areaInPixels, but actually was ${reds.length}")
+          s"$areaInPixels, but actually was ${reds.length}")
 
     if (greens.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given green RGBA component array is " +
-            s"$areaInPixels, but actually was ${greens.length}")
+          s"$areaInPixels, but actually was ${greens.length}")
 
     if (blues.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given blue RGBA component array is " +
-            s"$areaInPixels, but actually was ${blues.length}")
+          s"$areaInPixels, but actually was ${blues.length}")
 
     if (opacities.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given opacity RGBA component array is " +
-            s"$areaInPixels, but actually was ${opacities.length}")
+          s"$areaInPixels, but actually was ${opacities.length}")
 
 
     import aalto.smcl.colors.RGBASampleBand._
@@ -377,9 +379,9 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def createTransformedVersionWith(
-      transformation: AffineTransformation,
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
+    transformation: AffineTransformation,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): PlatformBitmapBuffer = {
 
     val globalInterpolationMethod =
       GS.enumSettingFor[BitmapInterpolationMethod.Value](PlatformBitmapInterpolationMethod).value.id
@@ -389,7 +391,7 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     val lowLevelTransformation = transformation.platformAffineTransform.awtAffineTransformation
     val transformedContentBoundaries: Rectangle2D =
       new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
-          .getBounds2D(awtBufferedImage)
+        .getBounds2D(awtBufferedImage)
 
     if (resizeCanvasBasedOnTransformation) {
       val offsetLeft = -transformedContentBoundaries.getMinX
@@ -411,7 +413,7 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
     val finalTransformOperation = new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
     val resultingBuffer: PlatformBitmapBuffer = PlatformBitmapBuffer(resultingImageWidth, resultingImageHeight)
 
-    resultingBuffer drawingSurface () clearUsing backgroundColor
+    resultingBuffer drawingSurface() clearUsing backgroundColor
 
     finalTransformOperation.filter(awtBufferedImage, resultingBuffer.awtBufferedImage)
 
@@ -428,10 +430,10 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def boundaryOverflowsForLTRB(
-      minX: Double,
-      minY: Double,
-      maxX: Double,
-      maxY: Double): (Double, Double, Double, Double) = {
+    minX: Double,
+    minY: Double,
+    maxX: Double,
+    maxY: Double): (Double, Double, Double, Double) = {
 
     val overflowLeft = if (minX < 0) -minX else 0
     val overflowTop = if (minY < 0) -minY else 0
@@ -493,10 +495,10 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def copyPortionXYXY(
-      topLeftX: Int,
-      topLeftY: Int,
-      bottomRightX: Int,
-      bottomRightY: Int): PlatformBitmapBuffer = {
+    topLeftX: Int,
+    topLeftY: Int,
+    bottomRightX: Int,
+    bottomRightY: Int): PlatformBitmapBuffer = {
 
     val (x0, x1) =
       if (topLeftX > bottomRightX)
@@ -526,10 +528,10 @@ private[smcl] class PlatformBitmapBuffer private(val awtBufferedImage: BufferedI
    * @return
    */
   def copyPortionXYWH(
-      topLeftX: Int,
-      topLeftY: Int,
-      width: Int,
-      height: Int): PlatformBitmapBuffer = {
+    topLeftX: Int,
+    topLeftY: Int,
+    width: Int,
+    height: Int): PlatformBitmapBuffer = {
 
     val sourceBufferArea =
       awtBufferedImage.getSubimage(topLeftX, topLeftY, width, height)

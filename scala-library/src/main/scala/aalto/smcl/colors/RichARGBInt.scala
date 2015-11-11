@@ -14,7 +14,9 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-class RichARGBInt(val self: Int) extends AnyVal {
+class RichARGBInt(val self: Int)
+  extends AnyVal {
+
 
   /**
    * Returns an immutable map containing individual color components of this ARGB-style `Int`.
@@ -68,6 +70,6 @@ class RichARGBInt(val self: Int) extends AnyVal {
    */
   final def toArgbBinaryColorString: String =
     self.toBinaryString.format("$s%32s").replace(StrSpace, StrZero)
-        .sliding(OneByte, OneByte).mkString(StrSpace)
+      .sliding(OneByte, OneByte).mkString(StrSpace)
 
 }

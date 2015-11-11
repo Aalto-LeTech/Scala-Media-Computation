@@ -4,8 +4,8 @@ package aalto.smcl.bitmaps.metadata
 import java.awt.image.BufferedImage
 import java.util.Date
 
-import aalto.smcl.MetaInterfaceBase
 import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.infrastructure.MetaInterfaceBase
 import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 
 
@@ -18,10 +18,10 @@ import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource,
  */
 private[metadata]
 case class ImmutableBitmapMetadataSource(relatedBitmap: Bitmap)
-    extends MetaInterfaceBase
-            with ResourceMetadataSource
-            with StaticGeneralBitmapSource
-            with StaticThumbnailBitmapSource {
+  extends MetaInterfaceBase
+  with ResourceMetadataSource
+  with StaticGeneralBitmapSource
+  with StaticThumbnailBitmapSource {
 
 
   /** Number of bitmaps provided per Bitmap instance by this metadata source. */
@@ -147,9 +147,9 @@ case class ImmutableBitmapMetadataSource(relatedBitmap: Bitmap)
    * @return
    */
   override def thumbnailBitmapOption(
-      thumbnailNumber: Int = FirstImageIndex,
-      maximumWidthInPixels: Int,
-      maximumHeightInPixels: Int): Option[BufferedImage] = {
+    thumbnailNumber: Int = FirstImageIndex,
+    maximumWidthInPixels: Int,
+    maximumHeightInPixels: Int): Option[BufferedImage] = {
 
     validateBitmapNumber(thumbnailNumber)
 
@@ -158,7 +158,7 @@ case class ImmutableBitmapMetadataSource(relatedBitmap: Bitmap)
     var buffer = relatedBitmap.toRenderedRepresentation.awtBufferedImage
 
     if (relatedBitmap.widthInPixels > maximumWidthInPixels
-        || relatedBitmap.heightInPixels > maximumHeightInPixels) {
+      || relatedBitmap.heightInPixels > maximumHeightInPixels) {
 
       val scalingFactor =
         if (relatedBitmap.widthInPixels > maximumWidthInPixels)
@@ -180,8 +180,8 @@ case class ImmutableBitmapMetadataSource(relatedBitmap: Bitmap)
    * @return
    */
   override def thumbnailBitmapsOption(
-      maximumWidthInPixels: Int,
-      maximumHeightInPixels: Int): Option[Seq[BufferedImage]] = {
+    maximumWidthInPixels: Int,
+    maximumHeightInPixels: Int): Option[Seq[BufferedImage]] = {
 
     Some(Seq(thumbnailBitmapOption(0, maximumWidthInPixels, maximumHeightInPixels).get))
   }

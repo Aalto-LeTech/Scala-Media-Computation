@@ -13,7 +13,6 @@ import aalto.smcl.infrastructure.BaseSettingKeys._
  */
 trait InfrastructureSettingKeys {
 
-
   // @formatter:off
 
   /** */

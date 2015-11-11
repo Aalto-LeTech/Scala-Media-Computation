@@ -4,8 +4,8 @@ package aalto.smcl.bitmaps.metadata
 import java.awt.image.BufferedImage
 import java.util.Date
 
-import aalto.smcl.MetaInterfaceBase
 import aalto.smcl.bitmaps.BitmapLoadingResult
+import aalto.smcl.infrastructure.MetaInterfaceBase
 import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 
 

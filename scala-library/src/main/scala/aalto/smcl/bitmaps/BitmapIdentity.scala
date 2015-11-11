@@ -11,6 +11,7 @@ import aalto.smcl.infrastructure.UniqueIdProvider
  *
  * @author Aleksi Lukkarinen
  */
+private[bitmaps]
 object BitmapIdentity {
 
   /**
@@ -19,7 +20,7 @@ object BitmapIdentity {
    * @return
    */
   def apply(): BitmapIdentity = {
-    new BitmapIdentity(UniqueIdProvider.newId())
+    new BitmapIdentity(new UniqueIdProvider().newId())
   }
 
 }

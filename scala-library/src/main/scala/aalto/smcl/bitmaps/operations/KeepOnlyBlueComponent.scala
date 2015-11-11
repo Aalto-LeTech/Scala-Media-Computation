@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.colors.RGBAComponentTranslationTable
-import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer, SMCLInitializationInvoker}
 
 
 
@@ -12,8 +12,11 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class KeepOnlyBlueComponent()
-    extends AbstractOperation with OneSourceFilter with Immutable {
+private[bitmaps]
+case class KeepOnlyBlueComponent()
+  extends AbstractOperation
+  with OneSourceFilter
+  with Immutable {
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap(Map(

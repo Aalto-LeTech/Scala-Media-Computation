@@ -4,11 +4,10 @@ package aalto.smcl.bitmaps.metadata
 import java.awt.image.BufferedImage
 import java.util.Date
 
-import aalto.smcl.MetaInterfaceBase
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.bitmaps.ViewerUpdateStyle.PreventViewerUpdates
 import aalto.smcl.colors.{PresetColors, RGBAColor}
-import aalto.smcl.infrastructure.GS
+import aalto.smcl.infrastructure.{GS, MetaInterfaceBase}
 import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource}
 
 
@@ -21,9 +20,9 @@ import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource}
  */
 private[metadata]
 case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
-    extends MetaInterfaceBase
-            with ResourceMetadataSource
-            with StaticGeneralBitmapSource {
+  extends MetaInterfaceBase
+  with ResourceMetadataSource
+  with StaticGeneralBitmapSource {
 
   /** General bitmaps */
   private[this] val _generalBitmaps =
@@ -51,7 +50,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
   def validateBitmapNumber(bitmapNumber: Int): Unit = {
     require(GeneralBitmapIndices.contains(bitmapNumber),
       s"This resource supports ${numberOfGeneralBitmaps()} bitmaps " +
-          s"(indices $FirstBitmapIndex to $LastBitmapIndex).")
+        s"(indices $FirstBitmapIndex to $LastBitmapIndex).")
   }
 
 

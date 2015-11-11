@@ -11,7 +11,12 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-object RGBAComponentTranslationTable {
+object RGBAComponentTranslationTable extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
+
 
   /**
    *
@@ -23,10 +28,10 @@ object RGBAComponentTranslationTable {
    * @return
    */
   def apply(
-      reds: Seq[Short],
-      greens: Seq[Short],
-      blues: Seq[Short],
-      opacities: Seq[Short]): RGBAComponentTranslationTable = {
+    reds: Seq[Short],
+    greens: Seq[Short],
+    blues: Seq[Short],
+    opacities: Seq[Short]): RGBAComponentTranslationTable = {
 
     RGBATranslationTableValidator.validateSeparateDimensions(reds, greens, blues, opacities)
 
@@ -64,9 +69,9 @@ object RGBAComponentTranslationTable {
   lazy val forNegation: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable {index =>
       ((ColorValidator.MaximumRgbRed - index).toShort,
-          (ColorValidator.MaximumRgbGreen - index).toShort,
-          (ColorValidator.MaximumRgbBlue - index).toShort,
-          index)
+        (ColorValidator.MaximumRgbGreen - index).toShort,
+        (ColorValidator.MaximumRgbBlue - index).toShort,
+        index)
     }
   }
 
@@ -74,9 +79,9 @@ object RGBAComponentTranslationTable {
   lazy val forNegatingRed: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable {index =>
       ((ColorValidator.MaximumRgbRed - index).toShort,
-          index,
-          index,
-          index)
+        index,
+        index,
+        index)
     }
   }
 
@@ -84,9 +89,9 @@ object RGBAComponentTranslationTable {
   lazy val forNegatingRedAndGreen: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable {index =>
       ((ColorValidator.MaximumRgbRed - index).toShort,
-          (ColorValidator.MaximumRgbGreen - index).toShort,
-          index,
-          index)
+        (ColorValidator.MaximumRgbGreen - index).toShort,
+        index,
+        index)
     }
   }
 
@@ -94,9 +99,9 @@ object RGBAComponentTranslationTable {
   lazy val forNegatingGreen: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable {index =>
       (index,
-          (ColorValidator.MaximumRgbGreen - index).toShort,
-          index,
-          index)
+        (ColorValidator.MaximumRgbGreen - index).toShort,
+        index,
+        index)
     }
   }
 
@@ -104,9 +109,9 @@ object RGBAComponentTranslationTable {
   lazy val forNegatingGreenAndBlue: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable {index =>
       (index,
-          (ColorValidator.MaximumRgbGreen - index).toShort,
-          (ColorValidator.MaximumRgbBlue - index).toShort,
-          index)
+        (ColorValidator.MaximumRgbGreen - index).toShort,
+        (ColorValidator.MaximumRgbBlue - index).toShort,
+        index)
     }
   }
 
@@ -114,9 +119,9 @@ object RGBAComponentTranslationTable {
   lazy val forNegatingBlue: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable {index =>
       (index,
-          index,
-          (ColorValidator.MaximumRgbBlue - index).toShort,
-          index)
+        index,
+        (ColorValidator.MaximumRgbBlue - index).toShort,
+        index)
     }
   }
 
@@ -124,9 +129,9 @@ object RGBAComponentTranslationTable {
   lazy val forNegatingRedAndBlue: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable {index =>
       ((ColorValidator.MaximumRgbRed - index).toShort,
-          index,
-          (ColorValidator.MaximumRgbBlue - index).toShort,
-          index)
+        index,
+        (ColorValidator.MaximumRgbBlue - index).toShort,
+        index)
     }
   }
 
@@ -179,7 +184,7 @@ object RGBAComponentTranslationTable {
    * @return
    */
   def forPosterization(strengthAsPercentage: Int): RGBAComponentTranslationTable = {
-    CommonValidators.validatePercentage(strengthAsPercentage, Option("Strength"))
+    new CommonValidators().validatePercentage(strengthAsPercentage, Option("Strength"))
 
     val divisor = strengthAsPercentage + 1
 
@@ -198,7 +203,8 @@ object RGBAComponentTranslationTable {
  * @author Aleksi Lukkarinen
  */
 case class RGBAComponentTranslationTable private(table: Seq[Seq[Short]])
-    extends RGBAColorTranslator with Immutable {
+  extends RGBAColorTranslator
+  with Immutable {
 
   /**
    *
@@ -213,9 +219,9 @@ case class RGBAComponentTranslationTable private(table: Seq[Seq[Short]])
     ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
     (table.head(red.toShort),
-        table(1)(green.toShort),
-        table(2)(blue.toShort),
-        table.last(opacity.toShort))
+      table(1)(green.toShort),
+      table(2)(blue.toShort),
+      table.last(opacity.toShort))
   }
 
   /**

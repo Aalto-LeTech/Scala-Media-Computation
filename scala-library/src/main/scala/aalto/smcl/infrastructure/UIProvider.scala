@@ -12,7 +12,8 @@ import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class UIProvider private[infrastructure]() {
+private[smcl]
+class UIProvider() {
 
 
   /** */

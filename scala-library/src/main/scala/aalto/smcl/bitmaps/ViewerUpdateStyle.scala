@@ -1,6 +1,11 @@
 package aalto.smcl.bitmaps
 
 
+import aalto.smcl.infrastructure.SMCLInitializationInvoker
+
+
+
+
 /**
  *
  *
@@ -12,7 +17,7 @@ object ViewerUpdateStyle {
   /**
    *
    */
-  abstract sealed class Value
+  abstract sealed class Value extends SMCLInitializationInvoker
 
 
   /**

@@ -20,13 +20,16 @@ import aalto.smcl.infrastructure.{GS, _}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class OverlayPerAlignments(
-    bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
-    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-    opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class OverlayPerAlignments(
+  bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
+  horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+  verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+  opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(bitmapsToOverlayFromBottomToTop.nonEmpty,
     "Overlay operation must be given a non-empty Sequence of Bitmap instances to overlay.")

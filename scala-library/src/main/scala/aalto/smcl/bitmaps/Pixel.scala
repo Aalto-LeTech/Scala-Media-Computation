@@ -1,6 +1,11 @@
 package aalto.smcl.bitmaps
 
 
+import aalto.smcl.infrastructure.SMCLInitializationInvoker
+
+
+
+
 /**
  *
  *
@@ -17,7 +22,11 @@ case class Pixel private[bitmaps](
   MinYInPixels: Int,
   MaxYInPixels: Int,
   currentXInPixels: Int,
-  currentYInPixels: Int) {
+  currentYInPixels: Int) extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /** */
   private[this] lazy val linearPosition: Int =

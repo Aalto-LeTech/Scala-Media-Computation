@@ -1,6 +1,8 @@
 package aalto.smcl.colors
 
 
+
+
 /**
  * RGBA sample bands.
  *

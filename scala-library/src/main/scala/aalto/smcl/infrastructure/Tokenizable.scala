@@ -6,10 +6,11 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] trait Tokenizable {
+private[smcl]
+trait Tokenizable {
 
   /** Tokenized representation of this operation, after it is calculated. */
-  private lazy val _tokenizedRepresentation: String = ClassTokenizer.tokenize(this)
+  private lazy val _tokenizedRepresentation: String = new ClassTokenizer().tokenize(this)
 
   /** Meta information based on which the class is tokenized. */
   def metaInformation: MetaInformationMap

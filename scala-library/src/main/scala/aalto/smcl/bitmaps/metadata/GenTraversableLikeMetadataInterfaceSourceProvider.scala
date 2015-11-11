@@ -14,7 +14,8 @@ import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
  * @author Aleksi Lukkarinen
  */
 private[metadata]
-class GenTraversableLikeMetadataInterfaceSourceProvider() extends MetadataInterfaceSourceProvider {
+class GenTraversableLikeMetadataInterfaceSourceProvider()
+  extends MetadataInterfaceSourceProvider {
 
   /** */
   private[this] val _genTaversableLikeClass = classOf[GenTraversableLike[_, _]]

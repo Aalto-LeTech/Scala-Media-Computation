@@ -6,7 +6,8 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class SettingValidatorFactory private[infrastructure]() {
+private[smcl]
+class SettingValidatorFactory() {
 
   /** */
   val EmptyValidator = null
@@ -19,13 +20,13 @@ private[smcl] class SettingValidatorFactory private[infrastructure]() {
    * @tparam SettingType
    * @return
    */
-  def ConditionFalseValidator[SettingType](
-      testFailingIfTrue: SettingType => Boolean,
-      errorMessage: String): SettingType => Option[Throwable] = {
-
-    {value =>
-      if (testFailingIfTrue(value)) Option(new IllegalArgumentException(errorMessage))
-      else None
+  def conditionFalseValidator[SettingType](
+    testFailingIfTrue: SettingType => Boolean,
+    errorMessage: String): SettingType => Option[Throwable] = {
+    {
+      value =>
+        if (testFailingIfTrue(value)) Option(new IllegalArgumentException(errorMessage))
+        else None
     }
   }
 
@@ -37,7 +38,7 @@ private[smcl] class SettingValidatorFactory private[infrastructure]() {
    * @return
    */
   def IsNullValidator[SettingType](errorMessage: String): SettingType => Option[Throwable] =
-    ConditionFalseValidator({
+    conditionFalseValidator({
       _ == null
     }, errorMessage)
 

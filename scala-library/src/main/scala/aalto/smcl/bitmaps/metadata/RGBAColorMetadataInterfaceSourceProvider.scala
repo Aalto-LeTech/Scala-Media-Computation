@@ -13,7 +13,8 @@ import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
  * @author Aleksi Lukkarinen
  */
 private[metadata]
-class RGBAColorMetadataInterfaceSourceProvider() extends MetadataInterfaceSourceProvider {
+class RGBAColorMetadataInterfaceSourceProvider()
+  extends MetadataInterfaceSourceProvider {
 
   /** */
   private[this] val _rgbaColorClass = RGBAColor(0).getClass

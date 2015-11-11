@@ -6,7 +6,8 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] trait TimestampedCreation {
+private[smcl]
+trait TimestampedCreation {
 
   /** Approximate creation time of this object. */
   val created: TimeStamp = TimeStamp()

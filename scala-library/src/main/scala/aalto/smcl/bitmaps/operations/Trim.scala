@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.{Bitmap, DefaultBackground}
 import aalto.smcl.colors.{RGBAColor, _}
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -17,10 +17,13 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class Trim(
-    sourceBitmap: Bitmap,
-    colorToTrim: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class Trim(
+  sourceBitmap: Bitmap,
+  colorToTrim: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(sourceBitmap != null, s"Trimming requires exactly one source image (was null).")
   require(colorToTrim != null, "The background color argument has to be a Color instance (was null).")

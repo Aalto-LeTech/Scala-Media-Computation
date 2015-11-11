@@ -1,6 +1,8 @@
 package aalto.smcl.infrastructure
 
 
+
+
 /**
  * Creates formal-like textual tokens representing classes. A class to
  * be tokenized has to provide the information necessary for tokenization.
@@ -19,7 +21,8 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class ClassTokenizer private[infrastructure]() {
+private[smcl]
+class ClassTokenizer private[infrastructure]() {
 
   /** Initial capacity of the `StringBuilder` class used for tokenization. */
   private val InitialStringbuilderCapacityInChars = 200
@@ -64,7 +67,7 @@ private[smcl] class ClassTokenizer private[infrastructure]() {
    * @param s       the `StringBuilder` instance to be used
    */
   private def appendPrologOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
-    s ++= StrLeftAngleBracket ++= escape(ReflectionUtils.shortTypeNameOf(clazz))
+    s ++= StrLeftAngleBracket ++= escape(new ReflectionUtils().shortTypeNameOf(clazz))
 
   /**
    * Appends key-value pairs to a given `StringBuilder` in the form `"; key: value"`.
@@ -93,8 +96,8 @@ private[smcl] class ClassTokenizer private[infrastructure]() {
    * escaped are the Scala's standard ones plus both colons and semicolons.
    */
   private def escape(part: String): String =
-    StringUtils.escapeString(part)
-        .replaceAllLiterally(StrColon, StrColonAsUnicode)
-        .replaceAllLiterally(StrSemicolon, StrSemicolonAsUnicode)
+    new StringUtils().escapeString(part)
+      .replaceAllLiterally(StrColon, StrColonAsUnicode)
+      .replaceAllLiterally(StrSemicolon, StrSemicolonAsUnicode)
 
 }

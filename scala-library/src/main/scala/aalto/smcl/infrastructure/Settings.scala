@@ -12,7 +12,13 @@ import aalto.smcl.infrastructure.BaseSettingKeys._
  *
  * @author Aleksi Lukkarinen
  */
-class Settings {
+class Settings
+  extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
+
 
   /** */
   private[this] val _settingMap =
@@ -37,7 +43,7 @@ class Settings {
    * @param value
    * @return
    */
-  def += (value: Setting[_]): Unit = _settingMap += (value.key -> value)
+  def +=(value: Setting[_]): Unit = _settingMap += (value.key -> value)
 
   /**
    *
@@ -186,11 +192,11 @@ class Settings {
     val sb = new StringBuilder(100)
 
     groupedByKeyType()
-        .map({case (groupKey, group) => groupKey + ": " + group.size})
-        .addString(sb,
-          start = StrLeftAngleBracket + ReflectionUtils.shortTypeNameOf(this) + StrSemicolon + StrSpace,
-          sep = StrSemicolon + StrSpace,
-          end = StrRightAngleBracket)
+      .map({case (groupKey, group) => groupKey + ": " + group.size})
+      .addString(sb,
+        start = StrLeftAngleBracket + new ReflectionUtils().shortTypeNameOf(this) + StrSemicolon + StrSpace,
+        sep = StrSemicolon + StrSpace,
+        end = StrRightAngleBracket)
 
     sb.toString()
   }
@@ -202,7 +208,7 @@ class Settings {
     val sb = new StringBuilder(100)
     val settingGroups = groupedByKeyType()
 
-    sb.append(ReflectionUtils.shortTypeNameOf(this))
+    sb.append(new ReflectionUtils().shortTypeNameOf(this))
 
     if (settingGroups.isEmpty)
       return sb.append(StrComma).append(StrSpace).append("currently empty").append(StrPeriod).toString()

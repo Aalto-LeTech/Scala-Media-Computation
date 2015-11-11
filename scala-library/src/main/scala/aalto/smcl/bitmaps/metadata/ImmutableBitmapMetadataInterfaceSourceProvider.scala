@@ -13,7 +13,8 @@ import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
  * @author Aleksi Lukkarinen
  */
 private[metadata]
-class ImmutableBitmapMetadataInterfaceSourceProvider() extends MetadataInterfaceSourceProvider {
+class ImmutableBitmapMetadataInterfaceSourceProvider()
+  extends MetadataInterfaceSourceProvider {
 
   /** */
   private[this] lazy val _bitmapClass = Bitmap().getClass

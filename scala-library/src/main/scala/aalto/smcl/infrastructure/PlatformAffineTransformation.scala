@@ -11,7 +11,9 @@ import java.awt.geom.{AffineTransform => AwtAffineTransformation}
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] object PlatformAffineTransformation {
+private[smcl]
+object PlatformAffineTransformation {
+
 
   /**
    *
@@ -37,8 +39,9 @@ private[smcl] object PlatformAffineTransformation {
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class PlatformAffineTransformation private(
-    val awtAffineTransformation: AwtAffineTransformation) {
+private[smcl]
+class PlatformAffineTransformation private(
+  val awtAffineTransformation: AwtAffineTransformation) {
 
   /** */
   val OneQuadrantClockwise: Int = 1
@@ -93,9 +96,9 @@ private[smcl] class PlatformAffineTransformation private(
    * @return
    */
   def rotateDegsAround(
-      angleInDegrees: Double,
-      anchorX: Double,
-      anchorY: Double): PlatformAffineTransformation = {
+    angleInDegrees: Double,
+    anchorX: Double,
+    anchorY: Double): PlatformAffineTransformation = {
 
     awtAffineTransformation.rotate(Math.toRadians(-angleInDegrees), anchorX, anchorY)
     this
@@ -119,8 +122,8 @@ private[smcl] class PlatformAffineTransformation private(
    * @return
    */
   def rotate90DegsCwAround(
-      anchorX: Double,
-      anchorY: Double): PlatformAffineTransformation = {
+    anchorX: Double,
+    anchorY: Double): PlatformAffineTransformation = {
 
     awtAffineTransformation.quadrantRotate(OneQuadrantClockwise, anchorX, anchorY)
     this
@@ -144,8 +147,8 @@ private[smcl] class PlatformAffineTransformation private(
    * @return
    */
   def rotate90DegsCcwAround(
-      anchorX: Double,
-      anchorY: Double): PlatformAffineTransformation = {
+    anchorX: Double,
+    anchorY: Double): PlatformAffineTransformation = {
 
     awtAffineTransformation.quadrantRotate(OneQuadrantCounterClockwise, anchorX, anchorY)
     this
@@ -169,8 +172,8 @@ private[smcl] class PlatformAffineTransformation private(
    * @return
    */
   def rotate180DegsAround(
-      anchorX: Double,
-      anchorY: Double): PlatformAffineTransformation = {
+    anchorX: Double,
+    anchorY: Double): PlatformAffineTransformation = {
 
     awtAffineTransformation.quadrantRotate(TwoQuadrants, anchorX, anchorY)
     this

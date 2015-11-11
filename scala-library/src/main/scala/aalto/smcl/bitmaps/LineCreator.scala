@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.GS
+import aalto.smcl.infrastructure.{GS, SMCLInitializationInvoker}
 
 
 
@@ -13,7 +13,11 @@ import aalto.smcl.infrastructure.GS
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class LineCreator private[bitmaps]() {
+private[bitmaps] class LineCreator private[bitmaps]()
+  extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
 
 
   /**
@@ -31,13 +35,13 @@ private[bitmaps] class LineCreator private[bitmaps]() {
    * @return
    */
   def createOne(
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+    fromXInPixels: Int,
+    fromYInPixels: Int,
+    toXInPixels: Int,
+    toYInPixels: Int,
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(color != null, "The line color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")

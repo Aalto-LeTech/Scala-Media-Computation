@@ -7,8 +7,9 @@ import scala.swing.Swing
 
 import rx.lang.scala.{Observable, Observer}
 
-import aalto.smcl.bitmaps.{BitmapIdentity, Bitmap}
+import aalto.smcl.SMCLLibrary
 import aalto.smcl.bitmaps.viewer.events.external.{DisplayBitmapEvent, ExternalViewerEvent, ForceAllViewersToClose}
+import aalto.smcl.bitmaps.{Bitmap, BitmapIdentity}
 
 
 
@@ -16,20 +17,13 @@ import aalto.smcl.bitmaps.viewer.events.external.{DisplayBitmapEvent, ExternalVi
 /**
  * Information and functionality related to this application.
  */
-private[bitmaps] object Application {
+private[bitmaps]
+object Application {
 
   // @formatter:off
 
-
-
-
-  import aalto.smcl.SMCL
-
-
-
-
   /** Full name of this application. */
-  val FullName = s"${SMCL.AbbreviatedName} Bitmap Viewer"
+  val FullName = s"${new SMCLLibrary().AbbreviatedName} Bitmap Viewer"
 
   /** Default mouse cursor used by this application. */
   val DefaultCursor: Cursor = Cursor.getDefaultCursor
@@ -50,8 +44,9 @@ private[bitmaps] object Application {
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class Application(val incomingEventStream: Observable[ExternalViewerEvent])
-    extends Observer[ExternalViewerEvent] {
+private[bitmaps]
+class Application(val incomingEventStream: Observable[ExternalViewerEvent])
+  extends Observer[ExternalViewerEvent] {
 
   private[this] var _viewers = Map[BitmapIdentity, ViewerMainFrame]()
 

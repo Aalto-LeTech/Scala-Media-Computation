@@ -1,12 +1,15 @@
 package aalto.smcl.bitmaps.viewer
 
 
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-private[viewer] class AbstractActionMap {
+private[viewer]
+class AbstractActionMap {
 
   /** */
   private[this] var _actions = Map[Symbol, ViewerAction]()

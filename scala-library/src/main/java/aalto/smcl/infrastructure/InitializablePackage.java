@@ -15,7 +15,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InitializablePackage {
 
-    /** Full names of packages the contents of which this package depends on, */
+    /** Full names of packages the contents of which this package depends on. */
     String[] dependsOnPackages();
 
 }

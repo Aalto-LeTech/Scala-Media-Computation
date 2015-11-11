@@ -1,17 +1,15 @@
 package aalto.smcl.infrastructure
 
 
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 final class SMCLUnknownSettingTypeError private[smcl](settingCandidate: AnyRef, cause: Throwable)
-    extends RuntimeException(
-      s"""The given object of type ${ReflectionUtils.shortTypeNameOf(settingCandidate)} does not represent a.valid setting""",
-      cause) {
+  extends RuntimeException(
+    s"""The given object of type ${new ReflectionUtils().shortTypeNameOf(settingCandidate)} does not represent a.valid setting""",
+    cause) {
 
   /**
    *

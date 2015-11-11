@@ -11,7 +11,8 @@ import java.awt.image.BufferedImage
  *
  * @author Aleksi Lukkarinen
  */
-private[infrastructure] object BitmapUtils {
+private[infrastructure]
+object BitmapUtils {
 
   /**
    *

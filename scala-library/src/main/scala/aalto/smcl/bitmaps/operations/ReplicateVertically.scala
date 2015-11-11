@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
-import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure._
 
 
 
@@ -18,12 +18,15 @@ import aalto.smcl.infrastructure.{GS, MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class ReplicateVertically(
-    bitmapToReplicate: Bitmap,
-    numberOfReplicas: Int,
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-    extends AbstractOperation with BufferProvider with Immutable {
+private[bitmaps]
+case class ReplicateVertically(
+  bitmapToReplicate: Bitmap,
+  numberOfReplicas: Int,
+  paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  extends AbstractOperation
+  with BufferProvider
+  with Immutable {
 
   require(bitmapToReplicate != null,
     "Replicate operation must be given a non-empty Bitmap instance to replicate.")
@@ -45,7 +48,7 @@ private[bitmaps] case class ReplicateVertically(
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int =
     (numberOfReplicas + 1) * bitmapToReplicate.heightInPixels +
-        numberOfReplicas * paddingInPixels
+      numberOfReplicas * paddingInPixels
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int = bitmapToReplicate.widthInPixels

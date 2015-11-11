@@ -17,7 +17,9 @@ import aalto.smcl.common.AffineTransformation
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class ImageDisplayPanel extends Panel {
+private[bitmaps]
+class ImageDisplayPanel
+  extends Panel {
 
   /** The bitmap to be displayed. */
   private var _bitmapOption: Option[Bitmap] = None

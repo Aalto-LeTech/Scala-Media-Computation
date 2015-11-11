@@ -1,12 +1,22 @@
 package aalto.smcl.bitmaps
 
 
+import aalto.smcl.infrastructure.SMCLInitializationInvoker
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-object ConvolutionKernel {
+object ConvolutionKernel
+  extends SMCLInitializationInvoker {
+
+  /** A dummy variable needed to enforce the library initialization. */
+  private val __smcl_initialization_ensuring_dummy_variable__ = null
+
 
   /**
    *
@@ -39,7 +49,8 @@ object ConvolutionKernel {
  *
  * @author Aleksi Lukkarinen
  */
-case class ConvolutionKernel private(matrix: Seq[Seq[Float]]) extends Immutable {
+case class ConvolutionKernel private(matrix: Seq[Seq[Float]])
+  extends Immutable {
 
   /** Height of this [[ConvolutionKernel]] instance. */
   val height: Int = matrix.head.length

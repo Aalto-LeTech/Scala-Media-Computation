@@ -6,7 +6,8 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl] class CommonValidators private[infrastructure]() {
+private[smcl]
+class CommonValidators() {
 
   /** */
   val MinimumPercentage: Double = 0.0
@@ -53,7 +54,7 @@ private[smcl] class CommonValidators private[infrastructure]() {
   def validatePercentage(valueCandidate: Double, percentageNameOption: Option[String]): Unit =
     if (!percentIsInRange(valueCandidate)) {
       val strError = percentageNameOption.fold("Given")({_.capitalize}) +
-          s" percentage must be between $MinimumPercentage and $MaximumPercentage (was $valueCandidate)"
+        s" percentage must be between $MinimumPercentage and $MaximumPercentage (was $valueCandidate)"
 
       throw new SMCLInvalidPercentageError(strError)
     }
@@ -70,7 +71,7 @@ private[smcl] class CommonValidators private[infrastructure]() {
   def validateZeroToOneFactor(valueCandidate: Double, factorNameOption: Option[String]): Unit =
     if (!percentIsInRange(valueCandidate)) {
       val strError = factorNameOption.fold("Given")({_.capitalize}) +
-          s" factor must be between $MinimumZeroToOneFactor and $MaximumZeroToOneFactor (was $valueCandidate)"
+        s" factor must be between $MinimumZeroToOneFactor and $MaximumZeroToOneFactor (was $valueCandidate)"
 
       throw new SMCLInvalidZeroToOneFactorError(strError)
     }
