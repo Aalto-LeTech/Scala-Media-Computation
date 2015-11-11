@@ -20,7 +20,8 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class AppendVertically(
+private[bitmaps]
+case class AppendVertically(
   bitmapsToCombine: Seq[Bitmap])(
   horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
   paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),

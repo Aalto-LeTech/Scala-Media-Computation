@@ -13,7 +13,8 @@ import aalto.smcl.infrastructure.{GS, SMCLInitializationInvoker}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class SquareCreator private[bitmaps]() extends SMCLInitializationInvoker {
+private[bitmaps]
+class SquareCreator private[bitmaps]() extends SMCLInitializationInvoker {
 
   /** A dummy variable needed to enforce the library initialization. */
   private val __smcl_initialization_ensuring_dummy_variable__ = null

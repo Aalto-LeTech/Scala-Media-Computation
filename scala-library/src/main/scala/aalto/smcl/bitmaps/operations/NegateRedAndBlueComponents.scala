@@ -12,7 +12,8 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class NegateRedAndBlueComponents()
+private[bitmaps]
+case class NegateRedAndBlueComponents()
   extends AbstractOperation
   with OneSourceFilter
   with Immutable {

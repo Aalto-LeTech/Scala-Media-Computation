@@ -7,7 +7,8 @@ package aalto.smcl.bitmaps.operations
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] trait PixelReader {
+private[bitmaps]
+trait PixelReader {
   this: AbstractOperation =>
 
 }

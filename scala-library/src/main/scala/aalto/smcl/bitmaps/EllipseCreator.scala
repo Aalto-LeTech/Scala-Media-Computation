@@ -13,7 +13,8 @@ import aalto.smcl.infrastructure.{GS, SMCLInitializationInvoker}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class EllipseCreator private[bitmaps]()
+private[bitmaps]
+class EllipseCreator private[bitmaps]()
   extends SMCLInitializationInvoker {
 
   /** A dummy variable needed to enforce the library initialization. */

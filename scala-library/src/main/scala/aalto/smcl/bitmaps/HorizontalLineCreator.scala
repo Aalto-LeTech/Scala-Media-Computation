@@ -13,7 +13,8 @@ import aalto.smcl.infrastructure.{GS, SMCLInitializationInvoker}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] class HorizontalLineCreator private[bitmaps]()
+private[bitmaps]
+class HorizontalLineCreator private[bitmaps]()
   extends SMCLInitializationInvoker {
 
   /** A dummy variable needed to enforce the library initialization. */
