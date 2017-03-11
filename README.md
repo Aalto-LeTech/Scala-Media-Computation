@@ -1,6 +1,4 @@
-# The Scala Media Computation Library (SMCL) | Public Interfaces
-
-This project provides the public interfaces, through which external software, such as integrated development environments, can communicate with SMCL.
+# The Scala Media Computation Library (SMCL)
 
 <br />
 
@@ -23,9 +21,9 @@ The repository contains only the files needed to create a fresh development setu
 
 One possibility to clone this repository onto your local mass storage is to use [Git](https://git-scm.com/) itself. From command line this can be done like below:
 ```
-git clone git@version.aalto.fi:lukkark1/aalto-cs-scala-smcl-public-interfaces.git
+git clone https://github.com/Aalto-LeTech/Scala-Media-Computation.git
 ```
-This will create a `aalto-cs-scala-smcl-public-interfaces` folder into the folder in which it is executed. Other possibilities to clone the repository include e.g. IDE plugins and other graphical user interfaces developed to make using of Git easier.
+This will create a `Scala-Media-Computation` folder into the folder in which it is executed. Other possibilities to clone the repository include e.g. IDE plugins and other graphical user interfaces developed to make using of Git easier.
 
 
 ## Building the Library
