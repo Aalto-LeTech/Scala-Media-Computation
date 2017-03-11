@@ -28,11 +28,9 @@ This will create a `Scala-Media-Computation` folder into the folder in which it 
 
 ## Building the Library
 
-This library uses [sbt](http://www.scala-sbt.org/) as its build tool. One way to test and package the library is to issue the following command in its root folder:
-```
-sbt clean test doc package
-```
-Build products---including the packaged Java archives (.jar files)---are located under the generated `js/target` and `jvm/target` folders.
+This library uses [sbt](http://www.scala-sbt.org/) as its build tool. 
+
+Build products---including the packaged Java archives (.jar files)---are located under the generated `<project>/js/target` and `<project>/jvm/target` folders.
 
 
 ## Developing with IntelliJ IDEA
