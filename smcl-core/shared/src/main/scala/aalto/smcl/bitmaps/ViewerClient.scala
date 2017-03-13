@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import scala.swing.Dialog
+//import scala.swing.Dialog
 
 //import rx.lang.scala.{JavaConversions, Subject}
 
@@ -46,8 +46,8 @@ class ViewerClient {
    *
    */
   def closeAllViewersWithTheForce(): Unit = {
-    //if (shouldCloseBasedOn(closingAllViewersMessageBoxResult()))
-      //dispatchEvent(ForceAllViewersToClose())
+    //if (ifUserWantsToForceAllViewersToBeClosed())
+      // dispatchEvent(ForceAllViewersToClose())
   }
 
   /**
@@ -55,15 +55,7 @@ class ViewerClient {
    *
    * @return
    */
-  def shouldCloseBasedOn(result: Dialog.Result.Value): Boolean = true
-    //new SwingUtils().yesNoDialogResultAsBoolean(result)
-
-  /**
-   *
-   *
-   * @return
-   */
-  def closingAllViewersMessageBoxResult(): Dialog.Result.Value = {
+  def ifUserWantsToForceAllViewersToBeClosed(): Boolean = {
     new SwingUtils().showParentlessYesNoQuestionDialog(
       "Do you really want to close all bitmap viewers without saving?\nALL unsaved bitmaps will be LOST.",
       "SMCL")
@@ -72,7 +64,6 @@ class ViewerClient {
   /**
    *
    *
-   * @param event
    */
   /*
   def dispatchEvent(event: ExternalViewerEvent): Unit = {

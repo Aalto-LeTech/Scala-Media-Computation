@@ -61,8 +61,8 @@ lazy val smclGeneralSettings = Seq(
     //ApplicationDependencies.GraphForScalaDot,
     //ApplicationDependencies.RxScala,
     //ApplicationDependencies.ScalaCompiler,
-    ApplicationDependencies.ScalaReflection,
-    ApplicationDependencies.ScalaSwing
+    ApplicationDependencies.ScalaReflection
+    //ApplicationDependencies.ScalaSwing
     //ApplicationDependencies.ScalaXml
   )
 )

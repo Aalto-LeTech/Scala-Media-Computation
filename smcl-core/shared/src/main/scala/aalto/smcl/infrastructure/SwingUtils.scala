@@ -1,8 +1,8 @@
 package aalto.smcl.infrastructure
 
 
-import scala.swing.Dialog
-import scala.swing.Dialog.{Message, Options}
+//import scala.swing.Dialog
+//import scala.swing.Dialog.{Message, Options}
 
 
 
@@ -20,19 +20,18 @@ class SwingUtils() {
    *
    * @return
    */
-  def yesNoDialogResultAsBoolean(result: Dialog.Result.Value): Boolean = result match {
-    case Dialog.Result.Yes    => true
-    case Dialog.Result.No     => false
-    case Dialog.Result.Closed => false
-    case _                    => throw new SMCLUnexpectedInternalError("Invalid dialog return value.")
-  }
+  val showParentlessYesNoQuestionDialog: (String, String) => Boolean = {
+    /*
+    val result = Dialog.showConfirmation(parent = null, _: String, _: String, Options.YesNo, Message.Question)
 
-  /**
-   *
-   *
-   * @return
-   */
-  val showParentlessYesNoQuestionDialog: (String, String) => Dialog.Result.Value =
-    Dialog.showConfirmation(parent = null, _: String, _: String, Options.YesNo, Message.Question)
+    result match {
+      case Dialog.Result.Yes    => true
+      case Dialog.Result.No     => false
+      case Dialog.Result.Closed => false
+      case _                    => throw new SMCLUnexpectedInternalError("Invalid dialog return value.")
+    }
+    */
+    (_: String, _: String) => false
+  }
 
 }

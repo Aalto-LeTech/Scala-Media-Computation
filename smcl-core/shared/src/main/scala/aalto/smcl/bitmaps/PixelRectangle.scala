@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import scala.swing.Dimension
+import aalto.smcl.common.Dimension
 
 
 
@@ -27,7 +27,7 @@ trait PixelRectangle {
   lazy val heightRangeInPixels: Range = 0 until heightInPixels
 
   /** Dimensions (width and height) of this rectangle. */
-  private[smcl] lazy val sizeInPixels: Dimension = new Dimension(widthInPixels, heightInPixels)
+  private[smcl] lazy val sizeInPixels: Dimension = Dimension(widthInPixels, heightInPixels)
 
   /** Area of this rectangle in pixels (equals to `pixelCount`). */
   lazy val areaInPixels: Int = widthInPixels * heightInPixels
