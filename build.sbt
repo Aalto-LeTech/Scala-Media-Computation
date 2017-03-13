@@ -56,7 +56,20 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   libraryDependencies ++= Seq(
-    ApplicationDependencies.ScalaCheck
+    ApplicationDependencies.ScalaCheck,
+    //ApplicationDependencies.GraphForScalaCore,
+    //ApplicationDependencies.GraphForScalaDot,
+    //ApplicationDependencies.RxScala,
+    //ApplicationDependencies.ScalaCompiler,
+    ApplicationDependencies.ScalaReflection,
+    ApplicationDependencies.ScalaSwing
+    //ApplicationDependencies.ScalaXml
+  )
+)
+
+lazy val smclGeneralJsDependencySettings = Seq(
+  libraryDependencies ++= Seq(
+
   )
 )
 
@@ -82,7 +95,8 @@ lazy val smclCore = crossProject
     description := prjSmclCoreDescription
   )
   .jvmSettings(smclGeneralJvmDependencySettings: _*)
-  .jsSettings()
+  .jsSettings(smclGeneralJsDependencySettings: _*)
+  .dependsOn(smclPublicInterfaces)
 
 lazy val smclCoreJVM = smclCore.jvm
 lazy val smclCoreJS = smclCore.js
@@ -98,7 +112,7 @@ lazy val smclCoreTests = crossProject
     description := prjSmclCoreDescription
   )
   .jvmSettings(smclGeneralJvmDependencySettings ++ smclTestingJvmDependencySettings: _*)
-  .jsSettings()
+  .jsSettings(smclGeneralJsDependencySettings: _*)
   .dependsOn(smclCore)
 
 lazy val smclCoreTestsJVM = smclCoreTests.jvm
@@ -115,7 +129,7 @@ lazy val smclPublicInterfaces = crossProject
     description := prjSmclPiDescription
   )
   .jvmSettings(smclGeneralJvmDependencySettings: _*)
-  .jsSettings()
+  .jsSettings(smclGeneralJsDependencySettings: _*)
 
 lazy val smclPublicInterfacesJVM = smclPublicInterfaces.jvm
 lazy val smclPublicInterfacesJS = smclPublicInterfaces.js
@@ -131,7 +145,7 @@ lazy val smclPublicInterfacesTests = crossProject
     description := prjSmclPiDescription
   )
   .jvmSettings(smclGeneralJvmDependencySettings ++ smclTestingJvmDependencySettings: _*)
-  .jsSettings()
+  .jsSettings(smclGeneralJsDependencySettings: _*)
   .dependsOn(smclPublicInterfaces)
 
 lazy val smclPublicInterfacesTestsJVM = smclPublicInterfacesTests.jvm
