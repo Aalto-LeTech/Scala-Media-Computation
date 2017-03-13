@@ -16,6 +16,9 @@
 !/.gitattributes
 !/.gitignore
 !/build.sbt
+!/CHANGELOG
+!/CONTRIBUTING.md
+!/LICENSE
 !/README.md
 
 /project/*
