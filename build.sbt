@@ -57,12 +57,11 @@ lazy val smclGeneralSettings = Seq(
 
   libraryDependencies ++= Seq(
     ApplicationDependencies.ScalaCheck,
+    ApplicationDependencies.ScalaReflection
     //ApplicationDependencies.GraphForScalaCore,
     //ApplicationDependencies.GraphForScalaDot,
     //ApplicationDependencies.RxScala,
     //ApplicationDependencies.ScalaCompiler,
-    ApplicationDependencies.ScalaReflection
-    //ApplicationDependencies.ScalaSwing
     //ApplicationDependencies.ScalaXml
   )
 )
@@ -75,7 +74,8 @@ lazy val smclGeneralJsDependencySettings = Seq(
 
 lazy val smclGeneralJvmDependencySettings = Seq(
   libraryDependencies ++= Seq(
-    ApplicationDependencies.ScalaJsStubs
+    ApplicationDependencies.ScalaJsStubs,
+    ApplicationDependencies.ScalaSwing
   )
 )
 
