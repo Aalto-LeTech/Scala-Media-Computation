@@ -1,8 +1,9 @@
-# The Scala Media Computation Library (SMCL) | Public Interfaces
+# The Scala Media Computation Library (SMCL)
 
-This project provides the public interfaces, through which external software, such as integrated development environments, can communicate with SMCL.
+This project is targeted mainly for instructors and students of introductory programming courses. From instructors' viewpoint, its goal is to provide means to motivate students via contextualized teaching. There are many ways to provice context, and the approach choosen here is the one of multimedia computation, that is, programmatically creating and processing multimedia content in a creative way. To provide the necessary scaffolding for novice students already challenged to learn for example logical and algorithmic thinking, programming concepts and paradigms, a new programming language (in this case, [Scala](http://www.scala-lang.org/)), and the related development tools, this library offers ways to concentrate only in the topics to be practiced while still producing hopefully interesting and attractive results.
 
 <br />
+
 
 ## Project Structure
 
@@ -23,18 +24,16 @@ The repository contains only the files needed to create a fresh development setu
 
 One possibility to clone this repository onto your local mass storage is to use [Git](https://git-scm.com/) itself. From command line this can be done like below:
 ```
-git clone git@version.aalto.fi:lukkark1/aalto-cs-scala-smcl-public-interfaces.git
+git clone https://github.com/Aalto-LeTech/Scala-Media-Computation.git
 ```
-This will create a `aalto-cs-scala-smcl-public-interfaces` folder into the folder in which it is executed. Other possibilities to clone the repository include e.g. IDE plugins and other graphical user interfaces developed to make using of Git easier.
+This will create a `Scala-Media-Computation` folder into the folder in which it is executed. Other possibilities to clone the repository include e.g. IDE plugins and other graphical user interfaces developed to make using of Git easier.
 
 
 ## Building the Library
 
-This library uses [sbt](http://www.scala-sbt.org/) as its build tool. One way to test and package the library is to issue the following command in its root folder:
-```
-sbt clean test doc package
-```
-Build products---including the packaged Java archives (.jar files)---are located under the generated `js/target` and `jvm/target` folders.
+This library uses [sbt](http://www.scala-sbt.org/) as its build tool. 
+
+Build products---including the packaged Java archives (.jar files)---are located under the generated `<project>/js/target` and `<project>/jvm/target` folders.
 
 
 ## Developing with IntelliJ IDEA
