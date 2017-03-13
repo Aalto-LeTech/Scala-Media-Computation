@@ -217,7 +217,7 @@ class ImageProvider() {
     require(attributes.size > 0, "The specified file has no content.")
 
 
-    val extension: String = new FileUtils().resolveExtensionOf(imageFile.getName)
+    val extension: String = new CommonFileUtils().resolveExtensionOf(imageFile.getName)
     ensureThatFileExtensionIsOfSupportedImageType(extension)
 
     (imageFile.getAbsoluteFile, imageFile.getAbsolutePath, extension)
