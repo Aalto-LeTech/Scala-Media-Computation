@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.infrastructure.UniqueIdProvider
+import aalto.smcl.infrastructure.PRF
 
 
 
@@ -20,7 +20,7 @@ object BitmapIdentity {
    * @return
    */
   def apply(): BitmapIdentity = {
-    new BitmapIdentity(new UniqueIdProvider().newId())
+    new BitmapIdentity(PRF.createUniqueIdString())
   }
 
 }

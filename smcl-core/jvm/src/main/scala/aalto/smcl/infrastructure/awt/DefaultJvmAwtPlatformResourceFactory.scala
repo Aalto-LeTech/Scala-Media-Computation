@@ -7,17 +7,20 @@ import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure._
 
 
-/**
-  *
-  *
-  * @author Aleksi Lukkarinen
-  */
-class DefaultJvmAwtPlatformResourceFactory extends PlatformResourceFactory {
 
-  /**  */
+
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
+class DefaultJvmAwtPlatformResourceFactory(jvmUniqueIdProvider: JvmUniqueIdProvider)
+  extends PlatformResourceFactory {
+
+  /** */
   private val _AwtImageProvider = new AwtImageProvider()
 
-  /**  */
+  /** */
   private val _AwtScreenInformationProvider = new AwtScreenInformationProvider()
 
 
@@ -29,35 +32,44 @@ class DefaultJvmAwtPlatformResourceFactory extends PlatformResourceFactory {
   override def screenInformationProvider: ScreenInformationProvider = _AwtScreenInformationProvider
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   override def createPlatformAffineTransformation: AffineTransformationAdapter = AwtAffineTransformationAdapter()
 
   /**
-    *
-    *
-    * @param widthInPixels
-    * @param heightInPixels
-    * @return
-    */
+   *
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   *
+   * @return
+   */
   def createPlatformBitmapBuffer(widthInPixels: Int, heightInPixels: Int): BitmapBufferAdapter =
     AwtBitmapBufferAdapter(widthInPixels, heightInPixels)
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   override def createPlatformColor(source: RGBAColor): ColorAdapter = AwtColorAdapter(source)
 
   /**
-    *
-    *
-    * @param sourceResourcePath
-    * @return
-    */
+   *
+   *
+   * @return
+   */
+  override def createUniqueIdString(): String = jvmUniqueIdProvider.newId()
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
   override def tryToLoadImagesFromPath(sourceResourcePath: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]] =
     _AwtImageProvider.tryToLoadImagesFromFile(sourceResourcePath)
 

@@ -1,7 +1,7 @@
 package aalto.smcl.infrastructure.awt
 
 
-import aalto.smcl.infrastructure.DefaultPlatformResourceFactory
+import aalto.smcl.infrastructure.{DefaultPlatformResourceFactory, JvmUniqueIdProvider}
 
 
 
@@ -14,6 +14,8 @@ import aalto.smcl.infrastructure.DefaultPlatformResourceFactory
 object Init {
 
   // Initialize platform resource factory
-  DefaultPlatformResourceFactory.setImplementation(new DefaultJvmAwtPlatformResourceFactory())
+  val uniqueIdProvider = new JvmUniqueIdProvider()
+  val factory = new DefaultJvmAwtPlatformResourceFactory(uniqueIdProvider)
+  DefaultPlatformResourceFactory.setImplementation(factory)
 
 }

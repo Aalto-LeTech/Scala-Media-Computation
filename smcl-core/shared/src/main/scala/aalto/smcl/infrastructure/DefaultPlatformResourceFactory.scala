@@ -46,6 +46,14 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
   override def createPlatformColor(source: RGBAColor): ColorAdapter =
     implementation.createPlatformColor(source)
 
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def createUniqueIdString(): String = implementation.createUniqueIdString()
+
   /**
    *
    *

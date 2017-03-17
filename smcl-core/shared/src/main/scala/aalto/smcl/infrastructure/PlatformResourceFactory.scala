@@ -50,6 +50,13 @@ trait PlatformResourceFactory {
   /**
    *
    *
+   * @return
+   */
+  def createUniqueIdString(): String
+
+  /**
+   *
+   *
    * @param sourceResourcePath
    * @return
    */
