@@ -1,4 +1,4 @@
-package aalto.smcl.infrastructure
+package aalto.smcl.infrastructure.awt
 
 import java.awt.image.BufferedImage
 
