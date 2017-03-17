@@ -6,7 +6,7 @@ import java.awt.{Toolkit, Color => LowLevelColor}
 import scala.language.implicitConversions
 
 import aalto.smcl.colors.RGBAColor
-
+import aalto.smcl.infrastructure.Constants
 
 
 

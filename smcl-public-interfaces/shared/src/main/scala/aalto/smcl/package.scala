@@ -10,4 +10,7 @@ package aalto
  */
 package object smcl {
 
+  /** */
+  lazy val SMCL: SMCLLibrary = new SMCLLibrary()
+
 }

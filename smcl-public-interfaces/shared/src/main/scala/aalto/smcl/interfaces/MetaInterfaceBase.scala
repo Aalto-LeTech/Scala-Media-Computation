@@ -1,8 +1,7 @@
-package aalto.smcl.infrastructure
+package aalto.smcl.interfaces
 
 
 import aalto.smcl.SMCL
-import aalto.smcl.interfaces.ProviderMetadataSource
 
 
 
@@ -13,7 +12,7 @@ import aalto.smcl.interfaces.ProviderMetadataSource
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class MetaInterfaceBase()
+class MetaInterfaceBase
   extends ProviderMetadataSource
   with Immutable {
 
