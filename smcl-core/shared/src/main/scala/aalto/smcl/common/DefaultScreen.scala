@@ -11,25 +11,22 @@ import aalto.smcl.infrastructure.{PRF, ScreenInformationProvider}
  *
  * @author Aleksi Lukkarinen
  */
-object Screen {
-
-  /**  */
-  private val informationProvider: ScreenInformationProvider = PRF.screenInformationProvider
-
+private[smcl]
+class DefaultScreen(private val _informationProvider: ScreenInformationProvider) {
 
   /**
    * Dimensions of the screen.
    *
    * @return
    */
-  def dimensionsInPixels: Dimension = informationProvider.dimensionsInPixels
+  def dimensionsInPixels: Dimension = _informationProvider.dimensionsInPixels
 
   /**
    *
    *
    * @return
    */
-  def resolutionInDotsPerInch: Int = informationProvider.resolutionInDotsPerInch
+  def resolutionInDotsPerInch: Int = _informationProvider.resolutionInDotsPerInch
 
   /**
    *
