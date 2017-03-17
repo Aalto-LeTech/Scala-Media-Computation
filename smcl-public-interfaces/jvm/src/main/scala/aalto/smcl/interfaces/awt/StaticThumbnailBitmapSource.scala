@@ -1,3 +1,6 @@
+package aalto.smcl.interfaces.awt
+
+
 import java.awt.image.BufferedImage
 
 

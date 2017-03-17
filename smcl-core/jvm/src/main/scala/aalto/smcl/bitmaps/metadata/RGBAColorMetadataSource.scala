@@ -7,8 +7,9 @@ import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.bitmaps.ViewerUpdateStyle.PreventViewerUpdates
 import aalto.smcl.colors.{PresetColors, RGBAColor}
 import aalto.smcl.infrastructure.awt.AwtBitmapBufferAdapter
-import aalto.smcl.infrastructure.{GS, MetaInterfaceBase}
-import aalto.smcl.interfaces.{ResourceMetadataSource, StaticGeneralBitmapSource}
+import aalto.smcl.infrastructure.GS
+import aalto.smcl.interfaces.MetaInterfaceBase
+import aalto.smcl.interfaces.awt.{ResourceMetadataSource, StaticGeneralBitmapSource}
 
 
 
@@ -36,10 +37,10 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
   val GeneralBitmapIndices: Range = _generalBitmaps.indices
 
   /** First possible bitmap index. */
-  val FirstBitmapIndex = GeneralBitmapIndices.start
+  val FirstBitmapIndex: Int = GeneralBitmapIndices.start
 
   /** Last possible bitmap index. */
-  val LastBitmapIndex = GeneralBitmapIndices.last
+  val LastBitmapIndex: Int = GeneralBitmapIndices.last
 
 
   /**
