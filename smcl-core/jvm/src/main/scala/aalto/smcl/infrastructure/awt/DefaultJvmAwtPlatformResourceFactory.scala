@@ -2,7 +2,6 @@ package aalto.smcl.infrastructure.awt
 
 
 import scala.util.{Either, Try}
-
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure._
 
@@ -14,22 +13,17 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-class DefaultJvmAwtPlatformResourceFactory(jvmUniqueIdProvider: JvmUniqueIdProvider)
-  extends PlatformResourceFactory {
-
-  /** */
-  private val _AwtImageProvider = new AwtImageProvider()
-
-  /** */
-  private val _AwtScreenInformationProvider = new AwtScreenInformationProvider()
-
+class DefaultJvmAwtPlatformResourceFactory(
+  uuidProvider: JvmUniqueIdProvider,
+  imageProvider: AwtImageProvider,
+  screenInfoProvider: AwtScreenInformationProvider) extends PlatformResourceFactory {
 
   /**
    *
    *
    * @return
    */
-  override def screenInformationProvider: ScreenInformationProvider = _AwtScreenInformationProvider
+  override def screenInformationProvider: ScreenInformationProvider = screenInfoProvider
 
   /**
    *
@@ -61,7 +55,7 @@ class DefaultJvmAwtPlatformResourceFactory(jvmUniqueIdProvider: JvmUniqueIdProvi
    *
    * @return
    */
-  override def createUniqueIdString(): String = jvmUniqueIdProvider.newId()
+  override def createUniqueIdString(): String = uuidProvider.newId()
 
   /**
    *
@@ -70,7 +64,8 @@ class DefaultJvmAwtPlatformResourceFactory(jvmUniqueIdProvider: JvmUniqueIdProvi
    *
    * @return
    */
+  // TODO: A terrible return type --> Redesign!!
   override def tryToLoadImagesFromPath(sourceResourcePath: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]] =
-    _AwtImageProvider.tryToLoadImagesFromFile(sourceResourcePath)
+    imageProvider.tryToLoadImagesFromFile(sourceResourcePath)
 
 }

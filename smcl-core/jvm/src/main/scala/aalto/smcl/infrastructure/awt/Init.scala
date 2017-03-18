@@ -7,15 +7,30 @@ import aalto.smcl.infrastructure.{DefaultPlatformResourceFactory, JvmUniqueIdPro
 
 
 /**
-  *
-  *
-  * @author Aleksi Lukkarinen
-  */
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
 object Init {
 
-  // Initialize platform resource factory
-  val uniqueIdProvider = new JvmUniqueIdProvider()
-  val factory = new DefaultJvmAwtPlatformResourceFactory(uniqueIdProvider)
-  DefaultPlatformResourceFactory.setImplementation(factory)
+  /**
+   *
+   */
+  def init(): Unit = {
+    initPlatformResourceFactory()
+  }
+
+  /**
+   * Initialize platform resource factory.
+   */
+  private def initPlatformResourceFactory(): Unit = {
+    val uuidProvider = new JvmUniqueIdProvider()
+    val imageProvider = new AwtImageProvider()
+    val screenInfoProvider = new AwtScreenInformationProvider()
+
+    val factory = new DefaultJvmAwtPlatformResourceFactory(uuidProvider, imageProvider, screenInfoProvider)
+
+    DefaultPlatformResourceFactory.setImplementation(factory)
+  }
 
 }
