@@ -1,7 +1,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, SMCLInvalidColorComponentArrayLengthError}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
+import aalto.smcl.infrastructure.exceptions.SMCLInvalidColorComponentArrayLengthError
 
 
 

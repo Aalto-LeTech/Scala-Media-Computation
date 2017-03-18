@@ -2,6 +2,7 @@ package aalto.smcl.infrastructure
 
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure.BaseSettingKeys._
+import aalto.smcl.infrastructure.exceptions.SMCLUninitializedSettingError
 
 
 

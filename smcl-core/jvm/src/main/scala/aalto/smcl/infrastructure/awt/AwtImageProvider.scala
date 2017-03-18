@@ -8,9 +8,9 @@ import javax.imageio.stream.ImageInputStream
 import javax.imageio.{ImageIO, ImageReader}
 
 import scala.util._
-
 import aalto.smcl.bitmaps._
-import aalto.smcl.infrastructure.{CommonFileUtils, EnsureClosingOfAfter, BitmapBufferAdapter, SMCLFileAttributeRetrievalFailedError, SMCLImageInputStreamNotCreatedError, SMCLImageReaderNotRetrievedError, SMCLSuitableImageReaderNotFoundError, SMCLSuitableImageStreamProviderNotFoundError}
+import aalto.smcl.infrastructure.exceptions._
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, CommonFileUtils, EnsureClosingOfAfter}
 
 
 

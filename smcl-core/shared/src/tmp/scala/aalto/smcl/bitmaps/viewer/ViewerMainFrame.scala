@@ -7,10 +7,10 @@ import scala.swing.Dialog.{Message, Options}
 import scala.swing._
 import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
-
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.awt.Screen
+import aalto.smcl.infrastructure.exceptions.SMCLUnexpectedInternalError
 
 
 

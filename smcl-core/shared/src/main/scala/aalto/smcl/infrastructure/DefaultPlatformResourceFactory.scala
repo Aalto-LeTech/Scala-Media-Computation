@@ -2,17 +2,17 @@ package aalto.smcl.infrastructure
 
 
 import scala.util.{Either, Try}
-
 import aalto.smcl.colors.RGBAColor
+import aalto.smcl.infrastructure.exceptions.SMCLImplementationNotSetError
 
 
 
 
 /**
-  *
-  *
-  * @author Aleksi Lukkarinen
-  */
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
 private[smcl]
 object DefaultPlatformResourceFactory extends PlatformResourceFactory {
 
@@ -21,28 +21,29 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
 
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   override def createPlatformAffineTransformation: AffineTransformationAdapter =
     implementation.createPlatformAffineTransformation
 
   /**
-    *
-    *
-    * @param widthInPixels
-    * @param heightInPixels
-    * @return
-    */
+   *
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   *
+   * @return
+   */
   override def createPlatformBitmapBuffer(widthInPixels: Int, heightInPixels: Int): BitmapBufferAdapter =
     implementation.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   override def createPlatformColor(source: RGBAColor): ColorAdapter =
     implementation.createPlatformColor(source)
 
@@ -63,27 +64,28 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
     implementation.screenInformationProvider
 
   /**
-    *
-    *
-    * @param sourceResourcePath
-    * @return
-    */
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
   override def tryToLoadImagesFromPath(sourceResourcePath: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]] =
     implementation.tryToLoadImagesFromPath(sourceResourcePath)
 
   /**
-    *
-    *
-    * @param factoryImplementation
-    */
+   *
+   *
+   * @param factoryImplementation
+   */
   def setImplementation(factoryImplementation: PlatformResourceFactory): Unit =
     _implementation = Some(factoryImplementation)
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   private def implementation: PlatformResourceFactory =
     _implementation.getOrElse(throw new SMCLImplementationNotSetError(DefaultPlatformResourceFactory))
 

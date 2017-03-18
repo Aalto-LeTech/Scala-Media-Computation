@@ -6,12 +6,11 @@ import java.awt.image._
 import java.awt.{AlphaComposite, Graphics2D}
 
 import scala.util.Try
-
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
 import aalto.smcl.common._
-
 import aalto.smcl.infrastructure._
+import aalto.smcl.infrastructure.exceptions.{SMCLFunctionExecutionError, SMCLInvalidColorComponentArrayLengthError}
 
 
 /**
