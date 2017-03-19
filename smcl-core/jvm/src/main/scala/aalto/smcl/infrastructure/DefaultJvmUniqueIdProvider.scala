@@ -1,21 +1,19 @@
 package aalto.smcl.infrastructure
 
 
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-trait JvmUniqueIdProvider {
+class DefaultJvmUniqueIdProvider() extends JvmUniqueIdProvider {
 
   /**
    *
    *
    * @return
    */
-  def newId: String
+  def newId: String = java.util.UUID.randomUUID().toString
 
 }

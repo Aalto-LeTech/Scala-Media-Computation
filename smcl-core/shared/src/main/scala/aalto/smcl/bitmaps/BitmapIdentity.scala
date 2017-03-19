@@ -20,7 +20,7 @@ object BitmapIdentity {
    * @return
    */
   def apply(): BitmapIdentity = {
-    new BitmapIdentity(PRF.createUniqueIdString())
+    new BitmapIdentity(PRF.createUniqueIdString)
   }
 
 }

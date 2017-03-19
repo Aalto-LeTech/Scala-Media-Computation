@@ -9,6 +9,7 @@ import java.util.Calendar
 /**
  *
  */
+private[smcl]
 class DefaultJvmCalendarProvider extends JvmCalendarProvider {
 
   /**

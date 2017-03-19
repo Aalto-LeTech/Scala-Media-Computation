@@ -20,21 +20,14 @@ class DefaultJvmAwtPlatformResourceFactory(
   calendarProvider: JvmCalendarProvider,
   uuidProvider: JvmUniqueIdProvider,
   imageProvider: AwtImageProvider,
-  screenInfoProvider: AwtScreenInformationProvider) extends PlatformResourceFactory {
+  val screenInformationProvider: ScreenInformationProvider) extends PlatformResourceFactory {
 
   /**
    *
    *
    * @return
    */
-  override def screenInformationProvider: ScreenInformationProvider = screenInfoProvider
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def createCurrentTimestamp(): Timestamp = {
+  override def createCurrentTimestamp: Timestamp = {
     def currentMoment = calendarProvider.currentMoment
 
     DefaultTimestamp(
@@ -78,7 +71,7 @@ class DefaultJvmAwtPlatformResourceFactory(
    *
    * @return
    */
-  override def createUniqueIdString(): String = uuidProvider.newId()
+  override def createUniqueIdString: String = uuidProvider.newId
 
   /**
    *

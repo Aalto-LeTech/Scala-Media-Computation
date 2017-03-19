@@ -15,6 +15,6 @@ private[smcl]
 trait TimestampedCreation {
 
   /** Approximate creation time of this object. */
-  val created: Timestamp = PRF.createCurrentTimestamp()
+  val created: Timestamp = PRF.createCurrentTimestamp
 
 }

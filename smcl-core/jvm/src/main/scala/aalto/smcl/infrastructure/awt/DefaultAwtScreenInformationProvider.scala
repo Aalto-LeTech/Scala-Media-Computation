@@ -5,12 +5,13 @@ import aalto.smcl.infrastructure.ScreenInformationProvider
 
 
 
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-class AwtScreenInformationProvider extends ScreenInformationProvider {
+class DefaultAwtScreenInformationProvider extends ScreenInformationProvider {
 
   /**
    * Dimensions of the screen.

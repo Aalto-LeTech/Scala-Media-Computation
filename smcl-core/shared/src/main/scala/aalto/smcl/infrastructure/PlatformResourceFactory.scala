@@ -52,14 +52,14 @@ trait PlatformResourceFactory {
    *
    * @return
    */
-  def createUniqueIdString(): String
+  def createUniqueIdString: String
 
   /**
    *
    *
    * @return
    */
-  def createCurrentTimestamp(): Timestamp
+  def createCurrentTimestamp: Timestamp
 
   /**
    *

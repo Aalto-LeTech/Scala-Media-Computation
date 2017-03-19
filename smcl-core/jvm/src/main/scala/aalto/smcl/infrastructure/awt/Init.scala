@@ -1,7 +1,7 @@
 package aalto.smcl.infrastructure.awt
 
 
-import aalto.smcl.infrastructure.{DefaultJvmCalendarProvider, DefaultPlatformResourceFactory, JvmUniqueIdProvider}
+import aalto.smcl.infrastructure.{DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory}
 
 
 
@@ -25,9 +25,9 @@ object Init {
    */
   private def initPlatformResourceFactory(): Unit = {
     val calendarProvider = new DefaultJvmCalendarProvider()
-    val uuidProvider = new JvmUniqueIdProvider()
-    val imageProvider = new AwtImageProvider()
-    val screenInfoProvider = new AwtScreenInformationProvider()
+    val uuidProvider = new DefaultJvmUniqueIdProvider()
+    val imageProvider = new DefaultAwtImageProvider()
+    val screenInfoProvider = new DefaultAwtScreenInformationProvider()
 
     val factory = new DefaultJvmAwtPlatformResourceFactory(
       calendarProvider, uuidProvider, imageProvider, screenInfoProvider)
