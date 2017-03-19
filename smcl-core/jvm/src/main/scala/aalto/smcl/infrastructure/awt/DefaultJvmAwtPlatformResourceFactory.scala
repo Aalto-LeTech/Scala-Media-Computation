@@ -1,9 +1,12 @@
 package aalto.smcl.infrastructure.awt
 
 
+import java.util.Calendar
+
 import scala.util.{Either, Try}
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure._
+import aalto.smcl.interfaces.Timestamp
 
 
 
@@ -14,6 +17,7 @@ import aalto.smcl.infrastructure._
  * @author Aleksi Lukkarinen
  */
 class DefaultJvmAwtPlatformResourceFactory(
+  calendarProvider: JvmCalendarProvider,
   uuidProvider: JvmUniqueIdProvider,
   imageProvider: AwtImageProvider,
   screenInfoProvider: AwtScreenInformationProvider) extends PlatformResourceFactory {
@@ -24,6 +28,25 @@ class DefaultJvmAwtPlatformResourceFactory(
    * @return
    */
   override def screenInformationProvider: ScreenInformationProvider = screenInfoProvider
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def createCurrentTimestamp(): Timestamp = {
+    def currentMoment = calendarProvider.currentMoment
+
+    DefaultTimestamp(
+      day = currentMoment.get(Calendar.DAY_OF_MONTH),
+      month = currentMoment.get(Calendar.MONTH),
+      year = currentMoment.get(Calendar.YEAR),
+      hour = currentMoment.get(Calendar.HOUR),
+      minute = currentMoment.get(Calendar.MINUTE),
+      second = currentMoment.get(Calendar.SECOND),
+      milliSecond = currentMoment.get(Calendar.MILLISECOND)
+    )
+  }
 
   /**
    *

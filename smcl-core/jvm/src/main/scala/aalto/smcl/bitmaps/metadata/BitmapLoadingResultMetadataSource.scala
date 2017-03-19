@@ -1,12 +1,11 @@
 package aalto.smcl.bitmaps.metadata
 
 import java.awt.image.BufferedImage
-import java.util.Date
 
 import aalto.smcl.bitmaps.BitmapLoadingResult
-import aalto.smcl.interfaces.MetaInterfaceBase
+import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 import aalto.smcl.infrastructure.awt.AwtBitmapBufferAdapter
-import aalto.smcl.interfaces.awt.{ResourceMetadataSource, StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
+import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 
 
 
@@ -75,10 +74,10 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    * @param bitmapNumber
    * @return
    */
-  override def resourceTimestampOption(bitmapNumber: Int = 0): Option[Date] = {
+  override def resourceTimestampOption(bitmapNumber: Int = 0): Option[Timestamp] = {
     validateBitmapNumber(bitmapNumber)
 
-    Some(relatedBitmapLoadingResult.bitmaps(bitmapNumber).created.underlyingDate)
+    Some(relatedBitmapLoadingResult.bitmaps(bitmapNumber).created)
   }
 
   /**

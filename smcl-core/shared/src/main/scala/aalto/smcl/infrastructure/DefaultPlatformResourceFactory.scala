@@ -4,6 +4,7 @@ package aalto.smcl.infrastructure
 import scala.util.{Either, Try}
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure.exceptions.SMCLImplementationNotSetError
+import aalto.smcl.interfaces.Timestamp
 
 
 
@@ -19,6 +20,13 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
   /** The concrete factory class. */
   private var _implementation: Option[PlatformResourceFactory] = None
 
+  /**
+   *
+   *
+   * @return
+   */
+  override def createCurrentTimestamp(): Timestamp =
+    implementation.createCurrentTimestamp()
 
   /**
    *

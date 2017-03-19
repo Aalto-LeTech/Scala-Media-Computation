@@ -1,15 +1,14 @@
 package aalto.smcl.bitmaps.metadata
 
 import java.awt.image.BufferedImage
-import java.util.Date
 
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.bitmaps.ViewerUpdateStyle.PreventViewerUpdates
 import aalto.smcl.colors.{PresetColors, RGBAColor}
 import aalto.smcl.infrastructure.awt.AwtBitmapBufferAdapter
 import aalto.smcl.infrastructure.GS
-import aalto.smcl.interfaces.MetaInterfaceBase
-import aalto.smcl.interfaces.awt.{ResourceMetadataSource, StaticGeneralBitmapSource}
+import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
+import aalto.smcl.interfaces.awt.StaticGeneralBitmapSource
 
 
 
@@ -182,7 +181,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    * @param bitmapNumber
    * @return
    */
-  override def resourceTimestampOption(bitmapNumber: Int = FirstBitmapIndex): Option[Date] = {
+  override def resourceTimestampOption(bitmapNumber: Int = FirstBitmapIndex): Option[Timestamp] = {
     validateBitmapNumber(bitmapNumber)
 
     None

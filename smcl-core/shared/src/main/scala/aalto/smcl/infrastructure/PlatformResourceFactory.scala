@@ -2,8 +2,8 @@ package aalto.smcl.infrastructure
 
 
 import scala.util.{Either, Try}
-
 import aalto.smcl.colors.RGBAColor
+import aalto.smcl.interfaces.Timestamp
 
 
 
@@ -53,6 +53,13 @@ trait PlatformResourceFactory {
    * @return
    */
   def createUniqueIdString(): String
+
+  /**
+   *
+   *
+   * @return
+   */
+  def createCurrentTimestamp(): Timestamp
 
   /**
    *

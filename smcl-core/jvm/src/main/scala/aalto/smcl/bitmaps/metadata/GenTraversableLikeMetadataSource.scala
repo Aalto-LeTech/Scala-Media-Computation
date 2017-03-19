@@ -5,11 +5,10 @@ import java.util.Date
 
 import scala.collection.GenTraversableLike
 import scala.collection.mutable.ArrayBuffer
-
 import aalto.smcl.bitmaps.{Bitmap, ImmutableBitmap}
-import aalto.smcl.interfaces.MetaInterfaceBase
+import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 import aalto.smcl.infrastructure.awt.AwtBitmapBufferAdapter
-import aalto.smcl.interfaces.awt.{ResourceMetadataSource, StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
+import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 
 
 
@@ -96,10 +95,10 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    * @param bitmapNumber
    * @return
    */
-  override def resourceTimestampOption(bitmapNumber: Int = 0): Option[Date] = {
+  override def resourceTimestampOption(bitmapNumber: Int = 0): Option[Timestamp] = {
     validateBitmapNumber(bitmapNumber)
 
-    Some(_bitmaps(bitmapNumber).created.underlyingDate)
+    Some(_bitmaps(bitmapNumber).created)
   }
 
   /**
