@@ -14,10 +14,11 @@ description := "Public interfaces for querying data from objects produced by the
 
 
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
-crossScalaVersions := Seq("2.10.5")
+crossScalaVersions := Seq("2.12.1")
 
+retrieveManaged := true
 
 
 scalacOptions ++= Seq(

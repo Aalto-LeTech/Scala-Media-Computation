@@ -16,6 +16,18 @@ import aalto.smcl.infrastructure.PackageInitializationPhase.PackageInitializatio
 private[infrastructure]
 object LibraryInitializer {
 
+  val FixedPackageInitializationOrder__HACK: Seq[Class[PackageInitializerBase]] = Seq(
+    classOf[aalto.smcl.PackageInitializer],
+    classOf[aalto.smcl.infrastructure.PackageInitializer],
+    classOf[aalto.smcl.common.PackageInitializer],
+    classOf[aalto.smcl.colors.PackageInitializer],
+    classOf[aalto.smcl.bitmaps.PackageInitializer],
+    classOf[aalto.smcl.bitmaps.operations.PackageInitializer],
+    classOf[aalto.smcl.bitmaps.viewer.PackageInitializer],
+    classOf[aalto.smcl.bitmaps.viewer.events.external.PackageInitializer],
+    classOf[aalto.smcl.bitmaps.metadata.PackageInitializer]
+  ) map {_.asInstanceOf[Class[PackageInitializerBase]]}
+
   private[this] var _initializationInitiatorOption: Option[AnyRef] = None
 
   /** */
@@ -143,18 +155,11 @@ object LibraryInitializer {
    * @return
    */
   def resolveInitializationOrder(): Seq[Class[PackageInitializerBase]] = {
-    val dependencyResolver = new PackageInitializerDependencyResolver()
-    for {initializer <- loadPackageInitializerClasses()} {
-      if (initializer.dependencies.isEmpty) {
-        dependencyResolver.addDependency(initializer.clazz, None)
-      }
-      else {
-        for (destinationClass <- initializer.dependencies)
-          dependencyResolver.addDependency(initializer.clazz, Some(destinationClass))
-      }
-    }
+    //loadPackageInitializerClasses()
+    // for {initializer <- loadPackageInitializerClasses()} { }
 
-    dependencyResolver.resolveInitializationOrder()
+    // TODO: HACK ALERT!!! Code related to resolving initialization order is removed!
+    FixedPackageInitializationOrder__HACK
   }
 
   /**
