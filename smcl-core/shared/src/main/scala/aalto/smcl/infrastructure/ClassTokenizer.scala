@@ -1,5 +1,8 @@
 package aalto.smcl.infrastructure
 
+
+
+
 /**
  * Creates formal-like textual tokens representing classes. A class to
  * be tokenized has to provide the information necessary for tokenization.
@@ -92,9 +95,9 @@ class ClassTokenizer private[infrastructure]() {
    * Returns an escaped string for tokenization with the `tokenize()` method. The characters to be
    * escaped are the Scala's standard ones plus both colons and semicolons.
    */
-  private def escape(part: String): String =
-    new StringUtils().escapeString(part)
-      .replaceAllLiterally(StrColon, StrColonAsUnicode)
-      .replaceAllLiterally(StrSemicolon, StrSemicolonAsUnicode)
+  // TODO: Escaping doesn't work (no reflection) --> redesign!!
+  private def escape(part: String): String = //new StringUtils().escapeString(part)
+    part.replaceAllLiterally(StrColon, StrColonAsUnicode)
+        .replaceAllLiterally(StrSemicolon, StrSemicolonAsUnicode)
 
 }
