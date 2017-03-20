@@ -26,4 +26,3 @@ class ExtendedRichRGBAColor(val self: RGBAColor) {
     AwtColorAdapter(self.withFullOpacity).awtColor
 
 }
-
