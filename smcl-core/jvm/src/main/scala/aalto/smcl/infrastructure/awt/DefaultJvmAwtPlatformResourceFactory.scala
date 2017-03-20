@@ -19,8 +19,17 @@ import aalto.smcl.interfaces.Timestamp
 class DefaultJvmAwtPlatformResourceFactory(
   calendarProvider: JvmCalendarProvider,
   uuidProvider: JvmUniqueIdProvider,
+  fontProvider: AwtFontProvider,
   imageProvider: AwtImageProvider,
   val screenInformationProvider: ScreenInformationProvider) extends PlatformResourceFactory {
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def availableFonts: Seq[String] = fontProvider.availableFonts map {_.getFontName}
+
 
   /**
    *

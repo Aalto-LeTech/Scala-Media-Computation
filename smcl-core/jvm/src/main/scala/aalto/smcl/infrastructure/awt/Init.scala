@@ -26,11 +26,12 @@ object Init {
   private def initPlatformResourceFactory(): Unit = {
     val calendarProvider = new DefaultJvmCalendarProvider()
     val uuidProvider = new DefaultJvmUniqueIdProvider()
+    val fontProvider = new DefaultAwtFontProvider()
     val imageProvider = new DefaultAwtImageProvider()
     val screenInfoProvider = new DefaultAwtScreenInformationProvider()
 
     val factory = new DefaultJvmAwtPlatformResourceFactory(
-      calendarProvider, uuidProvider, imageProvider, screenInfoProvider)
+      calendarProvider, uuidProvider, fontProvider, imageProvider, screenInfoProvider)
 
     DefaultPlatformResourceFactory.setImplementation(factory)
   }

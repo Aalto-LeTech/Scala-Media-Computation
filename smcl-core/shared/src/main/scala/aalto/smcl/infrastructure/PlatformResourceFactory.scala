@@ -21,6 +21,13 @@ trait PlatformResourceFactory {
    *
    * @return
    */
+  def availableFonts: Seq[String]
+
+  /**
+   *
+   *
+   * @return
+   */
   def screenInformationProvider: ScreenInformationProvider
 
 

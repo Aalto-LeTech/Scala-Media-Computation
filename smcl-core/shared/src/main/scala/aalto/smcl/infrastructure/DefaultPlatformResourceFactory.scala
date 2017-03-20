@@ -25,6 +25,13 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
+  override def availableFonts: Seq[String] = implementation.availableFonts
+
+  /**
+   *
+   *
+   * @return
+   */
   override def createCurrentTimestamp(): Timestamp =
     implementation.createCurrentTimestamp
 

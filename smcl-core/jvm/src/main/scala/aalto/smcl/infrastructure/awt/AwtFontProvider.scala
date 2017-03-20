@@ -1,5 +1,6 @@
 package aalto.smcl.infrastructure.awt
 
+
 import java.awt.{Font => LowLevelFont}
 
 
@@ -11,13 +12,13 @@ import java.awt.{Font => LowLevelFont}
  * @author Aleksi Lukkarinen
  */
 private[infrastructure]
-class FontProvider {
+trait AwtFontProvider {
 
   /**
    *
    *
    * @return
    */
-  def availableFonts(): Seq[LowLevelFont] = UIProvider.awtGraphEnv.getAllFonts.toSeq
+  def availableFonts: Seq[LowLevelFont]
 
 }
