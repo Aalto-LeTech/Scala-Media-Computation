@@ -34,7 +34,7 @@ case class Shear(
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Shear", Map(
     "shearingFactorHorizontal" -> Option(shearingFactorHorizontal.toString),
     "shearingFactorVertical" -> Option(shearingFactorVertical.toString),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString),

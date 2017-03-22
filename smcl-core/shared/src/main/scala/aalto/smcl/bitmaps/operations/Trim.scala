@@ -29,7 +29,7 @@ case class Trim(
   require(colorToTrim != null, "The background color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Trim", Map(
     "colorToTrim" -> Option(s"0x${colorToTrim.toArgbInt.toArgbHexColorString}")
   ))
 

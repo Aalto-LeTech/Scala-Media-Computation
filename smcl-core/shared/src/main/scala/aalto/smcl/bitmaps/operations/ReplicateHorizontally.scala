@@ -40,7 +40,7 @@ case class ReplicateHorizontally(
     Option(Seq(bitmapToReplicate.operations))
 
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("ReplicateHorizontally", Map(
     "numberOfReplicas" -> Option(numberOfReplicas.toString),
     "padding" -> Option(s"$paddingInPixels px"),
     "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")))

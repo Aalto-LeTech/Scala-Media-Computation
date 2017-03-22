@@ -41,7 +41,7 @@ case class AppendVertically(
     Option(bitmapsToCombine.map(_.operations))
 
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("AppendVertically", Map(
     "padding" -> Option(s"$paddingInPixels px"),
     "horizontalAlignment" -> Option(horizontalAlignment.toString),
     "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")))

@@ -33,7 +33,7 @@ case class Rotate(
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Rotate", Map(
     "angle" -> Option(s"$angleInDegrees deg"),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString),
     "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")

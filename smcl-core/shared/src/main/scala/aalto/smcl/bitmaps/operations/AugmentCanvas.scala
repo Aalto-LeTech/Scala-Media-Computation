@@ -47,7 +47,7 @@ case class AugmentCanvas(
     s"Number of extra pixels to be added onto the bottom edge must be >= 0 (was $extraPixelsOntoBottomEdge).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("AugmentCanvas", Map(
     "extraPixelsOntoLeftEdge" -> Option(s"$extraPixelsOntoLeftEdge px"),
     "extraPixelsOntoTopEdge" -> Option(s"$extraPixelsOntoTopEdge px"),
     "extraPixelsOntoRightEdge" -> Option(s"$extraPixelsOntoRightEdge px"),

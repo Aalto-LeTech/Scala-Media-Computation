@@ -26,14 +26,12 @@ case class ToGrayscaleByLuminocity()
   /** */
   private val StandardBlueWeight: Double = 0.07
 
-
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("ToGrayscaleByLuminocity", Map(
     "redWeight" -> Option(StandardRedWeight.toString),
     "greenWeight" -> Option(StandardGreenWeight.toString),
     "blueWeight" -> Option(StandardBlueWeight.toString)
   ))
-
 
   /**
    * Creates the buffer which contains the results of applying this operation

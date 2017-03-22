@@ -43,7 +43,7 @@ case class OverlayPerAlignments(
     Option(bitmapsToOverlayFromBottomToTop.map(_.operations))
 
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("OverlayPerAlignments", Map(
     "horizontalAlignment" -> Option(horizontalAlignment.toString),
     "verticalAlignment" -> Option(verticalAlignment.toString),
     "opacityForAllBitmaps" -> Option(opacityForAllBitmaps.toString),

@@ -18,9 +18,7 @@ private[bitmaps] case class Negate()
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
-  ))
-
+  lazy val metaInformation = MetaInformationMap("Negate", Map())
 
   /**
    * Creates the buffer which contains the results of applying this operation

@@ -67,7 +67,7 @@ class ClassTokenizer private[infrastructure]() {
    * @param s       the `StringBuilder` instance to be used
    */
   private def appendPrologOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
-    s ++= StrLeftAngleBracket ++= escape(new ReflectionUtils().shortTypeNameOf(clazz))
+    s ++= StrLeftAngleBracket ++= escape(clazz.metaInformation.className)
 
   /**
    * Appends key-value pairs to a given `StringBuilder` in the form `"; key: value"`.

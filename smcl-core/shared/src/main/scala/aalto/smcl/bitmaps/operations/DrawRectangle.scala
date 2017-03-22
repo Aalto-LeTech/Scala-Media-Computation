@@ -43,7 +43,7 @@ case class DrawRectangle(
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("DrawRectangle", Map(
     "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),

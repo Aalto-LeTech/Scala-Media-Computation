@@ -49,7 +49,7 @@ case class DrawEllipse(
   val boundingBoxUpperLeftY: Int = centerYInPixels - (heightInPixels / 2)
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("DrawEllipse", Map(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),

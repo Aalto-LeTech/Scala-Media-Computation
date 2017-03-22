@@ -42,7 +42,7 @@ case class OverlayFreely(
     Option(Seq(bottomBitmap.operations, topBitmap.operations))
 
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("OverlayFreely", Map(
     "topBitmapUpperLeftX" -> Option(s"$topBitmapUpperLeftX px"),
     "topBitmapUpperLeftY" -> Option(s"$topBitmapUpperLeftY px"),
     "topBitmapOpacity" -> Option(topBitmapOpacity.toString),

@@ -472,7 +472,7 @@ class RGBAColor protected(
   lazy val toHexString: String = toArgbInt.toArgbHexColorString
 
   /** Information about this [[aalto.smcl.bitmaps.operations.Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("RGBAColor", Map(
     "red" -> Option(red.toString),
     "green" -> Option(green.toString),
     "blue" -> Option(blue.toString),

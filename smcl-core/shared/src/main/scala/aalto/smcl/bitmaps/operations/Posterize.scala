@@ -23,7 +23,7 @@ case class Posterize(strengthAsPercentage: Int)
   new CommonValidators().validatePercentage(strengthAsPercentage, Option("Strength"))
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Posterize", Map(
     "strengthInPercents" -> Option(strengthAsPercentage.toString)
   ))
 

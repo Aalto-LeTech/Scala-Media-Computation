@@ -24,7 +24,7 @@ case class CreateBitmap(
   with Immutable {
 
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("CreateBitmap", Map(
     "width" -> Option("${widthInPixels} px"),
     "height" -> Option("${heightInPixels} px")
   ))

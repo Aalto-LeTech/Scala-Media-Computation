@@ -18,9 +18,7 @@ case class IteratePixels(function: (Int, Int, Int, Int) => (Int, Int, Int, Int))
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
-  ))
-
+  lazy val metaInformation = MetaInformationMap("IteratePixels", Map())
 
   /**
    * Creates the buffer which contains the results of applying this operation

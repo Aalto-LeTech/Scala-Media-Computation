@@ -49,7 +49,7 @@ case class DrawCircle(
   val boundingBoxSideLength: Int = 2 * radiusInPixels
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("DrawCircle", Map(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),
     "radius" -> Option(s"$radiusInPixels px"),

@@ -12,15 +12,14 @@ import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps] case class KeepOnlyRedAndBlueComponents()
+private[bitmaps]
+case class KeepOnlyRedAndBlueComponents()
   extends AbstractOperation
   with OneSourceFilter
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
-  ))
-
+  lazy val metaInformation = MetaInformationMap("KeepOnlyRedAndBlueComponents", Map())
 
   /**
    * Creates the buffer which contains the results of applying this operation

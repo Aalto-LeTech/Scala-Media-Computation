@@ -19,8 +19,7 @@ case class FlipVertically()
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map())
-
+  lazy val metaInformation = MetaInformationMap("FlipVertically", Map())
 
   /**
    * Creates the buffer which contains the results of applying this operation

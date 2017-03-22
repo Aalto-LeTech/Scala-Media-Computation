@@ -21,7 +21,7 @@ case class ConvolveWithCustomKernel(kernel: ConvolutionKernel)
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("ConvolveWithCustomKernel", Map(
     "kernel" -> Option(kernel.toString)
   ))
 

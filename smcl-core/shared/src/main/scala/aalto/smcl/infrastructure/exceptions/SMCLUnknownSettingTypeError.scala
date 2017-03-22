@@ -1,9 +1,6 @@
 package aalto.smcl.infrastructure.exceptions
 
 
-import aalto.smcl.infrastructure.ReflectionUtils
-
-
 
 
 /**
@@ -11,9 +8,9 @@ import aalto.smcl.infrastructure.ReflectionUtils
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLUnknownSettingTypeError private[smcl](settingCandidate: AnyRef, cause: Throwable)
+final class SMCLUnknownSettingTypeError private[smcl](settingCandidateName: String, cause: Throwable)
   extends RuntimeException(
-    s"""The given object of type ${new ReflectionUtils().shortTypeNameOf(settingCandidate)} does not represent a.valid setting""",
+    s"""The given object of type $settingCandidateName does not represent a.valid setting""",
     cause) {
 
   /**
@@ -22,6 +19,6 @@ final class SMCLUnknownSettingTypeError private[smcl](settingCandidate: AnyRef, 
    * @param settingCandidate
    * @return
    */
-  def this(settingCandidate: AnyRef) = this(settingCandidate, null)
+  def this(settingCandidate: String) = this(settingCandidate, null)
 
 }

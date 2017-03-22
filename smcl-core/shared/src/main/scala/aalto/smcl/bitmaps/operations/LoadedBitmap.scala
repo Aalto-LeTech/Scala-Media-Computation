@@ -34,7 +34,7 @@ case class LoadedBitmap(
   override def heightInPixels: Int = bitmap.heightInPixels
 
   /** Information about this [[Renderable]] instance */
-  lazy override val metaInformation = MetaInformationMap(Map(
+  lazy override val metaInformation = MetaInformationMap("LoadedBitmap", Map(
     "resourcePath" -> Option(resourcePathOption.getOrElse("<unknown>")),
     "imageIndexInFile" -> Option(bitmapIndexInResourceOption.fold("<undefined>") {
       _.toString

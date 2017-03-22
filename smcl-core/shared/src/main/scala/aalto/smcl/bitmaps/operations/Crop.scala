@@ -44,7 +44,7 @@ case class Crop(
     "Y coordinate of cropping window's bottom right corner was outside of the bitmap to be cropped.")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Crop", Map(
     "windowTopLeftX" -> Option(s"$windowTopLeftX px"),
     "windowTopLeftY" -> Option(s"$windowTopLeftY px"),
     "windowBottomRightX" -> Option(s"$windowBottomRightX px"),

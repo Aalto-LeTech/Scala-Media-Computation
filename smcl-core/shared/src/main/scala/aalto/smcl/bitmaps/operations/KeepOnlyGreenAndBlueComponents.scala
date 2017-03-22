@@ -19,9 +19,7 @@ case class KeepOnlyGreenAndBlueComponents()
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
-  ))
-
+  lazy val metaInformation = MetaInformationMap("KeepOnlyGreenAndBlueComponents", Map())
 
   /**
    * Creates the buffer which contains the results of applying this operation

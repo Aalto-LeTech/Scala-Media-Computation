@@ -18,8 +18,7 @@ case class ApplyPixelSnapshot(snapshotBuffer: BitmapBufferAdapter)
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
-  ))
+  lazy val metaInformation = MetaInformationMap("ApplyPixelSnapshot", Map())
 
 
   /**

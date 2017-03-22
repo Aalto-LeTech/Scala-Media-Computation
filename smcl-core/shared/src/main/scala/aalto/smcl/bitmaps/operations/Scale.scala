@@ -31,7 +31,7 @@ case class Scale(
   require(sourceBitmap != null, s"Scaling requires exactly one source image (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Scale", Map(
     "scalingFactorX" -> Option(scalingFactorVertical.toString),
     "scalingFactorY" -> Option(scalingFactorHorizontal.toString),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString)

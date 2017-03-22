@@ -40,7 +40,7 @@ case class DrawSquare(
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("DrawSquare", Map(
     "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "side" -> Option(s"$sideLengthInPixels px"),

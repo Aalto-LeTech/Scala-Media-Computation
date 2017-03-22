@@ -102,6 +102,6 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    * @return
    */
   private def implementation: PlatformResourceFactory =
-    _implementation.getOrElse(throw new SMCLImplementationNotSetError(DefaultPlatformResourceFactory))
+    _implementation.getOrElse(throw new SMCLImplementationNotSetError("DefaultPlatformResourceFactory"))
 
 }

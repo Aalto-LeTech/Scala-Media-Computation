@@ -19,7 +19,7 @@ case class FlipDiagonally()
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map())
+  lazy val metaInformation = MetaInformationMap("FlipDiagonally", Map())
 
 
   /**
