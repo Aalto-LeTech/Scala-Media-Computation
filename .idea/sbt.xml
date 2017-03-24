@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaSbtSettings">
+    <option name="customLauncherEnabled" value="true" />
+    <option name="customLauncherPath" value="C:\dev-apps\sbt\bin\sbt-launch.jar" />
+    <option name="customVMEnabled" value="true" />
+    <option name="customVMPath" value="C:\Program Files\Java\jdk1.8.0_121" />
+    <option name="linkedExternalProjectsSettings">
+      <SbtProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="jdk" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/project" />
+            <option value="$PROJECT_DIR$/smcl-core-tests/js" />
+            <option value="$PROJECT_DIR$/smcl-core-tests/js/project" />
+            <option value="$PROJECT_DIR$/smcl-core-tests/jvm" />
+            <option value="$PROJECT_DIR$/smcl-core-tests/jvm/project" />
+            <option value="$PROJECT_DIR$/smcl-core-tests/shared" />
+            <option value="$PROJECT_DIR$/smcl-core/js" />
+            <option value="$PROJECT_DIR$/smcl-core/js/project" />
+            <option value="$PROJECT_DIR$/smcl-core/jvm" />
+            <option value="$PROJECT_DIR$/smcl-core/jvm/project" />
+            <option value="$PROJECT_DIR$/smcl-core/shared" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces-tests/js" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces-tests/js/project" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces-tests/jvm" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces-tests/jvm/project" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces-tests/shared" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces/js" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces/js/project" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces/jvm" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces/jvm/project" />
+            <option value="$PROJECT_DIR$/smcl-public-interfaces/shared" />
+          </set>
+        </option>
+        <option name="resolveSbtClassifiers" value="true" />
+        <option name="sbtVersion" value="0.13.13" />
+      </SbtProjectSettings>
+    </option>
+    <option name="vmParameters" value="" />
+  </component>
+</project>

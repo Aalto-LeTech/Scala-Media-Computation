@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.8">
+      <module name="scala-media-computation" target="1.8" />
+      <module name="smclCoreJS" target="1.8" />
+      <module name="smclCoreJVM" target="1.8" />
+      <module name="smclCoreTestsJS" target="1.8" />
+      <module name="smclCoreTestsJVM" target="1.8" />
+      <module name="smclPublicInterfacesJS" target="1.8" />
+      <module name="smclPublicInterfacesJVM" target="1.8" />
+      <module name="smclPublicInterfacesTestsJS" target="1.8" />
+      <module name="smclPublicInterfacesTestsJVM" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

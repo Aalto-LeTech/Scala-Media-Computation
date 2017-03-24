@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/build.iml" filepath="$PROJECT_DIR$/.idea/modules/build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-core/js/smcl-core-js.iml" filepath="$PROJECT_DIR$/smcl-core/js/smcl-core-js.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-core/jvm/smcl-core-jvm.iml" filepath="$PROJECT_DIR$/smcl-core/jvm/smcl-core-jvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-core/shared/smcl-core-shared.iml" filepath="$PROJECT_DIR$/smcl-core/shared/smcl-core-shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-core-tests/js/smcl-core-tests-js.iml" filepath="$PROJECT_DIR$/smcl-core-tests/js/smcl-core-tests-js.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-core-tests/jvm/smcl-core-tests-jvm.iml" filepath="$PROJECT_DIR$/smcl-core-tests/jvm/smcl-core-tests-jvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-core-tests/shared/smcl-core-tests-shared.iml" filepath="$PROJECT_DIR$/smcl-core-tests/shared/smcl-core-tests-shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-public-interfaces/js/smcl-public-interfaces-js.iml" filepath="$PROJECT_DIR$/smcl-public-interfaces/js/smcl-public-interfaces-js.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-public-interfaces/jvm/smcl-public-interfaces-jvm.iml" filepath="$PROJECT_DIR$/smcl-public-interfaces/jvm/smcl-public-interfaces-jvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-public-interfaces/shared/smcl-public-interfaces-shared.iml" filepath="$PROJECT_DIR$/smcl-public-interfaces/shared/smcl-public-interfaces-shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-public-interfaces-tests/js/smcl-public-interfaces-tests-js.iml" filepath="$PROJECT_DIR$/smcl-public-interfaces-tests/js/smcl-public-interfaces-tests-js.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-public-interfaces-tests/jvm/smcl-public-interfaces-tests-jvm.iml" filepath="$PROJECT_DIR$/smcl-public-interfaces-tests/jvm/smcl-public-interfaces-tests-jvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-public-interfaces-tests/shared/smcl-public-interfaces-tests-shared.iml" filepath="$PROJECT_DIR$/smcl-public-interfaces-tests/shared/smcl-public-interfaces-tests-shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smcl-root.iml" filepath="$PROJECT_DIR$/smcl-root.iml" />
+    </modules>
+  </component>
+</project>
