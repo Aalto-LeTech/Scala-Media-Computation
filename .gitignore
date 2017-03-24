@@ -23,7 +23,8 @@
 !/README.md
 !/smcl-root.iml
 
-/idea/workspace.xml
+
+/.idea/workspace.xml
 
 /project/*
 !/project/ApplicationDependencies.scala
