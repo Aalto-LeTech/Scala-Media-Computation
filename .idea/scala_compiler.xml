@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
+    <option name="deprecationWarnings" value="true" />
+    <option name="uncheckedWarnings" value="true" />
+    <option name="featureWarnings" value="true" />
     <option name="incrementalityType" value="SBT" />
     <profile name="SBT 2" modules="scala-media-computation,smclCoreTestsJVM,smclCoreJVM,smclPublicInterfacesTestsJVM,smclPublicInterfacesJVM">
       <option name="deprecationWarnings" value="true" />
@@ -12,7 +15,7 @@
       <option name="uncheckedWarnings" value="true" />
       <option name="featureWarnings" value="true" />
       <plugins>
-        <plugin path="C:\Users\Aleksi\.ivy2\cache\org.scala-js\scalajs-compiler_2.12.1\jars\scalajs-compiler_2.12.1-0.6.14.jar" />
+        <plugin path="$USER_HOME$/.ivy2/cache/org.scala-js/scalajs-compiler_2.12.1/jars/scalajs-compiler_2.12.1-0.6.14.jar" />
       </plugins>
     </profile>
   </component>

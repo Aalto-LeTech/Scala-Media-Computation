@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ScalaSbtSettings">
     <option name="customLauncherEnabled" value="true" />
-    <option name="customLauncherPath" value="C:\dev-apps\sbt\bin\sbt-launch.jar" />
+    <option name="customLauncherPath" value="$PROJECT_DIR$/../../apps/sbt/bin/sbt-launch.jar" />
     <option name="customVMEnabled" value="true" />
-    <option name="customVMPath" value="C:\Program Files\Java\jdk1.8.0_121" />
+    <option name="customVMPath" value="/usr/lib/jvm/java-8-oracle-1.8.0.112" />
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
