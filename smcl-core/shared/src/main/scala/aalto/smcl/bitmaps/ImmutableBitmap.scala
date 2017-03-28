@@ -1817,7 +1817,7 @@ with TimestampedCreation {
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
     val rendition = toRenderedRepresentation
-    drawingSurface.drawBitmap(_renderingBuffer.apply(), transformation)
+    drawingSurface.drawBitmap(rendition, transformation)
   }
 
   /**
