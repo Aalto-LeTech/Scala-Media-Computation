@@ -1,5 +1,8 @@
 package aalto.smcl.infrastructure
 
+
+
+
 /**
  * Ensures that a bitmap can be rendered onto drawing surfaces.
  *
@@ -7,16 +10,15 @@ package aalto.smcl.infrastructure
  */
 trait RenderableBitmap {
 
-
   /**
    * Renders this [[RenderableBitmap]] onto a drawing surface.
    */
-  def renderOnto(platformDrawingSurface: PlatformDrawingSurface, x: Int, y: Int): Unit
+  def renderOnto(platformDrawingSurface: DrawingSurfaceAdapter, x: Int, y: Int): Unit
 
   /**
-   * Returns an instance of Java's [[PlatformBitmapBuffer]]
+   * Returns an instance of Java's [[BitmapBufferAdapter]]
    * representing this [[RenderableBitmap]].
    */
-  def toRenderedRepresentation: PlatformBitmapBuffer
+  def toRenderedRepresentation: BitmapBufferAdapter
 
 }

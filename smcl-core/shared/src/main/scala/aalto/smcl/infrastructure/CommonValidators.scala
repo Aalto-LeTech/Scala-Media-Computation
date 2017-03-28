@@ -1,5 +1,11 @@
 package aalto.smcl.infrastructure
 
+
+import aalto.smcl.infrastructure.exceptions.{SMCLInvalidPercentageError, SMCLInvalidZeroToOneFactorError}
+
+
+
+
 /**
  *
  *

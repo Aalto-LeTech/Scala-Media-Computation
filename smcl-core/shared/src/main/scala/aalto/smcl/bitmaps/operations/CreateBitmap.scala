@@ -24,7 +24,7 @@ case class CreateBitmap(
   with Immutable {
 
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("CreateBitmap", Map(
     "width" -> Option("${widthInPixels} px"),
     "height" -> Option("${heightInPixels} px")
   ))
@@ -37,18 +37,18 @@ case class CreateBitmap(
    *
    * @return
    */
-  override def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer =
-    PlatformBitmapBuffer(widthInPixels, heightInPixels)
+  override def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter =
+    PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
 
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer()
 
 }

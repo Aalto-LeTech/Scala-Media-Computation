@@ -2,10 +2,6 @@ package aalto.smcl.common
 
 
 import scala.collection.immutable.HashMap
-//import scala.swing.Font
-
-import aalto.smcl.infrastructure.FontProvider
-
 
 
 

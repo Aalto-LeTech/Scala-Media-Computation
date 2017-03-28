@@ -29,7 +29,7 @@ case class Trim(
   require(colorToTrim != null, "The background color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Trim", Map(
     "colorToTrim" -> Option(s"0x${colorToTrim.toArgbInt.toArgbHexColorString}")
   ))
 
@@ -42,10 +42,10 @@ case class Trim(
    * and which is used as a background for a new buffers provided by this
    * [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).trim(colorToTrim)
   }
 
@@ -60,12 +60,12 @@ case class Trim(
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
 
 }

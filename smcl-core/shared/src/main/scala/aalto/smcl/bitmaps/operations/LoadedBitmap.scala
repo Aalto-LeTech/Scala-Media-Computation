@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
 
 
 
@@ -17,7 +17,7 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
  */
 private[bitmaps]
 case class LoadedBitmap(
-  bitmap: PlatformBitmapBuffer,
+  bitmap: BitmapBufferAdapter,
   resourcePathOption: Option[String],
   bitmapIndexInResourceOption: Option[Int])
   extends AbstractOperation
@@ -34,7 +34,7 @@ case class LoadedBitmap(
   override def heightInPixels: Int = bitmap.heightInPixels
 
   /** Information about this [[Renderable]] instance */
-  lazy override val metaInformation = MetaInformationMap(Map(
+  lazy override val metaInformation = MetaInformationMap("LoadedBitmap", Map(
     "resourcePath" -> Option(resourcePathOption.getOrElse("<unknown>")),
     "imageIndexInFile" -> Option(bitmapIndexInResourceOption.fold("<undefined>") {
       _.toString
@@ -47,18 +47,17 @@ case class LoadedBitmap(
    *
    * @return
    */
-  override def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer =
-    bitmap.copy()
+  override def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = bitmap.copy
 
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer()
 
 }

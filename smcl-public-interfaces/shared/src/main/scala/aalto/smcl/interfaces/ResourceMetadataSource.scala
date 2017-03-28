@@ -1,9 +1,6 @@
 package aalto.smcl.interfaces
 
 
-import java.util.Date
-
-
 
 
 /**
@@ -27,7 +24,7 @@ trait ResourceMetadataSource {
    * @param bitmapNumber
    * @return
    */
-  def resourceTimestampOption(bitmapNumber: Int = 0): Option[Date]
+  def resourceTimestampOption(bitmapNumber: Int = 0): Option[Timestamp]
 
   /**
    *

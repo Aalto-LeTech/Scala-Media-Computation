@@ -3,6 +3,7 @@ package aalto.smcl.colors
 
 import aalto.smcl.colors
 import aalto.smcl.infrastructure._
+import aalto.smcl.infrastructure.ColorAdapter
 
 
 
@@ -190,7 +191,7 @@ object RGBAColor {
    * @param platformColor
    * @return
    */
-  private[smcl] def apply(platformColor: PlatformColor): RGBAColor =
+  private[smcl] def apply(platformColor: ColorAdapter): RGBAColor =
     RGBAColor(
       platformColor.red,
       platformColor.green,
@@ -205,7 +206,7 @@ object RGBAColor {
    * @return
    */
   private[smcl] def apply(
-    platformColor: PlatformColor,
+    platformColor: ColorAdapter,
     nameOption: Option[String]): RGBAColor =
     RGBAColor(
       platformColor.red,
@@ -471,14 +472,14 @@ class RGBAColor protected(
   lazy val toHexString: String = toArgbInt.toArgbHexColorString
 
   /** Information about this [[aalto.smcl.bitmaps.operations.Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("RGBAColor", Map(
     "red" -> Option(red.toString),
     "green" -> Option(green.toString),
     "blue" -> Option(blue.toString),
     "opacity" -> Option(opacity.toString)))
 
   /** */
-  lazy val toColorComponentMap = colorComponentMapFrom(this)
+  lazy val toColorComponentMap: Map[Symbol, Double] = colorComponentMapFrom(this)
 
   /** */
   lazy val toNormalizedRgbaComponents: (Double, Double, Double, Double) =

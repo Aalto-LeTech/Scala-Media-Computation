@@ -1,7 +1,9 @@
 package aalto.smcl.infrastructure
 
+import aalto.smcl.bitmaps.operations.Renderable
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure.BaseSettingKeys._
+import aalto.smcl.infrastructure.exceptions.SMCLUninitializedSettingError
 
 
 
@@ -11,7 +13,10 @@ import aalto.smcl.infrastructure.BaseSettingKeys._
  *
  * @author Aleksi Lukkarinen
  */
-class Settings {
+class Settings extends Tokenizable {
+
+  /** Information about this [[Settings]] instance */
+  lazy val metaInformation = MetaInformationMap("Settings", Map())
 
   /** */
   private[this] val _settingMap =
@@ -181,13 +186,13 @@ class Settings {
   /**
    *
    */
-  def toToken: String = {
+  override def toToken: String = {
     val sb = new StringBuilder(100)
 
     groupedByKeyType()
       .map({case (groupKey, group) => groupKey + ": " + group.size})
       .addString(sb,
-        start = StrLeftAngleBracket + new ReflectionUtils().shortTypeNameOf(this) + StrSemicolon + StrSpace,
+        start = StrLeftAngleBracket + metaInformation.className + StrSemicolon + StrSpace,
         sep = StrSemicolon + StrSpace,
         end = StrRightAngleBracket)
 
@@ -201,7 +206,7 @@ class Settings {
     val sb = new StringBuilder(100)
     val settingGroups = groupedByKeyType()
 
-    sb.append(new ReflectionUtils().shortTypeNameOf(this))
+    sb.append(metaInformation.className)
 
     if (settingGroups.isEmpty)
       return sb.append(StrComma).append(StrSpace).append("currently empty").append(StrPeriod).toString()

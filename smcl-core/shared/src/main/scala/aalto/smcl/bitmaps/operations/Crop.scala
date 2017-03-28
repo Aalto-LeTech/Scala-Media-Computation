@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
 
 
 
@@ -44,7 +44,7 @@ case class Crop(
     "Y coordinate of cropping window's bottom right corner was outside of the bitmap to be cropped.")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Crop", Map(
     "windowTopLeftX" -> Option(s"$windowTopLeftX px"),
     "windowTopLeftY" -> Option(s"$windowTopLeftY px"),
     "windowBottomRightX" -> Option(s"$windowBottomRightX px"),
@@ -66,10 +66,10 @@ case class Crop(
    * and which is used as a background for a new buffers provided by this
    * [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).copyPortionXYWH(
       windowTopLeftX,
       windowTopLeftY,
@@ -80,12 +80,12 @@ case class Crop(
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
 
 }

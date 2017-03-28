@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="SBT: org.scala-lang.modules:scala-swing_2.12:2.0.0:jar">
+    <CLASSES>
+      <root url="jar:///m/home/home9/90/lukkark1/unix/.ivy2/cache/org.scala-lang.modules/scala-swing_2.12/jars/scala-swing_2.12-2.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar:///m/home/home9/90/lukkark1/unix/.ivy2/cache/org.scala-lang.modules/scala-swing_2.12/docs/scala-swing_2.12-2.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar:///m/home/home9/90/lukkark1/unix/.ivy2/cache/org.scala-lang.modules/scala-swing_2.12/srcs/scala-swing_2.12-2.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

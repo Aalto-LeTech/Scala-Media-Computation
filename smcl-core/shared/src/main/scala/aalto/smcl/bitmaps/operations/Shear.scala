@@ -34,7 +34,7 @@ case class Shear(
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Shear", Map(
     "shearingFactorHorizontal" -> Option(shearingFactorHorizontal.toString),
     "shearingFactorVertical" -> Option(shearingFactorVertical.toString),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString),
@@ -49,10 +49,10 @@ case class Shear(
    * Creates the buffer which contains the results of applying this operation
    * and which is used as a background for new buffers provided by this [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).createTransformedVersionWith(
       AffineTransformation.forFreeShearingOf(shearingFactorHorizontal, shearingFactorVertical),
       resizeCanvasBasedOnTransformation,
@@ -70,12 +70,12 @@ case class Shear(
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
 
 }

@@ -1,5 +1,8 @@
 package aalto.smcl.infrastructure
 
+
+
+
 /**
  *
  *
@@ -19,10 +22,12 @@ object MetaInformationMap {
    * Processes the given content proposal and instantiates
    * a new MetaInformationMap if content is acceptable.
    */
-  def apply(contentProposal: Map[String, Option[String]]) = {
+  def apply(className: String,
+            contentProposal: Map[String, Option[String]]): MetaInformationMap = {
+
     var content = Map[String, Option[String]]()
 
-    contentProposal foreach {pair =>
+    contentProposal foreach { pair =>
       var key = pair._1
       require(key != null, MsgCannotBeNull)
 
@@ -36,7 +41,7 @@ object MetaInformationMap {
       content = content + (key -> value)
     }
 
-    new MetaInformationMap(content)
+    new MetaInformationMap(className, content)
   }
 
 }
@@ -48,32 +53,28 @@ object MetaInformationMap {
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class MetaInformationMap private(private val content: Map[String, Option[String]])
-  extends Immutable {
-
-
-  /**
-   *
-   */
-  def size: Int =
-    content.size
+class MetaInformationMap private(
+  val className: String,
+  private val content: Map[String, Option[String]]) extends Immutable {
 
   /**
    *
    */
-  def keyValuePairs: Seq[(String, Option[String])] =
-    content.toSeq
+  def size: Int = content.size
 
   /**
    *
    */
-  def get(key: String): Option[String] =
-    content.get(key).get
+  def keyValuePairs: Seq[(String, Option[String])] = content.toSeq
 
   /**
    *
    */
-  def foreach[T](f: ((String, Option[String])) => T): Unit =
-    content foreach f
+  def get(key: String): Option[String] = content(key)
+
+  /**
+   *
+   */
+  def foreach[T](f: ((String, Option[String])) => T): Unit = content foreach f
 
 }

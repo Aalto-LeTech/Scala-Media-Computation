@@ -26,7 +26,7 @@ case class Clear(
   require(color != null, "The color argument has to be a Color instance (was null).")
 
   /** Information about this operation instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Clear", Map(
     "background-color" -> Option("0x${_color.asArgbInt.toArgbHexColorString}")))
 
   /**
@@ -34,7 +34,7 @@ case class Clear(
    *
    * @param destination
    */
-  override def render(destination: PlatformBitmapBuffer): Unit =
-    destination.drawingSurface().clearUsing(color)
+  override def render(destination: BitmapBufferAdapter): Unit =
+    destination.drawingSurface clearUsing color
 
 }

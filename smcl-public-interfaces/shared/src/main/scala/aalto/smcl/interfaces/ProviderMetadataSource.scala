@@ -1,6 +1,8 @@
 package aalto.smcl.interfaces
 
 
+
+
 /**
  * Interface for querying objects for provider-related metadata.
  *

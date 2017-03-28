@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
 
 
 
@@ -26,24 +26,22 @@ case class ToGrayscaleByLuminocity()
   /** */
   private val StandardBlueWeight: Double = 0.07
 
-
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("ToGrayscaleByLuminocity", Map(
     "redWeight" -> Option(StandardRedWeight.toString),
     "greenWeight" -> Option(StandardGreenWeight.toString),
     "blueWeight" -> Option(StandardBlueWeight.toString)
   ))
-
 
   /**
    * Creates the buffer which contains the results of applying this operation
    * and which is used as a background for a new buffers provided by this
    * [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     require(sources.length == 1,
       s"Grayscale conversion requires exactly one source image (provided: ${sources.length}).")
 

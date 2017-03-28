@@ -23,7 +23,7 @@ case class Posterize(strengthAsPercentage: Int)
   new CommonValidators().validatePercentage(strengthAsPercentage, Option("Strength"))
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Posterize", Map(
     "strengthInPercents" -> Option(strengthAsPercentage.toString)
   ))
 
@@ -33,10 +33,10 @@ case class Posterize(strengthAsPercentage: Int)
    * and which is used as a background for a new buffers provided by this
    * [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     require(sources.length == 1,
       s"Negative creation requires exactly one source image (provided: ${sources.length}).")
 

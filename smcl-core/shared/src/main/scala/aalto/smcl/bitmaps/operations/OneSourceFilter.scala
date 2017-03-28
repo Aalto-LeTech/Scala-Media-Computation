@@ -2,7 +2,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.DefaultBackground
-import aalto.smcl.infrastructure.{GS, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure.{GS, BitmapBufferAdapter}
 
 
 
@@ -22,10 +22,10 @@ trait OneSourceFilter
    *
    * @param destination
    */
-  def render(destination: PlatformBitmapBuffer): Unit = {
+  def render(destination: BitmapBufferAdapter): Unit = {
     val filteredBitmap = getOrCreateStaticBuffer(destination)
 
-    val ds = destination.drawingSurface()
+    val ds = destination.drawingSurface
     ds.clearUsing(GS.colorFor(DefaultBackground), useSourceColorLiterally = true)
     ds.drawBitmap(filteredBitmap)
   }

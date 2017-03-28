@@ -49,7 +49,7 @@ case class DrawCircle(
   val boundingBoxSideLength: Int = 2 * radiusInPixels
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("DrawCircle", Map(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),
     "radius" -> Option(s"$radiusInPixels px"),
@@ -63,8 +63,8 @@ case class DrawCircle(
    *
    * @param destination
    */
-  override def render(destination: PlatformBitmapBuffer): Unit = {
-    destination.drawingSurface().drawEllipse(
+  override def render(destination: BitmapBufferAdapter): Unit = {
+    destination.drawingSurface.drawEllipse(
       boundingBoxUpperLeftX, boundingBoxUpperLeftY,
       boundingBoxSideLength, boundingBoxSideLength,
       hasBorder, hasFilling,

@@ -1,5 +1,11 @@
 package aalto.smcl.infrastructure
 
+
+import aalto.smcl.infrastructure.exceptions.SMCLSettingValidationError
+
+
+
+
 /**
  * Represents a single setting of a specific type.
  *
@@ -15,7 +21,7 @@ final class Setting[SettingType](
   val key: BaseSettingKeys.Value[SettingType],
   val initialValue: SettingType,
   val validator: SettingType => Option[Throwable])
-  extends Mutable {
+  extends Mutable with Tokenizable {
 
   if (validator != null)
     validator(initialValue) foreach {reason => throw new SMCLSettingValidationError(key, reason)}
@@ -23,6 +29,8 @@ final class Setting[SettingType](
   /** Holds the current value of this [[Setting]]. */
   private var _currentValue: SettingType = initialValue
 
+  /** Information about this [[Setting]] instance */
+  lazy val metaInformation = MetaInformationMap("Setting", Map())
 
   /**
    * Returns the current value of this [[Setting]].
@@ -53,9 +61,8 @@ final class Setting[SettingType](
   /**
    * Returns a formalized token representation of this [[Setting]].
    */
-  def toToken: String =
-    s"[${new ReflectionUtils().shortTypeNameOf(this)}; " +
-      s"key: ${key.simpleName}; initial-value: $initialValue; current-value: $value]"
+  override def toToken: String = metaInformation.className +
+      s"; key: ${key.simpleName}; initial-value: $initialValue; current-value: $value]"
 
   /**
    * Returns a string representation of this [[Setting]].

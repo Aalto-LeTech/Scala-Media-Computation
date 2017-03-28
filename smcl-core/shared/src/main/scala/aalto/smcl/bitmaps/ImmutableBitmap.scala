@@ -1,8 +1,8 @@
 package aalto.smcl.bitmaps
 
 
-import java.io.File
-import javax.imageio.ImageIO
+import scala.collection.mutable
+import scala.ref.WeakReference
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.bitmaps.operations._
@@ -10,10 +10,7 @@ import aalto.smcl.bitmaps.{display => displayInViewer}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common.AffineTransformation
 import aalto.smcl.infrastructure._
-
-import scala.collection.mutable
-import scala.ref.WeakReference
-import scala.util.{Failure, Success, Try}
+import aalto.smcl.infrastructure.DrawingSurfaceAdapter
 
 
 
@@ -68,7 +65,7 @@ object ImmutableBitmap {
     viewerHandling: ViewerUpdateStyle.Value): BitmapLoadingResult = {
 
     // The ImageProvider is trusted with validation of the source resource path.
-    val loadedBuffersTry = new ImageProvider().tryToLoadImagesFromFile(sourceResourcePath)
+    val loadedBuffersTry = PRF.tryToLoadImagesFromPath(sourceResourcePath)
     if (loadedBuffersTry.isFailure)
       throw loadedBuffersTry.failed.get
 
@@ -124,8 +121,8 @@ case class ImmutableBitmap private(
   val heightInPixels: Int = operations.heightInPixels
 
   /** Rendering buffer for this image. */
-  private[this] var _renderingBuffer: WeakReference[PlatformBitmapBuffer] =
-    WeakReference[PlatformBitmapBuffer](null)
+  private[this] var _renderingBuffer: WeakReference[BitmapBufferAdapter] =
+    WeakReference[BitmapBufferAdapter](null)
 
 } with RenderableBitmap
 with PixelRectangle
@@ -203,7 +200,8 @@ with TimestampedCreation {
   private[bitmaps] def applyInitialization(newOperation: BufferProvider): ImmutableBitmap =
     apply(newOperation, PreventViewerUpdates)
 
-
+/*
+  // ALUSTARIIPPUVAINEN TOIMINTO --> EI KUULU TÄNNE!!
   def saveTo(filename: String): String = {
     val destFile = new File(filename)
 
@@ -218,6 +216,7 @@ with TimestampedCreation {
       case Success(x) => "Save successful."
     }
   }
+*/
 
   /**
    *
@@ -297,7 +296,7 @@ with TimestampedCreation {
    * @param viewerHandling
    */
   private[smcl] def applyPixelSnapshot(
-    snapshotBuffer: PlatformBitmapBuffer,
+    snapshotBuffer: BitmapBufferAdapter,
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     apply(ApplyPixelSnapshot(snapshotBuffer), viewerHandling)
@@ -1810,7 +1809,7 @@ with TimestampedCreation {
    * @param x
    * @param y
    */
-  def renderOnto(drawingSurface: PlatformDrawingSurface, x: Int, y: Int): Unit = {
+  def renderOnto(drawingSurface: DrawingSurfaceAdapter, x: Int, y: Int): Unit = {
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
     val rendition = toRenderedRepresentation
@@ -1823,7 +1822,7 @@ with TimestampedCreation {
    * @param drawingSurface
    * @param transformation
    */
-  def renderOnto(drawingSurface: PlatformDrawingSurface, transformation: AffineTransformation): Unit = {
+  def renderOnto(drawingSurface: DrawingSurfaceAdapter, transformation: AffineTransformation): Unit = {
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
     val rendition = toRenderedRepresentation
@@ -1833,11 +1832,11 @@ with TimestampedCreation {
   /**
    * Returns a `BufferedImage` instance representing this [[ImmutableBitmap]].
    */
-  def toRenderedRepresentation: PlatformBitmapBuffer =
+  def toRenderedRepresentation: BitmapBufferAdapter =
     _renderingBuffer.get getOrElse {
       val rendition = operations.render()
 
-      _renderingBuffer = WeakReference[PlatformBitmapBuffer](rendition)
+      _renderingBuffer = WeakReference[BitmapBufferAdapter](rendition)
 
       return rendition
     }

@@ -47,7 +47,7 @@ case class AugmentCanvas(
     s"Number of extra pixels to be added onto the bottom edge must be >= 0 (was $extraPixelsOntoBottomEdge).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("AugmentCanvas", Map(
     "extraPixelsOntoLeftEdge" -> Option(s"$extraPixelsOntoLeftEdge px"),
     "extraPixelsOntoTopEdge" -> Option(s"$extraPixelsOntoTopEdge px"),
     "extraPixelsOntoRightEdge" -> Option(s"$extraPixelsOntoRightEdge px"),
@@ -71,14 +71,14 @@ case class AugmentCanvas(
    * and which is used as a background for a new buffers provided by this
    * [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
-    val newBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
+    val newBuffer = PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
 
-    newBuffer.drawingSurface().clearUsing(color, useSourceColorLiterally = true)
-    newBuffer.drawingSurface().drawBitmap(
+    newBuffer.drawingSurface.clearUsing(color, useSourceColorLiterally = true)
+    newBuffer.drawingSurface.drawBitmap(
       sources(0),
       extraPixelsOntoLeftEdge,
       extraPixelsOntoTopEdge)
@@ -89,12 +89,12 @@ case class AugmentCanvas(
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
 
 }

@@ -42,7 +42,7 @@ case class OverlayFreely(
     Option(Seq(bottomBitmap.operations, topBitmap.operations))
 
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("OverlayFreely", Map(
     "topBitmapUpperLeftX" -> Option(s"$topBitmapUpperLeftX px"),
     "topBitmapUpperLeftY" -> Option(s"$topBitmapUpperLeftY px"),
     "topBitmapOpacity" -> Option(topBitmapOpacity.toString),
@@ -69,7 +69,7 @@ case class OverlayFreely(
    *
    * @return
    */
-  override def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+  override def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     var bottomX, bottomY, topX, topY: Int = 0
 
     if (topBitmapUpperLeftX < 0) {
@@ -90,8 +90,8 @@ case class OverlayFreely(
       topY = topBitmapUpperLeftY
     }
 
-    val newBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
-    val drawingSurface = newBuffer.drawingSurface()
+    val newBuffer = PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+    val drawingSurface = newBuffer.drawingSurface
 
     drawingSurface.clearUsing(backgroundColor)
 
@@ -107,12 +107,12 @@ case class OverlayFreely(
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer()
 
 }

@@ -1,13 +1,13 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.PlatformBitmapBuffer
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
 
 /**
- * Ensures that an [[AbstractOperation]] can be rendered to [[PlatformBitmapBuffer]] instances.
+ * Ensures that an [[AbstractOperation]] can be rendered to [[BitmapBufferAdapter]] instances.
  *
  * @author Aleksi Lukkarinen
  */
@@ -20,6 +20,6 @@ trait Renderable {
    *
    * @param destination
    */
-  def render(destination: PlatformBitmapBuffer): Unit
+  def render(destination: BitmapBufferAdapter): Unit
 
 }

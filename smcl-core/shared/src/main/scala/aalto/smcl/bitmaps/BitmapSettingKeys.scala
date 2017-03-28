@@ -12,7 +12,7 @@ import aalto.smcl.infrastructure.{HorizontalAlignment, VerticalAlignment}
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps]
+private[smcl]
 trait BitmapSettingKeys {
 
   // @formatter:off
@@ -28,9 +28,6 @@ trait BitmapSettingKeys {
 
   /** */
   case object ShapesHaveFillingsByDefault extends BooleanSettingKey
-
-  /** */
-  case object CanvasesAreResizedBasedOnTransformations extends BooleanSettingKey
 
   /** */
   case object DefaultBitmapWidthInPixels extends IntSettingKey
@@ -61,9 +58,6 @@ trait BitmapSettingKeys {
 
   /** */
   case object DefaultPaddingInPixels extends IntSettingKey
-
-  /** */
-  case object DefaultBackground extends ColorSettingKey
 
   /** */
   case object DefaultPrimary extends ColorSettingKey

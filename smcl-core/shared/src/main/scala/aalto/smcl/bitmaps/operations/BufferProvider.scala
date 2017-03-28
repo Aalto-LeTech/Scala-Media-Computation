@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.PlatformBitmapBuffer
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -27,12 +27,12 @@ trait BufferProvider extends Buffered {
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer
+  protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter
 
 
   /**
@@ -40,10 +40,10 @@ trait BufferProvider extends Buffered {
    *
    * @return
    */
-  final def createNewBuffer(): PlatformBitmapBuffer = {
+  final def createNewBuffer(): BitmapBufferAdapter = {
     val templateBuffer = provideNewBufferToBeCopiedForProvidees()
 
-    templateBuffer.copy()
+    templateBuffer.copy
   }
 
 }

@@ -53,7 +53,7 @@ case class DrawPolygon(
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("DrawPolygon", Map(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
     "numberOfCoordinatesPresent" -> Option(numberOfCoordinatesPresent.toString),
     "numberOfCoordinatesToDraw" -> Option(numberOfCoordinatesToDraw.toString),
@@ -67,8 +67,8 @@ case class DrawPolygon(
    *
    * @param destination
    */
-  override def render(destination: PlatformBitmapBuffer): Unit = {
-    destination.drawingSurface().drawPolygon(
+  override def render(destination: BitmapBufferAdapter): Unit = {
+    destination.drawingSurface.drawPolygon(
       xCoordinates, yCoordinates,
       numberOfCoordinatesToDraw,
       hasBorder, hasFilling,

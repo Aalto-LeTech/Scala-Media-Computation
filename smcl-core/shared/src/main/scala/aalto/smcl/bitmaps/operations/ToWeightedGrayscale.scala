@@ -28,9 +28,8 @@ case class ToWeightedGrayscale(
 
   new ColorValidator().validateRgbColorWeightCombination(redWeight, greenWeight, blueWeight)
 
-
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("ToWeightedGrayscale", Map(
     "redWeight" -> Option(redWeight.toString),
     "greenWeight" -> Option(greenWeight.toString),
     "blueWeight" -> Option(blueWeight.toString)
@@ -41,10 +40,10 @@ case class ToWeightedGrayscale(
    * and which is used as a background for a new buffers provided by this
    * [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     require(sources.length == 1,
       s"Grayscale conversion requires exactly one source image (provided: ${sources.length}).")
 

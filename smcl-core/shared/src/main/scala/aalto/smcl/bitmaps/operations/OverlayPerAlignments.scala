@@ -43,7 +43,7 @@ case class OverlayPerAlignments(
     Option(bitmapsToOverlayFromBottomToTop.map(_.operations))
 
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("OverlayPerAlignments", Map(
     "horizontalAlignment" -> Option(horizontalAlignment.toString),
     "verticalAlignment" -> Option(verticalAlignment.toString),
     "opacityForAllBitmaps" -> Option(opacityForAllBitmaps.toString),
@@ -94,9 +94,9 @@ case class OverlayPerAlignments(
    *
    * @return
    */
-  override def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
-    val newBuffer = PlatformBitmapBuffer(widthInPixels, heightInPixels)
-    val drawingSurface = newBuffer.drawingSurface()
+  override def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
+    val newBuffer = PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+    val drawingSurface = newBuffer.drawingSurface
 
     drawingSurface.clearUsing(backgroundColor)
 
@@ -116,12 +116,12 @@ case class OverlayPerAlignments(
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer()
 
 }

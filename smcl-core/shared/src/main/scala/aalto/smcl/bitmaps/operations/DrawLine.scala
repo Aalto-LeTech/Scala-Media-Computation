@@ -34,7 +34,7 @@ case class DrawLine(
   require(color != null, "The color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("DrawLine", Map(
     "fromX" -> Option(s"$fromXInPixels px"),
     "fromY" -> Option(s"$fromYInPixels px"),
     "toX" -> Option(s"$toXInPixels px"),
@@ -46,8 +46,8 @@ case class DrawLine(
    *
    * @param destination
    */
-  override def render(destination: PlatformBitmapBuffer): Unit = {
-    destination.drawingSurface().drawLine(
+  override def render(destination: BitmapBufferAdapter): Unit = {
+    destination.drawingSurface.drawLine(
       fromXInPixels, fromYInPixels,
       toXInPixels, toYInPixels,
       color)

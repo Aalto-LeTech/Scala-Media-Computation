@@ -1,7 +1,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.infrastructure.{PlatformBitmapBuffer, SMCLInvalidColorComponentArrayLengthError}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
+import aalto.smcl.infrastructure.exceptions.SMCLInvalidColorComponentArrayLengthError
 
 
 
@@ -22,7 +23,7 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
   val heightInPixels: Int = relatedBitmap.heightInPixels
 
   /** */
-  private[this] val buffer: PlatformBitmapBuffer =
+  private[this] val buffer: BitmapBufferAdapter =
     relatedBitmap.toRenderedRepresentation.copyPortionXYWH(0, 0, widthInPixels, heightInPixels)
 
   private[this] var (_reds, _greens, _blues, _opacities) =

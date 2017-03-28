@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
 
 
 
@@ -18,19 +18,17 @@ case class IteratePixels(function: (Int, Int, Int, Int) => (Int, Int, Int, Int))
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
-  ))
-
+  lazy val metaInformation = MetaInformationMap("IteratePixels", Map())
 
   /**
    * Creates the buffer which contains the results of applying this operation
    * and which is used as a background for a new buffers provided by this
    * [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     require(sources.length == 1,
       s"Pixel iteration requires exactly one source image (provided: ${sources.length}).")
 

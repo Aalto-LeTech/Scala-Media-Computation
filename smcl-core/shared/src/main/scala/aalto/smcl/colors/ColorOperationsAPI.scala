@@ -2,6 +2,7 @@ package aalto.smcl.colors
 
 
 import aalto.smcl.colors
+import aalto.smcl.colors.exceptions.SMCLInvalidHsiValueCombinationError
 import aalto.smcl.infrastructure._
 
 

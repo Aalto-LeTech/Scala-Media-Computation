@@ -46,7 +46,7 @@ case class DrawRoundedSquare(
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("DrawRoundedSquare", Map(
     "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "sideLength" -> Option(s"$sideLengthInPixels px"),
@@ -62,8 +62,8 @@ case class DrawRoundedSquare(
    *
    * @param destination
    */
-  override def render(destination: PlatformBitmapBuffer): Unit = {
-    destination.drawingSurface().drawRoundedRectangle(
+  override def render(destination: BitmapBufferAdapter): Unit = {
+    destination.drawingSurface.drawRoundedRectangle(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       sideLengthInPixels, sideLengthInPixels,
       roundingWidthInPixels, roundingHeightInPixels,

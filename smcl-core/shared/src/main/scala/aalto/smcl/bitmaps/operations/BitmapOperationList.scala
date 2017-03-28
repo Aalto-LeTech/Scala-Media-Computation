@@ -4,7 +4,7 @@ package aalto.smcl.bitmaps.operations
 import scala.annotation.tailrec
 
 import aalto.smcl.colors.{PresetColors, RGBAColor}
-import aalto.smcl.infrastructure.PlatformBitmapBuffer
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -67,7 +67,7 @@ case class BitmapOperationList private(
   /**
    *
    */
-  private[bitmaps] def render(): PlatformBitmapBuffer = {
+  private[bitmaps] def render(): BitmapBufferAdapter = {
     val newBuffer = bufferProvider.createNewBuffer()
     val renderedBuffer = renderOperations(operations, newBuffer)
 
@@ -81,7 +81,7 @@ case class BitmapOperationList private(
   @tailrec
   private def renderOperations(
     list: List[Renderable],
-    buffer: PlatformBitmapBuffer): PlatformBitmapBuffer = {
+    buffer: BitmapBufferAdapter): BitmapBufferAdapter = {
 
     list match {
       case Nil                => buffer

@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
+import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
 
 
 
@@ -12,14 +12,13 @@ import aalto.smcl.infrastructure.{MetaInformationMap, PlatformBitmapBuffer}
  * @author Aleksi Lukkarinen
  */
 private[bitmaps]
-case class ApplyPixelSnapshot(snapshotBuffer: PlatformBitmapBuffer)
+case class ApplyPixelSnapshot(snapshotBuffer: BitmapBufferAdapter)
   extends AbstractOperation
   with OneSourceFilter
   with Immutable {
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
-  ))
+  lazy val metaInformation = MetaInformationMap("ApplyPixelSnapshot", Map())
 
 
   /**
@@ -27,10 +26,10 @@ case class ApplyPixelSnapshot(snapshotBuffer: PlatformBitmapBuffer)
    * and which is used as a background for a new buffers provided by this
    * [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer =
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter =
     snapshotBuffer
 
 }

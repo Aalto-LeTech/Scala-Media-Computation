@@ -56,8 +56,8 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   libraryDependencies ++= Seq(
-    ApplicationDependencies.ScalaCheck,
-    ApplicationDependencies.ScalaReflection
+    ApplicationDependencies.ScalaCheck
+    //ApplicationDependencies.ScalaReflection
     //ApplicationDependencies.GraphForScalaCore,
     //ApplicationDependencies.GraphForScalaDot,
     //ApplicationDependencies.RxScala,

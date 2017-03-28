@@ -31,7 +31,7 @@ case class Scale(
   require(sourceBitmap != null, s"Scaling requires exactly one source image (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("Scale", Map(
     "scalingFactorX" -> Option(scalingFactorVertical.toString),
     "scalingFactorY" -> Option(scalingFactorHorizontal.toString),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString)
@@ -45,10 +45,10 @@ case class Scale(
    * Creates the buffer which contains the results of applying this operation
    * and which is used as a background for new buffers provided by this [[Buffered]].
    *
-   * @param sources     possible [[PlatformBitmapBuffer]] instances used as sources
+   * @param sources possible [[BitmapBufferAdapter]] instances used as sources
    * @return
    */
-  override protected def createStaticBuffer(sources: PlatformBitmapBuffer*): PlatformBitmapBuffer = {
+  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).createTransformedVersionWith(
       AffineTransformation.forFreeScalingOf(scalingFactorVertical, scalingFactorHorizontal),
       resizeCanvasBasedOnTransformation)
@@ -65,12 +65,12 @@ case class Scale(
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[PlatformBitmapBuffer]] instance always after instantiation of
+   * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return    bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): PlatformBitmapBuffer =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
 
 }

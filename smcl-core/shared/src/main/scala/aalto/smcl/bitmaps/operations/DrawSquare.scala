@@ -40,7 +40,7 @@ case class DrawSquare(
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap(Map(
+  lazy val metaInformation = MetaInformationMap("DrawSquare", Map(
     "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "side" -> Option(s"$sideLengthInPixels px"),
@@ -54,8 +54,8 @@ case class DrawSquare(
    *
    * @param destination
    */
-  override def render(destination: PlatformBitmapBuffer): Unit = {
-    destination.drawingSurface().drawRectangle(
+  override def render(destination: BitmapBufferAdapter): Unit = {
+    destination.drawingSurface.drawRectangle(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       sideLengthInPixels, sideLengthInPixels,
       hasBorder, hasFilling,

@@ -1,7 +1,7 @@
 package aalto.smcl.common
 
 
-import aalto.smcl.infrastructure.PlatformAffineTransformation
+import aalto.smcl.infrastructure.{AffineTransformationAdapter, PRF}
 
 
 
@@ -19,7 +19,7 @@ object AffineTransformation {
    * @return
    */
   def apply(): AffineTransformation =
-    new AffineTransformation(PlatformAffineTransformation())
+    new AffineTransformation(PRF.createPlatformAffineTransformation)
 
 
   /**
@@ -169,7 +169,7 @@ object AffineTransformation {
  * @author Aleksi Lukkarinen
  */
 case class AffineTransformation private(
-  private[smcl] val platformAffineTransform: PlatformAffineTransformation) {
+  private[smcl] val platformAffineTransform: AffineTransformationAdapter) {
 
   require(platformAffineTransform != null, "Platform transformation argument cannot be null.")
 
@@ -182,7 +182,7 @@ case class AffineTransformation private(
    * @return
    */
   def scale(factorX: Double, factorY: Double): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy().scale(factorX, factorY))
+    AffineTransformation(platformAffineTransform.copy.scale(factorX, factorY))
 
   /**
    *
@@ -192,7 +192,7 @@ case class AffineTransformation private(
    * @return
    */
   def translate(amountXInPixels: Double, amountYInPixels: Double): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy().translate(amountXInPixels, amountYInPixels))
+    AffineTransformation(platformAffineTransform.copy.translate(amountXInPixels, amountYInPixels))
 
   /**
    *
@@ -201,7 +201,7 @@ case class AffineTransformation private(
    * @return
    */
   def rotateDegs(angleInDegrees: Double): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy().rotateDegs(angleInDegrees))
+    AffineTransformation(platformAffineTransform.copy.rotateDegs(angleInDegrees))
 
   /**
    *
@@ -217,7 +217,7 @@ case class AffineTransformation private(
     anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
-      platformAffineTransform.copy().rotateDegsAround(
+      platformAffineTransform.copy.rotateDegsAround(
         angleInDegrees, anchorXInPixels, anchorYInPixels))
   }
 
@@ -227,7 +227,7 @@ case class AffineTransformation private(
    * @return
    */
   def rotate90DegsCw(): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy().rotate90DegsCw())
+    AffineTransformation(platformAffineTransform.copy.rotate90DegsCw())
 
   /**
    *
@@ -241,7 +241,7 @@ case class AffineTransformation private(
     anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
-      platformAffineTransform.copy().rotate90DegsCwAround(
+      platformAffineTransform.copy.rotate90DegsCwAround(
         anchorXInPixels, anchorYInPixels))
   }
 
@@ -251,7 +251,7 @@ case class AffineTransformation private(
    * @return
    */
   def rotate90DegsCcw(): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy().rotate90DegsCcw())
+    AffineTransformation(platformAffineTransform.copy.rotate90DegsCcw())
 
   /**
    *
@@ -265,7 +265,7 @@ case class AffineTransformation private(
     anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
-      platformAffineTransform.copy().rotate90DegsCcwAround(
+      platformAffineTransform.copy.rotate90DegsCcwAround(
         anchorXInPixels, anchorYInPixels))
   }
 
@@ -275,7 +275,7 @@ case class AffineTransformation private(
    * @return
    */
   def rotate180Degs(): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy().rotate180Degs())
+    AffineTransformation(platformAffineTransform.copy.rotate180Degs())
 
   /**
    *
@@ -289,7 +289,7 @@ case class AffineTransformation private(
     anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
-      platformAffineTransform.copy().rotate180DegsAround(
+      platformAffineTransform.copy.rotate180DegsAround(
         anchorXInPixels, anchorYInPixels))
   }
 
@@ -300,7 +300,7 @@ case class AffineTransformation private(
    * @param amountY
    */
   def shear(amountX: Double, amountY: Double): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy().shear(amountX, amountY))
+    AffineTransformation(platformAffineTransform.copy.shear(amountX, amountY))
 
   /**
    *
@@ -308,6 +308,6 @@ case class AffineTransformation private(
    * @return
    */
   def copy(): AffineTransformation =
-    AffineTransformation(platformAffineTransform.copy())
+    AffineTransformation(platformAffineTransform.copy)
 
 }
