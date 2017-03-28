@@ -4,13 +4,18 @@ package aalto.smcl.infrastructure.awt
 import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 import java.awt.{AlphaComposite, Graphics2D}
+import java.io.File
+import javax.imageio.ImageIO
 
-import scala.util.Try
+import scala.util.{Failure, Try}
+
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
 import aalto.smcl.common._
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.exceptions.{SMCLFunctionExecutionError, SMCLInvalidColorComponentArrayLengthError}
+
+
 
 
 /**
@@ -573,5 +578,25 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    */
   override def emptyAlike: AwtBitmapBufferAdapter =
     AwtBitmapBufferAdapter(widthInPixels, heightInPixels)
+
+  /**
+   *
+   *
+   * @param filename
+   * @return
+   */
+  override def saveAsPngTo(filename: String): String = {
+    val destFile = new File(filename)
+
+    if (destFile.exists())
+      return "Error: The given file exists."
+
+    val savingResult = Try(ImageIO.write(awtBufferedImage, "png", destFile))
+
+    savingResult match {
+      case Failure(t: Throwable) => s"Error: ${t.getMessage}"
+      case _ => "Save successful."
+    }
+  }
 
 }

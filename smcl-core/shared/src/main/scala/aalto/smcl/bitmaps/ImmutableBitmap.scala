@@ -200,23 +200,14 @@ with TimestampedCreation {
   private[bitmaps] def applyInitialization(newOperation: BufferProvider): ImmutableBitmap =
     apply(newOperation, PreventViewerUpdates)
 
-/*
-  // ALUSTARIIPPUVAINEN TOIMINTO --> EI KUULU TÄNNE!!
-  def saveTo(filename: String): String = {
-    val destFile = new File(filename)
-
-    if (destFile.exists())
-      return "Error: The given file exists."
-
-    val bitmap = toRenderedRepresentation.awtBufferedImage
-    val savingResult = Try(ImageIO.write(bitmap, "png", destFile))
-
-    savingResult match {
-      case Failure(t: Throwable) => s"Error: ${t.getMessage}"
-      case Success(x) => "Save successful."
-    }
-  }
-*/
+  /**
+   *
+   *
+   * @param filename
+   * @return
+   */
+  def saveAsPngTo(filename: String): String =
+    toRenderedRepresentation.saveAsPngTo(filename)
 
   /**
    *

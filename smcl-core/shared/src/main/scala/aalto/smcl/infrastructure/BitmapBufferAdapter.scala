@@ -166,4 +166,12 @@ trait BitmapBufferAdapter extends PlatformBitmapSettingKeys {
    */
   def emptyAlike: BitmapBufferAdapter
 
+  /**
+   *
+   *
+   * @param filename
+   * @return
+   */
+  def saveAsPngTo(filename: String): String
+
 }
