@@ -6,6 +6,7 @@ import java.awt.{Toolkit, Color => LowLevelColor}
 import scala.language.implicitConversions
 
 import aalto.smcl.colors.RGBAColor
+import aalto.smcl.infrastructure.BaseSettingKeys.EnumSettingKey
 
 
 
@@ -24,6 +25,14 @@ package object awt
   /**  */
   private[infrastructure]
   lazy val AWTToolkit: Toolkit = UIProvider.awtToolkit
+
+
+
+  /** */
+  case object AffineTransformationInterpolationMethod extends
+      EnumSettingKey[AwtAffineTransformationInterpolationMethod.Value]
+
+
 
   /**
    *

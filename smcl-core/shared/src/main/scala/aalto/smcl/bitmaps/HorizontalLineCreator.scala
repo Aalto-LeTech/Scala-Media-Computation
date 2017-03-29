@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.GS
+import aalto.smcl.infrastructure.{DefaultBitmapWidthInPixels, DefaultPrimary, GS}
 
 
 

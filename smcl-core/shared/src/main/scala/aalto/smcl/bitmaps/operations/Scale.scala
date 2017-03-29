@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.{Bitmap, CanvasesAreResizedBasedOnTransformations}
+import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.common._
 import aalto.smcl.infrastructure._
 

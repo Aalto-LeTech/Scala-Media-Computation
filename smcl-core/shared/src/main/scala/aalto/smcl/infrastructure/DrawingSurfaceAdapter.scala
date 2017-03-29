@@ -1,7 +1,7 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.bitmaps.BitmapSettingKeys
+
 import aalto.smcl.colors.{ColorValidator, RGBAColor}
 import aalto.smcl.common.AffineTransformation
 
@@ -14,8 +14,7 @@ import aalto.smcl.common.AffineTransformation
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-trait DrawingSurfaceAdapter
-    extends PlatformBitmapSettingKeys with BitmapSettingKeys {
+trait DrawingSurfaceAdapter {
 
   /**
    *

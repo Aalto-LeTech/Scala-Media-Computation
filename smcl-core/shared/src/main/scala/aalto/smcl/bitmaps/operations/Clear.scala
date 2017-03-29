@@ -1,7 +1,6 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.DefaultBackground
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure._
 

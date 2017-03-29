@@ -14,7 +14,7 @@ import aalto.smcl.common.AffineTransformation
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-trait BitmapBufferAdapter extends PlatformBitmapSettingKeys {
+trait BitmapBufferAdapter {
 
   /**
    *

@@ -24,10 +24,13 @@ import aalto.smcl.infrastructure.exceptions.{SMCLFunctionExecutionError, SMCLInv
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object AwtBitmapBufferAdapter extends PlatformBitmapSettingKeys {
+object AwtBitmapBufferAdapter {
 
   /** */
   val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB
+
+  /** */
+  private val _bitmapValidator: BitmapValidator = new BitmapValidator()
 
 
   /**
@@ -38,7 +41,7 @@ object AwtBitmapBufferAdapter extends PlatformBitmapSettingKeys {
    * @return
    */
   def apply(widthInPixels: Int, heightInPixels: Int): AwtBitmapBufferAdapter = {
-    BitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+    _bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
     val newBuffer = createNormalizedLowLevelBitmapBufferOf(widthInPixels, heightInPixels)
 
@@ -54,7 +57,7 @@ object AwtBitmapBufferAdapter extends PlatformBitmapSettingKeys {
   def apply(awtBufferedImage: BufferedImage): AwtBitmapBufferAdapter = {
     require(awtBufferedImage != null, "Provided image buffer cannot be null.")
 
-    BitmapValidator.validateBitmapSize(awtBufferedImage.getWidth, awtBufferedImage.getHeight)
+    _bitmapValidator.validateBitmapSize(awtBufferedImage.getWidth, awtBufferedImage.getHeight)
 
     val normalizedAwtBuffer = convertToNormalizedLowLevelBitmapBufferIfNecessary(awtBufferedImage)
 

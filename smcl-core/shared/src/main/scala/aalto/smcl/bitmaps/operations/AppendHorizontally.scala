@@ -25,7 +25,8 @@ case class AppendHorizontally(
   bitmapsToCombine: Seq[Bitmap])(
   verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
   paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+  private val bitmapValidator: BitmapValidator)
   extends AbstractOperation
   with BufferProvider
   with Immutable {
@@ -54,7 +55,7 @@ case class AppendHorizontally(
     childOperationListsOption.get.foldLeft[Int](0)({_ + _.widthInPixels}) +
       (childOperationListsOption.get.length - 1) * paddingInPixels
 
-  BitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
+  bitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
 
   /** Vertical offsets of the bitmaps to be combined. */
   val verticalOffsets: Seq[Int] = verticalAlignment match {

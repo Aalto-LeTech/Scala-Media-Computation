@@ -12,12 +12,13 @@ final class SMCLMaximumBitmapSizeExceededError private[smcl](
   realWidthOption: Option[Int] = None,
   realHeightOption: Option[Int] = None,
   resourcePathOption: Option[String] = None,
-  imageIndexInResourceOption: Option[Int] = None) extends RuntimeException({
+  imageIndexInResourceOption: Option[Int] = None,
+  private val bitmapValidator: BitmapValidator) extends RuntimeException({
 
   val sb = new StringBuilder(200)
 
-  sb ++= s"The maximum image size of ${BitmapValidator.MaximumBitmapWidthInPixels} x " +
-    s"${BitmapValidator.MaximumBitmapHeightInPixels} px has been exceeded "
+  sb ++= s"The maximum image size of ${bitmapValidator.MaximumBitmapWidthInPixels} x " +
+    s"${bitmapValidator.MaximumBitmapHeightInPixels} px has been exceeded "
 
   if (realWidthOption.isDefined && realHeightOption.isDefined)
     sb ++= s"(was ${realWidthOption.get} x ${realHeightOption.get})"

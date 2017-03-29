@@ -1,5 +1,6 @@
 package aalto.smcl
 
+
 import scala.language.implicitConversions
 
 
@@ -11,8 +12,7 @@ import scala.language.implicitConversions
  * @author Aleksi Lukkarinen
  */
 package object bitmaps
-  extends BitmapSettingKeys
-  with BitmapOperationAPI
+  extends BitmapOperationAPI
   with ShapeCreationAPI {
 
   /** */
@@ -20,14 +20,6 @@ package object bitmaps
 
   /** */
   val Bitmap = ImmutableBitmap
-
-
-  /** */
-  lazy val BitmapValidatorFunctionFactory: BitmapValidatorFunctionFactory =
-    new BitmapValidatorFunctionFactory()
-
-  /** */
-  lazy val BitmapValidator: BitmapValidator = new BitmapValidator()
 
 
   /** */

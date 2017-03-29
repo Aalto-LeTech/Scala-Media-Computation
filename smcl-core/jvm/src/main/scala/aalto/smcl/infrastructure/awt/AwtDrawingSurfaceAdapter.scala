@@ -1,10 +1,11 @@
 package aalto.smcl.infrastructure.awt
 
+
 import java.awt.{AlphaComposite, Graphics2D}
 
 import aalto.smcl.colors.{ColorValidator, RGBAColor}
 import aalto.smcl.common.AffineTransformation
-import aalto.smcl.infrastructure.{GS, BitmapBufferAdapter, DrawingSurfaceAdapter}
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, DefaultArcAngleInDegrees, DefaultArcStartAngleInDegrees, DefaultBackground, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary, DefaultRoundingHeightInPixels, DefaultRoundingWidthInPixels, DefaultSecondary, DrawingSurfaceAdapter, GS, ShapesHaveBordersByDefault, ShapesHaveFillingsByDefault}
 
 
 /**

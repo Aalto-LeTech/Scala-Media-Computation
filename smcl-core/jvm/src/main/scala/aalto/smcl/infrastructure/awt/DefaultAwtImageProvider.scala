@@ -22,7 +22,7 @@ import aalto.smcl.infrastructure.{BitmapBufferAdapter, CommonFileUtils, EnsureCl
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class DefaultAwtImageProvider extends AwtImageProvider {
+class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImageProvider {
 
   /** */
   lazy val supportedReadableMimeTypes: Seq[String] =
@@ -119,20 +119,22 @@ class DefaultAwtImageProvider extends AwtImageProvider {
       case e: IOException => return Left(e)
     }).get
 
-    if (BitmapValidator.maximumSizeLimitsAreExceeded(width, height)) {
+    if (bitmapValidator.maximumSizeLimitsAreExceeded(width, height)) {
       val newThrowable =
         new SMCLMaximumBitmapSizeExceededError(
           Option(width), Option(height),
-          Option(filePath), Option(currentImageIndex))
+          Option(filePath), Option(currentImageIndex),
+          new BitmapValidator())
 
       return Left(newThrowable)
     }
 
-    if (BitmapValidator.minimumSizeLimitsAreNotMet(width, height)) {
+    if (bitmapValidator.minimumSizeLimitsAreNotMet(width, height)) {
       val newThrowable =
         new SMCLMinimumBitmapSizeNotMetError(
           Option(width), Option(height),
-          Option(filePath), Option(currentImageIndex))
+          Option(filePath), Option(currentImageIndex),
+          new BitmapValidator())
 
       return Left(newThrowable)
     }

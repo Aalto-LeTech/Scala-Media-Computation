@@ -12,15 +12,16 @@ final class SMCLMinimumBitmapSizeNotMetError private[smcl](
   realWidth: Option[Int] = None,
   realHeight: Option[Int] = None,
   resourcePath: Option[String] = None,
-  imageIndexInResourceOption: Option[Int] = None)
+  imageIndexInResourceOption: Option[Int] = None,
+  private val bitmapValidator: BitmapValidator)
   extends RuntimeException({
     val sb = new StringBuilder(200)
 
     sb ++= s"The minimum image size of ${
-      BitmapValidator.MinimumBitmapHeightInPixels
+      bitmapValidator.MinimumBitmapHeightInPixels
     } x " +
       s"${
-        BitmapValidator.MinimumBitmapHeightInPixels
+        bitmapValidator.MinimumBitmapHeightInPixels
       } px has not been met"
 
     if (realWidth.isDefined && realHeight.isDefined)

@@ -27,7 +27,8 @@ case class AugmentCanvas(
   extraPixelsOntoTopEdge: Int = 0,
   extraPixelsOntoRightEdge: Int = 0,
   extraPixelsOntoBottomEdge: Int = 0,
-  color: RGBAColor = GS.colorFor(DefaultBackground))
+  color: RGBAColor = GS.colorFor(DefaultBackground),
+  private val bitmapValidator: BitmapValidator)
   extends AbstractOperation
   with BufferProvider
   with Immutable {
@@ -64,7 +65,7 @@ case class AugmentCanvas(
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int = extraPixelsOntoTopEdge + sourceBitmap.heightInPixels + extraPixelsOntoBottomEdge
 
-  BitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+  bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
   /**
    * Creates the buffer which contains the results of applying this operation

@@ -16,7 +16,7 @@ import aalto.smcl.infrastructure._
  * @author Aleksi Lukkarinen
  */
 private[bitmaps]
-trait BitmapOperationAPI extends PlatformBitmapSettingKeys {
+trait BitmapOperationAPI {
 
   /**
    *

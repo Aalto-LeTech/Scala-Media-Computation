@@ -23,7 +23,8 @@ case class ReplicateHorizontally(
   bitmapToReplicate: Bitmap,
   numberOfReplicas: Int,
   paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+  private val bitmapValidator: BitmapValidator)
   extends AbstractOperation
   with BufferProvider
   with Immutable {
@@ -53,7 +54,7 @@ case class ReplicateHorizontally(
     (numberOfReplicas + 1) * bitmapToReplicate.widthInPixels +
       numberOfReplicas * paddingInPixels
 
-  BitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
+  bitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
 
   /**
    * Creates the buffer which contains the results of applying this operation

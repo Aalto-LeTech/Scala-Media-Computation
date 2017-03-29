@@ -22,6 +22,10 @@ import aalto.smcl.infrastructure.DrawingSurfaceAdapter
  */
 object ImmutableBitmap {
 
+  /**  */
+  private val _bitmapValidator: BitmapValidator = new BitmapValidator()
+
+
   /**
    * Creates a new empty [[ImmutableBitmap]] instance.
    */
@@ -31,9 +35,9 @@ object ImmutableBitmap {
     initialBackgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
     viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
-    BitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+    _bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
-    if (BitmapValidator.warningSizeLimitsAreExceeded(widthInPixels, heightInPixels)) {
+    if (_bitmapValidator.warningSizeLimitsAreExceeded(widthInPixels, heightInPixels)) {
       println("\n\nWarning: The image is larger than the recommended maximum size")
     }
 
@@ -43,7 +47,7 @@ object ImmutableBitmap {
       Clear(initialBackgroundColor) +:
         BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
 
-    val newBitmap = new ImmutableBitmap(operationList, BitmapIdentity())
+    val newBitmap = new ImmutableBitmap(operationList, _bitmapValidator, BitmapIdentity())
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
@@ -76,7 +80,7 @@ object ImmutableBitmap {
 
         case (Right(buffer), index) =>
           val operationList = BitmapOperationList(LoadedBitmap(buffer, Option(sourceResourcePath), Option(index)))
-          val newBitmap = new ImmutableBitmap(operationList, BitmapIdentity())
+          val newBitmap = new ImmutableBitmap(operationList, _bitmapValidator, BitmapIdentity())
 
           if (viewerHandling == UpdateViewerPerDefaults) {
             if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
@@ -105,14 +109,15 @@ object ImmutableBitmap {
  *
  *
  * @param operations
+ * @param bitmapValidator
  * @param uniqueIdentifier
  *
  * @author Aleksi Lukkarinen
  */
 case class ImmutableBitmap private(
   private[bitmaps] val operations: BitmapOperationList,
+  private val bitmapValidator: BitmapValidator,
   uniqueIdentifier: BitmapIdentity) extends {
-
 
   /** Width of this [[ImmutableBitmap]]. */
   val widthInPixels: Int = operations.widthInPixels
@@ -913,7 +918,8 @@ with TimestampedCreation {
         extraPixelsOntoTopEdge,
         extraPixelsOntoRightEdge,
         extraPixelsOntoBottomEdge,
-        color),
+        color,
+        bitmapValidator),
       viewerHandling)
   }
 
@@ -1106,7 +1112,8 @@ with TimestampedCreation {
       AppendHorizontally(bitmapsToCombineWith :+ this)(
         verticalAlignment,
         paddingInPixels,
-        backgroundColor),
+        backgroundColor,
+        ImmutableBitmap._bitmapValidator),
       viewerHandling)
   }
 
@@ -1130,7 +1137,8 @@ with TimestampedCreation {
       AppendHorizontally(this +: bitmapsToCombineWith)(
         verticalAlignment,
         paddingInPixels,
-        backgroundColor),
+        backgroundColor,
+        bitmapValidator),
       viewerHandling)
   }
 
@@ -1163,7 +1171,8 @@ with TimestampedCreation {
       AppendVertically(bitmapsToCombineWith :+ this)(
         horizontalAlignment,
         paddingInPixels,
-        backgroundColor),
+        backgroundColor,
+        bitmapValidator),
       viewerHandling)
   }
 
@@ -1196,7 +1205,8 @@ with TimestampedCreation {
       AppendVertically(this +: bitmapsToCombineWith)(
         horizontalAlignment,
         paddingInPixels,
-        backgroundColor),
+        backgroundColor,
+        bitmapValidator),
       viewerHandling)
   }
 
@@ -1520,7 +1530,8 @@ with TimestampedCreation {
         this,
         numberOfReplicas,
         paddingInPixels,
-        backgroundColor),
+        backgroundColor,
+        bitmapValidator),
       viewerHandling)
   }
 
@@ -1544,7 +1555,8 @@ with TimestampedCreation {
         this,
         numberOfReplicas,
         paddingInPixels,
-        backgroundColor),
+        backgroundColor,
+        bitmapValidator),
       viewerHandling)
   }
 

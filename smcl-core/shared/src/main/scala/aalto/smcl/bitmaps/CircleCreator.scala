@@ -6,7 +6,7 @@ import scala.collection.mutable
 import aalto.smcl.bitmaps
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.GS
+import aalto.smcl.infrastructure.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary, GS, NewBitmapsAreDisplayedAutomatically}
 
 
 

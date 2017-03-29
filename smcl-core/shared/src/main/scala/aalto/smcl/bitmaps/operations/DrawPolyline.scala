@@ -1,7 +1,6 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.DefaultPrimary
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
 
@@ -33,7 +32,7 @@ case class DrawPolyline(
   require(xCoordinates != null, "The x coordinate argument has to be an Seq[Int] instance (was null).")
   require(yCoordinates != null, "The y coordinate argument has to be an Seq[Int] instance (was null).")
 
-  val numberOfCoordinatesPresent = xCoordinates.length.min(yCoordinates.length)
+  val numberOfCoordinatesPresent: Int = xCoordinates.length.min(yCoordinates.length)
 
   require(numberOfCoordinatesPresent > 1, s"The coordinate sequences must have at least two coordinate pairs present.")
 
