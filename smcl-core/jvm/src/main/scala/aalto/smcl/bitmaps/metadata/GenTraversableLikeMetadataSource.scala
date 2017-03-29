@@ -1,14 +1,14 @@
 package aalto.smcl.bitmaps.metadata
 
 import java.awt.image.BufferedImage
-import java.util.Date
 
 import scala.collection.GenTraversableLike
 import scala.collection.mutable.ArrayBuffer
+
 import aalto.smcl.bitmaps.{Bitmap, ImmutableBitmap}
-import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 import aalto.smcl.infrastructure.awt.AwtBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
+import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 
 
 

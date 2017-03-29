@@ -31,7 +31,7 @@ case class Pixel private[bitmaps](
    *
    * @return
    */
-  def red: Int = relatedPixelSnapshot.reds()(linearPosition)
+  def red: Int = relatedPixelSnapshot.reds(linearPosition)
 
   /**
    *
@@ -39,14 +39,14 @@ case class Pixel private[bitmaps](
    * @param value
    */
   def red_=(value: Int): Unit =
-    relatedPixelSnapshot.reds()(linearPosition) = value
+    relatedPixelSnapshot.reds(linearPosition) = value
 
   /**
    *
    *
    * @return
    */
-  def green: Int = relatedPixelSnapshot.greens()(linearPosition)
+  def green: Int = relatedPixelSnapshot.greens(linearPosition)
 
   /**
    *
@@ -54,14 +54,14 @@ case class Pixel private[bitmaps](
    * @param value
    */
   def green_=(value: Int): Unit =
-    relatedPixelSnapshot.greens()(linearPosition) = value
+    relatedPixelSnapshot.greens(linearPosition) = value
 
   /**
    *
    *
    * @return
    */
-  def blue: Int = relatedPixelSnapshot.blues()(linearPosition)
+  def blue: Int = relatedPixelSnapshot.blues(linearPosition)
 
   /**
    *
@@ -69,14 +69,14 @@ case class Pixel private[bitmaps](
    * @param value
    */
   def blue_=(value: Int): Unit =
-    relatedPixelSnapshot.blues()(linearPosition) = value
+    relatedPixelSnapshot.blues(linearPosition) = value
 
   /**
    *
    *
    * @return
    */
-  def opacity: Int = relatedPixelSnapshot.opacities()(linearPosition)
+  def opacity: Int = relatedPixelSnapshot.opacities(linearPosition)
 
   /**
    *
@@ -84,7 +84,7 @@ case class Pixel private[bitmaps](
    * @param value
    */
   def opacity_=(value: Int): Unit =
-    relatedPixelSnapshot.opacities()(linearPosition) = value
+    relatedPixelSnapshot.opacities(linearPosition) = value
 
   /**
    *

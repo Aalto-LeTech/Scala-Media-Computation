@@ -58,7 +58,7 @@ case class BitmapOperationList private(
   /**
    *
    */
-  def initialBackgroundColor(): RGBAColor =
+  def initialBackgroundColor: RGBAColor =
     operations.lastOption.getOrElse(None) match {
       case Clear(color) => color
       case _            => PresetColors('white)

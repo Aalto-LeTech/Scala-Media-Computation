@@ -27,19 +27,19 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
     relatedBitmap.toRenderedRepresentation.copyPortionXYWH(0, 0, widthInPixels, heightInPixels)
 
   private[this] var (_reds, _greens, _blues, _opacities) =
-    buffer.colorComponentArrays()
+    buffer.colorComponentArrays
 
   /** */
-  private[bitmaps] def reds(): Array[Int] = _reds
+  private[bitmaps] def reds: Array[Int] = _reds
 
   /** */
-  private[bitmaps] def greens(): Array[Int] = _greens
+  private[bitmaps] def greens: Array[Int] = _greens
 
   /** */
-  private[bitmaps] def blues(): Array[Int] = _blues
+  private[bitmaps] def blues: Array[Int] = _blues
 
   /** */
-  private[bitmaps] def opacities(): Array[Int] = _opacities
+  private[bitmaps] def opacities: Array[Int] = _opacities
 
 
   /**
@@ -47,28 +47,28 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    *
    * @return
    */
-  def redComponentArray(): Array[Int] = _reds.clone()
+  def redComponentArray: Array[Int] = _reds.clone
 
   /**
    *
    *
    * @return
    */
-  def greenComponentArray(): Array[Int] = _greens.clone()
+  def greenComponentArray: Array[Int] = _greens.clone
 
   /**
    *
    *
    * @return
    */
-  def blueComponentArray(): Array[Int] = _blues.clone()
+  def blueComponentArray: Array[Int] = _blues.clone
 
   /**
    *
    *
    * @return
    */
-  def opacityComponentArray(): Array[Int] = _opacities.clone()
+  def opacityComponentArray: Array[Int] = _opacities.clone
 
   /**
    *
@@ -76,7 +76,7 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    * @return
    */
   def componentArrays(): (Array[Int], Array[Int], Array[Int], Array[Int]) =
-    (redComponentArray(), greenComponentArray(), blueComponentArray(), opacityComponentArray())
+    (redComponentArray, greenComponentArray, blueComponentArray, opacityComponentArray)
 
 
   /**
@@ -84,28 +84,28 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    *
    * @return
    */
-  def setRedComponentArray(array: Array[Int]): Unit = _reds = array.clone()
+  def setRedComponentArray(array: Array[Int]): Unit = _reds = array.clone
 
   /**
    *
    *
    * @return
    */
-  def setGreenComponentArray(array: Array[Int]): Unit = _greens = array.clone()
+  def setGreenComponentArray(array: Array[Int]): Unit = _greens = array.clone
 
   /**
    *
    *
    * @return
    */
-  def setBlueComponentArray(array: Array[Int]): Unit = _blues = array.clone()
+  def setBlueComponentArray(array: Array[Int]): Unit = _blues = array.clone
 
   /**
    *
    *
    * @return
    */
-  def setOpacityComponentArray(array: Array[Int]): Unit = _opacities = array.clone()
+  def setOpacityComponentArray(array: Array[Int]): Unit = _opacities = array.clone
 
   /**
    *
@@ -160,7 +160,7 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    * @param y
    * @return
    */
-  def pixel(x: Int, y: Int) = new Pixel(
+  def pixel(x: Int, y: Int) = Pixel(
     this,
     0, widthInPixels - 1,
     0, heightInPixels - 1,
@@ -227,7 +227,7 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    *
    * @return
    */
-  override def toString(): String =
+  override def toString: String =
     s"PixelSnapshot $widthInPixels x $heightInPixels"
 
 }

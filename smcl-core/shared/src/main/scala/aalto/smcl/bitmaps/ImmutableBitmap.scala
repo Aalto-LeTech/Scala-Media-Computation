@@ -133,7 +133,8 @@ with TimestampedCreation {
    * Returns the initial background color of this [[ImmutableBitmap]]
    * (may not be the actual background color at a later time).
    */
-  val initialBackgroundColor: RGBAColor = operations.initialBackgroundColor()
+  val initialBackgroundColor: RGBAColor =
+    operations.initialBackgroundColor
 
   /**
    * Applies an [[Renderable]] to this [[ImmutableBitmap]].
@@ -214,7 +215,7 @@ with TimestampedCreation {
    *
    * @return
    */
-  def aspectRatio(): (Double, Double) = {
+  def aspectRatio: (Double, Double) = {
     if (widthInPixels == heightInPixels)
       return (1.0, 1.0)
 
@@ -298,7 +299,7 @@ with TimestampedCreation {
    *
    * @return
    */
-  def createPixelSnapshot(): PixelSnapshot =
+  def createPixelSnapshot: PixelSnapshot =
     new PixelSnapshot(this)
 
   /**
@@ -1139,7 +1140,7 @@ with TimestampedCreation {
    * @param bitmap
    * @return
    */
-  def sewOnLeftOf(bitmap: ImmutableBitmap) =
+  def sewOnLeftOf(bitmap: ImmutableBitmap): ImmutableBitmap =
     appendOnRight(bitmap)(VerticalAlignment.Middle)
 
   /**
@@ -1172,7 +1173,7 @@ with TimestampedCreation {
    * @param bitmap
    * @return
    */
-  def pileOnTopOf(bitmap: ImmutableBitmap) =
+  def pileOnTopOf(bitmap: ImmutableBitmap): ImmutableBitmap =
     appendOnBottom(bitmap)(HorizontalAlignment.Center)
 
   /**

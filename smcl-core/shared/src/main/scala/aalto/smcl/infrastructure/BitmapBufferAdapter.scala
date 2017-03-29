@@ -65,7 +65,7 @@ trait BitmapBufferAdapter extends PlatformBitmapSettingKeys {
    *
    * @return
    */
-  def colorComponentArrays(): (Array[Int], Array[Int], Array[Int], Array[Int])
+  def colorComponentArrays: (Array[Int], Array[Int], Array[Int], Array[Int])
 
   /**
    *
