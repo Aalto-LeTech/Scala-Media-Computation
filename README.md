@@ -1,3 +1,5 @@
+[![GitHub version](https://badge.fury.io/gh/Aalto-LeTech%2FScala-Media-Computation.svg)](https://badge.fury.io/gh/Aalto-LeTech%2FScala-Media-Computation)
+
 # The Scala Media Computation Library (SMCL)
 
 This project is targeted mainly for instructors and students of introductory programming courses. From instructors' viewpoint, its goal is to provide means to motivate students via contextualized teaching. There are many ways to provice context, and the approach choosen here is the one of multimedia computation, that is, programmatically creating and processing multimedia content in a creative way. To provide the necessary scaffolding for novice students already challenged to learn for example logical and algorithmic thinking, programming concepts and paradigms, a new programming language (in this case, [Scala](http://www.scala-lang.org/)), and the related development tools, this library offers ways to concentrate only in the topics to be practiced while still producing hopefully interesting and attractive results.
