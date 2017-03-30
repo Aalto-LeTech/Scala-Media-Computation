@@ -172,3 +172,12 @@ lazy val smcl = project.in(file("."))
       smclCoreTestsJS, smclCoreTestsJS,
       smclPublicInterfacesJS, smclPublicInterfacesJVM,
       smclPublicInterfacesTestsJVM, smclPublicInterfacesTestsJS)
+
+
+addCommandAlias("cp", "; clean ; package")
+
+addCommandAlias("rcp", "; reload ; clean ; package")
+
+addCommandAlias("cpt", "; clean ; package ; test")
+
+addCommandAlias("rcpt", "; reload ; clean ; package ; test")
