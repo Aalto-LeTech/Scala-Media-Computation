@@ -63,7 +63,15 @@ lazy val smclGeneralSettings = Seq(
     //ApplicationDependencies.RxScala,
     //ApplicationDependencies.ScalaCompiler,
     //ApplicationDependencies.ScalaXml
-  )
+  ),
+
+  initialCommands in console :=
+      """import aalto.smcl._
+        |import aalto.smcl.infrastructure._
+        |import aalto.smcl.common._
+        |import aalto.smcl.colors._
+        |import aalto.smcl.bitmaps._
+        |aalto.smcl.infrastructure.awt.Initializer()""".stripMargin
 )
 
 lazy val smclGeneralJsDependencySettings = Seq(
