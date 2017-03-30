@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="1.8">
       <module name="root" target="1.8" />
       <module name="scala-media-computation" target="1.8" />
+      <module name="smcl" target="1.8" />
       <module name="smclCoreJS" target="1.8" />
       <module name="smclCoreJVM" target="1.8" />
       <module name="smclCoreTestsJS" target="1.8" />
