@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="scala-media-computation" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="root" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/../../target/scala-2.12/classes" />
     <output-test url="file://$MODULE_DIR$/../../target/scala-2.12/test-classes" />
@@ -21,8 +21,22 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.12.1:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.scala-sbt:test-interface:1.0:jar" level="project" />
+    <orderEntry type="module" module-name="smclCoreJS" exported="" />
     <orderEntry type="library" scope="TEST" name="SBT: org.scalacheck:scalacheck_2.12:1.13.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scala-sbt:test-interface:1.0:jar" level="project" />
+    <orderEntry type="module" module-name="smclCoreJVM" exported="" />
+    <orderEntry type="module" module-name="smclCoreTestsJS" exported="" />
+    <orderEntry type="module" module-name="smclPublicInterfacesJS" exported="" />
+    <orderEntry type="module" module-name="smclPublicInterfacesJVM" exported="" />
+    <orderEntry type="module" module-name="smclPublicInterfacesTestsJS" exported="" />
+    <orderEntry type="module" module-name="smclPublicInterfacesTestsJVM" exported="" />
+    <orderEntry type="library" name="SBT: org.scala-js:scalajs-library_2.12:0.6.14:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.12.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.12.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-parser-combinators_2.12:1.0.4:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-swing_2.12:2.0.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-xml_2.12:1.0.5:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalactic:scalactic_2.12:3.0.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalatest:scalatest_2.12:3.0.1:jar" level="project" />
   </component>
 </module>

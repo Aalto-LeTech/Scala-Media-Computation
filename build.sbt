@@ -160,4 +160,15 @@ lazy val smclPublicInterfacesTestsJVM = smclPublicInterfacesTests.jvm
 lazy val smclPublicInterfacesTestsJS = smclPublicInterfacesTests.js
 
 
-smclGeneralSettings
+lazy val root = project.in(file("."))
+    .settings(smclGeneralSettings: _*)
+    .aggregate(
+      smclCoreJS, smclCoreJVM,
+      smclCoreTestsJS, smclCoreTestsJS,
+      smclPublicInterfacesJS, smclPublicInterfacesJVM,
+      smclPublicInterfacesTestsJVM, smclPublicInterfacesTestsJS)
+    .dependsOn(
+      smclCoreJS, smclCoreJVM,
+      smclCoreTestsJS, smclCoreTestsJS,
+      smclPublicInterfacesJS, smclPublicInterfacesJVM,
+      smclPublicInterfacesTestsJVM, smclPublicInterfacesTestsJS)
