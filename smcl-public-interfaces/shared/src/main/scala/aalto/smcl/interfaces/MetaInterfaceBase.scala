@@ -1,7 +1,7 @@
 package aalto.smcl.interfaces
 
 
-import aalto.smcl.SMCL
+import aalto.smcl.SMCLLibrary
 
 
 
@@ -22,7 +22,7 @@ class MetaInterfaceBase
    * @return
    */
   override def providerNameOption(): Option[String] =
-    Option(SMCL.FullName)
+    Option(SMCLLibrary.FullName)
 
   /**
    *
@@ -30,7 +30,7 @@ class MetaInterfaceBase
    * @return
    */
   override def providerDescriptionOption(): Option[String] =
-    Option(SMCL.Description)
+    Option(SMCLLibrary.Description)
 
   /**
    *
@@ -38,7 +38,7 @@ class MetaInterfaceBase
    * @return
    */
   override def providerAuthorOrganizationNameOption(): Option[String] =
-    Option(SMCL.OriginalDeveloperOrganizationName + ", " + SMCL.OriginalDeveloperOrganizationCountry)
+    Option(SMCLLibrary.OriginalDeveloperOrganizationName + ", " + SMCLLibrary.OriginalDeveloperOrganizationCountry)
 
   /**
    *
@@ -46,7 +46,7 @@ class MetaInterfaceBase
    * @return
    */
   override def providerAuthorPersonFirstNameOption(): Option[String] =
-    Option(SMCL.OriginalDeveloperFirstName)
+    Option(SMCLLibrary.OriginalDeveloperFirstName)
 
   /**
    *
@@ -54,7 +54,7 @@ class MetaInterfaceBase
    * @return
    */
   override def providerAuthorPersonLastNameOption(): Option[String] =
-    Option(SMCL.OriginalDeveloperLastName)
+    Option(SMCLLibrary.OriginalDeveloperLastName)
 
   /**
    *
@@ -62,7 +62,7 @@ class MetaInterfaceBase
    * @return
    */
   override def providerMajorVersionOption(): Option[Int] =
-    Option(SMCL.VersionMajor)
+    Option(SMCLLibrary.VersionMajor)
 
   /**
    *
@@ -70,6 +70,6 @@ class MetaInterfaceBase
    * @return
    */
   override def providerMinorVersionOption(): Option[Int] =
-    Option(SMCL.VersionMinor)
+    Option(SMCLLibrary.VersionMinor)
 
 }

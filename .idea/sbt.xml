@@ -13,6 +13,16 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/project" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer-tests/js" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer-tests/js/project" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer-tests/jvm" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer-tests/jvm/project" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer-tests/shared" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer/js" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer/js/project" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer/jvm" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer/jvm/project" />
+            <option value="$PROJECT_DIR$/smcl-bitmap-viewer/shared" />
             <option value="$PROJECT_DIR$/smcl-core-tests/js" />
             <option value="$PROJECT_DIR$/smcl-core-tests/js/project" />
             <option value="$PROJECT_DIR$/smcl-core-tests/jvm" />

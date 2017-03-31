@@ -38,5 +38,11 @@
     <orderEntry type="library" scope="TEST" name="SBT: org.scalacheck:scalacheck_2.12:1.13.4:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scalactic:scalactic_2.12:3.0.1:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scalatest:scalatest_2.12:3.0.1:jar" level="project" />
+    <orderEntry type="module" module-name="smclBitmapViewerJS" exported="" />
+    <orderEntry type="module" module-name="smclBitmapViewerJVM" exported="" />
+    <orderEntry type="module" module-name="smclBitmapViewerTestsJS" exported="" />
+    <orderEntry type="module" module-name="smclBitmapViewerTestsJVM" exported="" />
+    <orderEntry type="library" name="SBT: io.reactivex:rxjava:1.2.4:jar" level="project" />
+    <orderEntry type="library" name="SBT: io.reactivex:rxscala_2.12:0.26.5:jar" level="project" />
   </component>
 </module>

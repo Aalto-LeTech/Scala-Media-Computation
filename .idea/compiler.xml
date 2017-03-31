@@ -5,6 +5,10 @@
       <module name="root" target="1.8" />
       <module name="scala-media-computation" target="1.8" />
       <module name="smcl" target="1.8" />
+      <module name="smclBitmapViewerJS" target="1.8" />
+      <module name="smclBitmapViewerJVM" target="1.8" />
+      <module name="smclBitmapViewerTestsJS" target="1.8" />
+      <module name="smclBitmapViewerTestsJVM" target="1.8" />
       <module name="smclCoreJS" target="1.8" />
       <module name="smclCoreJVM" target="1.8" />
       <module name="smclCoreTestsJS" target="1.8" />

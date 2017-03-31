@@ -32,7 +32,7 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def createCurrentTimestamp(): Timestamp =
+  override def createCurrentTimestamp: Timestamp =
     implementation.createCurrentTimestamp
 
   /**
@@ -68,7 +68,7 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def createUniqueIdString(): String = implementation.createUniqueIdString
+  override def createUniqueIdString: String = implementation.createUniqueIdString
 
   /**
    *

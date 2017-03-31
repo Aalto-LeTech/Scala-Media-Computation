@@ -6,7 +6,7 @@ import scala.ref.WeakReference
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.bitmaps.operations._
-import aalto.smcl.bitmaps.{display => displayInViewer}
+import aalto.smcl.viewers.{display => displayInViewer}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.common.AffineTransformation
 import aalto.smcl.infrastructure._
@@ -129,7 +129,8 @@ case class ImmutableBitmap private(
   private[this] var _renderingBuffer: WeakReference[BitmapBufferAdapter] =
     WeakReference[BitmapBufferAdapter](null)
 
-} with RenderableBitmap
+} with Displayable
+with RenderableBitmap
 with PixelRectangle
 with Immutable
 with TimestampedCreation {

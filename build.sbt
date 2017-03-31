@@ -18,6 +18,13 @@ lazy val projectStartYear = 2015
 lazy val projectJavaVersionSource = "1.8"
 lazy val projectJavaVersionTarget = "1.8"
 
+lazy val prjSmclBitmapViewerId = "smcl-bitmap-viewer"
+lazy val prjSmclBitmapViewerName = smclName
+lazy val prjSmclBitmapViewerVersion = "1.0.0-SNAPSHOT"
+lazy val prjSmclBitmapViewerDescription = "Bitmap viewers for " + smclName + "."
+
+lazy val prjSmclBitmapViewerTestsId = prjSmclBitmapViewerId + projectIdTestPostfix
+
 lazy val prjSmclCoreId = "smcl-core"
 lazy val prjSmclCoreName = smclName
 lazy val prjSmclCoreVersion = "1.0.0-SNAPSHOT"
@@ -57,12 +64,6 @@ lazy val smclGeneralSettings = Seq(
 
   libraryDependencies ++= Seq(
     ApplicationDependencies.ScalaCheck
-    //ApplicationDependencies.ScalaReflection
-    //ApplicationDependencies.GraphForScalaCore,
-    //ApplicationDependencies.GraphForScalaDot,
-    //ApplicationDependencies.RxScala,
-    //ApplicationDependencies.ScalaCompiler,
-    //ApplicationDependencies.ScalaXml
   ),
 
   initialCommands in console :=
@@ -71,7 +72,9 @@ lazy val smclGeneralSettings = Seq(
         |import aalto.smcl.common._
         |import aalto.smcl.colors._
         |import aalto.smcl.bitmaps._
-        |aalto.smcl.infrastructure.awt.Initializer()""".stripMargin
+        |import aalto.smcl.viewers._
+        |aalto.smcl.infrastructure.awt.Initializer()
+        |aalto.smcl.viewers.bitmaps.jvmawt.Initializer()""".stripMargin
 )
 
 lazy val smclGeneralJsDependencySettings = Seq(
@@ -92,6 +95,41 @@ lazy val smclTestingJvmDependencySettings = Seq(
     ApplicationDependencies.ScalaTest
   )
 )
+
+lazy val smclBitmapViewer = crossProject
+    .crossType(CrossType.Full)
+    .in(file(prjSmclBitmapViewerId))
+    .settings(smclGeneralSettings: _*)
+    .settings(
+      name := prjSmclBitmapViewerId,
+      version := prjSmclBitmapViewerVersion,
+      description := prjSmclBitmapViewerDescription
+    )
+    .jvmSettings(smclGeneralJvmDependencySettings: _*)
+    .jvmSettings(libraryDependencies += ApplicationDependencies.RxScala)
+    .jsSettings(smclGeneralJsDependencySettings: _*)
+    .dependsOn(smclCore, smclPublicInterfaces)
+
+lazy val smclBitmapViewerJVM = smclBitmapViewer.jvm
+lazy val smclBitmapViewerJS = smclBitmapViewer.js
+
+
+lazy val smclBitmapViewerTests = crossProject
+    .crossType(CrossType.Full)
+    .in(file(prjSmclBitmapViewerTestsId))
+    .settings(smclGeneralSettings: _*)
+    .settings(
+      name := prjSmclBitmapViewerTestsId,
+      version := prjSmclBitmapViewerVersion,
+      description := prjSmclBitmapViewerDescription
+    )
+    .jvmSettings(smclGeneralJvmDependencySettings ++ smclTestingJvmDependencySettings: _*)
+    .jsSettings(smclGeneralJsDependencySettings: _*)
+    .dependsOn(smclBitmapViewer, smclCore, smclPublicInterfaces)
+
+lazy val smclBitmapViewerTestsJVM = smclBitmapViewerTests.jvm
+lazy val smclBitmapViewerTestsJS = smclBitmapViewerTests.js
+
 
 lazy val smclCore = crossProject
   .crossType(CrossType.Full)
@@ -163,11 +201,15 @@ lazy val smclPublicInterfacesTestsJS = smclPublicInterfacesTests.js
 lazy val smcl = project.in(file("."))
     .settings(smclGeneralSettings: _*)
     .aggregate(
-      smclCoreJS, smclCoreJVM,
+      smclBitmapViewerJVM, smclBitmapViewerJS,
+      smclBitmapViewerTestsJVM, smclBitmapViewerTestsJS,
+      smclCoreJVM, smclCoreJS,
       smclCoreTestsJS, smclCoreTestsJS,
-      smclPublicInterfacesJS, smclPublicInterfacesJVM,
+      smclPublicInterfacesJVM, smclPublicInterfacesJS,
       smclPublicInterfacesTestsJVM, smclPublicInterfacesTestsJS)
     .dependsOn(
+      smclBitmapViewerJVM, smclBitmapViewerJS,
+      smclBitmapViewerTestsJVM, smclBitmapViewerTestsJS,
       smclCoreJS, smclCoreJVM,
       smclCoreTestsJS, smclCoreTestsJS,
       smclPublicInterfacesJS, smclPublicInterfacesJVM,

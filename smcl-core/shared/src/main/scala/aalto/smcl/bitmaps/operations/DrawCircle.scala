@@ -1,7 +1,6 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
 
@@ -10,7 +9,7 @@ import aalto.smcl.infrastructure._
 
 /**
  * Operation to draw a circle with given colors. If a color is not given, the default
- * primary/secondary colors will be used, as defined in the [[aalto.smcl.GS]].
+ * primary/secondary colors will be used, as defined in the [[aalto.smcl.infrastructure.GS]].
  *
  * @param centerXInPixels
  * @param centerYInPixels

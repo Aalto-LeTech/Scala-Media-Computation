@@ -22,22 +22,6 @@ package object bitmaps
   val Bitmap = ImmutableBitmap
 
 
-  /** */
-  private[this] lazy val _viewerClient = new ViewerClient()
-
-  /**
-   *
-   *
-   * @param sourceBitmap
-   */
-  def display(sourceBitmap: Bitmap): Unit = _viewerClient.display(sourceBitmap)
-
-  /**
-   *
-   */
-  def closeBitmapViewersWithoutSaving(): Unit = _viewerClient.closeAllViewersWithTheForce()
-
-
   /**
    *
    *

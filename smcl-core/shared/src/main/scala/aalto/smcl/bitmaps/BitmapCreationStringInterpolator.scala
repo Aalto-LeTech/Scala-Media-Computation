@@ -1,6 +1,8 @@
 package aalto.smcl.bitmaps
 
 
+
+
 /**
  * A string interpolator for creating [[aalto.smcl.bitmaps.Bitmap]] instances.
  *

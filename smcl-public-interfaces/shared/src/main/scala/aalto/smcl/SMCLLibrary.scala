@@ -8,7 +8,7 @@ package aalto.smcl
  *
  * @author Aleksi Lukkarinen
  */
-class SMCLLibrary {
+object SMCLLibrary {
 
   /** Full name of this library. */
   val FullName: String = "Scala Media Computation Library"
