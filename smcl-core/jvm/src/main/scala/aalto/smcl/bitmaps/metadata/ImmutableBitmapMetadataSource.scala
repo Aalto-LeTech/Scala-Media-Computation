@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage
 
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
-import aalto.smcl.infrastructure.awt.AwtBitmapBufferAdapter
+import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 
 

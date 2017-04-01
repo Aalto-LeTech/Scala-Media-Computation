@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.bitmaps.ViewerUpdateStyle.PreventViewerUpdates
 import aalto.smcl.colors.{PresetColors, RGBAColor}
-import aalto.smcl.infrastructure.awt.AwtBitmapBufferAdapter
+import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
 import aalto.smcl.infrastructure.GS
 import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 import aalto.smcl.interfaces.awt.StaticGeneralBitmapSource

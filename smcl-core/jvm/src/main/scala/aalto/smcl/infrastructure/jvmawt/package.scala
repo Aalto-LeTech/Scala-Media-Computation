@@ -15,7 +15,7 @@ import aalto.smcl.infrastructure.BaseSettingKeys.EnumSettingKey
  *
  * @author Aleksi Lukkarinen
  */
-package object awt
+package object jvmawt
   extends AwtSettingKeys with Constants {
 
   /**  */

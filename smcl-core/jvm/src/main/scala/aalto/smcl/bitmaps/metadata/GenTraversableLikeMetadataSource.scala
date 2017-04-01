@@ -6,7 +6,7 @@ import scala.collection.GenTraversableLike
 import scala.collection.mutable.ArrayBuffer
 
 import aalto.smcl.bitmaps.{Bitmap, ImmutableBitmap}
-import aalto.smcl.infrastructure.awt.AwtBitmapBufferAdapter
+import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 

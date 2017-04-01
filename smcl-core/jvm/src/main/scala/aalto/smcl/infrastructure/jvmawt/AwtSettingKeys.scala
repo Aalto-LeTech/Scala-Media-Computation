@@ -1,4 +1,4 @@
-package aalto.smcl.infrastructure.awt
+package aalto.smcl.infrastructure.jvmawt
 
 import aalto.smcl.infrastructure.BaseSettingKeys._
 

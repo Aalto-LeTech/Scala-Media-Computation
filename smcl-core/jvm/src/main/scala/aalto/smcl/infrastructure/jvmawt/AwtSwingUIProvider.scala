@@ -1,4 +1,4 @@
-package aalto.smcl.infrastructure.awt
+package aalto.smcl.infrastructure.jvmawt
 
 import java.awt.{GraphicsEnvironment, Toolkit}
 import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}

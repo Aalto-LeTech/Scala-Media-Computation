@@ -8,7 +8,7 @@ import scala.util.Try
 
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.common.AffineTransformation
-import aalto.smcl.infrastructure.awt.{AwtAffineTransformationAdapter, AwtBitmapBufferAdapter}
+import aalto.smcl.infrastructure.jvmawt.{AwtAffineTransformationAdapter, AwtBitmapBufferAdapter}
 
 
 
