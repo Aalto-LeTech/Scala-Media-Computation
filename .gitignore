@@ -10,11 +10,8 @@
 !/.idea
 !/project
 !/smcl-bitmap-viewer
-!/smcl-bitmap-viewer-tests
 !/smcl-core
-!/smcl-core-tests
 !/smcl-public-interfaces
-!/smcl-public-interfaces-tests
 !/.gitattributes
 !/.gitignore
 !/build.sbt
@@ -45,19 +42,6 @@
 !/smcl-bitmap-viewer/jvm/src
 !/smcl-bitmap-viewer/shared/src
 
-/smcl-bitmap-viewer-tests/*
-!/smcl-bitmap-viewer-tests/js
-!/smcl-bitmap-viewer-tests/jvm
-!/smcl-bitmap-viewer-tests/shared
-!/smcl-bitmap-viewer-tests/root-doc.txt
-
-/smcl-bitmap-viewer-tests/js/*
-/smcl-bitmap-viewer-tests/jvm/*
-/smcl-bitmap-viewer-tests/shared/*
-!/smcl-bitmap-viewer-tests/js/src
-!/smcl-bitmap-viewer-tests/jvm/src
-!/smcl-bitmap-viewer-tests/shared/src
-
 /smcl-core/*
 !/smcl-core/js
 !/smcl-core/jvm
@@ -71,19 +55,6 @@
 !/smcl-core/jvm/src
 !/smcl-core/shared/src
 
-/smcl-core-tests/*
-!/smcl-core-tests/js
-!/smcl-core-tests/jvm
-!/smcl-core-tests/shared
-!/smcl-core-tests/root-doc.txt
-
-/smcl-core-tests/js/*
-/smcl-core-tests/jvm/*
-/smcl-core-tests/shared/*
-!/smcl-core-tests/js/src
-!/smcl-core-tests/jvm/src
-!/smcl-core-tests/shared/src
-
 /smcl-public-interfaces/*
 !/smcl-public-interfaces/js
 !/smcl-public-interfaces/jvm
@@ -96,19 +67,6 @@
 !/smcl-public-interfaces/js/src
 !/smcl-public-interfaces/jvm/src
 !/smcl-public-interfaces/shared/src
-
-/smcl-public-interfaces-tests/*
-!/smcl-public-interfaces-tests/js
-!/smcl-public-interfaces-tests/jvm
-!/smcl-public-interfaces-tests/shared
-!/smcl-public-interfaces-tests/root-doc.txt
-
-/smcl-public-interfaces-tests/js/*
-/smcl-public-interfaces-tests/jvm/*
-/smcl-public-interfaces-tests/shared/*
-!/smcl-public-interfaces-tests/js/src
-!/smcl-public-interfaces-tests/jvm/src
-!/smcl-public-interfaces-tests/shared/src
 
 **/.git/*
 **/.history/*

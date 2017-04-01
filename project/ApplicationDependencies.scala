@@ -28,7 +28,7 @@ object ApplicationDependencies {
    * @see http://www.scalatest.org
    * @see http://search.maven.org/#search|ga|1|scalatest
    */
-  lazy val ScalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.0.1" withSources() withJavadoc()
+  lazy val ScalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.0.1"  % "test,it" withSources() withJavadoc()
 
 
   /**

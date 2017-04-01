@@ -1,7 +1,8 @@
 /**
- * Sbt build script for Scala Media Computation Library (SMCL).
+ * SBT build script for Scala Media Computation Library (SMCL).
  */
 
+import org.scalajs.sbtplugin.ScalaJSPluginInternal
 import sbt.Keys._
 
 
@@ -23,21 +24,15 @@ lazy val prjSmclBitmapViewerName = smclName
 lazy val prjSmclBitmapViewerVersion = "1.0.0-SNAPSHOT"
 lazy val prjSmclBitmapViewerDescription = "Bitmap viewers for " + smclName + "."
 
-lazy val prjSmclBitmapViewerTestsId = prjSmclBitmapViewerId + projectIdTestPostfix
-
 lazy val prjSmclCoreId = "smcl-core"
 lazy val prjSmclCoreName = smclName
 lazy val prjSmclCoreVersion = "1.0.0-SNAPSHOT"
 lazy val prjSmclCoreDescription = "A class library for bitmap processing using Scala."
 
-lazy val prjSmclCoreTestsId = prjSmclCoreId + projectIdTestPostfix
-
 lazy val prjSmclPiId = "smcl-public-interfaces"
 lazy val prjSmclPiName = smclName + ", Public Interfaces"
 lazy val prjSmclPiVersion = "1.0.0-SNAPSHOT"
 lazy val prjSmclPiDescription = "Public interfaces for communicating with " + smclName + "."
-
-lazy val prjSmclPiTestsId = prjSmclPiId + projectIdTestPostfix
 
 
 lazy val smclGeneralSettings = Seq(
@@ -67,153 +62,125 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   initialCommands in console :=
-      """import aalto.smcl._
-        |import aalto.smcl.infrastructure._
-        |import aalto.smcl.common._
-        |import aalto.smcl.colors._
-        |import aalto.smcl.bitmaps._
-        |import aalto.smcl.viewers._
-        |aalto.smcl.infrastructure.awt.Initializer()
-        |aalto.smcl.viewers.bitmaps.jvmawt.Initializer()""".stripMargin
+    """import aalto.smcl._
+      |import aalto.smcl.infrastructure._
+      |import aalto.smcl.common._
+      |import aalto.smcl.colors._
+      |import aalto.smcl.bitmaps._
+      |import aalto.smcl.viewers._
+      |
+      |aalto.smcl.infrastructure.awt.Initializer()
+      |aalto.smcl.viewers.bitmaps.jvmawt.Initializer()
+      |""".stripMargin
 )
 
-lazy val smclGeneralJsDependencySettings = Seq(
+lazy val smclGeneralJsSettings = Seq(
   libraryDependencies ++= Seq(
 
+  ),
+
+  libraryDependencies in Test ++= Seq(
+    ApplicationDependencies.ScalaTest,
+    ApplicationDependencies.ScalaCheck
   )
 )
 
-lazy val smclGeneralJvmDependencySettings = Seq(
+lazy val smclGeneralJvmSettings = Seq(
   libraryDependencies ++= Seq(
-    ApplicationDependencies.ScalaJsStubs,
-    ApplicationDependencies.ScalaSwing
-  )
-)
+    ApplicationDependencies.ScalaJsStubs
+  ),
 
-lazy val smclTestingJvmDependencySettings = Seq(
-  libraryDependencies ++= Seq(
-    ApplicationDependencies.ScalaTest
+  libraryDependencies in Test ++= Seq(
+    ApplicationDependencies.ScalaTest,
+    ApplicationDependencies.ScalaCheck
   )
 )
 
 lazy val smclBitmapViewer = crossProject
-    .crossType(CrossType.Full)
-    .in(file(prjSmclBitmapViewerId))
-    .settings(smclGeneralSettings: _*)
-    .settings(
-      name := prjSmclBitmapViewerId,
-      version := prjSmclBitmapViewerVersion,
-      description := prjSmclBitmapViewerDescription
-    )
-    .jvmSettings(smclGeneralJvmDependencySettings: _*)
-    .jvmSettings(libraryDependencies += ApplicationDependencies.RxScala)
-    .jsSettings(smclGeneralJsDependencySettings: _*)
-    .dependsOn(smclCore, smclPublicInterfaces)
+  .crossType(CrossType.Full)
+  .in(file(prjSmclBitmapViewerId))
+  .configs(IntegrationTest)
+  .settings(Defaults.itSettings: _*)
+  .settings(smclGeneralSettings: _*)
+  .settings(
+    name := prjSmclBitmapViewerId,
+    version := prjSmclBitmapViewerVersion,
+    description := prjSmclBitmapViewerDescription
+  )
+  .jvmSettings(smclGeneralJvmSettings: _*)
+  .jvmSettings(libraryDependencies ++= Seq(
+    ApplicationDependencies.RxScala,
+    ApplicationDependencies.ScalaSwing
+  ))
+  .jvmSettings(unmanagedSourceDirectories in IntegrationTest ++=
+      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
+  .jsSettings(smclGeneralJsSettings: _*)
+  .jsSettings(inConfig(IntegrationTest)(ScalaJSPluginInternal.scalaJSTestSettings): _*)
+  .jsSettings(unmanagedSourceDirectories in IntegrationTest ++=
+      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
+  .dependsOn(smclCore, smclPublicInterfaces)
 
 lazy val smclBitmapViewerJVM = smclBitmapViewer.jvm
 lazy val smclBitmapViewerJS = smclBitmapViewer.js
 
 
-lazy val smclBitmapViewerTests = crossProject
-    .crossType(CrossType.Full)
-    .in(file(prjSmclBitmapViewerTestsId))
-    .settings(smclGeneralSettings: _*)
-    .settings(
-      name := prjSmclBitmapViewerTestsId,
-      version := prjSmclBitmapViewerVersion,
-      description := prjSmclBitmapViewerDescription
-    )
-    .jvmSettings(smclGeneralJvmDependencySettings ++ smclTestingJvmDependencySettings: _*)
-    .jsSettings(smclGeneralJsDependencySettings: _*)
-    .dependsOn(smclBitmapViewer, smclCore, smclPublicInterfaces)
-
-lazy val smclBitmapViewerTestsJVM = smclBitmapViewerTests.jvm
-lazy val smclBitmapViewerTestsJS = smclBitmapViewerTests.js
-
-
 lazy val smclCore = crossProject
   .crossType(CrossType.Full)
   .in(file(prjSmclCoreId))
+  .configs(IntegrationTest)
+  .settings(Defaults.itSettings: _*)
   .settings(smclGeneralSettings: _*)
   .settings(
     name := prjSmclCoreId,
     version := prjSmclCoreVersion,
     description := prjSmclCoreDescription
   )
-  .jvmSettings(smclGeneralJvmDependencySettings: _*)
-  .jsSettings(smclGeneralJsDependencySettings: _*)
+  .jvmSettings(smclGeneralJvmSettings: _*)
+  .jvmSettings(unmanagedSourceDirectories in IntegrationTest ++=
+      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
+  .jsSettings(smclGeneralJsSettings: _*)
+  .jsSettings(inConfig(IntegrationTest)(ScalaJSPluginInternal.scalaJSTestSettings): _*)
+  .jsSettings(unmanagedSourceDirectories in IntegrationTest ++=
+      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
   .dependsOn(smclPublicInterfaces)
 
 lazy val smclCoreJVM = smclCore.jvm
 lazy val smclCoreJS = smclCore.js
 
 
-lazy val smclCoreTests = crossProject
-  .crossType(CrossType.Full)
-  .in(file(prjSmclCoreTestsId))
-  .settings(smclGeneralSettings: _*)
-  .settings(
-    name := prjSmclCoreTestsId,
-    version := prjSmclCoreVersion,
-    description := prjSmclCoreDescription
-  )
-  .jvmSettings(smclGeneralJvmDependencySettings ++ smclTestingJvmDependencySettings: _*)
-  .jsSettings(smclGeneralJsDependencySettings: _*)
-  .dependsOn(smclCore)
-
-lazy val smclCoreTestsJVM = smclCoreTests.jvm
-lazy val smclCoreTestsJS = smclCoreTests.js
-
-
 lazy val smclPublicInterfaces = crossProject
   .crossType(CrossType.Full)
   .in(file(prjSmclPiId))
+  .configs(IntegrationTest)
+  .settings(Defaults.itSettings: _*)
   .settings(smclGeneralSettings: _*)
   .settings(
-    name := prjSmclPiId,
-    version := prjSmclPiVersion,
-    description := prjSmclPiDescription
+      name := prjSmclPiId,
+      version := prjSmclPiVersion,
+      description := prjSmclPiDescription
   )
-  .jvmSettings(smclGeneralJvmDependencySettings: _*)
-  .jsSettings(smclGeneralJsDependencySettings: _*)
+  .jvmSettings(smclGeneralJvmSettings: _*)
+  .jvmSettings(unmanagedSourceDirectories in IntegrationTest ++=
+      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
+  .jsSettings(smclGeneralJsSettings: _*)
+  .jsSettings(unmanagedSourceDirectories in IntegrationTest ++=
+      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
+  .jsSettings(inConfig(IntegrationTest)(ScalaJSPluginInternal.scalaJSTestSettings): _*)
 
 lazy val smclPublicInterfacesJVM = smclPublicInterfaces.jvm
 lazy val smclPublicInterfacesJS = smclPublicInterfaces.js
 
 
-lazy val smclPublicInterfacesTests = crossProject
-  .crossType(CrossType.Full)
-  .in(file(prjSmclPiTestsId))
-  .settings(smclGeneralSettings: _*)
-  .settings(
-    name := prjSmclPiTestsId,
-    version := prjSmclPiVersion,
-    description := prjSmclPiDescription
-  )
-  .jvmSettings(smclGeneralJvmDependencySettings ++ smclTestingJvmDependencySettings: _*)
-  .jsSettings(smclGeneralJsDependencySettings: _*)
-  .dependsOn(smclPublicInterfaces)
-
-lazy val smclPublicInterfacesTestsJVM = smclPublicInterfacesTests.jvm
-lazy val smclPublicInterfacesTestsJS = smclPublicInterfacesTests.js
-
-
 lazy val smcl = project.in(file("."))
-    .settings(smclGeneralSettings: _*)
-    .aggregate(
-      smclBitmapViewerJVM, smclBitmapViewerJS,
-      smclBitmapViewerTestsJVM, smclBitmapViewerTestsJS,
-      smclCoreJVM, smclCoreJS,
-      smclCoreTestsJS, smclCoreTestsJS,
-      smclPublicInterfacesJVM, smclPublicInterfacesJS,
-      smclPublicInterfacesTestsJVM, smclPublicInterfacesTestsJS)
-    .dependsOn(
-      smclBitmapViewerJVM, smclBitmapViewerJS,
-      smclBitmapViewerTestsJVM, smclBitmapViewerTestsJS,
-      smclCoreJS, smclCoreJVM,
-      smclCoreTestsJS, smclCoreTestsJS,
-      smclPublicInterfacesJS, smclPublicInterfacesJVM,
-      smclPublicInterfacesTestsJVM, smclPublicInterfacesTestsJS)
+  .settings(smclGeneralSettings: _*)
+  .aggregate(
+    smclBitmapViewerJVM, smclBitmapViewerJS,
+    smclCoreJVM, smclCoreJS,
+    smclPublicInterfacesJVM, smclPublicInterfacesJS)
+  .dependsOn(
+    smclBitmapViewerJVM, smclBitmapViewerJS,
+    smclCoreJS, smclCoreJVM,
+    smclPublicInterfacesJS, smclPublicInterfacesJVM)
 
 
 addCommandAlias("cp", "; clean ; package")
