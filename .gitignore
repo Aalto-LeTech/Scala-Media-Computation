@@ -8,7 +8,6 @@
 /*
 
 !/.idea
-!/conf
 !/project
 !/smcl-bitmap-viewer
 !/smcl-bitmap-viewer-tests
@@ -23,7 +22,6 @@
 !/CONTRIBUTING.md
 !/LICENSE
 !/README.md
-!/smcl-root.iml
 
 
 /.idea/workspace.xml
@@ -70,11 +68,8 @@
 /smcl-core/jvm/*
 /smcl-core/shared/*
 !/smcl-core/js/src
-!/smcl-core/js/smcl-core-js.iml
 !/smcl-core/jvm/src
-!/smcl-core/jvm/smcl-core-jvm.iml
 !/smcl-core/shared/src
-!/smcl-core/shared/smcl-core-shared.iml
 
 /smcl-core-tests/*
 !/smcl-core-tests/js
@@ -86,11 +81,8 @@
 /smcl-core-tests/jvm/*
 /smcl-core-tests/shared/*
 !/smcl-core-tests/js/src
-!/smcl-core-tests/js/smcl-core-tests-js.iml
 !/smcl-core-tests/jvm/src
-!/smcl-core-tests/jvm/smcl-core-tests-jvm.iml
 !/smcl-core-tests/shared/src
-!/smcl-core-tests/shared/smcl-core-tests-shared.iml
 
 /smcl-public-interfaces/*
 !/smcl-public-interfaces/js
@@ -102,11 +94,8 @@
 /smcl-public-interfaces/jvm/*
 /smcl-public-interfaces/shared/*
 !/smcl-public-interfaces/js/src
-!/smcl-public-interfaces/js/smcl-public-interfaces-js.iml
 !/smcl-public-interfaces/jvm/src
-!/smcl-public-interfaces/jvm/smcl-public-interfaces-jvm.iml
 !/smcl-public-interfaces/shared/src
-!/smcl-public-interfaces/shared/smcl-public-interfaces-shared.iml
 
 /smcl-public-interfaces-tests/*
 !/smcl-public-interfaces-tests/js
@@ -118,11 +107,8 @@
 /smcl-public-interfaces-tests/jvm/*
 /smcl-public-interfaces-tests/shared/*
 !/smcl-public-interfaces-tests/js/src
-!/smcl-public-interfaces-tests/js/smcl-public-interfaces-tests-js.iml
 !/smcl-public-interfaces-tests/jvm/src
-!/smcl-public-interfaces-tests/jvm/smcl-public-interfaces-tests-jvm.iml
 !/smcl-public-interfaces-tests/shared/src
-!/smcl-public-interfaces-tests/shared/smcl-public-interfaces-tests-shared.iml
 
 **/.git/*
 **/.history/*
