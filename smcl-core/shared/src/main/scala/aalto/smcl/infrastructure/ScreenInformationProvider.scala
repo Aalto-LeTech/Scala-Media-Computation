@@ -1,7 +1,7 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.common.Dimension
+import aalto.smcl.geometry.Dimension
 
 
 

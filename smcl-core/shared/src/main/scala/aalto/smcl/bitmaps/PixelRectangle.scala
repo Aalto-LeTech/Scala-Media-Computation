@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.common.Dimension
+import aalto.smcl.geometry.Dimension
 
 
 

@@ -1,7 +1,7 @@
-package aalto.smcl.common
+package aalto.smcl.infrastructure
 
 
-import aalto.smcl.infrastructure.{PRF, ScreenInformationProvider}
+import aalto.smcl.geometry.Dimension
 
 
 

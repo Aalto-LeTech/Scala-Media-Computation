@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.colors.{RGBAColor, _}
-import aalto.smcl.common.AffineTransformation
+import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
 
 

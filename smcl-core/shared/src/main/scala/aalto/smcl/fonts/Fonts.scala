@@ -1,4 +1,4 @@
-package aalto.smcl.common
+package aalto.smcl.fonts
 
 
 import scala.collection.immutable.HashMap
@@ -10,7 +10,7 @@ import scala.collection.immutable.HashMap
  *
  * @author Aleksi Lukkarinen
  */
-class Fonts private[common]()
+class Fonts private[fonts]()
   extends // Map[String, Font]
   //with
   Immutable {

@@ -1,4 +1,5 @@
-package aalto.smcl.common
+package aalto.smcl.geometry
+
 
 /**
   *

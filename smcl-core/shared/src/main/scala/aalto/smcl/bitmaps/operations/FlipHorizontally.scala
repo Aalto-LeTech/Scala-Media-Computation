@@ -1,8 +1,9 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.common._
-import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
+import aalto.smcl.fonts._
+import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
 
 
 

@@ -1,6 +1,7 @@
 package aalto.smcl.infrastructure.jvmawt
 
-import aalto.smcl.common.Dimension
+
+import aalto.smcl.geometry.Dimension
 import aalto.smcl.infrastructure.ScreenInformationProvider
 
 

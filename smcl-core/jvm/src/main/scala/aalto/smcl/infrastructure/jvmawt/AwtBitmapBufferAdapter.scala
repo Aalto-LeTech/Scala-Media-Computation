@@ -11,7 +11,8 @@ import scala.util.{Failure, Try}
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
-import aalto.smcl.common._
+import aalto.smcl.fonts._
+import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.exceptions.{SMCLFunctionExecutionError, SMCLInvalidColorComponentArrayLengthError}
 

@@ -2,7 +2,8 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.common._
+import aalto.smcl.fonts._
+import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
 
 

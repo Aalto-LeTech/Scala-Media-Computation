@@ -3,7 +3,7 @@ package aalto.smcl.infrastructure
 
 import aalto.smcl.bitmaps.ConvolutionKernel
 import aalto.smcl.colors.{RGBAColor, RGBAComponentTranslationTable}
-import aalto.smcl.common.AffineTransformation
+import aalto.smcl.geometry.AffineTransformation
 
 
 

@@ -3,7 +3,7 @@ package aalto.smcl.infrastructure
 
 
 import aalto.smcl.colors.{ColorValidator, RGBAColor}
-import aalto.smcl.common.AffineTransformation
+import aalto.smcl.geometry.AffineTransformation
 
 
 

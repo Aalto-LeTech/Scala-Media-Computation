@@ -2,7 +2,7 @@ package aalto.smcl.viewers.bitmaps.jvmawt
 
 import scala.swing.Dimension
 
-import aalto.smcl.common.AffineTransformation
+import aalto.smcl.geometry.AffineTransformation
 
 
 

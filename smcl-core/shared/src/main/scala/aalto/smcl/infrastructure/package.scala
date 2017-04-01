@@ -17,10 +17,13 @@ import aalto.smcl.infrastructure.BaseSettingKeys.{BooleanSettingKey, ColorSettin
 package object infrastructure extends Constants {
 
   /** Global settings storage. */
-  val GS: Settings = new Settings()
+  lazy val GS: Settings = new Settings()
 
   /** Global platform resource factory. */
-  val PRF: PlatformResourceFactory = DefaultPlatformResourceFactory
+  lazy val PRF: PlatformResourceFactory = DefaultPlatformResourceFactory
+
+  /**  */
+  lazy val Screen: DefaultScreen = new DefaultScreen(PRF.screenInformationProvider)
 
 
   /** */

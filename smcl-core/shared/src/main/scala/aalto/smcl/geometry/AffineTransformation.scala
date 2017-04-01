@@ -1,4 +1,4 @@
-package aalto.smcl.common
+package aalto.smcl.geometry
 
 
 import aalto.smcl.infrastructure.{AffineTransformationAdapter, PRF}

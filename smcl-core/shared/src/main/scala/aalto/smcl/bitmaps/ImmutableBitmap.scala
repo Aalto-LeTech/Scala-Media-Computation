@@ -8,7 +8,7 @@ import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerP
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.viewers.{display => displayInViewer}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
-import aalto.smcl.common.AffineTransformation
+import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.DrawingSurfaceAdapter
 
