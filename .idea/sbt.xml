@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ScalaSbtSettings">
     <option name="customLauncherEnabled" value="true" />
-    <option name="customLauncherPath" value="$PROJECT_DIR$/../../apps/sbt/bin/sbt-launch.jar" />
-    <option name="customVMEnabled" value="true" />
+    <option name="customLauncherPath" value="$SBT_HOME$/bin/sbt-launch.jar" />
     <option name="customVMPath" value="/usr/lib/jvm/java-8-oracle-1.8.0.112" />
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
@@ -32,7 +31,6 @@
           </set>
         </option>
         <option name="resolveSbtClassifiers" value="true" />
-        <option name="sbtVersion" value="0.13.13" />
         <option name="useAutoImport" value="true" />
         <option name="useOurOwnAutoImport" value="true" />
       </SbtProjectSettings>
