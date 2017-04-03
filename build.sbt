@@ -78,7 +78,7 @@ lazy val smclGeneralSettings = Seq(
       |import aalto.smcl.bitmaps._
       |import aalto.smcl.viewers._
       |
-      |aalto.smcl.infrastructure.awt.Initializer()
+      |aalto.smcl.infrastructure.jvmawt.Initializer()
       |aalto.smcl.viewers.bitmaps.jvmawt.Initializer()
       |""".stripMargin
 )
