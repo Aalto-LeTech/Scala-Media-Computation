@@ -17,7 +17,6 @@
             <option value="$PROJECT_DIR$/smcl-bitmap-viewer/jvm" />
             <option value="$PROJECT_DIR$/smcl-bitmap-viewer/jvm/project" />
             <option value="$PROJECT_DIR$/smcl-bitmap-viewer/shared" />
-            <option value="$PROJECT_DIR$/smcl-bitmap-viewer/shared/src/it/scala" />
             <option value="$PROJECT_DIR$/smcl-core/js" />
             <option value="$PROJECT_DIR$/smcl-core/js/project" />
             <option value="$PROJECT_DIR$/smcl-core/jvm" />
@@ -31,6 +30,7 @@
           </set>
         </option>
         <option name="resolveSbtClassifiers" value="true" />
+        <option name="sbtVersion" value="0.13.13" />
         <option name="useAutoImport" value="true" />
         <option name="useOurOwnAutoImport" value="true" />
       </SbtProjectSettings>

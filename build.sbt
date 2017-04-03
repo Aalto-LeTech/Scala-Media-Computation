@@ -96,28 +96,36 @@ lazy val smclGeneralJvmSettings = Seq(
   )
 )
 
+lazy val ItgTest = config("it") extend Test
+
+def integrationTestFilter(name: String): Boolean = name endsWith "ItgTest"
+def unitTestFilter(name: String): Boolean = (name endsWith "Test") && !integrationTestFilter(name)
+
+
 lazy val smclBitmapViewer = crossProject
   .crossType(CrossType.Full)
   .in(file(prjSmclBitmapViewerId))
-  .configs(IntegrationTest)
-  .settings(Defaults.itSettings: _*)
-  .settings(smclGeneralSettings: _*)
+  .configs(ItgTest)
   .settings(
     name := prjSmclBitmapViewerId,
     version := prjSmclBitmapViewerVersion,
-    description := prjSmclBitmapViewerDescription
+    description := prjSmclBitmapViewerDescription,
+    smclGeneralSettings,
+    inConfig(ItgTest)(Defaults.testTasks),
+    testOptions in Test := Seq(Tests.Filter(unitTestFilter)),
+    testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilter))
   )
-  .jvmSettings(smclGeneralJvmSettings: _*)
-  .jvmSettings(libraryDependencies ++= Seq(
-    ApplicationDependencies.RxScala,
-    ApplicationDependencies.ScalaSwing
-  ))
-  .jvmSettings(unmanagedSourceDirectories in IntegrationTest ++=
-      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
-  .jsSettings(smclGeneralJsSettings: _*)
-  .jsSettings(inConfig(IntegrationTest)(ScalaJSPluginInternal.scalaJSTestSettings): _*)
-  .jsSettings(unmanagedSourceDirectories in IntegrationTest ++=
-      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
+  .jvmSettings(
+    smclGeneralJvmSettings,
+    libraryDependencies ++= Seq(
+      ApplicationDependencies.RxScala,
+      ApplicationDependencies.ScalaSwing
+    )
+  )
+  .jsSettings(
+    smclGeneralJsSettings,
+    inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+  )
   .dependsOn(smclCore, smclPublicInterfaces)
 
 lazy val smclBitmapViewerJVM = smclBitmapViewer.jvm
@@ -127,21 +135,23 @@ lazy val smclBitmapViewerJS = smclBitmapViewer.js
 lazy val smclCore = crossProject
   .crossType(CrossType.Full)
   .in(file(prjSmclCoreId))
-  .configs(IntegrationTest)
-  .settings(Defaults.itSettings: _*)
-  .settings(smclGeneralSettings: _*)
+  .configs(ItgTest)
   .settings(
     name := prjSmclCoreId,
     version := prjSmclCoreVersion,
-    description := prjSmclCoreDescription
+    description := prjSmclCoreDescription,
+    smclGeneralSettings,
+    inConfig(ItgTest)(Defaults.testTasks),
+    testOptions in Test := Seq(Tests.Filter(unitTestFilter)),
+    testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilter))
   )
-  .jvmSettings(smclGeneralJvmSettings: _*)
-  .jvmSettings(unmanagedSourceDirectories in IntegrationTest ++=
-      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
-  .jsSettings(smclGeneralJsSettings: _*)
-  .jsSettings(inConfig(IntegrationTest)(ScalaJSPluginInternal.scalaJSTestSettings): _*)
-  .jsSettings(unmanagedSourceDirectories in IntegrationTest ++=
-      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
+  .jvmSettings(
+    smclGeneralJvmSettings
+  )
+  .jsSettings(
+    smclGeneralJsSettings,
+    inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+  )
   .dependsOn(smclPublicInterfaces)
 
 lazy val smclCoreJVM = smclCore.jvm
@@ -151,21 +161,23 @@ lazy val smclCoreJS = smclCore.js
 lazy val smclPublicInterfaces = crossProject
   .crossType(CrossType.Full)
   .in(file(prjSmclPiId))
-  .configs(IntegrationTest)
-  .settings(Defaults.itSettings: _*)
-  .settings(smclGeneralSettings: _*)
+  .configs(ItgTest)
   .settings(
-      name := prjSmclPiId,
-      version := prjSmclPiVersion,
-      description := prjSmclPiDescription
+    name := prjSmclPiId,
+    version := prjSmclPiVersion,
+    description := prjSmclPiDescription,
+    smclGeneralSettings,
+    inConfig(ItgTest)(Defaults.testTasks),
+    testOptions in Test := Seq(Tests.Filter(unitTestFilter)),
+    testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilter))
   )
-  .jvmSettings(smclGeneralJvmSettings: _*)
-  .jvmSettings(unmanagedSourceDirectories in IntegrationTest ++=
-      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
-  .jsSettings(smclGeneralJsSettings: _*)
-  .jsSettings(unmanagedSourceDirectories in IntegrationTest ++=
-      CrossType.Full.sharedSrcDir(baseDirectory.value, "it").toSeq)
-  .jsSettings(inConfig(IntegrationTest)(ScalaJSPluginInternal.scalaJSTestSettings): _*)
+  .jvmSettings(
+    smclGeneralJvmSettings
+  )
+  .jsSettings(
+    smclGeneralJsSettings,
+    inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+  )
 
 lazy val smclPublicInterfacesJVM = smclPublicInterfaces.jvm
 lazy val smclPublicInterfacesJS = smclPublicInterfaces.js
@@ -190,3 +202,4 @@ addCommandAlias("rcp", "; reload ; clean ; package")
 addCommandAlias("cpt", "; clean ; package ; test")
 
 addCommandAlias("rcpt", "; reload ; clean ; package ; test")
+
