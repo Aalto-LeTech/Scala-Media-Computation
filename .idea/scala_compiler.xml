@@ -5,12 +5,12 @@
     <option name="uncheckedWarnings" value="true" />
     <option name="featureWarnings" value="true" />
     <option name="incrementalityType" value="SBT" />
-    <profile name="SBT 2" modules="scala-media-computation,root,smclBitmapViewerTestsJVM,smclCoreTestsJVM,smclPublicInterfacesTestsJVM,smcl,smclBitmapViewerJVM,smclCoreJVM,smclPublicInterfacesJVM">
+    <profile name="SBT 2" modules="scala-media-computation,root,smclBitmapViewerTestsJVM,smclCoreTestsJVM,smclPublicInterfacesTestsJVM,smclBitmapViewerJVM,smclCoreJVM,smclPublicInterfacesJVM,smcl,smcl-bitmap-viewer-js,smcl-core-js,smcl-public-interfaces-js">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <option name="featureWarnings" value="true" />
     </profile>
-    <profile name="SBT 3" modules="smclBitmapViewerTestsJS,smclCoreTestsJS,smclPublicInterfacesTestsJS,smclBitmapViewerJS,smclCoreJS,smclPublicInterfacesJS">
+    <profile name="SBT 3" modules="smclBitmapViewerTestsJS,smclCoreTestsJS,smclPublicInterfacesTestsJS,smclBitmapViewerJS,smclCoreJS,smclPublicInterfacesJS,smcl-bitmap-viewer-jvm,smcl-core-jvm,smcl-public-interfaces-jvm">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <option name="featureWarnings" value="true" />

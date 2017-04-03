@@ -3,10 +3,13 @@
  */
 
 import org.scalajs.sbtplugin.ScalaJSPluginInternal
+import org.scalajs.sbtplugin.cross.CrossProject
 import sbt.Keys._
 
 
 
+lazy val projectIdJvmPostfix = "-jvm"
+lazy val projectIdJsPostfix = "-js"
 lazy val projectIdTestPostfix = "-tests"
 
 lazy val smclName = "Scala Media Computation Library"
@@ -20,16 +23,22 @@ lazy val projectJavaVersionSource = "1.8"
 lazy val projectJavaVersionTarget = "1.8"
 
 lazy val prjSmclBitmapViewerId = "smcl-bitmap-viewer"
+lazy val prjSmclBitmapViewerJvmId = prjSmclBitmapViewerId + projectIdJvmPostfix
+lazy val prjSmclBitmapViewerJsId = prjSmclBitmapViewerId + projectIdJsPostfix
 lazy val prjSmclBitmapViewerName = smclName
 lazy val prjSmclBitmapViewerVersion = "1.0.0-SNAPSHOT"
 lazy val prjSmclBitmapViewerDescription = "Bitmap viewers for " + smclName + "."
 
 lazy val prjSmclCoreId = "smcl-core"
+lazy val prjSmclCoreJvmId = prjSmclCoreId + projectIdJvmPostfix
+lazy val prjSmclCoreJsId = prjSmclCoreId + projectIdJsPostfix
 lazy val prjSmclCoreName = smclName
 lazy val prjSmclCoreVersion = "1.0.0-SNAPSHOT"
 lazy val prjSmclCoreDescription = "A class library for bitmap processing using Scala."
 
 lazy val prjSmclPiId = "smcl-public-interfaces"
+lazy val prjSmclPiJvmId = prjSmclPiId + projectIdJvmPostfix
+lazy val prjSmclPiJsId = prjSmclPiId + projectIdJsPostfix
 lazy val prjSmclPiName = smclName + ", Public Interfaces"
 lazy val prjSmclPiVersion = "1.0.0-SNAPSHOT"
 lazy val prjSmclPiDescription = "Public interfaces for communicating with " + smclName + "."
@@ -102,9 +111,8 @@ def integrationTestFilter(name: String): Boolean = name endsWith "ItgTest"
 def unitTestFilter(name: String): Boolean = (name endsWith "Test") && !integrationTestFilter(name)
 
 
-lazy val smclBitmapViewer = crossProject
-  .crossType(CrossType.Full)
-  .in(file(prjSmclBitmapViewerId))
+lazy val smclBitmapViewer =
+  CrossProject(prjSmclBitmapViewerJsId, prjSmclBitmapViewerJvmId, file(prjSmclBitmapViewerId), CrossType.Full)
   .configs(ItgTest)
   .settings(
     name := prjSmclBitmapViewerId,
@@ -132,9 +140,8 @@ lazy val smclBitmapViewerJVM = smclBitmapViewer.jvm
 lazy val smclBitmapViewerJS = smclBitmapViewer.js
 
 
-lazy val smclCore = crossProject
-  .crossType(CrossType.Full)
-  .in(file(prjSmclCoreId))
+lazy val smclCore =
+  CrossProject(prjSmclCoreJsId, prjSmclCoreJvmId, file(prjSmclCoreId), CrossType.Full)
   .configs(ItgTest)
   .settings(
     name := prjSmclCoreId,
@@ -158,9 +165,8 @@ lazy val smclCoreJVM = smclCore.jvm
 lazy val smclCoreJS = smclCore.js
 
 
-lazy val smclPublicInterfaces = crossProject
-  .crossType(CrossType.Full)
-  .in(file(prjSmclPiId))
+lazy val smclPublicInterfaces =
+  CrossProject(prjSmclPiJsId, prjSmclPiJvmId, file(prjSmclPiId), CrossType.Full)
   .configs(ItgTest)
   .settings(
     name := prjSmclPiId,
@@ -184,7 +190,7 @@ lazy val smclPublicInterfacesJS = smclPublicInterfaces.js
 
 
 lazy val smcl = project.in(file("."))
-  .settings(smclGeneralSettings: _*)
+  .settings(smclGeneralSettings)
   .aggregate(
     smclBitmapViewerJVM, smclBitmapViewerJS,
     smclCoreJVM, smclCoreJS,

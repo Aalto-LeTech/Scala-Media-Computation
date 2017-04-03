@@ -10,10 +10,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="smclCoreJVM" />
-    <orderEntry type="module" module-name="smclPublicInterfacesJVM" />
-    <orderEntry type="module" module-name="smclCoreJS" />
-    <orderEntry type="module" module-name="smclPublicInterfacesJS" />
+    <orderEntry type="library" name="SBT: io.reactivex:rxscala_2.12:0.26.5:jar" level="project" />
+    <orderEntry type="module" module-name="smcl-public-interfaces-jvm" />
+    <orderEntry type="module" module-name="smcl-core-jvm" />
+    <orderEntry type="module" module-name="smcl-public-interfaces-js" />
+    <orderEntry type="module" module-name="smcl-core-js" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: org.scala-js:scalajs-stubs_2.12:0.6.14:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.12.1:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: org.scala-lang:scala-reflect:2.12.1:jar" level="project" />
@@ -23,6 +24,5 @@
     <orderEntry type="library" name="SBT: org.scala-js:scalajs-library_2.12:0.6.14:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.scala-js:scalajs-test-interface_2.12:0.6.14:jar" level="project" />
     <orderEntry type="library" name="SBT: io.reactivex:rxjava:1.2.4:jar" level="project" />
-    <orderEntry type="library" name="SBT: io.reactivex:rxscala_2.12:0.26.5:jar" level="project" />
   </component>
 </module>
