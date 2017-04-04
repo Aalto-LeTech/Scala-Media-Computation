@@ -22,17 +22,17 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="SBT: io.reactivex:rxscala_2.12:0.26.5:jar" level="project" />
-    <orderEntry type="module" module-name="smcl-public-interfaces-jvm" exported="" />
-    <orderEntry type="module" module-name="smcl-public-interfaces-js" exported="" />
-    <orderEntry type="module" module-name="smcl-core-jvm" exported="" />
-    <orderEntry type="module" module-name="smcl-core-js" exported="" />
-    <orderEntry type="module" module-name="smcl-bitmap-viewer-jvm" exported="" />
-    <orderEntry type="module" module-name="smcl-bitmap-viewer-js" exported="" />
-    <orderEntry type="library" name="SBT: org.scala-js:scalajs-library_2.12:0.6.14:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.12.1:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-swing_2.12:2.0.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.scala-sbt:test-interface:1.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.scalacheck:scalacheck_2.12:1.13.4:jar" level="project" />
     <orderEntry type="library" name="SBT: io.reactivex:rxjava:1.2.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scalacheck:scalacheck_2.12:1.13.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scala-sbt:test-interface:1.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-swing_2.12:2.0.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.12.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-js:scalajs-library_2.12:0.6.14:jar" level="project" />
+    <orderEntry type="module" module-name="smcl-bitmap-viewer-js" exported="" />
+    <orderEntry type="module" module-name="smcl-bitmap-viewer-jvm" exported="" />
+    <orderEntry type="module" module-name="smcl-core-js" exported="" />
+    <orderEntry type="module" module-name="smcl-core-jvm" exported="" />
+    <orderEntry type="module" module-name="smcl-public-interfaces-js" exported="" />
+    <orderEntry type="module" module-name="smcl-public-interfaces-jvm" exported="" />
   </component>
 </module>

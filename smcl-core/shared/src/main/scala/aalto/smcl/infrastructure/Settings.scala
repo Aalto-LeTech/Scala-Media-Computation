@@ -1,6 +1,6 @@
 package aalto.smcl.infrastructure
 
-import aalto.smcl.bitmaps.operations.Renderable
+
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure.BaseSettingKeys._
 import aalto.smcl.infrastructure.exceptions.SMCLUninitializedSettingError

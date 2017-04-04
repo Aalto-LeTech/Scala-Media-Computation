@@ -1,5 +1,8 @@
 package aalto.smcl.colors.exceptions
 
+
+
+
 /**
  *
  *

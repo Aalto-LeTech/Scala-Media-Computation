@@ -1,5 +1,6 @@
 package aalto.smcl.infrastructure
 
+
 import scala.collection.GenTraversable
 import scala.language.higherKinds
 

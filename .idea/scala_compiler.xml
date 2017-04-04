@@ -5,12 +5,20 @@
     <option name="uncheckedWarnings" value="true" />
     <option name="featureWarnings" value="true" />
     <option name="incrementalityType" value="SBT" />
+    <profile name="SBT 1" modules="smcl-bitmap-viewer-jvm,smcl-core-jvm,smcl-public-interfaces-jvm">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+      <plugins>
+        <plugin path="C:\Users\Aleksi\.ivy2\cache\org.scala-js\scalajs-compiler_2.12.1\jars\scalajs-compiler_2.12.1-0.6.14.jar" />
+      </plugins>
+    </profile>
     <profile name="SBT 2" modules="scala-media-computation,root,smclBitmapViewerTestsJVM,smclCoreTestsJVM,smclPublicInterfacesTestsJVM,smclBitmapViewerJVM,smclCoreJVM,smclPublicInterfacesJVM,smcl,smcl-bitmap-viewer-js,smcl-core-js,smcl-public-interfaces-js">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <option name="featureWarnings" value="true" />
     </profile>
-    <profile name="SBT 3" modules="smclBitmapViewerTestsJS,smclCoreTestsJS,smclPublicInterfacesTestsJS,smclBitmapViewerJS,smclCoreJS,smclPublicInterfacesJS,smcl-bitmap-viewer-jvm,smcl-core-jvm,smcl-public-interfaces-jvm">
+    <profile name="SBT 3" modules="smclBitmapViewerTestsJS,smclCoreTestsJS,smclPublicInterfacesTestsJS,smclBitmapViewerJS,smclCoreJS,smclPublicInterfacesJS">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <option name="featureWarnings" value="true" />

@@ -22,11 +22,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="smcl-public-interfaces-jvm" exported="" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.scalacheck:scalacheck_2.12:1.13.4:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.scala-sbt:test-interface:1.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.12.1:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.scala-js:scalajs-test-interface_2.12:0.6.14:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scala-js:scalajs-library_2.12:0.6.14:jar" level="project" />
     <orderEntry type="module" module-name="smcl-core-sources" exported="" />
+    <orderEntry type="library" name="SBT: org.scala-js:scalajs-library_2.12:0.6.14:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scala-js:scalajs-test-interface_2.12:0.6.14:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.12.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scala-sbt:test-interface:1.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scalacheck:scalacheck_2.12:1.13.4:jar" level="project" />
   </component>
 </module>

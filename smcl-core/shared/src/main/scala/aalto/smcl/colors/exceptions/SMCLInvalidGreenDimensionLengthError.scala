@@ -1,5 +1,6 @@
 package aalto.smcl.colors.exceptions
 
+
 import aalto.smcl.infrastructure._
 
 

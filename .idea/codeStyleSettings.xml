@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectCodeStyleSettingsManager">
+    <option name="PER_PROJECT_SETTINGS">
+      <value>
+        <option name="LINE_SEPARATOR" value="&#10;" />
+        <option name="FORMATTER_TAGS_ENABLED" value="true" />
+        <ScalaCodeStyleSettings>
+          <option name="importLayout">
+            <array>
+              <option value="java" />
+              <option value="_______ blank line _______" />
+              <option value="scala" />
+              <option value="_______ blank line _______" />
+              <option value="all other imports" />
+            </array>
+          </option>
+        </ScalaCodeStyleSettings>
+        <codeStyleSettings language="Scala">
+          <option name="KEEP_BLANK_LINES_IN_CODE" value="10" />
+          <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="1" />
+          <option name="BLANK_LINES_AFTER_PACKAGE" value="0" />
+          <option name="BLANK_LINES_BEFORE_IMPORTS" value="2" />
+          <option name="BLANK_LINES_AFTER_IMPORTS" value="4" />
+          <option name="BLANK_LINES_AROUND_FIELD_IN_INTERFACE" value="1" />
+          <option name="BLANK_LINES_AFTER_CLASS_HEADER" value="1" />
+        </codeStyleSettings>
+      </value>
+    </option>
+    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
+  </component>
+</project>

@@ -1,5 +1,8 @@
 package aalto.smcl.infrastructure
 
+
+
+
 /**
  * Creates formal-like textual tokens representing classes. A class to
  * be tokenized has to provide the information necessary for tokenization.
