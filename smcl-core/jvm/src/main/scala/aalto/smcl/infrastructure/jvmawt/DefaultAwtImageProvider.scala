@@ -124,8 +124,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
       val newThrowable =
         new SMCLMaximumBitmapSizeExceededError(
           Option(width), Option(height),
-          Option(filePath), Option(currentImageIndex),
-          new BitmapValidator())
+          Option(filePath), Option(currentImageIndex), bitmapValidator)
 
       return Left(newThrowable)
     }
@@ -134,8 +133,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
       val newThrowable =
         new SMCLMinimumBitmapSizeNotMetError(
           Option(width), Option(height),
-          Option(filePath), Option(currentImageIndex),
-          new BitmapValidator())
+          Option(filePath), Option(currentImageIndex), bitmapValidator)
 
       return Left(newThrowable)
     }
