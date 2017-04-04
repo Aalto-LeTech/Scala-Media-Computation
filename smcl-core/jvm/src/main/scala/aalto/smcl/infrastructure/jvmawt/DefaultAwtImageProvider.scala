@@ -2,13 +2,14 @@ package aalto.smcl.infrastructure.jvmawt
 
 
 import java.io.{File, IOException}
-import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes
+import java.nio.file.{Files, NoSuchFileException}
 import java.util.Locale
 import javax.imageio.stream.ImageInputStream
 import javax.imageio.{ImageIO, ImageReader}
 
 import scala.util._
+
 import aalto.smcl.bitmaps._
 import aalto.smcl.infrastructure.exceptions._
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, CommonFileUtils, EnsureClosingOfAfter}
@@ -211,7 +212,8 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
 
     val attributes: BasicFileAttributes =
       Try(Files.readAttributes(imageFilePath, classOf[BasicFileAttributes])).recover({
-        case t: Throwable => throw new SMCLFileAttributeRetrievalFailedError(t)
+        case e: NoSuchFileException => throw new SMCLFileNotFoundError(pathToFile, e)
+        case other: Throwable       => throw new SMCLFileAttributeRetrievalFailedError(other)
       }).get
 
     require(!attributes.isDirectory, "The specified path points to a folder instead of an image file.")
