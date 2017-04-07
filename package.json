@@ -1,0 +1,15 @@
+{
+  "name": "scala-media-computation-library",
+  "version": "1.0.0",
+  "dependencies": {
+    "jsdom": "^9.12.0",
+    "source-map-support": "^0.4.14"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aalto-LeTech/Scala-Media-Computation.git"
+  },
+  "author": "Aleksi Lukkarinen",
+  "homepage": "https://github.com/Aalto-LeTech/Scala-Media-Computation#readme"
+}
