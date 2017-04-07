@@ -16,6 +16,10 @@ import aalto.smcl.infrastructure.BaseSettingKeys.{BooleanSettingKey, ColorSettin
  */
 package object infrastructure extends Constants {
 
+  /** Type for SMCL initializer classes. */
+  type SMCLInitializer = () => Unit
+
+
   /** Global settings storage. */
   lazy val GS: Settings = new Settings()
 

@@ -1,8 +1,8 @@
-package aalto.smcl.infrastructure.jvmawt
+package aalto.smcl.infrastructure.js
 
 
 import aalto.smcl.bitmaps.BitmapValidator
-import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer}
+import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, SMCLInitializer, SettingValidatorFactory, SharedSettingInitializer}
 
 
 
@@ -18,7 +18,7 @@ object Initializer extends SMCLInitializer {
    *
    */
   def apply(): Unit = {
-    println("JVM-based SMCL Core initialization is in progress...")
+    println("JS-based SMCL Core initialization in progress...")
 
     initSharedSettings()
     initAwtSettings()
@@ -31,6 +31,7 @@ object Initializer extends SMCLInitializer {
    * Initialize platform resource factory.
    */
   private def initPlatformResourceFactory(): Unit = {
+    /*
     val calendarProvider = new DefaultJvmCalendarProvider()
     val uuidProvider = new DefaultJvmUniqueIdProvider()
     val fontProvider = new DefaultAwtFontProvider()
@@ -41,25 +42,28 @@ object Initializer extends SMCLInitializer {
       calendarProvider, uuidProvider, fontProvider, imageProvider, screenInfoProvider)
 
     DefaultPlatformResourceFactory.setImplementation(factory)
+    */
   }
 
   /**
    *
    *
    */
-  private def initSwingLookAndFeel(): Unit =
-    UIProvider.tryToInitializeSpecificLookAndFeel(UIProvider.NimbusLookAndFeelName)
+  private def initSwingLookAndFeel(): Unit = Unit
+    //UIProvider.tryToInitializeSpecificLookAndFeel(UIProvider.NimbusLookAndFeelName)
 
   /**
    * Initialize settings specific to SMCL's JVM/AWT implementation.
    */
   private def initAwtSettings(): Unit = {
+    /*
     val settingValidatorFactory = new SettingValidatorFactory()
 
     GS += new Setting[AwtAffineTransformationInterpolationMethod.Value](
       key = AffineTransformationInterpolationMethod,
       initialValue = AwtAffineTransformationInterpolationMethod.NearestNeighbor,
       validator = settingValidatorFactory.EmptyValidator)
+    */
   }
 
   /**

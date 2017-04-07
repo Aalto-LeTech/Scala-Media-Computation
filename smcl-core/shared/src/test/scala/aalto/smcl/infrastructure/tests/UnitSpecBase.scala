@@ -1,5 +1,4 @@
-package aalto
-
+package aalto.smcl.infrastructure.tests
 
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{FreeSpec, Matchers}

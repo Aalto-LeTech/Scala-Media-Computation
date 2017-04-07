@@ -4,11 +4,6 @@
  *
  */
 
-//
-// NOTE AL 3.4.2017: For some strange reason, the onLoadMessage strings get switched between
-// the cross-compiled JVM/JS project pairs; consequently, they are defined backwards.
-//
-
 import org.scalajs.sbtplugin.ScalaJSPluginInternal
 import org.scalajs.sbtplugin.cross.CrossProject
 import sbt.Keys._
@@ -16,21 +11,7 @@ import sbt.Keys._
 
 
 
-//-------------------------------------------------------------------------------------------------
-//
-// COMMAND ALIASES
-//
-//-------------------------------------------------------------------------------------------------
-
-addCommandAlias("cp", "; clean ; package")
-
-addCommandAlias("rcp", "; reload ; clean ; package")
-
-addCommandAlias("cpt", "; clean ; package ; test")
-
-addCommandAlias("rcpt", "; reload ; clean ; package ; test")
-
-
+enablePlugins(ScalaJSPlugin)
 
 
 //-------------------------------------------------------------------------------------------------
@@ -96,6 +77,8 @@ lazy val smclGeneralSettings = Seq(
   homepage := Some(url(smclHomepageUrl)),
   developers ++= projectDevelopers,
 
+  logLevel := Level.Info,
+
   scalaVersion in ThisBuild := ApplicationDependencies.ScalaVersion,
 
   javacOptions ++= Seq(
@@ -112,7 +95,8 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   libraryDependencies ++= Seq(
-    ApplicationDependencies.ScalaCheck
+    "org.scalatest" %%% "scalatest" % "3.0.1" % "test,it" withSources() withJavadoc(),
+    "org.scalacheck" %%% "scalacheck" % "1.13.4" % "test,it" withSources() withJavadoc()
   ),
 
   initialCommands in console :=
@@ -131,30 +115,29 @@ lazy val smclGeneralSettings = Seq(
 
 lazy val smclGeneralJsSettings = Seq(
   libraryDependencies ++= Seq(
-
+    "org.scala-js" %%% "scalajs-dom" % "0.9.1" withSources() withJavadoc()
   ),
 
-  libraryDependencies in Test ++= Seq(
-    ApplicationDependencies.ScalaTest,
-    ApplicationDependencies.ScalaCheck
-  )
+  jsDependencies += RuntimeDOM
+
+  // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
 )
 
 lazy val smclGeneralJvmSettings = Seq(
   libraryDependencies ++= Seq(
-    ApplicationDependencies.ScalaJsStubs
-  ),
-
-  libraryDependencies in Test ++= Seq(
-    ApplicationDependencies.ScalaTest,
-    ApplicationDependencies.ScalaCheck
+    ApplicationDependencies.ScalaJsStubs % "provided"
   )
+
+  // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
 )
 
 lazy val ItgTest = config("it") extend Test
 
-def integrationTestFilter(name: String): Boolean = name endsWith "ItgTest"
-def unitTestFilter(name: String): Boolean = (name endsWith "Test") && !integrationTestFilter(name)
+def integrationTestFilter(name: String): Boolean =
+  (name endsWith "ItgTests") || (name endsWith "ItgSuite")
+
+def unitTestFilter(name: String): Boolean =
+  ((name endsWith "Tests") || (name endsWith "Suite")) && !integrationTestFilter(name)
 
 def isSnapshotVersion(version: String): Boolean = version endsWith "-SNAPSHOT"
 
@@ -168,7 +151,7 @@ def isSnapshotVersion(version: String): Boolean = version endsWith "-SNAPSHOT"
 //-------------------------------------------------------------------------------------------------
 
 lazy val smclBitmapViewer =
-  CrossProject(prjSmclBitmapViewerJsId, prjSmclBitmapViewerJvmId, file(prjSmclBitmapViewerId), CrossType.Full)
+  CrossProject(prjSmclBitmapViewerJvmId, prjSmclBitmapViewerJsId, file(prjSmclBitmapViewerId), CrossType.Full)
   .configs(ItgTest)
   .settings(
     name := prjSmclBitmapViewerId,
@@ -182,7 +165,7 @@ lazy val smclBitmapViewer =
   )
   .jvmSettings(
     smclGeneralJvmSettings,
-    onLoadMessage := prjSmclBitmapViewerName + " JS Project Loaded",    // see the note at the top
+    onLoadMessage := prjSmclBitmapViewerName + " JVM Project Loaded",
     libraryDependencies ++= Seq(
       ApplicationDependencies.RxScala,
       ApplicationDependencies.ScalaSwing
@@ -190,7 +173,7 @@ lazy val smclBitmapViewer =
   )
   .jsSettings(
     smclGeneralJsSettings,
-    onLoadMessage := prjSmclBitmapViewerName + " JVM Project Loaded",   // see the note at the top
+    onLoadMessage := prjSmclBitmapViewerName + " JS Project Loaded",
     inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings)
   )
   .dependsOn(smclCore, smclPublicInterfaces)
@@ -208,7 +191,7 @@ lazy val smclBitmapViewerJS = smclBitmapViewer.js
 //-------------------------------------------------------------------------------------------------
 
 lazy val smclCore =
-  CrossProject(prjSmclCoreJsId, prjSmclCoreJvmId, file(prjSmclCoreId), CrossType.Full)
+  CrossProject(prjSmclCoreJvmId, prjSmclCoreJsId, file(prjSmclCoreId), CrossType.Full)
   .configs(ItgTest)
   .settings(
     name := prjSmclCoreId,
@@ -222,11 +205,11 @@ lazy val smclCore =
   )
   .jvmSettings(
     smclGeneralJvmSettings,
-    onLoadMessage := prjSmclCoreName + " JS Project Loaded"             // see the note at the top
+    onLoadMessage := prjSmclCoreName + " JVM Project Loaded"
   )
   .jsSettings(
     smclGeneralJsSettings,
-    onLoadMessage := prjSmclCoreName + " JVM Project Loaded",           // see the note at the top
+    onLoadMessage := prjSmclCoreName + " JS Project Loaded",
     inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings)
   )
   .dependsOn(smclPublicInterfaces)
@@ -244,7 +227,7 @@ lazy val smclCoreJS = smclCore.js
 //-------------------------------------------------------------------------------------------------
 
 lazy val smclPublicInterfaces =
-  CrossProject(prjSmclPiJsId, prjSmclPiJvmId, file(prjSmclPiId), CrossType.Full)
+  CrossProject(prjSmclPiJvmId, prjSmclPiJsId, file(prjSmclPiId), CrossType.Full)
   .configs(ItgTest)
   .settings(
     name := prjSmclPiId,
@@ -258,11 +241,11 @@ lazy val smclPublicInterfaces =
   )
   .jvmSettings(
     smclGeneralJvmSettings,
-    onLoadMessage := prjSmclPiName + " JS Project Loaded"               // see the note at the top
+    onLoadMessage := prjSmclPiName + " JVM Project Loaded"
   )
   .jsSettings(
     smclGeneralJsSettings,
-    onLoadMessage := prjSmclPiName + " JVM Project Loaded",             // see the note at the top
+    onLoadMessage := prjSmclPiName + " JS Project Loaded",
     inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings)
   )
 
@@ -274,11 +257,12 @@ lazy val smclPublicInterfacesJS = smclPublicInterfaces.js
 
 //-------------------------------------------------------------------------------------------------
 //
-// PROJECT: SMCL ROOT AGGREGATE PROJECT
+// PROJECT: SMCL ROOT AGGREGATE
 //
 //-------------------------------------------------------------------------------------------------
 
 lazy val smcl = project.in(file("."))
+  .configs(ItgTest)
   .settings(
     smclGeneralSettings,
     onLoadMessage := smclName + " Root Project Loaded"
@@ -291,3 +275,30 @@ lazy val smcl = project.in(file("."))
     smclBitmapViewerJVM, smclBitmapViewerJS,
     smclCoreJS, smclCoreJVM,
     smclPublicInterfacesJS, smclPublicInterfacesJVM)
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+//
+// COMMAND ALIASES
+//
+//-------------------------------------------------------------------------------------------------
+
+addCommandAlias("cp", "; clean ; package")
+
+addCommandAlias("rcp", "; reload ; clean ; package")
+
+addCommandAlias("cpt", "; clean ; package ; test")
+
+addCommandAlias("rcpt", "; reload ; clean ; package ; test")
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+//
+// MISCELLANEOUS TASK DEFINITIONS
+//
+//-------------------------------------------------------------------------------------------------
+

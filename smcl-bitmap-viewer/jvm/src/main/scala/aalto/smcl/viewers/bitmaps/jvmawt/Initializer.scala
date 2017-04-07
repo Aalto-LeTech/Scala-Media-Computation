@@ -1,6 +1,7 @@
 package aalto.smcl.viewers.bitmaps.jvmawt
 
 
+import aalto.smcl.infrastructure.SMCLInitializer
 import aalto.smcl.viewers.DefaultViewerApplicationClient
 
 
@@ -11,7 +12,7 @@ import aalto.smcl.viewers.DefaultViewerApplicationClient
  *
  * @author Aleksi Lukkarinen
  */
-object Initializer {
+object Initializer extends SMCLInitializer {
 
   /**
    *

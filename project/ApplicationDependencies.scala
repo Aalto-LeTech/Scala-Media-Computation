@@ -2,8 +2,8 @@
  * Definitions of application enrencies for Scala Media Computation Library (SMCL).
  */
 
-import sbt._
 
+import sbt._
 
 
 
@@ -19,7 +19,16 @@ object ApplicationDependencies {
    * @see https://www.scala-js.org/
    * @see http://search.maven.org/#search|ga|1|scalajs-stubs
    */
-  lazy val ScalaJsStubs: ModuleID = "org.scala-js" %% "scalajs-stubs" % "0.6.14" % "provided" withSources() withJavadoc()
+  lazy val ScalaJsStubs: ModuleID = "org.scala-js" %% "scalajs-stubs" % "0.6.14" withSources() withJavadoc()
+
+
+  /**
+   * Scala.js DOM
+   *
+   * @see https://www.scala-js.org/
+   * @see http://search.maven.org/#search|ga|1|scalajs-dom
+   */
+  //lazy val ScalaJsDOM: ModuleID = new CrossGroupArtifactID("org.scala-js", "scalajs-dom", ScalaJSCrossVersion.binary).%("0.9.1") withSources() withJavadoc()
 
 
   /**
@@ -28,7 +37,16 @@ object ApplicationDependencies {
    * @see http://www.scalatest.org
    * @see http://search.maven.org/#search|ga|1|scalatest
    */
-  lazy val ScalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.0.1"  % "test,it" withSources() withJavadoc()
+  lazy val ScalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.0.1" withSources() withJavadoc()
+
+
+  /**
+   * Scalactic
+   *
+   * @see http://www.scalactic.org/
+   * @see http://search.maven.org/#search|ga|1|scalactic
+   */
+  //lazy val Scalactic: ModuleID = "org.scalactic" %% "scalactic" % "3.0.1" withSources() withJavadoc()
 
 
   /**
@@ -37,7 +55,7 @@ object ApplicationDependencies {
    * @see https://www.scalacheck.org/
    * @see http://search.maven.org/#search|ga|1|scalacheck
    */
-  lazy val ScalaCheck: ModuleID = "org.scalacheck" %% "scalacheck" % "1.13.4" % "test" withSources() withJavadoc()
+  lazy val ScalaCheck: ModuleID = "org.scalacheck" %% "scalacheck" % "1.13.4" withSources() withJavadoc()
 
 
   /**
