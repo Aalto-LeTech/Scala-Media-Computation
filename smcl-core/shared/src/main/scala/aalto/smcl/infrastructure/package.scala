@@ -29,6 +29,19 @@ package object infrastructure extends Constants {
   /**  */
   lazy val Screen: DefaultScreen = new DefaultScreen(PRF.screenInformationProvider)
 
+  /**
+   *
+   *
+   * @return
+   */
+  def isScalaJSPlatform: Boolean = scala.sys.props("java.vm.name") == "Scala.js"
+
+  /**
+   *
+   *
+   * @return
+   */
+  def isNotScalaJSPlatform: Boolean = !isScalaJSPlatform
 
   /** */
   case object CanvasesAreResizedBasedOnTransformations extends BooleanSettingKey

@@ -21,8 +21,6 @@ abstract class AbstractSharedTestSuiteRunner(
     suitesToRun: Seq[Suite],
     argsUpdater: ArgsUpdater) extends Suites(suitesToRun: _*) {
 
-  println("AbstractSharedTestSuiteRunner initializing...")
-
   /**
    *
    *

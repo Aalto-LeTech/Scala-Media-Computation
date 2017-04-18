@@ -11,10 +11,8 @@ import org.scalatest.{DoNotDiscover, Suites}
  * @author Aleksi Lukkarinen
  */
 @DoNotDiscover
-class SharedTestSuite extends Suites(
-  new SmclCoreSmokeTests()
+class SharedIntegrationTestsuite extends Suites(
+  new DummySMCLItgTests()
 ) {
-
-  println("SharedTestSuite initializing...")
 
 }

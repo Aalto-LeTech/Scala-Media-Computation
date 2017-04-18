@@ -11,13 +11,11 @@ import aalto.smcl.infrastructure.tests.{AbstractSharedTestSuiteRunner, DefaultAr
  *
  * @author Aleksi Lukkarinen
  */
-class JSSharedTestSuite extends AbstractSharedTestSuiteRunner(
+class SharedItgTestsuiteForJVM extends AbstractSharedTestSuiteRunner(
   smclInitializers = Seq(
-    aalto.smcl.infrastructure.js.Initializer
+    aalto.smcl.infrastructure.jvmawt.Initializer
   ),
-  suitesToRun = Seq(new SharedTestSuite()),
+  suitesToRun = Seq(new SharedIntegrationTestsuite()),
   argsUpdater = new DefaultArgsUpdater()) {
-
-  println("JSSharedTestSuite initializing...")
 
 }
