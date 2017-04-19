@@ -26,10 +26,10 @@ import scala.swing.event._
 
 import aalto.smcl.SMCLLibrary._
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.infrastructure._
+import aalto.smcl.infrastructure.PRF
 import aalto.smcl.infrastructure.exceptions.SMCLUnexpectedInternalError
 import aalto.smcl.infrastructure.jvmawt.SwingUtils
-import aalto.smcl.viewers.bitmaps.jvmawt.ScrollingDirection._
+import aalto.smcl.viewers.bitmaps.jvmawt.ScrollingDirection.{Downwards, Leftwards, Upwards}
 
 
 

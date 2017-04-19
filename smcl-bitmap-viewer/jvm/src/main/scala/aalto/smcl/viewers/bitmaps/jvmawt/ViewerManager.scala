@@ -25,8 +25,8 @@ import rx.lang.scala.{Observable, Observer}
 
 import aalto.smcl.SMCLLibrary
 import aalto.smcl.bitmaps.{Bitmap, BitmapIdentity}
-import aalto.smcl.viewers.{ExternalViewerEvent, ForceAllViewersToCloseEvent}
 import aalto.smcl.viewers.bitmaps.DisplayBitmapEvent
+import aalto.smcl.viewers.{ExternalViewerEvent, ForceAllViewersToCloseEvent}
 
 
 

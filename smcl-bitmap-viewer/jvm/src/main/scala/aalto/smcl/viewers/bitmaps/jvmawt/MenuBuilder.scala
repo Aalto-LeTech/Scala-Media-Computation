@@ -20,7 +20,7 @@ package aalto.smcl.viewers.bitmaps.jvmawt
 import scala.swing.event.Key
 import scala.swing.{Component, Menu, MenuBar, MenuItem, Separator}
 
-import aalto.smcl.infrastructure._
+import aalto.smcl.infrastructure.StrEmpty
 
 
 

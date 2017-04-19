@@ -78,7 +78,39 @@ lazy val prjSmclCoreDescription = "A class library for bitmap processing using S
 //
 //-------------------------------------------------------------------------------------------------
 
-lazy val SmokeTest = config("smoke") extend Test describedAs "For running smoke tests"
+lazy val confUnitTestId = "test"
+lazy val confSmokeTestId = "smoke"
+lazy val confItgTestId = "integration"
+lazy val confGUITestId = "gui"
+lazy val confLearningTestId = "learning"
+
+lazy val testConfIDs: Seq[String] = Seq(
+  confUnitTestId,
+  confItgTestId,
+  confGUITestId,
+  confLearningTestId,
+  confSmokeTestId
+)
+
+lazy val testConfIDCommaString = testConfIDs.mkString(",")
+
+def createConfToConfSemicolonString(ids: Seq[String]): String = {
+  val idToIdSeparator = "->"
+  val listSeparator = ";"
+  def idToId(id: String): String = Seq(id, id).mkString(idToIdSeparator)
+
+  ids.map(idToId).mkString(listSeparator)
+}
+
+lazy val confToConfSemiColonString =
+  createConfToConfSemicolonString("compile" +: testConfIDs)
+
+
+lazy val SmokeTest = config(confSmokeTestId) extend Test describedAs "For running smoke tests"
+lazy val ItgTest = config(confItgTestId) extend Test describedAs "For running integration tests"
+lazy val GUITest = config(confGUITestId) extend Test describedAs "For running GUI-based tests"
+lazy val LearningTest = config(confLearningTestId) extend Test describedAs "For running learning tests"
+
 
 def smokeTestFilterForJVM(name: String): Boolean =
   (name endsWith "SmokeTests") || (name endsWith "SmokeTestsForJVM") ||
@@ -88,8 +120,6 @@ def smokeTestFilterForJS(name: String): Boolean =
   (name endsWith "SmokeTestsForJS") || (name endsWith "SmokeTestsuiteForJS")
 
 
-lazy val ItgTest = config("integration") extend Test describedAs "For running integration tests"
-
 def integrationTestFilterForJVM(name: String): Boolean =
   (name endsWith "ItgTests") || (name endsWith "ItgTestsForJVM") ||
       (name endsWith "ItgTestsuite") || (name endsWith "ItgTestsuiteForJVM")
@@ -98,8 +128,6 @@ def integrationTestFilterForJS(name: String): Boolean =
   (name endsWith "ItgTestsForJS") || (name endsWith "ItgTestsuiteForJS")
 
 
-lazy val GUITest = config("gui") extend Test describedAs "For running GUI-based tests"
-
 def guiTestFilterForJVM(name: String): Boolean =
   (name endsWith "GUITests") || (name endsWith "GUITestsForJVM") ||
       (name endsWith "GUITestsuite") || (name endsWith "GUITestsuiteForJVM")
@@ -107,8 +135,6 @@ def guiTestFilterForJVM(name: String): Boolean =
 def guiTestFilterForJS(name: String): Boolean =
   (name endsWith "GUITestsForJS") || (name endsWith "GUITestsuiteForJS")
 
-
-lazy val LearningTest = config("learning") extend Test describedAs "For running learning tests"
 
 def learningTestFilterForJVM(name: String): Boolean =
   (name endsWith "LearningTests") || (name endsWith "LearningTestsForJVM") ||
@@ -165,8 +191,8 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   libraryDependencies ++= Seq(
-    "org.scalatest" %%% "scalatest" % "3.0.1" % "test,integration,gui,smoke,learning" withSources() withJavadoc(),
-    "org.scalacheck" %%% "scalacheck" % "1.13.4" % "test,integration,gui,smoke,learning" withSources() withJavadoc()
+    "org.scalatest" %%% "scalatest" % "3.0.1" % testConfIDCommaString withSources() withJavadoc(),
+    "org.scalacheck" %%% "scalacheck" % "1.13.4" % testConfIDCommaString withSources() withJavadoc()
   ),
 
   initialCommands in console :=
@@ -251,7 +277,7 @@ lazy val smclBitmapViewer =
     inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
     inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
   )
-  .dependsOn(smclCore)
+  .dependsOn(smclCore % confToConfSemiColonString)
 
 lazy val smclBitmapViewerJVM = smclBitmapViewer.jvm
 lazy val smclBitmapViewerJS = smclBitmapViewer.js
@@ -335,6 +361,7 @@ addCommandAlias("cpt", "; clean ; package ; test")
 
 addCommandAlias("rcpt", "; reload ; clean ; package ; test")
 
+addCommandAlias("testAll", "; learning:test ; test ; integration:test ; gui:test ; smoke:test")
 
 
 
