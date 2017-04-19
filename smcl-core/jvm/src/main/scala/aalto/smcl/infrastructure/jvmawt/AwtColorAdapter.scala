@@ -1,4 +1,21 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure.jvmawt
+
 
 import java.awt.{Color => LowLevelColor}
 
@@ -20,6 +37,7 @@ object AwtColorAdapter {
    *
    *
    * @param applicationColor
+   *
    * @return
    */
   def apply(applicationColor: RGBAColor): AwtColorAdapter =
@@ -33,6 +51,7 @@ object AwtColorAdapter {
    *
    *
    * @param awtColor
+   *
    * @return
    */
   def apply(awtColor: LowLevelColor): AwtColorAdapter =
@@ -45,11 +64,13 @@ object AwtColorAdapter {
 }
 
 
+
+
 /**
-  *
-  *
-  * @author Aleksi Lukkarinen
-  */
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
 private[smcl]
 case class AwtColorAdapter(
     private val redComponent: Int,
@@ -62,39 +83,39 @@ case class AwtColorAdapter(
   lazy val awtColor = new LowLevelColor(redComponent, greenComponent, blueComponent, opacityComponent)
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   def applicationColor: RGBAColor =
     RGBAColor(redComponent, greenComponent, blueComponent, opacityComponent)
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   override def red: Int = redComponent
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   override def green: Int = greenComponent
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   override def blue: Int = blueComponent
 
   /**
-    *
-    *
-    * @return
-    */
+   *
+   *
+   * @return
+   */
   override def opacity: Int = opacityComponent
 
 }

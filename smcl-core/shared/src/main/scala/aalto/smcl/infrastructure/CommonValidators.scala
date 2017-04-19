@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure
 
 
@@ -31,21 +47,24 @@ class CommonValidators() {
    *
    *
    * @param valueCandidate
+   *
    * @return
    */
   @inline
-  def percentIsInRange(valueCandidate: Double): Boolean =
+  def percentIsInRange(valueCandidate: Double): Boolean = {
     valueCandidate >= MinimumPercentage && valueCandidate <= MaximumPercentage
+  }
 
   /**
    *
    *
    * @param valueCandidate
+   *
    * @return
    */
   @inline
   def zeroToOneFactorIsInRange(valueCandidate: Double): Boolean =
-    valueCandidate >= MinimumZeroToOneFactor && valueCandidate <= MaximumZeroToOneFactor
+  valueCandidate >= MinimumZeroToOneFactor && valueCandidate <= MaximumZeroToOneFactor
 
   /**
    *
@@ -57,12 +76,12 @@ class CommonValidators() {
    */
   @inline
   def validatePercentage(valueCandidate: Double, percentageNameOption: Option[String]): Unit =
-    if (!percentIsInRange(valueCandidate)) {
-      val strError = percentageNameOption.fold("Given")({_.capitalize}) +
+  if (!percentIsInRange(valueCandidate)) {
+    val strError = percentageNameOption.fold("Given")({_.capitalize}) +
         s" percentage must be between $MinimumPercentage and $MaximumPercentage (was $valueCandidate)"
 
-      throw new SMCLInvalidPercentageError(strError)
-    }
+    throw new SMCLInvalidPercentageError(strError)
+  }
 
   /**
    *
@@ -74,11 +93,11 @@ class CommonValidators() {
    */
   @inline
   def validateZeroToOneFactor(valueCandidate: Double, factorNameOption: Option[String]): Unit =
-    if (!percentIsInRange(valueCandidate)) {
-      val strError = factorNameOption.fold("Given")({_.capitalize}) +
+  if (!percentIsInRange(valueCandidate)) {
+    val strError = factorNameOption.fold("Given")({_.capitalize}) +
         s" factor must be between $MinimumZeroToOneFactor and $MaximumZeroToOneFactor (was $valueCandidate)"
 
-      throw new SMCLInvalidZeroToOneFactorError(strError)
-    }
+    throw new SMCLInvalidZeroToOneFactorError(strError)
+  }
 
 }

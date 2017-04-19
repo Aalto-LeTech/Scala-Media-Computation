@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps
 
 
@@ -24,12 +40,13 @@ trait BitmapOperationAPI {
    * @param bmp
    * @param kernel
    * @param viewerHandling
+   *
    * @return
    */
   def convolveWith(
-    bmp: Bitmap,
-    kernel: ConvolutionKernel,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      kernel: ConvolutionKernel,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -42,12 +59,13 @@ trait BitmapOperationAPI {
    * @param bmp
    * @param translator
    * @param viewerHandling
+   *
    * @return
    */
   def filterWith(
-    bmp: Bitmap,
-    translator: RGBAComponentTranslationTable,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      translator: RGBAComponentTranslationTable,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -60,12 +78,13 @@ trait BitmapOperationAPI {
    * @param bmp
    * @param function
    * @param viewerHandling
+   *
    * @return
    */
   def iteratePixelsWith(
-    bmp: Bitmap,
-    function: (Int, Int, Int, Int) => (Int, Int, Int, Int),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+      bmp: Bitmap,
+      function: (Int, Int, Int, Int) => (Int, Int, Int, Int),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -77,11 +96,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def convertToGrayscaleByLuminocity(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -93,11 +113,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def convertToGrayscaleByLightness(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -112,14 +133,15 @@ trait BitmapOperationAPI {
    * @param greenWeight
    * @param blueWeight
    * @param viewerHandling
+   *
    * @return
    */
   def convertToGrayscale(
-    bmp: Bitmap,
-    redWeight: Double,
-    greenWeight: Double,
-    blueWeight: Double,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
+      bmp: Bitmap,
+      redWeight: Double,
+      greenWeight: Double,
+      blueWeight: Double,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): ImmutableBitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -132,12 +154,13 @@ trait BitmapOperationAPI {
    * @param bmp
    * @param colorToTrim
    * @param viewerHandling
+   *
    * @return
    */
   def trim(
-    bmp: Bitmap,
-    colorToTrim: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      colorToTrim: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -153,15 +176,16 @@ trait BitmapOperationAPI {
    * @param windowBottomRightX
    * @param windowBottomRightY
    * @param viewerHandling
+   *
    * @return
    */
   def crop(
-    bmp: Bitmap,
-    windowTopLeftX: Int,
-    windowTopLeftY: Int,
-    windowBottomRightX: Int,
-    windowBottomRightY: Int,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      windowTopLeftX: Int,
+      windowTopLeftY: Int,
+      windowBottomRightX: Int,
+      windowBottomRightY: Int,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -183,16 +207,17 @@ trait BitmapOperationAPI {
    * @param extraPixelsOntoBottomEdge
    * @param color
    * @param viewerHandling
+   *
    * @return
    */
   def augmentCanvas(
-    bmp: Bitmap,
-    extraPixelsOntoLeftEdge: Int = 0,
-    extraPixelsOntoTopEdge: Int = 0,
-    extraPixelsOntoRightEdge: Int = 0,
-    extraPixelsOntoBottomEdge: Int = 0,
-    color: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      extraPixelsOntoLeftEdge: Int = 0,
+      extraPixelsOntoTopEdge: Int = 0,
+      extraPixelsOntoRightEdge: Int = 0,
+      extraPixelsOntoBottomEdge: Int = 0,
+      color: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -215,16 +240,17 @@ trait BitmapOperationAPI {
    * @param topBitmapOpacity
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def overlay(
-    bottomBitmap: Bitmap,
-    topBitmap: Bitmap,
-    topBitmapUpperLeftX: Int,
-    topBitmapUpperLeftY: Int,
-    topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bottomBitmap: Bitmap,
+      topBitmap: Bitmap,
+      topBitmapUpperLeftX: Int,
+      topBitmapUpperLeftY: Int,
+      topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     bottomBitmap.underlayBehind(
       topBitmap,
@@ -244,15 +270,16 @@ trait BitmapOperationAPI {
    * @param opacityForAllBitmaps
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def overlayPerAlignments(
-    bitmapsToOverlayFromBottomToTop: Bitmap*)(
-    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-    opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bitmapsToOverlayFromBottomToTop: Bitmap*)(
+      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+      opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     bitmapsToOverlayFromBottomToTop.head.overlayPerAlignments(bitmapsToOverlayFromBottomToTop.tail: _*)(
       horizontalAlignment,
@@ -267,11 +294,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def toNegative(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -283,11 +311,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def negateRedComponent(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -299,11 +328,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def negateGreenComponent(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -315,11 +345,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def negateBlueComponent(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -331,11 +362,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def negateRedAndGreenComponents(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -347,11 +379,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def negateRedAndBlueComponents(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -363,11 +396,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def negateGreenAndBlueComponents(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -379,11 +413,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def keepOnlyRedComponent(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -395,11 +430,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def keepOnlyGreenComponent(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -411,11 +447,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def keepOnlyBlueComponent(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -427,11 +464,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def keepOnlyRedAndGreenComponents(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -443,11 +481,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def keepOnlyRedAndBlueComponents(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -459,11 +498,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def keepOnlyGreenAndBlueComponents(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -478,9 +518,9 @@ trait BitmapOperationAPI {
    * @param viewerHandling
    */
   def posterize(
-    bmp: Bitmap,
-    strengthAsPercentage: Int,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      strengthAsPercentage: Int,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap to be cleared cannot be null.")
 
@@ -492,12 +532,13 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param color
+   *
    * @return
    */
   def clear(
-    bmp: Bitmap,
-    color: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      color: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap to be cleared cannot be null.")
 
@@ -514,16 +555,17 @@ trait BitmapOperationAPI {
    * @param toYInPixels
    * @param color
    * @param viewerHandling
+   *
    * @return
    */
   def drawLine(
-    bmp: Bitmap,
-    fromXInPixels: Int,
-    fromYInPixels: Int,
-    toXInPixels: Int,
-    toYInPixels: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      fromXInPixels: Int,
+      fromYInPixels: Int,
+      toXInPixels: Int,
+      toYInPixels: Int,
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -545,15 +587,16 @@ trait BitmapOperationAPI {
    * @param numberOfCoordinatesToDraw
    * @param color
    * @param viewerHandling
+   *
    * @return
    */
   def drawPolyline(
-    bmp: Bitmap,
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
-    numberOfCoordinatesToDraw: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
+      numberOfCoordinatesToDraw: Int,
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -577,18 +620,19 @@ trait BitmapOperationAPI {
    * @param color
    * @param fillColor
    * @param viewerHandling
+   *
    * @return
    */
   def drawPolygon(
-    bmp: Bitmap,
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
-    numberOfCoordinatesToDraw: Int,
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      xCoordinates: Seq[Int],
+      yCoordinates: Seq[Int],
+      numberOfCoordinatesToDraw: Int,
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -615,18 +659,19 @@ trait BitmapOperationAPI {
    * @param color
    * @param fillColor
    * @param viewerHandling
+   *
    * @return
    */
   def drawSquare(
-    bmp: Bitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -654,19 +699,20 @@ trait BitmapOperationAPI {
    * @param color
    * @param fillColor
    * @param viewerHandling
+   *
    * @return
    */
   def drawRectangle(
-    bmp: Bitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -696,20 +742,21 @@ trait BitmapOperationAPI {
    * @param color
    * @param fillColor
    * @param viewerHandling
+   *
    * @return
    */
   def drawRoundedSquare(
-    bmp: Bitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -741,21 +788,22 @@ trait BitmapOperationAPI {
    * @param color
    * @param fillColor
    * @param viewerHandling
+   *
    * @return
    */
   def drawRoundedRectangle(
-    bmp: Bitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
+      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -784,18 +832,19 @@ trait BitmapOperationAPI {
    * @param hasFilling
    * @param color
    * @param fillColor
+   *
    * @return
    */
   def drawCircle(
-    bmp: Bitmap,
-    centerXInPixels: Int,
-    centerYInPixels: Int,
-    radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      centerXInPixels: Int,
+      centerYInPixels: Int,
+      radiusInPixels: Int = GS.intFor(DefaultCircleRadiusInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -822,19 +871,20 @@ trait BitmapOperationAPI {
    * @param hasFilling
    * @param color
    * @param fillColor
+   *
    * @return
    */
   def drawEllipse(
-    bmp: Bitmap,
-    centerXInPixels: Int,
-    centerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      centerXInPixels: Int,
+      centerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -865,21 +915,22 @@ trait BitmapOperationAPI {
    * @param color
    * @param fillColor
    * @param viewerHandling
+   *
    * @return
    */
   def drawArc(
-    bmp: Bitmap,
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDegrees),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      upperLeftCornerXInPixels: Int,
+      upperLeftCornerYInPixels: Int,
+      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
+      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
+      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDegrees),
+      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      fillColor: RGBAColor = GS.colorFor(DefaultSecondary),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -904,14 +955,15 @@ trait BitmapOperationAPI {
    * @param verticalAlignment
    * @param paddingInPixels
    * @param backgroundColor
+   *
    * @return
    */
   def appendHorizontally(
-    bitmapsToCombine: Bitmap*)(
-    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bitmapsToCombine: Bitmap*)(
+      verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
 
@@ -927,6 +979,7 @@ trait BitmapOperationAPI {
    *
    * @param bitmapLeft
    * @param bitmapRight
+   *
    * @return
    */
   def sew(bitmapLeft: Bitmap, bitmapRight: Bitmap): Bitmap =
@@ -939,14 +992,15 @@ trait BitmapOperationAPI {
    * @param horizontalAlignment
    * @param paddingInPixels
    * @param backgroundColor
+   *
    * @return
    */
   def appendVertically(
-    bitmapsToCombine: Bitmap*)(
-    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bitmapsToCombine: Bitmap*)(
+      horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
 
@@ -962,6 +1016,7 @@ trait BitmapOperationAPI {
    *
    * @param bitmapTop
    * @param bitmapBottom
+   *
    * @return
    */
   def pile(bitmapTop: Bitmap, bitmapBottom: Bitmap): Bitmap =
@@ -972,11 +1027,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def flipHorizontally(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -988,11 +1044,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def flipVertically(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1004,11 +1061,12 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param viewerHandling
+   *
    * @return
    */
   def flipDiagonally(
-    bmp: Bitmap,
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1023,14 +1081,15 @@ trait BitmapOperationAPI {
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def rotateDegs(
-    bmp: Bitmap,
-    angleInDegrees: Double,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      angleInDegrees: Double,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1048,13 +1107,14 @@ trait BitmapOperationAPI {
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def rotate90DegsCw(
-    bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1071,13 +1131,14 @@ trait BitmapOperationAPI {
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def rotate90DegsCcw(
-    bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1094,13 +1155,14 @@ trait BitmapOperationAPI {
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def rotate180Degs(
-    bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1117,13 +1179,14 @@ trait BitmapOperationAPI {
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def turn(
-    bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1140,13 +1203,14 @@ trait BitmapOperationAPI {
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def unturn(
-    bmp: Bitmap,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1164,14 +1228,15 @@ trait BitmapOperationAPI {
    * @param scalingFactorVertical
    * @param resizeCanvasBasedOnTransformation
    * @param viewerHandling
+   *
    * @return
    */
   def scale(
-    bmp: Bitmap,
-    scalingFactorHorizontal: Double = 1.0,
-    scalingFactorVertical: Double = 1.0,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      scalingFactorHorizontal: Double = 1.0,
+      scalingFactorVertical: Double = 1.0,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1187,6 +1252,7 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param scalingFactor
+   *
    * @return
    */
   def scale(bmp: Bitmap, scalingFactor: Double): Bitmap = {
@@ -1202,13 +1268,14 @@ trait BitmapOperationAPI {
    * @param scalingFactor
    * @param resizeCanvasBasedOnTransformation
    * @param viewerHandling
+   *
    * @return
    */
   def scaleHorizontally(
-    bmp: Bitmap,
-    scalingFactor: Double,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      scalingFactor: Double,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     bmp.scaleHorizontally(
       scalingFactor,
@@ -1223,13 +1290,14 @@ trait BitmapOperationAPI {
    * @param scalingFactor
    * @param resizeCanvasBasedOnTransformation
    * @param viewerHandling
+   *
    * @return
    */
   def scaleVertically(
-    bmp: Bitmap,
-    scalingFactor: Double,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      scalingFactor: Double,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     bmp.scaleVertically(
       scalingFactor,
@@ -1246,15 +1314,16 @@ trait BitmapOperationAPI {
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def shear(
-    bmp: Bitmap,
-    shearingFactorHorizontal: Double = 0.0,
-    shearingFactorVertical: Double = 0.0,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      shearingFactorHorizontal: Double = 0.0,
+      shearingFactorVertical: Double = 0.0,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1271,6 +1340,7 @@ trait BitmapOperationAPI {
    *
    * @param bmp
    * @param shearingFactor
+   *
    * @return
    */
   def shear(bmp: Bitmap, shearingFactor: Double): Bitmap = {
@@ -1288,14 +1358,15 @@ trait BitmapOperationAPI {
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def shearHorizontally(
-    bmp: Bitmap,
-    shearingFactor: Double,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      shearingFactor: Double,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1314,14 +1385,15 @@ trait BitmapOperationAPI {
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def shearVertically(
-    bmp: Bitmap,
-    shearingFactor: Double,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      shearingFactor: Double,
+      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1341,14 +1413,15 @@ trait BitmapOperationAPI {
    * @param paddingInPixels
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def replicateHorizontally(
-    bmp: Bitmap,
-    numberOfReplicas: Int,
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      numberOfReplicas: Int,
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
@@ -1367,14 +1440,15 @@ trait BitmapOperationAPI {
    * @param paddingInPixels
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def replicateVertically(
-    bmp: Bitmap,
-    numberOfReplicas: Int,
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      bmp: Bitmap,
+      numberOfReplicas: Int,
+      paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 

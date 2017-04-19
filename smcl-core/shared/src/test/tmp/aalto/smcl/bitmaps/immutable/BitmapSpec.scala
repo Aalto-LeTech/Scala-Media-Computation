@@ -1,10 +1,26 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.immutable
 
 
 import java.awt.{Graphics2D => JGraphics2D}
 
 import aalto.smcl.bitmaps._
-import aalto.smcl.infrastructure.{GS, TimeStamp}
+import aalto.smcl.infrastructure.GS
 
 
 
@@ -33,12 +49,12 @@ class BitmapSpec extends ImageSpecBase {
     }
 
     "must throw an IllegalArgumentException when tried to instantiate with" - {
-      "width < 10" in {intercept[IllegalArgumentException] {Bitmap(widthInPixels = 9)}}
-      "height < 10" in {intercept[IllegalArgumentException] {Bitmap(heightInPixels = 9)}}
-      "zero width" in {intercept[IllegalArgumentException] {Bitmap(widthInPixels = 0)}}
-      "zero height" in {intercept[IllegalArgumentException] {Bitmap(heightInPixels = 0)}}
-      "negative width" in {intercept[IllegalArgumentException] {Bitmap(widthInPixels = -1)}}
-      "negative height" in {intercept[IllegalArgumentException] {Bitmap(heightInPixels = -1)}}
+      "width < 10" in {intercept[IllegalArgumentException]{Bitmap(widthInPixels = 9)}}
+      "height < 10" in {intercept[IllegalArgumentException]{Bitmap(heightInPixels = 9)}}
+      "zero width" in {intercept[IllegalArgumentException]{Bitmap(widthInPixels = 0)}}
+      "zero height" in {intercept[IllegalArgumentException]{Bitmap(heightInPixels = 0)}}
+      "negative width" in {intercept[IllegalArgumentException]{Bitmap(widthInPixels = -1)}}
+      "negative height" in {intercept[IllegalArgumentException]{Bitmap(heightInPixels = -1)}}
     }
 
     "when constructed without arguments, must be" - {

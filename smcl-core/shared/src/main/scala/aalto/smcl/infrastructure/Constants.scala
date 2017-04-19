@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure
 
 
@@ -20,31 +36,31 @@ trait Constants {
   protected[smcl] val StrSpace: String = " "
 
   /** A string containing a single period. */
-  protected[smcl] val StrPeriod: String  = "."
+  protected[smcl] val StrPeriod: String = "."
 
   /** A string containing a single comma. */
-  protected[smcl] val StrComma: String  = ","
+  protected[smcl] val StrComma: String = ","
 
   /** A string containing a single colon. */
-  protected[smcl] val StrColon: String  = ":"
+  protected[smcl] val StrColon: String = ":"
 
   /** A string containing a single colon. */
-  protected[smcl] val StrColonAsUnicode: String  = "\u003A"
+  protected[smcl] val StrColonAsUnicode: String = "\u003A"
 
   /** A string containing a single semicolon. */
-  protected[smcl] val StrSemicolon: String  = ";"
+  protected[smcl] val StrSemicolon: String = ";"
 
   /** A string containing a single semicolon. */
-  protected[smcl] val StrSemicolonAsUnicode: String  = "\u003B"
+  protected[smcl] val StrSemicolonAsUnicode: String = "\u003B"
 
   /** A string containing a single left angle bracket. */
-  protected[smcl] val StrLeftAngleBracket: String  = "["
+  protected[smcl] val StrLeftAngleBracket: String = "["
 
   /** A string containing a single right angle bracket. */
-  protected[smcl] val StrRightAngleBracket: String  = "]"
+  protected[smcl] val StrRightAngleBracket: String = "]"
 
   /** A string containing a single zero. */
-  protected[smcl] val StrZero: String  = "0"
+  protected[smcl] val StrZero: String = "0"
 
   /** Number of bits in one byte. */
   protected[smcl] val OneByte: Int = 8

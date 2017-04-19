@@ -1,7 +1,22 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
 
@@ -24,16 +39,16 @@ import aalto.smcl.infrastructure._
  */
 private[bitmaps]
 case class DrawPolygon(
-  xCoordinates: Seq[Int],
-  yCoordinates: Seq[Int],
-  numberOfCoordinatesToDraw: Int,
-  hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-  hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-  color: RGBAColor = GS.colorFor(DefaultPrimary),
-  fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
-  extends AbstractOperation
-  with Renderable
-  with Immutable {
+    xCoordinates: Seq[Int],
+    yCoordinates: Seq[Int],
+    numberOfCoordinatesToDraw: Int,
+    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
+    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
+    color: RGBAColor = GS.colorFor(DefaultPrimary),
+    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
+    extends AbstractOperation
+            with Renderable
+            with Immutable {
 
   require(xCoordinates != null, "The x coordinate argument has to be an Seq[Int] instance (was null).")
   require(yCoordinates != null, "The y coordinate argument has to be an Seq[Int] instance (was null).")
@@ -47,7 +62,7 @@ case class DrawPolygon(
 
   require(numberOfCoordinatesToDraw <= numberOfCoordinatesPresent,
     s"The coordinate sequences do not contain the requested amount of coordinate pairs " +
-      s"(only $numberOfCoordinatesPresent pairs present, $numberOfCoordinatesToDraw requested).")
+        s"(only $numberOfCoordinatesPresent pairs present, $numberOfCoordinatesToDraw requested).")
 
   require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")

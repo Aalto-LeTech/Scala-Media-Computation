@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure
 
 
@@ -48,6 +64,7 @@ trait BitmapBufferAdapter {
    *
    *
    * @param colorToTrim
+   *
    * @return
    */
   def trim(colorToTrim: RGBAColor = GS.colorFor(DefaultBackground)): BitmapBufferAdapter
@@ -56,6 +73,7 @@ trait BitmapBufferAdapter {
    *
    *
    * @param function
+   *
    * @return
    */
   def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): BitmapBufferAdapter
@@ -84,6 +102,7 @@ trait BitmapBufferAdapter {
    * @param transformation
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
+   *
    * @return
    */
   def createTransformedVersionWith(
@@ -98,6 +117,7 @@ trait BitmapBufferAdapter {
    * @param minY
    * @param maxX
    * @param maxY
+   *
    * @return
    */
   def boundaryOverflowsForLTRB(
@@ -110,6 +130,7 @@ trait BitmapBufferAdapter {
    *
    *
    * @param kernel
+   *
    * @return
    */
   def createFilteredVersionWith(kernel: ConvolutionKernel): BitmapBufferAdapter
@@ -118,6 +139,7 @@ trait BitmapBufferAdapter {
    *
    *
    * @param translator
+   *
    * @return
    */
   def createFilteredVersionWith(translator: RGBAComponentTranslationTable): BitmapBufferAdapter
@@ -136,6 +158,7 @@ trait BitmapBufferAdapter {
    * @param topLeftY
    * @param bottomRightX
    * @param bottomRightY
+   *
    * @return
    */
   def copyPortionXYXY(
@@ -151,6 +174,7 @@ trait BitmapBufferAdapter {
    * @param topLeftY
    * @param width
    * @param height
+   *
    * @return
    */
   def copyPortionXYWH(
@@ -170,6 +194,7 @@ trait BitmapBufferAdapter {
    *
    *
    * @param filename
+   *
    * @return
    */
   def saveAsPngTo(filename: String): String

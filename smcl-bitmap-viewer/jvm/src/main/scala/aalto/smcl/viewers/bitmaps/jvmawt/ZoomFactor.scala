@@ -1,4 +1,21 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.viewers.bitmaps.jvmawt
+
 
 import scala.swing.Dimension
 
@@ -58,17 +75,20 @@ object ZoomFactor {
    *
    *
    * @param valueInPercents
+   *
    * @return
    */
   def apply(valueInPercents: Int = 100): ZoomFactor = {
     require(validRangeInPercents.contains(valueInPercents),
       s"Zoom factor must be on the valid range from " +
-        "${validRangeInPercents.start} to ${validRangeInPercents.end} (was $valueAsPercents)")
+          "${validRangeInPercents.start} to ${validRangeInPercents.end} (was $valueAsPercents)")
 
     new ZoomFactor(valueInPercents)
   }
 
 }
+
+
 
 
 /**
@@ -78,8 +98,8 @@ object ZoomFactor {
  */
 private[jvmawt]
 class ZoomFactor private(val valueInPercents: Int)
-  extends Ordered[ZoomFactor]
-  with Immutable {
+    extends Ordered[ZoomFactor]
+            with Immutable {
 
 
   private val HUNDRED_AS_DOUBLE: Double = 100.toDouble
@@ -88,12 +108,13 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    *
    * @param factor
+   *
    * @return
    */
   def adjustByIfPossible(factor: Double): ZoomFactor = {
     val newValue = (factor * valueInPercents).toInt
-      .max(ZoomFactor.validRangeInPercents.start)
-      .min(ZoomFactor.validRangeInPercents.end)
+        .max(ZoomFactor.validRangeInPercents.start)
+        .min(ZoomFactor.validRangeInPercents.end)
 
     new ZoomFactor(newValue)
   }
@@ -131,6 +152,7 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    *
    * @param that
+   *
    * @return
    */
   override def compare(that: ZoomFactor): Int = this.valueInPercents - that.valueInPercents
@@ -139,6 +161,7 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    *
    * @param measure
+   *
    * @return
    */
   def scaleToDouble(measure: Double): Double = asFactor * measure
@@ -147,6 +170,7 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    *
    * @param measure
+   *
    * @return
    */
   def scaleToDouble(measure: Int): Double = asFactor * measure
@@ -155,6 +179,7 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    *
    * @param measure
+   *
    * @return
    */
   def scaleToInt(measure: Int): Int = (asFactor * measure).toInt
@@ -163,6 +188,7 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    *
    * @param dimensions
+   *
    * @return
    */
   def scaleToDimension(dimensions: Dimension): Dimension =

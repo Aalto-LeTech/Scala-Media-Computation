@@ -1,4 +1,21 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure
+
 
 /**
  * This object provides a way to mimic Java's resource-related `try` facility. The given resource has to implement
@@ -17,11 +34,12 @@ object EnsureClosingOfAfter {
    * @param workUnit
    * @tparam ResourceType
    * @tparam ReturnType
+   *
    * @return
    */
   def apply[ResourceType <: AutoCloseable, ReturnType](
-    resourceToBeUsed: ResourceType)(
-    workUnit: ResourceType => ReturnType): ReturnType = {
+      resourceToBeUsed: ResourceType)(
+      workUnit: ResourceType => ReturnType): ReturnType = {
 
     var memorizedThrowable: Throwable = null
 

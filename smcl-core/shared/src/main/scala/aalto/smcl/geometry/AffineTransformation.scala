@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.geometry
 
 
@@ -26,6 +42,7 @@ object AffineTransformation {
    *
    *
    * @param bitmapWidth
+   *
    * @return
    */
   def forHorizontalFlipOf(bitmapWidth: Int): AffineTransformation =
@@ -35,6 +52,7 @@ object AffineTransformation {
    *
    *
    * @param bitmapHeight
+   *
    * @return
    */
   def forVerticalFlipOf(bitmapHeight: Int): AffineTransformation =
@@ -44,6 +62,7 @@ object AffineTransformation {
    *
    *
    * @param bitmapHeight
+   *
    * @return
    */
   def forDiagonalFlipOf(bitmapWidth: Int, bitmapHeight: Int): AffineTransformation =
@@ -54,6 +73,7 @@ object AffineTransformation {
    *
    * @param factorX
    * @param factorY
+   *
    * @return
    */
   def forFreeScalingOf(factorX: Double, factorY: Double): AffineTransformation =
@@ -64,6 +84,7 @@ object AffineTransformation {
    *
    * @param amountX
    * @param amountY
+   *
    * @return
    */
   def forFreeShearingOf(amountX: Double, amountY: Double): AffineTransformation =
@@ -73,6 +94,7 @@ object AffineTransformation {
    *
    *
    * @param angleInDegrees
+   *
    * @return
    */
   def forFreeRotationOf(angleInDegrees: Double): AffineTransformation =
@@ -84,12 +106,13 @@ object AffineTransformation {
    * @param angleInDegrees
    * @param anchorX
    * @param anchorY
+   *
    * @return
    */
   def forFreeRotationOfAround(
-    angleInDegrees: Double,
-    anchorX: Double,
-    anchorY: Double): AffineTransformation = {
+      angleInDegrees: Double,
+      anchorX: Double,
+      anchorY: Double): AffineTransformation = {
 
     AffineTransformation().rotateDegsAround(angleInDegrees, anchorX, anchorY)
   }
@@ -107,11 +130,12 @@ object AffineTransformation {
    *
    * @param anchorX
    * @param anchorY
+   *
    * @return
    */
   def forRotationOf90DegsCwAround(
-    anchorX: Double,
-    anchorY: Double): AffineTransformation = {
+      anchorX: Double,
+      anchorY: Double): AffineTransformation = {
 
     AffineTransformation().rotate90DegsCwAround(anchorX, anchorY)
   }
@@ -129,11 +153,12 @@ object AffineTransformation {
    *
    * @param anchorX
    * @param anchorY
+   *
    * @return
    */
   def forRotationOf90DegsCcwAround(
-    anchorX: Double,
-    anchorY: Double): AffineTransformation = {
+      anchorX: Double,
+      anchorY: Double): AffineTransformation = {
 
     AffineTransformation().rotate90DegsCcwAround(anchorX, anchorY)
   }
@@ -151,16 +176,19 @@ object AffineTransformation {
    *
    * @param anchorX
    * @param anchorY
+   *
    * @return
    */
   def forRotationOf180DegsAround(
-    anchorX: Double,
-    anchorY: Double): AffineTransformation = {
+      anchorX: Double,
+      anchorY: Double): AffineTransformation = {
 
     AffineTransformation().rotate180DegsAround(anchorX, anchorY)
   }
 
 }
+
+
 
 
 /**
@@ -169,7 +197,7 @@ object AffineTransformation {
  * @author Aleksi Lukkarinen
  */
 case class AffineTransformation private(
-  private[smcl] val platformAffineTransform: AffineTransformationAdapter) {
+    private[smcl] val platformAffineTransform: AffineTransformationAdapter) {
 
   require(platformAffineTransform != null, "Platform transformation argument cannot be null.")
 
@@ -179,6 +207,7 @@ case class AffineTransformation private(
    *
    * @param factorX
    * @param factorY
+   *
    * @return
    */
   def scale(factorX: Double, factorY: Double): AffineTransformation =
@@ -189,6 +218,7 @@ case class AffineTransformation private(
    *
    * @param amountXInPixels
    * @param amountYInPixels
+   *
    * @return
    */
   def translate(amountXInPixels: Double, amountYInPixels: Double): AffineTransformation =
@@ -198,6 +228,7 @@ case class AffineTransformation private(
    *
    *
    * @param angleInDegrees
+   *
    * @return
    */
   def rotateDegs(angleInDegrees: Double): AffineTransformation =
@@ -209,12 +240,13 @@ case class AffineTransformation private(
    * @param angleInDegrees
    * @param anchorXInPixels
    * @param anchorYInPixels
+   *
    * @return
    */
   def rotateDegsAround(
-    angleInDegrees: Double,
-    anchorXInPixels: Double,
-    anchorYInPixels: Double): AffineTransformation = {
+      angleInDegrees: Double,
+      anchorXInPixels: Double,
+      anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
       platformAffineTransform.copy.rotateDegsAround(
@@ -234,11 +266,12 @@ case class AffineTransformation private(
    *
    * @param anchorXInPixels
    * @param anchorYInPixels
+   *
    * @return
    */
   def rotate90DegsCwAround(
-    anchorXInPixels: Double,
-    anchorYInPixels: Double): AffineTransformation = {
+      anchorXInPixels: Double,
+      anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
       platformAffineTransform.copy.rotate90DegsCwAround(
@@ -258,11 +291,12 @@ case class AffineTransformation private(
    *
    * @param anchorXInPixels
    * @param anchorYInPixels
+   *
    * @return
    */
   def rotate90DegsCcwAround(
-    anchorXInPixels: Double,
-    anchorYInPixels: Double): AffineTransformation = {
+      anchorXInPixels: Double,
+      anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
       platformAffineTransform.copy.rotate90DegsCcwAround(
@@ -282,11 +316,12 @@ case class AffineTransformation private(
    *
    * @param anchorXInPixels
    * @param anchorYInPixels
+   *
    * @return
    */
   def rotate180DegsAround(
-    anchorXInPixels: Double,
-    anchorYInPixels: Double): AffineTransformation = {
+      anchorXInPixels: Double,
+      anchorYInPixels: Double): AffineTransformation = {
 
     AffineTransformation(
       platformAffineTransform.copy.rotate180DegsAround(

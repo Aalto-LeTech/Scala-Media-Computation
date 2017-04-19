@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps
 
 
@@ -37,10 +53,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_RED" in {
-        intercept[IllegalArgumentException] {withNewRedComponent(TEST_PIXEL_INT, ColorValidator.MinimumRgbRed - 1)}
+        intercept[IllegalArgumentException]{withNewRedComponent(TEST_PIXEL_INT, ColorValidator.MinimumRgbRed - 1)}
       }
       "greater than MAX_RED" in {
-        intercept[IllegalArgumentException] {withNewRedComponent(TEST_PIXEL_INT, ColorValidator.MaximumRgbRed + 1)}
+        intercept[IllegalArgumentException]{withNewRedComponent(TEST_PIXEL_INT, ColorValidator.MaximumRgbRed + 1)}
       }
     }
   }
@@ -51,10 +67,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_GREEN" in {
-        intercept[IllegalArgumentException] {withNewGreenComponent(TEST_PIXEL_INT, ColorValidator.MinimumRgbGreen - 1)}
+        intercept[IllegalArgumentException]{withNewGreenComponent(TEST_PIXEL_INT, ColorValidator.MinimumRgbGreen - 1)}
       }
       "greater than MAX_GREEN" in {
-        intercept[IllegalArgumentException] {withNewGreenComponent(TEST_PIXEL_INT, ColorValidator.MaximumRgbGreen + 1)}
+        intercept[IllegalArgumentException]{withNewGreenComponent(TEST_PIXEL_INT, ColorValidator.MaximumRgbGreen + 1)}
       }
     }
   }
@@ -65,10 +81,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MIN_BLUE" in {
-        intercept[IllegalArgumentException] {withNewBlueComponent(TEST_PIXEL_INT, ColorValidator.MinimumRgbBlue - 1)}
+        intercept[IllegalArgumentException]{withNewBlueComponent(TEST_PIXEL_INT, ColorValidator.MinimumRgbBlue - 1)}
       }
       "greater than MAX_BLUE" in {
-        intercept[IllegalArgumentException] {withNewBlueComponent(TEST_PIXEL_INT, ColorValidator.MaximumRgbBlue + 1)}
+        intercept[IllegalArgumentException]{withNewBlueComponent(TEST_PIXEL_INT, ColorValidator.MaximumRgbBlue + 1)}
       }
     }
   }
@@ -79,10 +95,10 @@ class packageSpec extends ImageSpecBase {
     }
     "throw an IllegalArgumentException when color component is" - {
       "less than MinimumOpacity" in {
-        intercept[IllegalArgumentException] {withNewOpacityComponent(TEST_PIXEL_INT, ColorValidator.MinimumRgbaOpacity - 1)}
+        intercept[IllegalArgumentException]{withNewOpacityComponent(TEST_PIXEL_INT, ColorValidator.MinimumRgbaOpacity - 1)}
       }
       "greater than MaximumOpacity" in {
-        intercept[IllegalArgumentException] {withNewOpacityComponent(TEST_PIXEL_INT, ColorValidator.MaximumRgbaOpacity + 1)}
+        intercept[IllegalArgumentException]{withNewOpacityComponent(TEST_PIXEL_INT, ColorValidator.MaximumRgbaOpacity + 1)}
       }
     }
   }
@@ -109,42 +125,42 @@ class packageSpec extends ImageSpecBase {
 
     "throw an IllegalArgumentException when color component" - {
       "'red' is less than MIN_RED" in {
-        intercept[IllegalArgumentException] {
+        intercept[IllegalArgumentException]{
           argbIntFrom(red = ColorValidator.MinimumRgbRed - 1)
         }
       }
       "'red' is greater than MAX_RED" in {
-        intercept[IllegalArgumentException] {
+        intercept[IllegalArgumentException]{
           argbIntFrom(red = ColorValidator.MaximumRgbRed + 1)
         }
       }
       "'green' is less than MIN_GREEN" in {
-        intercept[IllegalArgumentException] {
+        intercept[IllegalArgumentException]{
           argbIntFrom(green = ColorValidator.MinimumRgbGreen - 1)
         }
       }
       "'green' is greater than MAX_GREEN" in {
-        intercept[IllegalArgumentException] {
+        intercept[IllegalArgumentException]{
           argbIntFrom(green = ColorValidator.MaximumRgbGreen + 1)
         }
       }
       "'blue' is less than MIN_BLUE" in {
-        intercept[IllegalArgumentException] {
+        intercept[IllegalArgumentException]{
           argbIntFrom(blue = ColorValidator.MinimumRgbBlue - 1)
         }
       }
       "'blue' is greater than MAX_BLUE" in {
-        intercept[IllegalArgumentException] {
+        intercept[IllegalArgumentException]{
           argbIntFrom(blue = ColorValidator.MaximumRgbBlue + 1)
         }
       }
       "opacity is less than MinimumOpacity" in {
-        intercept[IllegalArgumentException] {
+        intercept[IllegalArgumentException]{
           argbIntFrom(opacity = ColorValidator.MinimumRgbaOpacity - 1)
         }
       }
       "opacity is greater than MaximumOpacity" in {
-        intercept[IllegalArgumentException] {
+        intercept[IllegalArgumentException]{
           argbIntFrom(opacity = ColorValidator.MaximumRgbaOpacity + 1)
         }
       }

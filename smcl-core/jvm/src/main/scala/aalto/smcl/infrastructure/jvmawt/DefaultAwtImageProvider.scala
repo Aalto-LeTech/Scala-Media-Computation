@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure.jvmawt
 
 
@@ -46,6 +62,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    *
    *
    * @param path
+   *
    * @return
    */
   override def tryToLoadImagesFromFile(path: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]] =
@@ -55,6 +72,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    *
    *
    * @param path
+   *
    * @return
    *
    * @throws SMCLImageInputStreamNotCreatedError
@@ -67,7 +85,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
     val (imageFile, imagePath, imageExtension) =
       ensureThatImageFileIsReadableAndSupported(path)
 
-    EnsureClosingOfAfter(createImageInputStreamFor(imageFile)) {inputStream =>
+    EnsureClosingOfAfter(createImageInputStreamFor(imageFile)){inputStream =>
       val reader: ImageReader = findSuitableImageReaderFor(inputStream)
 
       try {
@@ -86,11 +104,12 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    *
    * @param filePath
    * @param reader
+   *
    * @return
    */
   private def loadImagesFromReader(
-    reader: ImageReader,
-    filePath: String): Seq[Either[Throwable, BitmapBufferAdapter]] = {
+      reader: ImageReader,
+      filePath: String): Seq[Either[Throwable, BitmapBufferAdapter]] = {
 
     val WithSearchingAllowed = true
     val lastImageIndex = reader.getMinIndex + reader.getNumImages(WithSearchingAllowed) - 1
@@ -105,12 +124,13 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    * @param currentImageIndex
    * @param reader
    * @param filePath
+   *
    * @return
    */
   private def loadSingleImageFromReader(
-    currentImageIndex: Int,
-    reader: ImageReader,
-    filePath: String): Either[Throwable, BitmapBufferAdapter] = {
+      currentImageIndex: Int,
+      reader: ImageReader,
+      filePath: String): Either[Throwable, BitmapBufferAdapter] = {
 
     val width = Try(reader.getWidth(currentImageIndex)).recover({
       case e: IOException => return Left(e)
@@ -154,6 +174,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    *
    *
    * @param inputStream
+   *
    * @return
    *
    * @throws SMCLSuitableImageReaderNotFoundError
@@ -173,6 +194,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    *
    *
    * @param imageFile
+   *
    * @return
    *
    * @throws SMCLImageInputStreamNotCreatedError
@@ -193,6 +215,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    *
    *
    * @param filePath
+   *
    * @return
    *
    * @throws SecurityException
@@ -235,7 +258,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
   private def ensureThatFileExtensionIsOfSupportedImageType(extension: String): Unit = {
     require(supportedReadableFileExtensions.contains(extension),
       "Extension of the given file is unknown (the supported ones are " +
-        supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
+          supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
   }
 
 

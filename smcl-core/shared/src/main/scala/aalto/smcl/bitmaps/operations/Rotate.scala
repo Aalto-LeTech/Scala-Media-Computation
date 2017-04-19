@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
@@ -21,13 +37,13 @@ import aalto.smcl.infrastructure._
  */
 private[bitmaps]
 case class Rotate(
-  sourceBitmap: Bitmap,
-  angleInDegrees: Double,
-  resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-  extends AbstractOperation
-  with BufferProvider
-  with Immutable {
+    sourceBitmap: Bitmap,
+    angleInDegrees: Double,
+    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    extends AbstractOperation
+            with BufferProvider
+            with Immutable {
 
   require(sourceBitmap != null, s"Rotation requires exactly one source image (was null).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
@@ -49,6 +65,7 @@ case class Rotate(
    * [[Buffered]].
    *
    * @param sources possible [[BitmapBufferAdapter]] instances used as sources
+   *
    * @return
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
@@ -75,7 +92,7 @@ case class Rotate(
    * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
-   * @return    bitmap buffer to be made copies of for providees
+   * @return bitmap buffer to be made copies of for providees
    */
   override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)

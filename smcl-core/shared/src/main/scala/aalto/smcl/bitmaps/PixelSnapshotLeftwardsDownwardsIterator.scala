@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps
 
 
@@ -12,8 +28,8 @@ import scala.collection.AbstractIterator
  * @author Aleksi Lukkarinen
  */
 class PixelSnapshotLeftwardsDownwardsIterator(
-  val relatedPixelSnapshot: PixelSnapshot)
-  extends AbstractIterator[Pixel] {
+    val relatedPixelSnapshot: PixelSnapshot)
+    extends AbstractIterator[Pixel] {
 
   /** */
   lazy val widthInPixels: Int = relatedPixelSnapshot.widthInPixels
@@ -86,7 +102,7 @@ class PixelSnapshotLeftwardsDownwardsIterator(
    */
   def hasNext: Boolean =
     _currentYInPixels <= MaxYInPixels &&
-      _currentXInPixels >= MinXInPixels
+        _currentXInPixels >= MinXInPixels
 
   /**
    *

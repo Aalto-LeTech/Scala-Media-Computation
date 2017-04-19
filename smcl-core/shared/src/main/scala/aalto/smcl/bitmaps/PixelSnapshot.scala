@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps
 
 
@@ -13,8 +29,8 @@ import aalto.smcl.infrastructure.exceptions.SMCLInvalidColorComponentArrayLength
  * @author Aleksi Lukkarinen
  */
 class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
-  extends Iterable[Pixel]
-  with PixelRectangle {
+    extends Iterable[Pixel]
+            with PixelRectangle {
 
   /** */
   val widthInPixels: Int = relatedBitmap.widthInPixels
@@ -113,30 +129,30 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    * @return
    */
   def setComponentArrays(
-    reds: Array[Int],
-    greens: Array[Int],
-    blues: Array[Int],
-    opacities: Array[Int]): Unit = {
+      reds: Array[Int],
+      greens: Array[Int],
+      blues: Array[Int],
+      opacities: Array[Int]): Unit = {
 
     if (reds.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given red RGBA component array is " +
-          s"$areaInPixels, but actually was ${reds.length}")
+            s"$areaInPixels, but actually was ${reds.length}")
 
     if (greens.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given green RGBA component array is " +
-          s"$areaInPixels, but actually was ${greens.length}")
+            s"$areaInPixels, but actually was ${greens.length}")
 
     if (blues.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given blue RGBA component array is " +
-          s"$areaInPixels, but actually was ${blues.length}")
+            s"$areaInPixels, but actually was ${blues.length}")
 
     if (opacities.length != areaInPixels)
       throw new SMCLInvalidColorComponentArrayLengthError(
         "Expected length for the given opacity RGBA component array is " +
-          s"$areaInPixels, but actually was ${opacities.length}")
+            s"$areaInPixels, but actually was ${opacities.length}")
 
     setRedComponentArray(reds)
     setGreenComponentArray(greens)
@@ -158,6 +174,7 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    *
    * @param x
    * @param y
+   *
    * @return
    */
   def pixel(x: Int, y: Int) = Pixel(

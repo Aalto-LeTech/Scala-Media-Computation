@@ -1,7 +1,23 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
 
 
 
@@ -13,9 +29,9 @@ import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
  */
 private[bitmaps]
 case class ToGrayscaleByLuminocity()
-  extends AbstractOperation
-  with OneSourceFilter
-  with Immutable {
+    extends AbstractOperation
+            with OneSourceFilter
+            with Immutable {
 
   /** */
   private val StandardRedWeight: Double = 0.21
@@ -39,17 +55,18 @@ case class ToGrayscaleByLuminocity()
    * [[Buffered]].
    *
    * @param sources possible [[BitmapBufferAdapter]] instances used as sources
+   *
    * @return
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     require(sources.length == 1,
       s"Grayscale conversion requires exactly one source image (provided: ${sources.length}).")
 
-    sources(0).iteratePixelsWith {(red, green, blue, opacity) =>
+    sources(0).iteratePixelsWith{(red, green, blue, opacity) =>
       val intensity = (
-        StandardRedWeight * red +
-          StandardGreenWeight * green +
-          StandardBlueWeight * blue).toInt
+          StandardRedWeight * red +
+              StandardGreenWeight * green +
+              StandardBlueWeight * blue).toInt
 
       (intensity, intensity, intensity, opacity)
     }

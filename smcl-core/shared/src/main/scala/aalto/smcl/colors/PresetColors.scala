@@ -1,6 +1,20 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.colors
-
-
 
 
 /**
@@ -9,8 +23,8 @@ package aalto.smcl.colors
  * @author Aleksi Lukkarinen
  */
 class PresetColors private[colors]()
-  extends Map[Symbol, RGBAColor]
-  with Immutable {
+    extends Map[Symbol, RGBAColor]
+            with Immutable {
 
   /** */
   private[this] lazy val _colorMap = Map[Symbol, RGBAColor](
@@ -163,14 +177,16 @@ class PresetColors private[colors]()
    *
    * @param kv
    * @tparam T
+   *
    * @return
    */
-  override def +[T >: RGBAColor](kv: (Symbol, T)): Map[Symbol, T] = _colorMap + kv
+  override def +[T >: RGBAColor] (kv: (Symbol, T)): Map[Symbol, T] = _colorMap + kv
 
   /**
    *
    *
    * @param key
+   *
    * @return
    */
   override def get(key: Symbol): Option[RGBAColor] = _colorMap.get(key)
@@ -186,8 +202,9 @@ class PresetColors private[colors]()
    *
    *
    * @param key
+   *
    * @return
    */
-  override def -(key: Symbol): Map[Symbol, RGBAColor] = _colorMap - key
+  override def - (key: Symbol): Map[Symbol, RGBAColor] = _colorMap - key
 
 }

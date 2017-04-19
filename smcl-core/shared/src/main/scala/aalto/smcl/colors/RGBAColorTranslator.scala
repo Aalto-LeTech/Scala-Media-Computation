@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.colors
 
 
@@ -12,6 +28,7 @@ trait RGBAColorTranslator {
    *
    *
    * @param color
+   *
    * @return
    */
   def translate(color: RGBAColor): RGBAColor =
@@ -21,6 +38,7 @@ trait RGBAColorTranslator {
    *
    *
    * @param argbInt
+   *
    * @return
    */
   def translate(argbInt: Int): Int =
@@ -30,11 +48,12 @@ trait RGBAColorTranslator {
    *
    *
    * @param rgbaTuple
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def translate(rgbaTuple: (Int, Int, Int, Int)): (Int, Int, Int, Int) =
-    (translate(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+  (translate(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
 
   /**
    *
@@ -43,6 +62,7 @@ trait RGBAColorTranslator {
    * @param green
    * @param blue
    * @param opacity
+   *
    * @return
    */
   def translate(red: Int, green: Int, blue: Int, opacity: Int): (Int, Int, Int, Int)

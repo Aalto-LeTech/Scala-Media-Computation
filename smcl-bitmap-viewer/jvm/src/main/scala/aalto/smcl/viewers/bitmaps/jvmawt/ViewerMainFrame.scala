@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.viewers.bitmaps.jvmawt
 
 
@@ -10,10 +26,10 @@ import scala.swing.event._
 
 import aalto.smcl.SMCLLibrary._
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.viewers.bitmaps.jvmawt.ScrollingDirection._
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.exceptions.SMCLUnexpectedInternalError
 import aalto.smcl.infrastructure.jvmawt.SwingUtils
+import aalto.smcl.viewers.bitmaps.jvmawt.ScrollingDirection._
 
 
 
@@ -56,23 +72,26 @@ object ViewerMainFrame {
    *
    *
    * @param bitmap
+   *
    * @return
    */
   def initialViewAreaSizeFor(bitmap: Bitmap): Dimension = {
     val screenSize = PRF.screenInformationProvider.dimensionsInPixels
 
     val width = (screenSize.widthInPixels * 0.8).toInt
-      .min((bitmap.widthInPixels * 1.1).toInt)
-      .max(MinimumFrameSize.width)
+        .min((bitmap.widthInPixels * 1.1).toInt)
+        .max(MinimumFrameSize.width)
 
     val height = (screenSize.heightInPixels * 0.8).toInt
-      .min((bitmap.heightInPixels * 1.1).toInt)
-      .max(MinimumFrameSize.height)
+        .min((bitmap.heightInPixels * 1.1).toInt)
+        .max(MinimumFrameSize.height)
 
     new Dimension(width, height)
   }
 
 }
+
+
 
 
 /**
@@ -82,8 +101,8 @@ object ViewerMainFrame {
  */
 private[jvmawt]
 class ViewerMainFrame private(
-  private val _initialPreferredViewAreaSize: Dimension)
-  extends Frame {
+    private val _initialPreferredViewAreaSize: Dimension)
+    extends Frame {
 
   /** */
   private val NoModifiers: Key.Modifiers = 0
@@ -99,6 +118,7 @@ class ViewerMainFrame private(
 
   /** */
   val scrollerViewportBackground = new GridBagPanel {
+
     layout(imagePanel) = new Constraints
     background = new Color(40, 40, 40)
     revalidate()
@@ -106,6 +126,7 @@ class ViewerMainFrame private(
 
   /** */
   val scroller = new ScrollPane {
+
     contents = scrollerViewportBackground
     peer.getViewport.setPreferredSize(_initialPreferredViewAreaSize)
     //horizontalScrollBarPolicy = ScrollPane.BarPolicy.Always
@@ -123,17 +144,19 @@ class ViewerMainFrame private(
 
   /** */
   val toolbar = new ToolBar() {
+
     name = "Main"
-    contents += new Button(_actionMap.get('copyToClipboard).get) { }
-    contents += new Button(_actionMap.get('saveToFile).get) { }
+    contents += new Button(_actionMap.get('copyToClipboard).get) {}
+    contents += new Button(_actionMap.get('saveToFile).get) {}
     contents += new Separator()
-    contents += new Button(_actionMap.get('ZoomIn).get) { }
-    contents += new Button(_actionMap.get('ZoomOut).get) { }
-    contents += new Button(_actionMap.get('Zoom100Percent).get) { }
+    contents += new Button(_actionMap.get('ZoomIn).get) {}
+    contents += new Button(_actionMap.get('ZoomOut).get) {}
+    contents += new Button(_actionMap.get('Zoom100Percent).get) {}
   }
 
   /** */
   val layoutBase = new BorderPanel {
+
     layout(toolbar) = BorderPanel.Position.North
     layout(scroller) = BorderPanel.Position.Center
 
@@ -148,29 +171,29 @@ class ViewerMainFrame private(
   peer.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
 
   menuBar = MenuBuilder.newMenuBarUsing(_actionMap)
-    .menu("Image", Option(Key.I))
-    .item('copyToClipboard).separator()
-    .item('saveToFile).separator()
-    .item('exitViewer)
-    .defined()
-    .menu("View", Option(Key.V))
-    .item('ZoomIn)
-    .item('ZoomOut).separator()
-    .item('Zoom60Percent)
-    .item('Zoom70Percent)
-    .item('Zoom80Percent)
-    .item('Zoom90Percent)
-    .item('Zoom100Percent)
-    .item('Zoom150Percent)
-    .item('Zoom200Percent)
-    .item('Zoom300Percent)
-    .item('Zoom400Percent)
-    .item('Zoom500Percent)
-    .defined()
-    .menu("Help", Option(Key.H))
-    .item('About)
-    .defined()
-    .get()
+      .menu("Image", Option(Key.I))
+      .item('copyToClipboard).separator()
+      .item('saveToFile).separator()
+      .item('exitViewer)
+      .defined()
+      .menu("View", Option(Key.V))
+      .item('ZoomIn)
+      .item('ZoomOut).separator()
+      .item('Zoom60Percent)
+      .item('Zoom70Percent)
+      .item('Zoom80Percent)
+      .item('Zoom90Percent)
+      .item('Zoom100Percent)
+      .item('Zoom150Percent)
+      .item('Zoom200Percent)
+      .item('Zoom300Percent)
+      .item('Zoom400Percent)
+      .item('Zoom500Percent)
+      .defined()
+      .menu("Help", Option(Key.H))
+      .item('About)
+      .defined()
+      .get()
 
   val zoomInAction : ViewerAction = _actionMap.get('ZoomIn).get
   val zoomOutAction: ViewerAction = _actionMap.get('ZoomOut).get
@@ -256,9 +279,9 @@ class ViewerMainFrame private(
    * @param directions
    */
   def adjustScrollBars(
-    directions: Seq[ScrollingDirection.Value],
-    magnitude: ScrollingMagnitude.Value,
-    steps: Int = 1): Unit = {
+      directions: Seq[ScrollingDirection.Value],
+      magnitude: ScrollingMagnitude.Value,
+      steps: Int = 1): Unit = {
 
     directions foreach {direction =>
       val upOrLeftDirection = direction match {
@@ -299,6 +322,7 @@ class ViewerMainFrame private(
    *
    *
    * @param key
+   *
    * @return
    */
   def representedDirections(key: Key.Value): Seq[ScrollingDirection.Value] = {
@@ -323,6 +347,7 @@ class ViewerMainFrame private(
    *
    *
    * @param key
+   *
    * @return
    */
   def representsMovingUpwards(key: Key.Value): Boolean =
@@ -332,6 +357,7 @@ class ViewerMainFrame private(
    *
    *
    * @param key
+   *
    * @return
    */
   def representsMovingDownwards(key: Key.Value): Boolean =
@@ -341,6 +367,7 @@ class ViewerMainFrame private(
    *
    *
    * @param key
+   *
    * @return
    */
   def representsMovingLeftwards(key: Key.Value): Boolean =
@@ -350,6 +377,7 @@ class ViewerMainFrame private(
    *
    *
    * @param key
+   *
    * @return
    */
   def representsMovingRightwards(key: Key.Value): Boolean =

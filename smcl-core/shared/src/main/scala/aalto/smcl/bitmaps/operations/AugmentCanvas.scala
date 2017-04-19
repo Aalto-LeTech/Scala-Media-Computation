@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
@@ -22,16 +38,16 @@ import aalto.smcl.infrastructure._
  */
 private[bitmaps]
 case class AugmentCanvas(
-  sourceBitmap: Bitmap,
-  extraPixelsOntoLeftEdge: Int = 0,
-  extraPixelsOntoTopEdge: Int = 0,
-  extraPixelsOntoRightEdge: Int = 0,
-  extraPixelsOntoBottomEdge: Int = 0,
-  color: RGBAColor = GS.colorFor(DefaultBackground),
-  private val bitmapValidator: BitmapValidator)
-  extends AbstractOperation
-  with BufferProvider
-  with Immutable {
+    sourceBitmap: Bitmap,
+    extraPixelsOntoLeftEdge: Int = 0,
+    extraPixelsOntoTopEdge: Int = 0,
+    extraPixelsOntoRightEdge: Int = 0,
+    extraPixelsOntoBottomEdge: Int = 0,
+    color: RGBAColor = GS.colorFor(DefaultBackground),
+    private val bitmapValidator: BitmapValidator)
+    extends AbstractOperation
+            with BufferProvider
+            with Immutable {
 
   require(sourceBitmap != null, s"Cropping requires exactly one source image (was null).")
 
@@ -73,6 +89,7 @@ case class AugmentCanvas(
    * [[Buffered]].
    *
    * @param sources possible [[BitmapBufferAdapter]] instances used as sources
+   *
    * @return
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
@@ -93,7 +110,7 @@ case class AugmentCanvas(
    * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
-   * @return    bitmap buffer to be made copies of for providees
+   * @return bitmap buffer to be made copies of for providees
    */
   override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)

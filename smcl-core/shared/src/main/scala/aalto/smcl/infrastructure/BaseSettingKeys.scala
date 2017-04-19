@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure
 
 
@@ -14,6 +30,9 @@ import aalto.smcl.colors.RGBAColor
 private[smcl]
 object BaseSettingKeys {
 
+
+
+
   /**
    * The base class for setting keys of all possible setting data types.
    *
@@ -21,10 +40,10 @@ object BaseSettingKeys {
    * @param typeNamePlural
    * @tparam SettingType
    */
-  abstract sealed class Value[SettingType] (
-    fullTypeName: String,
-    val typeNameSingular: String,
-    val typeNamePlural: String) extends Tokenizable {
+  abstract sealed class Value[SettingType](
+      fullTypeName: String,
+      val typeNameSingular: String,
+      val typeNamePlural: String) extends Tokenizable {
 
     /** Information about this [[Settings]] instance */
     lazy val metaInformation = MetaInformationMap(fullTypeName, Map())
@@ -52,38 +71,51 @@ object BaseSettingKeys {
   }
 
 
+
+
   /**
    * Base class for setting keys of type `Boolean`.
    */
   abstract class BooleanSettingKey()
-    extends Value[Boolean]("BooleanSettingKey", "boolean", "booleans")
+      extends Value[Boolean]("BooleanSettingKey", "boolean", "booleans")
+
+
 
 
   /**
    * Base class for setting keys of type `Enumeration`.
    */
   abstract class EnumSettingKey[SettingType]()
-    extends Value[SettingType]("EnumSettingKey", "enumeration", "enumerations")
+      extends Value[SettingType]("EnumSettingKey", "enumeration", "enumerations")
+
+
 
 
   /**
    * Base class for setting keys of type `Int`.
    */
   abstract class IntSettingKey()
-    extends Value[Int]("IntSettingKey", "integer", "integers")
+      extends Value[Int]("IntSettingKey", "integer", "integers")
+
+
 
 
   /**
    * Base class for setting keys of type `String`.
    */
   abstract class StringSettingKey()
-    extends Value[String]("StringSettingKey", "string", "strings")
+      extends Value[String]("StringSettingKey", "string", "strings")
+
+
 
 
   /**
    * Base class for setting keys of type [[aalto.smcl.colors.RGBAColor]].
    */
   abstract class ColorSettingKey()
-    extends Value[RGBAColor]("ColorSettingKey", "color", "colors")
+      extends Value[RGBAColor]("ColorSettingKey", "color", "colors")
+
+
+
 
 }

@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.colors
 
 
@@ -415,6 +431,7 @@ class RichRGBAColor(val self: RGBAColor) {
    *
    *
    * @param adjustmentInDegrees
+   *
    * @return
    */
   final def adjustHueByDegrees(adjustmentInDegrees: Double): RGBAColor =
@@ -426,12 +443,13 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param redWeight
    * @param greenWeight
    * @param blueWeight
+   *
    * @return
    */
   final def toWeightedGray(
-    redWeight: Double = 0.33,
-    greenWeight: Double = 0.33,
-    blueWeight: Double = 0.33): RGBAColor = {
+      redWeight: Double = 0.33,
+      greenWeight: Double = 0.33,
+      blueWeight: Double = 0.33): RGBAColor = {
 
     val validators = new CommonValidators()
     validators.validateZeroToOneFactor(redWeight, Option("Red weight"))

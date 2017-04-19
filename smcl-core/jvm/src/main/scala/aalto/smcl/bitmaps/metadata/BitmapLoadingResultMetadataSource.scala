@@ -1,11 +1,28 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.metadata
+
 
 import java.awt.image.BufferedImage
 
 import aalto.smcl.bitmaps.BitmapLoadingResult
-import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
+import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 
 
 
@@ -17,10 +34,10 @@ import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitm
  */
 private[metadata]
 case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapLoadingResult)
-  extends MetaInterfaceBase
-  with ResourceMetadataSource
-  with StaticGeneralBitmapSource
-  with StaticThumbnailBitmapSource {
+    extends MetaInterfaceBase
+            with ResourceMetadataSource
+            with StaticGeneralBitmapSource
+            with StaticThumbnailBitmapSource {
 
   /**
    *
@@ -36,6 +53,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceIdOption(bitmapNumber: Int = 0): Option[String] = {
@@ -48,6 +66,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceAuthorsOption(bitmapNumber: Int = 0): Option[String] = {
@@ -60,6 +79,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceKeywordsOption(bitmapNumber: Int = 0): Option[String] = {
@@ -72,6 +92,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceTimestampOption(bitmapNumber: Int = 0): Option[Timestamp] = {
@@ -84,6 +105,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceDescriptionOption(bitmapNumber: Int = 0): Option[String] = {
@@ -96,6 +118,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceTitleOption(bitmapNumber: Int = 0): Option[String] = {
@@ -108,6 +131,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def generalBitmapOption(bitmapNumber: Int = 0): Option[BufferedImage] = {
@@ -137,12 +161,13 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    * @param thumbnailNumber
    * @param maximumWidthInPixels
    * @param maximumHeightInPixels
+   *
    * @return
    */
   override def thumbnailBitmapOption(
-    thumbnailNumber: Int = 0,
-    maximumWidthInPixels: Int,
-    maximumHeightInPixels: Int): Option[BufferedImage] = {
+      thumbnailNumber: Int = 0,
+      maximumWidthInPixels: Int,
+      maximumHeightInPixels: Int): Option[BufferedImage] = {
 
     validateBitmapNumber(thumbnailNumber)
 
@@ -152,7 +177,7 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
     var buffer = bitmap.toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage
 
     if (bitmap.widthInPixels > maximumWidthInPixels
-      || bitmap.heightInPixels > maximumHeightInPixels) {
+        || bitmap.heightInPixels > maximumHeightInPixels) {
 
       val scalingFactor =
         if (bitmap.widthInPixels > maximumWidthInPixels)
@@ -171,14 +196,15 @@ case class BitmapLoadingResultMetadataSource(relatedBitmapLoadingResult: BitmapL
    *
    * @param maximumWidthInPixels
    * @param maximumHeightInPixels
+   *
    * @return
    */
   override def thumbnailBitmapsOption(
-    maximumWidthInPixels: Int,
-    maximumHeightInPixels: Int): Option[Seq[BufferedImage]] = {
+      maximumWidthInPixels: Int,
+      maximumHeightInPixels: Int): Option[Seq[BufferedImage]] = {
 
     Some(relatedBitmapLoadingResult.bitmaps.indices
-      .map(thumbnailBitmapOption(_: Int, maximumWidthInPixels, maximumHeightInPixels).get))
+        .map(thumbnailBitmapOption(_: Int, maximumWidthInPixels, maximumHeightInPixels).get))
   }
 
   /**

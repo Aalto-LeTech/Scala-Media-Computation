@@ -1,6 +1,20 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure
-
-
 
 
 /**
@@ -23,11 +37,11 @@ object MetaInformationMap {
    * a new MetaInformationMap if content is acceptable.
    */
   def apply(className: String,
-            contentProposal: Map[String, Option[String]]): MetaInformationMap = {
+      contentProposal: Map[String, Option[String]]): MetaInformationMap = {
 
     var content = Map[String, Option[String]]()
 
-    contentProposal foreach { pair =>
+    contentProposal foreach {pair =>
       var key = pair._1
       require(key != null, MsgCannotBeNull)
 
@@ -47,6 +61,8 @@ object MetaInformationMap {
 }
 
 
+
+
 /**
  *
  *
@@ -54,8 +70,8 @@ object MetaInformationMap {
  */
 private[smcl]
 class MetaInformationMap private(
-  val className: String,
-  private val content: Map[String, Option[String]]) extends Immutable {
+    val className: String,
+    private val content: Map[String, Option[String]]) extends Immutable {
 
   /**
    *

@@ -1,4 +1,21 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.metadata
+
 
 import java.awt.image.BufferedImage
 
@@ -20,10 +37,10 @@ import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timesta
  */
 private[metadata]
 case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _])
-  extends MetaInterfaceBase
-  with ResourceMetadataSource
-  with StaticGeneralBitmapSource
-  with StaticThumbnailBitmapSource {
+    extends MetaInterfaceBase
+            with ResourceMetadataSource
+            with StaticGeneralBitmapSource
+            with StaticThumbnailBitmapSource {
 
   /** */
   private[this] val _bitmaps = ArrayBuffer[Bitmap]()
@@ -32,7 +49,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
     var index = 0
     var numberOfBitmaps = 0
 
-    collection.toStream.takeWhile(_ => index < 100 && numberOfBitmaps <= 20).foreach {item =>
+    collection.toStream.takeWhile(_ => index < 100 && numberOfBitmaps <= 20).foreach{item =>
       if (item.isInstanceOf[ImmutableBitmap] || item.isInstanceOf[Bitmap]) {
         _bitmaps += item.asInstanceOf[Bitmap]
         numberOfBitmaps += 1
@@ -57,6 +74,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceIdOption(bitmapNumber: Int = 0): Option[String] = {
@@ -69,6 +87,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceAuthorsOption(bitmapNumber: Int = 0): Option[String] = {
@@ -81,6 +100,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceKeywordsOption(bitmapNumber: Int = 0): Option[String] = {
@@ -93,6 +113,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceTimestampOption(bitmapNumber: Int = 0): Option[Timestamp] = {
@@ -105,6 +126,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceDescriptionOption(bitmapNumber: Int = 0): Option[String] = {
@@ -117,6 +139,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceTitleOption(bitmapNumber: Int = 0): Option[String] = {
@@ -129,6 +152,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def generalBitmapOption(bitmapNumber: Int = 0): Option[BufferedImage] = {
@@ -158,12 +182,13 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    * @param thumbnailNumber
    * @param maximumWidthInPixels
    * @param maximumHeightInPixels
+   *
    * @return
    */
   override def thumbnailBitmapOption(
-    thumbnailNumber: Int = 0,
-    maximumWidthInPixels: Int,
-    maximumHeightInPixels: Int): Option[BufferedImage] = {
+      thumbnailNumber: Int = 0,
+      maximumWidthInPixels: Int,
+      maximumHeightInPixels: Int): Option[BufferedImage] = {
 
     validateBitmapNumber(thumbnailNumber)
 
@@ -173,7 +198,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
     var buffer = bitmap.toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage
 
     if (bitmap.widthInPixels > maximumWidthInPixels
-      || bitmap.heightInPixels > maximumHeightInPixels) {
+        || bitmap.heightInPixels > maximumHeightInPixels) {
 
       val scalingFactor =
         if (bitmap.widthInPixels > maximumWidthInPixels)
@@ -192,11 +217,12 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    *
    * @param maximumWidthInPixels
    * @param maximumHeightInPixels
+   *
    * @return
    */
   override def thumbnailBitmapsOption(
-    maximumWidthInPixels: Int,
-    maximumHeightInPixels: Int): Option[Seq[BufferedImage]] = {
+      maximumWidthInPixels: Int,
+      maximumHeightInPixels: Int): Option[Seq[BufferedImage]] = {
 
     Some(_bitmaps.indices.map(thumbnailBitmapOption(_: Int, maximumWidthInPixels, maximumHeightInPixels).get))
   }

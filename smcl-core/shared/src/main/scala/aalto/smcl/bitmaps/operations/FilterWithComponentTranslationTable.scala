@@ -1,8 +1,24 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.colors.RGBAComponentTranslationTable
-import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
 
 
 
@@ -16,9 +32,9 @@ import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
  */
 private[bitmaps]
 case class FilterWithComponentTranslationTable(translator: RGBAComponentTranslationTable)
-  extends AbstractOperation
-  with OneSourceFilter
-  with Immutable {
+    extends AbstractOperation
+            with OneSourceFilter
+            with Immutable {
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap("FilterWithComponentTranslationTable", Map())
@@ -29,6 +45,7 @@ case class FilterWithComponentTranslationTable(translator: RGBAComponentTranslat
    * [[Buffered]].
    *
    * @param sources possible [[BitmapBufferAdapter]] instances used as sources
+   *
    * @return
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {

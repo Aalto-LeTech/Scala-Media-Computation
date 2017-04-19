@@ -1,6 +1,20 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps
-
-
 
 
 /**
@@ -16,6 +30,7 @@ object ConvolutionKernel {
    * @param width
    * @param height
    * @param data
+   *
    * @return
    */
   def apply(width: Int, height: Int, data: Array[Float]): ConvolutionKernel = {
@@ -36,13 +51,15 @@ object ConvolutionKernel {
 }
 
 
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 case class ConvolutionKernel private(matrix: Seq[Seq[Float]])
-  extends Immutable {
+    extends Immutable {
 
   /** Height of this [[ConvolutionKernel]] instance. */
   val height: Int = matrix.head.length

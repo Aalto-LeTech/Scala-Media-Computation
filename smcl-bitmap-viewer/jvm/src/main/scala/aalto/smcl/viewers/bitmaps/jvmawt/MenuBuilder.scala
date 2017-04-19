@@ -1,4 +1,21 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.viewers.bitmaps.jvmawt
+
 
 import scala.swing.event.Key
 import scala.swing.{Component, Menu, MenuBar, MenuItem, Separator}
@@ -20,6 +37,7 @@ object MenuBuilder {
    *
    *
    * @param actionMap
+   *
    * @return
    */
   def newMenuBarUsing(actionMap: AbstractActionMap): MenuBuilder = {
@@ -31,6 +49,8 @@ object MenuBuilder {
 }
 
 
+
+
 /**
  *
  *
@@ -38,7 +58,7 @@ object MenuBuilder {
  */
 private[jvmawt]
 class MenuBuilder private(
-  private val _actionMap: AbstractActionMap) {
+    private val _actionMap: AbstractActionMap) {
 
   /** */
   private var _parents: List[Component] = new MenuBar() :: Nil
@@ -52,6 +72,7 @@ class MenuBuilder private(
    *
    * @param name
    * @param mnemonicOption
+   *
    * @return
    */
   def menu(name: String, mnemonicOption: Option[Key.Value]): MenuBuilder = {
@@ -87,6 +108,7 @@ class MenuBuilder private(
    *
    *
    * @param actionId
+   *
    * @return
    */
   def item(actionId: Symbol): MenuBuilder = {

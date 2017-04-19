@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps
 
 
@@ -30,94 +46,103 @@ class BitmapValidator private[smcl]() {
    *
    *
    * @param actualWidthInPixels
+   *
    * @return
    */
   @inline
   def minimumWidthIsNotMet(actualWidthInPixels: Int): Boolean =
-    actualWidthInPixels < MinimumBitmapHeightInPixels
+  actualWidthInPixels < MinimumBitmapHeightInPixels
 
   /**
    *
    *
    * @param actualHeightInPixels
+   *
    * @return
    */
   @inline
   def minimumHeightIsNotMet(actualHeightInPixels: Int): Boolean =
-    actualHeightInPixels < MinimumBitmapHeightInPixels
+  actualHeightInPixels < MinimumBitmapHeightInPixels
 
   /**
    *
    *
    * @param actualWidthInPixels
+   *
    * @return
    */
   @inline
   def maximumWidthIsExceeded(actualWidthInPixels: Int): Boolean =
-    actualWidthInPixels > MaximumBitmapHeightInPixels
+  actualWidthInPixels > MaximumBitmapHeightInPixels
 
   /**
    *
    *
    * @param actualHeightInPixels
+   *
    * @return
    */
   @inline
   def maximumHeightIsExceeded(actualHeightInPixels: Int): Boolean =
-    actualHeightInPixels > MaximumBitmapHeightInPixels
+  actualHeightInPixels > MaximumBitmapHeightInPixels
 
   /**
    *
    *
    * @param actualWidthInPixels
+   *
    * @return
    */
   @inline
   def warningWidthLimitIsExceeded(actualWidthInPixels: Int): Boolean =
-    actualWidthInPixels > GS.intFor(BitmapWidthWarningLimitInPixels)
+  actualWidthInPixels > GS.intFor(BitmapWidthWarningLimitInPixels)
 
   /**
    *
    *
    * @param actualHeightInPixels
+   *
    * @return
    */
   @inline
   def warningHeightLimitIsExceeded(actualHeightInPixels: Int): Boolean =
-    actualHeightInPixels > GS.intFor(BitmapHeightWarningLimitInPixels)
+  actualHeightInPixels > GS.intFor(BitmapHeightWarningLimitInPixels)
 
   /**
    *
    *
    * @param actualWidthInPixels
    * @param actualHeightInPixels
+   *
    * @return
    */
   @inline
   def minimumSizeLimitsAreNotMet(actualWidthInPixels: Int, actualHeightInPixels: Int): Boolean =
-    minimumWidthIsNotMet(actualWidthInPixels) || minimumHeightIsNotMet(actualHeightInPixels)
+  minimumWidthIsNotMet(actualWidthInPixels) || minimumHeightIsNotMet(actualHeightInPixels)
 
   /**
    *
    *
    * @param actualWidthInPixels
    * @param actualHeightInPixels
+   *
    * @return
    */
   @inline
   def maximumSizeLimitsAreExceeded(actualWidthInPixels: Int, actualHeightInPixels: Int): Boolean =
-    maximumWidthIsExceeded(actualWidthInPixels) || maximumHeightIsExceeded(actualHeightInPixels)
+  maximumWidthIsExceeded(actualWidthInPixels) || maximumHeightIsExceeded(actualHeightInPixels)
 
   /**
    *
    *
    * @param actualWidthInPixels
    * @param actualHeightInPixels
+   *
    * @return
    */
   @inline
   def warningSizeLimitsAreExceeded(actualWidthInPixels: Int, actualHeightInPixels: Int): Boolean =
-    warningWidthLimitIsExceeded(actualWidthInPixels) && warningHeightLimitIsExceeded(actualHeightInPixels)
+  warningWidthLimitIsExceeded(actualWidthInPixels) && warningHeightLimitIsExceeded(actualHeightInPixels)
 
   /**
    *

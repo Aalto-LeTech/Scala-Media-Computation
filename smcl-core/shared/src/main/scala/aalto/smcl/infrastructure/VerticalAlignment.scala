@@ -1,5 +1,6 @@
 package aalto.smcl.infrastructure
 
+
 /**
  * Vertical alignment positions.
  *

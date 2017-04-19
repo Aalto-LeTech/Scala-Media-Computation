@@ -1,6 +1,20 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.viewers.bitmaps.jvmawt
-
-
 
 
 /**
@@ -18,9 +32,12 @@ class AbstractActionMap {
    *
    *
    * @param actionId
+   *
    * @return
    */
   def get(actionId: Symbol): Option[ViewerAction] = _actions.get(actionId)
+
+
 
 
   /**
@@ -35,9 +52,11 @@ class AbstractActionMap {
      *
      * @param action
      */
-    def ==>(action: ViewerAction): Unit = _actions = _actions + (self -> action)
+    def ==> (action: ViewerAction): Unit = _actions = _actions + (self -> action)
 
   }
+
+
 
 
 }

@@ -1,9 +1,26 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 /**
  * Definitions of application enrencies for Scala Media Computation Library (SMCL).
  */
 
 
 import sbt._
+
 
 
 
@@ -19,7 +36,7 @@ object ApplicationDependencies {
    * @see https://www.scala-js.org/
    * @see http://search.maven.org/#search|ga|1|scalajs-stubs
    */
-  lazy val ScalaJsStubs: ModuleID = "org.scala-js" %% "scalajs-stubs" % "0.6.14" withSources() withJavadoc()
+  lazy val ScalaJsStubs: ModuleID = "org.scala-js" %% "scalajs-stubs" % "0.6.14" withSources () withJavadoc ()
 
 
   /**
@@ -37,7 +54,7 @@ object ApplicationDependencies {
    * @see http://www.scalatest.org
    * @see http://search.maven.org/#search|ga|1|scalatest
    */
-  lazy val ScalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.0.1" withSources() withJavadoc()
+  lazy val ScalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.0.1" withSources () withJavadoc ()
 
 
   /**
@@ -55,7 +72,7 @@ object ApplicationDependencies {
    * @see https://www.scalacheck.org/
    * @see http://search.maven.org/#search|ga|1|scalacheck
    */
-  lazy val ScalaCheck: ModuleID = "org.scalacheck" %% "scalacheck" % "1.13.4" withSources() withJavadoc()
+  lazy val ScalaCheck: ModuleID = "org.scalacheck" %% "scalacheck" % "1.13.4" withSources () withJavadoc ()
 
 
   /**
@@ -64,7 +81,7 @@ object ApplicationDependencies {
    * @see http://www.scala-graph.org/
    * @see http://search.maven.org/#search|ga|1|graph-core
    */
-  lazy val GraphForScalaCore: ModuleID = "org.scala-graph"  %% "graph-core" % "1.11.4" withSources() withJavadoc()
+  lazy val GraphForScalaCore: ModuleID = "org.scala-graph" %% "graph-core" % "1.11.4" withSources () withJavadoc ()
 
 
   /**
@@ -73,7 +90,7 @@ object ApplicationDependencies {
    * @see http://www.scala-graph.org/
    * @see http://search.maven.org/#search|ga|1|graph-dot
    */
-  lazy val GraphForScalaDot: ModuleID = "org.scala-graph" %% "graph-dot" % "1.11.0" withSources() withJavadoc()
+  lazy val GraphForScalaDot: ModuleID = "org.scala-graph" %% "graph-dot" % "1.11.0" withSources () withJavadoc ()
 
 
   /**
@@ -82,7 +99,7 @@ object ApplicationDependencies {
    * @see http://reactivex.io/rxscala/
    * @see http://search.maven.org/#search|ga|1|rxscala
    */
-  lazy val RxScala: ModuleID = "io.reactivex" %% "rxscala" % "0.26.5" withSources() withJavadoc()
+  lazy val RxScala: ModuleID = "io.reactivex" %% "rxscala" % "0.26.5" withSources () withJavadoc ()
 
 
   /**
@@ -91,7 +108,7 @@ object ApplicationDependencies {
    * @see http://www.scala-lang.org/
    * @see http://search.maven.org/#search|ga|1|scala-compiler
    */
-  lazy val ScalaCompiler: ModuleID = "org.scala-lang" % "scala-compiler" % ScalaVersion withSources() withJavadoc()
+  lazy val ScalaCompiler: ModuleID = "org.scala-lang" % "scala-compiler" % ScalaVersion withSources () withJavadoc ()
 
 
   /**
@@ -100,7 +117,7 @@ object ApplicationDependencies {
    * @see http://www.scala-lang.org/
    * @see http://search.maven.org/#search|ga|1|scala-reflect
    */
-  lazy val ScalaReflection: ModuleID = "org.scala-lang" % "scala-reflect" % ScalaVersion withSources() withJavadoc()
+  lazy val ScalaReflection: ModuleID = "org.scala-lang" % "scala-reflect" % ScalaVersion withSources () withJavadoc ()
 
 
   /**
@@ -109,7 +126,7 @@ object ApplicationDependencies {
    * @see http://www.scala-lang.org/
    * @see http://search.maven.org/#search|ga|1|scala-swing
    */
-  lazy val ScalaSwing: ModuleID = "org.scala-lang.modules" %% "scala-swing" % "2.0.0" withSources() withJavadoc()
+  lazy val ScalaSwing: ModuleID = "org.scala-lang.modules" %% "scala-swing" % "2.0.0" withSources () withJavadoc ()
 
 
   /**
@@ -118,6 +135,6 @@ object ApplicationDependencies {
    * @see http://www.scala-lang.org/
    * @see http://search.maven.org/#search|ga|1|scala-xml
    */
-  lazy val ScalaXml: ModuleID = "org.scala-lang.modules" %% "scala-xml" % "1.0.4" withSources() withJavadoc()
+  lazy val ScalaXml: ModuleID = "org.scala-lang.modules" %% "scala-xml" % "1.0.4" withSources () withJavadoc ()
 
 }

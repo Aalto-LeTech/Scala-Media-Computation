@@ -1,4 +1,21 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.interfaces
+
 
 import scala.collection.mutable
 
@@ -13,15 +30,17 @@ import scala.collection.mutable
 class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
 
   /** */
-  private[this] val _registry =
+  private[this]
+  val _registry =
     new mutable.HashMap[Class[_], mutable.Set[MetadataInterfaceSourceProvider]]
-      with mutable.MultiMap[Class[_], MetadataInterfaceSourceProvider]
+        with mutable.MultiMap[Class[_], MetadataInterfaceSourceProvider]
 
 
   /**
    *
    *
    * @param interestingObject
+   *
    * @return
    */
   def queryProvidersFor(interestingObject: Any): Set[MetadataInterfaceSourceProvider] = {
@@ -52,9 +71,10 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
    *
    * @param provider
    */
-  private[smcl] def registerProvider(
-    clazz: Class[_],
-    provider: MetadataInterfaceSourceProvider): Unit = {
+  private[smcl]
+  def registerProvider(
+      clazz: Class[_],
+      provider: MetadataInterfaceSourceProvider): Unit = {
     require(provider != null, "The provider argument cannot be null.")
 
     _registry.addBinding(clazz, provider)
@@ -65,10 +85,11 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
    *
    * @param provider
    */
-  private[smcl] def unregisterProvider(provider: MetadataInterfaceSourceProvider): Unit = {
+  private[smcl]
+  def unregisterProvider(provider: MetadataInterfaceSourceProvider): Unit = {
     require(provider != null, "The source argument cannot be null.")
 
-    _registry.keys.foreach {classId =>
+    _registry.keys.foreach{classId =>
       if (_registry.entryExists(classId, _ == provider))
         _registry.removeBinding(classId, provider)
     }
