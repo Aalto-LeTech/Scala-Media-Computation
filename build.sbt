@@ -82,14 +82,40 @@ def integrationTestFilterForJS(name: String): Boolean =
   (name endsWith "ItgTestsForJS") || (name endsWith "ItgTestsuiteForJS")
 
 
+lazy val GUITest = config("gui") extend Test describedAs "For running GUI-based tests"
+
+def guiTestFilterForJVM(name: String): Boolean =
+  (name endsWith "GUITests") || (name endsWith "GUITestsForJVM") ||
+      (name endsWith "GUITestsuite") || (name endsWith "GUITestsuiteForJVM")
+
+def guiTestFilterForJS(name: String): Boolean =
+  (name endsWith "GUITestsForJS") || (name endsWith "GUITestsuiteForJS")
+
+
+lazy val LearningTest = config("learning") extend Test describedAs "For running learning tests"
+
+def learningTestFilterForJVM(name: String): Boolean =
+  (name endsWith "LearningTests") || (name endsWith "LearningTestsForJVM") ||
+      (name endsWith "LearningTestsuite") || (name endsWith "LearningTestsuiteForJVM")
+
+def learningTestFilterForJS(name: String): Boolean =
+  (name endsWith "LearningTestsForJS") || (name endsWith "LearningTestsuiteForJS")
+
+
 def unitTestFilterForJVM(name: String): Boolean =
   ((name endsWith "Tests") || (name endsWith "TestsForJVM") ||
       (name endsWith "Testsuite") || (name endsWith "TestsuiteForJVM")) &&
-      !(integrationTestFilterForJVM(name) || smokeTestFilterForJVM(name))
+      !(integrationTestFilterForJVM(name) ||
+          smokeTestFilterForJVM(name) ||
+          guiTestFilterForJVM(name) ||
+          learningTestFilterForJVM(name))
 
 def unitTestFilterForJS(name: String): Boolean =
   ((name endsWith "TestsForJS") || (name endsWith "TestsuiteForJS")) &&
-      !(integrationTestFilterForJS(name) || smokeTestFilterForJS(name))
+      !(integrationTestFilterForJS(name) ||
+          smokeTestFilterForJS(name) ||
+          guiTestFilterForJS(name) ||
+          learningTestFilterForJS(name))
 
 
 def isSnapshotVersion(version: String): Boolean = version endsWith "-SNAPSHOT"
@@ -123,8 +149,8 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   libraryDependencies ++= Seq(
-    "org.scalatest" %%% "scalatest" % "3.0.1" % "test,integration,smoke" withSources() withJavadoc(),
-    "org.scalacheck" %%% "scalacheck" % "1.13.4" % "test,integration,smoke" withSources() withJavadoc()
+    "org.scalatest" %%% "scalatest" % "3.0.1" % "test,integration,gui,smoke,learning" withSources() withJavadoc(),
+    "org.scalacheck" %%% "scalacheck" % "1.13.4" % "test,integration,gui,smoke,learning" withSources() withJavadoc()
   ),
 
   initialCommands in console :=
@@ -150,7 +176,9 @@ lazy val smclGeneralJsSettings = Seq(
 
   testOptions in Test := Seq(Tests.Filter(unitTestFilterForJS)),
   testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilterForJS)),
-  testOptions in SmokeTest := Seq(Tests.Filter(smokeTestFilterForJS))
+  testOptions in GUITest := Seq(Tests.Filter(guiTestFilterForJS)),
+  testOptions in SmokeTest := Seq(Tests.Filter(smokeTestFilterForJS)),
+  testOptions in LearningTest := Seq(Tests.Filter(learningTestFilterForJS))
   // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
 )
 
@@ -161,7 +189,9 @@ lazy val smclGeneralJvmSettings = Seq(
 
   testOptions in Test := Seq(Tests.Filter(unitTestFilterForJVM)),
   testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilterForJVM)),
-  testOptions in SmokeTest := Seq(Tests.Filter(smokeTestFilterForJVM))
+  testOptions in GUITest := Seq(Tests.Filter(guiTestFilterForJVM)),
+  testOptions in SmokeTest := Seq(Tests.Filter(smokeTestFilterForJVM)),
+  testOptions in LearningTest := Seq(Tests.Filter(learningTestFilterForJVM))
   // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
 )
 
@@ -176,7 +206,7 @@ lazy val smclGeneralJvmSettings = Seq(
 
 lazy val smclBitmapViewer =
   CrossProject(prjSmclBitmapViewerJvmId, prjSmclBitmapViewerJsId, file(prjSmclBitmapViewerId), CrossType.Full)
-  .configs(ItgTest, SmokeTest)
+  .configs(ItgTest, GUITest, SmokeTest, LearningTest)
   .settings(
     name := prjSmclBitmapViewerId,
     version := prjSmclBitmapViewerVersion,
@@ -185,7 +215,9 @@ lazy val smclBitmapViewer =
     smclGeneralSettings,
     scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerName),
     inConfig(ItgTest)(Defaults.testTasks),
-    inConfig(SmokeTest)(Defaults.testTasks)
+    inConfig(GUITest)(Defaults.testTasks),
+    inConfig(SmokeTest)(Defaults.testTasks),
+    inConfig(LearningTest)(Defaults.testTasks)
   )
   .jvmSettings(
     smclGeneralJvmSettings,
@@ -199,7 +231,9 @@ lazy val smclBitmapViewer =
     smclGeneralJsSettings,
     onLoadMessage := prjSmclBitmapViewerName + " JS Project Loaded",
     inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-    inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+    inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
+    inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
+    inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
   )
   .dependsOn(smclCore)
 
@@ -217,7 +251,7 @@ lazy val smclBitmapViewerJS = smclBitmapViewer.js
 
 lazy val smclCore =
   CrossProject(prjSmclCoreJvmId, prjSmclCoreJsId, file(prjSmclCoreId), CrossType.Full)
-  .configs(ItgTest, SmokeTest)
+  .configs(ItgTest, GUITest, SmokeTest, LearningTest)
   .settings(
     name := prjSmclCoreId,
     version := prjSmclCoreVersion,
@@ -226,7 +260,9 @@ lazy val smclCore =
     smclGeneralSettings,
     scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreName),
     inConfig(ItgTest)(Defaults.testTasks),
-    inConfig(SmokeTest)(Defaults.testTasks)
+    inConfig(GUITest)(Defaults.testTasks),
+    inConfig(SmokeTest)(Defaults.testTasks),
+    inConfig(LearningTest)(Defaults.testTasks)
   )
   .jvmSettings(
     smclGeneralJvmSettings,
@@ -236,7 +272,9 @@ lazy val smclCore =
     smclGeneralJsSettings,
     onLoadMessage := prjSmclCoreName + " JS Project Loaded",
     inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-    inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+    inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
+    inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
+    inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
   )
 
 lazy val smclCoreJVM = smclCore.jvm
@@ -252,7 +290,7 @@ lazy val smclCoreJS = smclCore.js
 //-------------------------------------------------------------------------------------------------
 
 lazy val smcl = project.in(file("."))
-  .configs(ItgTest, SmokeTest)
+  .configs(ItgTest, GUITest, SmokeTest, LearningTest)
   .settings(
     smclGeneralSettings,
     onLoadMessage := smclName + " Root Project Loaded"
