@@ -73,6 +73,7 @@
 **/.git/*
 **/.history/*
 **/__pycache__/*
+**/*___jb_tmp___
 **/.cache-main
 **/.DS_Store
 **/*.bak
