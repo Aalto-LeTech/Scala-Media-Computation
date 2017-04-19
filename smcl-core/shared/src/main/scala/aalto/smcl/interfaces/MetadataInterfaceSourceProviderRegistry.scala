@@ -1,6 +1,5 @@
 package aalto.smcl.interfaces
 
-
 import scala.collection.mutable
 
 

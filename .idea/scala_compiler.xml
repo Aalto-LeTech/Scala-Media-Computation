@@ -13,7 +13,7 @@
         <plugin path="$USER_HOME$/.ivy2/cache/org.scala-js/scalajs-compiler_2.12.1/jars/scalajs-compiler_2.12.1-0.6.14.jar" />
       </plugins>
     </profile>
-    <profile name="SBT 2" modules="scala-media-computation,root,smclBitmapViewerTestsJVM,smclCoreTestsJVM,smclPublicInterfacesTestsJVM,smclBitmapViewerJVM,smclCoreJVM,smclPublicInterfacesJVM,smcl-bitmap-viewer-smcl-bitmap-viewer-jvm,smcl-public-interfaces-smcl-public-interfaces-jvm,smcl-core-smcl-core-jvm,smcl-bitmap-viewer-jvm,smcl-core-jvm,smcl-public-interfaces-jvm">
+    <profile name="SBT 2" modules="scala-media-computation,root,smclBitmapViewerTestsJVM,smclCoreTestsJVM,smclPublicInterfacesTestsJVM,smclBitmapViewerJVM,smclCoreJVM,smclPublicInterfacesJVM,smcl-bitmap-viewer-smcl-bitmap-viewer-jvm,smcl-public-interfaces-smcl-public-interfaces-jvm,smcl-core-smcl-core-jvm,smcl-public-interfaces-jvm,smcl-bitmap-viewer-jvm,smcl-core-jvm">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <option name="featureWarnings" value="true" />
@@ -26,7 +26,7 @@
         <plugin path="$IVY_REPOSITORY$/org.scala-js/scalajs-compiler_2.12.1/jars/scalajs-compiler_2.12.1-0.6.14.jar" />
       </plugins>
     </profile>
-    <profile name="SBT 4" modules="smcl,smcl-bitmap-viewer-js,smcl-core-js,smcl-public-interfaces-js">
+    <profile name="SBT 4" modules="smcl-public-interfaces-js,smcl,smcl-bitmap-viewer-js,smcl-core-js">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <option name="featureWarnings" value="true" />

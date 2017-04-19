@@ -6,7 +6,7 @@
 
 import org.scalajs.sbtplugin.ScalaJSPluginInternal
 import org.scalajs.sbtplugin.cross.CrossProject
-import sbt.Keys.{testOptions, _}
+import sbt.Keys.{scalacOptions, testOptions, _}
 import sbt.inConfig
 
 
@@ -53,13 +53,6 @@ lazy val prjSmclCoreName = smclName + " Core Library"
 lazy val prjSmclCoreVersion = "1.0.0-SNAPSHOT"
 lazy val prjSmclCoreDescription = "A class library for bitmap processing using Scala."
 
-lazy val prjSmclPiId = "smcl-public-interfaces"
-lazy val prjSmclPiJvmId = prjSmclPiId + projectIdJvmPostfix
-lazy val prjSmclPiJsId = prjSmclPiId + projectIdJsPostfix
-lazy val prjSmclPiName = smclName + " Public Interfaces"
-lazy val prjSmclPiVersion = "1.0.0-SNAPSHOT"
-lazy val prjSmclPiDescription = "Public interfaces for communicating with " + smclName + "."
-
 
 
 
@@ -69,33 +62,38 @@ lazy val prjSmclPiDescription = "Public interfaces for communicating with " + sm
 //
 //-------------------------------------------------------------------------------------------------
 
-lazy val ItgTest = config("integration") extend Test describedAs "For running integration tests"
 lazy val SmokeTest = config("smoke") extend Test describedAs "For running smoke tests"
 
 def smokeTestFilterForJVM(name: String): Boolean =
   (name endsWith "SmokeTests") || (name endsWith "SmokeTestsForJVM") ||
       (name endsWith "SmokeTestsuite") || (name endsWith "SmokeTestsuiteForJVM")
 
+def smokeTestFilterForJS(name: String): Boolean =
+  (name endsWith "SmokeTestsForJS") || (name endsWith "SmokeTestsuiteForJS")
+
+
+lazy val ItgTest = config("integration") extend Test describedAs "For running integration tests"
+
 def integrationTestFilterForJVM(name: String): Boolean =
   (name endsWith "ItgTests") || (name endsWith "ItgTestsForJVM") ||
       (name endsWith "ItgTestsuite") || (name endsWith "ItgTestsuiteForJVM")
+
+def integrationTestFilterForJS(name: String): Boolean =
+  (name endsWith "ItgTestsForJS") || (name endsWith "ItgTestsuiteForJS")
+
 
 def unitTestFilterForJVM(name: String): Boolean =
   ((name endsWith "Tests") || (name endsWith "TestsForJVM") ||
       (name endsWith "Testsuite") || (name endsWith "TestsuiteForJVM")) &&
       !(integrationTestFilterForJVM(name) || smokeTestFilterForJVM(name))
 
-def smokeTestFilterForJS(name: String): Boolean =
-  (name endsWith "SmokeTestsForJS") || (name endsWith "SmokeTestsuiteForJS")
-
-def integrationTestFilterForJS(name: String): Boolean =
-  (name endsWith "ItgTestsForJS") || (name endsWith "ItgTestsuiteForJS")
-
 def unitTestFilterForJS(name: String): Boolean =
   ((name endsWith "TestsForJS") || (name endsWith "TestsuiteForJS")) &&
       !(integrationTestFilterForJS(name) || smokeTestFilterForJS(name))
 
+
 def isSnapshotVersion(version: String): Boolean = version endsWith "-SNAPSHOT"
+
 
 lazy val smclGeneralSettings = Seq(
   organization := projectOrganizationId,
@@ -121,8 +119,7 @@ lazy val smclGeneralSettings = Seq(
 
   scalacOptions in (Compile, doc) := Seq(
     "-implicits",
-    "-doc-root-content", baseDirectory.value + "/root-doc.txt",
-    "-doc-title", prjSmclPiName
+    "-doc-root-content", baseDirectory.value + "/root-doc.txt"
   ),
 
   libraryDependencies ++= Seq(
@@ -186,6 +183,7 @@ lazy val smclBitmapViewer =
     isSnapshot := isSnapshotVersion(prjSmclBitmapViewerVersion),
     description := prjSmclBitmapViewerDescription,
     smclGeneralSettings,
+    scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerName),
     inConfig(ItgTest)(Defaults.testTasks),
     inConfig(SmokeTest)(Defaults.testTasks)
   )
@@ -203,7 +201,7 @@ lazy val smclBitmapViewer =
     inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
     inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings)
   )
-  .dependsOn(smclCore, smclPublicInterfaces)
+  .dependsOn(smclCore)
 
 lazy val smclBitmapViewerJVM = smclBitmapViewer.jvm
 lazy val smclBitmapViewerJS = smclBitmapViewer.js
@@ -226,6 +224,7 @@ lazy val smclCore =
     isSnapshot := isSnapshotVersion(prjSmclCoreVersion),
     description := prjSmclCoreDescription,
     smclGeneralSettings,
+    scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreName),
     inConfig(ItgTest)(Defaults.testTasks),
     inConfig(SmokeTest)(Defaults.testTasks)
   )
@@ -239,45 +238,9 @@ lazy val smclCore =
     inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
     inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings)
   )
-  .dependsOn(smclPublicInterfaces)
 
 lazy val smclCoreJVM = smclCore.jvm
 lazy val smclCoreJS = smclCore.js
-
-
-
-
-//-------------------------------------------------------------------------------------------------
-//
-// PROJECT: SMCL PUBLIC INTERFACES
-//
-//-------------------------------------------------------------------------------------------------
-
-lazy val smclPublicInterfaces =
-  CrossProject(prjSmclPiJvmId, prjSmclPiJsId, file(prjSmclPiId), CrossType.Full)
-  .configs(ItgTest, SmokeTest)
-  .settings(
-    name := prjSmclPiId,
-    version := prjSmclPiVersion,
-    isSnapshot := isSnapshotVersion(prjSmclPiVersion),
-    description := prjSmclPiDescription,
-    smclGeneralSettings,
-    inConfig(ItgTest)(Defaults.testTasks),
-    inConfig(SmokeTest)(Defaults.testTasks)
-  )
-  .jvmSettings(
-    smclGeneralJvmSettings,
-    onLoadMessage := prjSmclPiName + " JVM Project Loaded"
-  )
-  .jsSettings(
-    smclGeneralJsSettings,
-    onLoadMessage := prjSmclPiName + " JS Project Loaded",
-    inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-    inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings)
-  )
-
-lazy val smclPublicInterfacesJVM = smclPublicInterfaces.jvm
-lazy val smclPublicInterfacesJS = smclPublicInterfaces.js
 
 
 
@@ -289,19 +252,17 @@ lazy val smclPublicInterfacesJS = smclPublicInterfaces.js
 //-------------------------------------------------------------------------------------------------
 
 lazy val smcl = project.in(file("."))
-  .configs(ItgTest)
+  .configs(ItgTest, SmokeTest)
   .settings(
     smclGeneralSettings,
     onLoadMessage := smclName + " Root Project Loaded"
   )
   .aggregate(
     smclBitmapViewerJVM, smclBitmapViewerJS,
-    smclCoreJVM, smclCoreJS,
-    smclPublicInterfacesJVM, smclPublicInterfacesJS)
+    smclCoreJVM, smclCoreJS)
   .dependsOn(
     smclBitmapViewerJVM, smclBitmapViewerJS,
-    smclCoreJS, smclCoreJVM,
-    smclPublicInterfacesJS, smclPublicInterfacesJVM)
+    smclCoreJS, smclCoreJVM)
 
 
 

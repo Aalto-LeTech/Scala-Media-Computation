@@ -1,8 +1,5 @@
 package aalto.smcl.interfaces
 
-
-
-
 /**
  *
  */
