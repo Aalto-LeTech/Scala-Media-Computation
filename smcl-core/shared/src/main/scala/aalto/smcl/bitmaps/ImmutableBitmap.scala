@@ -62,7 +62,7 @@ object ImmutableBitmap {
       Clear(initialBackgroundColor) +:
           BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
 
-    val newBitmap = new ImmutableBitmap(operationList, _bitmapValidator, SMCLElementIdentity())
+    val newBitmap = new ImmutableBitmap(operationList, _bitmapValidator, Identity())
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
@@ -96,7 +96,7 @@ object ImmutableBitmap {
 
         case (Right(buffer), index) =>
           val operationList = BitmapOperationList(LoadedBitmap(buffer, Option(sourceResourcePath), Option(index)))
-          val newBitmap = new ImmutableBitmap(operationList, _bitmapValidator, SMCLElementIdentity())
+          val newBitmap = new ImmutableBitmap(operationList, _bitmapValidator, Identity())
 
           if (viewerHandling == UpdateViewerPerDefaults) {
             if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
@@ -136,7 +136,7 @@ object ImmutableBitmap {
 case class ImmutableBitmap private(
     private[bitmaps] val operations: BitmapOperationList,
     private val bitmapValidator: BitmapValidator,
-    uniqueIdentifier: SMCLElementIdentity) extends {
+    uniqueIdentifier: Identity) extends {
 
   /** Width of this [[ImmutableBitmap]]. */
   val widthInPixels: Int = operations.widthInPixels

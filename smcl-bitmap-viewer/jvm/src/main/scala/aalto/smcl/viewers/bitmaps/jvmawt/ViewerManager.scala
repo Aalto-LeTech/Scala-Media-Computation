@@ -25,7 +25,7 @@ import rx.lang.scala.{Observable, Observer}
 
 import aalto.smcl.SMCLLibrary
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.infrastructure.SMCLElementIdentity
+import aalto.smcl.infrastructure.Identity
 import aalto.smcl.viewers.bitmaps.DisplayBitmapEvent
 import aalto.smcl.viewers.{ExternalViewerEvent, ForceAllViewersToCloseEvent}
 
@@ -68,7 +68,7 @@ private[jvmawt]
 class ViewerManager(val incomingEventStream: Observable[ExternalViewerEvent])
     extends Observer[ExternalViewerEvent] {
 
-  private[this] var _viewers = Map[SMCLElementIdentity, ViewerMainFrame]()
+  private[this] var _viewers = Map[Identity, ViewerMainFrame]()
 
   /**
    *

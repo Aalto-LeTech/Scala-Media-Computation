@@ -23,16 +23,14 @@ package aalto.smcl.infrastructure
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object SMCLElementIdentity {
+object Identity {
 
   /**
    *
    *
    * @return
    */
-  def apply(): SMCLElementIdentity = {
-    new SMCLElementIdentity(PRF.createUniqueIdString)
-  }
+  def apply(): Identity = new Identity(PRF.createUniqueIdString)
 
 }
 
@@ -44,7 +42,7 @@ object SMCLElementIdentity {
  *
  * @author Aleksi Lukkarinen
  */
-case class SMCLElementIdentity private(identity: String) {
+case class Identity private(identity: String) {
 
   /**
    *
