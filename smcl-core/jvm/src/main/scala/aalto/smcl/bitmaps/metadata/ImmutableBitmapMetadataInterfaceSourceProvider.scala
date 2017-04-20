@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.metadata
 
 
-import aalto.smcl.bitmaps.{Bitmap, ImmutableBitmap}
+import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
 
 
@@ -33,10 +33,10 @@ class ImmutableBitmapMetadataInterfaceSourceProvider()
     extends MetadataInterfaceSourceProvider {
 
   /** */
-  private[this] lazy val _bitmapClass = Bitmap().getClass
+  private[this] lazy val _bitmapClass = Bitmap().getClass           // TODO: Get class objects some other way (classOf[] ?)
 
   /** */
-  private[this] lazy val _immutableBitmapClass = ImmutableBitmap().getClass
+  private[this] lazy val _immutableBitmapClass = Bitmap().getClass  // TODO: Get class objects some other way (classOf[] ?)
 
 
   /**
@@ -50,7 +50,7 @@ class ImmutableBitmapMetadataInterfaceSourceProvider()
     val c = interestingObject.getClass
 
     if (_immutableBitmapClass.isAssignableFrom(c)) {
-      return Some(ImmutableBitmapMetadataSource(interestingObject.asInstanceOf[ImmutableBitmap]))
+      return Some(ImmutableBitmapMetadataSource(interestingObject.asInstanceOf[Bitmap]))
     }
 
     None

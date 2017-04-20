@@ -29,13 +29,6 @@ package object bitmaps
     extends BitmapOperationAPI
             with ShapeCreationAPI {
 
-  /** */
-  type Bitmap = ImmutableBitmap
-
-  /** */
-  val Bitmap = ImmutableBitmap
-
-
   /**
    *
    *

@@ -33,9 +33,11 @@ class RGBAColorMetadataInterfaceSourceProvider()
     extends MetadataInterfaceSourceProvider {
 
   /** */
+  // TODO: Get class objects some other way (classOf[] ?)
   private[this] val _rgbaColorClass = RGBAColor(0).getClass
 
   /** */
+  // TODO: Get class objects some other way (classOf[] ?)
   private[this] val _presetRGBAColorClass = PresetRGBAColor(0, Option("<dummy>")).getClass
 
 

@@ -34,6 +34,7 @@ class BitmapLoadingResultMetadataInterfaceSourceProvider()
 
 
   /** */
+  // TODO: Get class objects some other way (classOf[] ?)
   private[this] val _bitmapLoadingResultClass = new BitmapLoadingResult(Seq(Right((0, null)))).getClass
 
 

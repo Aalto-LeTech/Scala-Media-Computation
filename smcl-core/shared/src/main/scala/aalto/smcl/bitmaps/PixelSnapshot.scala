@@ -163,7 +163,7 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
   /**
    *
    */
-  def toBitmap: ImmutableBitmap = {
+  def toBitmap: Bitmap = {
     buffer.setColorComponentArrays(_reds, _greens, _blues, _opacities)
 
     relatedBitmap.applyPixelSnapshot(buffer)

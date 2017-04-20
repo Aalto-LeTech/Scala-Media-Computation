@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage
 import scala.collection.GenTraversableLike
 import scala.collection.mutable.ArrayBuffer
 
-import aalto.smcl.bitmaps.{Bitmap, ImmutableBitmap}
+import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
@@ -50,7 +50,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
     var numberOfBitmaps = 0
 
     collection.toStream.takeWhile(_ => index < 100 && numberOfBitmaps <= 20).foreach{item =>
-      if (item.isInstanceOf[ImmutableBitmap] || item.isInstanceOf[Bitmap]) {
+      if (item.isInstanceOf[Bitmap] || item.isInstanceOf[Bitmap]) {
         _bitmaps += item.asInstanceOf[Bitmap]
         numberOfBitmaps += 1
       }
