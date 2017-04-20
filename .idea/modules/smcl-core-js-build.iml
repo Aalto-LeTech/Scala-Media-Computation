@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="smcl-bitmap-viewer-js-build" external.linked.project.path="$MODULE_DIR$/../../smcl-bitmap-viewer/js/project" external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" sbt.imports="$42963352f69f5252d444.smcl, $42963352f69f5252d444.smclBitmapViewerJS, $42963352f69f5252d444.smclBitmapViewerJVM, $42963352f69f5252d444.smclCoreJS, $42963352f69f5252d444.smclCoreJVM, _root_.org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._, _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.org.scalajs.sbtplugin.ScalaJSJUnitPlugin, _root_.org.scalajs.sbtplugin.ScalaJSPlugin, sbt._, Keys._, dsl._" sbt.resolvers="https://repo1.maven.org/maven2/|maven|public, /u/90/lukkark1/unix/.ivy2/cache|ivy|Local cache" type="SBT_MODULE" version="4">
+<module external.linked.project.id="smcl-core-js-build" external.linked.project.path="$MODULE_DIR$/../../smcl-core/js/project" external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" sbt.imports="$b125885c480c4c36f129.smcl, $b125885c480c4c36f129.smclBitmapViewerJS, $b125885c480c4c36f129.smclBitmapViewerJVM, $b125885c480c4c36f129.smclCoreJS, $b125885c480c4c36f129.smclCoreJVM, _root_.org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._, _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.org.scalajs.sbtplugin.ScalaJSJUnitPlugin, _root_.org.scalajs.sbtplugin.ScalaJSPlugin, sbt._, Keys._, dsl._" sbt.resolvers="https://repo1.maven.org/maven2/|maven|public, /u/90/lukkark1/unix/.ivy2/cache|ivy|Local cache" type="SBT_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <output url="file://$MODULE_DIR$/../../smcl-bitmap-viewer/js/project/target/idea-classes" />
-    <output-test url="file://$MODULE_DIR$/../../smcl-bitmap-viewer/js/project/target/idea-test-classes" />
+    <output url="file://$MODULE_DIR$/../../smcl-core/js/project/target/idea-classes" />
+    <output-test url="file://$MODULE_DIR$/../../smcl-core/js/project/target/idea-test-classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../smcl-bitmap-viewer/js/project">
-      <sourceFolder url="file://$MODULE_DIR$/../../smcl-bitmap-viewer/js/project" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/../../smcl-bitmap-viewer/js/project/project/target" />
-      <excludeFolder url="file://$MODULE_DIR$/../../smcl-bitmap-viewer/js/project/target" />
+    <content url="file://$MODULE_DIR$/../../smcl-core/js/project">
+      <sourceFolder url="file://$MODULE_DIR$/../../smcl-core/js/project" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../smcl-core/js/project/project/target" />
+      <excludeFolder url="file://$MODULE_DIR$/../../smcl-core/js/project/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

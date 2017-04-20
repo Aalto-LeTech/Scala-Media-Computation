@@ -17,6 +17,7 @@
       <module name="smcl-public-interfaces-jvm" target="1.8" />
       <module name="smcl-public-interfaces-smcl-public-interfaces-js" target="1.8" />
       <module name="smcl-public-interfaces-smcl-public-interfaces-jvm" target="1.8" />
+      <module name="work-repos-smcl" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
