@@ -1,6 +1,20 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.colors
-
-
 
 
 /**
@@ -17,7 +31,7 @@ object PresetRGBAColor {
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, opacity: Int,
-    nameOption: Option[String] = None): RGBAColor = {
+      nameOption: Option[String] = None): RGBAColor = {
 
     ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
@@ -35,6 +49,7 @@ object PresetRGBAColor {
    *
    * @param argbInt
    * @param nameOption
+   *
    * @return
    */
   def apply(argbInt: Int, nameOption: Option[String]): RGBAColor =
@@ -47,17 +62,19 @@ object PresetRGBAColor {
 }
 
 
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 class PresetRGBAColor private[colors](
-  override val red: Int,
-  override val green: Int,
-  override val blue: Int,
-  override val opacity: Int,
-  override val nameOption: Option[String] = None) extends {
+    override val red: Int,
+    override val green: Int,
+    override val blue: Int,
+    override val opacity: Int,
+    override val nameOption: Option[String] = None) extends {
 
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   override val isPreset: Boolean = true

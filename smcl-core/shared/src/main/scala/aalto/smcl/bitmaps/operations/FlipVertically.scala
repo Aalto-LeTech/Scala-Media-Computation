@@ -1,7 +1,22 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.fonts._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
 
@@ -15,9 +30,9 @@ import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
  */
 private[bitmaps]
 case class FlipVertically()
-  extends AbstractOperation
-  with OneSourceFilter
-  with Immutable {
+    extends AbstractOperation
+            with OneSourceFilter
+            with Immutable {
 
   /** Information about this [[Renderable]] instance */
   lazy val metaInformation = MetaInformationMap("FlipVertically", Map())
@@ -28,6 +43,7 @@ case class FlipVertically()
    * [[Buffered]].
    *
    * @param sources possible [[BitmapBufferAdapter]] instances used as sources
+   *
    * @return
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {

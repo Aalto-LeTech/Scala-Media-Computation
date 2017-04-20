@@ -1,4 +1,21 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.metadata
+
 
 import aalto.smcl.bitmaps.{Bitmap, ImmutableBitmap}
 import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
@@ -13,7 +30,7 @@ import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
  */
 private[metadata]
 class ImmutableBitmapMetadataInterfaceSourceProvider()
-  extends MetadataInterfaceSourceProvider {
+    extends MetadataInterfaceSourceProvider {
 
   /** */
   private[this] lazy val _bitmapClass = Bitmap().getClass
@@ -26,6 +43,7 @@ class ImmutableBitmapMetadataInterfaceSourceProvider()
    *
    *
    * @param interestingObject
+   *
    * @return
    */
   override def querySourceFor(interestingObject: Any): Option[Any] = {

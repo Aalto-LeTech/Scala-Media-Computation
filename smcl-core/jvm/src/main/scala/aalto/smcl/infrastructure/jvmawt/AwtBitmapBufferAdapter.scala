@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure.jvmawt
 
 
@@ -11,7 +27,6 @@ import scala.util.{Failure, Try}
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
-import aalto.smcl.fonts._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.exceptions.{SMCLFunctionExecutionError, SMCLInvalidColorComponentArrayLengthError}
@@ -39,6 +54,7 @@ object AwtBitmapBufferAdapter {
    *
    * @param widthInPixels
    * @param heightInPixels
+   *
    * @return
    */
   def apply(widthInPixels: Int, heightInPixels: Int): AwtBitmapBufferAdapter = {
@@ -53,6 +69,7 @@ object AwtBitmapBufferAdapter {
    *
    *
    * @param awtBufferedImage
+   *
    * @return
    */
   def apply(awtBufferedImage: BufferedImage): AwtBitmapBufferAdapter = {
@@ -70,6 +87,7 @@ object AwtBitmapBufferAdapter {
    *
    * @param widthInPixels
    * @param heightInPixels
+   *
    * @return
    */
   private[infrastructure] def createNormalizedLowLevelBitmapBufferOf(
@@ -97,6 +115,7 @@ object AwtBitmapBufferAdapter {
    *
    *
    * @param buffer
+   *
    * @return
    */
   private[infrastructure] def convertToNormalizedLowLevelBitmapBufferIfNecessary(
@@ -124,6 +143,8 @@ object AwtBitmapBufferAdapter {
   }
 
 }
+
+
 
 
 /**
@@ -167,6 +188,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    *
    *
    * @param colorToTrim
+   *
    * @return
    */
   override def trim(colorToTrim: RGBAColor = GS.colorFor(DefaultBackground)): AwtBitmapBufferAdapter = {
@@ -295,6 +317,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    *
    *
    * @param function
+   *
    * @return
    */
   override def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): AwtBitmapBufferAdapter = {
@@ -400,6 +423,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    * @param transformation
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
+   *
    * @return
    */
   override def createTransformedVersionWith(
@@ -452,6 +476,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    * @param minY
    * @param maxX
    * @param maxY
+   *
    * @return
    */
   override def boundaryOverflowsForLTRB(
@@ -472,6 +497,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    *
    *
    * @param kernel
+   *
    * @return
    */
   override def createFilteredVersionWith(kernel: ConvolutionKernel): AwtBitmapBufferAdapter = {
@@ -489,6 +515,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    *
    *
    * @param translator
+   *
    * @return
    */
   override def createFilteredVersionWith(translator: RGBAComponentTranslationTable): AwtBitmapBufferAdapter = {
@@ -517,6 +544,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    * @param topLeftY
    * @param bottomRightX
    * @param bottomRightY
+   *
    * @return
    */
   override def copyPortionXYXY(
@@ -550,6 +578,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    * @param topLeftY
    * @param width
    * @param height
+   *
    * @return
    */
   override def copyPortionXYWH(
@@ -587,6 +616,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    *
    *
    * @param filename
+   *
    * @return
    */
   override def saveAsPngTo(filename: String): String = {
@@ -599,7 +629,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
 
     savingResult match {
       case Failure(t: Throwable) => s"Error: ${t.getMessage}"
-      case _ => "Save successful."
+      case _                     => "Save successful."
     }
   }
 

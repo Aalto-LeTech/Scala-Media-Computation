@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
@@ -20,14 +36,14 @@ import aalto.smcl.infrastructure._
  */
 private[bitmaps]
 case class ReplicateVertically(
-  bitmapToReplicate: Bitmap,
-  numberOfReplicas: Int,
-  paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-  private val bitmapValidator: BitmapValidator)
-  extends AbstractOperation
-  with BufferProvider
-  with Immutable {
+    bitmapToReplicate: Bitmap,
+    numberOfReplicas: Int,
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    private val bitmapValidator: BitmapValidator)
+    extends AbstractOperation
+            with BufferProvider
+            with Immutable {
 
   require(bitmapToReplicate != null,
     "Replicate operation must be given a non-empty Bitmap instance to replicate.")
@@ -49,7 +65,7 @@ case class ReplicateVertically(
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int =
     (numberOfReplicas + 1) * bitmapToReplicate.heightInPixels +
-      numberOfReplicas * paddingInPixels
+        numberOfReplicas * paddingInPixels
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int = bitmapToReplicate.widthInPixels
@@ -87,7 +103,7 @@ case class ReplicateVertically(
    * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
-   * @return    bitmap buffer to be made copies of for providees
+   * @return bitmap buffer to be made copies of for providees
    */
   override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer()

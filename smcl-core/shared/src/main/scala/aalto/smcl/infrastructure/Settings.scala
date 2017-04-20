@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure
 
 
@@ -39,14 +55,16 @@ class Settings extends Tokenizable {
    *
    *
    * @param value
+   *
    * @return
    */
-  def +=(value: Setting[_]): Unit = _settingMap += (value.key -> value)
+  def += (value: Setting[_]): Unit = _settingMap += (value.key -> value)
 
   /**
    *
    *
    * @param key
+   *
    * @return
    */
   def get(key: BaseSettingKeys.Value[_]): Option[Setting[_]] = _settingMap.get(key)
@@ -55,6 +73,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def apply(key: BaseSettingKeys.Value[_]): Setting[_] = {
@@ -68,6 +87,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def settingFor(key: BaseSettingKeys.Value[_]): Setting[_] = apply(key)
@@ -76,6 +96,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def booleanSettingFor(key: BooleanSettingKey): Setting[Boolean] =
@@ -85,6 +106,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def intSettingFor(key: IntSettingKey): Setting[Int] =
@@ -94,6 +116,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def stringSettingFor(key: StringSettingKey): Setting[String] =
@@ -103,6 +126,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def colorSettingFor(key: ColorSettingKey): Setting[RGBAColor] =
@@ -112,6 +136,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def enumSettingFor[A](key: EnumSettingKey[A]): Setting[A] =
@@ -121,6 +146,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def isTrueThat(key: BooleanSettingKey): Boolean = booleanSettingFor(key).value
@@ -129,6 +155,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def intFor(key: IntSettingKey): Int = intSettingFor(key).value
@@ -137,6 +164,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def stringFor(key: StringSettingKey): String = stringSettingFor(key).value
@@ -145,6 +173,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def colorFor(key: ColorSettingKey): RGBAColor = colorSettingFor(key).value
@@ -153,6 +182,7 @@ class Settings extends Tokenizable {
    *
    *
    * @param key
+   *
    * @return
    */
   def optionFor[A](key: EnumSettingKey[A]): A = enumSettingFor[A](key).value
@@ -190,11 +220,11 @@ class Settings extends Tokenizable {
     val sb = new StringBuilder(100)
 
     groupedByKeyType()
-      .map({case (groupKey, group) => groupKey + ": " + group.size})
-      .addString(sb,
-        start = StrLeftAngleBracket + metaInformation.className + StrSemicolon + StrSpace,
-        sep = StrSemicolon + StrSpace,
-        end = StrRightAngleBracket)
+        .map({case (groupKey, group) => groupKey + ": " + group.size})
+        .addString(sb,
+          start = StrLeftAngleBracket + metaInformation.className + StrSemicolon + StrSpace,
+          sep = StrSemicolon + StrSpace,
+          end = StrRightAngleBracket)
 
     sb.toString()
   }

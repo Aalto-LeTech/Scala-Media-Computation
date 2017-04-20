@@ -2,23 +2,18 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/js-smcl-bitmap-viewer-js-build.iml" filepath="$PROJECT_DIR$/.idea/modules/js-smcl-bitmap-viewer-js-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/js-smcl-core-js-build.iml" filepath="$PROJECT_DIR$/.idea/modules/js-smcl-core-js-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jvm-smcl-bitmap-viewer-jvm-build.iml" filepath="$PROJECT_DIR$/.idea/modules/jvm-smcl-bitmap-viewer-jvm-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jvm-smcl-core-jvm-build.iml" filepath="$PROJECT_DIR$/.idea/modules/jvm-smcl-core-jvm-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-js.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-js.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-js-build.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-js-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-jvm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-jvm-build.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-jvm-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-sources.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-bitmap-viewer-sources.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-build.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-core-js.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-core-js.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-core-js-build.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-core-js-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-core-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-core-jvm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-core-jvm-build.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-core-jvm-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-core-sources.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-core-sources.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-js.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-js.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-js-build.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-js-build.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-jvm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-jvm-build.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-jvm-build.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-sources.iml" filepath="$PROJECT_DIR$/.idea/modules/smcl-public-interfaces-sources.iml" />
     </modules>
   </component>
 </project>

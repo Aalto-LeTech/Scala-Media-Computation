@@ -1,9 +1,26 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure.jvmawt
 
 
 import java.util.Calendar
 
 import scala.util.{Either, Try}
+
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure._
 import aalto.smcl.interfaces.Timestamp
@@ -17,11 +34,11 @@ import aalto.smcl.interfaces.Timestamp
  * @author Aleksi Lukkarinen
  */
 class DefaultJvmAwtPlatformResourceFactory(
-  calendarProvider: JvmCalendarProvider,
-  uuidProvider: JvmUniqueIdProvider,
-  fontProvider: AwtFontProvider,
-  imageProvider: AwtImageProvider,
-  val screenInformationProvider: ScreenInformationProvider) extends PlatformResourceFactory {
+    calendarProvider: JvmCalendarProvider,
+    uuidProvider: JvmUniqueIdProvider,
+    fontProvider: AwtFontProvider,
+    imageProvider: AwtImageProvider,
+    val screenInformationProvider: ScreenInformationProvider) extends PlatformResourceFactory {
 
   /**
    *
@@ -91,6 +108,6 @@ class DefaultJvmAwtPlatformResourceFactory(
    */
   // TODO: A terrible return type --> Redesign!!
   override def tryToLoadImagesFromPath(sourceResourcePath: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]] =
-    imageProvider.tryToLoadImagesFromFile(sourceResourcePath)
+  imageProvider.tryToLoadImagesFromFile(sourceResourcePath)
 
 }

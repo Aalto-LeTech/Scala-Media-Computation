@@ -1,8 +1,24 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure.jvmawt
 
 
 import aalto.smcl.bitmaps.BitmapValidator
-import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, Setting, SettingValidatorFactory, SharedSettingInitializer}
+import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer}
 
 
 
@@ -12,12 +28,14 @@ import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, DefaultJvmCale
  *
  * @author Aleksi Lukkarinen
  */
-object Initializer {
+object Initializer extends SMCLInitializer {
 
   /**
    *
    */
   def apply(): Unit = {
+    println("JVM-based SMCL Core initialization is in progress...")
+
     initSharedSettings()
     initAwtSettings()
 

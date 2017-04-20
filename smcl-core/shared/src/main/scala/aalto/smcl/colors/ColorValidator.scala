@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.colors
 
 
@@ -120,141 +136,155 @@ class ColorValidator() {
    *
    *
    * @param redCandidate
+   *
    * @return
    */
   @inline
   def rgbRedComponentIsInRange(redCandidate: Int): Boolean =
-    redCandidate >= MinimumRgbRed && redCandidate <= MaximumRgbRed
+  redCandidate >= MinimumRgbRed && redCandidate <= MaximumRgbRed
 
   /**
    *
    *
    * @param greenCandidate
+   *
    * @return
    */
   @inline
   def rgbGreenComponentIsInRange(greenCandidate: Int): Boolean =
-    greenCandidate >= MinimumRgbGreen && greenCandidate <= MaximumRgbGreen
+  greenCandidate >= MinimumRgbGreen && greenCandidate <= MaximumRgbGreen
 
   /**
    *
    *
    * @param blueCandidate
+   *
    * @return
    */
   @inline
   def rgbBlueComponentIsInRange(blueCandidate: Int): Boolean =
-    blueCandidate >= MinimumRgbBlue && blueCandidate <= MaximumRgbBlue
+  blueCandidate >= MinimumRgbBlue && blueCandidate <= MaximumRgbBlue
 
   /**
    *
    *
    * @param grayCandidate
+   *
    * @return
    */
   @inline
   def rgbGrayComponentIsInRange(grayCandidate: Int): Boolean =
-    grayCandidate >= MinimumRgbGray && grayCandidate <= MaximumRgbGray
+  grayCandidate >= MinimumRgbGray && grayCandidate <= MaximumRgbGray
 
   /**
    *
    *
    * @param opacityCandidate
+   *
    * @return
    */
   @inline
   def rgbaOpacityComponentIsInRange(opacityCandidate: Int): Boolean =
-    opacityCandidate >= MinimumRgbaOpacity && opacityCandidate <= MaximumRgbaOpacity
+  opacityCandidate >= MinimumRgbaOpacity && opacityCandidate <= MaximumRgbaOpacity
 
   /**
    *
    *
    * @param redCandidate
+   *
    * @return
    */
   @inline
   def rgbNormalizedRedComponentIsInRange(redCandidate: Double): Boolean =
-    redCandidate >= MinimumNormalizedRgbRed && redCandidate <= MaximumNormalizedRgbRed
+  redCandidate >= MinimumNormalizedRgbRed && redCandidate <= MaximumNormalizedRgbRed
 
   /**
    *
    *
    * @param greenCandidate
+   *
    * @return
    */
   @inline
   def rgbNormalizedGreenComponentIsInRange(greenCandidate: Double): Boolean =
-    greenCandidate >= MinimumNormalizedRgbGreen && greenCandidate <= MaximumNormalizedRgbGreen
+  greenCandidate >= MinimumNormalizedRgbGreen && greenCandidate <= MaximumNormalizedRgbGreen
 
   /**
    *
    *
    * @param blueCandidate
+   *
    * @return
    */
   @inline
   def rgbNormalizedBlueComponentIsInRange(blueCandidate: Double): Boolean =
-    blueCandidate >= MinimumNormalizedRgbBlue && blueCandidate <= MaximumNormalizedRgbGreen
+  blueCandidate >= MinimumNormalizedRgbBlue && blueCandidate <= MaximumNormalizedRgbGreen
 
   /**
    *
    *
    * @param grayCandidate
+   *
    * @return
    */
   @inline
   def rgbNormalizedGrayComponentIsInRange(grayCandidate: Double): Boolean =
-    grayCandidate >= MinimumNormalizedRgbGray && grayCandidate <= MaximumNormalizedRgbGray
+  grayCandidate >= MinimumNormalizedRgbGray && grayCandidate <= MaximumNormalizedRgbGray
 
   /**
    *
    *
    * @param opacityCandidate
+   *
    * @return
    */
   @inline
   def rgbaNormalizedOpacityComponentIsInRange(opacityCandidate: Int): Boolean =
-    opacityCandidate >= MinimumNormalizedRgbaOpacity && opacityCandidate <= MaximumNormalizedRgbGreen
+  opacityCandidate >= MinimumNormalizedRgbaOpacity && opacityCandidate <= MaximumNormalizedRgbGreen
 
   /**
    *
    *
    * @param saturationCandidate
+   *
    * @return
    */
   @inline
   def hsiSaturationComponentIsInRange(saturationCandidate: Double): Boolean =
-    saturationCandidate >= MinimumHsiSaturation && saturationCandidate <= MaximumHsiSaturation
+  saturationCandidate >= MinimumHsiSaturation && saturationCandidate <= MaximumHsiSaturation
 
   /**
    *
    *
    * @param intensityCandidate
+   *
    * @return
    */
   @inline
   def hsiIntensityComponentIsInRange(intensityCandidate: Double): Boolean =
-    intensityCandidate >= MinimumHsiIntensity && intensityCandidate <= MaximumHsiIntensity
+  intensityCandidate >= MinimumHsiIntensity && intensityCandidate <= MaximumHsiIntensity
 
   /**
    *
    *
    * @param saturationCandidate
+   *
    * @return
    */
   @inline
   def hsvSaturationComponentIsInRange(saturationCandidate: Double): Boolean =
-    saturationCandidate >= MinimumHsvSaturation && saturationCandidate <= MaximumHsvSaturation
+  saturationCandidate >= MinimumHsvSaturation && saturationCandidate <= MaximumHsvSaturation
 
   /**
    *
    *
    * @param valueCandidate
+   *
    * @return
    */
   @inline
   def hsvValueComponentIsInRange(valueCandidate: Double): Boolean =
-    valueCandidate >= MinimumHsvValue && valueCandidate <= MaximumHsvValue
+  valueCandidate >= MinimumHsvValue && valueCandidate <= MaximumHsvValue
 
   /**
    *
@@ -442,10 +472,10 @@ class ColorValidator() {
    */
   @inline
   def validateRgbaColor(
-    redCandidate: Int,
-    greenCandidate: Int,
-    blueCandidate: Int,
-    opacityCandidate: Int): Unit = {
+      redCandidate: Int,
+      greenCandidate: Int,
+      blueCandidate: Int,
+      opacityCandidate: Int): Unit = {
 
     validateRgbColor(redCandidate, greenCandidate, blueCandidate)
     validateRgbaOpacityComponent(opacityCandidate)
@@ -463,7 +493,7 @@ class ColorValidator() {
    */
   //noinspection ScalaUnnecessaryParentheses
   def validateRgbaColor(rgbaTuple: (Int, Int, Int, Int)): Unit =
-    (validateRgbaColor(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+  (validateRgbaColor(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
 
   /**
    *
@@ -477,9 +507,9 @@ class ColorValidator() {
    */
   @inline
   def validateHsiColor(
-    hueCandidate: Double,
-    saturationCandidate: Double,
-    intensityCandidate: Double): Unit = {
+      hueCandidate: Double,
+      saturationCandidate: Double,
+      intensityCandidate: Double): Unit = {
 
     validateHsiSaturationComponent(saturationCandidate)
     validateHsiIntensityComponent(intensityCandidate)
@@ -497,9 +527,9 @@ class ColorValidator() {
    */
   @inline
   def validateHsvColor(
-    hueCandidate: Double,
-    saturationCandidate: Double,
-    valueCandidate: Double): Unit = {
+      hueCandidate: Double,
+      saturationCandidate: Double,
+      valueCandidate: Double): Unit = {
 
     validateHsvSaturationComponent(saturationCandidate)
     validateHsvValueComponent(valueCandidate)
@@ -516,9 +546,9 @@ class ColorValidator() {
    */
   @inline
   def validateRgbColorWeightCombination(
-    redWeightCandidate: Double,
-    greenWeightCandidate: Double,
-    blueWeightCandidate: Double): Unit = {
+      redWeightCandidate: Double,
+      greenWeightCandidate: Double,
+      blueWeightCandidate: Double): Unit = {
 
     val weightSum = redWeightCandidate + greenWeightCandidate + blueWeightCandidate
 
@@ -537,6 +567,7 @@ class ColorValidator() {
    *
    *
    * @param nameOptionCandidate
+   *
    * @return
    */
   @inline

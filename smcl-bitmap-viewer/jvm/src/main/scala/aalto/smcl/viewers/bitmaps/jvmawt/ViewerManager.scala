@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.viewers.bitmaps.jvmawt
 
 
@@ -9,10 +25,8 @@ import rx.lang.scala.{Observable, Observer}
 
 import aalto.smcl.SMCLLibrary
 import aalto.smcl.bitmaps.{Bitmap, BitmapIdentity}
-import aalto.smcl.viewers.ExternalViewerEvent
-import aalto.smcl.viewers.ForceAllViewersToCloseEvent
 import aalto.smcl.viewers.bitmaps.DisplayBitmapEvent
-
+import aalto.smcl.viewers.{ExternalViewerEvent, ForceAllViewersToCloseEvent}
 
 
 
@@ -42,6 +56,8 @@ object ViewerManager {
 }
 
 
+
+
 /**
  *
  *
@@ -49,7 +65,7 @@ object ViewerManager {
  */
 private[jvmawt]
 class ViewerManager(val incomingEventStream: Observable[ExternalViewerEvent])
-  extends Observer[ExternalViewerEvent] {
+    extends Observer[ExternalViewerEvent] {
 
   private[this] var _viewers = Map[BitmapIdentity, ViewerMainFrame]()
 
@@ -83,7 +99,7 @@ class ViewerManager(val incomingEventStream: Observable[ExternalViewerEvent])
       newViewer
     })
 
-    Swing.onEDT {
+    Swing.onEDT{
       viewer.updateBitmapBuffer(bitmap)
     }
   }
@@ -94,7 +110,7 @@ class ViewerManager(val incomingEventStream: Observable[ExternalViewerEvent])
    */
   private[this] def closeAllViewersWithTheForce(): Unit = {
     _viewers.values foreach {viewer =>
-      Swing.onEDT {
+      Swing.onEDT{
         viewer.forceToClose()
       }
     }

@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
@@ -21,15 +37,15 @@ import aalto.smcl.infrastructure._
  */
 private[bitmaps]
 case class OverlayFreely(
-  bottomBitmap: Bitmap,
-  topBitmap: Bitmap,
-  topBitmapUpperLeftX: Int,
-  topBitmapUpperLeftY: Int,
-  topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
-  extends AbstractOperation
-  with BufferProvider
-  with Immutable {
+    bottomBitmap: Bitmap,
+    topBitmap: Bitmap,
+    topBitmapUpperLeftX: Int,
+    topBitmapUpperLeftY: Int,
+    topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    extends AbstractOperation
+            with BufferProvider
+            with Immutable {
 
   require(bottomBitmap != null, "The lower bitmap argument has to be a Bitmap instance (was null).")
   require(topBitmap != null, "The upper bitmap argument has to be a Bitmap instance (was null).")
@@ -110,7 +126,7 @@ case class OverlayFreely(
    * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
-   * @return    bitmap buffer to be made copies of for providees
+   * @return bitmap buffer to be made copies of for providees
    */
   override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer()

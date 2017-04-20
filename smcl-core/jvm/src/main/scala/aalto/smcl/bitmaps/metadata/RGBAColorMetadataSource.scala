@@ -1,14 +1,31 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.metadata
+
 
 import java.awt.image.BufferedImage
 
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.bitmaps.ViewerUpdateStyle.PreventViewerUpdates
 import aalto.smcl.colors.{PresetColors, RGBAColor}
-import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
 import aalto.smcl.infrastructure.GS
-import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
+import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.StaticGeneralBitmapSource
+import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 
 
 
@@ -20,9 +37,9 @@ import aalto.smcl.interfaces.awt.StaticGeneralBitmapSource
  */
 private[metadata]
 case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
-  extends MetaInterfaceBase
-  with ResourceMetadataSource
-  with StaticGeneralBitmapSource {
+    extends MetaInterfaceBase
+            with ResourceMetadataSource
+            with StaticGeneralBitmapSource {
 
   /** General bitmaps */
   private[this] val _generalBitmaps =
@@ -50,7 +67,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
   def validateBitmapNumber(bitmapNumber: Int): Unit = {
     require(GeneralBitmapIndices.contains(bitmapNumber),
       s"This resource supports ${numberOfGeneralBitmaps()} bitmaps " +
-        s"(indices $FirstBitmapIndex to $LastBitmapIndex).")
+          s"(indices $FirstBitmapIndex to $LastBitmapIndex).")
   }
 
 
@@ -58,6 +75,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def generalBitmapOption(bitmapNumber: Int): Option[BufferedImage] = {
@@ -110,6 +128,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    *
    *
    * @param backgroundColor
+   *
    * @return
    */
   def createDoubleColorTile(backgroundColor: RGBAColor): Bitmap = {
@@ -143,6 +162,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceIdOption(bitmapNumber: Int = FirstBitmapIndex): Option[String] = {
@@ -155,6 +175,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceAuthorsOption(bitmapNumber: Int = FirstBitmapIndex): Option[String] = {
@@ -167,6 +188,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceKeywordsOption(bitmapNumber: Int = FirstBitmapIndex): Option[String] = {
@@ -179,6 +201,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceTimestampOption(bitmapNumber: Int = FirstBitmapIndex): Option[Timestamp] = {
@@ -191,6 +214,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceDescriptionOption(bitmapNumber: Int = FirstBitmapIndex): Option[String] = {
@@ -203,6 +227,7 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    *
    *
    * @param bitmapNumber
+   *
    * @return
    */
   override def resourceTitleOption(bitmapNumber: Int = FirstBitmapIndex): Option[String] = {

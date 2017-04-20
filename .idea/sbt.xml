@@ -22,11 +22,6 @@
             <option value="$PROJECT_DIR$/smcl-core/jvm" />
             <option value="$PROJECT_DIR$/smcl-core/jvm/project" />
             <option value="$PROJECT_DIR$/smcl-core/shared" />
-            <option value="$PROJECT_DIR$/smcl-public-interfaces/js" />
-            <option value="$PROJECT_DIR$/smcl-public-interfaces/js/project" />
-            <option value="$PROJECT_DIR$/smcl-public-interfaces/jvm" />
-            <option value="$PROJECT_DIR$/smcl-public-interfaces/jvm/project" />
-            <option value="$PROJECT_DIR$/smcl-public-interfaces/shared" />
           </set>
         </option>
         <option name="resolveSbtClassifiers" value="true" />

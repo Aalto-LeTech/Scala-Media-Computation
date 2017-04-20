@@ -1,9 +1,24 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.colors
 
 
 import aalto.smcl.colors
-import aalto.smcl.infrastructure._
-import aalto.smcl.infrastructure.ColorAdapter
+import aalto.smcl.infrastructure.{ColorAdapter, _}
 
 
 
@@ -23,10 +38,11 @@ object RGBAColor {
    * @param blue
    * @param opacity
    * @param nameOption
+   *
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, opacity: Int,
-    nameOption: Option[String] = None): RGBAColor = {
+      nameOption: Option[String] = None): RGBAColor = {
 
     ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
@@ -40,21 +56,23 @@ object RGBAColor {
    *
    * @param rgbaTuple
    * @param nameOption
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def apply(rgbaTuple: (Int, Int, Int, Int), nameOption: Option[String]): RGBAColor =
-    (RGBAColor(_: Int, _: Int, _: Int, _: Int, nameOption)).tupled.apply(rgbaTuple)
+  (RGBAColor(_: Int, _: Int, _: Int, _: Int, nameOption)).tupled.apply(rgbaTuple)
 
   /**
    *
    *
    * @param rgbaTuple
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def apply(rgbaTuple: (Int, Int, Int, Int)): RGBAColor =
-    (RGBAColor(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+  (RGBAColor(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
 
   /**
    *
@@ -62,6 +80,7 @@ object RGBAColor {
    * @param gray
    * @param opacity
    * @param nameOption
+   *
    * @return
    */
   def apply(gray: Int, opacity: Int, nameOption: Option[String]): RGBAColor =
@@ -72,11 +91,12 @@ object RGBAColor {
    *
    * @param grayOpacityTuple
    * @param nameOption
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def apply(grayOpacityTuple: (Int, Int), nameOption: Option[String]): RGBAColor =
-    (RGBAColor(_: Int, _: Int, nameOption)).tupled.apply(grayOpacityTuple)
+  (RGBAColor(_: Int, _: Int, nameOption)).tupled.apply(grayOpacityTuple)
 
   /**
    *
@@ -85,6 +105,7 @@ object RGBAColor {
    * @param green
    * @param blue
    * @param nameOption
+   *
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, nameOption: Option[String]): RGBAColor =
@@ -96,6 +117,7 @@ object RGBAColor {
    * @param red
    * @param green
    * @param blue
+   *
    * @return
    */
   def apply(red: Int, green: Int, blue: Int): RGBAColor =
@@ -106,21 +128,23 @@ object RGBAColor {
    *
    * @param rgbTuple
    * @param nameOption
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def apply(rgbTuple: (Int, Int, Int), nameOption: Option[String]): RGBAColor =
-    (RGBAColor(_: Int, _: Int, _: Int, nameOption)).tupled.apply(rgbTuple)
+  (RGBAColor(_: Int, _: Int, _: Int, nameOption)).tupled.apply(rgbTuple)
 
   /**
    *
    *
    * @param rgbTuple
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def apply(rgbTuple: (Int, Int, Int)): RGBAColor =
-    (RGBAColor(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  (RGBAColor(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -128,28 +152,31 @@ object RGBAColor {
    * @param rgbTuple
    * @param opacity
    * @param nameOption
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def apply(rgbTuple: (Int, Int, Int), opacity: Int, nameOption: Option[String]): RGBAColor =
-    (RGBAColor(_: Int, _: Int, _: Int, opacity, nameOption)).tupled.apply(rgbTuple)
+  (RGBAColor(_: Int, _: Int, _: Int, opacity, nameOption)).tupled.apply(rgbTuple)
 
   /**
    *
    *
    * @param rgbTuple
    * @param opacity
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def apply(rgbTuple: (Int, Int, Int), opacity: Int): RGBAColor =
-    (RGBAColor(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
+  (RGBAColor(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
 
   /**
    *
    *
    * @param gray
    * @param opacity
+   *
    * @return
    */
   def apply(gray: Int, opacity: Int): RGBAColor =
@@ -160,17 +187,19 @@ object RGBAColor {
    *
    *
    * @param grayOpacityTuple
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def apply(grayOpacityTuple: (Int, Int)): RGBAColor =
-    (RGBAColor(_: Int, _: Int)).tupled.apply(grayOpacityTuple)
+  (RGBAColor(_: Int, _: Int)).tupled.apply(grayOpacityTuple)
 
   /**
    *
    *
    * @param argbInt
    * @param nameOption
+   *
    * @return
    */
   def apply(argbInt: Int, nameOption: Option[String]): RGBAColor =
@@ -180,6 +209,7 @@ object RGBAColor {
    *
    *
    * @param argbInt
+   *
    * @return
    */
   def apply(argbInt: Int): RGBAColor =
@@ -189,6 +219,7 @@ object RGBAColor {
    *
    *
    * @param platformColor
+   *
    * @return
    */
   private[smcl] def apply(platformColor: ColorAdapter): RGBAColor =
@@ -203,11 +234,12 @@ object RGBAColor {
    *
    * @param platformColor
    * @param nameOption
+   *
    * @return
    */
   private[smcl] def apply(
-    platformColor: ColorAdapter,
-    nameOption: Option[String]): RGBAColor =
+      platformColor: ColorAdapter,
+      nameOption: Option[String]): RGBAColor =
     RGBAColor(
       platformColor.red,
       platformColor.green,
@@ -221,6 +253,7 @@ object RGBAColor {
    * @param hueInDegrees
    * @param saturation
    * @param value
+   *
    * @return
    */
   def fromHsv(hueInDegrees: Double, saturation: Double, value: Double): RGBAColor =
@@ -230,11 +263,12 @@ object RGBAColor {
    *
    *
    * @param hsvTuple
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsv(hsvTuple: (Double, Double, Double)): RGBAColor =
-    (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity)).tupled.apply(hsvTuple)
+  (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity)).tupled.apply(hsvTuple)
 
   /**
    *
@@ -242,13 +276,14 @@ object RGBAColor {
    * @param hueInDegrees
    * @param saturation
    * @param value
+   *
    * @return
    */
   def fromHsv(
-    hueInDegrees: Double,
-    saturation: Double,
-    value: Double,
-    nameOption: Option[String]): RGBAColor =
+      hueInDegrees: Double,
+      saturation: Double,
+      value: Double,
+      nameOption: Option[String]): RGBAColor =
     fromHsv(hueInDegrees, saturation, value, ColorValidator.MaximumRgbaOpacity, nameOption)
 
   /**
@@ -256,11 +291,12 @@ object RGBAColor {
    *
    * @param hsvTuple
    * @param nameOption
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsv(hsvTuple: (Double, Double, Double), nameOption: Option[String]): RGBAColor =
-    (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity, nameOption)).tupled.apply(hsvTuple)
+  (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity, nameOption)).tupled.apply(hsvTuple)
 
   /**
    *
@@ -269,13 +305,14 @@ object RGBAColor {
    * @param saturation
    * @param value
    * @param opacity
+   *
    * @return
    */
   def fromHsv(
-    hueInDegrees: Double,
-    saturation: Double,
-    value: Double,
-    opacity: Int): RGBAColor =
+      hueInDegrees: Double,
+      saturation: Double,
+      value: Double,
+      opacity: Int): RGBAColor =
     RGBAColor(hsvToRgb(hueInDegrees, saturation, value), opacity)
 
   /**
@@ -283,11 +320,12 @@ object RGBAColor {
    *
    * @param hsvTuple
    * @param opacity
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsv(hsvTuple: (Double, Double, Double), opacity: Int): RGBAColor =
-    (fromHsv(_: Double, _: Double, _: Double, opacity)).tupled.apply(hsvTuple)
+  (fromHsv(_: Double, _: Double, _: Double, opacity)).tupled.apply(hsvTuple)
 
   /**
    *
@@ -296,14 +334,15 @@ object RGBAColor {
    * @param saturation
    * @param value
    * @param opacity
+   *
    * @return
    */
   def fromHsv(
-    hueInDegrees: Double,
-    saturation: Double,
-    value: Double,
-    opacity: Int,
-    nameOption: Option[String]): RGBAColor =
+      hueInDegrees: Double,
+      saturation: Double,
+      value: Double,
+      opacity: Int,
+      nameOption: Option[String]): RGBAColor =
     RGBAColor(hsvToRgb(hueInDegrees, saturation, value), opacity, nameOption)
 
   /**
@@ -312,14 +351,15 @@ object RGBAColor {
    * @param hsvTuple
    * @param opacity
    * @param nameOption
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsv(
-    hsvTuple: (Double, Double, Double),
-    opacity: Int,
-    nameOption: Option[String]): RGBAColor =
-    (fromHsv(_: Double, _: Double, _: Double, opacity, nameOption)).tupled.apply(hsvTuple)
+      hsvTuple: (Double, Double, Double),
+      opacity: Int,
+      nameOption: Option[String]): RGBAColor =
+  (fromHsv(_: Double, _: Double, _: Double, opacity, nameOption)).tupled.apply(hsvTuple)
 
   /**
    *
@@ -327,6 +367,7 @@ object RGBAColor {
    * @param hueInDegrees
    * @param saturation
    * @param intensity
+   *
    * @return
    */
   def fromHsi(hueInDegrees: Double, saturation: Double, intensity: Double): RGBAColor =
@@ -336,11 +377,12 @@ object RGBAColor {
    *
    *
    * @param hsiTuple
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsi(hsiTuple: (Double, Double, Double)): RGBAColor =
-    (fromHsi(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity)).tupled.apply(hsiTuple)
+  (fromHsi(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity)).tupled.apply(hsiTuple)
 
   /**
    *
@@ -348,13 +390,14 @@ object RGBAColor {
    * @param hueInDegrees
    * @param saturation
    * @param intensity
+   *
    * @return
    */
   def fromHsi(
-    hueInDegrees: Double,
-    saturation: Double,
-    intensity: Double,
-    nameOption: Option[String]): RGBAColor =
+      hueInDegrees: Double,
+      saturation: Double,
+      intensity: Double,
+      nameOption: Option[String]): RGBAColor =
     fromHsi(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity, nameOption)
 
   /**
@@ -362,11 +405,12 @@ object RGBAColor {
    *
    * @param hsiTuple
    * @param nameOption
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsi(hsiTuple: (Double, Double, Double), nameOption: Option[String]): RGBAColor =
-    (fromHsi(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity, nameOption)).tupled.apply(hsiTuple)
+  (fromHsi(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity, nameOption)).tupled.apply(hsiTuple)
 
   /**
    *
@@ -375,13 +419,14 @@ object RGBAColor {
    * @param saturation
    * @param intensity
    * @param opacity
+   *
    * @return
    */
   def fromHsi(
-    hueInDegrees: Double,
-    saturation: Double,
-    intensity: Double,
-    opacity: Int): RGBAColor =
+      hueInDegrees: Double,
+      saturation: Double,
+      intensity: Double,
+      opacity: Int): RGBAColor =
     RGBAColor(hsiToRgb(hueInDegrees, saturation, intensity), opacity)
 
   /**
@@ -389,11 +434,12 @@ object RGBAColor {
    *
    * @param hsiTuple
    * @param opacity
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsi(hsiTuple: (Double, Double, Double), opacity: Int): RGBAColor =
-    (fromHsi(_: Double, _: Double, _: Double, opacity)).tupled.apply(hsiTuple)
+  (fromHsi(_: Double, _: Double, _: Double, opacity)).tupled.apply(hsiTuple)
 
   /**
    *
@@ -402,14 +448,15 @@ object RGBAColor {
    * @param saturation
    * @param intensity
    * @param opacity
+   *
    * @return
    */
   def fromHsi(
-    hueInDegrees: Double,
-    saturation: Double,
-    intensity: Double,
-    opacity: Int,
-    nameOption: Option[String]): RGBAColor =
+      hueInDegrees: Double,
+      saturation: Double,
+      intensity: Double,
+      opacity: Int,
+      nameOption: Option[String]): RGBAColor =
     RGBAColor(hsiToRgb(hueInDegrees, saturation, intensity), opacity, nameOption)
 
   /**
@@ -418,16 +465,19 @@ object RGBAColor {
    * @param hsiTuple
    * @param opacity
    * @param nameOption
+   *
    * @return
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsi(
-    hsiTuple: (Double, Double, Double),
-    opacity: Int,
-    nameOption: Option[String]): RGBAColor =
-    (fromHsi(_: Double, _: Double, _: Double, opacity, nameOption)).tupled.apply(hsiTuple)
+      hsiTuple: (Double, Double, Double),
+      opacity: Int,
+      nameOption: Option[String]): RGBAColor =
+  (fromHsi(_: Double, _: Double, _: Double, opacity, nameOption)).tupled.apply(hsiTuple)
 
 }
+
+
 
 
 /**
@@ -442,11 +492,11 @@ object RGBAColor {
  * @author Aleksi Lukkarinen
  */
 class RGBAColor protected(
-  val red: Int,
-  val green: Int,
-  val blue: Int,
-  val opacity: Int,
-  val nameOption: Option[String] = None) extends {
+    val red: Int,
+    val green: Int,
+    val blue: Int,
+    val opacity: Int,
+    val nameOption: Option[String] = None) extends {
 
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false
@@ -553,6 +603,7 @@ class RGBAColor protected(
    *
    *
    * @param that
+   *
    * @return
    */
   override def compare(that: RGBAColor): Int =
@@ -562,6 +613,7 @@ class RGBAColor protected(
    *
    *
    * @param that
+   *
    * @return
    */
   def compareByHsiSaturation(that: RGBAColor): Int =
@@ -571,6 +623,7 @@ class RGBAColor protected(
    *
    *
    * @param that
+   *
    * @return
    */
   def compareByHsiIntensity(that: RGBAColor): Int =

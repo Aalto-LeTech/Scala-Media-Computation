@@ -1,6 +1,20 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure
-
-
 
 
 /**
@@ -39,7 +53,7 @@ class ClassTokenizer private[infrastructure]() {
   /**
    * Returns a tokenized representation of a given class extending the [[Tokenizable]] trait.
    *
-   * @param clazz   the instance to be tokenized
+   * @param clazz the instance to be tokenized
    */
   def tokenize(clazz: Tokenizable): String = tokenize0(clazz: Tokenizable, builder)
 
@@ -47,8 +61,8 @@ class ClassTokenizer private[infrastructure]() {
    * Returns a tokenized representation of a given class extending the [[Tokenizable]] trait.
    * Tokenization is performed using a provided `StringBuilder` instance.
    *
-   * @param clazz   the instance to be tokenized
-   * @param s       the `StringBuilder` instance to be used
+   * @param clazz the instance to be tokenized
+   * @param s     the `StringBuilder` instance to be used
    */
   private def tokenize0(clazz: Tokenizable, s: StringBuilder): String = {
     s.clear()
@@ -63,8 +77,8 @@ class ClassTokenizer private[infrastructure]() {
   /**
    * Appends a prolog to a given `StringBuilder` in the form `"[ClassName"`.
    *
-   * @param clazz   the instance to be tokenized
-   * @param s       the `StringBuilder` instance to be used
+   * @param clazz the instance to be tokenized
+   * @param s     the `StringBuilder` instance to be used
    */
   private def appendPrologOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
     s ++= StrLeftAngleBracket ++= escape(clazz.metaInformation.className)
@@ -74,8 +88,8 @@ class ClassTokenizer private[infrastructure]() {
    * If `key` is empty or `null`, nothing will be appended. If `key` is a non-empty string
    * but `value` is empty or `null`, only the `key` will be appended (as in `"; key"`).
    *
-   * @param clazz   the instance to be tokenized
-   * @param s       the `StringBuilder` instance to be used
+   * @param clazz the instance to be tokenized
+   * @param s     the `StringBuilder` instance to be used
    */
   private def appendKvPairsOfTo(clazz: Tokenizable, s: StringBuilder): Unit =
     clazz.metaInformation foreach {
@@ -87,7 +101,7 @@ class ClassTokenizer private[infrastructure]() {
   /**
    * Appends an epilog to a given `StringBuilder` in the form `"]"`.
    *
-   * @param s       the `StringBuilder` instance to be used
+   * @param s the `StringBuilder` instance to be used
    */
   private def appendEpilogTo(s: StringBuilder): Unit = s ++= StrRightAngleBracket
 
@@ -97,7 +111,7 @@ class ClassTokenizer private[infrastructure]() {
    */
   // TODO: Escaping doesn't work (no reflection) --> redesign!!
   private def escape(part: String): String = //new StringUtils().escapeString(part)
-    part.replaceAllLiterally(StrColon, StrColonAsUnicode)
-        .replaceAllLiterally(StrSemicolon, StrSemicolonAsUnicode)
+  part.replaceAllLiterally(StrColon, StrColonAsUnicode)
+      .replaceAllLiterally(StrSemicolon, StrSemicolonAsUnicode)
 
 }

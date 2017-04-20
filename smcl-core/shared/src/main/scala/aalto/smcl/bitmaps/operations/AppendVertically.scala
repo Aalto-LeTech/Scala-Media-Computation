@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
@@ -22,14 +38,14 @@ import aalto.smcl.infrastructure._
  */
 private[bitmaps]
 case class AppendVertically(
-  bitmapsToCombine: Seq[Bitmap])(
-  horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-  paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-  backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-  private val bitmapValidator: BitmapValidator)
-  extends AbstractOperation
-  with BufferProvider
-  with Immutable {
+    bitmapsToCombine: Seq[Bitmap])(
+    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
+    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    private val bitmapValidator: BitmapValidator)
+    extends AbstractOperation
+            with BufferProvider
+            with Immutable {
 
   require(bitmapsToCombine.nonEmpty,
     "Append operation must be given a non-empty Sequence of Bitmap instances to combine.")
@@ -53,7 +69,7 @@ case class AppendVertically(
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int =
     childOperationListsOption.get.foldLeft[Int](0)({_ + _.heightInPixels}) +
-      (childOperationListsOption.get.length - 1) * paddingInPixels
+        (childOperationListsOption.get.length - 1) * paddingInPixels
 
   bitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
 
@@ -104,7 +120,7 @@ case class AppendVertically(
    * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
-   * @return    bitmap buffer to be made copies of for providees
+   * @return bitmap buffer to be made copies of for providees
    */
   override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer()

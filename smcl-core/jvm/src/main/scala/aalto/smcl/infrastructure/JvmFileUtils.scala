@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.infrastructure
 
 
@@ -15,11 +31,12 @@ private[smcl]
 class JvmFileUtils {
 
   /**
-    *
-    *
-    * @param f
-    * @return
-    */
+   *
+   *
+   * @param f
+   *
+   * @return
+   */
   def representsReadableFile(f: File): Boolean =
     f.isFile && f.canRead
 
@@ -27,6 +44,7 @@ class JvmFileUtils {
    *
    *
    * @param f
+   *
    * @return
    */
   def doesNotRepresentReadableFile(f: File): Boolean =
@@ -36,6 +54,7 @@ class JvmFileUtils {
    *
    *
    * @param f
+   *
    * @return
    */
   def representsReadableDirectory(f: File): Boolean =
@@ -45,6 +64,7 @@ class JvmFileUtils {
    *
    *
    * @param f
+   *
    * @return
    */
   def doesNotRepresentReadableDirectory(f: File): Boolean =

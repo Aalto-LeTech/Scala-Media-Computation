@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps
 
 
@@ -26,13 +42,14 @@ class CircleCreator {
    * @param color
    * @param backgroundColor
    * @param viewerHandling
+   *
    * @return
    */
   def createOne(
-    diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-    viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
     require(diameter > 0, s"Diameter of the circle must be at least 1 pixel (was $diameter)")
     require(color != null, "The circle color argument has to be a Color instance (was null).")
@@ -73,13 +90,14 @@ class CircleCreator {
    * @param diameter
    * @param color
    * @param backgroundColor
+   *
    * @return
    */
   def createArrayOf(
-    collectionSize: Int = 5,
-    diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Array[Bitmap] = {
+      collectionSize: Int = 5,
+      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
+      color: RGBAColor = GS.colorFor(DefaultPrimary),
+      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Array[Bitmap] = {
 
     require(collectionSize >= 0, s"Size of the collection cannot be negative (was $collectionSize)")
 

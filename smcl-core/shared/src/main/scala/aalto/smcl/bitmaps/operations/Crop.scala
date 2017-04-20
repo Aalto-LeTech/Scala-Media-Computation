@@ -1,8 +1,24 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
 
 
 
@@ -20,14 +36,14 @@ import aalto.smcl.infrastructure.{MetaInformationMap, BitmapBufferAdapter}
  */
 private[bitmaps]
 case class Crop(
-  sourceBitmap: Bitmap,
-  windowTopLeftX: Int,
-  windowTopLeftY: Int,
-  windowBottomRightX: Int,
-  windowBottomRightY: Int)
-  extends AbstractOperation
-  with BufferProvider
-  with Immutable {
+    sourceBitmap: Bitmap,
+    windowTopLeftX: Int,
+    windowTopLeftY: Int,
+    windowBottomRightX: Int,
+    windowBottomRightY: Int)
+    extends AbstractOperation
+            with BufferProvider
+            with Immutable {
 
   require(sourceBitmap != null, s"Cropping requires exactly one source image (was null).")
 
@@ -67,6 +83,7 @@ case class Crop(
    * [[Buffered]].
    *
    * @param sources possible [[BitmapBufferAdapter]] instances used as sources
+   *
    * @return
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
@@ -83,7 +100,7 @@ case class Crop(
    * a [[BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
-   * @return    bitmap buffer to be made copies of for providees
+   * @return bitmap buffer to be made copies of for providees
    */
   override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)

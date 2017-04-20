@@ -1,3 +1,19 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.colors
 
 
@@ -18,81 +34,97 @@ class RGBATranslationTableValidator private[colors]() {
    *
    *
    * @param redCandidate
+   *
    * @return
    */
   @inline
-  def redComponentIsInRange(redCandidate: Short): Boolean =
+  def redComponentIsInRange(redCandidate: Short): Boolean = {
     ColorValidator rgbRedComponentIsInRange redCandidate
+  }
 
   /**
    *
    *
    * @param greenCandidate
+   *
    * @return
    */
   @inline
-  def greenComponentIsInRange(greenCandidate: Short): Boolean =
+  def greenComponentIsInRange(greenCandidate: Short): Boolean = {
     ColorValidator rgbGreenComponentIsInRange greenCandidate
+  }
 
   /**
    *
    *
    * @param blueCandidate
+   *
    * @return
    */
   @inline
-  def blueComponentIsInRange(blueCandidate: Short): Boolean =
+  def blueComponentIsInRange(blueCandidate: Short): Boolean = {
     ColorValidator rgbBlueComponentIsInRange blueCandidate
+  }
 
   /**
    *
    *
    * @param opacityCandidate
+   *
    * @return
    */
   @inline
-  def opacityComponentIsInRange(opacityCandidate: Short): Boolean =
+  def opacityComponentIsInRange(opacityCandidate: Short): Boolean = {
     ColorValidator rgbaOpacityComponentIsInRange opacityCandidate
+  }
 
   /**
    *
    *
    * @param reds
+   *
    * @return
    */
   @inline
-  def lengthOfRedDimensionIsValid(reds: Seq[Short]): Boolean =
+  def lengthOfRedDimensionIsValid(reds: Seq[Short]): Boolean = {
     reds.length == ByteRange.length
+  }
 
   /**
    *
    *
    * @param greens
+   *
    * @return
    */
   @inline
-  def lengthOfGreenDimensionIsValid(greens: Seq[Short]): Boolean =
+  def lengthOfGreenDimensionIsValid(greens: Seq[Short]): Boolean = {
     greens.length == ByteRange.length
+  }
 
   /**
    *
    *
    * @param blues
+   *
    * @return
    */
   @inline
-  def lengthOfBlueDimensionIsValid(blues: Seq[Short]): Boolean =
+  def lengthOfBlueDimensionIsValid(blues: Seq[Short]): Boolean = {
     blues.length == ByteRange.length
+  }
 
   /**
    *
    *
    * @param opacities
+   *
    * @return
    */
   @inline
-  def lengthOfOpacityDimensionIsValid(opacities: Seq[Short]): Boolean =
+  def lengthOfOpacityDimensionIsValid(opacities: Seq[Short]): Boolean = {
     opacities.length == ByteRange.length
+  }
 
   /**
    *
@@ -100,8 +132,9 @@ class RGBATranslationTableValidator private[colors]() {
    * @param redCandidate
    */
   @inline
-  def validateRedComponent(redCandidate: Short): Unit =
+  def validateRedComponent(redCandidate: Short): Unit = {
     ColorValidator validateRgbRedComponent redCandidate
+  }
 
   /**
    *
@@ -110,9 +143,9 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateFunctionProvidedRedComponent(redCandidate: Short): Unit =
-    if (!redComponentIsInRange(redCandidate)) {
-      throw new SMCLRgbRedComponentFromValueProviderOutOfRangeError(redCandidate)
-    }
+  if (!redComponentIsInRange(redCandidate)) {
+    throw new SMCLRgbRedComponentFromValueProviderOutOfRangeError(redCandidate)
+  }
 
   /**
    *
@@ -120,8 +153,9 @@ class RGBATranslationTableValidator private[colors]() {
    * @param greenCandidate
    */
   @inline
-  def validateGreenComponent(greenCandidate: Short): Unit =
+  def validateGreenComponent(greenCandidate: Short): Unit = {
     ColorValidator validateRgbGreenComponent greenCandidate
+  }
 
   /**
    *
@@ -130,9 +164,9 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateFunctionProvidedGreenComponent(greenCandidate: Short): Unit =
-    if (!greenComponentIsInRange(greenCandidate)) {
-      throw new SMCLRgbGreenComponentFromValueProviderOutOfRangeError(greenCandidate)
-    }
+  if (!greenComponentIsInRange(greenCandidate)) {
+    throw new SMCLRgbGreenComponentFromValueProviderOutOfRangeError(greenCandidate)
+  }
 
   /**
    *
@@ -140,8 +174,9 @@ class RGBATranslationTableValidator private[colors]() {
    * @param blueCandidate
    */
   @inline
-  def validateBlueComponent(blueCandidate: Short): Unit =
+  def validateBlueComponent(blueCandidate: Short): Unit = {
     ColorValidator validateRgbBlueComponent blueCandidate
+  }
 
   /**
    *
@@ -150,9 +185,9 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateFunctionProvidedBlueComponent(blueCandidate: Short): Unit =
-    if (!blueComponentIsInRange(blueCandidate)) {
-      throw new SMCLRgbBlueComponentFromValueProviderOutOfRangeError(blueCandidate)
-    }
+  if (!blueComponentIsInRange(blueCandidate)) {
+    throw new SMCLRgbBlueComponentFromValueProviderOutOfRangeError(blueCandidate)
+  }
 
   /**
    *
@@ -160,8 +195,9 @@ class RGBATranslationTableValidator private[colors]() {
    * @param opacityCandidate
    */
   @inline
-  def validateOpacityComponent(opacityCandidate: Short): Unit =
+  def validateOpacityComponent(opacityCandidate: Short): Unit = {
     ColorValidator validateRgbaOpacityComponent opacityCandidate
+  }
 
   /**
    *
@@ -170,9 +206,9 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateFunctionProvidedOpacityComponent(opacityCandidate: Short): Unit =
-    if (!opacityComponentIsInRange(opacityCandidate)) {
-      throw new SMCLRgbaOpacityComponentFromValueProviderOutOfRangeError(opacityCandidate)
-    }
+  if (!opacityComponentIsInRange(opacityCandidate)) {
+    throw new SMCLRgbaOpacityComponentFromValueProviderOutOfRangeError(opacityCandidate)
+  }
 
   /**
    *
@@ -288,10 +324,10 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateSeparateDimensions(
-    reds: Seq[Short],
-    greens: Seq[Short],
-    blues: Seq[Short],
-    opacities: Seq[Short]): Unit = {
+      reds: Seq[Short],
+      greens: Seq[Short],
+      blues: Seq[Short],
+      opacities: Seq[Short]): Unit = {
 
     validateRedDimension(reds)
     validateGreenDimension(greens)
@@ -306,7 +342,7 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateFunctionProvidedComponents(
-    rgbaTuple: (Short, Short, Short, Short)): Unit = {
+      rgbaTuple: (Short, Short, Short, Short)): Unit = {
 
     validateFunctionProvidedRedComponent(rgbaTuple._1)
     validateFunctionProvidedGreenComponent(rgbaTuple._2)
