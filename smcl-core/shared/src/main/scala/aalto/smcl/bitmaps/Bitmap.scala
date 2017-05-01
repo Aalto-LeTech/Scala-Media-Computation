@@ -82,7 +82,7 @@ object Bitmap {
    */
   def apply(
       sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle.Value): BitmapLoadingResult = {
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): BitmapLoadingResult = {
 
     // The ImageProvider is trusted with validation of the source resource path.
     val loadedBuffersTry = PRF.tryToLoadImagesFromPath(sourceResourcePath)
