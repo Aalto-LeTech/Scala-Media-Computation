@@ -37,6 +37,8 @@ enablePlugins(ScalaJSPlugin)
 //
 //-------------------------------------------------------------------------------------------------
 
+lazy val primaryScalaVersion = "2.12.2"
+
 lazy val projectIdJvmPostfix = "-jvm"
 lazy val projectIdJsPostfix = "-js"
 lazy val projectIdTestPostfix = "-tests"
@@ -174,7 +176,7 @@ lazy val smclGeneralSettings = Seq(
 
   logLevel := Level.Info,
 
-  scalaVersion in ThisBuild := ApplicationDependencies.ScalaVersion,
+  scalaVersion in ThisBuild := primaryScalaVersion,
 
   javacOptions ++= Seq(
     "-source", projectJavaVersionSource,
@@ -191,26 +193,61 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   libraryDependencies ++= Seq(
+    /**
+     * scalatest
+     *
+     * @see http://www.scalatest.org
+     * @see http://search.maven.org/#search|ga|1|scalatest
+     */
     "org.scalatest" %%% "scalatest" % "3.0.1" % testConfIDCommaString withSources() withJavadoc(),
+
+    /**
+     * ScalaCheck
+     *
+     * @see https://www.scalacheck.org/
+     * @see http://search.maven.org/#search|ga|1|scalacheck
+     */
     "org.scalacheck" %%% "scalacheck" % "1.13.4" % testConfIDCommaString withSources() withJavadoc()
+
+    /**
+     * Scalactic
+     *
+     * @see http://www.scalactic.org/
+     * @see http://search.maven.org/#search|ga|1|scalactic
+     */
+    // "org.scalactic" %% "scalactic" % "3.0.1" withSources() withJavadoc()
+
+    /**
+     * Scalaz
+     *
+     * @see https://github.com/scalaz/scalaz
+     * @see http://search.maven.org/#search|ga|1|scalaz
+     */
+    // "org.scalaz" %% "scalaz-core" % "7.2.12"
   ),
 
   initialCommands in console :=
-    """import aalto.smcl._
-      |import aalto.smcl.infrastructure._
-      |import aalto.smcl.geometry._
-      |import aalto.smcl.fonts._
-      |import aalto.smcl.colors._
-      |import aalto.smcl.bitmaps._
-      |import aalto.smcl.viewers._
-      |
-      |aalto.smcl.infrastructure.jvmawt.Initializer()
-      |aalto.smcl.viewers.bitmaps.jvmawt.Initializer()
-      |""".stripMargin
+      """import aalto.smcl._
+        |import aalto.smcl.infrastructure._
+        |import aalto.smcl.geometry._
+        |import aalto.smcl.fonts._
+        |import aalto.smcl.colors._
+        |import aalto.smcl.bitmaps._
+        |import aalto.smcl.viewers._
+        |
+        |aalto.smcl.infrastructure.jvmawt.Initializer()
+        |aalto.smcl.viewers.bitmaps.jvmawt.Initializer()
+        |""".stripMargin
 )
 
 lazy val smclGeneralJsSettings = Seq(
   libraryDependencies ++= Seq(
+    /**
+     * Scala.js DOM
+     *
+     * @see https://www.scala-js.org/
+     * @see http://search.maven.org/#search|ga|1|scalajs-dom
+     */
     "org.scala-js" %%% "scalajs-dom" % "0.9.1" withSources() withJavadoc()
   ),
 
@@ -226,7 +263,13 @@ lazy val smclGeneralJsSettings = Seq(
 
 lazy val smclGeneralJvmSettings = Seq(
   libraryDependencies ++= Seq(
-    ApplicationDependencies.ScalaJsStubs % "provided"
+    /**
+     * Scala.js Stubs for Scala
+     *
+     * @see https://www.scala-js.org/
+     * @see http://search.maven.org/#search|ga|1|scalajs-stubs
+     */
+    "org.scala-js" %% "scalajs-stubs" % "0.6.14" % "provided" withSources() withJavadoc()
   ),
 
   testOptions in Test := Seq(Tests.Filter(unitTestFilterForJVM)),
@@ -248,36 +291,49 @@ lazy val smclGeneralJvmSettings = Seq(
 
 lazy val smclBitmapViewer =
   CrossProject(prjSmclBitmapViewerJvmId, prjSmclBitmapViewerJsId, file(prjSmclBitmapViewerId), CrossType.Full)
-  .configs(ItgTest, GUITest, SmokeTest, LearningTest)
-  .settings(
-    name := prjSmclBitmapViewerId,
-    version := prjSmclBitmapViewerVersion,
-    isSnapshot := isSnapshotVersion(prjSmclBitmapViewerVersion),
-    description := prjSmclBitmapViewerDescription,
-    smclGeneralSettings,
-    scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerName),
-    inConfig(ItgTest)(Defaults.testTasks),
-    inConfig(GUITest)(Defaults.testTasks),
-    inConfig(SmokeTest)(Defaults.testTasks),
-    inConfig(LearningTest)(Defaults.testTasks)
-  )
-  .jvmSettings(
-    smclGeneralJvmSettings,
-    onLoadMessage := prjSmclBitmapViewerName + " JVM Project Loaded",
-    libraryDependencies ++= Seq(
-      ApplicationDependencies.RxScala,
-      ApplicationDependencies.ScalaSwing
-    )
-  )
-  .jsSettings(
-    smclGeneralJsSettings,
-    onLoadMessage := prjSmclBitmapViewerName + " JS Project Loaded",
-    inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-    inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
-    inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-    inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
-  )
-  .dependsOn(smclCore % confToConfSemiColonString)
+      .configs(ItgTest, GUITest, SmokeTest, LearningTest)
+      .settings(
+        name := prjSmclBitmapViewerId,
+        version := prjSmclBitmapViewerVersion,
+        isSnapshot := isSnapshotVersion(prjSmclBitmapViewerVersion),
+        description := prjSmclBitmapViewerDescription,
+        smclGeneralSettings,
+        scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerName),
+        inConfig(ItgTest)(Defaults.testTasks),
+        inConfig(GUITest)(Defaults.testTasks),
+        inConfig(SmokeTest)(Defaults.testTasks),
+        inConfig(LearningTest)(Defaults.testTasks)
+      )
+      .jvmSettings(
+        smclGeneralJvmSettings,
+        onLoadMessage := prjSmclBitmapViewerName + " JVM Project Loaded",
+        libraryDependencies ++= Seq(
+          /**
+           * RxScala
+           *
+           * @see http://reactivex.io/rxscala/
+           * @see http://search.maven.org/#search|ga|1|rxscala
+           */
+          "io.reactivex" %% "rxscala" % "0.26.5" withSources () withJavadoc (),
+
+          /**
+           * Scala Swing
+           *
+           * @see http://www.scala-lang.org/
+           * @see http://search.maven.org/#search|ga|1|scala-swing
+           */
+          "org.scala-lang.modules" %% "scala-swing" % "2.0.0" withSources () withJavadoc ()
+        )
+      )
+      .jsSettings(
+        smclGeneralJsSettings,
+        onLoadMessage := prjSmclBitmapViewerName + " JS Project Loaded",
+        inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
+        inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
+        inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
+        inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+      )
+      .dependsOn(smclCore % confToConfSemiColonString)
 
 lazy val smclBitmapViewerJVM = smclBitmapViewer.jvm
 lazy val smclBitmapViewerJS = smclBitmapViewer.js
@@ -293,31 +349,31 @@ lazy val smclBitmapViewerJS = smclBitmapViewer.js
 
 lazy val smclCore =
   CrossProject(prjSmclCoreJvmId, prjSmclCoreJsId, file(prjSmclCoreId), CrossType.Full)
-  .configs(ItgTest, GUITest, SmokeTest, LearningTest)
-  .settings(
-    name := prjSmclCoreId,
-    version := prjSmclCoreVersion,
-    isSnapshot := isSnapshotVersion(prjSmclCoreVersion),
-    description := prjSmclCoreDescription,
-    smclGeneralSettings,
-    scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreName),
-    inConfig(ItgTest)(Defaults.testTasks),
-    inConfig(GUITest)(Defaults.testTasks),
-    inConfig(SmokeTest)(Defaults.testTasks),
-    inConfig(LearningTest)(Defaults.testTasks)
-  )
-  .jvmSettings(
-    smclGeneralJvmSettings,
-    onLoadMessage := prjSmclCoreName + " JVM Project Loaded"
-  )
-  .jsSettings(
-    smclGeneralJsSettings,
-    onLoadMessage := prjSmclCoreName + " JS Project Loaded",
-    inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-    inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
-    inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-    inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
-  )
+      .configs(ItgTest, GUITest, SmokeTest, LearningTest)
+      .settings(
+        name := prjSmclCoreId,
+        version := prjSmclCoreVersion,
+        isSnapshot := isSnapshotVersion(prjSmclCoreVersion),
+        description := prjSmclCoreDescription,
+        smclGeneralSettings,
+        scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreName),
+        inConfig(ItgTest)(Defaults.testTasks),
+        inConfig(GUITest)(Defaults.testTasks),
+        inConfig(SmokeTest)(Defaults.testTasks),
+        inConfig(LearningTest)(Defaults.testTasks)
+      )
+      .jvmSettings(
+        smclGeneralJvmSettings,
+        onLoadMessage := prjSmclCoreName + " JVM Project Loaded"
+      )
+      .jsSettings(
+        smclGeneralJsSettings,
+        onLoadMessage := prjSmclCoreName + " JS Project Loaded",
+        inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
+        inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
+        inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
+        inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+      )
 
 lazy val smclCoreJVM = smclCore.jvm
 lazy val smclCoreJS = smclCore.js
@@ -332,17 +388,17 @@ lazy val smclCoreJS = smclCore.js
 //-------------------------------------------------------------------------------------------------
 
 lazy val smcl = project.in(file("."))
-  .configs(ItgTest, GUITest, SmokeTest, LearningTest)
-  .settings(
-    smclGeneralSettings,
-    onLoadMessage := smclName + " Root Project Loaded"
-  )
-  .aggregate(
-    smclBitmapViewerJVM, smclBitmapViewerJS,
-    smclCoreJVM, smclCoreJS)
-  .dependsOn(
-    smclBitmapViewerJVM, smclBitmapViewerJS,
-    smclCoreJS, smclCoreJVM)
+    .configs(ItgTest, GUITest, SmokeTest, LearningTest)
+    .settings(
+      smclGeneralSettings,
+      onLoadMessage := smclName + " Root Project Loaded"
+    )
+    .aggregate(
+      smclBitmapViewerJVM, smclBitmapViewerJS,
+      smclCoreJVM, smclCoreJS)
+    .dependsOn(
+      smclBitmapViewerJVM, smclBitmapViewerJS,
+      smclCoreJS, smclCoreJVM)
 
 
 
