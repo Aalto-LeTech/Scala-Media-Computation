@@ -27,6 +27,7 @@ import javax.imageio.{ImageIO, ImageReader}
 import scala.util._
 
 import aalto.smcl.bitmaps._
+import aalto.smcl.bitmaps.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
 import aalto.smcl.infrastructure.exceptions._
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, CommonFileUtils, EnsureClosingOfAfter}
 
@@ -151,7 +152,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
 
     if (bitmapValidator.maximumSizeLimitsAreExceeded(width, height)) {
       val newThrowable =
-        new SMCLMaximumBitmapSizeExceededError(
+        new MaximumBitmapSizeExceededError(
           Option(width), Option(height),
           Option(filePath), Option(currentImageIndex), bitmapValidator)
 
@@ -160,7 +161,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
 
     if (bitmapValidator.minimumSizeLimitsAreNotMet(width, height)) {
       val newThrowable =
-        new SMCLMinimumBitmapSizeNotMetError(
+        new MinimumBitmapSizeNotMetError(
           Option(width), Option(height),
           Option(filePath), Option(currentImageIndex), bitmapValidator)
 

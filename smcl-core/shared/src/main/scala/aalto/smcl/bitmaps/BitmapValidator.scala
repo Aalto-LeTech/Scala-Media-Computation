@@ -17,6 +17,7 @@
 package aalto.smcl.bitmaps
 
 
+import aalto.smcl.bitmaps.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
 import aalto.smcl.infrastructure.{BitmapHeightWarningLimitInPixels, BitmapWidthWarningLimitInPixels, GS}
 
 
@@ -150,18 +151,18 @@ class BitmapValidator private[smcl]() {
    * @param actualWidthInPixels
    * @param actualHeightInPixels
    *
-   * @throws SMCLMinimumBitmapSizeNotMetError
-   * @throws SMCLMaximumBitmapSizeExceededError
+   * @throws MinimumBitmapSizeNotMetError
+   * @throws MaximumBitmapSizeExceededError
    */
   @inline
   def validateBitmapSize(actualWidthInPixels: Int, actualHeightInPixels: Int): Unit = {
     if (minimumSizeLimitsAreNotMet(actualWidthInPixels, actualHeightInPixels)) {
-      throw new SMCLMinimumBitmapSizeNotMetError(
+      throw new MinimumBitmapSizeNotMetError(
         Option(actualWidthInPixels), Option(actualHeightInPixels), None, None, new BitmapValidator())
     }
 
     if (maximumSizeLimitsAreExceeded(actualWidthInPixels, actualHeightInPixels)) {
-      throw new SMCLMaximumBitmapSizeExceededError(
+      throw new MaximumBitmapSizeExceededError(
         Option(actualWidthInPixels), Option(actualHeightInPixels), None, None, new BitmapValidator())
     }
   }
