@@ -22,16 +22,5 @@ package aalto.smcl.infrastructure.exceptions
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLInvalidZeroToOneFactorError private[smcl](private val detailMessage: String, cause: Throwable)
-    extends RuntimeException(detailMessage, cause) {
-
-  /**
-   *
-   *
-   * @param detailMessage
-   *
-   * @return
-   */
-  def this(detailMessage: String) = this(detailMessage, null)
-
-}
+case object SuitableImageReaderNotFoundError extends SMCLBaseError(
+  "A suitable image reader for the given image file could not be found.", null)

@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.infrastructure.exceptions.SMCLSettingValidationError
+import aalto.smcl.infrastructure.exceptions.SettingValidationError
 
 
 
@@ -40,7 +40,7 @@ final class Setting[SettingType](
     extends Mutable with Tokenizable {
 
   if (validator != null)
-    validator(initialValue) foreach {reason => throw new SMCLSettingValidationError(key, reason)}
+    validator(initialValue) foreach {reason => throw SettingValidationError(key, reason)}
 
   /** Holds the current value of this [[Setting]]. */
   private var _currentValue: SettingType = initialValue
@@ -58,12 +58,12 @@ final class Setting[SettingType](
    *
    * @param value The new value to be set.
    *
-   * @throws SMCLSettingValidationError Thrown if the validator defined for the setting does not accept the proposed new value.
+   * @throws SettingValidationError Thrown if the validator defined for the setting does not accept the proposed new value.
    */
   def value_=(value: SettingType): Unit = {
     if (validator != null) {
       validator(value) foreach {
-        reason => throw new SMCLSettingValidationError(key, reason)
+        reason => throw SettingValidationError(key, reason)
       }
     }
 

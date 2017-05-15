@@ -17,28 +17,53 @@
 package aalto.smcl.infrastructure.exceptions
 
 
-import aalto.smcl.infrastructure.BaseSettingKeys
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
+private[smcl]
+object ResourceWithGivenIndexNotFoundError {
+
+  /**
+   *
+   * @param invalidIndex
+   * @param minimumValidIndex
+   * @param maximumValidIndex
+   *
+   * @return
+   */
+  def apply(
+      invalidIndex: Int,
+      minimumValidIndex: Int,
+      maximumValidIndex: Int): SMCLBaseError = {
+    new ResourceWithGivenIndexNotFoundError(
+      invalidIndex,
+      minimumValidIndex,
+      maximumValidIndex,
+      null)
+  }
+
+}
 
 
 
 
 /**
  *
+ * @param invalidIndex
+ * @param minimumValidIndex
+ * @param maximumValidIndex
+ * @param cause
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLUninitializedSettingError private[smcl](settingKey: BaseSettingKeys.Value[_], cause: Throwable)
-    extends RuntimeException(
-      s"""No setting with name "${settingKey.toString}" is initialized.""",
-      cause) {
-
-  /**
-   *
-   *
-   * @param settingKey
-   *
-   * @return
-   */
-  def this(settingKey: BaseSettingKeys.Value[_]) = this(settingKey, null)
-
-}
+final case class ResourceWithGivenIndexNotFoundError private[smcl](
+    invalidIndex: Int,
+    minimumValidIndex: Int,
+    maximumValidIndex: Int,
+    override val cause: Throwable)
+    extends SMCLBaseError(
+      s"Resource #$invalidIndex was not found. " +
+          s"The valid indices are from $minimumValidIndex to $maximumValidIndex",
+      cause)

@@ -17,6 +17,28 @@
 package aalto.smcl.infrastructure.exceptions
 
 
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
+private[smcl]
+object FileNotFoundError {
+
+  /**
+   *
+   *
+   * @param filename
+   *
+   * @return
+   */
+  def apply(filename: String): SMCLBaseError = {
+    new FileNotFoundError(filename, null)
+  }
+
+}
+
+
 
 
 /**
@@ -24,7 +46,5 @@ package aalto.smcl.infrastructure.exceptions
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLFileNotFoundError private[smcl](filename: String, cause: Throwable)
-    extends RuntimeException(s"""File \"$filename\" cannot be found.""", cause) {
-
-}
+final case class FileNotFoundError private[smcl](filename: String, override val cause: Throwable)
+    extends SMCLBaseError(s"""File \"$filename\" cannot be found.""", cause)

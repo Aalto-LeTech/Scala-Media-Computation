@@ -17,15 +17,14 @@
 package aalto.smcl.infrastructure.exceptions
 
 
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLUnknownMediaTypeError private[smcl]()
-    extends RuntimeException(
-      s"""The given object does not represent a known media type.""") {
-
-}
+final case class ImageInputStreamNotCreatedError private[smcl](
+    override val cause: Throwable)
+    extends SMCLBaseError(
+      "Input stream for the image file could not be created, possibly " +
+          "because a cache file could not be created.",
+      cause)

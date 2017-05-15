@@ -18,7 +18,7 @@ package aalto.smcl.bitmaps
 
 
 import aalto.smcl.infrastructure.BitmapBufferAdapter
-import aalto.smcl.infrastructure.exceptions.SMCLInvalidColorComponentArrayLengthError
+import aalto.smcl.infrastructure.exceptions.InvalidColorComponentArrayLengthError
 
 
 
@@ -135,22 +135,22 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
       opacities: Array[Int]): Unit = {
 
     if (reds.length != areaInPixels)
-      throw new SMCLInvalidColorComponentArrayLengthError(
+      throw InvalidColorComponentArrayLengthError(
         "Expected length for the given red RGBA component array is " +
             s"$areaInPixels, but actually was ${reds.length}")
 
     if (greens.length != areaInPixels)
-      throw new SMCLInvalidColorComponentArrayLengthError(
+      throw InvalidColorComponentArrayLengthError(
         "Expected length for the given green RGBA component array is " +
             s"$areaInPixels, but actually was ${greens.length}")
 
     if (blues.length != areaInPixels)
-      throw new SMCLInvalidColorComponentArrayLengthError(
+      throw InvalidColorComponentArrayLengthError(
         "Expected length for the given blue RGBA component array is " +
             s"$areaInPixels, but actually was ${blues.length}")
 
     if (opacities.length != areaInPixels)
-      throw new SMCLInvalidColorComponentArrayLengthError(
+      throw InvalidColorComponentArrayLengthError(
         "Expected length for the given opacity RGBA component array is " +
             s"$areaInPixels, but actually was ${opacities.length}")
 

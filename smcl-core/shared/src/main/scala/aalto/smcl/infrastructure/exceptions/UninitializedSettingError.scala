@@ -14,13 +14,10 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure.jvmawt
+package aalto.smcl.infrastructure.exceptions
 
 
-import scala.swing.Dialog
-import scala.swing.Dialog.{Message, Options}
-
-import aalto.smcl.infrastructure.exceptions.UnexpectedInternalError
+import aalto.smcl.infrastructure.BaseSettingKeys
 
 
 
@@ -30,27 +27,30 @@ import aalto.smcl.infrastructure.exceptions.UnexpectedInternalError
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl]
-class SwingUtils() {
+object UninitializedSettingError {
 
   /**
    *
    *
-   * @return
-   */
-  def yesNoDialogResultAsBoolean(result: Dialog.Result.Value): Boolean = result match {
-    case Dialog.Result.Yes    => true
-    case Dialog.Result.No     => false
-    case Dialog.Result.Closed => false
-    case _                    => throw UnexpectedInternalError("Invalid dialog return value.")
-  }
-
-  /**
-   *
+   * @param settingKey
    *
    * @return
    */
-  val showParentlessYesNoQuestionDialog: (String, String) => Dialog.Result.Value =
-    Dialog.showConfirmation(parent = null, _: String, _: String, Options.YesNo, Message.Question)
+  def apply(settingKey: BaseSettingKeys.Value[_]): UninitializedSettingError =
+    UninitializedSettingError(settingKey, null)
 
 }
+
+
+
+
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
+final case class UninitializedSettingError private[smcl](
+    settingKey: BaseSettingKeys.Value[_], override val cause: Throwable)
+    extends SMCLBaseError(
+      s"""No setting with name "${settingKey.toString}" is initialized.""",
+      cause)

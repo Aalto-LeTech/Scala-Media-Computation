@@ -19,7 +19,7 @@ package aalto.smcl.viewers
 
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.infrastructure.Displayable
-import aalto.smcl.infrastructure.exceptions.{SMCLImplementationNotSetError, SMCLUnknownMediaTypeError}
+import aalto.smcl.infrastructure.exceptions.{ImplementationNotSetError, UnknownMediaTypeError}
 
 
 
@@ -43,7 +43,7 @@ object DefaultViewerApplicationClient extends ViewerApplicationClient {
   override def display(resource: Displayable): Unit = {
     resource match {
       case bmp: Bitmap => bitmapViewerApplication.display(bmp)
-      case _           => throw new SMCLUnknownMediaTypeError()
+      case _           => throw UnknownMediaTypeError
     }
   }
 
@@ -68,6 +68,6 @@ object DefaultViewerApplicationClient extends ViewerApplicationClient {
    * @return
    */
   private def bitmapViewerApplication: BitmapViewerApplication =
-    _bitmapViewerApplication.getOrElse(throw new SMCLImplementationNotSetError("DefaultViewerClient"))
+    _bitmapViewerApplication.getOrElse(throw ImplementationNotSetError("DefaultViewerClient"))
 
 }

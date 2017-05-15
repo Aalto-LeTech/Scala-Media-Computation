@@ -22,7 +22,7 @@ package aalto.smcl.infrastructure.exceptions
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLImageReaderNotRetrievedError private[smcl](cause: Throwable)
-    extends RuntimeException("A suitable image reader for the given image file could not be retrieved.", cause) {
-
-}
+case object SuitableImageStreamProviderNotFoundError
+    extends SMCLBaseError(
+      "Input stream for the image file could not be created " +
+          "because a suitable stream provider could not be found.", null)

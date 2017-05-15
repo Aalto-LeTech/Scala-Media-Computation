@@ -75,11 +75,20 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    *
    * @return
    *
-   * @throws SMCLImageInputStreamNotCreatedError
-   * @throws SMCLSuitableImageStreamProviderNotFoundError
-   * @throws SMCLSuitableImageReaderNotFoundError
-   * @throws SMCLImageReaderNotRetrievedError
    * @throws SecurityException
+   * @throws PathIsNullError
+   * @throws PathIsEmptyOrOnlyWhitespaceError
+   * @throws FileAttributeRetrievalFailedError
+   * @throws PathPointsToFolderError
+   * @throws PathPointsToSymbolicLinkError
+   * @throws PathDoesNotPointToRegularFileError
+   * @throws UnknownFileExtensionError
+   * @throws FileNotFoundError
+   * @throws EmptyFileError
+   * @throws SuitableImageStreamProviderNotFoundError
+   * @throws ImageInputStreamNotCreatedError
+   * @throws SuitableImageReaderNotFoundError
+   * @throws ImageReaderNotRetrievedError
    */
   private def loadImagesFromFile(path: String): Seq[Either[Throwable, BitmapBufferAdapter]] = {
     val (imageFile, imagePath, imageExtension) =
@@ -115,7 +124,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
     val lastImageIndex = reader.getMinIndex + reader.getNumImages(WithSearchingAllowed) - 1
     val imageNumberRange = reader.getMinIndex to lastImageIndex
 
-    imageNumberRange.map(loadSingleImageFromReader(_, reader, filePath)).toSeq
+    imageNumberRange.map(loadSingleImageFromReader(_, reader, filePath))
   }
 
   /**
@@ -169,6 +178,26 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
     Right(platformBitmapBuffer)
   }
 
+  /**
+   *
+   *
+   * @param imageFile
+   *
+   * @return
+   *
+   * @throws SuitableImageStreamProviderNotFoundError
+   * @throws ImageInputStreamNotCreatedError
+   */
+  private def createImageInputStreamFor(imageFile: File): ImageInputStream = {
+    val inputStream = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)).recover({
+      case e: IOException => throw ImageInputStreamNotCreatedError(e)
+    }).get
+
+    if (inputStream == null)
+      throw SuitableImageStreamProviderNotFoundError
+
+    inputStream
+  }
 
   /**
    *
@@ -177,38 +206,17 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    *
    * @return
    *
-   * @throws SMCLSuitableImageReaderNotFoundError
-   * @throws SMCLImageReaderNotRetrievedError
+   * @throws SuitableImageReaderNotFoundError
+   * @throws ImageReaderNotRetrievedError
    */
   private def findSuitableImageReaderFor(inputStream: ImageInputStream): ImageReader = {
     val imageReaders = ImageIO.getImageReaders(inputStream)
     if (!imageReaders.hasNext)
-      throw new SMCLSuitableImageReaderNotFoundError()
+      throw SuitableImageReaderNotFoundError
 
     Try(imageReaders.next()).recover({
-      case t: Throwable => throw new SMCLImageReaderNotRetrievedError(t)
+      case t: Throwable => throw ImageReaderNotRetrievedError(t)
     }).get
-  }
-
-  /**
-   *
-   *
-   * @param imageFile
-   *
-   * @return
-   *
-   * @throws SMCLImageInputStreamNotCreatedError
-   * @throws SMCLSuitableImageStreamProviderNotFoundError
-   */
-  private def createImageInputStreamFor(imageFile: File): ImageInputStream = {
-    val inputStream = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)).recover({
-      case e: IOException => throw new SMCLImageInputStreamNotCreatedError(e)
-    }).get
-
-    if (inputStream == null)
-      throw new SMCLSuitableImageStreamProviderNotFoundError()
-
-    inputStream
   }
 
   /**
@@ -219,46 +227,47 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    * @return
    *
    * @throws SecurityException
+   * @throws PathIsNullError
+   * @throws PathIsEmptyOrOnlyWhitespaceError
+   * @throws FileAttributeRetrievalFailedError
+   * @throws PathPointsToFolderError
+   * @throws PathPointsToSymbolicLinkError
+   * @throws PathDoesNotPointToRegularFileError
+   * @throws UnknownFileExtensionError
+   * @throws FileNotFoundError
+   * @throws EmptyFileError
    */
   private def ensureThatImageFileIsReadableAndSupported(filePath: String): (File, String, String) = {
-    require(filePath != null, "Path of the image file to be loaded cannot be null.")
+    if (filePath == null)
+      throw PathIsNullError
 
-    val pathToFile = filePath.trim
-    require(!pathToFile.isEmpty,
-      "Path of the image file to be loaded cannot be an empty string or contain only white space.")
+    val trimmedPathstring = filePath.trim
+    if (trimmedPathstring.isEmpty)
+      throw PathIsEmptyOrOnlyWhitespaceError
 
-
-    val imageFile = new File(pathToFile)
+    val imageFile = new File(trimmedPathstring)
     val imageFilePath = imageFile.toPath
 
-    val attributes: BasicFileAttributes =
+    val fileAttributes: BasicFileAttributes =
       Try(Files.readAttributes(imageFilePath, classOf[BasicFileAttributes])).recover({
-        case e: NoSuchFileException => throw new SMCLFileNotFoundError(pathToFile, e)
-        case other: Throwable       => throw new SMCLFileAttributeRetrievalFailedError(other)
+        case e: NoSuchFileException => throw FileNotFoundError(trimmedPathstring, e)
+        case other: Throwable       => throw FileAttributeRetrievalFailedError(other)
       }).get
 
-    require(!attributes.isDirectory, "The specified path points to a folder instead of an image file.")
-    require(!attributes.isSymbolicLink, "The specified path points to a symbolic link instead of an image file.")
-    require(attributes.isRegularFile, "The specified path does not point to a regular image file.")
-    require(Files.exists(imageFilePath), "The specified file does not exist.")
-    require(attributes.size > 0, "The specified file has no content.")
+    Map(
+      fileAttributes.isDirectory -> PathPointsToFolderError,
+      fileAttributes.isSymbolicLink -> PathPointsToSymbolicLinkError,
+      !fileAttributes.isRegularFile -> PathDoesNotPointToRegularFileError,
+      !Files.exists(imageFilePath) -> FileNotFoundError(trimmedPathstring),
+      (fileAttributes.size <= 0) -> EmptyFileError
+    ).find(_._1) map { pair => throw pair._2 }
 
+    val fileExtension: String = new CommonFileUtils().resolveExtensionOf(imageFile.getName)
+    if (supportedReadableFileExtensions.contains(fileExtension))
+      throw UnknownFileExtensionError(
+        fileExtension, supportedReadableFileExtensions)
 
-    val extension: String = new CommonFileUtils().resolveExtensionOf(imageFile.getName)
-    ensureThatFileExtensionIsOfSupportedImageType(extension)
-
-    (imageFile.getAbsoluteFile, imageFile.getAbsolutePath, extension)
-  }
-
-  /**
-   *
-   *
-   * @param extension
-   */
-  private def ensureThatFileExtensionIsOfSupportedImageType(extension: String): Unit = {
-    require(supportedReadableFileExtensions.contains(extension),
-      "Extension of the given file is unknown (the supported ones are " +
-          supportedReadableFileExtensions.mkString(StrComma + StrSpace) + ").")
+    (imageFile.getAbsoluteFile, imageFile.getAbsolutePath, fileExtension)
   }
 
 

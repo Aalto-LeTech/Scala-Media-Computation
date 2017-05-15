@@ -22,9 +22,5 @@ package aalto.smcl.infrastructure.exceptions
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLImageInputStreamNotCreatedError private[smcl](cause: Throwable)
-    extends RuntimeException(
-      "Input stream for the image file could not be created, possibly because a cache file could not be created.",
-      cause) {
-
-}
+final case class ImageFileReadingError private[smcl](override val cause: Throwable)
+    extends SMCLBaseError("An error occurred while reading an image file.", cause)

@@ -29,7 +29,7 @@ import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
-import aalto.smcl.infrastructure.exceptions.{SMCLFunctionExecutionError, SMCLInvalidColorComponentArrayLengthError}
+import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
 
 
 
@@ -346,7 +346,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
     }
 
     if (resultRgbaTuplesTry.isFailure) {
-      throw new SMCLFunctionExecutionError(
+      throw FunctionExecutionError(
         "The given pixel iteration function did not get executed correctly (see the chained exceptions)",
         resultRgbaTuplesTry.failed.get
       )
@@ -384,22 +384,22 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
       opacities: Array[Int]): Unit = {
 
     if (reds.length != areaInPixels)
-      throw new SMCLInvalidColorComponentArrayLengthError(
+      throw InvalidColorComponentArrayLengthError(
         "Expected length for the given red RGBA component array is " +
             s"$areaInPixels, but actually was ${reds.length}")
 
     if (greens.length != areaInPixels)
-      throw new SMCLInvalidColorComponentArrayLengthError(
+      throw InvalidColorComponentArrayLengthError(
         "Expected length for the given green RGBA component array is " +
             s"$areaInPixels, but actually was ${greens.length}")
 
     if (blues.length != areaInPixels)
-      throw new SMCLInvalidColorComponentArrayLengthError(
+      throw InvalidColorComponentArrayLengthError(
         "Expected length for the given blue RGBA component array is " +
             s"$areaInPixels, but actually was ${blues.length}")
 
     if (opacities.length != areaInPixels)
-      throw new SMCLInvalidColorComponentArrayLengthError(
+      throw InvalidColorComponentArrayLengthError(
         "Expected length for the given opacity RGBA component array is " +
             s"$areaInPixels, but actually was ${opacities.length}")
 

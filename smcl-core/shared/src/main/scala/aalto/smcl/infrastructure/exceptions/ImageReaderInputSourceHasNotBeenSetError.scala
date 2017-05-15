@@ -17,19 +17,12 @@
 package aalto.smcl.infrastructure.exceptions
 
 
-import aalto.smcl.infrastructure.BaseSettingKeys
-
-
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLSettingValidationError private[smcl](setting: BaseSettingKeys.Value[_], cause: Throwable)
-    extends RuntimeException(
-      s"""Validation of setting "${setting.toString}" failed (see the upstream exception).""",
-      cause) {
-
-}
+final case class ImageReaderInputSourceHasNotBeenSetError private[smcl](
+    override val cause: Throwable)
+    extends SMCLBaseError(
+      "Unable to use an image reader because its input source has not been set.", cause)

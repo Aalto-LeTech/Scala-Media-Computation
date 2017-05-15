@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure
 
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure.BaseSettingKeys._
-import aalto.smcl.infrastructure.exceptions.SMCLUninitializedSettingError
+import aalto.smcl.infrastructure.exceptions.UninitializedSettingError
 
 
 
@@ -78,7 +78,7 @@ class Settings extends Tokenizable {
    */
   def apply(key: BaseSettingKeys.Value[_]): Setting[_] = {
     if (!_settingMap.contains(key))
-      throw new SMCLUninitializedSettingError(key)
+      throw UninitializedSettingError(key)
 
     _settingMap(key)
   }

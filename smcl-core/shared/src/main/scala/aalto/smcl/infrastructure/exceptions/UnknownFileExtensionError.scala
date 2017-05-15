@@ -17,21 +17,19 @@
 package aalto.smcl.infrastructure.exceptions
 
 
+import aalto.smcl.infrastructure.{StrComma, StrSpace}
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLFunctionExecutionError private[smcl](private val detailMessage: String, cause: Throwable)
-    extends RuntimeException(detailMessage, cause) {
-
-  /**
-   *
-   *
-   * @param detailMessage
-   *
-   * @return
-   */
-  def this(detailMessage: String) = this(detailMessage, null)
-
-}
+final case class UnknownFileExtensionError private[smcl](
+    actualExtension: String,
+    supportedExtensionList: Seq[String])
+    extends SMCLBaseError(
+      s"Extension ($actualExtension) of a specified file is unknown (extensions of the supported " +
+          "file types: " + supportedExtensionList.mkString(StrComma + StrSpace) + ").", null)

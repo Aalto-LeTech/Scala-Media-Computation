@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.infrastructure.exceptions.{SMCLInvalidPercentageError, SMCLInvalidZeroToOneFactorError}
+import aalto.smcl.infrastructure.exceptions.{InvalidPercentageError, InvalidZeroToOneFactorError}
 
 
 
@@ -72,7 +72,7 @@ class CommonValidators() {
    * @param valueCandidate
    * @param percentageNameOption
    *
-   * @throws SMCLInvalidPercentageError
+   * @throws InvalidPercentageError
    */
   @inline
   def validatePercentage(valueCandidate: Double, percentageNameOption: Option[String]): Unit =
@@ -80,7 +80,7 @@ class CommonValidators() {
     val strError = percentageNameOption.fold("Given")({_.capitalize}) +
         s" percentage must be between $MinimumPercentage and $MaximumPercentage (was $valueCandidate)"
 
-    throw new SMCLInvalidPercentageError(strError)
+    throw InvalidPercentageError(strError)
   }
 
   /**
@@ -89,7 +89,7 @@ class CommonValidators() {
    * @param valueCandidate
    * @param factorNameOption
    *
-   * @throws SMCLInvalidZeroToOneFactorError
+   * @throws InvalidZeroToOneFactorError
    */
   @inline
   def validateZeroToOneFactor(valueCandidate: Double, factorNameOption: Option[String]): Unit =
@@ -97,7 +97,7 @@ class CommonValidators() {
     val strError = factorNameOption.fold("Given")({_.capitalize}) +
         s" factor must be between $MinimumZeroToOneFactor and $MaximumZeroToOneFactor (was $valueCandidate)"
 
-    throw new SMCLInvalidZeroToOneFactorError(strError)
+    throw InvalidZeroToOneFactorError(strError)
   }
 
 }

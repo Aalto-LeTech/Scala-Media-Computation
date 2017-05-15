@@ -27,7 +27,7 @@ import scala.swing.event._
 import aalto.smcl.SMCLLibrary._
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.infrastructure.PRF
-import aalto.smcl.infrastructure.exceptions.SMCLUnexpectedInternalError
+import aalto.smcl.infrastructure.exceptions.UnexpectedInternalError
 import aalto.smcl.infrastructure.jvmawt.SwingUtils
 import aalto.smcl.viewers.bitmaps.jvmawt.ScrollingDirection.{Downwards, Leftwards, Upwards}
 
@@ -238,7 +238,7 @@ class ViewerMainFrame private(
             case (Shift, false)       => ScrollingDirection.Rightwards
 
             case _ =>
-              throw new SMCLUnexpectedInternalError(
+              throw UnexpectedInternalError(
                 "Invalid value match when determining scrolling direction.")
           }
 

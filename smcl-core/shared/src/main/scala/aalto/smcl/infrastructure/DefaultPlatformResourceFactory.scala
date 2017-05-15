@@ -20,7 +20,7 @@ package aalto.smcl.infrastructure
 import scala.util.{Either, Try}
 
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.exceptions.SMCLImplementationNotSetError
+import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
 import aalto.smcl.interfaces.Timestamp
 
 
@@ -119,6 +119,6 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    * @return
    */
   private def implementation: PlatformResourceFactory =
-    _implementation.getOrElse(throw new SMCLImplementationNotSetError("DefaultPlatformResourceFactory"))
+    _implementation.getOrElse(throw ImplementationNotSetError("DefaultPlatformResourceFactory"))
 
 }
