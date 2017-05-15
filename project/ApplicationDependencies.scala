@@ -27,7 +27,7 @@ import sbt._
 object ApplicationDependencies {
 
   /** Scala version. */
-  lazy val ScalaVersion = "2.12.1"
+  lazy val ScalaVersion = "2.12.2"
 
 
   /**
