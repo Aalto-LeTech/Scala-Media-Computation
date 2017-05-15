@@ -17,17 +17,13 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.infrastructure._
-
-
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLInvalidBlueDimensionLengthError private[smcl](actualLength: Double)
-    extends RuntimeException(s"The blue dimension must have exactly ${ByteRange.length} items (had $actualLength).") {
-
-}
+final case class HSIIntensityComponentOutOfRangeError private[smcl](
+    invalidValue: Double, minimumValue: Double, maximumValue: Double)
+    extends RuntimeException(
+      "The HSI intensity component of a given color was out of its Double range " +
+          s"$minimumValue - $maximumValue (was $invalidValue)")

@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -27,9 +27,5 @@ import aalto.smcl.colors.ColorValidator
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLRgbRedComponentFromValueProviderOutOfRangeError private[smcl](invalidValue: Int)
-    extends RuntimeException(
-      s"An RGB red component value returned by a value provider function was out of its range " +
-          s"${ColorValidator.MinimumRgbRed} - ${ColorValidator.MaximumRgbRed} (was $invalidValue)") {
-
-}
+case object ColorNameIsEmptyOrOnlyWhitespaceError extends SMCLBaseError(
+  "Color name cannot be an empty string or contain only white space.", null)

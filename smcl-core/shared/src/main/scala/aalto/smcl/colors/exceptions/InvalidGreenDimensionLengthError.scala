@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -27,9 +27,6 @@ import aalto.smcl.colors.ColorValidator
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLRgbaOpacityComponentOutOfRangeError private[smcl](invalidValue: Int)
-    extends RuntimeException(
-      s"The RGBA opacity component of given color was out of its Int range ${ColorValidator.MinimumRgbaOpacity} - " +
-          s"${ColorValidator.MaximumRgbaOpacity} (was $invalidValue)") {
-
-}
+final case class InvalidGreenDimensionLengthError private[smcl](
+    expectedLength: Int, actualLength: Int) extends SMCLBaseError(
+  s"The green dimension must have exactly $expectedLength items (had $actualLength).", null)

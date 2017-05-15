@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -27,9 +27,10 @@ import aalto.smcl.colors.ColorValidator
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLHsiSaturationComponentOutOfRangeError private[smcl](invalidValue: Double)
-    extends RuntimeException(
-      "The HSI saturation component of given color was out of its Double range " +
-          s"${ColorValidator.MinimumHsiSaturation} - ${ColorValidator.MaximumHsiSaturation} (was $invalidValue)") {
-
-}
+final case class InvalidHSIValueCombinationError private[smcl](
+    invalidHueValue: Double,
+    invalidSaturationValue: Double,
+    invalidIntensityValue: Double)
+    extends SMCLBaseError(
+      s"The given HSI color component combination " +
+          s"($invalidHueValue, $invalidSaturationValue, $invalidIntensityValue) is invalid.", null)

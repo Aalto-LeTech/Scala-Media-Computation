@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -25,14 +25,10 @@ import aalto.smcl.colors.ColorValidator
 /**
  *
  *
- * @param invalidValue
- *
  * @author Aleksi Lukkarinen
  */
-final class SMCLNormalizedRgbaOpacityComponentOutOfRangeError private[smcl](invalidValue: Double)
-    extends RuntimeException(
-      s"The normalized RGBA opacity component of given color was out of its Double range " +
-          s"${ColorValidator.MinimumNormalizedRgbaOpacity} - " +
-          s"${ColorValidator.MaximumNormalizedRgbaOpacity} (was $invalidValue)") {
-
-}
+final case class HSVValueComponentOutOfRangeError private[smcl](
+    invalidValue: Double, minimumValue: Double, maximumValue: Double)
+    extends SMCLBaseError(
+      "The HSV value component of a given color was out of its Double range " +
+          s"$minimumValue - $maximumValue (was $invalidValue)", null)

@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -27,9 +27,6 @@ import aalto.smcl.colors.ColorValidator
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLHsvSaturationComponentOutOfRangeError private[smcl](invalidValue: Double)
-    extends RuntimeException(
-      s"The HSV saturation component of given color was out of its Double range " +
-          s"${ColorValidator.MinimumHsvSaturation} - ${ColorValidator.MaximumHsvSaturation} (was $invalidValue)") {
-
-}
+final case class InvalidOpacityDimensionLengthError private[smcl](
+    expectedLength: Int, actualLength: Int) extends SMCLBaseError(
+  s"The opacity dimension must have exactly $expectedLength items (had $actualLength).", null)

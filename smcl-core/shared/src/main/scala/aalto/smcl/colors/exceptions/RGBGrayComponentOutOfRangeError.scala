@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -27,9 +27,8 @@ import aalto.smcl.colors.ColorValidator
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLRgbGreenComponentOutOfRangeError private[smcl](invalidValue: Int)
-    extends RuntimeException(
-      s"The RGB green component of given color was out of Int its range ${ColorValidator.MinimumRgbGreen} - " +
-          s"${ColorValidator.MaximumRgbGreen} (was $invalidValue)") {
-
-}
+final case class RGBGrayComponentOutOfRangeError private[smcl](
+    invalidValue: Int, minimumValue: Int, maximumValue: Int)
+    extends SMCLBaseError(
+      "The RGB gray component of a given color was out of Int its range " +
+          s"$minimumValue - $maximumValue (was $invalidValue)", null)

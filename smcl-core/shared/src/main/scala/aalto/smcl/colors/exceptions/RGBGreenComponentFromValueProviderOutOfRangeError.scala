@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.infrastructure._
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -27,7 +27,8 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLInvalidGreenDimensionLengthError private[smcl](actualLength: Double)
-    extends RuntimeException(s"The green dimension must have exactly ${ByteRange.length} items (had $actualLength).") {
-
-}
+final case class RGBGreenComponentFromValueProviderOutOfRangeError private[smcl](
+    invalidValue: Int, minimumValue: Int, maximumValue: Int)
+    extends SMCLBaseError(
+      "An RGB green component value returned by a value provider function was out of its range " +
+          s"$minimumValue - $maximumValue (was $invalidValue)", null)

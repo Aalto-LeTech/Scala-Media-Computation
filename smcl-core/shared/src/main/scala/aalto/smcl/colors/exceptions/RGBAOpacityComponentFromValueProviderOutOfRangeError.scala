@@ -17,17 +17,18 @@
 package aalto.smcl.colors.exceptions
 
 
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLInvalidHsiValueCombinationError private[smcl](
-    invalidHueValue: Double,
-    invalidSaturationValue: Double,
-    invalidIntensityValue: Double)
-    extends RuntimeException(
-      s"The given HSI component combination " +
-          "($invalidHueValue, $invalidSaturationValue, $invalidIntensityValue) is invalid.") {
-
-}
+final case class RGBAOpacityComponentFromValueProviderOutOfRangeError private[smcl](
+    invalidValue: Int, minimumValue: Int, maximumValue: Int)
+    extends SMCLBaseError(
+      "An RGBA opacity component value returned by a value provider function was out of its range " +
+          s"$minimumValue - $maximumValue (was $invalidValue)", null)

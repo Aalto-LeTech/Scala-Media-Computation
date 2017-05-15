@@ -18,7 +18,7 @@ package aalto.smcl.colors
 
 
 import aalto.smcl.colors
-import aalto.smcl.colors.exceptions.SMCLInvalidHsiValueCombinationError
+import aalto.smcl.colors.exceptions.InvalidHSIValueCombinationError
 import aalto.smcl.infrastructure._
 
 
@@ -718,7 +718,7 @@ trait ColorOperationsAPI {
         !ColorValidator.rgbGreenComponentIsInRange(green) ||
         !ColorValidator.rgbBlueComponentIsInRange(blue)) {
 
-      throw new SMCLInvalidHsiValueCombinationError(hueInDegrees, saturation, intensity)
+      throw InvalidHSIValueCombinationError(hueInDegrees, saturation, intensity)
     }
 
     (red, green, blue)

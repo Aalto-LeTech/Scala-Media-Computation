@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.infrastructure._
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -25,9 +25,12 @@ import aalto.smcl.infrastructure._
 /**
  *
  *
+ * @param invalidValue
+ *
  * @author Aleksi Lukkarinen
  */
-final class SMCLInvalidRedDimensionLengthError private[smcl](actualLength: Double)
-    extends RuntimeException(s"The red dimension must have exactly ${ByteRange.length} items (had $actualLength).") {
-
-}
+final case class NormalizedRGBRedComponentOutOfRangeError private[smcl](
+    invalidValue: Double, minimumValue: Double, maximumValue: Double)
+    extends SMCLBaseError(
+      "The normalized RGB red component of a given color was out of its Double range " +
+          s"$minimumValue - $maximumValue (was $invalidValue)", null)

@@ -144,7 +144,8 @@ class RGBATranslationTableValidator private[colors]() {
   @inline
   def validateFunctionProvidedRedComponent(redCandidate: Short): Unit =
   if (!redComponentIsInRange(redCandidate)) {
-    throw new SMCLRgbRedComponentFromValueProviderOutOfRangeError(redCandidate)
+    throw RGBRedComponentFromValueProviderOutOfRangeError(
+      redCandidate, ColorValidator.MinimumRgbRed, ColorValidator.MaximumRgbRed)
   }
 
   /**
@@ -165,7 +166,8 @@ class RGBATranslationTableValidator private[colors]() {
   @inline
   def validateFunctionProvidedGreenComponent(greenCandidate: Short): Unit =
   if (!greenComponentIsInRange(greenCandidate)) {
-    throw new SMCLRgbGreenComponentFromValueProviderOutOfRangeError(greenCandidate)
+    throw RGBGreenComponentFromValueProviderOutOfRangeError(
+      greenCandidate, ColorValidator.MinimumRgbGreen, ColorValidator.MaximumRgbGreen)
   }
 
   /**
@@ -186,7 +188,8 @@ class RGBATranslationTableValidator private[colors]() {
   @inline
   def validateFunctionProvidedBlueComponent(blueCandidate: Short): Unit =
   if (!blueComponentIsInRange(blueCandidate)) {
-    throw new SMCLRgbBlueComponentFromValueProviderOutOfRangeError(blueCandidate)
+    throw RGBBlueComponentFromValueProviderOutOfRangeError(
+      blueCandidate, ColorValidator.MinimumRgbBlue, ColorValidator.MaximumRgbBlue)
   }
 
   /**
@@ -207,7 +210,8 @@ class RGBATranslationTableValidator private[colors]() {
   @inline
   def validateFunctionProvidedOpacityComponent(opacityCandidate: Short): Unit =
   if (!opacityComponentIsInRange(opacityCandidate)) {
-    throw new SMCLRgbaOpacityComponentFromValueProviderOutOfRangeError(opacityCandidate)
+    throw RGBAOpacityComponentFromValueProviderOutOfRangeError(
+      opacityCandidate, ColorValidator.MinimumRgbaOpacity, ColorValidator.MaximumRgbaOpacity)
   }
 
   /**
@@ -218,7 +222,7 @@ class RGBATranslationTableValidator private[colors]() {
   @inline
   def validateRedDimensionLength(reds: Seq[Short]): Unit = {
     if (!lengthOfRedDimensionIsValid(reds)) {
-      throw new SMCLInvalidRedDimensionLengthError(reds.length)
+      throw InvalidRedDimensionLengthError(reds.length, ByteRange.length)
     }
   }
 
@@ -230,7 +234,7 @@ class RGBATranslationTableValidator private[colors]() {
   @inline
   def validateGreenDimensionLength(greens: Seq[Short]): Unit = {
     if (!lengthOfGreenDimensionIsValid(greens)) {
-      throw new SMCLInvalidGreenDimensionLengthError(greens.length)
+      throw InvalidGreenDimensionLengthError(greens.length, ByteRange.length)
     }
   }
 
@@ -242,7 +246,7 @@ class RGBATranslationTableValidator private[colors]() {
   @inline
   def validateBlueDimensionLength(blues: Seq[Short]): Unit = {
     if (!lengthOfBlueDimensionIsValid(blues)) {
-      throw new SMCLInvalidBlueDimensionLengthError(blues.length)
+      throw InvalidBlueDimensionLengthError(blues.length, ByteRange.length)
     }
   }
 
@@ -254,7 +258,7 @@ class RGBATranslationTableValidator private[colors]() {
   @inline
   def validateOpacityDimensionLength(opacities: Seq[Short]): Unit = {
     if (!lengthOfOpacityDimensionIsValid(opacities)) {
-      throw new SMCLInvalidOpacityDimensionLengthError(opacities.length)
+      throw InvalidOpacityDimensionLengthError(opacities.length, ByteRange.length)
     }
   }
 

@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -27,9 +27,8 @@ import aalto.smcl.colors.ColorValidator
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLHsiIntensityComponentOutOfRangeError private[smcl](invalidValue: Double)
-    extends RuntimeException(
-      s"The HSI intensity component of given color was out of its Double range ${ColorValidator.MinimumHsiIntensity} " +
-          s"- ${ColorValidator.MaximumHsiIntensity} (was $invalidValue)") {
-
-}
+final case class RGBBlueComponentFromValueProviderOutOfRangeError private[smcl](
+    invalidValue: Int, minimumValue: Int, maximumValue: Int)
+    extends SMCLBaseError(
+      "An RGB blue component value returned by a value provider function was out of its range " +
+          s"$minimumValue - $maximumValue (was $invalidValue)", null)

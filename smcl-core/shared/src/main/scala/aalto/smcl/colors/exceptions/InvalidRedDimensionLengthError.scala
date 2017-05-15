@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -25,14 +25,8 @@ import aalto.smcl.colors.ColorValidator
 /**
  *
  *
- * @param invalidValue
- *
  * @author Aleksi Lukkarinen
  */
-final class SMCLNormalizedRgbBlueComponentOutOfRangeError private[smcl](invalidValue: Double)
-    extends RuntimeException(
-      s"The normalized RGB blue component of given color was out of its Double range " +
-          s"${ColorValidator.MinimumNormalizedRgbBlue} - " +
-          s"${ColorValidator.MaximumNormalizedRgbBlue} (was $invalidValue)") {
-
-}
+final case class InvalidRedDimensionLengthError private[smcl](
+    expectedLength: Int, actualLength: Int) extends SMCLBaseError(
+  s"The red dimension must have exactly $expectedLength items (had $actualLength).", null)

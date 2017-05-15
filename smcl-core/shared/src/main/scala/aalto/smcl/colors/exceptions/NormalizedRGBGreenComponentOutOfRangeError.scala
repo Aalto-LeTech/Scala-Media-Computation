@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -29,10 +29,8 @@ import aalto.smcl.colors.ColorValidator
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLNormalizedRgbGrayComponentOutOfRangeError private[smcl](invalidValue: Double)
-    extends RuntimeException(
-      s"The normalized RGB gray component of given color was out of its Double range " +
-          s"${ColorValidator.MinimumNormalizedRgbGray} - " +
-          s"${ColorValidator.MaximumNormalizedRgbGray} (was $invalidValue)") {
-
-}
+final case class NormalizedRGBGreenComponentOutOfRangeError private[smcl](
+    invalidValue: Double, minimumValue: Double, maximumValue: Double)
+    extends SMCLBaseError(
+      "The normalized RGB green component of a given color was out of its Double range " +
+          s"$minimumValue - $maximumValue (was $invalidValue)", null)

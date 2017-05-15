@@ -291,12 +291,13 @@ class ColorValidator() {
    *
    * @param redCandidate
    *
-   * @throws SMCLRgbRedComponentOutOfRangeError
+   * @throws RGBRedComponentOutOfRangeError
    */
   @inline
   def validateRgbRedComponent(redCandidate: Int): Unit = {
     if (!rgbRedComponentIsInRange(redCandidate)) {
-      throw new SMCLRgbRedComponentOutOfRangeError(redCandidate)
+      throw RGBRedComponentOutOfRangeError(
+        redCandidate, MinimumRgbRed, MaximumRgbRed)
     }
   }
 
@@ -305,12 +306,13 @@ class ColorValidator() {
    *
    * @param greenCandidate
    *
-   * @throws SMCLRgbGreenComponentOutOfRangeError
+   * @throws RGBGreenComponentOutOfRangeError
    */
   @inline
   def validateRgbGreenComponent(greenCandidate: Int): Unit = {
     if (!rgbGreenComponentIsInRange(greenCandidate)) {
-      throw new SMCLRgbGreenComponentOutOfRangeError(greenCandidate)
+      throw RGBGreenComponentOutOfRangeError(
+        greenCandidate, MinimumRgbGreen, MaximumRgbGreen)
     }
   }
 
@@ -319,12 +321,13 @@ class ColorValidator() {
    *
    * @param blueCandidate
    *
-   * @throws SMCLRgbBlueComponentOutOfRangeError
+   * @throws RGBBlueComponentOutOfRangeError
    */
   @inline
   def validateRgbBlueComponent(blueCandidate: Int): Unit = {
     if (!rgbBlueComponentIsInRange(blueCandidate)) {
-      throw new SMCLRgbBlueComponentOutOfRangeError(blueCandidate)
+      throw RGBBlueComponentOutOfRangeError(
+        blueCandidate, MinimumRgbBlue, MaximumRgbBlue)
     }
   }
 
@@ -333,12 +336,13 @@ class ColorValidator() {
    *
    * @param grayCandidate
    *
-   * @throws SMCLRgbGrayComponentOutOfRangeError
+   * @throws RGBGrayComponentOutOfRangeError
    */
   @inline
   def validateRgbGrayComponent(grayCandidate: Int): Unit = {
     if (!rgbGrayComponentIsInRange(grayCandidate)) {
-      throw new SMCLRgbGrayComponentOutOfRangeError(grayCandidate)
+      throw RGBGrayComponentOutOfRangeError(
+        grayCandidate, MinimumRgbGray, MaximumRgbGray)
     }
   }
 
@@ -347,12 +351,13 @@ class ColorValidator() {
    *
    * @param opacityCandidate
    *
-   * @throws SMCLRgbaOpacityComponentOutOfRangeError
+   * @throws RGBAOpacityComponentOutOfRangeError
    */
   @inline
   def validateRgbaOpacityComponent(opacityCandidate: Int): Unit = {
     if (!rgbaOpacityComponentIsInRange(opacityCandidate)) {
-      throw new SMCLRgbaOpacityComponentOutOfRangeError(opacityCandidate)
+      throw RGBAOpacityComponentOutOfRangeError(
+        opacityCandidate, MinimumRgbaOpacity, MaximumRgbaOpacity)
     }
   }
 
@@ -361,12 +366,13 @@ class ColorValidator() {
    *
    * @param saturationCandidate
    *
-   * @throws SMCLHsiSaturationComponentOutOfRangeError
+   * @throws HSISaturationComponentOutOfRangeError
    */
   @inline
   def validateHsiSaturationComponent(saturationCandidate: Double): Unit = {
     if (!hsiSaturationComponentIsInRange(saturationCandidate)) {
-      throw new SMCLHsiSaturationComponentOutOfRangeError(saturationCandidate)
+      throw HSISaturationComponentOutOfRangeError(
+        saturationCandidate, MinimumHsiSaturation, MaximumHsiSaturation)
     }
   }
 
@@ -375,12 +381,13 @@ class ColorValidator() {
    *
    * @param intensityCandidate
    *
-   * @throws SMCLHsiIntensityComponentOutOfRangeError
+   * @throws HSIIntensityComponentOutOfRangeError
    */
   @inline
   def validateHsiIntensityComponent(intensityCandidate: Double): Unit = {
     if (!hsiIntensityComponentIsInRange(intensityCandidate)) {
-      throw new SMCLHsiIntensityComponentOutOfRangeError(intensityCandidate)
+      throw HSIIntensityComponentOutOfRangeError(
+        intensityCandidate, MinimumHsiIntensity, MaximumHsiIntensity)
     }
   }
 
@@ -389,12 +396,13 @@ class ColorValidator() {
    *
    * @param saturationCandidate
    *
-   * @throws SMCLHsvSaturationComponentOutOfRangeError
+   * @throws HSVSaturationComponentOutOfRangeError
    */
   @inline
   def validateHsvSaturationComponent(saturationCandidate: Double): Unit = {
     if (!hsvSaturationComponentIsInRange(saturationCandidate)) {
-      throw new SMCLHsvSaturationComponentOutOfRangeError(saturationCandidate)
+      throw HSVSaturationComponentOutOfRangeError(
+        saturationCandidate, MinimumHsvSaturation, MaximumHsvSaturation)
     }
   }
 
@@ -403,12 +411,13 @@ class ColorValidator() {
    *
    * @param valueCandidate
    *
-   * @throws SMCLHsvValueComponentOutOfRangeError
+   * @throws HSVValueComponentOutOfRangeError
    */
   @inline
   def validateHsvValueComponent(valueCandidate: Double): Unit = {
     if (!hsvValueComponentIsInRange(valueCandidate)) {
-      throw new SMCLHsvValueComponentOutOfRangeError(valueCandidate)
+      throw HSVValueComponentOutOfRangeError(
+        valueCandidate, MinimumHsvValue, MaximumHsvValue)
     }
   }
 
@@ -417,12 +426,13 @@ class ColorValidator() {
    *
    * @param grayCandidate
    *
-   * @throws SMCLRgbGrayComponentOutOfRangeError
+   * @throws RGBGrayComponentOutOfRangeError
    */
   @inline
   def validateRgbGray(grayCandidate: Int): Unit = {
     if (!rgbGrayComponentIsInRange(grayCandidate)) {
-      throw new SMCLRgbGrayComponentOutOfRangeError(grayCandidate)
+      throw RGBGrayComponentOutOfRangeError(
+        grayCandidate, MinimumRgbGray, MaximumRgbGray)
     }
   }
 
@@ -433,9 +443,9 @@ class ColorValidator() {
    * @param greenCandidate
    * @param blueCandidate
    *
-   * @throws SMCLRgbRedComponentOutOfRangeError
-   * @throws SMCLRgbGreenComponentOutOfRangeError
-   * @throws SMCLRgbBlueComponentOutOfRangeError
+   * @throws RGBRedComponentOutOfRangeError
+   * @throws RGBGreenComponentOutOfRangeError
+   * @throws RGBBlueComponentOutOfRangeError
    */
   @inline
   def validateRgbColor(redCandidate: Int, greenCandidate: Int, blueCandidate: Int): Unit = {
@@ -449,8 +459,8 @@ class ColorValidator() {
    *
    * @param grayCandidate
    *
-   * @throws SMCLRgbGrayComponentOutOfRangeError
-   * @throws SMCLRgbaOpacityComponentOutOfRangeError
+   * @throws RGBGrayComponentOutOfRangeError
+   * @throws RGBAOpacityComponentOutOfRangeError
    */
   @inline
   def validateRgbGrayAndOpacity(grayCandidate: Int, opacityCandidate: Int): Unit = {
@@ -465,10 +475,10 @@ class ColorValidator() {
    * @param greenCandidate
    * @param blueCandidate
    *
-   * @throws SMCLRgbRedComponentOutOfRangeError
-   * @throws SMCLRgbGreenComponentOutOfRangeError
-   * @throws SMCLRgbBlueComponentOutOfRangeError
-   * @throws SMCLRgbaOpacityComponentOutOfRangeError
+   * @throws RGBRedComponentOutOfRangeError
+   * @throws RGBGreenComponentOutOfRangeError
+   * @throws RGBBlueComponentOutOfRangeError
+   * @throws RGBAOpacityComponentOutOfRangeError
    */
   @inline
   def validateRgbaColor(
@@ -486,10 +496,10 @@ class ColorValidator() {
    *
    * @param rgbaTuple
    *
-   * @throws SMCLRgbRedComponentOutOfRangeError
-   * @throws SMCLRgbGreenComponentOutOfRangeError
-   * @throws SMCLRgbBlueComponentOutOfRangeError
-   * @throws SMCLRgbaOpacityComponentOutOfRangeError
+   * @throws RGBRedComponentOutOfRangeError
+   * @throws RGBGreenComponentOutOfRangeError
+   * @throws RGBBlueComponentOutOfRangeError
+   * @throws RGBAOpacityComponentOutOfRangeError
    */
   //noinspection ScalaUnnecessaryParentheses
   def validateRgbaColor(rgbaTuple: (Int, Int, Int, Int)): Unit =
@@ -502,8 +512,8 @@ class ColorValidator() {
    * @param saturationCandidate
    * @param intensityCandidate
    *
-   * @throws SMCLHsiSaturationComponentOutOfRangeError
-   * @throws SMCLHsiIntensityComponentOutOfRangeError
+   * @throws HSISaturationComponentOutOfRangeError
+   * @throws HSIIntensityComponentOutOfRangeError
    */
   @inline
   def validateHsiColor(
@@ -522,8 +532,8 @@ class ColorValidator() {
    * @param saturationCandidate
    * @param valueCandidate
    *
-   * @throws SMCLHsvSaturationComponentOutOfRangeError
-   * @throws SMCLHsvValueComponentOutOfRangeError
+   * @throws HSVSaturationComponentOutOfRangeError
+   * @throws HSVValueComponentOutOfRangeError
    */
   @inline
   def validateHsvColor(
@@ -542,7 +552,7 @@ class ColorValidator() {
    * @param greenWeightCandidate
    * @param blueWeightCandidate
    *
-   * @throws SMCLInvalidColorWeightCombinationError
+   * @throws InvalidColorWeightCombinationError
    */
   @inline
   def validateRgbColorWeightCombination(
@@ -553,12 +563,12 @@ class ColorValidator() {
     val weightSum = redWeightCandidate + greenWeightCandidate + blueWeightCandidate
 
     if (weightSum < 0.0) {
-      throw new SMCLInvalidColorWeightCombinationError(
+      throw InvalidColorWeightCombinationError(
         s"The sum of the three weights must be >= 0.0 (was $weightSum)")
     }
 
     if (weightSum > 1.0) {
-      throw new SMCLInvalidColorWeightCombinationError(
+      throw InvalidColorWeightCombinationError(
         s"The sum of the three weights must be <= 1.0 (was $weightSum)")
     }
   }
@@ -566,24 +576,26 @@ class ColorValidator() {
   /**
    *
    *
-   * @param nameOptionCandidate
+   * @param nameCandidate
    *
    * @return
    */
   @inline
-  def validateColorNameOption(nameOptionCandidate: Option[String]): Option[String] = {
-    require(nameOptionCandidate != null, "The name option argument must be Option(<name>) or None (was null).")
+  def validateColorNameOption(nameCandidate: Option[String]): Option[String] = {
+    if (nameCandidate == null)
+      throw ColorNameIsNullError
 
-    if (nameOptionCandidate.nonEmpty) {
-      val name = nameOptionCandidate.get.trim
+    if (nameCandidate.nonEmpty) {
+      val name = nameCandidate.get.trim
 
-      require(name != StrEmpty, "The name cannot be empty or contain only whitespace.")
+      if (name.isEmpty)
+        throw ColorNameIsEmptyOrOnlyWhitespaceError
 
-      if (name != nameOptionCandidate.get)
+      if (name != nameCandidate.get)
         return Option(name)
     }
 
-    nameOptionCandidate
+    nameCandidate
   }
 
 }

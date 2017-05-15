@@ -17,21 +17,18 @@
 package aalto.smcl.colors.exceptions
 
 
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-final class SMCLInvalidColorWeightCombinationError private[smcl](private val detailMessage: String, cause: Throwable)
-    extends RuntimeException(detailMessage, cause) {
-
-  /**
-   *
-   *
-   * @param detailMessage
-   *
-   * @return
-   */
-  def this(detailMessage: String) = this(detailMessage, null)
-
-}
+final case class HSISaturationComponentOutOfRangeError private[smcl](
+    invalidValue: Double, minimumValue: Double, maximumValue: Double)
+    extends SMCLBaseError(
+      "The HSI saturation component of a given color was out of its Double range " +
+          s"$minimumValue - $maximumValue (was $invalidValue)", null)

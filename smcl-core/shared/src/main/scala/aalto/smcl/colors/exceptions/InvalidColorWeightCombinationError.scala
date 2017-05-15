@@ -17,7 +17,7 @@
 package aalto.smcl.colors.exceptions
 
 
-import aalto.smcl.colors.ColorValidator
+import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
 
@@ -25,14 +25,7 @@ import aalto.smcl.colors.ColorValidator
 /**
  *
  *
- * @param invalidValue
- *
  * @author Aleksi Lukkarinen
  */
-final class SMCLNormalizedRgbRedComponentOutOfRangeError private[smcl](invalidValue: Double)
-    extends RuntimeException(
-      s"The normalized RGB red component of given color was out of its Double range " +
-          s"${ColorValidator.MinimumNormalizedRgbRed} - " +
-          s"${ColorValidator.MaximumNormalizedRgbRed} (was $invalidValue)") {
-
-}
+final case class InvalidColorWeightCombinationError private[smcl](
+    private val detailMessage: String) extends SMCLBaseError(detailMessage, null)
