@@ -17,6 +17,11 @@
 package aalto.smcl.colors
 
 
+import aalto.smcl.infrastructure.StrEmpty
+
+
+
+
 /**
  * This trait defines all preset colors available in SMCL. These color form a superset
  * of the colors defined in 5.7.2017 draft of the
@@ -27,12 +32,47 @@ package aalto.smcl.colors
  */
 trait PresetColors {
 
-  //
-  //  ATTENTION!
-  //
-  //  When adding or removing colors, BOTH the actual constant
-  //  AND the PresetColors map have to be changed accordingly!
-  //
+  // Sequence containing all preset colors; they are added by the PresetRGBAColor constructor.
+  private var allPresetColors: Seq[PresetRGBAColor] = Seq()
+
+
+
+
+  /**
+   * Preset RGBA color.
+   *
+   * @param argbInt
+   * @param canonicalName
+   * @param cssName
+   */
+  sealed case class PresetRGBAColor private(
+      argbInt: Int,
+      override val canonicalName: Option[String] = None,
+      override val cssName: Option[String] = None) extends {
+
+    /** Returns `true` if this [[PresetRGBAColor]] is provided by SMCL, otherwise `false`. */
+    override val isPreset: Boolean = true
+
+  } with
+      RGBAColor(
+        redComponentOf(argbInt),
+        greenComponentOf(argbInt),
+        blueComponentOf(argbInt),
+        opacityComponentOf(argbInt),
+        canonicalName)
+      with Immutable {
+
+    allPresetColors = allPresetColors :+ this
+
+    /**
+     * Returns a string representation of this [[PresetRGBAColor]].
+     */
+    override def toString: String =
+      s"${super.toString}\nCSS name: ${cssName getOrElse StrEmpty}"
+  }
+
+
+
 
   /** Color constant for <em>"alice blue"</em> (<code>0xfff0f8ff</code>). */
   val AliceBlue = PresetRGBAColor(0xfff0f8ff, Some("alice blue"), Some("aliceblue"))
@@ -480,159 +520,66 @@ trait PresetColors {
   val YellowGreen = PresetRGBAColor(0xff9acd32, Some("yellow green"), Some("yellowgreen"))
 
 
+  /** Color constant for 10-percent black. */
+  val Black10 = PresetRGBAColor(Black.tintByPercentage(90).toArgbInt, Some("black10"), None)
+
+  /** Color constant for 20-percent black. */
+  val Black20 = PresetRGBAColor(Black.tintByPercentage(80).toArgbInt, Some("black20"), None)
+
+  /** Color constant for 30-percent black. */
+  val Black30 = PresetRGBAColor(Black.tintByPercentage(70).toArgbInt, Some("black30"), None)
+
+  /** Color constant for 40-percent black. */
+  val Black40 = PresetRGBAColor(Black.tintByPercentage(60).toArgbInt, Some("black40"), None)
+
+  /** Color constant for 50-percent black. */
+  val Black50 = PresetRGBAColor(Black.tintByPercentage(50).toArgbInt, Some("black50"), None)
+
+  /** Color constant for 60-percent black. */
+  val Black60 = PresetRGBAColor(Black.tintByPercentage(40).toArgbInt, Some("black60"), None)
+
+  /** Color constant for 70-percent black. */
+  val Black70 = PresetRGBAColor(Black.tintByPercentage(30).toArgbInt, Some("black70"), None)
+
+  /** Color constant for 80-percent black. */
+  val Black80 = PresetRGBAColor(Black.tintByPercentage(20).toArgbInt, Some("black80"), None)
+
+  /** Color constant for 90-percent black. */
+  val Black90 = PresetRGBAColor(Black.tintByPercentage(10).toArgbInt, Some("black90"), None)
+
+
+  /** Color constant for 10-percent white. */
+  val White10 = PresetRGBAColor(White.shadeByPercentage(90).toArgbInt, Some("white10"), None)
+
+  /** Color constant for 20-percent white. */
+  val White20 = PresetRGBAColor(White.shadeByPercentage(80).toArgbInt, Some("white20"), None)
+
+  /** Color constant for 30-percent white. */
+  val White30 = PresetRGBAColor(White.shadeByPercentage(70).toArgbInt, Some("white30"), None)
+
+  /** Color constant for 40-percent white. */
+  val White40 = PresetRGBAColor(White.shadeByPercentage(60).toArgbInt, Some("white40"), None)
+
+  /** Color constant for 50-percent white. */
+  val White50 = PresetRGBAColor(White.shadeByPercentage(50).toArgbInt, Some("white50"), None)
+
+  /** Color constant for 60-percent white. */
+  val White60 = PresetRGBAColor(White.shadeByPercentage(40).toArgbInt, Some("white60"), None)
+
+  /** Color constant for 70-percent white. */
+  val White70 = PresetRGBAColor(White.shadeByPercentage(30).toArgbInt, Some("white70"), None)
+
+  /** Color constant for 80-percent white. */
+  val White80 = PresetRGBAColor(White.shadeByPercentage(20).toArgbInt, Some("white80"), None)
+
+  /** Color constant for 90-percent white. */
+  val White90 = PresetRGBAColor(White.shadeByPercentage(10).toArgbInt, Some("white90"), None)
+
+
   /**
    * All [[PresetRGBAColor]] definitions as a mapping from CSS
    * color names to the actual [[RGBAColor]] objects.
    */
-  lazy val PresetColors = Map(
-    "aliceblue" -> AliceBlue,
-    "amethyst" -> Amethyst,
-    "antiquewhite" -> AntiqueWhite,
-    "aqua" -> Aqua,
-    "aquamarine" -> Aquamarine,
-    "azure" -> Azure,
-    "beige" -> Beige,
-    "bisque" -> Bisque,
-    "black" -> Black,
-    "blanchedalmond" -> BlanchedAlmond,
-    "blue" -> Blue,
-    "blueviolet" -> BlueViolet,
-    "brown" -> Brown,
-    "burlywood" -> BurlyWood,
-    "cadetblue" -> CadetBlue,
-    "chartreuse" -> ChartReuse,
-    "chocolate" -> Chocolate,
-    "coral" -> Coral,
-    "cornflowerblue" -> CornflowerBlue,
-    "cornsilk" -> CornSilk,
-    "crimson" -> Crimson,
-    "cyan" -> Cyan,
-    "darkblue" -> DarkBlue,
-    "darkcyan" -> DarkCyan,
-    "darkgoldenrod" -> DarkGoldenRod,
-    "darkgray" -> DarkGray,
-    "darkgreen" -> DarkGreen,
-    "darkgrey" -> DarkGrey,
-    "darkkhaki" -> DarkKhaki,
-    "darkmagenta" -> DarkMagenta,
-    "darkolivegreen" -> DarkOliveGreen,
-    "darkorange" -> DarkOrange,
-    "darkorchid" -> DarkOrchid,
-    "darkred" -> DarkRed,
-    "darksalmon" -> DarkSalmon,
-    "darkseagreen" -> DarkSeaGreen,
-    "darkslateblue" -> DarkSlateBlue,
-    "darkslategray" -> DarkSlateGray,
-    "darkslategrey" -> DarkSlateGrey,
-    "darkturquoise" -> DarkTurquoise,
-    "darkviolet" -> DarkViolet,
-    "deeppink" -> DeepPink,
-    "deepskyblue" -> DeepSkyBlue,
-    "dimgray" -> DimGray,
-    "dimgrey" -> DimGrey,
-    "dodgerblue" -> DodgerBlue,
-    "firebrick" -> FireBrick,
-    "floralwhite" -> FloralWhite,
-    "forestgreen" -> ForestGreen,
-    "fuchsia" -> Fuchsia,
-    "gainsboro" -> Gainsboro,
-    "ghostwhite" -> GhostWhite,
-    "gold" -> Gold,
-    "goldenrod" -> GoldenRod,
-    "gray" -> Gray,
-    "green" -> Green,
-    "greenyellow" -> GreenYellow,
-    "grey" -> Grey,
-    "honeydew" -> Honeydew,
-    "hotpink" -> HotPink,
-    "indianred" -> IndianRed,
-    "indigo" -> Indigo,
-    "ivory" -> Ivory,
-    "khaki" -> Khaki,
-    "lavender" -> Lavender,
-    "lavenderblush" -> LavenderBlush,
-    "lawngreen" -> LawnGreen,
-    "lemonchiffon" -> LemonChiffon,
-    "lightblue" -> LightBlue,
-    "lightcoral" -> LightCoral,
-    "lightcyan" -> LightCyan,
-    "lightgoldenrodyellow" -> LightGoldenRodYellow,
-    "lightgray" -> LightGray,
-    "lightgreen" -> LightGreen,
-    "lightgrey" -> LightGrey,
-    "lightpink" -> LightPink,
-    "lightsalmon" -> LightSalmon,
-    "lightseagreen" -> LightSeaGreen,
-    "lightskyblue" -> LightSkyBlue,
-    "lightslategray" -> LightSlateGray,
-    "lightslategrey" -> LightSlateGrey,
-    "lightsteelblue" -> LightSteelBlue,
-    "lightyellow" -> LightYellow,
-    "lime" -> Lime,
-    "limegreen" -> LimeGreen,
-    "linen" -> Linen,
-    "magenta" -> Magenta,
-    "maroon" -> Maroon,
-    "mediumaquamarine" -> MediumAquamarine,
-    "mediumblue" -> MediumBlue,
-    "mediumorchid" -> MediumOrchid,
-    "mediumpurple" -> MediumPurple,
-    "mediumseagreen" -> MediumSeaGreen,
-    "mediumslateblue" -> MediumSlateBlue,
-    "mediumspringgreen" -> MediumSpringGreen,
-    "mediumturquoise" -> MediumTurquoise,
-    "mediumvioletred" -> MediumVioletRed,
-    "midnightblue" -> MidnightBlue,
-    "mintcream" -> MintCream,
-    "mistyrose" -> MistyRose,
-    "moccasin" -> Moccasin,
-    "navajowhite" -> NavajoWhite,
-    "navy" -> Navy,
-    "oldlace" -> OldLace,
-    "olive" -> Olive,
-    "olivedrab" -> OliveDrab,
-    "orange" -> Orange,
-    "orangered" -> OrangeRed,
-    "orchid" -> Orchid,
-    "palegoldenrod" -> PaleGoldenRod,
-    "palegreen" -> PaleGreen,
-    "paleturquoise" -> PaleTurquoise,
-    "palevioletred" -> PaleVioletRed,
-    "papayawhip" -> PapayaWhip,
-    "peachpuff" -> PeachPuff,
-    "peru" -> Peru,
-    "pink" -> Pink,
-    "plum" -> Plum,
-    "powderblue" -> PowderBlue,
-    "purple" -> Purple,
-    "red" -> Red,
-    "rosybrown" -> RosyBrown,
-    "royalblue" -> RoyalBlue,
-    "saddlebrown" -> SaddleBrown,
-    "salmon" -> Salmon,
-    "sandybrown" -> SandyBrown,
-    "seagreen" -> SeaGreen,
-    "seashell" -> SeaShell,
-    "sienna" -> Sienna,
-    "silver" -> Silver,
-    "skyblue" -> SkyBlue,
-    "slateblue" -> SlateBlue,
-    "slategray" -> SlateGray,
-    "slategrey" -> SlateGrey,
-    "snow" -> Snow,
-    "springgreen" -> SpringGreen,
-    "steelblue" -> SteelBlue,
-    "tan" -> Tan,
-    "teal" -> Teal,
-    "thistle" -> Thistle,
-    "tomato" -> Tomato,
-    "turquoise" -> Turquoise,
-    "violet" -> Violet,
-    "wheat" -> Wheat,
-    "white" -> White,
-    "whitesmoke" -> WhiteSmoke,
-    "yellow" -> Yellow,
-    "yellowgreen" -> YellowGreen
-  )
+  def PresetColors: Seq[PresetRGBAColor] = allPresetColors
 
 }

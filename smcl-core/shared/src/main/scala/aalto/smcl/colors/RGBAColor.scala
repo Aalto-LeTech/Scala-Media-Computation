@@ -487,7 +487,7 @@ object RGBAColor {
  * @param green
  * @param blue
  * @param opacity
- * @param name
+ * @param canonicalName
  *
  * @author Aleksi Lukkarinen
  */
@@ -496,7 +496,7 @@ class RGBAColor protected(
     val green: Int,
     val blue: Int,
     val opacity: Int,
-    val name: Option[String] = None) extends {
+    val canonicalName: Option[String] = None) extends {
 
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false
@@ -639,6 +639,6 @@ class RGBAColor protected(
     (if (isPreset) "Preset " else "") +
     s"""RGBA Color
        |ARGB: 0x$toHexString -- $opacity - $red - $green - $blue
-       |Canonical name: ${name getOrElse StrEmpty}""".stripMargin
+       |Canonical name: ${canonicalName getOrElse StrEmpty}""".stripMargin
 
 }

@@ -851,7 +851,7 @@ trait ColorOperationsAPI {
   RGBAColor(
     adjustHueOfRgbByDegrees(rgbTupleFrom(color), adjustmentInDegrees),
     color.opacity,
-    color.name)
+    color.canonicalName)
 
   /**
    *
