@@ -26,7 +26,7 @@ import scala.language.implicitConversions
  * @author Aleksi Lukkarinen
  */
 package object colors
-    extends ColorOperationsAPI {
+    extends PresetColors with ColorOperationsAPI {
 
   /** Color component value representing maximal opacity. */
   val FullyOpaque: Int = ColorValidator.MaximumRgbaOpacity
@@ -39,14 +39,11 @@ package object colors
   lazy val ColorValidator: ColorValidator = new ColorValidator()
 
   /** */
-  lazy val PresetColors: PresetColors = new PresetColors()
-
-  /** */
   lazy val RGBATranslationTableValidator: RGBATranslationTableValidator =
     new RGBATranslationTableValidator()
 
 
-  /** Application of the RichArgbInt class. */
+  /** Application of the RichARGBInt class. */
   implicit def ARGBIntWrapper(self: Int): RichARGBInt = new RichARGBInt(self)
 
   /** Application of the RichRGBAColor class. */

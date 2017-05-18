@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.colors.{PresetColors, RGBAColor}
+import aalto.smcl.colors.{RGBAColor, Black, White}
 
 
 
@@ -122,17 +122,17 @@ class SharedSettingInitializer(
 
     GS += new Setting[RGBAColor](
       key = DefaultBackground,
-      initialValue = PresetColors('white).withAbsoluteOpacity(0),
+      initialValue = White.withAbsoluteOpacity(0),
       validator = settingValidatorFactory.IsNullValidator("Color cannot be null"))
 
     GS += new Setting[RGBAColor](
       key = DefaultPrimary,
-      initialValue = PresetColors('black),
+      initialValue = Black,
       validator = settingValidatorFactory.IsNullValidator("Color cannot be null"))
 
     GS += new Setting[RGBAColor](
       key = DefaultSecondary,
-      initialValue = PresetColors('black),
+      initialValue = Black,
       validator = settingValidatorFactory.IsNullValidator("Color cannot be null"))
 
     GS += new Setting[HorizontalAlignment.Value](

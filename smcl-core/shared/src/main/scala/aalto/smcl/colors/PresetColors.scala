@@ -18,193 +18,621 @@ package aalto.smcl.colors
 
 
 /**
- *
+ * This trait defines all preset colors available in SMCL. These color form a superset
+ * of the colors defined in 5.7.2017 draft of the
+ * <a href="https://www.w3.org/TR/2016/WD-css-color-4-20160705/">CSS Color Module Level 4</a>
+ * standard.
  *
  * @author Aleksi Lukkarinen
  */
-class PresetColors private[colors]()
-    extends Map[Symbol, RGBAColor]
-            with Immutable {
+trait PresetColors {
 
-  /** */
-  private[this] lazy val _colorMap = Map[Symbol, RGBAColor](
-    'aliceBlue -> PresetRGBAColor(0xfff0f8ff, Option("alice blue")),
-    'amethyst -> PresetRGBAColor(0xff9966cc, Option("amethyst")),
-    'antiqueWhite -> PresetRGBAColor(0xfffaebd7, Option("antique white")),
-    'aqua -> PresetRGBAColor(0xff00ffff, Option("aqua")),
-    'aquamarine -> PresetRGBAColor(0xff7fffd4, Option("aquamarine")),
-    'azure -> PresetRGBAColor(0xfff0ffff, Option("azure")),
-    'beige -> PresetRGBAColor(0xfff5f5dc, Option("beige")),
-    'bisque -> PresetRGBAColor(0xffffe4c4, Option("bisque")),
-    'black -> PresetRGBAColor(0xff000000, Option("black")),
-    'blanchedAlmond -> PresetRGBAColor(0xffffebcd, Option("blanched almond")),
-    'blue -> PresetRGBAColor(0xff0000ff, Option("blue")),
-    'blueViolet -> PresetRGBAColor(0xff8a2be2, Option("blue violet")),
-    'brown -> PresetRGBAColor(0xffa52a2a, Option("brown")),
-    'burlyWood -> PresetRGBAColor(0xffdeb887, Option("burly wood")),
-    'cadetBlue -> PresetRGBAColor(0xff5f9ea0, Option("cadet blue")),
-    'chartreuse -> PresetRGBAColor(0xff7fff00, Option("chartreuse")),
-    'chocolate -> PresetRGBAColor(0xffd2691e, Option("chocolate")),
-    'coral -> PresetRGBAColor(0xffff7f50, Option("coral")),
-    'cornflowerBlue -> PresetRGBAColor(0xff6495ed, Option("cornflower blue")),
-    'cornsilk -> PresetRGBAColor(0xfffff8dc, Option("cornsilk")),
-    'crimson -> PresetRGBAColor(0xffdc143c, Option("crimson")),
-    'cyan -> PresetRGBAColor(0xff00ffff, Option("cyan")),
-    'darkBlue -> PresetRGBAColor(0xff00008b, Option("dark blue")),
-    'darkCyan -> PresetRGBAColor(0xff008b8b, Option("dark cyan")),
-    'darkGoldenrod -> PresetRGBAColor(0xffb8860b, Option("dark goldenrod")),
-    'darkGray -> PresetRGBAColor(0xffa9a9a9, Option("dark gray")),
-    'darkGreen -> PresetRGBAColor(0xff006400, Option("dark green")),
-    'darkKhaki -> PresetRGBAColor(0xffbdb76b, Option("dark khaki")),
-    'darkMagenta -> PresetRGBAColor(0xff8b008b, Option("dark magenta")),
-    'darkOliveGreen -> PresetRGBAColor(0xff556b2f, Option("dark olive green")),
-    'darkOrange -> PresetRGBAColor(0xffff8c00, Option("dark orange")),
-    'darkOrchid -> PresetRGBAColor(0xff9932cc, Option("dark orchid")),
-    'darkRed -> PresetRGBAColor(0xff8b0000, Option("dark red")),
-    'darkSalmon -> PresetRGBAColor(0xffe9967a, Option("dark salmon")),
-    'darkSeaGreen -> PresetRGBAColor(0xff8fbc8f, Option("dark sea green")),
-    'darkSlateBlue -> PresetRGBAColor(0xff483d8b, Option("dark slate blue")),
-    'darkSlateGray -> PresetRGBAColor(0xff2f4f4f, Option("dark slate gray")),
-    'darkTurquoise -> PresetRGBAColor(0xff00ced1, Option("dark turquoise")),
-    'darkViolet -> PresetRGBAColor(0xff9400d3, Option("dark violet")),
-    'deepPink -> PresetRGBAColor(0xffff1493, Option("deep pink")),
-    'deepSkyBlue -> PresetRGBAColor(0xff00bfff, Option("deep sky blue")),
-    'dimGray -> PresetRGBAColor(0xff696969, Option("dim gray")),
-    'dodgerBlue -> PresetRGBAColor(0xff1e90ff, Option("dodger blue")),
-    'fireBrick -> PresetRGBAColor(0xffb22222, Option("fire brick")),
-    'floralWhite -> PresetRGBAColor(0xfffffaf0, Option("floral white")),
-    'forestGreen -> PresetRGBAColor(0xff228b22, Option("forest green")),
-    'fuchsia -> PresetRGBAColor(0xffff00ff, Option("fuchsia")),
-    'gainsboro -> PresetRGBAColor(0xffdcdcdc, Option("gainsboro")),
-    'ghostWhite -> PresetRGBAColor(0xfff8f8ff, Option("ghost white")),
-    'gold -> PresetRGBAColor(0xffffd700, Option("gold")),
-    'goldenrod -> PresetRGBAColor(0xffdaa520, Option("goldenrod")),
-    'gray -> PresetRGBAColor(0xff808080, Option("gray")),
-    'green -> PresetRGBAColor(0xff008000, Option("green")),
-    'greenYellow -> PresetRGBAColor(0xffadff2f, Option("green yellow")),
-    'honeydew -> PresetRGBAColor(0xfff0fff0, Option("honeydew")),
-    'hotPink -> PresetRGBAColor(0xffff69b4, Option("hot pink")),
-    'indianRed -> PresetRGBAColor(0xffcd5c5c, Option("indian red")),
-    'indigo -> PresetRGBAColor(0xff4b0082, Option("indigo")),
-    'ivory -> PresetRGBAColor(0xfffffff0, Option("ivory")),
-    'khaki -> PresetRGBAColor(0xfff0e68c, Option("khaki")),
-    'lavender -> PresetRGBAColor(0xffe6e6fa, Option("lavender")),
-    'lavenderBlush -> PresetRGBAColor(0xfffff0f5, Option("lavender blush")),
-    'lawnGreen -> PresetRGBAColor(0xff7cfc00, Option("lawn green")),
-    'lemonChiffon -> PresetRGBAColor(0xfffffacd, Option("lemon chiffon")),
-    'lightBlue -> PresetRGBAColor(0xffadd8e6, Option("light blue")),
-    'lightCoral -> PresetRGBAColor(0xfff08080, Option("light coral")),
-    'lightCyan -> PresetRGBAColor(0xffe0ffff, Option("light cyan")),
-    'lightGoldenrodYellow -> PresetRGBAColor(0xfffafad2, Option("light goldenrod yellow")),
-    'lightGreen -> PresetRGBAColor(0xff90ee90, Option("light green")),
-    'lightGrey -> PresetRGBAColor(0xffd3d3d3, Option("light grey")),
-    'lightPink -> PresetRGBAColor(0xffffb6c1, Option("light pink")),
-    'lightSalmon -> PresetRGBAColor(0xffffa07a, Option("light salmon")),
-    'lightSeaGreen -> PresetRGBAColor(0xff20b2aa, Option("light sea green")),
-    'lightSkyBlue -> PresetRGBAColor(0xff87cefa, Option("light sky blue")),
-    'lightSlateGray -> PresetRGBAColor(0xff778899, Option("light slate gray")),
-    'lightSteelBlue -> PresetRGBAColor(0xffb0c4de, Option("light steel blue")),
-    'lightYellow -> PresetRGBAColor(0xffffffe0, Option("light yellow")),
-    'lime -> PresetRGBAColor(0xff00ff00, Option("lime")),
-    'limeGreen -> PresetRGBAColor(0xff32cd32, Option("lime green")),
-    'linen -> PresetRGBAColor(0xfffaf0e6, Option("linen")),
-    'magenta -> PresetRGBAColor(0xffff00ff, Option("magenta")),
-    'maroon -> PresetRGBAColor(0xff800000, Option("maroon")),
-    'mediumAquamarine -> PresetRGBAColor(0xff66cdaa, Option("medium aquamarine")),
-    'mediumBlue -> PresetRGBAColor(0xff0000cd, Option("medium blue")),
-    'mediumOrchid -> PresetRGBAColor(0xffba55d3, Option("medium orchid")),
-    'mediumPurple -> PresetRGBAColor(0xff9370db, Option("medium purple")),
-    'mediumSeaGreen -> PresetRGBAColor(0xff3cb371, Option("medium sea green")),
-    'mediumSlateBlue -> PresetRGBAColor(0xff7b68ee, Option("medium slate blue")),
-    'mediumSpringGreen -> PresetRGBAColor(0xff00fa9a, Option("medium spring green")),
-    'mediumTurquoise -> PresetRGBAColor(0xff48d1cc, Option("medium turquoise")),
-    'mediumVioletRed -> PresetRGBAColor(0xffc71585, Option("medium violet red")),
-    'midnightBlue -> PresetRGBAColor(0xff191970, Option("midnight blue")),
-    'mintCream -> PresetRGBAColor(0xfff5fffa, Option("mint cream")),
-    'mistyRose -> PresetRGBAColor(0xffffe4e1, Option("misty rose")),
-    'moccasin -> PresetRGBAColor(0xffffe4b5, Option("moccasin")),
-    'navajoWhite -> PresetRGBAColor(0xffffdead, Option("navajo white")),
-    'navy -> PresetRGBAColor(0xff000080, Option("navy")),
-    'oldLace -> PresetRGBAColor(0xfffdf5e6, Option("old lace")),
-    'olive -> PresetRGBAColor(0xff808000, Option("olive")),
-    'oliveDrab -> PresetRGBAColor(0xff6b8e23, Option("olive drab")),
-    'orange -> PresetRGBAColor(0xffffa500, Option("orange")),
-    'orangeRed -> PresetRGBAColor(0xffff4500, Option("orange red")),
-    'orchid -> PresetRGBAColor(0xffda70d6, Option("orchid")),
-    'paleGoldenrod -> PresetRGBAColor(0xffeee8aa, Option("pale goldenrod")),
-    'paleGreen -> PresetRGBAColor(0xff98fb98, Option("pale green")),
-    'paleTurquoise -> PresetRGBAColor(0xffafeeee, Option("pale turquoise")),
-    'paleVioletRed -> PresetRGBAColor(0xffdb7093, Option("pale violet red")),
-    'papayaWhip -> PresetRGBAColor(0xffffefd5, Option("papaya whip")),
-    'peachPuff -> PresetRGBAColor(0xffffdab9, Option("peach puff")),
-    'peru -> PresetRGBAColor(0xffcd853f, Option("peru")),
-    'pink -> PresetRGBAColor(0xffffc0cb, Option("pink")),
-    'plum -> PresetRGBAColor(0xffdda0dd, Option("plum")),
-    'powderBlue -> PresetRGBAColor(0xffb0e0e6, Option("powder blue")),
-    'purple -> PresetRGBAColor(0xff800080, Option("purple")),
-    'red -> PresetRGBAColor(0xffff0000, Option("red")),
-    'rosyBrown -> PresetRGBAColor(0xffbc8f8f, Option("rosy brown")),
-    'royalBlue -> PresetRGBAColor(0xff4169e1, Option("royal blue")),
-    'saddleBrown -> PresetRGBAColor(0xff8b4513, Option("saddle brown")),
-    'salmon -> PresetRGBAColor(0xfffa8072, Option("salmon")),
-    'sandyBrown -> PresetRGBAColor(0xfff4a460, Option("sandy brown")),
-    'seaGreen -> PresetRGBAColor(0xff2e8b57, Option("sea green")),
-    'seashell -> PresetRGBAColor(0xfffff5ee, Option("seashell")),
-    'sienna -> PresetRGBAColor(0xffa0522d, Option("sienna")),
-    'silver -> PresetRGBAColor(0xffc0c0c0, Option("silver")),
-    'skyBlue -> PresetRGBAColor(0xff87ceeb, Option("sky blue")),
-    'slateBlue -> PresetRGBAColor(0xff6a5acd, Option("slate blue")),
-    'slateGray -> PresetRGBAColor(0xff708090, Option("slate gray")),
-    'snow -> PresetRGBAColor(0xfffffafa, Option("snow")),
-    'springGreen -> PresetRGBAColor(0xff00ff7f, Option("spring green")),
-    'steelBlue -> PresetRGBAColor(0xff4682b4, Option("steel blue")),
-    'tan -> PresetRGBAColor(0xffd2b48c, Option("tan")),
-    'teal -> PresetRGBAColor(0xff008080, Option("teal")),
-    'thistle -> PresetRGBAColor(0xffd8bfd8, Option("thistle")),
-    'tomato -> PresetRGBAColor(0xffff6347, Option("tomato")),
-    'turquoise -> PresetRGBAColor(0xff40e0d0, Option("turquoise")),
-    'violet -> PresetRGBAColor(0xffee82ee, Option("violet")),
-    'wheat -> PresetRGBAColor(0xfff5deb3, Option("wheat")),
-    'white -> PresetRGBAColor(0xffffffff, Option("white")),
-    'whiteSmoke -> PresetRGBAColor(0xfff5f5f5, Option("white smoke")),
-    'yellow -> PresetRGBAColor(0xffffff00, Option("yellow")),
-    'yellowGreen -> PresetRGBAColor(0xff9acd32, Option("yellow green"))
+  //
+  //  ATTENTION!
+  //
+  //  When adding or removing colors, BOTH the actual constant
+  //  AND the PresetColors map have to be changed accordingly!
+  //
+
+  /** Color constant for <em>"alice blue"</em> (<code>0xfff0f8ff</code>). */
+  val AliceBlue = PresetRGBAColor(0xfff0f8ff, Some("alice blue"), Some("aliceblue"))
+
+  /** Color constant for <em>"amethyst"</em> (<code>0xff9966cc</code>). */
+  val Amethyst = PresetRGBAColor(0xff9966cc, Some("amethyst"), Some("amethyst"))
+
+  /** Color constant for <em>"antique white"</em> (<code>0xfffaebd7</code>). */
+  val AntiqueWhite = PresetRGBAColor(0xfffaebd7, Some("antique white"), Some("antiquewhite"))
+
+  /** Color constant for <em>"aqua"</em> (<code>0xff00ffff</code>). */
+  val Aqua = PresetRGBAColor(0xff00ffff, Some("aqua"), Some("aqua"))
+
+  /** Color constant for <em>"aquamarine"</em> (<code>0xff7fffd4</code>). */
+  val Aquamarine = PresetRGBAColor(0xff7fffd4, Some("aquamarine"), Some("aquamarine"))
+
+  /** Color constant for <em>"azure"</em> (<code>0xfff0ffff</code>). */
+  val Azure = PresetRGBAColor(0xfff0ffff, Some("azure"), Some("azure"))
+
+  /** Color constant for <em>"beige"</em> (<code>0xfff5f5dc</code>). */
+  val Beige = PresetRGBAColor(0xfff5f5dc, Some("beige"), Some("beige"))
+
+  /** Color constant for <em>"bisque"</em> (<code>0xffffe4c4</code>). */
+  val Bisque = PresetRGBAColor(0xffffe4c4, Some("bisque"), Some("bisque"))
+
+  /** Color constant for <em>"black"</em> (<code>0xff000000</code>). */
+  val Black = PresetRGBAColor(0xff000000, Some("black"), Some("black"))
+
+  /** Color constant for <em>"blanched almond"</em> (<code>0xffffebcd</code>). */
+  val BlanchedAlmond = PresetRGBAColor(0xffffebcd, Some("blanched almond"), Some("blanchedalmond"))
+
+  /** Color constant for <em>"blue"</em> (<code>0xff0000ff</code>). */
+  val Blue = PresetRGBAColor(0xff0000ff, Some("blue"), Some("blue"))
+
+  /** Color constant for <em>"blue violet"</em> (<code>0xff8a2be2</code>). */
+  val BlueViolet = PresetRGBAColor(0xff8a2be2, Some("blue violet"), Some("blueviolet"))
+
+  /** Color constant for <em>"brown"</em> (<code>0xffa52a2a</code>). */
+  val Brown = PresetRGBAColor(0xffa52a2a, Some("brown"), Some("brown"))
+
+  /** Color constant for <em>"burly wood"</em> (<code>0xffdeb887</code>). */
+  val BurlyWood = PresetRGBAColor(0xffdeb887, Some("burly wood"), Some("burlywood"))
+
+  /** Color constant for <em>"cadet blue"</em> (<code>0xff5f9ea0</code>). */
+  val CadetBlue = PresetRGBAColor(0xff5f9ea0, Some("cadet blue"), Some("cadetblue"))
+
+  /** Color constant for <em>"chartreuse"</em> (<code>0xff7fff00</code>). */
+  val ChartReuse = PresetRGBAColor(0xff7fff00, Some("chartreuse"), Some("chartreuse"))
+
+  /** Color constant for <em>"chocolate"</em> (<code>0xffd2691e</code>). */
+  val Chocolate = PresetRGBAColor(0xffd2691e, Some("chocolate"), Some("chocolate"))
+
+  /** Color constant for <em>"coral"</em> (<code>0xffff7f50</code>). */
+  val Coral = PresetRGBAColor(0xffff7f50, Some("coral"), Some("coral"))
+
+  /** Color constant for <em>"cornflower blue"</em> (<code>0xff6495ed</code>). */
+  val CornflowerBlue = PresetRGBAColor(0xff6495ed, Some("cornflower blue"), Some("cornflowerblue"))
+
+  /** Color constant for <em>"cornsilk"</em> (<code>0xfffff8dc</code>). */
+  val CornSilk = PresetRGBAColor(0xfffff8dc, Some("cornsilk"), Some("cornsilk"))
+
+  /** Color constant for <em>"crimson"</em> (<code>0xffdc143c</code>). */
+  val Crimson = PresetRGBAColor(0xffdc143c, Some("crimson"), Some("crimson"))
+
+  /** Color constant for <em>"cyan"</em> (<code>0xff00ffff</code>). */
+  val Cyan = PresetRGBAColor(0xff00ffff, Some("cyan"), Some("cyan"))
+
+  /** Color constant for <em>"dark blue"</em> (<code>0xff00008b</code>). */
+  val DarkBlue = PresetRGBAColor(0xff00008b, Some("dark blue"), Some("darkblue"))
+
+  /** Color constant for <em>"dark cyan"</em> (<code>0xff008b8b</code>). */
+  val DarkCyan = PresetRGBAColor(0xff008b8b, Some("dark cyan"), Some("darkcyan"))
+
+  /** Color constant for <em>"dark golden rod"</em> (<code>0xffb8860b</code>). */
+  val DarkGoldenRod = PresetRGBAColor(0xffb8860b, Some("dark golden rod"), Some("darkgoldenrod"))
+
+  /** Color constant for <em>"dark gray"</em> (<code>0xffa9a9a9</code>). */
+  val DarkGray = PresetRGBAColor(0xffa9a9a9, Some("dark gray"), Some("darkgray"))
+
+  /** Color constant for <em>"dark green"</em> (<code>0xff006400</code>). */
+  val DarkGreen = PresetRGBAColor(0xff006400, Some("dark green"), Some("darkgreen"))
+
+  /** Color constant for <em>"dark grey"</em> (<code>0xffa9a9a9</code>). */
+  val DarkGrey: RGBAColor = PresetRGBAColor(0xffa9a9a9, Some("dark grey"), Some("darkgrey"))
+
+  /** Color constant for <em>"dark khaki"</em> (<code>0xffbdb76b</code>). */
+  val DarkKhaki = PresetRGBAColor(0xffbdb76b, Some("dark khaki"), Some("darkkhaki"))
+
+  /** Color constant for <em>"dark magenta"</em> (<code>0xff8b008b</code>). */
+  val DarkMagenta = PresetRGBAColor(0xff8b008b, Some("dark magenta"), Some("darkmagenta"))
+
+  /** Color constant for <em>"dark olive green"</em> (<code>0xff556b2f</code>). */
+  val DarkOliveGreen = PresetRGBAColor(0xff556b2f, Some("dark olive green"), Some("darkolivegreen"))
+
+  /** Color constant for <em>"dark orange"</em> (<code>0xffff8c00</code>). */
+  val DarkOrange = PresetRGBAColor(0xffff8c00, Some("dark orange"), Some("darkorange"))
+
+  /** Color constant for <em>"dark orchid"</em> (<code>0xff9932cc</code>). */
+  val DarkOrchid = PresetRGBAColor(0xff9932cc, Some("dark orchid"), Some("darkorchid"))
+
+  /** Color constant for <em>"dark red"</em> (<code>0xff8b0000</code>). */
+  val DarkRed = PresetRGBAColor(0xff8b0000, Some("dark red"), Some("darkred"))
+
+  /** Color constant for <em>"dark salmon"</em> (<code>0xffe9967a</code>). */
+  val DarkSalmon = PresetRGBAColor(0xffe9967a, Some("dark salmon"), Some("darksalmon"))
+
+  /** Color constant for <em>"dark sea green"</em> (<code>0xff8fbc8f</code>). */
+  val DarkSeaGreen = PresetRGBAColor(0xff8fbc8f, Some("dark sea green"), Some("darkseagreen"))
+
+  /** Color constant for <em>"dark slate blue"</em> (<code>0xff483d8b</code>). */
+  val DarkSlateBlue = PresetRGBAColor(0xff483d8b, Some("dark slate blue"), Some("darkslateblue"))
+
+  /** Color constant for <em>"dark slate gray"</em> (<code>0xff2f4f4f</code>). */
+  val DarkSlateGray = PresetRGBAColor(0xff2f4f4f, Some("dark slate gray"), Some("darkslategray"))
+
+  /** Color constant for <em>"dark slate grey"</em> (<code>0xff2f4f4f</code>). */
+  val DarkSlateGrey = PresetRGBAColor(0xff2f4f4f, Some("dark slate grey"), Some("darkslategrey"))
+
+  /** Color constant for <em>"dark turquoise"</em> (<code>0xff00ced1</code>). */
+  val DarkTurquoise = PresetRGBAColor(0xff00ced1, Some("dark turquoise"), Some("darkturquoise"))
+
+  /** Color constant for <em>"dark violet"</em> (<code>0xff9400d3</code>). */
+  val DarkViolet = PresetRGBAColor(0xff9400d3, Some("dark violet"), Some("darkviolet"))
+
+  /** Color constant for <em>"deep pink"</em> (<code>0xffff1493</code>). */
+  val DeepPink = PresetRGBAColor(0xffff1493, Some("deep pink"), Some("deeppink"))
+
+  /** Color constant for <em>"deep sky blue"</em> (<code>0xff00bfff</code>). */
+  val DeepSkyBlue = PresetRGBAColor(0xff00bfff, Some("deep sky blue"), Some("deepskyblue"))
+
+  /** Color constant for <em>"dim gray"</em> (<code>0xff696969</code>). */
+  val DimGray = PresetRGBAColor(0xff696969, Some("dim gray"), Some("dimgray"))
+
+  /** Color constant for <em>"dim grey"</em> (<code>0xff696969</code>). */
+  val DimGrey = PresetRGBAColor(0xff696969, Some("dim grey"), Some("dimgrey"))
+
+  /** Color constant for <em>"dodger blue"</em> (<code>0xff1e90ff</code>). */
+  val DodgerBlue = PresetRGBAColor(0xff1e90ff, Some("dodger blue"), Some("dodgerblue"))
+
+  /** Color constant for <em>"fire brick"</em> (<code>0xffb22222</code>). */
+  val FireBrick = PresetRGBAColor(0xffb22222, Some("fire brick"), Some("firebrick"))
+
+  /** Color constant for <em>"floral white"</em> (<code>0xfffffaf0</code>). */
+  val FloralWhite = PresetRGBAColor(0xfffffaf0, Some("floral white"), Some("floralwhite"))
+
+  /** Color constant for <em>"forest green"</em> (<code>0xff228b22</code>). */
+  val ForestGreen = PresetRGBAColor(0xff228b22, Some("forest green"), Some("forestgreen"))
+
+  /** Color constant for <em>"fuchsia"</em> (<code>0xffff00ff</code>). */
+  val Fuchsia = PresetRGBAColor(0xffff00ff, Some("fuchsia"), Some("fuchsia"))
+
+  /** Color constant for <em>"gainsboro"</em> (<code>0xffdcdcdc</code>). */
+  val Gainsboro = PresetRGBAColor(0xffdcdcdc, Some("gainsboro"), Some("gainsboro"))
+
+  /** Color constant for <em>"ghost white"</em> (<code>0xfff8f8ff</code>). */
+  val GhostWhite = PresetRGBAColor(0xfff8f8ff, Some("ghost white"), Some("ghostwhite"))
+
+  /** Color constant for <em>"gold"</em> (<code>0xffffd700</code>). */
+  val Gold = PresetRGBAColor(0xffffd700, Some("gold"), Some("gold"))
+
+  /** Color constant for <em>"golden rod"</em> (<code>0xffdaa520</code>). */
+  val GoldenRod = PresetRGBAColor(0xffdaa520, Some("golden rod"), Some("goldenrod"))
+
+  /** Color constant for <em>"gray"</em> (<code>0xff808080</code>). */
+  val Gray = PresetRGBAColor(0xff808080, Some("gray"), Some("gray"))
+
+  /** Color constant for <em>"green"</em> (<code>0xff008000</code>). */
+  val Green = PresetRGBAColor(0xff008000, Some("green"), Some("green"))
+
+  /** Color constant for <em>"green yellow"</em> (<code>0xffadff2f</code>). */
+  val GreenYellow = PresetRGBAColor(0xffadff2f, Some("green yellow"), Some("greenyellow"))
+
+  /** Color constant for <em>"grey"</em> (<code>0xff808080</code>). */
+  val Grey = PresetRGBAColor(0xff808080, Some("grey"), Some("grey"))
+
+  /** Color constant for <em>"honeydew"</em> (<code>0xfff0fff0</code>). */
+  val Honeydew = PresetRGBAColor(0xfff0fff0, Some("honeydew"), Some("honeydew"))
+
+  /** Color constant for <em>"hot pink"</em> (<code>0xffff69b4</code>). */
+  val HotPink = PresetRGBAColor(0xffff69b4, Some("hot pink"), Some("hotpink"))
+
+  /** Color constant for <em>"indian red"</em> (<code>0xffcd5c5c</code>). */
+  val IndianRed = PresetRGBAColor(0xffcd5c5c, Some("indian red"), Some("indianred"))
+
+  /** Color constant for <em>"indigo"</em> (<code>0xff4b0082</code>). */
+  val Indigo = PresetRGBAColor(0xff4b0082, Some("indigo"), Some("indigo"))
+
+  /** Color constant for <em>"ivory"</em> (<code>0xfffffff0</code>). */
+  val Ivory = PresetRGBAColor(0xfffffff0, Some("ivory"), Some("ivory"))
+
+  /** Color constant for <em>"khaki"</em> (<code>0xfff0e68c</code>). */
+  val Khaki = PresetRGBAColor(0xfff0e68c, Some("khaki"), Some("khaki"))
+
+  /** Color constant for <em>"lavender"</em> (<code>0xffe6e6fa</code>). */
+  val Lavender = PresetRGBAColor(0xffe6e6fa, Some("lavender"), Some("lavender"))
+
+  /** Color constant for <em>"lavender blush"</em> (<code>0xfffff0f5</code>). */
+  val LavenderBlush = PresetRGBAColor(0xfffff0f5, Some("lavender blush"), Some("lavenderblush"))
+
+  /** Color constant for <em>"lawn green"</em> (<code>0xff7cfc00</code>). */
+  val LawnGreen = PresetRGBAColor(0xff7cfc00, Some("lawn green"), Some("lawngreen"))
+
+  /** Color constant for <em>"lemon chiffon"</em> (<code>0xfffffacd</code>). */
+  val LemonChiffon = PresetRGBAColor(0xfffffacd, Some("lemon chiffon"), Some("lemonchiffon"))
+
+  /** Color constant for <em>"light blue"</em> (<code>0xffadd8e6</code>). */
+  val LightBlue = PresetRGBAColor(0xffadd8e6, Some("light blue"), Some("lightblue"))
+
+  /** Color constant for <em>"light coral"</em> (<code>0xfff08080</code>). */
+  val LightCoral = PresetRGBAColor(0xfff08080, Some("light coral"), Some("lightcoral"))
+
+  /** Color constant for <em>"light cyan"</em> (<code>0xffe0ffff</code>). */
+  val LightCyan = PresetRGBAColor(0xffe0ffff, Some("light cyan"), Some("lightcyan"))
+
+  /** Color constant for "light golden rod yellow" (0xfffafad2). */
+  val LightGoldenRodYellow =
+    PresetRGBAColor(0xfffafad2, Some("light golden rod yellow"), Some("lightgoldenrodyellow"))
+
+  /** Color constant for <em>"light gray"</em> (<code>0xffd3d3d3</code>). */
+  val LightGray = PresetRGBAColor(0xffd3d3d3, Some("light gray"), Some("lightgray"))
+
+  /** Color constant for <em>"light green"</em> (<code>0xff90ee90</code>). */
+  val LightGreen = PresetRGBAColor(0xff90ee90, Some("light green"), Some("lightgreen"))
+
+  /** Color constant for <em>"light grey"</em> (<code>0xffd3d3d3</code>). */
+  val LightGrey = PresetRGBAColor(0xffd3d3d3, Some("light grey"), Some("lightgrey"))
+
+  /** Color constant for <em>"light pink"</em> (<code>0xffffb6c1</code>). */
+  val LightPink = PresetRGBAColor(0xffffb6c1, Some("light pink"), Some("lightpink"))
+
+  /** Color constant for <em>"light salmon"</em> (<code>0xffffa07a</code>). */
+  val LightSalmon = PresetRGBAColor(0xffffa07a, Some("light salmon"), Some("lightsalmon"))
+
+  /** Color constant for <em>"light sea green"</em> (<code>0xff20b2aa</code>). */
+  val LightSeaGreen = PresetRGBAColor(0xff20b2aa, Some("light sea green"), Some("lightseagreen"))
+
+  /** Color constant for <em>"light sky blue"</em> (<code>0xff87cefa</code>). */
+  val LightSkyBlue = PresetRGBAColor(0xff87cefa, Some("light sky blue"), Some("lightskyblue"))
+
+  /** Color constant for <em>"light slate gray"</em> (<code>0xff778899</code>). */
+  val LightSlateGray = PresetRGBAColor(0xff778899, Some("light slate gray"), Some("lightslategray"))
+
+  /** Color constant for <em>"light slate grey"</em> (<code>0xff778899</code>). */
+  val LightSlateGrey = PresetRGBAColor(0xff778899, Some("light slate grey"), Some("lightslategrey"))
+
+  /** Color constant for <em>"light steel blue"</em> (<code>0xffb0c4de</code>). */
+  val LightSteelBlue = PresetRGBAColor(0xffb0c4de, Some("light steel blue"), Some("lightsteelblue"))
+
+  /** Color constant for <em>"light yellow"</em> (<code>0xffffffe0</code>). */
+  val LightYellow = PresetRGBAColor(0xffffffe0, Some("light yellow"), Some("lightyellow"))
+
+  /** Color constant for <em>"lime"</em> (<code>0xff00ff00</code>). */
+  val Lime = PresetRGBAColor(0xff00ff00, Some("lime"), Some("lime"))
+
+  /** Color constant for <em>"lime green"</em> (<code>0xff32cd32</code>). */
+  val LimeGreen = PresetRGBAColor(0xff32cd32, Some("lime green"), Some("limegreen"))
+
+  /** Color constant for <em>"linen"</em> (<code>0xfffaf0e6</code>). */
+  val Linen = PresetRGBAColor(0xfffaf0e6, Some("linen"), Some("linen"))
+
+  /** Color constant for <em>"magenta"</em> (<code>0xffff00ff</code>). */
+  val Magenta = PresetRGBAColor(0xffff00ff, Some("magenta"), Some("magenta"))
+
+  /** Color constant for <em>"maroon"</em> (<code>0xff800000</code>). */
+  val Maroon = PresetRGBAColor(0xff800000, Some("maroon"), Some("maroon"))
+
+  /** Color constant for <em>"medium aquamarine"</em> (<code>0xff66cdaa</code>). */
+  val MediumAquamarine = PresetRGBAColor(0xff66cdaa, Some("medium aquamarine"), Some("mediumaquamarine"))
+
+  /** Color constant for <em>"medium blue"</em> (<code>0xff0000cd</code>). */
+  val MediumBlue = PresetRGBAColor(0xff0000cd, Some("medium blue"), Some("mediumblue"))
+
+  /** Color constant for <em>"medium orchid"</em> (<code>0xffba55d3</code>). */
+  val MediumOrchid = PresetRGBAColor(0xffba55d3, Some("medium orchid"), Some("mediumorchid"))
+
+  /** Color constant for <em>"medium purple"</em> (<code>0xff9370db</code>). */
+  val MediumPurple = PresetRGBAColor(0xff9370db, Some("medium purple"), Some("mediumpurple"))
+
+  /** Color constant for <em>"medium sea green"</em> (<code>0xff3cb371</code>). */
+  val MediumSeaGreen = PresetRGBAColor(0xff3cb371, Some("medium sea green"), Some("mediumseagreen"))
+
+  /** Color constant for <em>"medium slate blue"</em> (<code>0xff7b68ee</code>). */
+  val MediumSlateBlue = PresetRGBAColor(0xff7b68ee, Some("medium slate blue"), Some("mediumslateblue"))
+
+  /** Color constant for <em>"medium spring green"</em> (<code>0xff00fa9a</code>). */
+  val MediumSpringGreen = PresetRGBAColor(0xff00fa9a, Some("medium spring green"), Some("mediumspringbreen"))
+
+  /** Color constant for <em>"medium turquoise"</em> (<code>0xff48d1cc</code>). */
+  val MediumTurquoise = PresetRGBAColor(0xff48d1cc, Some("medium turquoise"), Some("mediumturquoise"))
+
+  /** Color constant for <em>"medium violet red"</em> (<code>0xffc71585</code>). */
+  val MediumVioletRed = PresetRGBAColor(0xffc71585, Some("medium violet red"), Some("mediumvioletred"))
+
+  /** Color constant for <em>"midnight blue"</em> (<code>0xff191970</code>). */
+  val MidnightBlue = PresetRGBAColor(0xff191970, Some("midnight blue"), Some("midnightblue"))
+
+  /** Color constant for <em>"mint cream"</em> (<code>0xfff5fffa</code>). */
+  val MintCream = PresetRGBAColor(0xfff5fffa, Some("mint cream"), Some("mintcream"))
+
+  /** Color constant for <em>"misty rose"</em> (<code>0xffffe4e1</code>). */
+  val MistyRose = PresetRGBAColor(0xffffe4e1, Some("misty rose"), Some("mistyrose"))
+
+  /** Color constant for <em>"moccasin"</em> (<code>0xffffe4b5</code>). */
+  val Moccasin = PresetRGBAColor(0xffffe4b5, Some("moccasin"), Some("moccasin"))
+
+  /** Color constant for <em>"navajo white"</em> (<code>0xffffdead</code>). */
+  val NavajoWhite = PresetRGBAColor(0xffffdead, Some("navajo white"), Some("navajowhite"))
+
+  /** Color constant for <em>"navy"</em> (<code>0xff000080</code>). */
+  val Navy = PresetRGBAColor(0xff000080, Some("navy"), Some("navy"))
+
+  /** Color constant for <em>"old lace"</em> (<code>0xfffdf5e6</code>). */
+  val OldLace = PresetRGBAColor(0xfffdf5e6, Some("old lace"), Some("oldlace"))
+
+  /** Color constant for <em>"olive"</em> (<code>0xff808000</code>). */
+  val Olive = PresetRGBAColor(0xff808000, Some("olive"), Some("olive"))
+
+  /** Color constant for <em>"olive drab"</em> (<code>0xff6b8e23</code>). */
+  val OliveDrab = PresetRGBAColor(0xff6b8e23, Some("olive drab"), Some("olivedrab"))
+
+  /** Color constant for <em>"orange"</em> (<code>0xffffa500</code>). */
+  val Orange = PresetRGBAColor(0xffffa500, Some("orange"), Some("orange"))
+
+  /** Color constant for <em>"orange red"</em> (<code>0xffff4500</code>). */
+  val OrangeRed = PresetRGBAColor(0xffff4500, Some("orange red"), Some("orangered"))
+
+  /** Color constant for <em>"orchid"</em> (<code>0xffda70d6</code>). */
+  val Orchid = PresetRGBAColor(0xffda70d6, Some("orchid"), Some("orchid"))
+
+  /** Color constant for <em>"pale golden rod"</em> (<code>0xffeee8aa</code>). */
+  val PaleGoldenRod = PresetRGBAColor(0xffeee8aa, Some("pale golden rod"), Some("palegoldenrod"))
+
+  /** Color constant for <em>"pale green"</em> (<code>0xff98fb98</code>). */
+  val PaleGreen = PresetRGBAColor(0xff98fb98, Some("pale green"), Some("palegreen"))
+
+  /** Color constant for <em>"pale turquoise"</em> (<code>0xffafeeee</code>). */
+  val PaleTurquoise = PresetRGBAColor(0xffafeeee, Some("pale turquoise"), Some("paleturquoise"))
+
+  /** Color constant for <em>"pale violet red"</em> (<code>0xffdb7093</code>). */
+  val PaleVioletRed = PresetRGBAColor(0xffdb7093, Some("pale violet red"), Some("palevioletred"))
+
+  /** Color constant for <em>"papaya whip"</em> (<code>0xffffefd5</code>). */
+  val PapayaWhip = PresetRGBAColor(0xffffefd5, Some("papaya whip"), Some("papayawhip"))
+
+  /** Color constant for <em>"peach puff"</em> (<code>0xffffdab9</code>). */
+  val PeachPuff = PresetRGBAColor(0xffffdab9, Some("peach puff"), Some("peachpuff"))
+
+  /** Color constant for <em>"peru"</em> (<code>0xffcd853f</code>). */
+  val Peru = PresetRGBAColor(0xffcd853f, Some("peru"), Some("peru"))
+
+  /** Color constant for <em>"pink"</em> (<code>0xffffc0cb</code>). */
+  val Pink = PresetRGBAColor(0xffffc0cb, Some("pink"), Some("pink"))
+
+  /** Color constant for <em>"plum"</em> (<code>0xffdda0dd</code>). */
+  val Plum = PresetRGBAColor(0xffdda0dd, Some("plum"), Some("plum"))
+
+  /** Color constant for <em>"powder blue"</em> (<code>0xffb0e0e6</code>). */
+  val PowderBlue = PresetRGBAColor(0xffb0e0e6, Some("powder blue"), Some("powderblue"))
+
+  /** Color constant for <em>"purple"</em> (<code>0xff800080</code>). */
+  val Purple = PresetRGBAColor(0xff800080, Some("purple"), Some("purple"))
+
+  /** Color constant for <em>"red"</em> (<code>0xffff0000</code>). */
+  val Red = PresetRGBAColor(0xffff0000, Some("red"), Some("red"))
+
+  /** Color constant for <em>"rosy brown"</em> (<code>0xffbc8f8f</code>). */
+  val RosyBrown = PresetRGBAColor(0xffbc8f8f, Some("rosy brown"), Some("rosybrown"))
+
+  /** Color constant for <em>"royal blue"</em> (<code>0xff4169e1</code>). */
+  val RoyalBlue = PresetRGBAColor(0xff4169e1, Some("royal blue"), Some("royalblue"))
+
+  /** Color constant for <em>"saddle brown"</em> (<code>0xff8b4513</code>). */
+  val SaddleBrown = PresetRGBAColor(0xff8b4513, Some("saddle brown"), Some("saddlebrown"))
+
+  /** Color constant for <em>"salmon"</em> (<code>0xfffa8072</code>). */
+  val Salmon = PresetRGBAColor(0xfffa8072, Some("salmon"), Some("salmon"))
+
+  /** Color constant for <em>"sandy brown"</em> (<code>0xfff4a460</code>). */
+  val SandyBrown = PresetRGBAColor(0xfff4a460, Some("sandy brown"), Some("sandybrown"))
+
+  /** Color constant for <em>"sea green"</em> (<code>0xff2e8b57</code>). */
+  val SeaGreen = PresetRGBAColor(0xff2e8b57, Some("sea green"), Some("seagreen"))
+
+  /** Color constant for <em>"seashell"</em> (<code>0xfffff5ee</code>). */
+  val SeaShell = PresetRGBAColor(0xfffff5ee, Some("seashell"), Some("seashell"))
+
+  /** Color constant for <em>"sienna"</em> (<code>0xffa0522d</code>). */
+  val Sienna = PresetRGBAColor(0xffa0522d, Some("sienna"), Some("sienna"))
+
+  /** Color constant for <em>"silver"</em> (<code>0xffc0c0c0</code>). */
+  val Silver = PresetRGBAColor(0xffc0c0c0, Some("silver"), Some("silver"))
+
+  /** Color constant for <em>"sky blue"</em> (<code>0xff87ceeb</code>). */
+  val SkyBlue = PresetRGBAColor(0xff87ceeb, Some("sky blue"), Some("skyblue"))
+
+  /** Color constant for <em>"slate blue"</em> (<code>0xff6a5acd</code>). */
+  val SlateBlue = PresetRGBAColor(0xff6a5acd, Some("slate blue"), Some("slateblue"))
+
+  /** Color constant for <em>"slate gray"</em> (<code>0xff708090</code>). */
+  val SlateGray = PresetRGBAColor(0xff708090, Some("slate gray"), Some("slategray"))
+
+  /** Color constant for <em>"slate grey"</em> (<code>0xff708090</code>). */
+  val SlateGrey = PresetRGBAColor(0xff708090, Some("slate grey"), Some("slategrey"))
+
+  /** Color constant for <em>"snow"</em> (<code>0xfffffafa</code>). */
+  val Snow = PresetRGBAColor(0xfffffafa, Some("snow"), Some("snow"))
+
+  /** Color constant for <em>"spring green"</em> (<code>0xff00ff7f</code>). */
+  val SpringGreen = PresetRGBAColor(0xff00ff7f, Some("spring green"), Some("springgreen"))
+
+  /** Color constant for <em>"steel blue"</em> (<code>0xff4682b4</code>). */
+  val SteelBlue = PresetRGBAColor(0xff4682b4, Some("steel blue"), Some("steelblue"))
+
+  /** Color constant for <em>"tan"</em> (<code>0xffd2b48c</code>). */
+  val Tan = PresetRGBAColor(0xffd2b48c, Some("tan"), Some("tan"))
+
+  /** Color constant for <em>"teal"</em> (<code>0xff008080</code>). */
+  val Teal = PresetRGBAColor(0xff008080, Some("teal"), Some("teal"))
+
+  /** Color constant for <em>"thistle"</em> (<code>0xffd8bfd8</code>). */
+  val Thistle = PresetRGBAColor(0xffd8bfd8, Some("thistle"), Some("thistle"))
+
+  /** Color constant for <em>"tomato"</em> (<code>0xffff6347</code>). */
+  val Tomato = PresetRGBAColor(0xffff6347, Some("tomato"), Some("tomato"))
+
+  /** Color constant for <em>"turquoise"</em> (<code>0xff40e0d0</code>). */
+  val Turquoise = PresetRGBAColor(0xff40e0d0, Some("turquoise"), Some("turquoise"))
+
+  /** Color constant for <em>"violet"</em> (<code>0xffee82ee</code>). */
+  val Violet = PresetRGBAColor(0xffee82ee, Some("violet"), Some("violet"))
+
+  /** Color constant for <em>"wheat"</em> (<code>0xfff5deb3</code>). */
+  val Wheat = PresetRGBAColor(0xfff5deb3, Some("wheat"), Some("wheat"))
+
+  /** Color constant for <em>"white"</em> (<code>0xffffffff</code>). */
+  val White = PresetRGBAColor(0xffffffff, Some("white"), Some("white"))
+
+  /** Color constant for <em>"white smoke"</em> (<code>0xfff5f5f5</code>). */
+  val WhiteSmoke = PresetRGBAColor(0xfff5f5f5, Some("white smoke"), Some("whitesmoke"))
+
+  /** Color constant for <em>"yellow"</em> (<code>0xffffff00</code>). */
+  val Yellow = PresetRGBAColor(0xffffff00, Some("yellow"), Some("yellow"))
+
+  /** Color constant for <em>"yellow green"</em> (<code>0xff9acd32</code>). */
+  val YellowGreen = PresetRGBAColor(0xff9acd32, Some("yellow green"), Some("yellowgreen"))
+
+
+  /**
+   * All [[PresetRGBAColor]] definitions as a mapping from CSS
+   * color names to the actual [[RGBAColor]] objects.
+   */
+  lazy val PresetColors = Map(
+    "aliceblue" -> AliceBlue,
+    "amethyst" -> Amethyst,
+    "antiquewhite" -> AntiqueWhite,
+    "aqua" -> Aqua,
+    "aquamarine" -> Aquamarine,
+    "azure" -> Azure,
+    "beige" -> Beige,
+    "bisque" -> Bisque,
+    "black" -> Black,
+    "blanchedalmond" -> BlanchedAlmond,
+    "blue" -> Blue,
+    "blueviolet" -> BlueViolet,
+    "brown" -> Brown,
+    "burlywood" -> BurlyWood,
+    "cadetblue" -> CadetBlue,
+    "chartreuse" -> ChartReuse,
+    "chocolate" -> Chocolate,
+    "coral" -> Coral,
+    "cornflowerblue" -> CornflowerBlue,
+    "cornsilk" -> CornSilk,
+    "crimson" -> Crimson,
+    "cyan" -> Cyan,
+    "darkblue" -> DarkBlue,
+    "darkcyan" -> DarkCyan,
+    "darkgoldenrod" -> DarkGoldenRod,
+    "darkgray" -> DarkGray,
+    "darkgreen" -> DarkGreen,
+    "darkgrey" -> DarkGrey,
+    "darkkhaki" -> DarkKhaki,
+    "darkmagenta" -> DarkMagenta,
+    "darkolivegreen" -> DarkOliveGreen,
+    "darkorange" -> DarkOrange,
+    "darkorchid" -> DarkOrchid,
+    "darkred" -> DarkRed,
+    "darksalmon" -> DarkSalmon,
+    "darkseagreen" -> DarkSeaGreen,
+    "darkslateblue" -> DarkSlateBlue,
+    "darkslategray" -> DarkSlateGray,
+    "darkslategrey" -> DarkSlateGrey,
+    "darkturquoise" -> DarkTurquoise,
+    "darkviolet" -> DarkViolet,
+    "deeppink" -> DeepPink,
+    "deepskyblue" -> DeepSkyBlue,
+    "dimgray" -> DimGray,
+    "dimgrey" -> DimGrey,
+    "dodgerblue" -> DodgerBlue,
+    "firebrick" -> FireBrick,
+    "floralwhite" -> FloralWhite,
+    "forestgreen" -> ForestGreen,
+    "fuchsia" -> Fuchsia,
+    "gainsboro" -> Gainsboro,
+    "ghostwhite" -> GhostWhite,
+    "gold" -> Gold,
+    "goldenrod" -> GoldenRod,
+    "gray" -> Gray,
+    "green" -> Green,
+    "greenyellow" -> GreenYellow,
+    "grey" -> Grey,
+    "honeydew" -> Honeydew,
+    "hotpink" -> HotPink,
+    "indianred" -> IndianRed,
+    "indigo" -> Indigo,
+    "ivory" -> Ivory,
+    "khaki" -> Khaki,
+    "lavender" -> Lavender,
+    "lavenderblush" -> LavenderBlush,
+    "lawngreen" -> LawnGreen,
+    "lemonchiffon" -> LemonChiffon,
+    "lightblue" -> LightBlue,
+    "lightcoral" -> LightCoral,
+    "lightcyan" -> LightCyan,
+    "lightgoldenrodyellow" -> LightGoldenRodYellow,
+    "lightgray" -> LightGray,
+    "lightgreen" -> LightGreen,
+    "lightgrey" -> LightGrey,
+    "lightpink" -> LightPink,
+    "lightsalmon" -> LightSalmon,
+    "lightseagreen" -> LightSeaGreen,
+    "lightskyblue" -> LightSkyBlue,
+    "lightslategray" -> LightSlateGray,
+    "lightslategrey" -> LightSlateGrey,
+    "lightsteelblue" -> LightSteelBlue,
+    "lightyellow" -> LightYellow,
+    "lime" -> Lime,
+    "limegreen" -> LimeGreen,
+    "linen" -> Linen,
+    "magenta" -> Magenta,
+    "maroon" -> Maroon,
+    "mediumaquamarine" -> MediumAquamarine,
+    "mediumblue" -> MediumBlue,
+    "mediumorchid" -> MediumOrchid,
+    "mediumpurple" -> MediumPurple,
+    "mediumseagreen" -> MediumSeaGreen,
+    "mediumslateblue" -> MediumSlateBlue,
+    "mediumspringgreen" -> MediumSpringGreen,
+    "mediumturquoise" -> MediumTurquoise,
+    "mediumvioletred" -> MediumVioletRed,
+    "midnightblue" -> MidnightBlue,
+    "mintcream" -> MintCream,
+    "mistyrose" -> MistyRose,
+    "moccasin" -> Moccasin,
+    "navajowhite" -> NavajoWhite,
+    "navy" -> Navy,
+    "oldlace" -> OldLace,
+    "olive" -> Olive,
+    "olivedrab" -> OliveDrab,
+    "orange" -> Orange,
+    "orangered" -> OrangeRed,
+    "orchid" -> Orchid,
+    "palegoldenrod" -> PaleGoldenRod,
+    "palegreen" -> PaleGreen,
+    "paleturquoise" -> PaleTurquoise,
+    "palevioletred" -> PaleVioletRed,
+    "papayawhip" -> PapayaWhip,
+    "peachpuff" -> PeachPuff,
+    "peru" -> Peru,
+    "pink" -> Pink,
+    "plum" -> Plum,
+    "powderblue" -> PowderBlue,
+    "purple" -> Purple,
+    "red" -> Red,
+    "rosybrown" -> RosyBrown,
+    "royalblue" -> RoyalBlue,
+    "saddlebrown" -> SaddleBrown,
+    "salmon" -> Salmon,
+    "sandybrown" -> SandyBrown,
+    "seagreen" -> SeaGreen,
+    "seashell" -> SeaShell,
+    "sienna" -> Sienna,
+    "silver" -> Silver,
+    "skyblue" -> SkyBlue,
+    "slateblue" -> SlateBlue,
+    "slategray" -> SlateGray,
+    "slategrey" -> SlateGrey,
+    "snow" -> Snow,
+    "springgreen" -> SpringGreen,
+    "steelblue" -> SteelBlue,
+    "tan" -> Tan,
+    "teal" -> Teal,
+    "thistle" -> Thistle,
+    "tomato" -> Tomato,
+    "turquoise" -> Turquoise,
+    "violet" -> Violet,
+    "wheat" -> Wheat,
+    "white" -> White,
+    "whitesmoke" -> WhiteSmoke,
+    "yellow" -> Yellow,
+    "yellowgreen" -> YellowGreen
   )
-
-
-  /**
-   *
-   *
-   * @param kv
-   * @tparam T
-   *
-   * @return
-   */
-  override def +[T >: RGBAColor] (kv: (Symbol, T)): Map[Symbol, T] = _colorMap + kv
-
-  /**
-   *
-   *
-   * @param key
-   *
-   * @return
-   */
-  override def get(key: Symbol): Option[RGBAColor] = _colorMap.get(key)
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def iterator: Iterator[(Symbol, RGBAColor)] = _colorMap.iterator
-
-  /**
-   *
-   *
-   * @param key
-   *
-   * @return
-   */
-  override def - (key: Symbol): Map[Symbol, RGBAColor] = _colorMap - key
 
 }

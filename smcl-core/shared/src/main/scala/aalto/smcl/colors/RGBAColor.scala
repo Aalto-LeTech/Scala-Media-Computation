@@ -487,7 +487,7 @@ object RGBAColor {
  * @param green
  * @param blue
  * @param opacity
- * @param nameOption
+ * @param name
  *
  * @author Aleksi Lukkarinen
  */
@@ -496,12 +496,15 @@ class RGBAColor protected(
     val green: Int,
     val blue: Int,
     val opacity: Int,
-    val nameOption: Option[String] = None) extends {
+    val name: Option[String] = None) extends {
 
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false
 
 } with Ordered[RGBAColor] with Immutable with Tokenizable {
+
+  /** CSS name of this color. Only some of the preset colors have a value for this property. */
+  val cssName: Option[String] = None
 
   /** This [[RGBAColor]] coded into an `Int`. */
   lazy val toArgbInt: Int = argbIntFrom(red, green, blue, opacity)
@@ -633,6 +636,9 @@ class RGBAColor protected(
    * Returns a string representation of this [[RGBAColor]].
    */
   override def toString: String =
-    s"ARGB: 0x$toHexString -- $opacity - $red - $green - $blue"
+    (if (isPreset) "Preset " else "") +
+    s"""RGBA Color
+       |ARGB: 0x$toHexString -- $opacity - $red - $green - $blue
+       |Canonical name: ${name getOrElse StrEmpty}""".stripMargin
 
 }

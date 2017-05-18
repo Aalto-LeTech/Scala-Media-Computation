@@ -17,6 +17,11 @@
 package aalto.smcl.colors
 
 
+import aalto.smcl.infrastructure.StrEmpty
+
+
+
+
 /**
  *
  *
@@ -28,37 +33,57 @@ object PresetRGBAColor {
   /**
    *
    *
+   * @param red
+   * @param green
+   * @param blue
+   * @param opacity
+   * @param name
+   * @param cssName
+   *
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, opacity: Int,
-      nameOption: Option[String] = None): RGBAColor = {
+      name: Option[String] = None, cssName: Option[String] = None): RGBAColor = {
 
     ColorValidator.validateRgbaColor(red, green, blue, opacity)
 
-    val resultNameOption = ColorValidator.validateColorNameOption(nameOption)
+    val validatedName = ColorValidator.validateColorNameOption(name)
+    val validatedCssName = ColorValidator.validateColorNameOption(cssName)
 
-    require(resultNameOption.isDefined,
+    require(validatedName.isDefined,
       "PresetColor instances must be given unique names (was None).")
 
-    new PresetRGBAColor(red, green, blue, opacity, resultNameOption)
+    new PresetRGBAColor(red, green, blue, opacity, validatedName, validatedCssName)
   }
-
 
   /**
    *
    *
    * @param argbInt
-   * @param nameOption
+   * @param name
+   * @param cssName
    *
    * @return
    */
-  def apply(argbInt: Int, nameOption: Option[String]): RGBAColor =
+  def apply(argbInt: Int, name: Option[String], cssName: Option[String]): RGBAColor =
     PresetRGBAColor(
       redComponentOf(argbInt),
       greenComponentOf(argbInt),
       blueComponentOf(argbInt),
       opacityComponentOf(argbInt),
-      nameOption)
+      name,
+      cssName)
+
+  /**
+   *
+   *
+   * @param argbInt
+   * @param name
+   *
+   * @return
+   */
+  def apply(argbInt: Int, name: Option[String]): RGBAColor = apply(argbInt, name, None)
+
 }
 
 
@@ -67,6 +92,13 @@ object PresetRGBAColor {
 /**
  *
  *
+ * @param red
+ * @param green
+ * @param blue
+ * @param opacity
+ * @param name
+ * @param cssName
+ *
  * @author Aleksi Lukkarinen
  */
 class PresetRGBAColor private[colors](
@@ -74,19 +106,21 @@ class PresetRGBAColor private[colors](
     override val green: Int,
     override val blue: Int,
     override val opacity: Int,
-    override val nameOption: Option[String] = None) extends {
+    override val name: Option[String] = None,
+    override val cssName: Option[String] = None) extends {
 
-  /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
+  /** Returns `true` if this [[PresetRGBAColor]] is provided by SMCL, otherwise `false`. */
   override val isPreset: Boolean = true
 
-} with RGBAColor(red, green, blue, opacity, nameOption) with Immutable {
-
-  /** Default name for an unnamed preset color. */
-  private val StrNoName = "<unnamed preset>"
+} with RGBAColor(red, green, blue, opacity, name) with Immutable {
 
   /**
-   * Returns a string representation of this [[RGBAColor]].
+   * Returns a string representation of this [[PresetRGBAColor]].
    */
-  override def toString: String = s"${nameOption.getOrElse(StrNoName)} (${super.toString})"
+  override def toString: String =
+    s"""${super.toString}
+       |CSS name: ${cssName getOrElse StrEmpty}
+       |This is a preset color.
+    """.stripMargin
 
 }

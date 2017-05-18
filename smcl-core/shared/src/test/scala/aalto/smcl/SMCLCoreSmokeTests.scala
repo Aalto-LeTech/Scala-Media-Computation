@@ -20,7 +20,7 @@ package aalto.smcl
 import org.scalatest.DoNotDiscover
 
 import aalto.smcl.bitmaps.{Bitmap, circle}
-import aalto.smcl.colors.{PresetColors, RGBAColor}
+import aalto.smcl.colors.{RGBAColor, LightBlue}
 import aalto.smcl.infrastructure.GS
 import aalto.smcl.infrastructure.tests.SharedIntegrationSpecBase
 
@@ -40,7 +40,7 @@ class SMCLCoreSmokeTests extends SharedIntegrationSpecBase {
     "create a bitmap" in {Bitmap(widthInPixels = 15)}
     "create a circle" in {circle(50)}
     "create a new RGBA color" in {RGBAColor(1, 2, 3, 4)}
-    "recall a preset RGBA color" in {PresetColors('lightBlue)}
+    "recall a preset RGBA color" in LightBlue
   }
 
 }
