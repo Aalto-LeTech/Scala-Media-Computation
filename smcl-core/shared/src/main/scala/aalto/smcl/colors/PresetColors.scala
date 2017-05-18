@@ -32,8 +32,8 @@ import aalto.smcl.infrastructure.StrEmpty
  */
 trait PresetColors {
 
-  // Sequence containing all preset colors; they are added by the PresetRGBAColor constructor.
-  private var allPresetColors: Seq[PresetRGBAColor] = Seq()
+  // Map for all preset colors; content is added by the PresetRGBAColor constructor.
+  private var allPresetColors: Map[String, PresetRGBAColor] = Map()
 
 
 
@@ -62,7 +62,7 @@ trait PresetColors {
         canonicalName)
       with Immutable {
 
-    allPresetColors = allPresetColors :+ this
+    allPresetColors = allPresetColors + ((cssName getOrElse canonicalName.get) -> this)
 
     /**
      * Returns a string representation of this [[PresetRGBAColor]].
@@ -577,9 +577,9 @@ trait PresetColors {
 
 
   /**
-   * All [[PresetRGBAColor]] definitions as a mapping from CSS
-   * color names to the actual [[RGBAColor]] objects.
+   * All preset color definitions as a mapping from
+   * color names to the corresponding [[PresetRGBAColor]] objects.
    */
-  def PresetColors: Seq[PresetRGBAColor] = allPresetColors
+  def PresetColors: Map[String, PresetRGBAColor] = allPresetColors
 
 }
