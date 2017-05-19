@@ -56,11 +56,15 @@ case class ReplicateHorizontally(
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(Seq(bitmapToReplicate.operations))
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "ReplicateHorizontally"
+
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap("ReplicateHorizontally", Map(
+  lazy val describedProperties = Map(
     "numberOfReplicas" -> Option(numberOfReplicas.toString),
     "padding" -> Option(s"$paddingInPixels px"),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")))
+    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
+  )
 
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int = bitmapToReplicate.heightInPixels

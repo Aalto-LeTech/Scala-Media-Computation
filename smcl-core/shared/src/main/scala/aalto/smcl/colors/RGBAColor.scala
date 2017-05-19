@@ -18,7 +18,7 @@ package aalto.smcl.colors
 
 
 import aalto.smcl.colors
-import aalto.smcl.infrastructure.{ColorAdapter, _}
+import aalto.smcl.infrastructure.{ColorAdapter, Describable, StringUtils, _}
 
 
 
@@ -501,7 +501,7 @@ class RGBAColor protected(
   /** Returns `true` if this [[RGBAColor]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false
 
-} with Ordered[RGBAColor] with Immutable with Tokenizable {
+} with Ordered[RGBAColor] with Immutable with Describable {
 
   /** CSS name of this color. Only some of the preset colors have a value for this property. */
   val cssName: Option[String] = None
@@ -524,12 +524,18 @@ class RGBAColor protected(
   /** This [[RGBAColor]] represented as a hexadecimal string. */
   lazy val toHexString: String = toArgbInt.toArgbHexColorString
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "RGBA Color"
+
   /** Information about this [[aalto.smcl.bitmaps.operations.Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("RGBAColor", Map(
-    "red" -> Option(red.toString),
-    "green" -> Option(green.toString),
-    "blue" -> Option(blue.toString),
-    "opacity" -> Option(opacity.toString)))
+  lazy val describedProperties = Map(
+    "Canonical Name" -> new StringUtils().titleCase(canonicalName getOrElse StrUnnamed),
+    "CSS Name" -> (cssName getOrElse StrUnnamed),
+    "Red Component" -> red,
+    "Green Component" -> green,
+    "Blue Component" -> blue,
+    "Opacity Component" -> opacity
+  )
 
   /** */
   lazy val toColorComponentMap: Map[Symbol, Double] = colorComponentMapFrom(this)
@@ -631,14 +637,5 @@ class RGBAColor protected(
    */
   def compareByHsiIntensity(that: RGBAColor): Int =
     Math.signum(that.toHsiIntensity - this.toHsiIntensity).toInt
-
-  /**
-   * Returns a string representation of this [[RGBAColor]].
-   */
-  override def toString: String =
-    (if (isPreset) "Preset " else "") +
-    s"""RGBA Color
-       |ARGB: 0x$toHexString -- $opacity - $red - $green - $blue
-       |Canonical name: ${canonicalName getOrElse StrEmpty}""".stripMargin
 
 }

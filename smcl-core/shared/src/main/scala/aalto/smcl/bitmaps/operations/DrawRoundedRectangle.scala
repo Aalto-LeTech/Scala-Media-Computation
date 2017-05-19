@@ -63,8 +63,11 @@ case class DrawRoundedRectangle(
   require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "DrawRoundedRectangle"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("DrawRoundedRectangle", Map(
+  lazy val describedProperties = Map(
     "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),
@@ -74,7 +77,8 @@ case class DrawRoundedRectangle(
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")))
+    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")
+  )
 
   /**
    * Draws a rounded-corner rectangle onto the given bitmap with the given colors.

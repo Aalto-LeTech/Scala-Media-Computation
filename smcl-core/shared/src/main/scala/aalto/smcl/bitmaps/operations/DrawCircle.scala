@@ -63,15 +63,19 @@ case class DrawCircle(
   /** Length of a side of the bounding box of the circle to be drawn. */
   val boundingBoxSideLength: Int = 2 * radiusInPixels
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "DrawCircle"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("DrawCircle", Map(
+  lazy val describedProperties = Map(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),
     "radius" -> Option(s"$radiusInPixels px"),
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")))
+    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")
+  )
 
   /**
    * Draws a circle onto the given bitmap with the given colors.

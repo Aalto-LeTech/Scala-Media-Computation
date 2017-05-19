@@ -44,10 +44,13 @@ case class Trim(
   require(sourceBitmap != null, s"Trimming requires exactly one source image (was null).")
   require(colorToTrim != null, "The background color argument has to be a Color instance (was null).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "Trim"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("Trim", Map(
+  lazy val describedProperties = Map(
     "colorToTrim" -> Option(s"0x${colorToTrim.toArgbInt.toArgbHexColorString}")
-  ))
+  )
 
   /** The [[BitmapOperationList]] instance resulting the bitmap to be trimmed. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

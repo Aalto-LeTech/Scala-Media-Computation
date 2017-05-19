@@ -57,11 +57,15 @@ case class AppendHorizontally(
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(bitmapsToCombine.map(_.operations))
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "AppendHorizontally"
+
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap("AppendHorizontally", Map(
+  lazy val describedProperties = Map(
     "padding" -> Option(s"$paddingInPixels px"),
     "verticalAlignment" -> Option(verticalAlignment.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")))
+    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
+  )
 
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int = childOperationListsOption.get.maxBy({_.heightInPixels}).heightInPixels

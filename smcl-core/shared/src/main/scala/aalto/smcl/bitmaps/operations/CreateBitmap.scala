@@ -38,11 +38,14 @@ case class CreateBitmap(
             with BufferProvider
             with Immutable {
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "CreateBitmap"
+
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap("CreateBitmap", Map(
+  lazy val describedProperties = Map(
     "width" -> Option("${widthInPixels} px"),
     "height" -> Option("${heightInPixels} px")
-  ))
+  )
 
 
   /**

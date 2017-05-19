@@ -22,75 +22,17 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl]
-object MetaInformationMap {
-
-  // Messages
-  private val MsgCannotBeNull =
-    "MetaInformationMap content key cannot be null"
-
-  private val MsgKeyCannotContainOnlyWhitespace =
-    "MetaInformationMap content key cannot contain only white space"
+class StringUtils {
 
   /**
-   * Processes the given content proposal and instantiates
-   * a new MetaInformationMap if content is acceptable.
-   */
-  def apply(className: String,
-      contentProposal: Map[String, Option[String]]): MetaInformationMap = {
-
-    var content = Map[String, Option[String]]()
-
-    contentProposal foreach {pair =>
-      var key = pair._1
-      require(key != null, MsgCannotBeNull)
-
-      key = key.trim()
-      require(key.nonEmpty, MsgKeyCannotContainOnlyWhitespace)
-
-      var value = pair._2
-      if (value == null)
-        value = None
-
-      content = content + (key -> value)
-    }
-
-    new MetaInformationMap(className, content)
-  }
-
-}
-
-
-
-
-/**
- *
- *
- * @author Aleksi Lukkarinen
- */
-private[smcl]
-class MetaInformationMap private(
-    val className: String,
-    private val content: Map[String, Option[String]]) extends Immutable {
-
-  /**
+   * Returns an string, in which the first letter of every
+   * word is capitalized and other letters are in lower case.
    *
-   */
-  def size: Int = content.size
-
-  /**
+   * @param s
    *
+   * @return
    */
-  def keyValuePairs: Seq[(String, Option[String])] = content.toSeq
-
-  /**
-   *
-   */
-  def get(key: String): Option[String] = content(key)
-
-  /**
-   *
-   */
-  def foreach[T](f: ((String, Option[String])) => T): Unit = content foreach f
+  def titleCase(s: String): String =
+    s.toLowerCase.split(StrSpace).map(_.capitalize).mkString(StrSpace)
 
 }

@@ -48,12 +48,15 @@ case class Rotate(
   require(sourceBitmap != null, s"Rotation requires exactly one source image (was null).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "Rotate"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("Rotate", Map(
+  lazy val describedProperties = Map(
     "angle" -> Option(s"$angleInDegrees deg"),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString),
     "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
-  ))
+  )
 
   /** The [[BitmapOperationList]] instance resulting the bitmap to be rotated. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

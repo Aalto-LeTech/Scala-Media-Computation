@@ -44,12 +44,15 @@ case class ToWeightedGrayscale(
 
   new ColorValidator().validateRgbColorWeightCombination(redWeight, greenWeight, blueWeight)
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "ToWeightedGrayscale"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("ToWeightedGrayscale", Map(
+  lazy val describedProperties = Map(
     "redWeight" -> Option(redWeight.toString),
     "greenWeight" -> Option(greenWeight.toString),
     "blueWeight" -> Option(blueWeight.toString)
-  ))
+  )
 
   /**
    * Creates the buffer which contains the results of applying this operation

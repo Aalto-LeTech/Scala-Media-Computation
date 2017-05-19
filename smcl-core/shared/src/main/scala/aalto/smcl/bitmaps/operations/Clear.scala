@@ -40,9 +40,13 @@ case class Clear(
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "Clear"
+
   /** Information about this operation instance */
-  lazy val metaInformation = MetaInformationMap("Clear", Map(
-    "background-color" -> Option("0x${_color.asArgbInt.toArgbHexColorString}")))
+  lazy val describedProperties = Map(
+    "background-color" -> Option("0x${_color.asArgbInt.toArgbHexColorString}")
+  )
 
   /**
    * Clears the given bitmap with the given color.

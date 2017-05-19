@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -49,12 +49,14 @@ case class LoadedBitmap(
   /** Height of the provided buffer in pixels. */
   override def heightInPixels: Int = bitmap.heightInPixels
 
+  /** First text paragraph of the description of this class. */
+  override def descriptionTitle: String = "LoadedBitmap"
+
   /** Information about this [[Renderable]] instance */
-  lazy override val metaInformation = MetaInformationMap("LoadedBitmap", Map(
+  lazy override val describedProperties = Map(
     "resourcePath" -> Option(resourcePathOption.getOrElse("<unknown>")),
-    "imageIndexInFile" -> Option(bitmapIndexInResourceOption.fold("<undefined>"){
-      _.toString
-    })))
+    "imageIndexInFile" -> Option(bitmapIndexInResourceOption.fold("<undefined>"){_.toString})
+  )
 
   /**
    * Creates the buffer which contains the results of applying this operation

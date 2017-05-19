@@ -17,9 +17,6 @@
 package aalto.smcl.colors
 
 
-import aalto.smcl.infrastructure.StrEmpty
-
-
 
 
 /**
@@ -63,12 +60,6 @@ trait PresetColors {
       with Immutable {
 
     allPresetColors = allPresetColors + ((cssName getOrElse canonicalName.get) -> this)
-
-    /**
-     * Returns a string representation of this [[PresetRGBAColor]].
-     */
-    override def toString: String =
-      s"${super.toString}\nCSS name: ${cssName getOrElse StrEmpty}"
   }
 
 

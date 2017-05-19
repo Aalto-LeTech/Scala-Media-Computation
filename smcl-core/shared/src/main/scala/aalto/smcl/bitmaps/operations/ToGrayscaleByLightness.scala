@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -33,8 +33,11 @@ case class ToGrayscaleByLightness()
             with OneSourceFilter
             with Immutable {
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "ToGrayscaleByLightness"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("ToGrayscaleByLightness", Map())
+  lazy val describedProperties = Map()
 
   /**
    * Creates the buffer which contains the results of applying this operation

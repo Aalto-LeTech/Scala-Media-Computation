@@ -57,12 +57,16 @@ case class OverlayFreely(
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(Seq(bottomBitmap.operations, topBitmap.operations))
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "OverlayFreely"
+
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap("OverlayFreely", Map(
+  lazy val describedProperties = Map(
     "topBitmapUpperLeftX" -> Option(s"$topBitmapUpperLeftX px"),
     "topBitmapUpperLeftY" -> Option(s"$topBitmapUpperLeftY px"),
     "topBitmapOpacity" -> Option(topBitmapOpacity.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")))
+    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
+  )
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =

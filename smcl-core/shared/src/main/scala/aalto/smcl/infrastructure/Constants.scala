@@ -62,6 +62,15 @@ trait Constants {
   /** A string containing a single zero. */
   protected[smcl] val StrZero: String = "0"
 
+  /** A string containing a new-line separator. */
+  protected[smcl] val StrNewLine: String = System.lineSeparator
+
+  /** Length of a string containing a new-line separator. */
+  protected[smcl] val StrNewLineLength: Int = System.lineSeparator.length
+
+  /** A string containing text "&lt;unnamed&gt;". */
+  protected[smcl] val StrUnnamed: String = "<unnamed>"
+
   /** Number of bits in one byte. */
   protected[smcl] val OneByte: Int = 8
 

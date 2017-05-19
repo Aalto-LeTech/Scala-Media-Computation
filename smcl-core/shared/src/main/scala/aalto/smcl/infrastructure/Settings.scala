@@ -29,10 +29,13 @@ import aalto.smcl.infrastructure.exceptions.UninitializedSettingError
  *
  * @author Aleksi Lukkarinen
  */
-class Settings extends Tokenizable {
+class Settings extends Describable {
+
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "Settings"
 
   /** Information about this [[Settings]] instance */
-  lazy val metaInformation = MetaInformationMap("Settings", Map())
+  lazy val describedProperties = Map()
 
   /** */
   private[this] val _settingMap =
@@ -200,7 +203,7 @@ class Settings extends Tokenizable {
       println(s"\n${groupKey.capitalize}:")
 
       group foreach {case (_, setting) =>
-        println(s" - ${setting.key.simpleName}: ${setting.value}")
+        println(s" - ${setting.key.fullTypeName}: ${setting.value}")
       }
     }
   }
@@ -212,50 +215,5 @@ class Settings extends Tokenizable {
     _settingMap.values foreach {
       _.reset()
     }
-
-  /**
-   *
-   */
-  override def toToken: String = {
-    val sb = new StringBuilder(100)
-
-    groupedByKeyType()
-        .map({case (groupKey, group) => groupKey + ": " + group.size})
-        .addString(sb,
-          start = StrLeftAngleBracket + metaInformation.className + StrSemicolon + StrSpace,
-          sep = StrSemicolon + StrSpace,
-          end = StrRightAngleBracket)
-
-    sb.toString()
-  }
-
-  /**
-   *
-   */
-  override def toString: String = {
-    val sb = new StringBuilder(100)
-    val settingGroups = groupedByKeyType()
-
-    sb.append(metaInformation.className)
-
-    if (settingGroups.isEmpty)
-      return sb.append(StrComma).append(StrSpace).append("currently empty").append(StrPeriod).toString()
-
-    sb.append(StrSpace + "containing" + StrSpace)
-
-    val countStrings = groupedByKeyType() map {case (groupKey, group) =>
-      val typeName = if (group.size == 1) group.head._1.typeNameSingular else group.head._1.typeNamePlural
-
-      group.size.toString + StrSpace + typeName
-    }
-
-    val initials = countStrings.init
-    if (initials.nonEmpty) {
-      initials.addString(sb, StrComma + StrSpace)
-      sb.append(StrSpace).append("and").append(StrSpace)
-    }
-
-    sb.append(countStrings.last).append(StrPeriod).toString()
-  }
 
 }

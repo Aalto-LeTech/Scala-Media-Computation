@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -42,12 +42,15 @@ case class ToGrayscaleByLuminocity()
   /** */
   private val StandardBlueWeight: Double = 0.07
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "ToGrayscaleByLuminocity"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("ToGrayscaleByLuminocity", Map(
+  lazy val describedProperties = Map(
     "redWeight" -> Option(StandardRedWeight.toString),
     "greenWeight" -> Option(StandardGreenWeight.toString),
     "blueWeight" -> Option(StandardBlueWeight.toString)
-  ))
+  )
 
   /**
    * Creates the buffer which contains the results of applying this operation

@@ -201,13 +201,6 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    * @return
    */
-  def toToken: String = s"[ZoomFactor, $valueInPercents %]"
-
-  /**
-   *
-   *
-   * @return
-   */
   override def toString: String = s"$valueInPercents %"
 
 }

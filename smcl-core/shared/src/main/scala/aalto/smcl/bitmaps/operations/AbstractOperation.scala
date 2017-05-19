@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.infrastructure.{MetaInformationMap, Tokenizable}
+import aalto.smcl.infrastructure.Describable
 
 
 
@@ -29,10 +29,7 @@ import aalto.smcl.infrastructure.{MetaInformationMap, Tokenizable}
  */
 private[bitmaps]
 abstract class AbstractOperation
-    extends Tokenizable
+    extends Describable
             with Immutable {
-
-  /** Information about this [[AbstractOperation]]. */
-  def metaInformation: MetaInformationMap
 
 }

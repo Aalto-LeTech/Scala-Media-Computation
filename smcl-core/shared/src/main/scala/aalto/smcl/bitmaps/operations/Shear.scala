@@ -49,13 +49,16 @@ case class Shear(
   require(sourceBitmap != null, s"Shearing requires exactly one source image (was null).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "Shear"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("Shear", Map(
+  lazy val describedProperties = Map(
     "shearingFactorHorizontal" -> Option(shearingFactorHorizontal.toString),
     "shearingFactorVertical" -> Option(shearingFactorVertical.toString),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString),
     "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
-  ))
+  )
 
   /** The [[BitmapOperationList]] instance resulting the bitmap to be sheared. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

@@ -18,7 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.colors.RGBAComponentTranslationTable
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -34,8 +34,11 @@ case class NegateRedAndGreenComponents()
             with OneSourceFilter
             with Immutable {
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "NegateRedAndGreenComponents"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("NegateRedAndGreenComponents", Map())
+  lazy val describedProperties = Map()
 
   /**
    * Creates the buffer which contains the results of applying this operation

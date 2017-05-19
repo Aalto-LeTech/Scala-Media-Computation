@@ -18,7 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.geometry.AffineTransformation
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -34,8 +34,11 @@ case class FlipDiagonally()
             with OneSourceFilter
             with Immutable {
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "FlipDiagonally"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("FlipDiagonally", Map())
+  lazy val describedProperties = Map()
 
 
   /**

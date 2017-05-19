@@ -38,10 +38,13 @@ case class Posterize(strengthAsPercentage: Int)
 
   new CommonValidators().validatePercentage(strengthAsPercentage, Option("Strength"))
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "Posterize"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("Posterize", Map(
+  lazy val describedProperties = Map(
     "strengthInPercents" -> Option(strengthAsPercentage.toString)
-  ))
+  )
 
 
   /**

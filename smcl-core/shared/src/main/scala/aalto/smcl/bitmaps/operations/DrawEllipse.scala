@@ -63,8 +63,11 @@ case class DrawEllipse(
   /** Y coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
   val boundingBoxUpperLeftY: Int = centerYInPixels - (heightInPixels / 2)
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "DrawEllipse"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("DrawEllipse", Map(
+  lazy val describedProperties = Map(
     "centerX" -> Option(s"$centerXInPixels px"),
     "centerY" -> Option(s"$centerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),
@@ -72,7 +75,8 @@ case class DrawEllipse(
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")))
+    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")
+  )
 
   /**
    * Draws an ellipse onto the given bitmap with the given colors.

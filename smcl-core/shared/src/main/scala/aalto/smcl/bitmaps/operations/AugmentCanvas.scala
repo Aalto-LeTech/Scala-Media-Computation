@@ -63,13 +63,16 @@ case class AugmentCanvas(
   require(extraPixelsOntoBottomEdge >= 0,
     s"Number of extra pixels to be added onto the bottom edge must be >= 0 (was $extraPixelsOntoBottomEdge).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "AugmentCanvas"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("AugmentCanvas", Map(
+  lazy val describedProperties = Map(
     "extraPixelsOntoLeftEdge" -> Option(s"$extraPixelsOntoLeftEdge px"),
     "extraPixelsOntoTopEdge" -> Option(s"$extraPixelsOntoTopEdge px"),
     "extraPixelsOntoRightEdge" -> Option(s"$extraPixelsOntoRightEdge px"),
     "extraPixelsOntoBottomEdge" -> Option(s"$extraPixelsOntoBottomEdge px")
-  ))
+  )
 
   /** The [[BitmapOperationList]] instance resulting the bitmap to be cropped. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

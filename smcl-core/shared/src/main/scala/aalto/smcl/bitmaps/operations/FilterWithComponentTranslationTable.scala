@@ -18,7 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.colors.RGBAComponentTranslationTable
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -36,8 +36,11 @@ case class FilterWithComponentTranslationTable(translator: RGBAComponentTranslat
             with OneSourceFilter
             with Immutable {
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "FilterWithComponentTranslationTable"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("FilterWithComponentTranslationTable", Map())
+  lazy val describedProperties = Map()
 
   /**
    * Creates the buffer which contains the results of applying this operation

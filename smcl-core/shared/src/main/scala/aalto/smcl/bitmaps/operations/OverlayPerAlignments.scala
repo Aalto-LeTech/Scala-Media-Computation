@@ -58,12 +58,16 @@ case class OverlayPerAlignments(
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
     Option(bitmapsToOverlayFromBottomToTop.map(_.operations))
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "OverlayPerAlignments"
+
   /** Information about this [[BufferProvider]] instance */
-  lazy val metaInformation = MetaInformationMap("OverlayPerAlignments", Map(
+  lazy val describedProperties = Map(
     "horizontalAlignment" -> Option(horizontalAlignment.toString),
     "verticalAlignment" -> Option(verticalAlignment.toString),
     "opacityForAllBitmaps" -> Option(opacityForAllBitmaps.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")))
+    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
+  )
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int = childOperationListsOption.get.maxBy({_.widthInPixels}).widthInPixels

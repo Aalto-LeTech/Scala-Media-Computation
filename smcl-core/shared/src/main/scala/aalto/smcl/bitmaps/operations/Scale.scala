@@ -46,12 +46,15 @@ case class Scale(
 
   require(sourceBitmap != null, s"Scaling requires exactly one source image (was null).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "Scale"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("Scale", Map(
+  lazy val describedProperties = Map(
     "scalingFactorX" -> Option(scalingFactorVertical.toString),
     "scalingFactorY" -> Option(scalingFactorHorizontal.toString),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString)
-  ))
+  )
 
   /** The [[BitmapOperationList]] instance resulting the bitmap to be scaled. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

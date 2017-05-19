@@ -18,7 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.ConvolutionKernel
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -36,10 +36,13 @@ case class ConvolveWithCustomKernel(kernel: ConvolutionKernel)
             with OneSourceFilter
             with Immutable {
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "ConvolveWithCustomKernel"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("ConvolveWithCustomKernel", Map(
+  lazy val describedProperties = Map(
     "kernel" -> Option(kernel.toString)
-  ))
+  )
 
 
   /**

@@ -18,7 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, MetaInformationMap}
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
@@ -59,13 +59,16 @@ case class Crop(
   require(windowBottomRightY >= 0 && windowBottomRightY < sourceBitmap.heightInPixels,
     "Y coordinate of cropping window's bottom right corner was outside of the bitmap to be cropped.")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "Crop"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("Crop", Map(
+  lazy val describedProperties = Map(
     "windowTopLeftX" -> Option(s"$windowTopLeftX px"),
     "windowTopLeftY" -> Option(s"$windowTopLeftY px"),
     "windowBottomRightX" -> Option(s"$windowBottomRightX px"),
     "windowBottomRightY" -> Option(s"$windowBottomRightY px")
-  ))
+  )
 
   /** The [[BitmapOperationList]] instance resulting the bitmap to be cropped. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

@@ -48,13 +48,17 @@ case class DrawLine(
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "DrawLine"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("DrawLine", Map(
+  lazy val describedProperties = Map(
     "fromX" -> Option(s"$fromXInPixels px"),
     "fromY" -> Option(s"$fromYInPixels px"),
     "toX" -> Option(s"$toXInPixels px"),
     "toY" -> Option(s"$toYInPixels px"),
-    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}")))
+    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}")
+  )
 
   /**
    * Draws a line onto the given bitmap with the given colors.

@@ -37,7 +37,7 @@ final class Setting[SettingType](
     val key: BaseSettingKeys.Value[SettingType],
     val initialValue: SettingType,
     val validator: SettingType => Option[Throwable])
-    extends Mutable with Tokenizable {
+    extends Mutable with Describable {
 
   if (validator != null)
     validator(initialValue) foreach {reason => throw SettingValidationError(key, reason)}
@@ -45,8 +45,11 @@ final class Setting[SettingType](
   /** Holds the current value of this [[Setting]]. */
   private var _currentValue: SettingType = initialValue
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "Setting"
+
   /** Information about this [[Setting]] instance */
-  lazy val metaInformation = MetaInformationMap("Setting", Map())
+  lazy val describedProperties = Map()
 
   /**
    * Returns the current value of this [[Setting]].
@@ -74,16 +77,5 @@ final class Setting[SettingType](
    * Resets this [[Setting]] to its initial value.
    */
   def reset(): Unit = value = initialValue
-
-  /**
-   * Returns a formalized token representation of this [[Setting]].
-   */
-  override def toToken: String = metaInformation.className +
-      s"; key: ${key.simpleName}; initial-value: $initialValue; current-value: $value]"
-
-  /**
-   * Returns a string representation of this [[Setting]].
-   */
-  override def toString: String = s"${key.simpleName} = $value  (initially $initialValue)"
 
 }

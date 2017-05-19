@@ -58,6 +58,26 @@ package object infrastructure extends Constants {
   def isNotScalaJSPlatform: Boolean = !isScalaJSPlatform
 
 
+  /**
+   * Prints a description of a describable object.
+   *
+   * @param describee the object to be described
+   */
+  def describe(describee: Describable): Unit = {
+    println(describee.toDescription)
+  }
+
+  /**
+   * Prints descriptions for a sequence of describable objects.
+   *
+   * @param describees the sequence the content of which is to be described
+   */
+  def describe(describees: Seq[Describable]): Unit = {
+    for (describee <- describees)
+      println(describee.toDescription)
+  }
+
+
 
 
   /** */

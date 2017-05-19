@@ -25,7 +25,7 @@ import aalto.smcl.infrastructure._
 
 /**
  * Operation to draw a rectangle with given colors. If a color is not given, the default
- * primary/secondary colors will be used, as defined in the [[aalto.smcl.GS]].
+ * primary/secondary colors will be used, as defined in the [[aalto.smcl.infrastructure.GS]].
  *
  * @param upperLeftCornerXInPixels
  * @param upperLeftCornerYInPixels
@@ -57,8 +57,11 @@ case class DrawRectangle(
   require(color != null, "The line color argument has to be a Color instance (was null).")
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "DrawRectangle"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("DrawRectangle", Map(
+  lazy val describedProperties = Map(
     "upperLeftX" -> Option(s"$upperLeftCornerXInPixels px"),
     "upperLeftY" -> Option(s"$upperLeftCornerYInPixels px"),
     "width" -> Option(s"$widthInPixels px"),
@@ -66,7 +69,8 @@ case class DrawRectangle(
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
     "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")))
+    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")
+  )
 
   /**
    * Draws a rectangle onto the given bitmap with the given colors.

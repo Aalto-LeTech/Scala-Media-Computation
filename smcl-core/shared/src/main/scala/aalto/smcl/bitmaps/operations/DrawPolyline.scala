@@ -61,12 +61,16 @@ case class DrawPolyline(
 
   require(color != null, "The color argument has to be a Color instance (was null).")
 
+  /** First text paragraph of the description of this class. */
+  val descriptionTitle: String = "DrawPolyline"
+
   /** Information about this [[Renderable]] instance */
-  lazy val metaInformation = MetaInformationMap("DrawPolyline", Map(
+  lazy val describedProperties = Map(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
     "numberOfCoordinatesPresent" -> Option(numberOfCoordinatesPresent.toString),
     "numberOfCoordinatesToDraw" -> Option(numberOfCoordinatesToDraw.toString),
-    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}")))
+    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}")
+  )
 
   /**
    * Draws a polyline onto the given bitmap with the given colors.

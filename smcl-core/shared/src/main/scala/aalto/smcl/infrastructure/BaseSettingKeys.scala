@@ -41,33 +41,15 @@ object BaseSettingKeys {
    * @tparam SettingType
    */
   abstract sealed class Value[SettingType](
-      fullTypeName: String,
+      val fullTypeName: String,
       val typeNameSingular: String,
-      val typeNamePlural: String) extends Tokenizable {
+      val typeNamePlural: String) extends Describable {
+
+    /** First text paragraph of the description of this class. */
+    override def descriptionTitle: String = fullTypeName
 
     /** Information about this [[Settings]] instance */
-    lazy val metaInformation = MetaInformationMap(fullTypeName, Map())
-
-    /**
-     * Returns full name of this setting key, which equals the full path of this class.
-     */
-    lazy val fullName: String = fullTypeName
-
-    /**
-     * Returns short name of this setting key, which equals the name of this class without any enclosing elements.
-     */
-    lazy val simpleName: String = fullTypeName    // TODO: Get the last part of the name
-
-    /**
-     * Returns a string representation of this setting key.
-     */
-    override def toToken: String = s"[$simpleName]"
-
-    /**
-     * Returns a string representation of this setting key.
-     */
-    override def toString: String = simpleName
-
+    override val describedProperties = Map()
   }
 
 
