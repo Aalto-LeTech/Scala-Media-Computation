@@ -62,7 +62,7 @@ trait DrawingSurfaceAdapter {
       bitmap: BitmapBufferAdapter,
       x: Int,
       y: Int,
-      opacity: Int = ColorValidator.MaximumRgbaOpacity): Boolean
+      opacity: Int = ColorValidator.MaximumRGBAOpacity): Boolean
 
   /**
    *

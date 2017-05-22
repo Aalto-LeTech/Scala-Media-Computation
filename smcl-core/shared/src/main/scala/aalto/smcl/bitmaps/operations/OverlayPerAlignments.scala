@@ -41,7 +41,7 @@ case class OverlayPerAlignments(
     bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
     horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
     verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-    opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+    opacityForAllBitmaps: Int = ColorValidator.MaximumRGBAOpacity,
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
     extends AbstractOperation
             with BufferProvider
@@ -52,7 +52,7 @@ case class OverlayPerAlignments(
 
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
-  ColorValidator.validateRgbaOpacityComponent(opacityForAllBitmaps)
+  ColorValidator.validateRGBAOpacityComponent(opacityForAllBitmaps)
 
   /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

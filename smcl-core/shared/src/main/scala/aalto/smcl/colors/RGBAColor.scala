@@ -44,9 +44,9 @@ object RGBAColor {
   def apply(red: Int, green: Int, blue: Int, opacity: Int,
       nameOption: Option[String] = None): RGBAColor = {
 
-    ColorValidator.validateRgbaColor(red, green, blue, opacity)
+    ColorValidator.validateRGBAColor(red, green, blue, opacity)
 
-    val resultNameOption = ColorValidator.validateColorNameOption(nameOption)
+    val resultNameOption = ColorValidator.validateColorName(nameOption)
 
     new RGBAColor(red, green, blue, opacity, resultNameOption)
   }
@@ -109,7 +109,7 @@ object RGBAColor {
    * @return
    */
   def apply(red: Int, green: Int, blue: Int, nameOption: Option[String]): RGBAColor =
-    RGBAColor(red, green, blue, ColorValidator.MaximumRgbaOpacity, nameOption)
+    RGBAColor(red, green, blue, ColorValidator.MaximumRGBAOpacity, nameOption)
 
   /**
    *
@@ -121,7 +121,7 @@ object RGBAColor {
    * @return
    */
   def apply(red: Int, green: Int, blue: Int): RGBAColor =
-    RGBAColor(red, green, blue, ColorValidator.MaximumRgbaOpacity)
+    RGBAColor(red, green, blue, ColorValidator.MaximumRGBAOpacity)
 
   /**
    *
@@ -257,7 +257,7 @@ object RGBAColor {
    * @return
    */
   def fromHsv(hueInDegrees: Double, saturation: Double, value: Double): RGBAColor =
-    fromHsv(hueInDegrees, saturation, value, ColorValidator.MaximumRgbaOpacity)
+    fromHsv(hueInDegrees, saturation, value, ColorValidator.MaximumRGBAOpacity)
 
   /**
    *
@@ -268,7 +268,7 @@ object RGBAColor {
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsv(hsvTuple: (Double, Double, Double)): RGBAColor =
-  (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity)).tupled.apply(hsvTuple)
+  (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRGBAOpacity)).tupled.apply(hsvTuple)
 
   /**
    *
@@ -284,7 +284,7 @@ object RGBAColor {
       saturation: Double,
       value: Double,
       nameOption: Option[String]): RGBAColor =
-    fromHsv(hueInDegrees, saturation, value, ColorValidator.MaximumRgbaOpacity, nameOption)
+    fromHsv(hueInDegrees, saturation, value, ColorValidator.MaximumRGBAOpacity, nameOption)
 
   /**
    *
@@ -296,7 +296,7 @@ object RGBAColor {
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsv(hsvTuple: (Double, Double, Double), nameOption: Option[String]): RGBAColor =
-  (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity, nameOption)).tupled.apply(hsvTuple)
+  (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRGBAOpacity, nameOption)).tupled.apply(hsvTuple)
 
   /**
    *
@@ -371,7 +371,7 @@ object RGBAColor {
    * @return
    */
   def fromHsi(hueInDegrees: Double, saturation: Double, intensity: Double): RGBAColor =
-    fromHsi(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity)
+    fromHsi(hueInDegrees, saturation, intensity, ColorValidator.MaximumRGBAOpacity)
 
   /**
    *
@@ -382,7 +382,7 @@ object RGBAColor {
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsi(hsiTuple: (Double, Double, Double)): RGBAColor =
-  (fromHsi(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity)).tupled.apply(hsiTuple)
+  (fromHsi(_: Double, _: Double, _: Double, ColorValidator.MaximumRGBAOpacity)).tupled.apply(hsiTuple)
 
   /**
    *
@@ -398,7 +398,7 @@ object RGBAColor {
       saturation: Double,
       intensity: Double,
       nameOption: Option[String]): RGBAColor =
-    fromHsi(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity, nameOption)
+    fromHsi(hueInDegrees, saturation, intensity, ColorValidator.MaximumRGBAOpacity, nameOption)
 
   /**
    *
@@ -410,7 +410,7 @@ object RGBAColor {
    */
   //noinspection ScalaUnnecessaryParentheses
   def fromHsi(hsiTuple: (Double, Double, Double), nameOption: Option[String]): RGBAColor =
-  (fromHsi(_: Double, _: Double, _: Double, ColorValidator.MaximumRgbaOpacity, nameOption)).tupled.apply(hsiTuple)
+  (fromHsi(_: Double, _: Double, _: Double, ColorValidator.MaximumRGBAOpacity, nameOption)).tupled.apply(hsiTuple)
 
   /**
    *
@@ -510,7 +510,7 @@ class RGBAColor protected(
   lazy val toArgbInt: Int = argbIntFrom(red, green, blue, opacity)
 
   /** Returns `true` if this [[RGBAColor]] is fully opaque, otherwise `false`. */
-  val isOpaque: Boolean = opacity == ColorValidator.MaximumRgbaOpacity
+  val isOpaque: Boolean = opacity == ColorValidator.MaximumRGBAOpacity
 
   /** Returns `false` if this [[RGBAColor]] is fully opaque, otherwise `true`. */
   val isTransparent: Boolean = !isOpaque
@@ -582,27 +582,27 @@ class RGBAColor protected(
 
   /** */
   lazy val keepingOnlyRedComponent: RGBAColor =
-    RGBAColor(red, ColorValidator.MinimumRgbGreen, ColorValidator.MinimumRgbBlue, FullyOpaque)
+    RGBAColor(red, ColorValidator.MinimumRGBGreen, ColorValidator.MinimumRGBBlue, FullyOpaque)
 
   /** */
   lazy val keepingOnlyGreenComponent: RGBAColor =
-    RGBAColor(ColorValidator.MinimumRgbRed, green, ColorValidator.MinimumRgbBlue, FullyOpaque)
+    RGBAColor(ColorValidator.MinimumRGBRed, green, ColorValidator.MinimumRGBBlue, FullyOpaque)
 
   /** */
   lazy val keepingOnlyBlueComponent: RGBAColor =
-    RGBAColor(ColorValidator.MinimumRgbRed, ColorValidator.MinimumRgbGreen, blue, FullyOpaque)
+    RGBAColor(ColorValidator.MinimumRGBRed, ColorValidator.MinimumRGBGreen, blue, FullyOpaque)
 
   /** */
   lazy val keepingOnlyRedAndGreenComponents: RGBAColor =
-    RGBAColor(red, green, ColorValidator.MinimumRgbBlue, FullyOpaque)
+    RGBAColor(red, green, ColorValidator.MinimumRGBBlue, FullyOpaque)
 
   /** */
   lazy val keepingOnlyRedAndBlueComponents: RGBAColor =
-    RGBAColor(red, ColorValidator.MinimumRgbGreen, blue, FullyOpaque)
+    RGBAColor(red, ColorValidator.MinimumRGBGreen, blue, FullyOpaque)
 
   /** */
   lazy val keepingOnlyGreenAndBlueComponents: RGBAColor =
-    RGBAColor(ColorValidator.MinimumRgbRed, green, blue, FullyOpaque)
+    RGBAColor(ColorValidator.MinimumRGBRed, green, blue, FullyOpaque)
 
   /** */
   lazy val representingOpacityAsGreyLevel: RGBAColor =

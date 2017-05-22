@@ -42,7 +42,7 @@ case class ToWeightedGrayscale(
   validators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
   validators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
 
-  new ColorValidator().validateRgbColorWeightCombination(redWeight, greenWeight, blueWeight)
+  new ColorValidator().validateRGBColorWeightCombination(redWeight, greenWeight, blueWeight)
 
   /** First text paragraph of the description of this class. */
   val descriptionTitle: String = "ToWeightedGrayscale"

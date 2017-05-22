@@ -29,10 +29,10 @@ package object colors
     extends PresetColors with ColorOperationsAPI {
 
   /** Color component value representing maximal opacity. */
-  val FullyOpaque: Int = ColorValidator.MaximumRgbaOpacity
+  val FullyOpaque: Int = ColorValidator.MaximumRGBAOpacity
 
   /** Color component value representing minimal opacity. */
-  val FullyTransparent: Int = ColorValidator.MinimumRgbaOpacity
+  val FullyTransparent: Int = ColorValidator.MinimumRGBAOpacity
 
 
   /** */

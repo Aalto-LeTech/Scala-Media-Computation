@@ -41,7 +41,7 @@ case class OverlayFreely(
     topBitmap: Bitmap,
     topBitmapUpperLeftX: Int,
     topBitmapUpperLeftY: Int,
-    topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
+    topBitmapOpacity: Int = ColorValidator.MaximumRGBAOpacity,
     backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
     extends AbstractOperation
             with BufferProvider
@@ -51,7 +51,7 @@ case class OverlayFreely(
   require(topBitmap != null, "The upper bitmap argument has to be a Bitmap instance (was null).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
-  ColorValidator.validateRgbaOpacityComponent(topBitmapOpacity)
+  ColorValidator.validateRGBAOpacityComponent(topBitmapOpacity)
 
   /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

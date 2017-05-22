@@ -100,9 +100,9 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       bitmap: BitmapBufferAdapter,
       x: Int,
       y: Int,
-      opacity: Int = ColorValidator.MaximumRgbaOpacity): Boolean = {
+      opacity: Int = ColorValidator.MaximumRGBAOpacity): Boolean = {
 
-    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumRgbaOpacity
+    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumRGBAOpacity
 
     withDrawingSurface{ds =>
       ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
@@ -125,7 +125,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       transformation: AffineTransformation,
       opacity: Int): Boolean = {
 
-    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumRgbaOpacity
+    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumRGBAOpacity
 
     withDrawingSurface{ds =>
       ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
@@ -148,7 +148,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
   override def drawBitmap(
       bitmap: BitmapBufferAdapter,
       transformation: AffineTransformation): Boolean =
-    drawBitmap(bitmap, transformation, ColorValidator.MaximumRgbaOpacity)
+    drawBitmap(bitmap, transformation, ColorValidator.MaximumRGBAOpacity)
 
   /**
    *

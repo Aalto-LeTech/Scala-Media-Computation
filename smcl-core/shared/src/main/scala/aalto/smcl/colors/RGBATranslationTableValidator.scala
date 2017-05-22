@@ -133,7 +133,7 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateRedComponent(redCandidate: Short): Unit = {
-    ColorValidator validateRgbRedComponent redCandidate
+    ColorValidator validateRGBRedComponent redCandidate
   }
 
   /**
@@ -145,7 +145,7 @@ class RGBATranslationTableValidator private[colors]() {
   def validateFunctionProvidedRedComponent(redCandidate: Short): Unit =
   if (!redComponentIsInRange(redCandidate)) {
     throw RGBRedComponentFromValueProviderOutOfRangeError(
-      redCandidate, ColorValidator.MinimumRgbRed, ColorValidator.MaximumRgbRed)
+      redCandidate, ColorValidator.MinimumRGBRed, ColorValidator.MaximumRGBRed)
   }
 
   /**
@@ -155,7 +155,7 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateGreenComponent(greenCandidate: Short): Unit = {
-    ColorValidator validateRgbGreenComponent greenCandidate
+    ColorValidator validateRGBGreenComponent greenCandidate
   }
 
   /**
@@ -167,7 +167,7 @@ class RGBATranslationTableValidator private[colors]() {
   def validateFunctionProvidedGreenComponent(greenCandidate: Short): Unit =
   if (!greenComponentIsInRange(greenCandidate)) {
     throw RGBGreenComponentFromValueProviderOutOfRangeError(
-      greenCandidate, ColorValidator.MinimumRgbGreen, ColorValidator.MaximumRgbGreen)
+      greenCandidate, ColorValidator.MinimumRGBGreen, ColorValidator.MaximumRGBGreen)
   }
 
   /**
@@ -177,7 +177,7 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateBlueComponent(blueCandidate: Short): Unit = {
-    ColorValidator validateRgbBlueComponent blueCandidate
+    ColorValidator validateRGBBlueComponent blueCandidate
   }
 
   /**
@@ -189,7 +189,7 @@ class RGBATranslationTableValidator private[colors]() {
   def validateFunctionProvidedBlueComponent(blueCandidate: Short): Unit =
   if (!blueComponentIsInRange(blueCandidate)) {
     throw RGBBlueComponentFromValueProviderOutOfRangeError(
-      blueCandidate, ColorValidator.MinimumRgbBlue, ColorValidator.MaximumRgbBlue)
+      blueCandidate, ColorValidator.MinimumRGBBlue, ColorValidator.MaximumRGBBlue)
   }
 
   /**
@@ -199,7 +199,7 @@ class RGBATranslationTableValidator private[colors]() {
    */
   @inline
   def validateOpacityComponent(opacityCandidate: Short): Unit = {
-    ColorValidator validateRgbaOpacityComponent opacityCandidate
+    ColorValidator validateRGBAOpacityComponent opacityCandidate
   }
 
   /**
@@ -211,7 +211,7 @@ class RGBATranslationTableValidator private[colors]() {
   def validateFunctionProvidedOpacityComponent(opacityCandidate: Short): Unit =
   if (!opacityComponentIsInRange(opacityCandidate)) {
     throw RGBAOpacityComponentFromValueProviderOutOfRangeError(
-      opacityCandidate, ColorValidator.MinimumRgbaOpacity, ColorValidator.MaximumRgbaOpacity)
+      opacityCandidate, ColorValidator.MinimumRGBAOpacity, ColorValidator.MaximumRGBAOpacity)
   }
 
   /**

@@ -334,7 +334,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
           blues(index),
           opacities(index))
 
-        ColorValidator.validateRgbaColor(newRed, newGreen, newBlue, newOpacity)
+        ColorValidator.validateRGBAColor(newRed, newGreen, newBlue, newOpacity)
 
         reds(index) = newRed
         greens(index) = newGreen

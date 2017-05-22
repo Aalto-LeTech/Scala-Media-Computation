@@ -248,7 +248,7 @@ trait BitmapOperationAPI {
       topBitmap: Bitmap,
       topBitmapUpperLeftX: Int,
       topBitmapUpperLeftY: Int,
-      topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
+      topBitmapOpacity: Int = ColorValidator.MaximumRGBAOpacity,
       backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -277,7 +277,7 @@ trait BitmapOperationAPI {
       bitmapsToOverlayFromBottomToTop: Bitmap*)(
       horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
       verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-      opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+      opacityForAllBitmaps: Int = ColorValidator.MaximumRGBAOpacity,
       backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 

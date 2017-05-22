@@ -43,7 +43,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def withNewRedComponent(argbInt: Int, newRed: Int): Int = {
-    ColorValidator.validateRgbRedComponent(newRed)
+    ColorValidator.validateRGBRedComponent(newRed)
 
     (argbInt & ~ThirdByte) | (newRed << TwoBytes)
   }
@@ -58,7 +58,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def withNewGreenComponent(argbInt: Int, newGreen: Int): Int = {
-    ColorValidator.validateRgbGreenComponent(newGreen)
+    ColorValidator.validateRGBGreenComponent(newGreen)
 
     (argbInt & ~SecondByte) | (newGreen << OneByte)
   }
@@ -73,7 +73,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def withNewBlueComponent(argbInt: Int, newBlue: Int): Int = {
-    ColorValidator.validateRgbBlueComponent(newBlue)
+    ColorValidator.validateRGBBlueComponent(newBlue)
 
     (argbInt & ~FirstByte) | newBlue
   }
@@ -88,7 +88,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def withNewOpacityComponent(argbInt: Int, newOpacity: Int): Int = {
-    ColorValidator.validateRgbaOpacityComponent(newOpacity)
+    ColorValidator.validateRGBAOpacityComponent(newOpacity)
 
     (argbInt & ~FourthByte) | (newOpacity << ThreeBytes)
   }
@@ -185,14 +185,14 @@ trait ColorOperationsAPI {
    */
   @inline
   def normalizeRgba(red: Int, green: Int, blue: Int, opacity: Int): (Double, Double, Double, Double) = {
-    ColorValidator.validateRgbaColor(red, green, blue, opacity)
+    ColorValidator.validateRGBAColor(red, green, blue, opacity)
 
     def rgbSum: Double = (red + green + blue).toDouble
 
     (red.toDouble / rgbSum,
         green.toDouble / rgbSum,
         blue.toDouble / rgbSum,
-        opacity.toDouble / ColorValidator.MaximumRgbaOpacity)
+        opacity.toDouble / ColorValidator.MaximumRGBAOpacity)
   }
 
   /**
@@ -242,7 +242,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def normalizeRgb(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
-    ColorValidator.validateRgbColor(red, green, blue)
+    ColorValidator.validateRGBColor(red, green, blue)
 
     def sum: Double = (red + green + blue).toDouble
 
@@ -286,12 +286,12 @@ trait ColorOperationsAPI {
    */
   @inline
   def argbIntFrom(
-      red: Int = ColorValidator.MinimumRgbRed,
-      green: Int = ColorValidator.MinimumRgbGreen,
-      blue: Int = ColorValidator.MinimumRgbBlue,
-      opacity: Int = ColorValidator.MaximumRgbaOpacity): Int = {
+      red: Int = ColorValidator.MinimumRGBRed,
+      green: Int = ColorValidator.MinimumRGBGreen,
+      blue: Int = ColorValidator.MinimumRGBBlue,
+      opacity: Int = ColorValidator.MaximumRGBAOpacity): Int = {
 
-    ColorValidator.validateRgbaColor(red, green, blue, opacity)
+    ColorValidator.validateRGBAColor(red, green, blue, opacity)
 
     ((opacity & FirstByte) << ThreeBytes) |
         ((red & FirstByte) << TwoBytes) |
@@ -394,9 +394,9 @@ trait ColorOperationsAPI {
    */
   @inline
   def isBlack(red: Int, green: Int, blue: Int): Boolean =
-  red == ColorValidator.MinimumRgbRed.toDouble &&
-      green == ColorValidator.MinimumRgbGreen.toDouble &&
-      blue == ColorValidator.MinimumRgbBlue.toDouble
+  red == ColorValidator.MinimumRGBRed.toDouble &&
+      green == ColorValidator.MinimumRGBGreen.toDouble &&
+      blue == ColorValidator.MinimumRGBBlue.toDouble
 
   /**
    *
@@ -490,9 +490,9 @@ trait ColorOperationsAPI {
    */
   @inline
   def isWhite(red: Int, green: Int, blue: Int): Boolean =
-  red == ColorValidator.MaximumRgbRed.toDouble &&
-      green == ColorValidator.MaximumRgbGreen.toDouble &&
-      blue == ColorValidator.MaximumRgbBlue.toDouble
+  red == ColorValidator.MaximumRGBRed.toDouble &&
+      green == ColorValidator.MaximumRGBGreen.toDouble &&
+      blue == ColorValidator.MaximumRGBBlue.toDouble
 
   /**
    *
@@ -570,13 +570,13 @@ trait ColorOperationsAPI {
   def rgbToHsi(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
     import Math._
 
-    ColorValidator.validateRgbColor(red, green, blue)
+    ColorValidator.validateRGBColor(red, green, blue)
 
     val rgbSum: Double = red + green + blue
 
     val hue: Double =
       if (isGray(red, green, blue)) // Not defined for grays
-        ColorValidator.UndefinedHsiHue
+        ColorValidator.UndefinedHSIHue
       else {
         val RmG = red - green
         val RmB = red - blue
@@ -590,7 +590,7 @@ trait ColorOperationsAPI {
 
     val saturation: Double =
       if (isBlack(red, green, blue))
-        ColorValidator.MinimumHsiSaturation
+        ColorValidator.MinimumHSISaturation
       else
         1.0 - 3.0 * (colors.min(red, green, blue) / rgbSum)
 
@@ -611,7 +611,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def hsiToColor(hueInDegrees: Double, saturation: Double, intensity: Double): RGBAColor =
-  hsiToColor(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity)
+  hsiToColor(hueInDegrees, saturation, intensity, ColorValidator.MaximumRGBAOpacity)
 
   /**
    *
@@ -638,7 +638,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def hsiToArgbInt(hueInDegrees: Double, saturation: Double, intensity: Double): Int =
-  hsiToArgbInt(hueInDegrees, saturation, intensity, ColorValidator.MaximumRgbaOpacity)
+  hsiToArgbInt(hueInDegrees, saturation, intensity, ColorValidator.MaximumRGBAOpacity)
 
   /**
    *
@@ -679,10 +679,10 @@ trait ColorOperationsAPI {
   def hsiToRgb(hueInDegrees: Double, saturation: Double, intensity: Double): (Int, Int, Int) = {
     import Math._
 
-    ColorValidator.validateHsiColor(hueInDegrees, saturation, intensity)
+    ColorValidator.validateHSIColor(hueInDegrees, saturation, intensity)
 
     // Special case
-    if (saturation == ColorValidator.MinimumHsiSaturation) {
+    if (saturation == ColorValidator.MinimumHSISaturation) {
       val i: Int = round(intensity).toInt
       return (i, i, i)
     }
@@ -769,7 +769,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def rgbToHsv(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
-    ColorValidator.validateRgbColor(red, green, blue)
+    ColorValidator.validateRGBColor(red, green, blue)
 
     val value: Double = max(red, green, blue)
 
@@ -777,13 +777,13 @@ trait ColorOperationsAPI {
 
     val saturation: Double =
       if (isBlack(red, green, blue)) // Defined to be zero for black because the division-by-zero
-        ColorValidator.MinimumHsvSaturation
+        ColorValidator.MinimumHSVSaturation
       else
         vMinusMinRgb / value
 
     val hueInDegrees: Double =
       if (isGray(red, green, blue)) // Not defined for grays
-        ColorValidator.UndefinedHsvHue
+        ColorValidator.UndefinedHSVHue
       else {
         if (value == red) {
           if (green >= blue)
@@ -813,7 +813,7 @@ trait ColorOperationsAPI {
   def hsvToRgb(hue: Double, saturation: Double, value: Double): (Int, Int, Int) = {
     import Math._
 
-    ColorValidator.validateHsvColor(hue, saturation, value)
+    ColorValidator.validateHSVColor(hue, saturation, value)
 
     val huePer60 = normalizedHsvHueInDegreesFrom(hue) / 60.0
     val K = floor(huePer60)
@@ -931,7 +931,7 @@ trait ColorOperationsAPI {
   //noinspection ScalaUnnecessaryParentheses
   @inline
   def colorComponentMapFrom(rgbTuple: (Int, Int, Int)): Map[Symbol, Double] =
-  (colorComponentMapFrom(_: Int, _: Int, _: Int, ColorValidator.MaximumRgbaOpacity)).tupled.apply(rgbTuple)
+  (colorComponentMapFrom(_: Int, _: Int, _: Int, ColorValidator.MaximumRGBAOpacity)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -944,7 +944,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def colorComponentMapFrom(red: Int, green: Int, blue: Int): Map[Symbol, Double] =
-  colorComponentMapFrom(red, green, blue, ColorValidator.MaximumRgbaOpacity)
+  colorComponentMapFrom(red, green, blue, ColorValidator.MaximumRGBAOpacity)
 
   /**
    *

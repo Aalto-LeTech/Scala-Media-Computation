@@ -81,9 +81,9 @@ object RGBAComponentTranslationTable {
   /** */
   lazy val forNegation: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable{index =>
-      ((ColorValidator.MaximumRgbRed - index).toShort,
-          (ColorValidator.MaximumRgbGreen - index).toShort,
-          (ColorValidator.MaximumRgbBlue - index).toShort,
+      ((ColorValidator.MaximumRGBRed - index).toShort,
+          (ColorValidator.MaximumRGBGreen - index).toShort,
+          (ColorValidator.MaximumRGBBlue - index).toShort,
           index)
     }
   }
@@ -91,7 +91,7 @@ object RGBAComponentTranslationTable {
   /** */
   lazy val forNegatingRed: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable{index =>
-      ((ColorValidator.MaximumRgbRed - index).toShort,
+      ((ColorValidator.MaximumRGBRed - index).toShort,
           index,
           index,
           index)
@@ -101,8 +101,8 @@ object RGBAComponentTranslationTable {
   /** */
   lazy val forNegatingRedAndGreen: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable{index =>
-      ((ColorValidator.MaximumRgbRed - index).toShort,
-          (ColorValidator.MaximumRgbGreen - index).toShort,
+      ((ColorValidator.MaximumRGBRed - index).toShort,
+          (ColorValidator.MaximumRGBGreen - index).toShort,
           index,
           index)
     }
@@ -112,7 +112,7 @@ object RGBAComponentTranslationTable {
   lazy val forNegatingGreen: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable{index =>
       (index,
-          (ColorValidator.MaximumRgbGreen - index).toShort,
+          (ColorValidator.MaximumRGBGreen - index).toShort,
           index,
           index)
     }
@@ -122,8 +122,8 @@ object RGBAComponentTranslationTable {
   lazy val forNegatingGreenAndBlue: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable{index =>
       (index,
-          (ColorValidator.MaximumRgbGreen - index).toShort,
-          (ColorValidator.MaximumRgbBlue - index).toShort,
+          (ColorValidator.MaximumRGBGreen - index).toShort,
+          (ColorValidator.MaximumRGBBlue - index).toShort,
           index)
     }
   }
@@ -133,7 +133,7 @@ object RGBAComponentTranslationTable {
     RGBAComponentTranslationTable{index =>
       (index,
           index,
-          (ColorValidator.MaximumRgbBlue - index).toShort,
+          (ColorValidator.MaximumRGBBlue - index).toShort,
           index)
     }
   }
@@ -141,9 +141,9 @@ object RGBAComponentTranslationTable {
   /** */
   lazy val forNegatingRedAndBlue: RGBAComponentTranslationTable = {
     RGBAComponentTranslationTable{index =>
-      ((ColorValidator.MaximumRgbRed - index).toShort,
+      ((ColorValidator.MaximumRGBRed - index).toShort,
           index,
-          (ColorValidator.MaximumRgbBlue - index).toShort,
+          (ColorValidator.MaximumRGBBlue - index).toShort,
           index)
     }
   }
@@ -233,7 +233,7 @@ case class RGBAComponentTranslationTable private(table: Seq[Seq[Short]])
    * @return
    */
   def translate(red: Int, green: Int, blue: Int, opacity: Int): (Int, Int, Int, Int) = {
-    ColorValidator.validateRgbaColor(red, green, blue, opacity)
+    ColorValidator.validateRGBAColor(red, green, blue, opacity)
 
     (table.head(red.toShort),
         table(1)(green.toShort),

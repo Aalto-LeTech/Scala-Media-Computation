@@ -993,7 +993,7 @@ case class Bitmap private(
       topBitmap: Bitmap,
       topBitmapUpperLeftX: Int,
       topBitmapUpperLeftY: Int,
-      topBitmapOpacity: Int = ColorValidator.MaximumRgbaOpacity,
+      topBitmapOpacity: Int = ColorValidator.MaximumRGBAOpacity,
       backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1023,7 +1023,7 @@ case class Bitmap private(
       bottomBitmap: Bitmap,
       upperLeftX: Int,
       upperLeftY: Int,
-      opacity: Int = ColorValidator.MaximumRgbaOpacity,
+      opacity: Int = ColorValidator.MaximumRGBAOpacity,
       backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1149,7 +1149,7 @@ case class Bitmap private(
       bitmapsToLayOverThisFromBottomToTop: Bitmap*)(
       horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
       verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-      opacityForAllBitmaps: Int = ColorValidator.MaximumRgbaOpacity,
+      opacityForAllBitmaps: Int = ColorValidator.MaximumRGBAOpacity,
       backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
