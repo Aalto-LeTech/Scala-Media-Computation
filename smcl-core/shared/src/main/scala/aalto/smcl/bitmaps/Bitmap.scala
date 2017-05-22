@@ -94,8 +94,10 @@ object Bitmap
           Left((index, throwable))
 
         case (Right(buffer), index) =>
-          val operationList = BitmapOperationList(LoadedBitmap(buffer, Option(sourceResourcePath), Option(index)))
-          val newBitmap = new Bitmap(operationList, bitmapValidator, colorValidator, Identity())
+          val operationList = BitmapOperationList(
+            LoadedBitmap(buffer, Option(sourceResourcePath), Option(index)))
+          val newBitmap = new Bitmap(
+            operationList, bitmapValidator, colorValidator, Identity())
 
           if (viewerHandling == UpdateViewerPerDefaults) {
             if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
@@ -115,8 +117,9 @@ object Bitmap
    *
    * @return
    */
-  def apply(sourceResourcePath: String): BitmapLoadingResult =
+  def apply(sourceResourcePath: String): BitmapLoadingResult = {
     apply(sourceResourcePath, UpdateViewerPerDefaults)
+  }
 
 }
 
@@ -158,8 +161,9 @@ case class Bitmap private(
    * Returns the initial background color of this [[Bitmap]]
    * (may not be the actual background color at a later time).
    */
-  val initialBackgroundColor: RGBAColor =
+  val initialBackgroundColor: RGBAColor = {
     operations.initialBackgroundColor
+  }
 
   /**
    * Applies an [[Renderable]] to this [[Bitmap]].
@@ -335,8 +339,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def createPixelSnapshot: PixelSnapshot =
+  def createPixelSnapshot: PixelSnapshot = {
     new PixelSnapshot(this)
+  }
 
   /**
    *
@@ -390,8 +395,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def negate(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def negate(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(Negate(), viewerHandling)
+  }
 
   /**
    *
@@ -407,8 +415,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def negateRedComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def negateRedComponent(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(NegateRedComponent(), viewerHandling)
+  }
 
   /**
    *
@@ -417,8 +428,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def negateGreenComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def negateGreenComponent(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(NegateGreenComponent(), viewerHandling)
+  }
 
   /**
    *
@@ -427,8 +441,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def negateBlueComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def negateBlueComponent(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(NegateBlueComponent(), viewerHandling)
+  }
 
   /**
    *
@@ -437,8 +454,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def negateRedAndGreenComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def negateRedAndGreenComponents(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(NegateRedAndGreenComponents(), viewerHandling)
+  }
 
   /**
    *
@@ -447,8 +467,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def negateRedAndBlueComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def negateRedAndBlueComponents(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(NegateRedAndBlueComponents(), viewerHandling)
+  }
 
   /**
    *
@@ -457,8 +480,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def negateGreenAndBlueComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def negateGreenAndBlueComponents(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(NegateGreenAndBlueComponents(), viewerHandling)
+  }
 
   /**
    *
@@ -467,8 +493,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def keepOnlyRedComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def keepOnlyRedComponent(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(KeepOnlyRedComponent(), viewerHandling)
+  }
 
   /**
    *
@@ -477,8 +506,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def keepOnlyGreenComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def keepOnlyGreenComponent(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(KeepOnlyGreenComponent(), viewerHandling)
+  }
 
   /**
    *
@@ -487,8 +519,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def keepOnlyBlueComponent(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def keepOnlyBlueComponent(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(KeepOnlyBlueComponent(), viewerHandling)
+  }
 
   /**
    *
@@ -497,8 +532,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def keepOnlyRedAndGreenComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def keepOnlyRedAndGreenComponents(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(KeepOnlyRedAndGreenComponents(), viewerHandling)
+  }
 
   /**
    *
@@ -507,8 +545,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def keepOnlyRedAndBlueComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def keepOnlyRedAndBlueComponents(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(KeepOnlyRedAndBlueComponents(), viewerHandling)
+  }
 
   /**
    *
@@ -517,8 +558,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def keepOnlyGreenAndBlueComponents(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def keepOnlyGreenAndBlueComponents(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(KeepOnlyGreenAndBlueComponents(), viewerHandling)
+  }
 
   /**
    *
@@ -1052,8 +1096,10 @@ case class Bitmap private(
    *
    * @return
    */
-  def :|++| (other: Bitmap): Bitmap =
-    overlayPerAlignments(this, other)(HorizontalAlignment.Left, VerticalAlignment.Top)
+  def :|++| (other: Bitmap): Bitmap = {
+    overlayPerAlignments(this, other)(
+      HorizontalAlignment.Left, VerticalAlignment.Top)
+  }
 
   /**
    *
@@ -1062,8 +1108,10 @@ case class Bitmap private(
    *
    * @return
    */
-  def :|+*| (other: Bitmap): Bitmap =
-    overlayPerAlignments(this, other)(HorizontalAlignment.Left, VerticalAlignment.Middle)
+  def :|+*| (other: Bitmap): Bitmap = {
+    overlayPerAlignments(this, other)(
+      HorizontalAlignment.Left, VerticalAlignment.Middle)
+  }
 
   /**
    *
@@ -1072,8 +1120,10 @@ case class Bitmap private(
    *
    * @return
    */
-  def :|+-| (other: Bitmap): Bitmap =
-    overlayPerAlignments(this, other)(HorizontalAlignment.Left, VerticalAlignment.Bottom)
+  def :|+-| (other: Bitmap): Bitmap = {
+    overlayPerAlignments(this, other)(
+      HorizontalAlignment.Left, VerticalAlignment.Bottom)
+  }
 
   /**
    *
@@ -1082,8 +1132,10 @@ case class Bitmap private(
    *
    * @return
    */
-  def :|*+| (other: Bitmap): Bitmap =
-    overlayPerAlignments(this, other)(HorizontalAlignment.Center, VerticalAlignment.Top)
+  def :|*+| (other: Bitmap): Bitmap = {
+    overlayPerAlignments(this, other)(
+      HorizontalAlignment.Center, VerticalAlignment.Top)
+  }
 
   /**
    *
@@ -1092,8 +1144,10 @@ case class Bitmap private(
    *
    * @return
    */
-  def :|**| (other: Bitmap): Bitmap =
-    overlayPerAlignments(this, other)(HorizontalAlignment.Center, VerticalAlignment.Middle)
+  def :|**| (other: Bitmap): Bitmap = {
+    overlayPerAlignments(this, other)(
+      HorizontalAlignment.Center, VerticalAlignment.Middle)
+  }
 
   /**
    *
@@ -1102,8 +1156,10 @@ case class Bitmap private(
    *
    * @return
    */
-  def :|*-| (other: Bitmap): Bitmap =
-    overlayPerAlignments(this, other)(HorizontalAlignment.Center, VerticalAlignment.Bottom)
+  def :|*-| (other: Bitmap): Bitmap = {
+    overlayPerAlignments(this, other)(
+      HorizontalAlignment.Center, VerticalAlignment.Bottom)
+  }
 
   /**
    *
@@ -1112,8 +1168,10 @@ case class Bitmap private(
    *
    * @return
    */
-  def :|-+| (other: Bitmap): Bitmap =
-    overlayPerAlignments(this, other)(HorizontalAlignment.Right, VerticalAlignment.Top)
+  def :|-+| (other: Bitmap): Bitmap = {
+    overlayPerAlignments(this, other)(
+      HorizontalAlignment.Right, VerticalAlignment.Top)
+  }
 
   /**
    *
@@ -1122,8 +1180,10 @@ case class Bitmap private(
    *
    * @return
    */
-  def :|-*| (other: Bitmap): Bitmap =
-    overlayPerAlignments(this, other)(HorizontalAlignment.Right, VerticalAlignment.Middle)
+  def :|-*| (other: Bitmap): Bitmap = {
+    overlayPerAlignments(this, other)(
+      HorizontalAlignment.Right, VerticalAlignment.Middle)
+  }
 
   /**
    *
@@ -1132,8 +1192,10 @@ case class Bitmap private(
    *
    * @return
    */
-  def :|--| (other: Bitmap): Bitmap =
-    overlayPerAlignments(this, other)(HorizontalAlignment.Right, VerticalAlignment.Bottom)
+  def :|--| (other: Bitmap): Bitmap = {
+    overlayPerAlignments(this, other)(
+      HorizontalAlignment.Right, VerticalAlignment.Bottom)
+  }
 
   // ----------------------------------------------------------------------------------------------
 
@@ -1225,8 +1287,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def sewOnLeftOf(bitmap: Bitmap): Bitmap =
+  def sewOnLeftOf(bitmap: Bitmap): Bitmap = {
     appendOnRight(bitmap)(VerticalAlignment.Middle)
+  }
 
   /**
    *
@@ -1261,8 +1324,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def pileOnTopOf(bitmap: Bitmap): Bitmap =
+  def pileOnTopOf(bitmap: Bitmap): Bitmap = {
     appendOnBottom(bitmap)(HorizontalAlignment.Center)
+  }
 
   /**
    *
@@ -1297,8 +1361,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def flipHorizontally(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def flipHorizontally(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(FlipHorizontally(), viewerHandling)
+  }
 
   /**
    *
@@ -1307,8 +1374,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def flipVertically(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def flipVertically(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(FlipVertically(), viewerHandling)
+  }
 
   /**
    *
@@ -1317,8 +1387,11 @@ case class Bitmap private(
    *
    * @return
    */
-  def flipDiagonally(viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap =
+  def flipDiagonally(
+      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+
     apply(FlipDiagonally(), viewerHandling)
+  }
 
   /**
    *
@@ -1352,8 +1425,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def scale(scalingFactor: Double): Bitmap =
+  def scale(scalingFactor: Double): Bitmap = {
     scale(scalingFactor, scalingFactor)
+  }
 
   /**
    *
@@ -1430,8 +1504,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def shear(shearingFactor: Double): Bitmap =
+  def shear(shearingFactor: Double): Bitmap = {
     shear(shearingFactor, shearingFactor)
+  }
 
   /**
    *
@@ -1684,7 +1759,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def :/\ (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other: _*)()
+  def :/\ (other: scala.collection.Seq[Bitmap]): Bitmap = {
+    appendOnTop(other: _*)()
+  }
 
   /**
    *
@@ -1693,7 +1770,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def :/\ (other: scala.collection.Traversable[Bitmap]): Bitmap = :/\(other.toSeq)
+  def :/\ (other: scala.collection.Traversable[Bitmap]): Bitmap = {
+    :/\(other.toSeq)
+  }
 
   //-------------------------------
   //
@@ -1717,7 +1796,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def /\: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnTop(other: _*)()
+  def /\: (other: scala.collection.Seq[Bitmap]): Bitmap = {
+    appendOnTop(other: _*)()
+  }
 
   /**
    *
@@ -1726,7 +1807,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def /\: (other: scala.collection.Traversable[Bitmap]): Bitmap = /\:(other.toSeq)
+  def /\: (other: scala.collection.Traversable[Bitmap]): Bitmap = {
+    /\:(other.toSeq)
+  }
 
   //-------------------------------
   //
@@ -1750,7 +1833,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def :\/ (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other: _*)()
+  def :\/ (other: scala.collection.Seq[Bitmap]): Bitmap = {
+    appendOnBottom(other: _*)()
+  }
 
   /**
    *
@@ -1759,7 +1844,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def :\/ (other: scala.collection.Traversable[Bitmap]): Bitmap = :\/(other.toSeq)
+  def :\/ (other: scala.collection.Traversable[Bitmap]): Bitmap = {
+    :\/(other.toSeq)
+  }
 
   //-------------------------------
   //
@@ -1783,7 +1870,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def \/: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnBottom(other: _*)()
+  def \/: (other: scala.collection.Seq[Bitmap]): Bitmap = {
+    appendOnBottom(other: _*)()
+  }
 
   /**
    *
@@ -1792,7 +1881,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def \/: (other: scala.collection.Traversable[Bitmap]): Bitmap = \/:(other.toSeq)
+  def \/: (other: scala.collection.Traversable[Bitmap]): Bitmap = {
+    \/:(other.toSeq)
+  }
 
   //-------------------------------
   //
@@ -1816,7 +1907,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def :>> (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other: _*)()
+  def :>> (other: scala.collection.Seq[Bitmap]): Bitmap = {
+    appendOnRight(other: _*)()
+  }
 
   /**
    *
@@ -1825,7 +1918,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def :>> (other: scala.collection.Traversable[Bitmap]): Bitmap = :>>(other.toSeq)
+  def :>> (other: scala.collection.Traversable[Bitmap]): Bitmap = {
+    :>>(other.toSeq)
+  }
 
   //-------------------------------
   //
@@ -1849,7 +1944,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def >>: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnRight(other: _*)()
+  def >>: (other: scala.collection.Seq[Bitmap]): Bitmap = {
+    appendOnRight(other: _*)()
+  }
 
   /**
    *
@@ -1858,7 +1955,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def >>: (other: scala.collection.Traversable[Bitmap]): Bitmap = >>:(other.toSeq)
+  def >>: (other: scala.collection.Traversable[Bitmap]): Bitmap = {
+    >>:(other.toSeq)
+  }
 
   //-------------------------------
   //
@@ -1882,7 +1981,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def :<< (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other: _*)()
+  def :<< (other: scala.collection.Seq[Bitmap]): Bitmap = {
+    appendOnLeft(other: _*)()
+  }
 
   /**
    *
@@ -1891,7 +1992,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def :<< (other: scala.collection.Traversable[Bitmap]): Bitmap = :<<(other.toSeq)
+  def :<< (other: scala.collection.Traversable[Bitmap]): Bitmap = {
+    :<<(other.toSeq)
+  }
 
   //-------------------------------
   //
@@ -1915,7 +2018,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def <<: (other: scala.collection.Seq[Bitmap]): Bitmap = appendOnLeft(other: _*)()
+  def <<: (other: scala.collection.Seq[Bitmap]): Bitmap = {
+    appendOnLeft(other: _*)()
+  }
 
   /**
    *
@@ -1924,7 +2029,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def <<: (other: scala.collection.Traversable[Bitmap]): Bitmap = <<:(other.toSeq)
+  def <<: (other: scala.collection.Traversable[Bitmap]): Bitmap = {
+    <<:(other.toSeq)
+  }
 
   // ----------------------------------------------------------------------------------------------
 
@@ -1949,7 +2056,10 @@ case class Bitmap private(
    * @param drawingSurface
    * @param transformation
    */
-  def renderOnto(drawingSurface: DrawingSurfaceAdapter, transformation: AffineTransformation): Unit = {
+  def renderOnto(
+      drawingSurface: DrawingSurfaceAdapter,
+      transformation: AffineTransformation): Unit = {
+
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
     val rendition = toRenderedRepresentation
@@ -1988,7 +2098,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def propagateToArray(size: Int): Array[Bitmap] = propagateToArrayBuffer(size).toArray
+  def propagateToArray(size: Int): Array[Bitmap] = {
+    propagateToArrayBuffer(size).toArray
+  }
 
   /**
    * Returns an `List` containing a given number of copies of this [[Bitmap]] instance.
@@ -1997,7 +2109,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def propagateToList(size: Int): List[Bitmap] = propagateToArrayBuffer(size).toList
+  def propagateToList(size: Int): List[Bitmap] = {
+    propagateToArrayBuffer(size).toList
+  }
 
   /**
    * Returns an `Seq` containing a given number of copies of this [[Bitmap]] instance.
@@ -2006,7 +2120,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def propagateToSeq(size: Int): Seq[Bitmap] = propagateToArrayBuffer(size).toSeq
+  def propagateToSeq(size: Int): Seq[Bitmap] = {
+    propagateToArrayBuffer(size)
+  }
 
   /**
    *
