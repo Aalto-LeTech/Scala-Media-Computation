@@ -18,8 +18,8 @@ package aalto.smcl.infrastructure.jvmawt
 
 
 import aalto.smcl.bitmaps.BitmapValidator
-import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable, RGBATranslationTableValidator}
-import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer}
+import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable, RGBATranslationTableValidator, RichRGBAColor}
+import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer}
 
 
 
@@ -31,10 +31,13 @@ import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, DefaultJvmCale
  */
 object Initializer extends SMCLInitializer {
 
-  // The ColorValidator instance to be passed for SMCL classes
+  /** The ColorValidator instance to be passed for SMCL classes */
+  private val _commonValidators = new CommonValidators()
+
+  /** The ColorValidator instance to be passed for SMCL classes */
   private val _colorValidator = new ColorValidator()
 
-  // The RGBATranslationTableValidator instance to be passed for SMCL classes
+  /** The RGBATranslationTableValidator instance to be passed for SMCL classes */
   private val _rgbaTranslationTableValidator =
     new RGBATranslationTableValidator(_colorValidator)
 
@@ -55,9 +58,14 @@ object Initializer extends SMCLInitializer {
     initSwingLookAndFeel()
   }
 
+  /**
+   *
+   */
   private def injectDependencies(): Unit = {
     AwtBitmapBufferAdapter.setColorValidator(_colorValidator)
     RGBAColor.setColorValidator(_colorValidator)
+    RichRGBAColor.setColorValidator(_colorValidator)
+    RichRGBAColor.setCommonValidators(_commonValidators)
     RGBAComponentTranslationTable.setColorValidator(_colorValidator)
     RGBAComponentTranslationTable
         .setRGBATranslationTableValidator(_rgbaTranslationTableValidator)

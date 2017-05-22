@@ -37,17 +37,10 @@ package object colors
   val FullyTransparent: Int = ColorValidator.MinimumRGBAOpacity
 
 
-  //
-  private lazy val commonValidators = new CommonValidators()
-
-  //
-  private lazy val colorValidator = new ColorValidator()
-
   /** Application of the RichARGBInt class. */
   implicit def ARGBIntWrapper(self: Int): RichARGBInt = new RichARGBInt(self)
 
   /** Application of the RichRGBAColor class. */
-  implicit def RGBAColorWrapper(self: RGBAColor): RichRGBAColor =
-    new RichRGBAColor(self, commonValidators, colorValidator)
+  implicit def RGBAColorWrapper(self: RGBAColor): RichRGBAColor = RichRGBAColor(self)
 
 }
