@@ -29,7 +29,7 @@ import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
-import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, ImplementationNotSetError, InvalidColorComponentArrayLengthError}
+import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
 
 
 
@@ -40,14 +40,12 @@ import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, Implementat
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object AwtBitmapBufferAdapter {
+object AwtBitmapBufferAdapter
+    extends InjectableColorValidator
+            with InjectableBitmapValidator {
 
   /** */
   val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB
-
-  /** */
-  private val _bitmapValidator: BitmapValidator = new BitmapValidator()
-
 
   /**
    *
@@ -58,7 +56,7 @@ object AwtBitmapBufferAdapter {
    * @return
    */
   def apply(widthInPixels: Int, heightInPixels: Int): AwtBitmapBufferAdapter = {
-    _bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+    bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
     val newBuffer = createNormalizedLowLevelBitmapBufferOf(widthInPixels, heightInPixels)
 
@@ -75,7 +73,7 @@ object AwtBitmapBufferAdapter {
   def apply(awtBufferedImage: BufferedImage): AwtBitmapBufferAdapter = {
     require(awtBufferedImage != null, "Provided image buffer cannot be null.")
 
-    _bitmapValidator.validateBitmapSize(awtBufferedImage.getWidth, awtBufferedImage.getHeight)
+    bitmapValidator.validateBitmapSize(awtBufferedImage.getWidth, awtBufferedImage.getHeight)
 
     val normalizedAwtBuffer = convertToNormalizedLowLevelBitmapBufferIfNecessary(awtBufferedImage)
 
@@ -142,33 +140,6 @@ object AwtBitmapBufferAdapter {
     bufferCandidate
   }
 
-
-  //
-  private var _colorValidator: Option[ColorValidator] = None
-
-  /**
-   * Returns the ColorValidator instance to be used by this object.
-   *
-   * @return
-   *
-   * @throws ImplementationNotSetError
-   */
-  private def colorValidator: ColorValidator = {
-    _colorValidator.getOrElse(throw ImplementationNotSetError("ColorValidator"))
-  }
-
-  /**
-   * Set the ColorValidator instance to be used by this object.
-   *
-   * @param validator
-   */
-  private[smcl] def setColorValidator(validator: ColorValidator): Unit = {
-    require(validator != null,
-      "The ColorValidator instance must be given (was null)")
-
-    _colorValidator = Some(validator)
-  }
-
 }
 
 
@@ -221,7 +192,7 @@ class AwtBitmapBufferAdapter private(
    * @return
    */
   override def trim(colorToTrim: RGBAColor = GS.colorFor(DefaultBackground)): AwtBitmapBufferAdapter = {
-    val (reds, greens, blues, opacities) = colorComponentArrays()
+    val (reds, greens, blues, opacities) = colorComponentArrays
 
     val redToTrim = colorToTrim.red
     val greenToTrim = colorToTrim.green
@@ -352,7 +323,7 @@ class AwtBitmapBufferAdapter private(
   override def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): AwtBitmapBufferAdapter = {
     val newBuffer = copyPortionXYWH(0, 0, widthInPixels, heightInPixels)
 
-    val (reds, greens, blues, opacities) = newBuffer.colorComponentArrays()
+    val (reds, greens, blues, opacities) = newBuffer.colorComponentArrays
 
     var index: Int = 0
     val resultRgbaTuplesTry = Try{
@@ -390,7 +361,7 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def colorComponentArrays(): (Array[Int], Array[Int], Array[Int], Array[Int]) = {
+  override def colorComponentArrays: (Array[Int], Array[Int], Array[Int], Array[Int]) = {
     import aalto.smcl.colors.RGBASampleBand._
 
     val getSamples =

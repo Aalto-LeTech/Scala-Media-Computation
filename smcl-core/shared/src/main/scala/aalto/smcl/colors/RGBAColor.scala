@@ -18,7 +18,6 @@ package aalto.smcl.colors
 
 
 import aalto.smcl.colors
-import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
 import aalto.smcl.infrastructure.{ColorAdapter, Describable, StringUtils, _}
 
 
@@ -29,7 +28,7 @@ import aalto.smcl.infrastructure.{ColorAdapter, Describable, StringUtils, _}
  *
  * @author Aleksi Lukkarinen
  */
-object RGBAColor {
+object RGBAColor extends InjectableColorValidator {
 
   /**
    *
@@ -530,33 +529,6 @@ object RGBAColor {
 
     (fromHSI(_: Double, _: Double, _: Double, opacity, name))
         .tupled.apply(hsiTuple)
-  }
-
-
-  //
-  private var _colorValidator: Option[ColorValidator] = None
-
-  /**
-   * Returns the ColorValidator instance to be used by this object.
-   *
-   * @return
-   *
-   * @throws ImplementationNotSetError
-   */
-  private def colorValidator: ColorValidator = {
-    _colorValidator.getOrElse(throw ImplementationNotSetError("ColorValidator"))
-  }
-
-  /**
-   * Set the ColorValidator instance to be used by this object.
-   *
-   * @param validator
-   */
-  private[smcl] def setColorValidator(validator: ColorValidator): Unit = {
-    require(validator != null,
-      "The ColorValidator instance must be given (was null)")
-
-    _colorValidator = Some(validator)
   }
 
 }

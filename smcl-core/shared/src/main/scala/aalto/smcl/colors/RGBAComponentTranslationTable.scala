@@ -18,7 +18,6 @@ package aalto.smcl.colors
 
 
 import aalto.smcl.infrastructure._
-import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
 
 
 
@@ -28,7 +27,9 @@ import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
  *
  * @author Aleksi Lukkarinen
  */
-object RGBAComponentTranslationTable {
+object RGBAComponentTranslationTable
+    extends InjectableColorValidator
+            with InjectableRGBATranslationTableValidator {
 
   /**
    *
@@ -211,65 +212,10 @@ object RGBAComponentTranslationTable {
     }
   }
 
-
-  //
-  private var _colorValidator: Option[ColorValidator] = None
-
-  /**
-   * Returns the ColorValidator instance to be used by this object.
-   *
-   * @return
-   *
-   * @throws ImplementationNotSetError
-   */
-  private def colorValidator: ColorValidator = {
-    _colorValidator.getOrElse(throw ImplementationNotSetError("ColorValidator"))
-  }
-
-  /**
-   * Set the ColorValidator instance to be used by this object.
-   *
-   * @param validator
-   */
-  private[smcl] def setColorValidator(validator: ColorValidator): Unit = {
-    require(validator != null,
-      "The ColorValidator instance must be given (was null)")
-
-    _colorValidator = Some(validator)
-  }
-
-
-  //
-  private var _rgbaTranslationTableValidator: Option[RGBATranslationTableValidator] = None
-
-  /**
-   * Returns the RGBATranslationTableValidator instance to be used by this object.
-   *
-   * @return
-   *
-   * @throws ImplementationNotSetError
-   */
-  private def rgbaTranslationTableValidator: RGBATranslationTableValidator = {
-    _rgbaTranslationTableValidator.getOrElse(
-      throw ImplementationNotSetError("RGBATranslationTableValidator"))
-  }
-
-  /**
-   * Set the RGBATranslationTableValidator instance to be used by this object.
-   *
-   * @param validator
-   */
-  private[smcl] def setRGBATranslationTableValidator(validator: RGBATranslationTableValidator): Unit = {
-    require(validator != null,
-      "The RGBATranslationTableValidator instance must be given (was null)")
-
-    _rgbaTranslationTableValidator = Some(validator)
-  }
-
 }
 
 
-//new RGBATranslationTableValidator(colorValidator)
+
 
 /**
  *

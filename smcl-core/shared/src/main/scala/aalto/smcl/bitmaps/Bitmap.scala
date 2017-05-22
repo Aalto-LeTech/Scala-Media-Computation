@@ -22,9 +22,8 @@ import scala.ref.WeakReference
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.bitmaps.operations._
-import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
+import aalto.smcl.colors.{ColorValidator, InjectableColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.geometry.AffineTransformation
-import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, _}
 import aalto.smcl.viewers.{display => displayInViewer}
 
@@ -36,7 +35,9 @@ import aalto.smcl.viewers.{display => displayInViewer}
  *
  * @author Aleksi Lukkarinen
  */
-object Bitmap {
+object Bitmap
+    extends InjectableBitmapValidator
+            with InjectableColorValidator {
 
   /**
    * Creates a new empty [[Bitmap]] instance.
@@ -116,60 +117,6 @@ object Bitmap {
    */
   def apply(sourceResourcePath: String): BitmapLoadingResult =
     apply(sourceResourcePath, UpdateViewerPerDefaults)
-
-
-  //
-  private var _colorValidator: Option[ColorValidator] = None
-
-  /**
-   * Returns the ColorValidator instance to be used by this object.
-   *
-   * @return
-   *
-   * @throws ImplementationNotSetError
-   */
-  private def colorValidator: ColorValidator = {
-    _colorValidator.getOrElse(throw ImplementationNotSetError("ColorValidator"))
-  }
-
-  /**
-   * Set the ColorValidator instance to be used by this object.
-   *
-   * @param validator
-   */
-  private[smcl] def setColorValidator(validator: ColorValidator): Unit = {
-    require(validator != null,
-      "The ColorValidator instance must be given (was null)")
-
-    _colorValidator = Some(validator)
-  }
-
-
-  //
-  private var _bitmapValidator: Option[BitmapValidator] = None
-
-  /**
-   * Returns the BitmapValidator instance to be used by this object.
-   *
-   * @return
-   *
-   * @throws ImplementationNotSetError
-   */
-  private def bitmapValidator: BitmapValidator = {
-    _bitmapValidator.getOrElse(throw ImplementationNotSetError("BitmapValidator"))
-  }
-
-  /**
-   * Set the BitmapValidator instance to be used by this object.
-   *
-   * @param validator
-   */
-  private[smcl] def setBitmapValidator(validator: BitmapValidator): Unit = {
-    require(validator != null,
-      "The BitmapValidator instance must be given (was null)")
-
-    _bitmapValidator = Some(validator)
-  }
 
 }
 
