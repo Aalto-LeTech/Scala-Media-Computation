@@ -32,6 +32,8 @@ import aalto.smcl.infrastructure._
 private[colors]
 trait ColorOperationsAPI {
 
+  // ColorValidator instance to be used by the operations of this trait.
+  private lazy val colorValidator: ColorValidator = new ColorValidator()
 
   /**
    *
@@ -43,7 +45,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def withNewRedComponent(argbInt: Int, newRed: Int): Int = {
-    ColorValidator.validateRGBRedComponent(newRed)
+    colorValidator.validateRGBRedComponent(newRed)
 
     (argbInt & ~ThirdByte) | (newRed << TwoBytes)
   }
@@ -58,7 +60,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def withNewGreenComponent(argbInt: Int, newGreen: Int): Int = {
-    ColorValidator.validateRGBGreenComponent(newGreen)
+    colorValidator.validateRGBGreenComponent(newGreen)
 
     (argbInt & ~SecondByte) | (newGreen << OneByte)
   }
@@ -73,7 +75,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def withNewBlueComponent(argbInt: Int, newBlue: Int): Int = {
-    ColorValidator.validateRGBBlueComponent(newBlue)
+    colorValidator.validateRGBBlueComponent(newBlue)
 
     (argbInt & ~FirstByte) | newBlue
   }
@@ -88,7 +90,7 @@ trait ColorOperationsAPI {
    */
   @inline
   def withNewOpacityComponent(argbInt: Int, newOpacity: Int): Int = {
-    ColorValidator.validateRGBAOpacityComponent(newOpacity)
+    colorValidator.validateRGBAOpacityComponent(newOpacity)
 
     (argbInt & ~FourthByte) | (newOpacity << ThreeBytes)
   }
@@ -101,8 +103,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def redComponentOf(argbInt: Int): Int =
-  (argbInt & ThirdByte) >>> TwoBytes
+  def redComponentOf(argbInt: Int): Int = (argbInt & ThirdByte) >>> TwoBytes
 
   /**
    *
@@ -112,8 +113,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def greenComponentOf(argbInt: Int): Int =
-  (argbInt & SecondByte) >>> OneByte
+  def greenComponentOf(argbInt: Int): Int = (argbInt & SecondByte) >>> OneByte
 
   /**
    *
@@ -123,8 +123,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def blueComponentOf(argbInt: Int): Int =
-  argbInt & FirstByte
+  def blueComponentOf(argbInt: Int): Int = argbInt & FirstByte
 
   /**
    *
@@ -134,8 +133,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def opacityComponentOf(argbInt: Int): Int =
-  argbInt >>> ThreeBytes
+  def opacityComponentOf(argbInt: Int): Int = argbInt >>> ThreeBytes
 
   /**
    *
@@ -145,8 +143,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def rgbaTupleFrom(color: RGBAColor): (Int, Int, Int, Int) =
-  (color.red, color.green, color.blue, color.opacity)
+  def rgbaTupleFrom(color: RGBAColor): (Int, Int, Int, Int) = {
+    (color.red, color.green, color.blue, color.opacity)
+  }
 
   /**
    *
@@ -156,11 +155,12 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def rgbaTupleFrom(argbInt: Int): (Int, Int, Int, Int) =
-  (redComponentOf(argbInt),
-      greenComponentOf(argbInt),
-      blueComponentOf(argbInt),
-      opacityComponentOf(argbInt))
+  def rgbaTupleFrom(argbInt: Int): (Int, Int, Int, Int) = {
+    (redComponentOf(argbInt),
+        greenComponentOf(argbInt),
+        blueComponentOf(argbInt),
+        opacityComponentOf(argbInt))
+  }
 
   /**
    *
@@ -171,8 +171,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def normalizeRgba(rgbaTuple: (Int, Int, Int, Int)): (Double, Double, Double, Double) =
-  (normalizeRgba(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+  def normalizeRGBA(rgbaTuple: (Int, Int, Int, Int)): (Double, Double, Double, Double) = {
+    (normalizeRGBA(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+  }
 
   /**
    *
@@ -184,8 +185,8 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def normalizeRgba(red: Int, green: Int, blue: Int, opacity: Int): (Double, Double, Double, Double) = {
-    ColorValidator.validateRGBAColor(red, green, blue, opacity)
+  def normalizeRGBA(red: Int, green: Int, blue: Int, opacity: Int): (Double, Double, Double, Double) = {
+    colorValidator.validateRGBAColor(red, green, blue, opacity)
 
     def rgbSum: Double = (red + green + blue).toDouble
 
@@ -203,8 +204,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def rgbTupleFrom(color: RGBAColor): (Int, Int, Int) =
-  (color.red, color.green, color.blue)
+  def rgbTupleFrom(color: RGBAColor): (Int, Int, Int) = {
+    (color.red, color.green, color.blue)
+  }
 
   /**
    *
@@ -214,10 +216,11 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def rgbTupleFrom(argbInt: Int): (Int, Int, Int) =
-  (redComponentOf(argbInt),
-      greenComponentOf(argbInt),
-      blueComponentOf(argbInt))
+  def rgbTupleFrom(argbInt: Int): (Int, Int, Int) = {
+    (redComponentOf(argbInt),
+        greenComponentOf(argbInt),
+        blueComponentOf(argbInt))
+  }
 
   /**
    *
@@ -228,8 +231,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def normalizeRgb(rgbTuple: (Int, Int, Int)): (Double, Double, Double) =
-  (normalizeRgb(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def normalizeRGB(rgbTuple: (Int, Int, Int)): (Double, Double, Double) = {
+    (normalizeRGB(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -241,8 +245,8 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def normalizeRgb(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
-    ColorValidator.validateRGBColor(red, green, blue)
+  def normalizeRGB(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
+    colorValidator.validateRGBColor(red, green, blue)
 
     def sum: Double = (red + green + blue).toDouble
 
@@ -258,8 +262,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def argbIntFrom(rgbaTuple: (Int, Int, Int, Int)): Int =
-  (argbIntFrom(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+  def argbIntFrom(rgbaTuple: (Int, Int, Int, Int)): Int = {
+    (argbIntFrom(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+  }
 
   /**
    *
@@ -271,8 +276,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def argbIntFrom(rgbTuple: (Int, Int, Int), opacity: Int): Int =
-  (argbIntFrom(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
+  def argbIntFrom(rgbTuple: (Int, Int, Int), opacity: Int): Int = {
+    (argbIntFrom(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -291,7 +297,7 @@ trait ColorOperationsAPI {
       blue: Int = ColorValidator.MinimumRGBBlue,
       opacity: Int = ColorValidator.MaximumRGBAOpacity): Int = {
 
-    ColorValidator.validateRGBAColor(red, green, blue, opacity)
+    colorValidator.validateRGBAColor(red, green, blue, opacity)
 
     ((opacity & FirstByte) << ThreeBytes) |
         ((red & FirstByte) << TwoBytes) |
@@ -308,8 +314,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def max(rgbTuple: (Int, Int, Int)): Int =
-  (max(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def max(rgbTuple: (Int, Int, Int)): Int = {
+    (max(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -321,8 +328,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def max(red: Int, green: Int, blue: Int): Int =
-  red.max(green).max(blue)
+  def max(red: Int, green: Int, blue: Int): Int = red.max(green).max(blue)
 
   /**
    *
@@ -333,8 +339,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def min(rgbTuple: (Int, Int, Int)): Int =
-  (min(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def min(rgbTuple: (Int, Int, Int)): Int = {
+    (min(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -346,8 +353,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def min(red: Int, green: Int, blue: Int): Int =
-  red.min(green).min(blue)
+  def min(red: Int, green: Int, blue: Int): Int = red.min(green).min(blue)
 
   /**
    *
@@ -357,8 +363,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def isBlack(color: RGBAColor): Boolean =
-  isBlack(rgbTupleFrom(color))
+  def isBlack(color: RGBAColor): Boolean = isBlack(rgbTupleFrom(color))
 
   /**
    *
@@ -368,8 +373,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def isBlack(argbInt: Int): Boolean =
-  isBlack(rgbTupleFrom(argbInt))
+  def isBlack(argbInt: Int): Boolean = isBlack(rgbTupleFrom(argbInt))
 
   /**
    *
@@ -380,8 +384,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def isBlack(rgbTuple: (Int, Int, Int)): Boolean =
-  (isBlack(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def isBlack(rgbTuple: (Int, Int, Int)): Boolean = {
+    (isBlack(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -393,10 +398,11 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def isBlack(red: Int, green: Int, blue: Int): Boolean =
-  red == ColorValidator.MinimumRGBRed.toDouble &&
-      green == ColorValidator.MinimumRGBGreen.toDouble &&
-      blue == ColorValidator.MinimumRGBBlue.toDouble
+  def isBlack(red: Int, green: Int, blue: Int): Boolean = {
+    red == ColorValidator.MinimumRGBRed.toDouble &&
+        green == ColorValidator.MinimumRGBGreen.toDouble &&
+        blue == ColorValidator.MinimumRGBBlue.toDouble
+  }
 
   /**
    *
@@ -406,8 +412,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def isGray(color: RGBAColor): Boolean =
-  isGray(rgbTupleFrom(color))
+  def isGray(color: RGBAColor): Boolean = isGray(rgbTupleFrom(color))
 
   /**
    *
@@ -417,8 +422,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def isGray(argbInt: Int): Boolean =
-  isGray(rgbTupleFrom(argbInt))
+  def isGray(argbInt: Int): Boolean = isGray(rgbTupleFrom(argbInt))
 
   /**
    *
@@ -429,8 +433,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def isGray(rgbTuple: (Int, Int, Int)): Boolean =
-  (isGray(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def isGray(rgbTuple: (Int, Int, Int)): Boolean = {
+    (isGray(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -442,8 +447,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def isGray(red: Int, green: Int, blue: Int): Boolean =
-  red == blue && green == blue
+  def isGray(red: Int, green: Int, blue: Int): Boolean = {
+    red == blue && green == blue
+  }
 
   /**
    *
@@ -453,8 +459,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def isWhite(color: RGBAColor): Boolean =
-  isWhite(rgbTupleFrom(color))
+  def isWhite(color: RGBAColor): Boolean = isWhite(rgbTupleFrom(color))
 
   /**
    *
@@ -464,8 +469,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def isWhite(argbInt: Int): Boolean =
-  isWhite(rgbTupleFrom(argbInt))
+  def isWhite(argbInt: Int): Boolean = isWhite(rgbTupleFrom(argbInt))
 
   /**
    *
@@ -476,8 +480,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def isWhite(rgbTuple: (Int, Int, Int)): Boolean =
-  (isWhite(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def isWhite(rgbTuple: (Int, Int, Int)): Boolean = {
+    (isWhite(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -489,10 +494,11 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def isWhite(red: Int, green: Int, blue: Int): Boolean =
-  red == ColorValidator.MaximumRGBRed.toDouble &&
-      green == ColorValidator.MaximumRGBGreen.toDouble &&
-      blue == ColorValidator.MaximumRGBBlue.toDouble
+  def isWhite(red: Int, green: Int, blue: Int): Boolean = {
+    red == ColorValidator.MaximumRGBRed.toDouble &&
+        green == ColorValidator.MaximumRGBGreen.toDouble &&
+        blue == ColorValidator.MaximumRGBBlue.toDouble
+  }
 
   /**
    *
@@ -502,7 +508,7 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def normalizedHsiHueInDegreesFrom(hueCandidateInDegrees: Double): Double = {
+  def normalizedHSIHueInDegreesFrom(hueCandidateInDegrees: Double): Double = {
     val modCircle = hueCandidateInDegrees % FullCircleInDegrees
 
     if (modCircle < 0)
@@ -520,8 +526,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def normalizedHsvHueInDegreesFrom(hueCandidateInDegrees: Double): Double =
-  normalizedHsiHueInDegreesFrom(hueCandidateInDegrees)
+  def normalizedHSVHueInDegreesFrom(hueCandidateInDegrees: Double): Double = {
+    normalizedHSIHueInDegreesFrom(hueCandidateInDegrees)
+  }
 
   /**
    *
@@ -531,8 +538,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def toHsi(argbInt: Int): (Double, Double, Double) =
-  rgbToHsi(rgbTupleFrom(argbInt))
+  def toHsi(argbInt: Int): (Double, Double, Double) = {
+    rgbToHSI(rgbTupleFrom(argbInt))
+  }
 
   /**
    *
@@ -542,8 +550,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def toHsi(color: RGBAColor): (Double, Double, Double) =
-  rgbToHsi(rgbTupleFrom(color))
+  def toHsi(color: RGBAColor): (Double, Double, Double) = {
+    rgbToHSI(rgbTupleFrom(color))
+  }
 
   /**
    *
@@ -554,8 +563,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def rgbToHsi(rgbTuple: (Int, Int, Int)): (Double, Double, Double) =
-  (rgbToHsi(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def rgbToHSI(rgbTuple: (Int, Int, Int)): (Double, Double, Double) = {
+    (rgbToHSI(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -567,10 +577,10 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def rgbToHsi(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
+  def rgbToHSI(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
     import Math._
 
-    ColorValidator.validateRGBColor(red, green, blue)
+    colorValidator.validateRGBColor(red, green, blue)
 
     val rgbSum: Double = red + green + blue
 
@@ -610,8 +620,15 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def hsiToColor(hueInDegrees: Double, saturation: Double, intensity: Double): RGBAColor =
-  hsiToColor(hueInDegrees, saturation, intensity, ColorValidator.MaximumRGBAOpacity)
+  def hsiToColor(
+      hueInDegrees: Double,
+      saturation: Double,
+      intensity: Double): RGBAColor = {
+
+    hsiToColor(
+      hueInDegrees, saturation, intensity,
+      ColorValidator.MaximumRGBAOpacity)
+  }
 
   /**
    *
@@ -624,8 +641,15 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def hsiToColor(hueInDegrees: Double, saturation: Double, intensity: Double, opacity: Int): RGBAColor =
-  (RGBAColor.apply(_: Int, _: Int, _: Int, opacity)).tupled.apply(hsiToRgb(hueInDegrees, saturation, intensity))
+  def hsiToColor(
+      hueInDegrees: Double,
+      saturation: Double,
+      intensity: Double,
+      opacity: Int): RGBAColor = {
+
+    (RGBAColor.apply(_: Int, _: Int, _: Int, opacity))
+        .tupled.apply(hsiToRGB(hueInDegrees, saturation, intensity))
+  }
 
   /**
    *
@@ -637,8 +661,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def hsiToArgbInt(hueInDegrees: Double, saturation: Double, intensity: Double): Int =
-  hsiToArgbInt(hueInDegrees, saturation, intensity, ColorValidator.MaximumRGBAOpacity)
+  def hsiToARGBInt(hueInDegrees: Double, saturation: Double, intensity: Double): Int = {
+    hsiToARGBInt(hueInDegrees, saturation, intensity, ColorValidator.MaximumRGBAOpacity)
+  }
 
   /**
    *
@@ -651,8 +676,10 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def hsiToArgbInt(hueInDegrees: Double, saturation: Double, intensity: Double, opacity: Int): Int =
-  (argbIntFrom(_: Int, _: Int, _: Int, opacity)).tupled.apply(hsiToRgb(hueInDegrees, saturation, intensity))
+  def hsiToARGBInt(hueInDegrees: Double, saturation: Double, intensity: Double, opacity: Int): Int = {
+    (argbIntFrom(_: Int, _: Int, _: Int, opacity))
+        .tupled.apply(hsiToRGB(hueInDegrees, saturation, intensity))
+  }
 
   /**
    *
@@ -663,8 +690,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def hsiToRgb(hsiTuple: (Double, Double, Double)): (Int, Int, Int) =
-  (hsiToRgb(_: Double, _: Double, _: Double)).tupled.apply(hsiTuple)
+  def hsiToRgb(hsiTuple: (Double, Double, Double)): (Int, Int, Int) = {
+    (hsiToRGB(_: Double, _: Double, _: Double)).tupled.apply(hsiTuple)
+  }
 
   /**
    *
@@ -676,10 +704,10 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def hsiToRgb(hueInDegrees: Double, saturation: Double, intensity: Double): (Int, Int, Int) = {
+  def hsiToRGB(hueInDegrees: Double, saturation: Double, intensity: Double): (Int, Int, Int) = {
     import Math._
 
-    ColorValidator.validateHSIColor(hueInDegrees, saturation, intensity)
+    colorValidator.validateHSIColor(hueInDegrees, saturation, intensity)
 
     // Special case
     if (saturation == ColorValidator.MinimumHSISaturation) {
@@ -687,7 +715,7 @@ trait ColorOperationsAPI {
       return (i, i, i)
     }
 
-    val nHueInDeg = normalizedHsiHueInDegreesFrom(hueInDegrees)
+    val nHueInDeg = normalizedHSIHueInDegreesFrom(hueInDegrees)
 
     val (aThirdOfCircleHueInDegrees: Double, finalOrder: ((Int, Int, Int) => (Int, Int, Int))) =
       if (nHueInDeg <= 120.0)
@@ -714,9 +742,9 @@ trait ColorOperationsAPI {
 
     val (red, green, blue) = finalOrder(X, Y, Z)
 
-    if (!ColorValidator.rgbRedComponentIsInRange(red) ||
-        !ColorValidator.rgbGreenComponentIsInRange(green) ||
-        !ColorValidator.rgbBlueComponentIsInRange(blue)) {
+    if (!colorValidator.rgbRedComponentIsInRange(red) ||
+        !colorValidator.rgbGreenComponentIsInRange(green) ||
+        !colorValidator.rgbBlueComponentIsInRange(blue)) {
 
       throw InvalidHSIValueCombinationError(hueInDegrees, saturation, intensity)
     }
@@ -732,8 +760,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def toHsv(argbInt: Int): (Double, Double, Double) =
-  rgbToHsv(rgbTupleFrom(argbInt))
+  def toHSV(argbInt: Int): (Double, Double, Double) = {
+    rgbToHSV(rgbTupleFrom(argbInt))
+  }
 
   /**
    *
@@ -743,8 +772,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def toHsv(color: RGBAColor): (Double, Double, Double) =
-  rgbToHsv(rgbTupleFrom(color))
+  def toHSV(color: RGBAColor): (Double, Double, Double) = {
+    rgbToHSV(rgbTupleFrom(color))
+  }
 
   /**
    *
@@ -755,8 +785,9 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def rgbToHsv(rgbTuple: (Int, Int, Int)): (Double, Double, Double) =
-  (rgbToHsv(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  def rgbToHSV(rgbTuple: (Int, Int, Int)): (Double, Double, Double) = {
+    (rgbToHSV(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -768,8 +799,8 @@ trait ColorOperationsAPI {
    *
    */
   @inline
-  def rgbToHsv(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
-    ColorValidator.validateRGBColor(red, green, blue)
+  def rgbToHSV(red: Int, green: Int, blue: Int): (Double, Double, Double) = {
+    colorValidator.validateRGBColor(red, green, blue)
 
     val value: Double = max(red, green, blue)
 
@@ -810,12 +841,12 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def hsvToRgb(hue: Double, saturation: Double, value: Double): (Int, Int, Int) = {
+  def hsvToRGB(hue: Double, saturation: Double, value: Double): (Int, Int, Int) = {
     import Math._
 
-    ColorValidator.validateHSVColor(hue, saturation, value)
+    colorValidator.validateHSVColor(hue, saturation, value)
 
-    val huePer60 = normalizedHsvHueInDegreesFrom(hue) / 60.0
+    val huePer60 = normalizedHSVHueInDegreesFrom(hue) / 60.0
     val K = floor(huePer60)
     val T = huePer60 - K
 
@@ -847,11 +878,15 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def adjustHueOfRgbByDegrees(color: RGBAColor, adjustmentInDegrees: Double): RGBAColor =
-  RGBAColor(
-    adjustHueOfRgbByDegrees(rgbTupleFrom(color), adjustmentInDegrees),
-    color.opacity,
-    color.canonicalName)
+  def adjustHueOfRGBByDegrees(
+      color: RGBAColor,
+      adjustmentInDegrees: Double): RGBAColor = {
+
+    RGBAColor(
+      adjustHueOfRgbByDegrees(rgbTupleFrom(color), adjustmentInDegrees),
+      color.opacity,
+      color.canonicalName)
+  }
 
   /**
    *
@@ -862,10 +897,14 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def adjustHueOfRgbByDegrees(argbInt: Int, adjustmentInDegrees: Double): Int =
-  argbIntFrom(
-    adjustHueOfRgbByDegrees(rgbTupleFrom(argbInt), adjustmentInDegrees),
-    opacityComponentOf(argbInt))
+  def adjustHueOfRGBByDegrees(
+      argbInt: Int,
+      adjustmentInDegrees: Double): Int = {
+
+    argbIntFrom(
+      adjustHueOfRgbByDegrees(rgbTupleFrom(argbInt), adjustmentInDegrees),
+      opacityComponentOf(argbInt))
+  }
 
   /**
    *
@@ -877,8 +916,13 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def adjustHueOfRgbByDegrees(rgbTuple: (Int, Int, Int), adjustmentInDegrees: Double): (Int, Int, Int) =
-  (adjustHueOfRgbByDegrees(_: Int, _: Int, _: Int, adjustmentInDegrees)).tupled.apply(rgbTuple)
+  def adjustHueOfRgbByDegrees(
+      rgbTuple: (Int, Int, Int),
+      adjustmentInDegrees: Double): (Int, Int, Int) = {
+
+    (adjustHueOfRGBByDegrees(_: Int, _: Int, _: Int, adjustmentInDegrees))
+        .tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -891,12 +935,16 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def adjustHueOfRgbByDegrees(red: Int, green: Int, blue: Int, adjustmentInDegrees: Double): (Int, Int, Int) = {
-    val (originalHue, originalSaturation, originalValue) = rgbToHsv(red, green, blue) // Validates rgb values
+  def adjustHueOfRGBByDegrees(
+      red: Int, green: Int, blue: Int,
+      adjustmentInDegrees: Double): (Int, Int, Int) = {
+
+    val (originalHue, originalSaturation, originalValue) =
+      rgbToHSV(red, green, blue) // Validates rgb values
 
     val newHue = originalHue + adjustmentInDegrees
 
-    hsvToRgb(newHue, originalSaturation, originalValue)
+    hsvToRGB(newHue, originalSaturation, originalValue)
   }
 
   /**
@@ -907,8 +955,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def colorComponentMapFrom(color: RGBAColor): Map[Symbol, Double] =
-  colorComponentMapFrom(rgbaTupleFrom(color))
+  def colorComponentMapFrom(color: RGBAColor): Map[Symbol, Double] = {
+    colorComponentMapFrom(rgbaTupleFrom(color))
+  }
 
   /**
    *
@@ -918,8 +967,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def colorComponentMapFrom(argbInt: Int): Map[Symbol, Double] =
-  colorComponentMapFrom(rgbaTupleFrom(argbInt))
+  def colorComponentMapFrom(argbInt: Int): Map[Symbol, Double] = {
+    colorComponentMapFrom(rgbaTupleFrom(argbInt))
+  }
 
   /**
    *
@@ -930,8 +980,10 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def colorComponentMapFrom(rgbTuple: (Int, Int, Int)): Map[Symbol, Double] =
-  (colorComponentMapFrom(_: Int, _: Int, _: Int, ColorValidator.MaximumRGBAOpacity)).tupled.apply(rgbTuple)
+  def colorComponentMapFrom(rgbTuple: (Int, Int, Int)): Map[Symbol, Double] = {
+    (colorComponentMapFrom(_: Int, _: Int, _: Int, ColorValidator.MaximumRGBAOpacity))
+        .tupled.apply(rgbTuple)
+  }
 
   /**
    *
@@ -943,8 +995,9 @@ trait ColorOperationsAPI {
    * @return
    */
   @inline
-  def colorComponentMapFrom(red: Int, green: Int, blue: Int): Map[Symbol, Double] =
-  colorComponentMapFrom(red, green, blue, ColorValidator.MaximumRGBAOpacity)
+  def colorComponentMapFrom(red: Int, green: Int, blue: Int): Map[Symbol, Double] = {
+    colorComponentMapFrom(red, green, blue, ColorValidator.MaximumRGBAOpacity)
+  }
 
   /**
    *
@@ -955,8 +1008,10 @@ trait ColorOperationsAPI {
    */
   //noinspection ScalaUnnecessaryParentheses
   @inline
-  def colorComponentMapFrom(rgbaTuple: (Int, Int, Int, Int)): Map[Symbol, Double] =
-  (colorComponentMapFrom(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+  def colorComponentMapFrom(rgbaTuple: (Int, Int, Int, Int)): Map[Symbol, Double] = {
+    (colorComponentMapFrom(_: Int, _: Int, _: Int, _: Int))
+        .tupled.apply(rgbaTuple)
+  }
 
   /**
    *
@@ -970,8 +1025,8 @@ trait ColorOperationsAPI {
    */
   @inline
   def colorComponentMapFrom(red: Int, green: Int, blue: Int, opacity: Int): Map[Symbol, Double] = {
-    val (hsiHue, hsiSaturation, hsiIntensity) = rgbToHsi(red, green, blue)
-    val (hsvHue, hsvSaturation, hsvValue) = rgbToHsv(red, green, blue)
+    val (hsiHue, hsiSaturation, hsiIntensity) = rgbToHSI(red, green, blue)
+    val (hsvHue, hsvSaturation, hsvValue) = rgbToHSV(red, green, blue)
 
     Map[Symbol, Double](
       'red -> red.toDouble,

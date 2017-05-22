@@ -18,6 +18,7 @@ package aalto.smcl.infrastructure.jvmawt
 
 
 import aalto.smcl.bitmaps.BitmapValidator
+import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable, RGBATranslationTableValidator}
 import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer}
 
 
@@ -30,17 +31,36 @@ import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, DefaultJvmCale
  */
 object Initializer extends SMCLInitializer {
 
+  // The ColorValidator instance to be passed for SMCL classes
+  private val _colorValidator = new ColorValidator()
+
+  // The RGBATranslationTableValidator instance to be passed for SMCL classes
+  private val _rgbaTranslationTableValidator =
+    new RGBATranslationTableValidator(_colorValidator)
+
+
   /**
    *
    */
   def apply(): Unit = {
     println("JVM-based SMCL Core initialization is in progress...")
 
+    injectDependencies()
+
+    initPlatformResourceFactory()
+
     initSharedSettings()
     initAwtSettings()
 
     initSwingLookAndFeel()
-    initPlatformResourceFactory()
+  }
+
+  private def injectDependencies(): Unit = {
+    AwtBitmapBufferAdapter.setColorValidator(_colorValidator)
+    RGBAColor.setColorValidator(_colorValidator)
+    RGBAComponentTranslationTable.setColorValidator(_colorValidator)
+    RGBAComponentTranslationTable
+        .setRGBATranslationTableValidator(_rgbaTranslationTableValidator)
   }
 
   /**
@@ -63,8 +83,9 @@ object Initializer extends SMCLInitializer {
    *
    *
    */
-  private def initSwingLookAndFeel(): Unit =
+  private def initSwingLookAndFeel(): Unit = {
     UIProvider.tryToInitializeSpecificLookAndFeel(UIProvider.NimbusLookAndFeelName)
+  }
 
   /**
    * Initialize settings specific to SMCL's JVM/AWT implementation.

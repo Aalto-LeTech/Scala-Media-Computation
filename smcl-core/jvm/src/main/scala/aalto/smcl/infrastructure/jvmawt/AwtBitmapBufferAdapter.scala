@@ -29,7 +29,7 @@ import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
-import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
+import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, ImplementationNotSetError, InvalidColorComponentArrayLengthError}
 
 
 
@@ -62,7 +62,7 @@ object AwtBitmapBufferAdapter {
 
     val newBuffer = createNormalizedLowLevelBitmapBufferOf(widthInPixels, heightInPixels)
 
-    new AwtBitmapBufferAdapter(newBuffer)
+    new AwtBitmapBufferAdapter(newBuffer, colorValidator)
   }
 
   /**
@@ -79,7 +79,7 @@ object AwtBitmapBufferAdapter {
 
     val normalizedAwtBuffer = convertToNormalizedLowLevelBitmapBufferIfNecessary(awtBufferedImage)
 
-    new AwtBitmapBufferAdapter(normalizedAwtBuffer)
+    new AwtBitmapBufferAdapter(normalizedAwtBuffer, colorValidator)
   }
 
   /**
@@ -142,6 +142,33 @@ object AwtBitmapBufferAdapter {
     bufferCandidate
   }
 
+
+  //
+  private var _colorValidator: Option[ColorValidator] = None
+
+  /**
+   * Returns the ColorValidator instance to be used by this object.
+   *
+   * @return
+   *
+   * @throws ImplementationNotSetError
+   */
+  private def colorValidator: ColorValidator = {
+    _colorValidator.getOrElse(throw ImplementationNotSetError("ColorValidator"))
+  }
+
+  /**
+   * Set the ColorValidator instance to be used by this object.
+   *
+   * @param validator
+   */
+  private[smcl] def setColorValidator(validator: ColorValidator): Unit = {
+    require(validator != null,
+      "The ColorValidator instance must be given (was null)")
+
+    _colorValidator = Some(validator)
+  }
+
 }
 
 
@@ -153,7 +180,9 @@ object AwtBitmapBufferAdapter {
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extends BitmapBufferAdapter {
+class AwtBitmapBufferAdapter private(
+    val awtBufferedImage: BufferedImage,
+    private val colorValidator: ColorValidator) extends BitmapBufferAdapter {
 
   /**
    *
@@ -334,7 +363,7 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
           blues(index),
           opacities(index))
 
-        ColorValidator.validateRGBAColor(newRed, newGreen, newBlue, newOpacity)
+        colorValidator.validateRGBAColor(newRed, newGreen, newBlue, newOpacity)
 
         reds(index) = newRed
         greens(index) = newGreen
@@ -534,8 +563,9 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    *
    * @return
    */
-  override def copy: AwtBitmapBufferAdapter =
+  override def copy: AwtBitmapBufferAdapter = {
     AwtBitmapBufferAdapter(BitmapUtils.deepCopy(awtBufferedImage))
+  }
 
   /**
    *
@@ -609,8 +639,9 @@ class AwtBitmapBufferAdapter private(val awtBufferedImage: BufferedImage) extend
    *
    * @return
    */
-  override def emptyAlike: AwtBitmapBufferAdapter =
+  override def emptyAlike: AwtBitmapBufferAdapter = {
     AwtBitmapBufferAdapter(widthInPixels, heightInPixels)
+  }
 
   /**
    *

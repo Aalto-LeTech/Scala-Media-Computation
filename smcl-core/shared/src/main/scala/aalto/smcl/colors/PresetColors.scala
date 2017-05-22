@@ -512,59 +512,59 @@ trait PresetColors {
 
 
   /** Color constant for 10-percent black. */
-  val Black10 = PresetRGBAColor(Black.tintByPercentage(90).toArgbInt, Some("black10"), None)
+  val Black10 = PresetRGBAColor(Black.tintByPercentage(90).toARGBInt, Some("black10"), None)
 
   /** Color constant for 20-percent black. */
-  val Black20 = PresetRGBAColor(Black.tintByPercentage(80).toArgbInt, Some("black20"), None)
+  val Black20 = PresetRGBAColor(Black.tintByPercentage(80).toARGBInt, Some("black20"), None)
 
   /** Color constant for 30-percent black. */
-  val Black30 = PresetRGBAColor(Black.tintByPercentage(70).toArgbInt, Some("black30"), None)
+  val Black30 = PresetRGBAColor(Black.tintByPercentage(70).toARGBInt, Some("black30"), None)
 
   /** Color constant for 40-percent black. */
-  val Black40 = PresetRGBAColor(Black.tintByPercentage(60).toArgbInt, Some("black40"), None)
+  val Black40 = PresetRGBAColor(Black.tintByPercentage(60).toARGBInt, Some("black40"), None)
 
   /** Color constant for 50-percent black. */
-  val Black50 = PresetRGBAColor(Black.tintByPercentage(50).toArgbInt, Some("black50"), None)
+  val Black50 = PresetRGBAColor(Black.tintByPercentage(50).toARGBInt, Some("black50"), None)
 
   /** Color constant for 60-percent black. */
-  val Black60 = PresetRGBAColor(Black.tintByPercentage(40).toArgbInt, Some("black60"), None)
+  val Black60 = PresetRGBAColor(Black.tintByPercentage(40).toARGBInt, Some("black60"), None)
 
   /** Color constant for 70-percent black. */
-  val Black70 = PresetRGBAColor(Black.tintByPercentage(30).toArgbInt, Some("black70"), None)
+  val Black70 = PresetRGBAColor(Black.tintByPercentage(30).toARGBInt, Some("black70"), None)
 
   /** Color constant for 80-percent black. */
-  val Black80 = PresetRGBAColor(Black.tintByPercentage(20).toArgbInt, Some("black80"), None)
+  val Black80 = PresetRGBAColor(Black.tintByPercentage(20).toARGBInt, Some("black80"), None)
 
   /** Color constant for 90-percent black. */
-  val Black90 = PresetRGBAColor(Black.tintByPercentage(10).toArgbInt, Some("black90"), None)
+  val Black90 = PresetRGBAColor(Black.tintByPercentage(10).toARGBInt, Some("black90"), None)
 
 
   /** Color constant for 10-percent white. */
-  val White10 = PresetRGBAColor(White.shadeByPercentage(90).toArgbInt, Some("white10"), None)
+  val White10 = PresetRGBAColor(White.shadeByPercentage(90).toARGBInt, Some("white10"), None)
 
   /** Color constant for 20-percent white. */
-  val White20 = PresetRGBAColor(White.shadeByPercentage(80).toArgbInt, Some("white20"), None)
+  val White20 = PresetRGBAColor(White.shadeByPercentage(80).toARGBInt, Some("white20"), None)
 
   /** Color constant for 30-percent white. */
-  val White30 = PresetRGBAColor(White.shadeByPercentage(70).toArgbInt, Some("white30"), None)
+  val White30 = PresetRGBAColor(White.shadeByPercentage(70).toARGBInt, Some("white30"), None)
 
   /** Color constant for 40-percent white. */
-  val White40 = PresetRGBAColor(White.shadeByPercentage(60).toArgbInt, Some("white40"), None)
+  val White40 = PresetRGBAColor(White.shadeByPercentage(60).toARGBInt, Some("white40"), None)
 
   /** Color constant for 50-percent white. */
-  val White50 = PresetRGBAColor(White.shadeByPercentage(50).toArgbInt, Some("white50"), None)
+  val White50 = PresetRGBAColor(White.shadeByPercentage(50).toARGBInt, Some("white50"), None)
 
   /** Color constant for 60-percent white. */
-  val White60 = PresetRGBAColor(White.shadeByPercentage(40).toArgbInt, Some("white60"), None)
+  val White60 = PresetRGBAColor(White.shadeByPercentage(40).toARGBInt, Some("white60"), None)
 
   /** Color constant for 70-percent white. */
-  val White70 = PresetRGBAColor(White.shadeByPercentage(30).toArgbInt, Some("white70"), None)
+  val White70 = PresetRGBAColor(White.shadeByPercentage(30).toARGBInt, Some("white70"), None)
 
   /** Color constant for 80-percent white. */
-  val White80 = PresetRGBAColor(White.shadeByPercentage(20).toArgbInt, Some("white80"), None)
+  val White80 = PresetRGBAColor(White.shadeByPercentage(20).toARGBInt, Some("white80"), None)
 
   /** Color constant for 90-percent white. */
-  val White90 = PresetRGBAColor(White.shadeByPercentage(10).toArgbInt, Some("white90"), None)
+  val White90 = PresetRGBAColor(White.shadeByPercentage(10).toARGBInt, Some("white90"), None)
 
 
   /**

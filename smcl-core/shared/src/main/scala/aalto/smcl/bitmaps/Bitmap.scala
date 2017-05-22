@@ -24,6 +24,7 @@ import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerP
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, _}
 import aalto.smcl.viewers.{display => displayInViewer}
 
@@ -37,10 +38,6 @@ import aalto.smcl.viewers.{display => displayInViewer}
  */
 object Bitmap {
 
-  /** */
-  private val _bitmapValidator: BitmapValidator = new BitmapValidator()
-
-
   /**
    * Creates a new empty [[Bitmap]] instance.
    */
@@ -50,19 +47,20 @@ object Bitmap {
       initialBackgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    _bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+    bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
-    if (_bitmapValidator.warningSizeLimitsAreExceeded(widthInPixels, heightInPixels)) {
+    if (bitmapValidator.warningSizeLimitsAreExceeded(widthInPixels, heightInPixels)) {
       println("\n\nWarning: The image is larger than the recommended maximum size")
     }
 
-    require(initialBackgroundColor != null, "The background color argument has to be a Color instance (was null).")
+    require(initialBackgroundColor != null,
+      "The background color argument has to be a Color instance (was null).")
 
     val operationList =
       Clear(initialBackgroundColor) +:
           BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
 
-    val newBitmap = new Bitmap(operationList, _bitmapValidator, Identity())
+    val newBitmap = new Bitmap(operationList, bitmapValidator, colorValidator, Identity())
 
     if (viewerHandling == UpdateViewerPerDefaults) {
       if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
@@ -96,7 +94,7 @@ object Bitmap {
 
         case (Right(buffer), index) =>
           val operationList = BitmapOperationList(LoadedBitmap(buffer, Option(sourceResourcePath), Option(index)))
-          val newBitmap = new Bitmap(operationList, _bitmapValidator, Identity())
+          val newBitmap = new Bitmap(operationList, bitmapValidator, colorValidator, Identity())
 
           if (viewerHandling == UpdateViewerPerDefaults) {
             if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
@@ -119,6 +117,60 @@ object Bitmap {
   def apply(sourceResourcePath: String): BitmapLoadingResult =
     apply(sourceResourcePath, UpdateViewerPerDefaults)
 
+
+  //
+  private var _colorValidator: Option[ColorValidator] = None
+
+  /**
+   * Returns the ColorValidator instance to be used by this object.
+   *
+   * @return
+   *
+   * @throws ImplementationNotSetError
+   */
+  private def colorValidator: ColorValidator = {
+    _colorValidator.getOrElse(throw ImplementationNotSetError("ColorValidator"))
+  }
+
+  /**
+   * Set the ColorValidator instance to be used by this object.
+   *
+   * @param validator
+   */
+  private[smcl] def setColorValidator(validator: ColorValidator): Unit = {
+    require(validator != null,
+      "The ColorValidator instance must be given (was null)")
+
+    _colorValidator = Some(validator)
+  }
+
+
+  //
+  private var _bitmapValidator: Option[BitmapValidator] = None
+
+  /**
+   * Returns the BitmapValidator instance to be used by this object.
+   *
+   * @return
+   *
+   * @throws ImplementationNotSetError
+   */
+  private def bitmapValidator: BitmapValidator = {
+    _bitmapValidator.getOrElse(throw ImplementationNotSetError("BitmapValidator"))
+  }
+
+  /**
+   * Set the BitmapValidator instance to be used by this object.
+   *
+   * @param validator
+   */
+  private[smcl] def setBitmapValidator(validator: BitmapValidator): Unit = {
+    require(validator != null,
+      "The BitmapValidator instance must be given (was null)")
+
+    _bitmapValidator = Some(validator)
+  }
+
 }
 
 
@@ -136,6 +188,7 @@ object Bitmap {
 case class Bitmap private(
     private[bitmaps] val operations: BitmapOperationList,
     private val bitmapValidator: BitmapValidator,
+    private val colorValidator: ColorValidator,
     uniqueIdentifier: Identity) extends {
 
   /** Width of this [[Bitmap]]. */
@@ -227,8 +280,9 @@ case class Bitmap private(
    *
    * @return
    */
-  private[bitmaps] def applyInitialization(newOperation: BufferProvider): Bitmap =
+  private[bitmaps] def applyInitialization(newOperation: BufferProvider): Bitmap = {
     apply(newOperation, PreventViewerUpdates)
+  }
 
   /**
    *
@@ -237,8 +291,9 @@ case class Bitmap private(
    *
    * @return
    */
-  def saveAsPngTo(filename: String): String =
+  def saveAsPngTo(filename: String): String = {
     toRenderedRepresentation.saveAsPngTo(filename)
+  }
 
   /**
    *
@@ -1004,7 +1059,8 @@ case class Bitmap private(
         topBitmapUpperLeftX,
         topBitmapUpperLeftY,
         topBitmapOpacity,
-        backgroundColor),
+        backgroundColor,
+        colorValidator),
       viewerHandling)
   }
 
@@ -1034,7 +1090,8 @@ case class Bitmap private(
         upperLeftX,
         upperLeftY,
         opacity,
-        backgroundColor),
+        backgroundColor,
+        colorValidator),
       viewerHandling)
   }
 
@@ -1157,7 +1214,8 @@ case class Bitmap private(
       OverlayPerAlignments(this +: bitmapsToLayOverThisFromBottomToTop)(
         horizontalAlignment,
         verticalAlignment,
-        opacityForAllBitmaps),
+        opacityForAllBitmaps,
+        colorValidator = colorValidator),
       viewerHandling)
   }
 
@@ -1183,7 +1241,7 @@ case class Bitmap private(
         verticalAlignment,
         paddingInPixels,
         backgroundColor,
-        Bitmap._bitmapValidator),
+        bitmapValidator),
       viewerHandling)
   }
 

@@ -57,7 +57,7 @@ case class DrawLine(
     "fromY" -> Option(s"$fromYInPixels px"),
     "toX" -> Option(s"$toXInPixels px"),
     "toY" -> Option(s"$toYInPixels px"),
-    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}")
+    "color" -> Option(s"0x${color.toARGBInt.toArgbHexColorString}")
   )
 
   /**

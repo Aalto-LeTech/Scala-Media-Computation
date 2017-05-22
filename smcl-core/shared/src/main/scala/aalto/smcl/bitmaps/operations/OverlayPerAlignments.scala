@@ -42,7 +42,8 @@ case class OverlayPerAlignments(
     horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
     verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
     opacityForAllBitmaps: Int = ColorValidator.MaximumRGBAOpacity,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    private val colorValidator: ColorValidator)
     extends AbstractOperation
             with BufferProvider
             with Immutable {
@@ -52,7 +53,9 @@ case class OverlayPerAlignments(
 
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
-  ColorValidator.validateRGBAOpacityComponent(opacityForAllBitmaps)
+  require(colorValidator != null, "The color validator argument has to be a ColorValidator instance (was null).")
+
+  colorValidator.validateRGBAOpacityComponent(opacityForAllBitmaps)
 
   /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
@@ -66,7 +69,7 @@ case class OverlayPerAlignments(
     "horizontalAlignment" -> Option(horizontalAlignment.toString),
     "verticalAlignment" -> Option(verticalAlignment.toString),
     "opacityForAllBitmaps" -> Option(opacityForAllBitmaps.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
+    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toArgbHexColorString}")
   )
 
   /** Width of the provided buffer in pixels. */

@@ -18,6 +18,7 @@ package aalto.smcl.colors
 
 
 import aalto.smcl.infrastructure._
+import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
 
 
 
@@ -45,9 +46,11 @@ object RGBAComponentTranslationTable {
       blues: Seq[Short],
       opacities: Seq[Short]): RGBAComponentTranslationTable = {
 
-    RGBATranslationTableValidator.validateSeparateDimensions(reds, greens, blues, opacities)
+    rgbaTranslationTableValidator.validateSeparateDimensions(reds, greens, blues, opacities)
 
-    new RGBAComponentTranslationTable(Seq(reds, greens, blues, opacities))
+    new RGBAComponentTranslationTable(
+      Seq(reds, greens, blues, opacities),
+      colorValidator)
   }
 
   /**
@@ -65,7 +68,7 @@ object RGBAComponentTranslationTable {
     for (rowIndex <- ByteRange) {
       val rgbaRowCandidate: (Short, Short, Short, Short) = valueProvider(rowIndex.toShort)
 
-      RGBATranslationTableValidator.validateFunctionProvidedComponents(rgbaRowCandidate)
+      rgbaTranslationTableValidator.validateFunctionProvidedComponents(rgbaRowCandidate)
 
       tableArray(0)(rowIndex) = rgbaRowCandidate._1
       tableArray(1)(rowIndex) = rgbaRowCandidate._2
@@ -75,7 +78,7 @@ object RGBAComponentTranslationTable {
 
     val tableSeq: Seq[Seq[Short]] = tableArray.map(_.toList).toList
 
-    new RGBAComponentTranslationTable(tableSeq)
+    new RGBAComponentTranslationTable(tableSeq, colorValidator)
   }
 
   /** */
@@ -208,17 +211,74 @@ object RGBAComponentTranslationTable {
     }
   }
 
+
+  //
+  private var _colorValidator: Option[ColorValidator] = None
+
+  /**
+   * Returns the ColorValidator instance to be used by this object.
+   *
+   * @return
+   *
+   * @throws ImplementationNotSetError
+   */
+  private def colorValidator: ColorValidator = {
+    _colorValidator.getOrElse(throw ImplementationNotSetError("ColorValidator"))
+  }
+
+  /**
+   * Set the ColorValidator instance to be used by this object.
+   *
+   * @param validator
+   */
+  private[smcl] def setColorValidator(validator: ColorValidator): Unit = {
+    require(validator != null,
+      "The ColorValidator instance must be given (was null)")
+
+    _colorValidator = Some(validator)
+  }
+
+
+  //
+  private var _rgbaTranslationTableValidator: Option[RGBATranslationTableValidator] = None
+
+  /**
+   * Returns the RGBATranslationTableValidator instance to be used by this object.
+   *
+   * @return
+   *
+   * @throws ImplementationNotSetError
+   */
+  private def rgbaTranslationTableValidator: RGBATranslationTableValidator = {
+    _rgbaTranslationTableValidator.getOrElse(
+      throw ImplementationNotSetError("RGBATranslationTableValidator"))
+  }
+
+  /**
+   * Set the RGBATranslationTableValidator instance to be used by this object.
+   *
+   * @param validator
+   */
+  private[smcl] def setRGBATranslationTableValidator(validator: RGBATranslationTableValidator): Unit = {
+    require(validator != null,
+      "The RGBATranslationTableValidator instance must be given (was null)")
+
+    _rgbaTranslationTableValidator = Some(validator)
+  }
+
 }
 
 
-
+//new RGBATranslationTableValidator(colorValidator)
 
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-case class RGBAComponentTranslationTable private(table: Seq[Seq[Short]])
+case class RGBAComponentTranslationTable private(
+    table: Seq[Seq[Short]],
+    private val colorValidator: ColorValidator)
     extends RGBAColorTranslator
             with Immutable {
 
@@ -233,7 +293,7 @@ case class RGBAComponentTranslationTable private(table: Seq[Seq[Short]])
    * @return
    */
   def translate(red: Int, green: Int, blue: Int, opacity: Int): (Int, Int, Int, Int) = {
-    ColorValidator.validateRGBAColor(red, green, blue, opacity)
+    colorValidator.validateRGBAColor(red, green, blue, opacity)
 
     (table.head(red.toShort),
         table(1)(green.toShort),

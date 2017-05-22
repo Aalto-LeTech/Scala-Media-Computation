@@ -74,8 +74,8 @@ case class DrawArc(
     "arcAngle" -> Option(s"${arcAngleInDegrees.toString} deg"),
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
-    "color" -> Option(s"0x${color.toArgbInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.toArgbInt.toArgbHexColorString}")
+    "color" -> Option(s"0x${color.toARGBInt.toArgbHexColorString}"),
+    "fillColor" -> Option(s"0x${fillColor.toARGBInt.toArgbHexColorString}")
   )
 
   /**

@@ -64,7 +64,7 @@ case class AppendHorizontally(
   lazy val describedProperties = Map(
     "padding" -> Option(s"$paddingInPixels px"),
     "verticalAlignment" -> Option(verticalAlignment.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
+    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toArgbHexColorString}")
   )
 
   /** Height of the provided buffer in pixels. */

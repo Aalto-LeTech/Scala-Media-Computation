@@ -19,6 +19,8 @@ package aalto.smcl
 
 import scala.language.implicitConversions
 
+import aalto.smcl.infrastructure.CommonValidators
+
 
 /**
  *
@@ -35,18 +37,17 @@ package object colors
   val FullyTransparent: Int = ColorValidator.MinimumRGBAOpacity
 
 
-  /** */
-  lazy val ColorValidator: ColorValidator = new ColorValidator()
+  //
+  private lazy val commonValidators = new CommonValidators()
 
-  /** */
-  lazy val RGBATranslationTableValidator: RGBATranslationTableValidator =
-    new RGBATranslationTableValidator()
-
+  //
+  private lazy val colorValidator = new ColorValidator()
 
   /** Application of the RichARGBInt class. */
   implicit def ARGBIntWrapper(self: Int): RichARGBInt = new RichARGBInt(self)
 
   /** Application of the RichRGBAColor class. */
-  implicit def RGBAColorWrapper(self: RGBAColor): RichRGBAColor = new RichRGBAColor(self)
+  implicit def RGBAColorWrapper(self: RGBAColor): RichRGBAColor =
+    new RichRGBAColor(self, commonValidators, colorValidator)
 
 }

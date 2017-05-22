@@ -26,10 +26,15 @@ import aalto.smcl.infrastructure.CommonValidators
  *
  *
  * @param self
+ * @param commonValidators
+ * @param colorValidator
  *
  * @author Aleksi Lukkarinen
  */
-class RichRGBAColor(val self: RGBAColor) {
+class RichRGBAColor(
+    val self: RGBAColor,
+    private val commonValidators: CommonValidators,
+    private val colorValidator: ColorValidator) {
 
   ///////////////////////////////////////////////////////////////////////////////////
   //
@@ -47,7 +52,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteRednessInPercents
    */
   final def withAbsoluteRednessPercentage(newAbsoluteRednessInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(newAbsoluteRednessInPercents, Option("Redness"))
+    commonValidators.validatePercentage(newAbsoluteRednessInPercents, Option("Redness"))
 
     withAbsoluteRednessFactor(newAbsoluteRednessInPercents / 100.0)
   }
@@ -58,7 +63,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteRednessFactorFromZeroToOne
    */
   final def withAbsoluteRednessFactor(newAbsoluteRednessFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(newAbsoluteRednessFactorFromZeroToOne, Option("Redness"))
+    commonValidators.validateZeroToOneFactor(newAbsoluteRednessFactorFromZeroToOne, Option("Redness"))
 
     withAbsoluteRedness((newAbsoluteRednessFactorFromZeroToOne * ColorValidator.MaximumRGBRed).toInt)
   }
@@ -69,7 +74,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteRedness
    */
   final def withAbsoluteRedness(newAbsoluteRedness: Int): RGBAColor = {
-    ColorValidator.validateRGBRedComponent(newAbsoluteRedness)
+    colorValidator.validateRGBRedComponent(newAbsoluteRedness)
 
     RGBAColor(newAbsoluteRedness, self.green, self.blue, self.opacity)
   }
@@ -80,7 +85,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param rednessIncrementInPercents
    */
   final def increaseRednessByPercentage(rednessIncrementInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(rednessIncrementInPercents, Option("Redness increment"))
+    commonValidators.validatePercentage(rednessIncrementInPercents, Option("Redness increment"))
 
     increaseRednessByFactor(rednessIncrementInPercents / 100.0)
   }
@@ -91,7 +96,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param rednessIncrementFactorFromZeroToOne
    */
   final def increaseRednessByFactor(rednessIncrementFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(rednessIncrementFactorFromZeroToOne, Option("Redness increment"))
+    commonValidators.validateZeroToOneFactor(rednessIncrementFactorFromZeroToOne, Option("Redness increment"))
 
     val newRed = (self.red + rednessIncrementFactorFromZeroToOne * (ColorValidator.MaximumRGBRed - self.red)).toInt
 
@@ -104,7 +109,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param rednessDecrementInPercents
    */
   final def decreaseRednessByPercentage(rednessDecrementInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(rednessDecrementInPercents, Option("Redness decrement"))
+    commonValidators.validatePercentage(rednessDecrementInPercents, Option("Redness decrement"))
 
     decreaseRednessByFactor(rednessDecrementInPercents / 100)
   }
@@ -115,7 +120,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param rednessDecrementFactorFromZeroToOne
    */
   final def decreaseRednessByFactor(rednessDecrementFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(rednessDecrementFactorFromZeroToOne, Option("Redness decrement"))
+    commonValidators.validateZeroToOneFactor(rednessDecrementFactorFromZeroToOne, Option("Redness decrement"))
 
     val invertedFactor: Double = 1.0 - rednessDecrementFactorFromZeroToOne
     val newRed = (invertedFactor * self.red).toInt
@@ -140,7 +145,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteGreennessInPercents
    */
   final def withAbsoluteGreennessPercentage(newAbsoluteGreennessInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(newAbsoluteGreennessInPercents, Option("Greenness"))
+    commonValidators.validatePercentage(newAbsoluteGreennessInPercents, Option("Greenness"))
 
     withAbsoluteGreennessFactor(newAbsoluteGreennessInPercents / 100.0)
   }
@@ -151,7 +156,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteGreennessFactorFromZeroToOne
    */
   final def withAbsoluteGreennessFactor(newAbsoluteGreennessFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(newAbsoluteGreennessFactorFromZeroToOne, Option("Greenness"))
+    commonValidators.validateZeroToOneFactor(newAbsoluteGreennessFactorFromZeroToOne, Option("Greenness"))
 
     withAbsoluteGreenness((newAbsoluteGreennessFactorFromZeroToOne * ColorValidator.MaximumRGBGreen).toInt)
   }
@@ -162,7 +167,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteGreenness
    */
   final def withAbsoluteGreenness(newAbsoluteGreenness: Int): RGBAColor = {
-    ColorValidator.validateRGBGreenComponent(newAbsoluteGreenness)
+    colorValidator.validateRGBGreenComponent(newAbsoluteGreenness)
 
     RGBAColor(self.red, newAbsoluteGreenness, self.blue, self.opacity)
   }
@@ -173,7 +178,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param greennessIncrementInPercents
    */
   final def increaseGreennessByPercentage(greennessIncrementInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(greennessIncrementInPercents, Option("Greenness increment"))
+    commonValidators.validatePercentage(greennessIncrementInPercents, Option("Greenness increment"))
 
     increaseGreennessByFactor(greennessIncrementInPercents / 100.0)
   }
@@ -184,7 +189,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param greennessIncrementFactorFromZeroToOne
    */
   final def increaseGreennessByFactor(greennessIncrementFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(greennessIncrementFactorFromZeroToOne, Option("Greenness increment"))
+    commonValidators.validateZeroToOneFactor(greennessIncrementFactorFromZeroToOne, Option("Greenness increment"))
 
     val newGreen = (self.green + greennessIncrementFactorFromZeroToOne * (ColorValidator.MaximumRGBGreen - self.green)).toInt
 
@@ -197,7 +202,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param greennessDecrementInPercents
    */
   final def decreaseGreennessByPercentage(greennessDecrementInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(greennessDecrementInPercents, Option("Greenness decrement"))
+    commonValidators.validatePercentage(greennessDecrementInPercents, Option("Greenness decrement"))
 
     decreaseGreennessByFactor(greennessDecrementInPercents / 100)
   }
@@ -208,7 +213,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param greennessDecrementFactorFromZeroToOne
    */
   final def decreaseGreennessByFactor(greennessDecrementFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(greennessDecrementFactorFromZeroToOne, Option("Greenness decrement"))
+    commonValidators.validateZeroToOneFactor(greennessDecrementFactorFromZeroToOne, Option("Greenness decrement"))
 
     val invertedFactor: Double = 1.0 - greennessDecrementFactorFromZeroToOne
     val newGreen = (invertedFactor * self.green).toInt
@@ -233,7 +238,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteBluenessInPercents
    */
   final def withAbsoluteBluenessPercentage(newAbsoluteBluenessInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(newAbsoluteBluenessInPercents, Option("Blueness"))
+    commonValidators.validatePercentage(newAbsoluteBluenessInPercents, Option("Blueness"))
 
     withAbsoluteBluenessFactor(newAbsoluteBluenessInPercents / 100.0)
   }
@@ -244,7 +249,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteBluenessFactorFromZeroToOne
    */
   final def withAbsoluteBluenessFactor(newAbsoluteBluenessFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(newAbsoluteBluenessFactorFromZeroToOne, Option("Blueness"))
+    commonValidators.validateZeroToOneFactor(newAbsoluteBluenessFactorFromZeroToOne, Option("Blueness"))
 
     withAbsoluteBlueness((newAbsoluteBluenessFactorFromZeroToOne * ColorValidator.MaximumRGBBlue).toInt)
   }
@@ -255,7 +260,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteBlueness
    */
   final def withAbsoluteBlueness(newAbsoluteBlueness: Int): RGBAColor = {
-    ColorValidator.validateRGBBlueComponent(newAbsoluteBlueness)
+    colorValidator.validateRGBBlueComponent(newAbsoluteBlueness)
 
     RGBAColor(self.red, self.green, newAbsoluteBlueness, self.opacity)
   }
@@ -266,7 +271,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param bluenessIncrementInPercents
    */
   final def increaseBluenessByPercentage(bluenessIncrementInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(bluenessIncrementInPercents, Option("Blueness increment"))
+    commonValidators.validatePercentage(bluenessIncrementInPercents, Option("Blueness increment"))
 
     increaseBluenessByFactor(bluenessIncrementInPercents / 100.0)
   }
@@ -277,7 +282,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param bluenessIncrementFactorFromZeroToOne
    */
   final def increaseBluenessByFactor(bluenessIncrementFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(bluenessIncrementFactorFromZeroToOne, Option("Blueness increment"))
+    commonValidators.validateZeroToOneFactor(bluenessIncrementFactorFromZeroToOne, Option("Blueness increment"))
 
     val newBlue = (self.blue + bluenessIncrementFactorFromZeroToOne * (ColorValidator.MaximumRGBBlue - self.blue)).toInt
 
@@ -290,7 +295,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param bluenessDecrementInPercents
    */
   final def decreaseBluenessByPercentage(bluenessDecrementInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(bluenessDecrementInPercents, Option("Blueness decrement"))
+    commonValidators.validatePercentage(bluenessDecrementInPercents, Option("Blueness decrement"))
 
     decreaseBluenessByFactor(bluenessDecrementInPercents / 100)
   }
@@ -301,7 +306,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param bluenessDecrementFactorFromZeroToOne
    */
   final def decreaseBluenessByFactor(bluenessDecrementFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(bluenessDecrementFactorFromZeroToOne, Option("Blueness decrement"))
+    commonValidators.validateZeroToOneFactor(bluenessDecrementFactorFromZeroToOne, Option("Blueness decrement"))
 
     val invertedFactor: Double = 1.0 - bluenessDecrementFactorFromZeroToOne
     val newBlue = (invertedFactor * self.blue).toInt
@@ -340,7 +345,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteOpacityInPercents
    */
   final def withAbsoluteOpacityPercentage(newAbsoluteOpacityInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(newAbsoluteOpacityInPercents, Option("Opacity"))
+    commonValidators.validatePercentage(newAbsoluteOpacityInPercents, Option("Opacity"))
 
     withAbsoluteOpacityFactor(newAbsoluteOpacityInPercents / 100.0)
   }
@@ -351,7 +356,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteOpacityFactorFromZeroToOne
    */
   final def withAbsoluteOpacityFactor(newAbsoluteOpacityFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(newAbsoluteOpacityFactorFromZeroToOne, Option("Opacity"))
+    commonValidators.validateZeroToOneFactor(newAbsoluteOpacityFactorFromZeroToOne, Option("Opacity"))
 
     withAbsoluteOpacity((newAbsoluteOpacityFactorFromZeroToOne * FullyOpaque).toInt)
   }
@@ -362,7 +367,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param newAbsoluteOpacity
    */
   final def withAbsoluteOpacity(newAbsoluteOpacity: Int): RGBAColor = {
-    ColorValidator.validateRGBAOpacityComponent(newAbsoluteOpacity)
+    colorValidator.validateRGBAOpacityComponent(newAbsoluteOpacity)
 
     RGBAColor(self.red, self.green, self.blue, newAbsoluteOpacity)
   }
@@ -373,7 +378,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param opacityIncrementInPercents
    */
   final def increaseOpacityByPercentage(opacityIncrementInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(opacityIncrementInPercents, Option("Opacity increment"))
+    commonValidators.validatePercentage(opacityIncrementInPercents, Option("Opacity increment"))
 
     increaseOpacityByFactor(opacityIncrementInPercents / 100.0)
   }
@@ -384,7 +389,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param opacityIncrementFactorFromZeroToOne
    */
   final def increaseOpacityByFactor(opacityIncrementFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(opacityIncrementFactorFromZeroToOne, Option("Opacity increment"))
+    commonValidators.validateZeroToOneFactor(opacityIncrementFactorFromZeroToOne, Option("Opacity increment"))
 
     val newOpacity = (self.opacity + opacityIncrementFactorFromZeroToOne * (ColorValidator.MaximumRGBAOpacity - self.opacity)).toInt
 
@@ -397,7 +402,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param opacityDecrementInPercents
    */
   final def decreaseOpacityByPercentage(opacityDecrementInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(opacityDecrementInPercents, Option("Opacity decrement"))
+    commonValidators.validatePercentage(opacityDecrementInPercents, Option("Opacity decrement"))
 
     decreaseOpacityByFactor(opacityDecrementInPercents / 100)
   }
@@ -408,7 +413,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param opacityDecrementFactorFromZeroToOne
    */
   final def decreaseOpacityByFactor(opacityDecrementFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(opacityDecrementFactorFromZeroToOne, Option("Opacity decrement"))
+    commonValidators.validateZeroToOneFactor(opacityDecrementFactorFromZeroToOne, Option("Opacity decrement"))
 
     val invertedFactor: Double = 1.0 - opacityDecrementFactorFromZeroToOne
     val newOpacity = (invertedFactor * self.opacity).toInt
@@ -435,7 +440,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @return
    */
   final def adjustHueByDegrees(adjustmentInDegrees: Double): RGBAColor =
-    adjustHueOfRgbByDegrees(self, adjustmentInDegrees)
+    adjustHueOfRGBByDegrees(self, adjustmentInDegrees)
 
   /**
    *
@@ -456,7 +461,7 @@ class RichRGBAColor(val self: RGBAColor) {
     validators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
     validators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
 
-    ColorValidator.validateRGBColorWeightCombination(redWeight, greenWeight, blueWeight)
+    colorValidator.validateRGBColorWeightCombination(redWeight, greenWeight, blueWeight)
 
     val weightedRed = redWeight * self.red
     val weightedGreen = greenWeight * self.green
@@ -472,7 +477,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param shadingFactorInPercents
    */
   final def shadeByPercentage(shadingFactorInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(shadingFactorInPercents, Option("Shading"))
+    commonValidators.validatePercentage(shadingFactorInPercents, Option("Shading"))
 
     shadeByFactor(shadingFactorInPercents / 100)
   }
@@ -483,7 +488,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param shadingFactorFromZeroToOne
    */
   final def shadeByFactor(shadingFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(shadingFactorFromZeroToOne, Option("Shading"))
+    commonValidators.validateZeroToOneFactor(shadingFactorFromZeroToOne, Option("Shading"))
 
     val invertedFactor: Double = 1.0 - shadingFactorFromZeroToOne
     val newRed = (invertedFactor * self.red).toInt
@@ -499,7 +504,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param tintingFactorInPercents
    */
   final def tintByPercentage(tintingFactorInPercents: Double): RGBAColor = {
-    new CommonValidators().validatePercentage(tintingFactorInPercents, Option("Tinting"))
+    commonValidators.validatePercentage(tintingFactorInPercents, Option("Tinting"))
 
     tintByFactor(tintingFactorInPercents / 100.0)
   }
@@ -510,7 +515,7 @@ class RichRGBAColor(val self: RGBAColor) {
    * @param tintingFactorFromZeroToOne
    */
   final def tintByFactor(tintingFactorFromZeroToOne: Double): RGBAColor = {
-    new CommonValidators().validateZeroToOneFactor(tintingFactorFromZeroToOne, Option("Tinting"))
+    commonValidators.validateZeroToOneFactor(tintingFactorFromZeroToOne, Option("Tinting"))
 
     val newRed = (self.red + tintingFactorFromZeroToOne * (ColorValidator.MaximumRGBRed - self.red)).toInt
     val newGreen = (self.green + tintingFactorFromZeroToOne * (ColorValidator.MaximumRGBGreen - self.green)).toInt

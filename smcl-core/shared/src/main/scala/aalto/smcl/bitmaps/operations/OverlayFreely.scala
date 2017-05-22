@@ -42,7 +42,8 @@ case class OverlayFreely(
     topBitmapUpperLeftX: Int,
     topBitmapUpperLeftY: Int,
     topBitmapOpacity: Int = ColorValidator.MaximumRGBAOpacity,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    private val colorValidator: ColorValidator)
     extends AbstractOperation
             with BufferProvider
             with Immutable {
@@ -50,8 +51,9 @@ case class OverlayFreely(
   require(bottomBitmap != null, "The lower bitmap argument has to be a Bitmap instance (was null).")
   require(topBitmap != null, "The upper bitmap argument has to be a Bitmap instance (was null).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
+  require(colorValidator != null, "The color validator argument has to be a ColorValidator instance (was null).")
 
-  ColorValidator.validateRGBAOpacityComponent(topBitmapOpacity)
+  colorValidator.validateRGBAOpacityComponent(topBitmapOpacity)
 
   /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =
@@ -65,7 +67,7 @@ case class OverlayFreely(
     "topBitmapUpperLeftX" -> Option(s"$topBitmapUpperLeftX px"),
     "topBitmapUpperLeftY" -> Option(s"$topBitmapUpperLeftY px"),
     "topBitmapOpacity" -> Option(topBitmapOpacity.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toArgbInt.toArgbHexColorString}")
+    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toArgbHexColorString}")
   )
 
   /** Width of the provided buffer in pixels. */

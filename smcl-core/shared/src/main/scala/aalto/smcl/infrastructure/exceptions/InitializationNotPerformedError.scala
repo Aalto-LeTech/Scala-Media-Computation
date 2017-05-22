@@ -14,31 +14,36 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps
+package aalto.smcl.infrastructure.exceptions
 
 
 /**
- * A string interpolator for creating [[aalto.smcl.bitmaps.Bitmap]] instances.
  *
- * @param sc
  *
  * @author Aleksi Lukkarinen
  */
-class BitmapCreationStringInterpolator(val sc: StringContext)
-    extends AnyVal {
-
+object InitializationNotPerformedError {
 
   /**
-   * Loads bitmaps from a file.
    *
-   * @param args path to the image file to be loaded
+   *
+   * @param message
    *
    * @return
    */
-  def bmpf(args: Any*): BitmapLoadingResult = {
-    val pathStringCandidate = sc.standardInterpolator(StringContext.processEscapes, args)
-
-    Bitmap(pathStringCandidate)
-  }
+  def apply(message: String): InitializationNotPerformedError =
+    InitializationNotPerformedError(message, null)
 
 }
+
+
+
+
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
+final case class InitializationNotPerformedError private[smcl](
+    override val message: String, override val cause: Throwable)
+    extends SMCLBaseError(message, cause)
