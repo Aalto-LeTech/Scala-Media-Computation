@@ -72,7 +72,7 @@ class RichARGBInt(val self: Int) extends AnyVal {
    * res0: String = 89abcdef
    * }}}
    */
-  final def toArgbHexColorString: String = f"$self%08x"
+  final def toARGBHexColorString: String = f"$self%08x"
 
   /**
    * Displays this `Int` as a zero-padded binary form divided to bytes by spaces.
@@ -82,7 +82,7 @@ class RichARGBInt(val self: Int) extends AnyVal {
    * res0: String = 10001001 10101011 11001101 11101111
    * }}}
    */
-  final def toArgbBinaryColorString: String =
+  final def toARGBBinaryColorString: String =
     self.toBinaryString.format("$s%32s").replace(StrSpace, StrZero)
         .sliding(OneByte, OneByte).mkString(StrSpace)
 

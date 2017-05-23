@@ -157,7 +157,7 @@ object ColorValidator {
  *
  * @author Aleksi Lukkarinen
  */
-class ColorValidator(private val stringUtils: StringUtils) {
+class ColorValidator() {
 
   /**
    *
@@ -642,7 +642,7 @@ class ColorValidator(private val stringUtils: StringUtils) {
       if (name.isEmpty)
         throw ColorNameIsEmptyOrOnlyWhitespaceError
 
-      val capitalizedName = stringUtils.titleCase(name)
+      val capitalizedName = name.toAmericanTitleCase
       if (capitalizedName != nameCandidate.get)
         return Option(capitalizedName)
     }

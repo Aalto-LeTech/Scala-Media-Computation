@@ -57,7 +57,7 @@ case class Shear(
     "shearingFactorHorizontal" -> Option(shearingFactorHorizontal.toString),
     "shearingFactorVertical" -> Option(shearingFactorVertical.toString),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toArgbHexColorString}")
+    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toARGBHexColorString}")
   )
 
   /** The [[BitmapOperationList]] instance resulting the bitmap to be sheared. */

@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure.jvmawt
 
 import aalto.smcl.bitmaps.{Bitmap, BitmapValidator}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable, RGBATranslationTableValidator, RichRGBAColor}
-import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, InjectableRegistry, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer, StringUtils}
+import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, InjectableRegistry, RicherString, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer, StringUtils}
 
 
 
@@ -41,7 +41,7 @@ object Initializer extends SMCLInitializer {
   val _commonValidators = new CommonValidators()
 
   /** */
-  val _colorValidator = new ColorValidator(_stringUtils)
+  val _colorValidator = new ColorValidator()
 
   /** */
   val _rgbaTranslationTableValidator =
@@ -74,6 +74,10 @@ object Initializer extends SMCLInitializer {
    * Inject dependencies to miscellaneous objects.
    */
   private def injectMiscellaneousDependencies(): Unit = {
+    RicherString.inject(
+      InjectableRegistry.IIdStringUtils -> _stringUtils
+    )
+
     RGBAColor.inject(
       InjectableRegistry.IIdColorValidator -> _colorValidator
     )

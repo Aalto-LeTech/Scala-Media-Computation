@@ -63,7 +63,7 @@ case class ReplicateHorizontally(
   lazy val describedProperties = Map(
     "numberOfReplicas" -> Option(numberOfReplicas.toString),
     "padding" -> Option(s"$paddingInPixels px"),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toArgbHexColorString}")
+    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toARGBHexColorString}")
   )
 
   /** Height of the provided buffer in pixels. */

@@ -69,7 +69,7 @@ case class DrawPolyline(
     "coordinates" -> Option(xCoordinates.zip(yCoordinates).mkString(StrSpace)),
     "numberOfCoordinatesPresent" -> Option(numberOfCoordinatesPresent.toString),
     "numberOfCoordinatesToDraw" -> Option(numberOfCoordinatesToDraw.toString),
-    "color" -> Option(s"0x${color.toARGBInt.toArgbHexColorString}")
+    "color" -> Option(s"0x${color.toARGBInt.toARGBHexColorString}")
   )
 
   /**

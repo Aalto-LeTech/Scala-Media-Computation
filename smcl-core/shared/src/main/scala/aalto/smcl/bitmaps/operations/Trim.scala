@@ -49,7 +49,7 @@ case class Trim(
 
   /** Information about this [[Renderable]] instance */
   lazy val describedProperties = Map(
-    "colorToTrim" -> Option(s"0x${colorToTrim.toARGBInt.toArgbHexColorString}")
+    "colorToTrim" -> Option(s"0x${colorToTrim.toARGBInt.toARGBHexColorString}")
   )
 
   /** The [[BitmapOperationList]] instance resulting the bitmap to be trimmed. */

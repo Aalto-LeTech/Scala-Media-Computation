@@ -189,21 +189,42 @@ package object infrastructure extends Constants {
 
 
   /** */
-  case object DefaultHorizontalAlignment extends EnumSettingKey[HorizontalAlignment.Value]
+  case object DefaultHorizontalAlignment
+      extends EnumSettingKey[HorizontalAlignment.Value]
 
 
 
 
   /** */
-  case object DefaultVerticalAlignment extends EnumSettingKey[VerticalAlignment.Value]
+  case object DefaultVerticalAlignment
+      extends EnumSettingKey[VerticalAlignment.Value]
 
 
 
 
-  /** */
+  /**
+   * Application of the RichGenTraversable class.
+   */
   //noinspection TypeParameterShadow
   private[smcl]
-  implicit def GenTraversableWrapper[E, C[E] <: GenTraversable[E]](self: C[E]): RichGenTraversable[E, C] =
-  new RichGenTraversable[E, C](self)
+  implicit def GenTraversableWrapper[E, C[E] <: GenTraversable[E]](
+      self: C[E]): RichGenTraversable[E, C] = {
+
+    new RichGenTraversable[E, C](self)
+  }
+
+  /**
+   * Application of the RicherString class.
+   */
+  implicit def StringWrapper(self: String): RicherString = {
+    RicherString(self)
+  }
+
+  /**
+   * Application of the RichOptionString class.
+   */
+  implicit def OptionStringWrapper(self: Option[String]): RichOptionString = {
+    RichOptionString(self)
+  }
 
 }

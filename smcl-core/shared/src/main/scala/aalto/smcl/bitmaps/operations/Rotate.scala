@@ -55,7 +55,7 @@ case class Rotate(
   lazy val describedProperties = Map(
     "angle" -> Option(s"$angleInDegrees deg"),
     "resizeCanvasBasedOnTransformation" -> Option(resizeCanvasBasedOnTransformation.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toArgbHexColorString}")
+    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toARGBHexColorString}")
   )
 
   /** The [[BitmapOperationList]] instance resulting the bitmap to be rotated. */

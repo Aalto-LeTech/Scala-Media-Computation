@@ -69,7 +69,7 @@ case class OverlayPerAlignments(
     "horizontalAlignment" -> Option(horizontalAlignment.toString),
     "verticalAlignment" -> Option(verticalAlignment.toString),
     "opacityForAllBitmaps" -> Option(opacityForAllBitmaps.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toArgbHexColorString}")
+    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toARGBHexColorString}")
   )
 
   /** Width of the provided buffer in pixels. */

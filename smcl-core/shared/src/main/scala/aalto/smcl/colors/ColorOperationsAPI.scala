@@ -33,10 +33,7 @@ private[colors]
 trait ColorOperationsAPI {
 
   /** ColorValidator instance to be used by the operations of this trait. */
-  private lazy val stringUtils: StringUtils = new StringUtils()
-
-  /** ColorValidator instance to be used by the operations of this trait. */
-  private lazy val colorValidator: ColorValidator = new ColorValidator(stringUtils)
+  private lazy val colorValidator: ColorValidator = new ColorValidator()
 
 
   /**

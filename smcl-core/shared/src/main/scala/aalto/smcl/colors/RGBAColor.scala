@@ -616,19 +616,19 @@ class RGBAColor protected(
   val isUserCreated: Boolean = !isPreset
 
   /** This [[RGBAColor]] represented as a 32-digit binary string of four 8-digit groups. */
-  lazy val toBinaryString: String = toARGBInt.toArgbBinaryColorString
+  lazy val toBinaryString: String = toARGBInt.toARGBBinaryColorString
 
   /** This [[RGBAColor]] represented as a hexadecimal string. */
-  lazy val toHexString: String = toARGBInt.toArgbHexColorString
+  lazy val toHexString: String = toARGBInt.toARGBHexColorString
 
   /** First text paragraph of the description of this class. */
   @inline
   val descriptionTitle: String = "RGBA Color"
 
-  /** Information about this [[aalto.smcl.bitmaps.operations.Renderable]] instance */
+  /** Information about this [[aalto.smcl.bitmaps.operations.Renderable]] instance. */
   lazy val describedProperties = Map(
-    "Canonical Name" -> (canonicalName getOrElse StrUnnamed),
-    "CSS Name" -> (cssName getOrElse StrUnnamed),
+    "Canonical Name" -> canonicalName.orUnnamed,
+    "CSS Name" -> cssName.orUnnamed,
     "Red Component" -> red,
     "Green Component" -> green,
     "Blue Component" -> blue,
@@ -683,36 +683,64 @@ class RGBAColor protected(
 
   /** */
   lazy val keepingOnlyRedComponent  : RGBAColor = {
-    RGBAColor(red, ColorValidator.MinimumRGBGreen, ColorValidator.MinimumRGBBlue, FullyOpaque)
+    RGBAColor(
+      red,
+      ColorValidator.MinimumRGBGreen,
+      ColorValidator.MinimumRGBBlue,
+      FullyOpaque)
   }
   /** */
   lazy val keepingOnlyGreenComponent: RGBAColor = {
-    RGBAColor(ColorValidator.MinimumRGBRed, green, ColorValidator.MinimumRGBBlue, FullyOpaque)
+    RGBAColor(
+      ColorValidator.MinimumRGBRed,
+      green,
+      ColorValidator.MinimumRGBBlue,
+      FullyOpaque)
   }
 
   /** */
   lazy val keepingOnlyBlueComponent: RGBAColor = {
-    RGBAColor(ColorValidator.MinimumRGBRed, ColorValidator.MinimumRGBGreen, blue, FullyOpaque)
+    RGBAColor(
+      ColorValidator.MinimumRGBRed,
+      ColorValidator.MinimumRGBGreen,
+      blue,
+      FullyOpaque)
   }
 
   /** */
   lazy val keepingOnlyRedAndGreenComponents: RGBAColor = {
-    RGBAColor(red, green, ColorValidator.MinimumRGBBlue, FullyOpaque)
+    RGBAColor(
+      red,
+      green,
+      ColorValidator.MinimumRGBBlue,
+      FullyOpaque)
   }
 
   /** */
   lazy val keepingOnlyRedAndBlueComponents: RGBAColor = {
-    RGBAColor(red, ColorValidator.MinimumRGBGreen, blue, FullyOpaque)
+    RGBAColor(
+      red,
+      ColorValidator.MinimumRGBGreen,
+      blue,
+      FullyOpaque)
   }
 
   /** */
   lazy val keepingOnlyGreenAndBlueComponents: RGBAColor = {
-    RGBAColor(ColorValidator.MinimumRGBRed, green, blue, FullyOpaque)
+    RGBAColor(
+      ColorValidator.MinimumRGBRed,
+      green,
+      blue,
+      FullyOpaque)
   }
 
   /** */
   lazy val representingOpacityAsGreyLevel: RGBAColor = {
-    RGBAColor(opacity, opacity, opacity, FullyOpaque)
+    RGBAColor(
+      opacity,
+      opacity,
+      opacity,
+      FullyOpaque)
   }
 
   /**

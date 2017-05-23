@@ -76,8 +76,8 @@ case class DrawRoundedRectangle(
     "roundingHeight" -> Option(s"$roundingHeightInPixels px"),
     "hasBorder" -> Option(hasBorder.toString),
     "hasFilling" -> Option(hasFilling.toString),
-    "color" -> Option(s"0x${color.toARGBInt.toArgbHexColorString}"),
-    "fillColor" -> Option(s"0x${fillColor.toARGBInt.toArgbHexColorString}")
+    "color" -> Option(s"0x${color.toARGBInt.toARGBHexColorString}"),
+    "fillColor" -> Option(s"0x${fillColor.toARGBInt.toARGBHexColorString}")
   )
 
   /**

@@ -22,17 +22,63 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-class StringUtils {
+object RichOptionString extends InjectableRegistry {
+
+  /** The StringUtils instance to be used by this object. */
+  private lazy val stringUtils: StringUtils = {
+    injectable(InjectableRegistry.IIdStringUtils).asInstanceOf[StringUtils]
+  }
 
   /**
-   * Returns an string, in which the first letter of every
-   * word is capitalized and other letters are in lower case.
+   * Return a new RichOptionString instance.
    *
-   * @param s
+   * @param self
    *
    * @return
    */
-  def toTitleCase(s: String): String =
-    s.toLowerCase.split(StrSpace).map(_.capitalize).mkString(StrSpace)
+  def apply(self: Option[String]): RichOptionString = {
+    new RichOptionString(self, stringUtils)
+  }
+
+}
+
+
+
+
+/**
+ * Some methods to extend Option instances having a String as a payload.
+ *
+ * @param self
+ *
+ * @author Aleksi Lukkarinen
+ */
+class RichOptionString private[smcl](
+    val self: Option[String],
+    private val stringUtils: StringUtils) {
+
+  /**
+   * Converts the string into American-style title case, i.e.,
+   * every word begins with a capital letter and all other
+   * letters are in lower case.
+   * <br>
+   * This function does not take into account any
+   * spellings (e.g., "eLearning" or "StringUtils") that do
+   * not conform with the rule above.
+   */
+  final def toAmericanTitleCase: Option[String] =
+    self map stringUtils.toTitleCase
+
+  /**
+   * Returns the <code>StrUnnamed</code> string if the given
+   * string is null or contains only whitespace; otherwise,
+   * a trimmed version of the string itself is returned.
+   *
+   * @return the return value
+   */
+  final def orUnnamed: String = {
+    self.fold(StrUnnamed) { s =>
+      new RicherString(s, stringUtils).orUnnamed
+    }
+  }
 
 }

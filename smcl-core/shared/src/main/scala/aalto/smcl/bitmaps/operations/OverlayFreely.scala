@@ -67,7 +67,7 @@ case class OverlayFreely(
     "topBitmapUpperLeftX" -> Option(s"$topBitmapUpperLeftX px"),
     "topBitmapUpperLeftY" -> Option(s"$topBitmapUpperLeftY px"),
     "topBitmapOpacity" -> Option(topBitmapOpacity.toString),
-    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toArgbHexColorString}")
+    "backgroundColor" -> Option(s"0x${backgroundColor.toARGBInt.toARGBHexColorString}")
   )
 
   /** Width of the provided buffer in pixels. */
