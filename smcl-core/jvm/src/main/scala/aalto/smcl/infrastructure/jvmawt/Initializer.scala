@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure.jvmawt
 
 import aalto.smcl.bitmaps.{Bitmap, BitmapValidator}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable, RGBATranslationTableValidator, RichRGBAColor}
-import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer}
+import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, InjectableRegistry, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer, StringUtils}
 
 
 
@@ -31,13 +31,36 @@ import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidato
  */
 object Initializer extends SMCLInitializer {
 
+  /** */
+  val _stringUtils = new StringUtils()
+
+                                                                                                                                                                                                                                    /** */
+  val _settingValidatorFactory = new SettingValidatorFactory()
+
+  /** */
+  val _commonValidators = new CommonValidators()
+
+  /** */
+  val _colorValidator = new ColorValidator(_stringUtils)
+
+  /** */
+  val _rgbaTranslationTableValidator =
+    new RGBATranslationTableValidator(_colorValidator)
+
+  /** */
+  val _bitmapValidator = new BitmapValidator()
+
+  /** */
+  val _bitmapValidatorFunctionFactory =
+    new BitmapValidatorFunctionFactory(_bitmapValidator)
+
   /**
-   *
+   * Initialize SMCL.
    */
   def apply(): Unit = {
     println("JVM-based SMCL Core initialization is in progress...")
 
-    injectDependencies()
+    injectMiscellaneousDependencies()
 
     initPlatformResourceFactory()
 
@@ -48,29 +71,33 @@ object Initializer extends SMCLInitializer {
   }
 
   /**
-   *
+   * Inject dependencies to miscellaneous objects.
    */
-  private def injectDependencies(): Unit = {
-    val commonValidators = new CommonValidators()
-    val colorValidator = new ColorValidator()
-    val rgbaTranslationTableValidator =
-      new RGBATranslationTableValidator(colorValidator)
-    val bitmapValidator = new BitmapValidator()
+  private def injectMiscellaneousDependencies(): Unit = {
+    RGBAColor.inject(
+      InjectableRegistry.IIdColorValidator -> _colorValidator
+    )
 
-    RGBAColor.setColorValidator(colorValidator)
+    RichRGBAColor.inject(
+      InjectableRegistry.IIdColorValidator -> _colorValidator,
+      InjectableRegistry.IIdCommonValidators -> _commonValidators
+    )
 
-    RichRGBAColor.setColorValidator(colorValidator)
-    RichRGBAColor.setCommonValidators(commonValidators)
+    RGBAComponentTranslationTable.inject(
+      InjectableRegistry.IIdCommonValidators -> _commonValidators,
+      InjectableRegistry.IIdColorValidator -> _colorValidator,
+      InjectableRegistry.IIdRGBATranslationTableValidator -> _rgbaTranslationTableValidator
+    )
 
-    RGBAComponentTranslationTable.setColorValidator(colorValidator)
-    RGBAComponentTranslationTable
-        .setRGBATranslationTableValidator(rgbaTranslationTableValidator)
+    AwtBitmapBufferAdapter.inject(
+      InjectableRegistry.IIdColorValidator -> _colorValidator,
+      InjectableRegistry.IIdBitmapValidator -> _bitmapValidator
+    )
 
-    AwtBitmapBufferAdapter.setColorValidator(colorValidator)
-    AwtBitmapBufferAdapter.setBitmapValidator(bitmapValidator)
-
-    Bitmap.setColorValidator(colorValidator)
-    Bitmap.setBitmapValidator(bitmapValidator)
+    Bitmap.inject(
+      InjectableRegistry.IIdColorValidator -> _colorValidator,
+      InjectableRegistry.IIdBitmapValidator -> _bitmapValidator
+    )
   }
 
   /**
@@ -80,7 +107,7 @@ object Initializer extends SMCLInitializer {
     val calendarProvider = new DefaultJvmCalendarProvider()
     val uuidProvider = new DefaultJvmUniqueIdProvider()
     val fontProvider = new DefaultAwtFontProvider()
-    val imageProvider = new DefaultAwtImageProvider(new BitmapValidator())
+    val imageProvider = new DefaultAwtImageProvider(_bitmapValidator)
     val screenInfoProvider = new DefaultAwtScreenInformationProvider()
 
     val factory = new DefaultJvmAwtPlatformResourceFactory(
@@ -101,23 +128,19 @@ object Initializer extends SMCLInitializer {
    * Initialize settings specific to SMCL's JVM/AWT implementation.
    */
   private def initAwtSettings(): Unit = {
-    val settingValidatorFactory = new SettingValidatorFactory()
-
     GS += new Setting[AwtAffineTransformationInterpolationMethod.Value](
       key = AffineTransformationInterpolationMethod,
       initialValue = AwtAffineTransformationInterpolationMethod.NearestNeighbor,
-      validator = settingValidatorFactory.EmptyValidator)
+      validator = _settingValidatorFactory.EmptyValidator)
   }
 
   /**
    *
    */
   private def initSharedSettings(): Unit = {
-    val settingValidatorFactory = new SettingValidatorFactory()
-    val bitmapValidatorFunctionFactory = new BitmapValidatorFunctionFactory(new BitmapValidator())
-
     val settingInitializer = new SharedSettingInitializer(
-      settingValidatorFactory, bitmapValidatorFunctionFactory)
+      _settingValidatorFactory,
+      _bitmapValidatorFunctionFactory)
 
     settingInitializer.init()
   }

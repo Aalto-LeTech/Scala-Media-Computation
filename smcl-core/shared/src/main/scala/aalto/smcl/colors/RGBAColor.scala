@@ -18,7 +18,7 @@ package aalto.smcl.colors
 
 
 import aalto.smcl.colors
-import aalto.smcl.infrastructure.{ColorAdapter, Describable, StringUtils, _}
+import aalto.smcl.infrastructure.{ColorAdapter, Describable, _}
 
 
 
@@ -28,7 +28,12 @@ import aalto.smcl.infrastructure.{ColorAdapter, Describable, StringUtils, _}
  *
  * @author Aleksi Lukkarinen
  */
-object RGBAColor extends InjectableColorValidator {
+object RGBAColor extends InjectableRegistry {
+
+  /** The ColorValidator instance to be used by this object. */
+  private lazy val colorValidator: ColorValidator = {
+    injectable(InjectableRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
+  }
 
   /**
    *
@@ -42,12 +47,15 @@ object RGBAColor extends InjectableColorValidator {
    * @return
    */
   def apply(
-      red: Int, green: Int, blue: Int, opacity: Int,
+      red: Int,
+      green: Int,
+      blue: Int,
+      opacity: Int,
       name: Option[String] = None): RGBAColor = {
 
     colorValidator.validateRGBAColor(red, green, blue, opacity)
 
-    val resultName = colorValidator.validateColorName(name)
+    val resultName = colorValidator.validateCanonicalColorName(name)
 
     new RGBAColor(red, green, blue, opacity, resultName)
   }
@@ -60,7 +68,6 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def apply(
       rgbaTuple: (Int, Int, Int, Int),
       name: Option[String]): RGBAColor = {
@@ -76,7 +83,6 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def apply(rgbaTuple: (Int, Int, Int, Int)): RGBAColor = {
     (RGBAColor(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
   }
@@ -90,7 +96,11 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  def apply(gray: Int, opacity: Int, name: Option[String]): RGBAColor = {
+  def apply(
+      gray: Int,
+      opacity: Int,
+      name: Option[String]): RGBAColor = {
+
     RGBAColor(gray, gray, gray, opacity, name)
   }
 
@@ -102,8 +112,10 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
-  def apply(grayOpacityTuple: (Int, Int), name: Option[String]): RGBAColor = {
+  def apply(
+      grayOpacityTuple: (Int, Int),
+      name: Option[String]): RGBAColor = {
+
     (RGBAColor(_: Int, _: Int, name)).tupled.apply(grayOpacityTuple)
   }
 
@@ -117,7 +129,12 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  def apply(red: Int, green: Int, blue: Int, name: Option[String]): RGBAColor = {
+  def apply(
+      red: Int,
+      green: Int,
+      blue: Int,
+      name: Option[String]): RGBAColor = {
+
     RGBAColor(red, green, blue, ColorValidator.MaximumRGBAOpacity, name)
   }
 
@@ -130,7 +147,11 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  def apply(red: Int, green: Int, blue: Int): RGBAColor = {
+  def apply(
+      red: Int,
+      green: Int,
+      blue: Int): RGBAColor = {
+
     RGBAColor(red, green, blue, ColorValidator.MaximumRGBAOpacity)
   }
 
@@ -142,8 +163,10 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
-  def apply(rgbTuple: (Int, Int, Int), name: Option[String]): RGBAColor = {
+  def apply(
+      rgbTuple: (Int, Int, Int),
+      name: Option[String]): RGBAColor = {
+
     (RGBAColor(_: Int, _: Int, _: Int, name)).tupled.apply(rgbTuple)
   }
 
@@ -154,7 +177,6 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def apply(rgbTuple: (Int, Int, Int)): RGBAColor = {
     (RGBAColor(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
   }
@@ -168,8 +190,11 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
-  def apply(rgbTuple: (Int, Int, Int), opacity: Int, name: Option[String]): RGBAColor = {
+  def apply(
+      rgbTuple: (Int, Int, Int),
+      opacity: Int,
+      name: Option[String]): RGBAColor = {
+
     (RGBAColor(_: Int, _: Int, _: Int, opacity, name)).tupled.apply(rgbTuple)
   }
 
@@ -181,8 +206,10 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
-  def apply(rgbTuple: (Int, Int, Int), opacity: Int): RGBAColor = {
+  def apply(
+      rgbTuple: (Int, Int, Int),
+      opacity: Int): RGBAColor = {
+
     (RGBAColor(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
   }
 
@@ -194,8 +221,12 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  def apply(gray: Int, opacity: Int): RGBAColor = RGBAColor(gray, gray, gray, opacity)
+  def apply(
+      gray: Int,
+      opacity: Int): RGBAColor = {
 
+    RGBAColor(gray, gray, gray, opacity)
+  }
 
   /**
    *
@@ -204,7 +235,6 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def apply(grayOpacityTuple: (Int, Int)): RGBAColor = {
     (RGBAColor(_: Int, _: Int)).tupled.apply(grayOpacityTuple)
   }
@@ -217,7 +247,10 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  def apply(argbInt: Int, name: Option[String]): RGBAColor = {
+  def apply(
+      argbInt: Int,
+      name: Option[String]): RGBAColor = {
+
     RGBAColor(rgbaTupleFrom(argbInt), name)
   }
 
@@ -274,8 +307,12 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  def fromHSV(hueInDegrees: Double, saturation: Double, value: Double): RGBAColor = {
-    fromHsv(hueInDegrees, saturation, value, ColorValidator.MaximumRGBAOpacity)
+  def fromHSV(
+      hueInDegrees: Double,
+      saturation: Double,
+      value: Double): RGBAColor = {
+
+    fromHSV(hueInDegrees, saturation, value, ColorValidator.MaximumRGBAOpacity)
   }
 
   /**
@@ -285,9 +322,8 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def fromHSV(hsvTuple: (Double, Double, Double)): RGBAColor = {
-    (fromHsv(_: Double, _: Double, _: Double, ColorValidator.MaximumRGBAOpacity))
+    (fromHSV(_: Double, _: Double, _: Double, ColorValidator.MaximumRGBAOpacity))
         .tupled.apply(hsvTuple)
   }
 
@@ -317,7 +353,6 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def fromHSV(
       hsvTuple: (Double, Double, Double),
       name: Option[String]): RGBAColor = {
@@ -336,7 +371,7 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  def fromHsv(
+  def fromHSV(
       hueInDegrees: Double,
       saturation: Double,
       value: Double,
@@ -353,9 +388,12 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
-  def fromHSV(hsvTuple: (Double, Double, Double), opacity: Int): RGBAColor = {
-    (fromHsv(_: Double, _: Double, _: Double, opacity)).tupled.apply(hsvTuple)
+  def fromHSV(
+      hsvTuple: (Double, Double, Double),
+      opacity: Int): RGBAColor = {
+
+    (fromHSV(_: Double, _: Double, _: Double, opacity))
+        .tupled.apply(hsvTuple)
   }
 
   /**
@@ -387,7 +425,6 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def fromHSV(
       hsvTuple: (Double, Double, Double),
       opacity: Int,
@@ -406,8 +443,13 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  def fromHSI(hueInDegrees: Double, saturation: Double, intensity: Double): RGBAColor = {
-    fromHSI(hueInDegrees, saturation, intensity, ColorValidator.MaximumRGBAOpacity)
+  def fromHSI(
+      hueInDegrees: Double,
+      saturation: Double,
+      intensity: Double): RGBAColor = {
+
+    fromHSI(hueInDegrees, saturation, intensity,
+      ColorValidator.MaximumRGBAOpacity)
   }
 
   /**
@@ -417,7 +459,6 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def fromHSI(hsiTuple: (Double, Double, Double)): RGBAColor = {
     (fromHSI(_: Double, _: Double, _: Double, ColorValidator.MaximumRGBAOpacity))
         .tupled.apply(hsiTuple)
@@ -450,7 +491,6 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def fromHSI(
       hsiTuple: (Double, Double, Double),
       name: Option[String]): RGBAColor = {
@@ -487,8 +527,10 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
-  def fromHSI(hsiTuple: (Double, Double, Double), opacity: Int): RGBAColor = {
+  def fromHSI(
+      hsiTuple: (Double, Double, Double),
+      opacity: Int): RGBAColor = {
+
     (fromHSI(_: Double, _: Double, _: Double, opacity)).tupled.apply(hsiTuple)
   }
 
@@ -521,7 +563,6 @@ object RGBAColor extends InjectableColorValidator {
    *
    * @return
    */
-  //noinspection ScalaUnnecessaryParentheses
   def fromHSI(
       hsiTuple: (Double, Double, Double),
       opacity: Int,
@@ -586,7 +627,7 @@ class RGBAColor protected(
 
   /** Information about this [[aalto.smcl.bitmaps.operations.Renderable]] instance */
   lazy val describedProperties = Map(
-    "Canonical Name" -> new StringUtils().titleCase(canonicalName getOrElse StrUnnamed),
+    "Canonical Name" -> (canonicalName getOrElse StrUnnamed),
     "CSS Name" -> (cssName getOrElse StrUnnamed),
     "Red Component" -> red,
     "Green Component" -> green,
@@ -595,11 +636,14 @@ class RGBAColor protected(
   )
 
   /** */
-  lazy val toColorComponentMap: Map[Symbol, Double] = colorComponentMapFrom(this)
+  lazy val toColorComponentMap: Map[Symbol, Double] = {
+    colorComponentMapFrom(this)
+  }
 
   /** */
-  lazy val toNormalizedRGBAComponents: (Double, Double, Double, Double) =
+  lazy val toNormalizedRGBAComponents: (Double, Double, Double, Double) = {
     normalizeRGBA(red, green, blue, opacity)
+  }
 
   /** */
   lazy val toGray: RGBAColor = RGBAColor(toHSIIntensity.toInt, FullyOpaque)
@@ -638,32 +682,38 @@ class RGBAColor protected(
   lazy val isGray: Boolean = colors.isGray(this)
 
   /** */
-  lazy val keepingOnlyRedComponent: RGBAColor =
+  lazy val keepingOnlyRedComponent  : RGBAColor = {
     RGBAColor(red, ColorValidator.MinimumRGBGreen, ColorValidator.MinimumRGBBlue, FullyOpaque)
-
+  }
   /** */
-  lazy val keepingOnlyGreenComponent: RGBAColor =
+  lazy val keepingOnlyGreenComponent: RGBAColor = {
     RGBAColor(ColorValidator.MinimumRGBRed, green, ColorValidator.MinimumRGBBlue, FullyOpaque)
+  }
 
   /** */
-  lazy val keepingOnlyBlueComponent: RGBAColor =
+  lazy val keepingOnlyBlueComponent: RGBAColor = {
     RGBAColor(ColorValidator.MinimumRGBRed, ColorValidator.MinimumRGBGreen, blue, FullyOpaque)
+  }
 
   /** */
-  lazy val keepingOnlyRedAndGreenComponents: RGBAColor =
+  lazy val keepingOnlyRedAndGreenComponents: RGBAColor = {
     RGBAColor(red, green, ColorValidator.MinimumRGBBlue, FullyOpaque)
+  }
 
   /** */
-  lazy val keepingOnlyRedAndBlueComponents: RGBAColor =
+  lazy val keepingOnlyRedAndBlueComponents: RGBAColor = {
     RGBAColor(red, ColorValidator.MinimumRGBGreen, blue, FullyOpaque)
+  }
 
   /** */
-  lazy val keepingOnlyGreenAndBlueComponents: RGBAColor =
+  lazy val keepingOnlyGreenAndBlueComponents: RGBAColor = {
     RGBAColor(ColorValidator.MinimumRGBRed, green, blue, FullyOpaque)
+  }
 
   /** */
-  lazy val representingOpacityAsGreyLevel: RGBAColor =
+  lazy val representingOpacityAsGreyLevel: RGBAColor = {
     RGBAColor(opacity, opacity, opacity, FullyOpaque)
+  }
 
   /**
    *
@@ -672,8 +722,9 @@ class RGBAColor protected(
    *
    * @return
    */
-  override def compare(that: RGBAColor): Int =
+  override def compare(that: RGBAColor): Int = {
     Math.signum(that.toHSIHueInDegrees - this.toHSIHueInDegrees).toInt
+  }
 
   /**
    *
@@ -682,8 +733,9 @@ class RGBAColor protected(
    *
    * @return
    */
-  def compareByHSISaturation(that: RGBAColor): Int =
+  def compareByHSISaturation(that: RGBAColor): Int = {
     Math.signum(that.toHSISaturation - this.toHSISaturation).toInt
+  }
 
   /**
    *
@@ -692,7 +744,8 @@ class RGBAColor protected(
    *
    * @return
    */
-  def compareByHSIIntensity(that: RGBAColor): Int =
+  def compareByHSIIntensity(that: RGBAColor): Int = {
     Math.signum(that.toHSIIntensity - this.toHSIIntensity).toInt
+  }
 
 }

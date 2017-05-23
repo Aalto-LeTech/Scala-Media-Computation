@@ -32,7 +32,8 @@ private[bitmaps]
 case class ToWeightedGrayscale(
     redWeight: Double,
     greenWeight: Double,
-    blueWeight: Double)
+    blueWeight: Double,
+    private val colorValidator: ColorValidator)
     extends AbstractOperation
             with OneSourceFilter
             with Immutable {
@@ -42,7 +43,7 @@ case class ToWeightedGrayscale(
   validators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
   validators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
 
-  new ColorValidator().validateRGBColorWeightCombination(redWeight, greenWeight, blueWeight)
+  colorValidator.validateRGBColorWeightCombination(redWeight, greenWeight, blueWeight)
 
   /** First text paragraph of the description of this class. */
   val descriptionTitle: String = "ToWeightedGrayscale"

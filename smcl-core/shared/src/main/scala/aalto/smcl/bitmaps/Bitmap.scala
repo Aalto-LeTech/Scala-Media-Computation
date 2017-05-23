@@ -22,7 +22,7 @@ import scala.ref.WeakReference
 
 import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.bitmaps.operations._
-import aalto.smcl.colors.{ColorValidator, InjectableColorValidator, RGBAColor, RGBAComponentTranslationTable}
+import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, _}
 import aalto.smcl.viewers.{display => displayInViewer}
@@ -35,9 +35,17 @@ import aalto.smcl.viewers.{display => displayInViewer}
  *
  * @author Aleksi Lukkarinen
  */
-object Bitmap
-    extends InjectableBitmapValidator
-            with InjectableColorValidator {
+object Bitmap extends InjectableRegistry {
+
+  /** The ColorValidator instance to be used by this object. */
+  private lazy val colorValidator: ColorValidator = {
+    injectable(InjectableRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
+  }
+
+  /** The BitmapValidator instance to be used by this object. */
+  private lazy val bitmapValidator: BitmapValidator = {
+    injectable(InjectableRegistry.IIdBitmapValidator).asInstanceOf[BitmapValidator]
+  }
 
   /**
    * Creates a new empty [[Bitmap]] instance.
@@ -385,7 +393,13 @@ case class Bitmap private(
       blueWeight: Double,
       viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
 
-    apply(ToWeightedGrayscale(redWeight, greenWeight, blueWeight), viewerHandling)
+    apply(
+      ToWeightedGrayscale(
+        redWeight,
+        greenWeight,
+        blueWeight,
+        colorValidator),
+      viewerHandling)
   }
 
   /**

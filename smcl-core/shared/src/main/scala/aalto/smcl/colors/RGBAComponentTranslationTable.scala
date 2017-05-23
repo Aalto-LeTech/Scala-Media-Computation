@@ -27,9 +27,23 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-object RGBAComponentTranslationTable
-    extends InjectableColorValidator
-            with InjectableRGBATranslationTableValidator {
+object RGBAComponentTranslationTable extends InjectableRegistry {
+
+  /** The CommonValidators instance to be used by this object. */
+  private lazy val commonValidators: CommonValidators = {
+    injectable(InjectableRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
+  }
+
+  /** The ColorValidator instance to be used by this object. */
+  private lazy val colorValidator: ColorValidator = {
+    injectable(InjectableRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
+  }
+
+  /** The RGBATranslationTableValidator instance to be used by this object. */
+  private lazy val rgbaTranslationTableValidator: RGBATranslationTableValidator = {
+    injectable(InjectableRegistry.IIdRGBATranslationTableValidator)
+        .asInstanceOf[RGBATranslationTableValidator]
+  }
 
   /**
    *
@@ -202,7 +216,7 @@ object RGBAComponentTranslationTable
    * @return
    */
   def forPosterization(strengthAsPercentage: Int): RGBAComponentTranslationTable = {
-    new CommonValidators().validatePercentage(strengthAsPercentage, Option("Strength"))
+    commonValidators.validatePercentage(strengthAsPercentage, Option("Strength"))
 
     val divisor = strengthAsPercentage + 1
 

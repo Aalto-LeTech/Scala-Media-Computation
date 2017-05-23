@@ -157,7 +157,7 @@ object ColorValidator {
  *
  * @author Aleksi Lukkarinen
  */
-class ColorValidator() {
+class ColorValidator(private val stringUtils: StringUtils) {
 
   /**
    *
@@ -632,7 +632,7 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def validateColorName(nameCandidate: Option[String]): Option[String] = {
+  def validateCanonicalColorName(nameCandidate: Option[String]): Option[String] = {
     if (nameCandidate == null)
       throw ColorNameIsNullError
 
@@ -642,8 +642,9 @@ class ColorValidator() {
       if (name.isEmpty)
         throw ColorNameIsEmptyOrOnlyWhitespaceError
 
-      if (name != nameCandidate.get)
-        return Option(name)
+      val capitalizedName = stringUtils.titleCase(name)
+      if (capitalizedName != nameCandidate.get)
+        return Option(capitalizedName)
     }
 
     nameCandidate
