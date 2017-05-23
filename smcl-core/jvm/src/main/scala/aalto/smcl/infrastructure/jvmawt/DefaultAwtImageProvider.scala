@@ -24,7 +24,7 @@ import java.util.Locale
 import javax.imageio.stream.ImageInputStream
 import javax.imageio.{ImageIO, ImageReader}
 
-import scala.util._
+import scala.util.{Try, _}
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.bitmaps.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
@@ -66,13 +66,30 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    *
    * @return
    */
-  override def tryToLoadImagesFromFile(path: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]] =
-    Try(loadImagesFromFile(path))
+  override def tryToLoadImageFromFile(path: String): Try[BitmapBufferAdapter] = {
+    val overallLoadingResult = Try(loadImagesFromFile(path, shouldLoadOnlyFirst = true))
+    if (overallLoadingResult.isFailure)
+      return Failure(overallLoadingResult.failed.get)
+
+    overallLoadingResult.get.head
+  }
 
   /**
    *
    *
    * @param path
+   *
+   * @return
+   */
+  override def tryToLoadImagesFromFile(path: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+    Try(loadImagesFromFile(path, shouldLoadOnlyFirst = false))
+  }
+
+  /**
+   *
+   *
+   * @param path
+   * @param shouldLoadOnlyFirst
    *
    * @return
    *
@@ -91,7 +108,10 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    * @throws SuitableImageReaderNotFoundError
    * @throws ImageReaderNotRetrievedError
    */
-  private def loadImagesFromFile(path: String): Seq[Either[Throwable, BitmapBufferAdapter]] = {
+  private def loadImagesFromFile(
+      path: String,
+      shouldLoadOnlyFirst: Boolean): Seq[Try[BitmapBufferAdapter]] = {
+
     val (imageFile, imagePath, imageExtension) =
       ensureThatImageFileIsReadableAndSupported(path)
 
@@ -100,7 +120,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
 
       try {
         reader.setInput(inputStream)
-        loadImagesFromReader(reader, imagePath)
+        loadImagesFromReader(reader, imagePath, shouldLoadOnlyFirst)
       }
       finally {
         if (reader != null)
@@ -111,73 +131,65 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
 
   /**
    *
-   *
-   * @param filePath
    * @param reader
+   * @param filePath
+   * @param shouldLoadOnlyFirst
    *
    * @return
    */
   private def loadImagesFromReader(
       reader: ImageReader,
-      filePath: String): Seq[Either[Throwable, BitmapBufferAdapter]] = {
+      filePath: String,
+      shouldLoadOnlyFirst: Boolean): Seq[Try[BitmapBufferAdapter]] = {
 
     val WithSearchingAllowed = true
-    val lastImageIndex = reader.getMinIndex + reader.getNumImages(WithSearchingAllowed) - 1
-    val imageNumberRange = reader.getMinIndex to lastImageIndex
+    val firstImageIndex = reader.getMinIndex
 
-    imageNumberRange.map(loadSingleImageFromReader(_, reader, filePath))
+    if (shouldLoadOnlyFirst) {
+      Seq(loadSingleImageFromReader(firstImageIndex, reader, filePath))
+    }
+    else {
+      val lastImageIndex = firstImageIndex + reader.getNumImages(WithSearchingAllowed) - 1
+      val imageNumberRange = firstImageIndex to lastImageIndex
+
+      imageNumberRange.map(loadSingleImageFromReader(_, reader, filePath))
+    }
   }
 
   /**
    *
    *
-   * @param currentImageIndex
+   * @param imageIndex
    * @param reader
    * @param filePath
    *
    * @return
    */
   private def loadSingleImageFromReader(
-      currentImageIndex: Int,
+      imageIndex: Int,
       reader: ImageReader,
-      filePath: String): Either[Throwable, BitmapBufferAdapter] = {
+      filePath: String): Try[BitmapBufferAdapter] = for {
 
-    val width = Try(reader.getWidth(currentImageIndex)).recover({
-      case e: IOException => return Left(e)
-    }).get
+    width <- Try(reader.getWidth(imageIndex))
+    height <- Try(reader.getHeight(imageIndex))
 
-    val height = Try(reader.getHeight(currentImageIndex)).recover({
-      case e: IOException => return Left(e)
-    }).get
-
-    if (bitmapValidator.maximumSizeLimitsAreExceeded(width, height)) {
-      val newThrowable =
-        new MaximumBitmapSizeExceededError(
+    _ = {
+      if (bitmapValidator.maximumSizeLimitsAreExceeded(width, height))
+        throw MaximumBitmapSizeExceededError(
           Option(width), Option(height),
-          Option(filePath), Option(currentImageIndex), bitmapValidator)
+          Option(filePath), Option(imageIndex),
+          bitmapValidator)
 
-      return Left(newThrowable)
+      if (bitmapValidator.minimumSizeLimitsAreNotMet(width, height))
+        throw MinimumBitmapSizeNotMetError(
+          Option(width), Option(height),
+          Option(filePath), Option(imageIndex),
+          bitmapValidator)
     }
 
-    if (bitmapValidator.minimumSizeLimitsAreNotMet(width, height)) {
-      val newThrowable =
-        new MinimumBitmapSizeNotMetError(
-          Option(width), Option(height),
-          Option(filePath), Option(currentImageIndex), bitmapValidator)
+    readImage <- Try(reader.read(imageIndex))
 
-      return Left(newThrowable)
-    }
-
-    val readImage = Try(reader.read(currentImageIndex)).recover({
-      case e: IOException => return Left(e)
-    }).get
-
-    val platformBitmapBuffer = Try(AwtBitmapBufferAdapter(readImage)).recover({
-      case t: Throwable => return Left(t)
-    }).get
-
-    Right(platformBitmapBuffer)
-  }
+  } yield AwtBitmapBufferAdapter(readImage)
 
   /**
    *
@@ -190,9 +202,10 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    * @throws ImageInputStreamNotCreatedError
    */
   private def createImageInputStreamFor(imageFile: File): ImageInputStream = {
-    val inputStream = Try[ImageInputStream](ImageIO.createImageInputStream(imageFile)).recover({
-      case e: IOException => throw ImageInputStreamNotCreatedError(e)
-    }).get
+    val inputStream =
+      Try(ImageIO.createImageInputStream(imageFile)).recover({
+        case e: IOException => throw ImageInputStreamNotCreatedError(e)
+      }).get
 
     if (inputStream == null)
       throw SuitableImageStreamProviderNotFoundError
@@ -210,7 +223,9 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    * @throws SuitableImageReaderNotFoundError
    * @throws ImageReaderNotRetrievedError
    */
-  private def findSuitableImageReaderFor(inputStream: ImageInputStream): ImageReader = {
+  private def findSuitableImageReaderFor(
+      inputStream: ImageInputStream): ImageReader = {
+
     val imageReaders = ImageIO.getImageReaders(inputStream)
     if (!imageReaders.hasNext)
       throw SuitableImageReaderNotFoundError
@@ -238,20 +253,22 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
    * @throws FileNotFoundError
    * @throws EmptyFileError
    */
-  private def ensureThatImageFileIsReadableAndSupported(filePath: String): (File, String, String) = {
+  private def ensureThatImageFileIsReadableAndSupported(
+      filePath: String): (File, String, String) = {
+
     if (filePath == null)
       throw PathIsNullError
 
-    val trimmedPathstring = filePath.trim
-    if (trimmedPathstring.isEmpty)
+    val trimmedPathString = filePath.trim
+    if (trimmedPathString.isEmpty)
       throw PathIsEmptyOrOnlyWhitespaceError
 
-    val imageFile = new File(trimmedPathstring)
+    val imageFile = new File(trimmedPathString)
     val imageFilePath = imageFile.toPath
 
     val fileAttributes: BasicFileAttributes =
       Try(Files.readAttributes(imageFilePath, classOf[BasicFileAttributes])).recover({
-        case e: NoSuchFileException => throw FileNotFoundError(trimmedPathstring, e)
+        case e: NoSuchFileException => throw FileNotFoundError(trimmedPathString, e)
         case other: Throwable       => throw FileAttributeRetrievalFailedError(other)
       }).get
 
@@ -259,12 +276,12 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
       fileAttributes.isDirectory -> PathPointsToFolderError,
       fileAttributes.isSymbolicLink -> PathPointsToSymbolicLinkError,
       !fileAttributes.isRegularFile -> PathDoesNotPointToRegularFileError,
-      !Files.exists(imageFilePath) -> FileNotFoundError(trimmedPathstring),
+      !Files.exists(imageFilePath) -> FileNotFoundError(trimmedPathString),
       (fileAttributes.size <= 0) -> EmptyFileError
-    ).find(_._1) map { pair => throw pair._2 }
+    ).find(_._1) map {pair => throw pair._2}
 
     val fileExtension: String = new CommonFileUtils().resolveExtensionOf(imageFile.getName)
-    if (supportedReadableFileExtensions.contains(fileExtension))
+    if (!supportedReadableFileExtensions.contains(fileExtension))
       throw UnknownFileExtensionError(
         fileExtension, supportedReadableFileExtensions)
 

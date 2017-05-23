@@ -89,33 +89,24 @@ object Bitmap extends InjectableRegistry {
    */
   def apply(
       sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle.Value): BitmapLoadingResult = {
+      viewerHandling: ViewerUpdateStyle.Value): Bitmap = {
 
     // The ImageProvider is trusted with validation of the source resource path.
-    val loadedBuffersTry = PRF.tryToLoadImagesFromPath(sourceResourcePath)
-    if (loadedBuffersTry.isFailure)
-      throw loadedBuffersTry.failed.get
+    val loadedBufferTry = PRF.tryToLoadImageFromPath(sourceResourcePath)
+    if (loadedBufferTry.isFailure)
+      throw loadedBufferTry.failed.get
 
-    val bitmapsOrThrowables: collection.Seq[Either[(Int, Throwable), (Int, Bitmap)]] =
-      loadedBuffersTry.get.zipWithIndex map {
-        case (Left(throwable), index) =>
-          Left((index, throwable))
+    val operationList = BitmapOperationList(
+      LoadedBitmap(loadedBufferTry.get, Option(sourceResourcePath), Option(0)))
+    val newBitmap = new Bitmap(
+      operationList, bitmapValidator, colorValidator, Identity())
 
-        case (Right(buffer), index) =>
-          val operationList = BitmapOperationList(
-            LoadedBitmap(buffer, Option(sourceResourcePath), Option(index)))
-          val newBitmap = new Bitmap(
-            operationList, bitmapValidator, colorValidator, Identity())
+    if (viewerHandling == UpdateViewerPerDefaults) {
+      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+        newBitmap.display()
+    }
 
-          if (viewerHandling == UpdateViewerPerDefaults) {
-            if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
-              newBitmap.display()
-          }
-
-          Right((index, newBitmap))
-      }
-
-    BitmapLoadingResult(bitmapsOrThrowables)
+    newBitmap
   }
 
   /**
@@ -125,7 +116,7 @@ object Bitmap extends InjectableRegistry {
    *
    * @return
    */
-  def apply(sourceResourcePath: String): BitmapLoadingResult = {
+  def apply(sourceResourcePath: String): Bitmap = {
     apply(sourceResourcePath, UpdateViewerPerDefaults)
   }
 
@@ -143,7 +134,7 @@ object Bitmap extends InjectableRegistry {
  *
  * @author Aleksi Lukkarinen
  */
-case class Bitmap private(
+case class Bitmap private[bitmaps](
     private[bitmaps] val operations: BitmapOperationList,
     private val bitmapValidator: BitmapValidator,
     private val colorValidator: ColorValidator,

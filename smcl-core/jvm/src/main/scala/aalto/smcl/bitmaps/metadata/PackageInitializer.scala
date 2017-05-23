@@ -60,9 +60,6 @@ class PackageInitializer {
 
       PresetRGBAColor(0, Option("<dummy>")).getClass -> rgbaColorProvider,
 
-      new BitmapLoadingResult(Seq(Right((0, null)))).getClass ->
-        new BitmapLoadingResultMetadataInterfaceSourceProvider(),
-
       classOf[GenTraversableLike[_, _]] -> new GenTraversableLikeMetadataInterfaceSourceProvider()
     )
 

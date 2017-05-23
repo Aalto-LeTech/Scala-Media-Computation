@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure.jvmawt
 
 
-import scala.util.{Either, Try}
+import scala.util.Try
 
 import aalto.smcl.infrastructure.BitmapBufferAdapter
 
@@ -36,6 +36,15 @@ trait AwtImageProvider {
    *
    * @return
    */
-  def tryToLoadImagesFromFile(path: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]]
+  def tryToLoadImageFromFile(path: String): Try[BitmapBufferAdapter]
+
+  /**
+   *
+   *
+   * @param path
+   *
+   * @return
+   */
+  def tryToLoadImagesFromFile(path: String): Try[Seq[Try[BitmapBufferAdapter]]]
 
 }

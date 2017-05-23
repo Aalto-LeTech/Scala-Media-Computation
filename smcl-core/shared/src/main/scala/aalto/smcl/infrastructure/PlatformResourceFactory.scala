@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure
 
 
-import scala.util.{Either, Try}
+import scala.util.Try
 
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.interfaces.Timestamp
@@ -93,6 +93,15 @@ trait PlatformResourceFactory {
    *
    * @return
    */
-  def tryToLoadImagesFromPath(sourceResourcePath: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]]
+  def tryToLoadImagesFromPath(sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  def tryToLoadImageFromPath(sourceResourcePath: String): Try[BitmapBufferAdapter]
 
 }

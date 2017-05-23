@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure.jvmawt
 
 import java.util.Calendar
 
-import scala.util.{Either, Try}
+import scala.util.Try
 
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure._
@@ -38,14 +38,17 @@ class DefaultJvmAwtPlatformResourceFactory(
     uuidProvider: JvmUniqueIdProvider,
     fontProvider: AwtFontProvider,
     imageProvider: AwtImageProvider,
-    val screenInformationProvider: ScreenInformationProvider) extends PlatformResourceFactory {
+    val screenInformationProvider: ScreenInformationProvider)
+    extends PlatformResourceFactory {
 
   /**
    *
    *
    * @return
    */
-  override def availableFonts: Seq[String] = fontProvider.availableFonts map {_.getFontName}
+  override def availableFonts: Seq[String] = {
+    fontProvider.availableFonts map {_.getFontName}
+  }
 
 
   /**
@@ -72,7 +75,9 @@ class DefaultJvmAwtPlatformResourceFactory(
    *
    * @return
    */
-  override def createPlatformAffineTransformation: AffineTransformationAdapter = AwtAffineTransformationAdapter()
+  override def createPlatformAffineTransformation: AffineTransformationAdapter = {
+    AwtAffineTransformationAdapter()
+  }
 
   /**
    *
@@ -82,22 +87,30 @@ class DefaultJvmAwtPlatformResourceFactory(
    *
    * @return
    */
-  def createPlatformBitmapBuffer(widthInPixels: Int, heightInPixels: Int): BitmapBufferAdapter =
+  def createPlatformBitmapBuffer(
+      widthInPixels: Int,
+      heightInPixels: Int): BitmapBufferAdapter = {
+
     AwtBitmapBufferAdapter(widthInPixels, heightInPixels)
+  }
 
   /**
    *
    *
    * @return
    */
-  override def createPlatformColor(source: RGBAColor): ColorAdapter = AwtColorAdapter(source)
+  override def createPlatformColor(source: RGBAColor): ColorAdapter = {
+    AwtColorAdapter(source)
+  }
 
   /**
    *
    *
    * @return
    */
-  override def createUniqueIdString: String = uuidProvider.newId
+  override def createUniqueIdString: String = {
+    uuidProvider.newId
+  }
 
   /**
    *
@@ -106,8 +119,23 @@ class DefaultJvmAwtPlatformResourceFactory(
    *
    * @return
    */
-  // TODO: A terrible return type --> Redesign!!
-  override def tryToLoadImagesFromPath(sourceResourcePath: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]] =
-  imageProvider.tryToLoadImagesFromFile(sourceResourcePath)
+  override def tryToLoadImagesFromPath(
+      sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    imageProvider.tryToLoadImagesFromFile(sourceResourcePath)
+  }
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  override def tryToLoadImageFromPath(
+      sourceResourcePath: String): Try[BitmapBufferAdapter] = {
+
+    imageProvider.tryToLoadImageFromFile(sourceResourcePath)
+  }
 
 }

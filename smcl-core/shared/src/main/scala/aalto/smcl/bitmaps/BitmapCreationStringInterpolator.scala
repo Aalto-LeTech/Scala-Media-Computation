@@ -29,16 +29,30 @@ class BitmapCreationStringInterpolator(val sc: StringContext)
 
 
   /**
-   * Loads bitmaps from a file.
+   * Loads a bitmap from a file.
    *
    * @param args path to the image file to be loaded
    *
    * @return
    */
-  def bmpf(args: Any*): BitmapLoadingResult = {
+  def bmpf(args: Any*): Bitmap = {
     val pathStringCandidate = sc.standardInterpolator(StringContext.processEscapes, args)
 
     Bitmap(pathStringCandidate)
+  }
+
+
+  /**
+   * Loads all bitmaps from a file.
+   *
+   * @param args path to the image file to be loaded
+   *
+   * @return
+   */
+  def bmpsf(args: Any*): Seq[Bitmap] = {
+    val pathStringCandidate = sc.standardInterpolator(StringContext.processEscapes, args)
+
+    Bitmaps(pathStringCandidate)
   }
 
 }

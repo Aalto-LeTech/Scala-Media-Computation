@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure
 
 
-import scala.util.{Either, Try}
+import scala.util.Try
 
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
@@ -42,23 +42,27 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def availableFonts: Seq[String] = implementation.availableFonts
+  override def availableFonts: Seq[String] = {
+    implementation.availableFonts
+  }
 
   /**
    *
    *
    * @return
    */
-  override def createCurrentTimestamp: Timestamp =
+  override def createCurrentTimestamp: Timestamp = {
     implementation.createCurrentTimestamp
+  }
 
   /**
    *
    *
    * @return
    */
-  override def createPlatformAffineTransformation: AffineTransformationAdapter =
+  override def createPlatformAffineTransformation: AffineTransformationAdapter = {
     implementation.createPlatformAffineTransformation
+  }
 
   /**
    *
@@ -68,16 +72,21 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def createPlatformBitmapBuffer(widthInPixels: Int, heightInPixels: Int): BitmapBufferAdapter =
+  override def createPlatformBitmapBuffer(
+      widthInPixels: Int,
+      heightInPixels: Int): BitmapBufferAdapter = {
+
     implementation.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+  }
 
   /**
    *
    *
    * @return
    */
-  override def createPlatformColor(source: RGBAColor): ColorAdapter =
+  override def createPlatformColor(source: RGBAColor): ColorAdapter = {
     implementation.createPlatformColor(source)
+  }
 
 
   /**
@@ -85,15 +94,18 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def createUniqueIdString: String = implementation.createUniqueIdString
+  override def createUniqueIdString: String = {
+    implementation.createUniqueIdString
+  }
 
   /**
    *
    *
    * @return
    */
-  override def screenInformationProvider: ScreenInformationProvider =
+  override def screenInformationProvider: ScreenInformationProvider = {
     implementation.screenInformationProvider
+  }
 
   /**
    *
@@ -102,23 +114,42 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def tryToLoadImagesFromPath(sourceResourcePath: String): Try[Seq[Either[Throwable, BitmapBufferAdapter]]] =
+  override def tryToLoadImageFromPath(
+      sourceResourcePath: String): Try[BitmapBufferAdapter] = {
+
+    implementation.tryToLoadImageFromPath(sourceResourcePath)
+  }
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  override def tryToLoadImagesFromPath(
+      sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
     implementation.tryToLoadImagesFromPath(sourceResourcePath)
+  }
 
   /**
    *
    *
    * @param factoryImplementation
    */
-  def setImplementation(factoryImplementation: PlatformResourceFactory): Unit =
+  def setImplementation(factoryImplementation: PlatformResourceFactory): Unit = {
     _implementation = Some(factoryImplementation)
+  }
 
   /**
    *
    *
    * @return
    */
-  private def implementation: PlatformResourceFactory =
-    _implementation.getOrElse(throw ImplementationNotSetError("DefaultPlatformResourceFactory"))
+  private def implementation: PlatformResourceFactory = {
+    _implementation.getOrElse(
+      throw ImplementationNotSetError("DefaultPlatformResourceFactory"))
+  }
 
 }
