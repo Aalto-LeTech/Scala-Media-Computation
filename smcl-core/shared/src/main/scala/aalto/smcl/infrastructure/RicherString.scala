@@ -22,11 +22,11 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-object RicherString extends InjectableRegistry {
+object RicherString extends InjectablesRegistry {
 
   /** The StringUtils instance to be used by this object. */
   private lazy val stringUtils: StringUtils = {
-    injectable(InjectableRegistry.IIdStringUtils).asInstanceOf[StringUtils]
+    injectable(InjectablesRegistry.IIdStringUtils).asInstanceOf[StringUtils]
   }
 
   /**

@@ -40,19 +40,19 @@ import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColo
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object AwtBitmapBufferAdapter extends InjectableRegistry {
+object AwtBitmapBufferAdapter extends InjectablesRegistry {
 
   /** A constant for buffer of a 'normalized' type. */
   val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB
 
   /** The ColorValidator instance to be used by this object. */
   private lazy val colorValidator: ColorValidator = {
-    injectable(InjectableRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
+    injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
   }
 
   /** The BitmapValidator instance to be used by this object. */
   private lazy val bitmapValidator: BitmapValidator = {
-    injectable(InjectableRegistry.IIdBitmapValidator).asInstanceOf[BitmapValidator]
+    injectable(InjectablesRegistry.IIdBitmapValidator).asInstanceOf[BitmapValidator]
   }
 
   /**

@@ -17,8 +17,6 @@
 package aalto.smcl.infrastructure
 
 
-import scala.collection.mutable
-
 import aalto.smcl.infrastructure.exceptions.{ImplementationNotSetError, InjectableNotInjectedError}
 
 
@@ -29,7 +27,7 @@ import aalto.smcl.infrastructure.exceptions.{ImplementationNotSetError, Injectab
  *
  * @author Aleksi Lukkarinen
  */
-object InjectableRegistry {
+object InjectablesRegistry {
 
   /** Injectable ID for the StringUtils class. */
   val IIdStringUtils = "StringUtils"
@@ -56,13 +54,13 @@ object InjectableRegistry {
  *
  * @author Aleksi Lukkarinen
  */
-trait InjectableRegistry {
+trait InjectablesRegistry {
 
   /** Map for the injectables to be used by this object. */
-  private val _injectableRegistry = mutable.Map[String, Any]()
+  private var injectablesRegistry: Map[String, Any] = Map()
 
   /**
-   * Returns an object previously injected into this object.
+   * Returns an object from the previously-set injectables registry.
    *
    * @param id
    *
@@ -71,32 +69,21 @@ trait InjectableRegistry {
    * @throws ImplementationNotSetError
    */
   protected def injectable(id: String): Any = {
-    _injectableRegistry.getOrElse(id, throw InjectableNotInjectedError(id))
+    injectablesRegistry.getOrElse(id,
+      throw InjectableNotInjectedError(id))
   }
 
   /**
-   * Injects objects to be used by this object.
+   * Sets the injectable object registry to be used by this object.
    *
-   * @param content
+   * @param registryToUse
    */
   private[smcl]
-  def inject(content: (String, Any)*): Unit = {
-    for ((id, injectable) <- content) {
-      require(injectable != null,
-        "The injectable object instance must be given (was null)")
+  def setInjectables(registryToUse: Map[String, Any]): Unit = {
+    require(registryToUse != null,
+      "The injectable registry must be given (was null)")
 
-      require(id != null,
-        "The injectable id must be given (was null)")
-
-      val trimmedId = id.trim
-      require(trimmedId.nonEmpty,
-        "The injectable id must not be empty or contain only white space.")
-
-      require(!_injectableRegistry.contains(trimmedId),
-        s"The given injectable id ($trimmedId) is injected already.")
-
-      _injectableRegistry += (trimmedId -> injectable)
-    }
+    injectablesRegistry = registryToUse
   }
 
 }

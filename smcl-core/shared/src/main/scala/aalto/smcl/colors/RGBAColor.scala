@@ -28,11 +28,11 @@ import aalto.smcl.infrastructure.{ColorAdapter, Describable, _}
  *
  * @author Aleksi Lukkarinen
  */
-object RGBAColor extends InjectableRegistry {
+object RGBAColor extends InjectablesRegistry {
 
   /** The ColorValidator instance to be used by this object. */
   private lazy val colorValidator: ColorValidator = {
-    injectable(InjectableRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
+    injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
   }
 
   /**

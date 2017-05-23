@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure.jvmawt
 
 import aalto.smcl.bitmaps.{Bitmap, BitmapValidator, Bitmaps}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable, RGBATranslationTableValidator, RichRGBAColor}
-import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, InjectableRegistry, RicherString, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer, StringUtils}
+import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, InjectablesRegistry, RicherString, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer, StringUtils}
 
 
 
@@ -32,29 +32,29 @@ import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidato
 object Initializer extends SMCLInitializer {
 
   /** */
-  val _stringUtils = new StringUtils()
+  private val stringUtils = new StringUtils()
 
   /** */
-  val _settingValidatorFactory = new SettingValidatorFactory()
+  private val settingValidatorFactory = new SettingValidatorFactory()
 
   /** */
-  val _commonValidators = new CommonValidators()
+  private val commonValidators = new CommonValidators()
 
   /** */
-  val _colorValidator = new ColorValidator()
+  private val colorValidator = new ColorValidator()
 
   /** */
-  val _rgbaTranslationTableValidator =
-    new RGBATranslationTableValidator(_colorValidator)
+  private val rgbaTranslationTableValidator =
+    new RGBATranslationTableValidator(colorValidator)
 
   /** */
-  val _bitmapValidator = new BitmapValidator()
+  private val bitmapValidator = new BitmapValidator()
 
   /** */
-  val _bitmapValidatorFunctionFactory =
+  private val bitmapValidatorFunctionFactory =
     new BitmapValidatorFunctionFactory(
-      _settingValidatorFactory,
-      _bitmapValidator)
+      settingValidatorFactory,
+      bitmapValidator)
 
   /**
    * Initialize SMCL.
@@ -76,39 +76,27 @@ object Initializer extends SMCLInitializer {
    * Inject dependencies to miscellaneous objects.
    */
   private def injectMiscellaneousDependencies(): Unit = {
-    RicherString.inject(
-      InjectableRegistry.IIdStringUtils -> _stringUtils
+    val registry = Map[String, Any](
+      InjectablesRegistry.IIdStringUtils -> stringUtils,
+      InjectablesRegistry.IIdCommonValidators -> commonValidators,
+      InjectablesRegistry.IIdColorValidator -> colorValidator,
+      InjectablesRegistry.IIdRGBATranslationTableValidator -> rgbaTranslationTableValidator,
+      InjectablesRegistry.IIdBitmapValidator -> bitmapValidator
     )
 
-    RGBAColor.inject(
-      InjectableRegistry.IIdColorValidator -> _colorValidator
+    val injectionTargets: Seq[InjectablesRegistry] = Seq(
+      RicherString,
+      RGBAColor,
+      RichRGBAColor,
+      RGBAComponentTranslationTable,
+      AwtBitmapBufferAdapter,
+      Bitmap,
+      Bitmaps
     )
 
-    RichRGBAColor.inject(
-      InjectableRegistry.IIdColorValidator -> _colorValidator,
-      InjectableRegistry.IIdCommonValidators -> _commonValidators
-    )
-
-    RGBAComponentTranslationTable.inject(
-      InjectableRegistry.IIdCommonValidators -> _commonValidators,
-      InjectableRegistry.IIdColorValidator -> _colorValidator,
-      InjectableRegistry.IIdRGBATranslationTableValidator -> _rgbaTranslationTableValidator
-    )
-
-    AwtBitmapBufferAdapter.inject(
-      InjectableRegistry.IIdColorValidator -> _colorValidator,
-      InjectableRegistry.IIdBitmapValidator -> _bitmapValidator
-    )
-
-    Bitmap.inject(
-      InjectableRegistry.IIdColorValidator -> _colorValidator,
-      InjectableRegistry.IIdBitmapValidator -> _bitmapValidator
-    )
-
-    Bitmaps.inject(
-      InjectableRegistry.IIdColorValidator -> _colorValidator,
-      InjectableRegistry.IIdBitmapValidator -> _bitmapValidator
-    )
+    injectionTargets foreach {
+      _.setInjectables(registry)
+    }
   }
 
   /**
@@ -118,7 +106,7 @@ object Initializer extends SMCLInitializer {
     val calendarProvider = new DefaultJvmCalendarProvider()
     val uuidProvider = new DefaultJvmUniqueIdProvider()
     val fontProvider = new DefaultAwtFontProvider()
-    val imageProvider = new DefaultAwtImageProvider(_bitmapValidator)
+    val imageProvider = new DefaultAwtImageProvider(bitmapValidator)
     val screenInfoProvider = new DefaultAwtScreenInformationProvider()
 
     val factory = new DefaultJvmAwtPlatformResourceFactory(
@@ -142,7 +130,7 @@ object Initializer extends SMCLInitializer {
     GS += new Setting[AwtAffineTransformationInterpolationMethod.Value](
       key = AffineTransformationInterpolationMethod,
       initialValue = AwtAffineTransformationInterpolationMethod.NearestNeighbor,
-      validator = _settingValidatorFactory.EmptyValidator)
+      validator = settingValidatorFactory.EmptyValidator)
   }
 
   /**
@@ -150,8 +138,8 @@ object Initializer extends SMCLInitializer {
    */
   private def initSharedSettings(): Unit = {
     val settingInitializer = new SharedSettingInitializer(
-      _settingValidatorFactory,
-      _bitmapValidatorFunctionFactory)
+      settingValidatorFactory,
+      bitmapValidatorFunctionFactory)
 
     settingInitializer.init()
   }

@@ -17,7 +17,7 @@
 package aalto.smcl.colors
 
 
-import aalto.smcl.infrastructure.{CommonValidators, InjectableRegistry}
+import aalto.smcl.infrastructure.{CommonValidators, InjectablesRegistry}
 
 
 
@@ -27,16 +27,16 @@ import aalto.smcl.infrastructure.{CommonValidators, InjectableRegistry}
  *
  * @author Aleksi Lukkarinen
  */
-object RichRGBAColor extends InjectableRegistry {
+object RichRGBAColor extends InjectablesRegistry {
 
   /** The ColorValidator instance to be used by this object. */
   private lazy val colorValidator: ColorValidator = {
-    injectable(InjectableRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
+    injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
   }
 
   /** The CommonValidators instance to be used by this object. */
   private lazy val commonValidators: CommonValidators = {
-    injectable(InjectableRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
+    injectable(InjectablesRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
   }
 
   /**

@@ -27,21 +27,21 @@ import aalto.smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-object RGBAComponentTranslationTable extends InjectableRegistry {
+object RGBAComponentTranslationTable extends InjectablesRegistry {
 
   /** The CommonValidators instance to be used by this object. */
   private lazy val commonValidators: CommonValidators = {
-    injectable(InjectableRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
+    injectable(InjectablesRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
   }
 
   /** The ColorValidator instance to be used by this object. */
   private lazy val colorValidator: ColorValidator = {
-    injectable(InjectableRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
+    injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
   }
 
   /** The RGBATranslationTableValidator instance to be used by this object. */
   private lazy val rgbaTranslationTableValidator: RGBATranslationTableValidator = {
-    injectable(InjectableRegistry.IIdRGBATranslationTableValidator)
+    injectable(InjectablesRegistry.IIdRGBATranslationTableValidator)
         .asInstanceOf[RGBATranslationTableValidator]
   }
 
