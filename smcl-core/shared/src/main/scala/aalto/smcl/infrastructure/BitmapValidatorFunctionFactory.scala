@@ -28,11 +28,9 @@ import aalto.smcl.bitmaps.BitmapValidator
  * @author Aleksi Lukkarinen
  */
 private[infrastructure]
-class BitmapValidatorFunctionFactory(bitmapValidator: BitmapValidator) {
-
-  /** */
-  private val _settingValidatorFactory = new SettingValidatorFactory()
-
+class BitmapValidatorFunctionFactory(
+    private val settingValidatorFactory: SettingValidatorFactory,
+    private val bitmapValidator: BitmapValidator) {
 
   /**
    *
@@ -41,10 +39,10 @@ class BitmapValidatorFunctionFactory(bitmapValidator: BitmapValidator) {
    */
   // @formatter:off
   def BitmapWidthValidator(): Int => Option[Throwable] =
-    _settingValidatorFactory.conditionFalseValidator[Int](
+    settingValidatorFactory.conditionFalseValidator[Int](
     { width => bitmapValidator.minimumWidthIsNotMet(width) || bitmapValidator.maximumWidthIsExceeded(width) },
-    s"Bitmap width must be between ${bitmapValidator.MinimumBitmapHeightInPixels} " +
-      s"and ${bitmapValidator.MaximumBitmapWidthInPixels} pixels")
+    s"Bitmap width must be between ${BitmapValidator.MinimumBitmapHeightInPixels} " +
+      s"and ${BitmapValidator.MaximumBitmapWidthInPixels} pixels")
 
   // @formatter:on
 
@@ -55,10 +53,10 @@ class BitmapValidatorFunctionFactory(bitmapValidator: BitmapValidator) {
    */
   // @formatter:off
   def BitmapHeightValidator(): Int => Option[Throwable] =
-    _settingValidatorFactory.conditionFalseValidator[Int](
+    settingValidatorFactory.conditionFalseValidator[Int](
     { height => bitmapValidator.minimumHeightIsNotMet(height) || bitmapValidator.maximumHeightIsExceeded(height) },
-    s"Bitmap height must be between ${bitmapValidator.MinimumBitmapHeightInPixels} " +
-      s"and ${bitmapValidator.MaximumBitmapHeightInPixels} pixels")
+    s"Bitmap height must be between ${BitmapValidator.MinimumBitmapHeightInPixels} " +
+      s"and ${BitmapValidator.MaximumBitmapHeightInPixels} pixels")
 
   // @formatter:on
 

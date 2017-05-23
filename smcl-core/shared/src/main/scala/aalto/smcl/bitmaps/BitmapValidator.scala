@@ -28,7 +28,7 @@ import aalto.smcl.infrastructure.{BitmapHeightWarningLimitInPixels, BitmapWidthW
  *
  * @author Aleksi Lukkarinen
  */
-class BitmapValidator private[smcl]() {
+object BitmapValidator {
 
   /** */
   val MinimumBitmapWidthInPixels: Int = 1
@@ -42,6 +42,18 @@ class BitmapValidator private[smcl]() {
   /** */
   val MaximumBitmapHeightInPixels: Int = 65000
 
+}
+
+
+
+
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
+class BitmapValidator private[smcl]() {
+
 
   /**
    *
@@ -52,7 +64,7 @@ class BitmapValidator private[smcl]() {
    */
   @inline
   def minimumWidthIsNotMet(actualWidthInPixels: Int): Boolean = {
-    actualWidthInPixels < MinimumBitmapHeightInPixels
+    actualWidthInPixels < BitmapValidator.MinimumBitmapHeightInPixels
   }
 
   /**
@@ -64,7 +76,7 @@ class BitmapValidator private[smcl]() {
    */
   @inline
   def minimumHeightIsNotMet(actualHeightInPixels: Int): Boolean = {
-    actualHeightInPixels < MinimumBitmapHeightInPixels
+    actualHeightInPixels < BitmapValidator.MinimumBitmapHeightInPixels
   }
 
   /**
@@ -76,7 +88,7 @@ class BitmapValidator private[smcl]() {
    */
   @inline
   def maximumWidthIsExceeded(actualWidthInPixels: Int): Boolean = {
-    actualWidthInPixels > MaximumBitmapHeightInPixels
+    actualWidthInPixels > BitmapValidator.MaximumBitmapHeightInPixels
   }
 
   /**
@@ -88,7 +100,7 @@ class BitmapValidator private[smcl]() {
    */
   @inline
   def maximumHeightIsExceeded(actualHeightInPixels: Int): Boolean = {
-    actualHeightInPixels > MaximumBitmapHeightInPixels
+    actualHeightInPixels > BitmapValidator.MaximumBitmapHeightInPixels
   }
 
   /**
@@ -123,8 +135,12 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
-  def minimumSizeLimitsAreNotMet(actualWidthInPixels: Int, actualHeightInPixels: Int): Boolean = {
-    minimumWidthIsNotMet(actualWidthInPixels) || minimumHeightIsNotMet(actualHeightInPixels)
+  def minimumSizeLimitsAreNotMet(
+      actualWidthInPixels: Int,
+      actualHeightInPixels: Int): Boolean = {
+
+    (minimumWidthIsNotMet(actualWidthInPixels)
+        || minimumHeightIsNotMet(actualHeightInPixels))
   }
 
   /**
@@ -136,8 +152,12 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
-  def maximumSizeLimitsAreExceeded(actualWidthInPixels: Int, actualHeightInPixels: Int): Boolean = {
-    maximumWidthIsExceeded(actualWidthInPixels) || maximumHeightIsExceeded(actualHeightInPixels)
+  def maximumSizeLimitsAreExceeded(
+      actualWidthInPixels: Int,
+      actualHeightInPixels: Int): Boolean = {
+
+    (maximumWidthIsExceeded(actualWidthInPixels)
+        || maximumHeightIsExceeded(actualHeightInPixels))
   }
 
   /**
@@ -149,8 +169,12 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
-  def warningSizeLimitsAreExceeded(actualWidthInPixels: Int, actualHeightInPixels: Int): Boolean = {
-    warningWidthLimitIsExceeded(actualWidthInPixels) && warningHeightLimitIsExceeded(actualHeightInPixels)
+  def warningSizeLimitsAreExceeded(
+      actualWidthInPixels: Int,
+      actualHeightInPixels: Int): Boolean = {
+
+    (warningWidthLimitIsExceeded(actualWidthInPixels)
+        && warningHeightLimitIsExceeded(actualHeightInPixels))
   }
 
   /**
@@ -163,15 +187,26 @@ class BitmapValidator private[smcl]() {
    * @throws MaximumBitmapSizeExceededError
    */
   @inline
-  def validateBitmapSize(actualWidthInPixels: Int, actualHeightInPixels: Int): Unit = {
+  def validateBitmapSize(
+      actualWidthInPixels: Int,
+      actualHeightInPixels: Int): Unit = {
+
     if (minimumSizeLimitsAreNotMet(actualWidthInPixels, actualHeightInPixels)) {
       throw MinimumBitmapSizeNotMetError(
-        Option(actualWidthInPixels), Option(actualHeightInPixels), None, None, new BitmapValidator())
+        actualWidthInPixels,
+        actualHeightInPixels,
+        BitmapValidator.MinimumBitmapWidthInPixels,
+        BitmapValidator.MinimumBitmapHeightInPixels,
+        None, None)
     }
 
     if (maximumSizeLimitsAreExceeded(actualWidthInPixels, actualHeightInPixels)) {
       throw MaximumBitmapSizeExceededError(
-        Option(actualWidthInPixels), Option(actualHeightInPixels), None, None, new BitmapValidator())
+        actualWidthInPixels,
+        actualHeightInPixels,
+        BitmapValidator.MaximumBitmapWidthInPixels,
+        BitmapValidator.MaximumBitmapHeightInPixels,
+        None, None)
     }
   }
 

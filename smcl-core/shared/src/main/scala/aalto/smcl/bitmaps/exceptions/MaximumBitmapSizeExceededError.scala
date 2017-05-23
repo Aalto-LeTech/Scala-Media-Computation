@@ -17,7 +17,6 @@
 package aalto.smcl.bitmaps.exceptions
 
 
-import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.infrastructure.exceptions.SMCLBaseError
 
 
@@ -29,25 +28,23 @@ import aalto.smcl.infrastructure.exceptions.SMCLBaseError
  * @author Aleksi Lukkarinen
  */
 final case class MaximumBitmapSizeExceededError private[smcl](
-    realWidthOption: Option[Int] = None,
-    realHeightOption: Option[Int] = None,
-    resourcePathOption: Option[String] = None,
-    imageIndexInResourceOption: Option[Int] = None,
-    private val bitmapValidator: BitmapValidator)
+    actualWidthInPixels: Int,
+    actualHeightInPixels: Int,
+    maximumBitmapWidthInPixels: Int,
+    maximumBitmapHeightInPixels: Int,
+    resourcePath: Option[String] = None,
+    imageIndexInResource: Option[Int] = None)
     extends SMCLBaseError({
-
       val sb = new StringBuilder(200)
 
-      sb ++= s"The maximum image size of ${bitmapValidator.MaximumBitmapWidthInPixels} x " +
-          s"${bitmapValidator.MaximumBitmapHeightInPixels} px has been exceeded "
+      sb ++= s"The maximum image size of $maximumBitmapWidthInPixels x " ++=
+          s"$maximumBitmapHeightInPixels px has been exceeded " ++=
+          s"(was $actualWidthInPixels x $actualHeightInPixels)."
 
-      if (realWidthOption.isDefined && realHeightOption.isDefined)
-        sb ++= s"(was ${realWidthOption.get} x ${realHeightOption.get})"
-
-      sb ++= "."
-
-      resourcePathOption foreach {path => sb ++= s""" Resource: "$path"."""}
-      imageIndexInResourceOption foreach {index => sb ++= s""" Index of the image in the resource: $index."""}
+      resourcePath foreach {path => sb ++= s""" Resource: "$path"."""}
+      imageIndexInResource foreach {index =>
+        sb ++= s" Index of the image in the resource: $index."
+      }
 
       sb.toString()
     }, null)

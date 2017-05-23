@@ -26,7 +26,7 @@ import javax.imageio.{ImageIO, ImageReader}
 
 import scala.util.{Try, _}
 
-import aalto.smcl.bitmaps._
+import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.bitmaps.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
 import aalto.smcl.infrastructure.exceptions._
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, CommonFileUtils, EnsureClosingOfAfter}
@@ -174,17 +174,21 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
     height <- Try(reader.getHeight(imageIndex))
 
     _ = {
-      if (bitmapValidator.maximumSizeLimitsAreExceeded(width, height))
+      if (bitmapValidator.maximumSizeLimitsAreExceeded(width, height)) {
         throw MaximumBitmapSizeExceededError(
-          Option(width), Option(height),
-          Option(filePath), Option(imageIndex),
-          bitmapValidator)
+          width, height,
+          BitmapValidator.MaximumBitmapWidthInPixels,
+          BitmapValidator.MaximumBitmapHeightInPixels,
+          Option(filePath), Option(imageIndex))
+      }
 
-      if (bitmapValidator.minimumSizeLimitsAreNotMet(width, height))
+      if (bitmapValidator.minimumSizeLimitsAreNotMet(width, height)) {
         throw MinimumBitmapSizeNotMetError(
-          Option(width), Option(height),
-          Option(filePath), Option(imageIndex),
-          bitmapValidator)
+          width, height,
+          BitmapValidator.MinimumBitmapWidthInPixels,
+          BitmapValidator.MinimumBitmapHeightInPixels,
+          Option(filePath), Option(imageIndex))
+      }
     }
 
     readImage <- Try(reader.read(imageIndex))

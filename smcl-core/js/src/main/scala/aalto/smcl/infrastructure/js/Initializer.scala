@@ -87,7 +87,8 @@ object Initializer extends SMCLInitializer {
    */
   private def initSharedSettings(): Unit = {
     val settingValidatorFactory = new SettingValidatorFactory()
-    val bitmapValidatorFunctionFactory = new BitmapValidatorFunctionFactory(new BitmapValidator())
+    val bitmapValidatorFunctionFactory = new BitmapValidatorFunctionFactory(
+      settingValidatorFactory, new BitmapValidator())
 
     val settingInitializer = new SharedSettingInitializer(
       settingValidatorFactory, bitmapValidatorFunctionFactory)

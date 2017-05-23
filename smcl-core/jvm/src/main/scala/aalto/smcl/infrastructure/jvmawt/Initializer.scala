@@ -52,7 +52,9 @@ object Initializer extends SMCLInitializer {
 
   /** */
   val _bitmapValidatorFunctionFactory =
-    new BitmapValidatorFunctionFactory(_bitmapValidator)
+    new BitmapValidatorFunctionFactory(
+      _settingValidatorFactory,
+      _bitmapValidator)
 
   /**
    * Initialize SMCL.
