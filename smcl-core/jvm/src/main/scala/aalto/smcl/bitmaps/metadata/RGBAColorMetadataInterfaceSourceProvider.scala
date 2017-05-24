@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.metadata
 
 
-import aalto.smcl.colors.{PresetRGBAColor, RGBAColor}
+import aalto.smcl.colors.{Black, RGBAColor}
 import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
 
 
@@ -38,7 +38,7 @@ class RGBAColorMetadataInterfaceSourceProvider()
 
   /** */
   // TODO: Get class objects some other way (classOf[] ?)
-  private[this] val _presetRGBAColorClass = PresetRGBAColor(0, Option("<dummy>")).getClass
+  private[this] val _presetRGBAColorClass = Black.getClass
 
 
   /**
