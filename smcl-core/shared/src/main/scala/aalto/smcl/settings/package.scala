@@ -14,31 +14,32 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure.jvmawt
+package aalto.smcl
 
 
-import java.awt.image.AffineTransformOp
-
-
+import scala.language.implicitConversions
 
 
 /**
- * Methods for performing interpolation needed during AWT-performed affine transformations.
+ *
  *
  * @author Aleksi Lukkarinen
  */
-object AwtAffineTransformationInterpolationMethod extends Enumeration {
+package object settings
+    extends ViewerUpdateStyleDefinitions
+            with HorizontalAlignmentDefinitions
+            with VerticalAlignmentDefinitions
+            with SettingRegistry
+            with SharedSettingDefinitions {
 
-  /** Type alias for this enumeration. */
-  type BitmapInterpolationMethod = Value
+  /** A type for setting validator functions. */
+  type SettingValidator[SettingDataType] = SettingDataType => Option[Throwable]
 
-  /** Utilize "nearest neighbor" interpolation method. */
-  val NearestNeighbor = Value(AffineTransformOp.TYPE_NEAREST_NEIGHBOR)
-
-  /** Utilize bilinear interpolation method. */
-  val Bilinear = Value(AffineTransformOp.TYPE_BILINEAR)
-
-  /** Utilize bicubic interpolation method. */
-  val Bicubic = Value(AffineTransformOp.TYPE_BICUBIC)
+  /**
+   * Application of the RichSettingMap class.
+   */
+  implicit def SettingMapWrapper(self: SettingMap): RichSettingMap = {
+    new RichSettingMap(self)
+  }
 
 }

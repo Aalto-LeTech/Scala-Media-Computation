@@ -19,13 +19,14 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.DefaultPrimaryColor
 
 
 
 
 /**
  * Operation to draw a line with given color. If the color is not given, the default
- * primary color will be used, as defined in the [[aalto.smcl.infrastructure.GS]].
+ * primary color will be used.
  *
  * @param fromXInPixels
  * @param fromYInPixels
@@ -41,7 +42,7 @@ case class DrawLine(
     fromYInPixels: Int,
     toXInPixels: Int,
     toYInPixels: Int,
-    color: RGBAColor = GS.colorFor(DefaultPrimary))
+    color: RGBAColor = DefaultPrimaryColor)
     extends AbstractOperation
             with Renderable
             with Immutable {

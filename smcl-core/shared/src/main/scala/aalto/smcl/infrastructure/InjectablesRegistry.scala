@@ -44,6 +44,9 @@ object InjectablesRegistry {
   /** Injectable ID for the BitmapValidator class. */
   val IIdBitmapValidator = "BitmapValidator"
 
+  /** Injectable ID for the SettingRegisterer class. */
+  val IIdSettingRegisterer = "SettingRegisterer"
+
 }
 
 
@@ -68,9 +71,10 @@ trait InjectablesRegistry {
    *
    * @throws ImplementationNotSetError
    */
-  protected def injectable(id: String): Any = {
-    injectablesRegistry.getOrElse(id,
-      throw InjectableNotInjectedError(id))
+  protected def injectable[InjectableType](id: String): InjectableType = {
+    injectablesRegistry.getOrElse(id, {
+      throw InjectableNotInjectedError(id)
+    }).asInstanceOf[InjectableType]
   }
 
   /**

@@ -17,9 +17,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary, DefaultRoundingHeightInPixels, DefaultRoundingWidthInPixels, GS, NewBitmapsAreDisplayedAutomatically}
+import aalto.smcl.settings._
 
 
 
@@ -45,12 +44,12 @@ class RoundedSquareCreator private[bitmaps]() {
    * @return
    */
   def createOne(
-      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      color: RGBAColor = DefaultPrimaryColor,
+      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(sideLengthInPixels >= 5, s"Side length of the square must be at least 5 pixels (was $sideLengthInPixels)")
     require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
@@ -75,7 +74,7 @@ class RoundedSquareCreator private[bitmaps]() {
       PreventViewerUpdates)
 
     if (viewerHandling == UpdateViewerPerDefaults) {
-      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+      if (NewBitmapsAreDisplayedAutomatically)
         newRSquare.display()
     }
 

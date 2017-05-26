@@ -17,9 +17,9 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
+
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.{DefaultBackground, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary, DefaultRoundingHeightInPixels, DefaultRoundingWidthInPixels, GS, NewBitmapsAreDisplayedAutomatically}
+import aalto.smcl.settings._
 
 
 
@@ -46,13 +46,13 @@ class RoundedRectangleCreator private[bitmaps]() {
    * @return
    */
   def createOne(
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      color: RGBAColor = DefaultPrimaryColor,
+      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels >= 5, s"Width of the rectangle must be at least 5 pixels (was $widthInPixels)")
     require(heightInPixels >= 5, s"Height of the rectangle must be at least 5 pixels (was $heightInPixels)")
@@ -78,7 +78,7 @@ class RoundedRectangleCreator private[bitmaps]() {
       PreventViewerUpdates)
 
     if (viewerHandling == UpdateViewerPerDefaults) {
-      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+      if (NewBitmapsAreDisplayedAutomatically)
         newRRectangle.display()
     }
 

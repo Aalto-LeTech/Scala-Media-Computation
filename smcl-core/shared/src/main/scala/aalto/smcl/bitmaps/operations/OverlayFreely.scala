@@ -20,6 +20,7 @@ package aalto.smcl.bitmaps.operations
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{ColorValidator, RGBAColor, _}
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.DefaultBackgroundColor
 
 
 
@@ -42,7 +43,7 @@ case class OverlayFreely(
     topBitmapUpperLeftX: Int,
     topBitmapUpperLeftY: Int,
     topBitmapOpacity: Int = ColorValidator.MaximumRGBAOpacity,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    backgroundColor: RGBAColor = DefaultBackgroundColor,
     private val colorValidator: ColorValidator)
     extends AbstractOperation
             with BufferProvider

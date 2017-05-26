@@ -14,42 +14,52 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure
+package aalto.smcl.settings
 
 
+import aalto.smcl.infrastructure.Describable
 import aalto.smcl.infrastructure.exceptions.SettingValidationError
 
 
 
 
 /**
- * Represents a single setting of a specific type.
+ * A base class for all settings.
  *
- * @param key          Identifier of this [[Setting]].
- * @param initialValue Initial value of this [[Setting]].
- * @param validator    A function literal of type `A => Option[Throwable]` used to validate this [[Setting]].
- * @tparam SettingType Type of the value contained by this [[Setting]].
+ * @param key
+ * @param initialValue
+ * @param validator
+ * @param companion
+ * @tparam SettingType
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl]
-final class Setting[SettingType](
-    val key: BaseSettingKeys.Value[SettingType],
+abstract class Setting[SettingType] private[settings](
+    val key: String,
     val initialValue: SettingType,
-    val validator: SettingType => Option[Throwable])
-    extends Mutable with Describable {
+    val validator: SettingType => Option[Throwable],
+    private val companion: SettingCompanionConstants) extends Describable {
 
   if (validator != null)
     validator(initialValue) foreach {reason => throw SettingValidationError(key, reason)}
 
+  /** Name of this class. */
+  val fullTypeName: String = companion.FullTypeName
+
+  /** Singular form of the "layman's name" of the setting's data type in lower case. */
+  val typeNameSingular: String = companion.TypeNameSingular
+
+  /** Plural form of the "layman's name" of the setting's data type in lower case. */
+  val typeNamePlural: String = companion.TypeNamePlural
+
   /** Holds the current value of this [[Setting]]. */
   private var _currentValue: SettingType = initialValue
 
-  /** First text paragraph of the description of this class. */
-  val descriptionTitle: String = "Setting"
+  /** First text paragraph of the description of this [[Setting]]. */
+  override val descriptionTitle: String = fullTypeName
 
   /** Information about this [[Setting]] instance */
-  lazy val describedProperties = Map()
+  override val describedProperties = Map()
 
   /**
    * Returns the current value of this [[Setting]].
@@ -76,6 +86,8 @@ final class Setting[SettingType](
   /**
    * Resets this [[Setting]] to its initial value.
    */
-  def reset(): Unit = value = initialValue
+  def reset(): Unit = {
+    value = initialValue
+  }
 
 }

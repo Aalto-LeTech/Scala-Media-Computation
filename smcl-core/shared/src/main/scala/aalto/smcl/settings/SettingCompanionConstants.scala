@@ -14,24 +14,33 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.metadata
+package aalto.smcl.settings
 
 
-import aalto.smcl.infrastructure.BaseSettingKeys.IntSettingKey
+import aalto.smcl.infrastructure.InjectablesRegistry
 
 
 
 
 /**
- *
+ * Constant definitions for companion objects of [[Setting]] subclasses.
  *
  * @author Aleksi Lukkarinen
  */
-trait MetadataSettingKeys {
+trait SettingCompanionConstants extends InjectablesRegistry {
 
-  // @formatter:off
+  /** Name of the related [[Setting]] subclass. */
+  def FullTypeName: String
 
-  /** */
-  case object ColorVisualizationTileSideLengthInPixels extends IntSettingKey
+  /** Singular form of the "layman's name" of the setting's data type in lower case. */
+  def TypeNameSingular: String
+
+  /** Plural form of the "layman's name" of the setting's data type in lower case. */
+  def TypeNamePlural: String
+
+  /** The [[SettingRegisterer]] instance to be used by this object. */
+  protected lazy val settingRegisterer: SettingRegisterer = {
+    injectable[SettingRegisterer](InjectablesRegistry.IIdSettingRegisterer)
+  }
 
 }

@@ -20,6 +20,7 @@ package aalto.smcl.bitmaps.operations
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.DefaultBackgroundColor
 
 
 
@@ -43,7 +44,7 @@ case class AugmentCanvas(
     extraPixelsOntoTopEdge: Int = 0,
     extraPixelsOntoRightEdge: Int = 0,
     extraPixelsOntoBottomEdge: Int = 0,
-    color: RGBAColor = GS.colorFor(DefaultBackground),
+    color: RGBAColor = DefaultBackgroundColor,
     private val bitmapValidator: BitmapValidator)
     extends AbstractOperation
             with BufferProvider

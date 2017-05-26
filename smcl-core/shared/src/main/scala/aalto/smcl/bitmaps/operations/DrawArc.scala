@@ -19,13 +19,14 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings._
 
 
 
 
 /**
  * Operation to draw an arc with given colors. If a color is not given, the default
- * primary/secondary colors will be used, as defined in the [[aalto.smcl.GS]].
+ * primary/secondary colors will be used.
  *
  * @param upperLeftCornerXInPixels
  * @param upperLeftCornerYInPixels
@@ -44,14 +45,14 @@ private[bitmaps]
 case class DrawArc(
     upperLeftCornerXInPixels: Int,
     upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-    startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-    arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDegrees),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
+    widthInPixels: Int = DefaultBitmapWidthInPixels,
+    heightInPixels: Int = DefaultBitmapHeightInPixels,
+    startAngleInDegrees: Int = DefaultArcStartAngleInDegrees,
+    arcAngleInDegrees: Int = DefaultArcAngleInDegrees,
+    hasBorder: Boolean = ShapesHaveBordersByDefault,
+    hasFilling: Boolean = ShapesHaveFillingsByDefault,
+    color: RGBAColor = DefaultPrimaryColor,
+    fillColor: RGBAColor = DefaultSecondaryColor)
     extends AbstractOperation
             with Renderable
             with Immutable {

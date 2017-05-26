@@ -30,8 +30,8 @@ import aalto.smcl.colors._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
-
-
+import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
+import aalto.smcl.settings.jvmawt.AffineTransformationInterpolationMethod
 
 
 /**
@@ -106,7 +106,7 @@ object AwtBitmapBufferAdapter extends InjectablesRegistry {
     try {
       drawingSurface = newBuffer.createGraphics()
       drawingSurface.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
-      drawingSurface.setColor(GS.colorFor(DefaultBackground).toAwtColor)
+      drawingSurface.setColor(DefaultBackgroundColor.toAwtColor)
       drawingSurface.fillRect(0, 0, widthInPixels, heightInPixels)
     }
     finally {
@@ -199,7 +199,7 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def trim(colorToTrim: RGBAColor = GS.colorFor(DefaultBackground)): AwtBitmapBufferAdapter = {
+  override def trim(colorToTrim: RGBAColor = DefaultBackgroundColor): AwtBitmapBufferAdapter = {
     val (reds, greens, blues, opacities) = colorComponentArrays
 
     val redToTrim = colorToTrim.red
@@ -436,12 +436,10 @@ class AwtBitmapBufferAdapter private(
    */
   override def createTransformedVersionWith(
       transformation: AffineTransformation,
-      resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): AwtBitmapBufferAdapter = {
+      resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
+      backgroundColor: RGBAColor = DefaultBackgroundColor): AwtBitmapBufferAdapter = {
 
-    val globalInterpolationMethod =
-      GS.enumSettingFor[AwtAffineTransformationInterpolationMethod.Value](AwtAffTransfInterpMethod).value.id
-
+    val globalInterpolationMethod = AffineTransformationInterpolationMethod.lowLevelValue
     var resultingImageWidth: Int = awtBufferedImage.getWidth
     var resultingImageHeight: Int = awtBufferedImage.getHeight
     val lowLevelTransformation =

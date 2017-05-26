@@ -14,26 +14,49 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure
+package aalto.smcl.bitmaps
+
+import aalto.smcl.settings.SettingValidatorFactory
+
+
 
 
 /**
- * Horizontal alignment positions.
+ *
  *
  * @author Aleksi Lukkarinen
  */
-object HorizontalAlignment extends Enumeration {
+private[smcl]
+class BitmapValidatorFunctionFactory(
+    private val settingValidatorFactory: SettingValidatorFactory,
+    private val bitmapValidator: BitmapValidator) {
 
-  /** Type alias for this enumeration. */
-  type HorizontalAlignment = Value
+  /**
+   *
+   *
+   * @return
+   */
+  // @formatter:off
+  def BitmapWidthValidator(): Int => Option[Throwable] =
+    settingValidatorFactory.conditionFalseValidator[Int](
+    { width => bitmapValidator.minimumWidthIsNotMet(width) || bitmapValidator.maximumWidthIsExceeded(width) },
+    s"Bitmap width must be between ${BitmapValidator.MinimumBitmapHeightInPixels} " +
+      s"and ${BitmapValidator.MaximumBitmapWidthInPixels} pixels")
 
-  /** Align to the left. */
-  val Left = Value
+  // @formatter:on
 
-  /** Align to the center. */
-  val Center = Value
+  /**
+   *
+   *
+   * @return
+   */
+  // @formatter:off
+  def BitmapHeightValidator(): Int => Option[Throwable] =
+    settingValidatorFactory.conditionFalseValidator[Int](
+    { height => bitmapValidator.minimumHeightIsNotMet(height) || bitmapValidator.maximumHeightIsExceeded(height) },
+    s"Bitmap height must be between ${BitmapValidator.MinimumBitmapHeightInPixels} " +
+      s"and ${BitmapValidator.MaximumBitmapHeightInPixels} pixels")
 
-  /** Align to the right. */
-  val Right = Value
+  // @formatter:on
 
 }

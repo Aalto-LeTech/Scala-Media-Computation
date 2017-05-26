@@ -21,7 +21,8 @@ import scala.collection.mutable.ArrayBuffer
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{ColorValidator, RGBAColor, _}
-import aalto.smcl.infrastructure.{GS, _}
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, PRF}
+import aalto.smcl.settings._
 
 
 
@@ -39,10 +40,10 @@ import aalto.smcl.infrastructure.{GS, _}
 private[bitmaps]
 case class OverlayPerAlignments(
     bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
-    horizontalAlignment: HorizontalAlignment.Value = GS.optionFor(DefaultHorizontalAlignment),
-    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
+    horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
+    verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
     opacityForAllBitmaps: Int = ColorValidator.MaximumRGBAOpacity,
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    backgroundColor: RGBAColor = DefaultBackgroundColor,
     private val colorValidator: ColorValidator)
     extends AbstractOperation
             with BufferProvider
@@ -80,13 +81,13 @@ case class OverlayPerAlignments(
 
   /** Future horizontal offsets of the bitmaps to be overlaid. */
   val horizontalOffsets: Seq[Int] = horizontalAlignment match {
-    case HorizontalAlignment.Left =>
+    case Left =>
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0)
 
-    case HorizontalAlignment.Right =>
+    case Right =>
       bitmapsToOverlayFromBottomToTop map {widthInPixels - _.widthInPixels}
 
-    case HorizontalAlignment.Center =>
+    case Center =>
       val canvasWidth = widthInPixels.toDouble / 2
 
       bitmapsToOverlayFromBottomToTop map {bmp =>
@@ -96,13 +97,13 @@ case class OverlayPerAlignments(
 
   /** Future vertical offsets of the bitmaps to be overlaid. */
   val verticalOffsets: Seq[Int] = verticalAlignment match {
-    case VerticalAlignment.Top =>
+    case Top =>
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0).toSeq
 
-    case VerticalAlignment.Bottom =>
+    case Bottom =>
       bitmapsToOverlayFromBottomToTop map {heightInPixels - _.heightInPixels}
 
-    case VerticalAlignment.Middle =>
+    case Middle =>
       val canvasMiddle = heightInPixels.toDouble / 2
 
       bitmapsToOverlayFromBottomToTop map {bmp =>
@@ -139,12 +140,13 @@ case class OverlayPerAlignments(
   /**
    * Returns the buffer from which the provided buffer copies are made.
    * Users of this trait must provide an implementation, which returns
-   * a [[BitmapBufferAdapter]] instance always after instantiation of
+   * a [[aalto.smcl.infrastructure.BitmapBufferAdapter]] instance always after instantiation of
    * the class claiming to provide the buffer.
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer()
+  }
 
 }

@@ -20,9 +20,8 @@ package aalto.smcl.bitmaps
 import scala.collection.mutable
 
 import aalto.smcl.bitmaps
-import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.{DefaultBackground, DefaultBitmapWidthInPixels, DefaultPrimary, GS, NewBitmapsAreDisplayedAutomatically}
+import aalto.smcl.settings._
 
 
 
@@ -46,10 +45,10 @@ class CircleCreator {
    * @return
    */
   def createOne(
-      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      diameter: Int = DefaultBitmapWidthInPixels,
+      color: RGBAColor = DefaultPrimaryColor,
+      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(diameter > 0, s"Diameter of the circle must be at least 1 pixel (was $diameter)")
     require(color != null, "The circle color argument has to be a Color instance (was null).")
@@ -76,7 +75,7 @@ class CircleCreator {
       viewerHandling = PreventViewerUpdates)
 
     if (viewerHandling == UpdateViewerPerDefaults) {
-      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+      if (NewBitmapsAreDisplayedAutomatically)
         newCircle.display()
     }
 
@@ -95,9 +94,9 @@ class CircleCreator {
    */
   def createArrayOf(
       collectionSize: Int = 5,
-      diameter: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground)): Array[Bitmap] = {
+      diameter: Int = DefaultBitmapWidthInPixels,
+      color: RGBAColor = DefaultPrimaryColor,
+      backgroundColor: RGBAColor = DefaultBackgroundColor): Array[Bitmap] = {
 
     require(collectionSize >= 0, s"Size of the collection cannot be negative (was $collectionSize)")
 

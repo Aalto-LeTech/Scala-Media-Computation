@@ -17,9 +17,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.{DefaultBitmapHeightInPixels, DefaultPrimary, GS}
+import aalto.smcl.settings.{DefaultBitmapHeightInPixels, DefaultPrimaryColor, UpdateViewerPerDefaults, ViewerUpdateStyle}
 
 
 
@@ -42,9 +41,9 @@ class VerticalLineCreator private[bitmaps]() {
    * @return
    */
   def createOne(
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      color: RGBAColor = DefaultPrimaryColor,
+      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(heightInPixels > 0, s"Width of the line must be at least 1 pixel (was $heightInPixels)")
     require(color != null, "The color argument has to be a Color instance (was null).")

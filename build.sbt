@@ -229,6 +229,7 @@ lazy val smclGeneralSettings = Seq(
   initialCommands in console :=
       """import aalto.smcl._
         |import aalto.smcl.infrastructure._
+        |import aalto.smcl.settings._
         |import aalto.smcl.geometry._
         |import aalto.smcl.fonts._
         |import aalto.smcl.colors._

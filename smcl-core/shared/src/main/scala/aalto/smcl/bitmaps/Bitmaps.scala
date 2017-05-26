@@ -19,11 +19,10 @@ package aalto.smcl.bitmaps
 
 import scala.util.{Failure, Success}
 
-import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.infrastructure._
-import aalto.smcl.viewers.{display => displayInViewer}
+import aalto.smcl.settings.{NewBitmapsAreDisplayedAutomatically, UpdateViewerPerDefaults, ViewerUpdateStyle}
 
 
 
@@ -55,7 +54,7 @@ object Bitmaps extends InjectablesRegistry {
    */
   def apply(
       sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle.Value): Seq[Bitmap] = {
+      viewerHandling: ViewerUpdateStyle): Seq[Bitmap] = {
 
     // The ImageProvider is trusted with validation of the source resource path.
     val loadedBuffersTry = PRF.tryToLoadImagesFromPath(sourceResourcePath)
@@ -72,7 +71,7 @@ object Bitmaps extends InjectablesRegistry {
           operationList, bitmapValidator, colorValidator, Identity())
 
         if (viewerHandling == UpdateViewerPerDefaults) {
-          if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+          if (NewBitmapsAreDisplayedAutomatically)
             newBitmap.display()
         }
 

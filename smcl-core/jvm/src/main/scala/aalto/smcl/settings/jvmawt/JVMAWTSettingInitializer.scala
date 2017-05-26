@@ -14,11 +14,12 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.operations
+package aalto.smcl.settings.jvmawt
 
 
-import aalto.smcl.infrastructure.BitmapBufferAdapter
-import aalto.smcl.settings.DefaultBackgroundColor
+import aalto.smcl.bitmaps.BitmapValidatorFunctionFactory
+import aalto.smcl.infrastructure.SettingInitializer
+import aalto.smcl.settings.{IntSetting, ObjectSetting, SettingValidatorFactory}
 
 
 
@@ -28,22 +29,28 @@ import aalto.smcl.settings.DefaultBackgroundColor
  *
  * @author Aleksi Lukkarinen
  */
-trait OneSourceFilter
-    extends Renderable
-            with Buffered {
-  this: AbstractOperation =>
+private[smcl]
+class JVMAWTSettingInitializer() extends SettingInitializer {
 
   /**
-   * Applies this convolution filter operation to the given bitmap.
    *
-   * @param destination
    */
-  def render(destination: BitmapBufferAdapter): Unit = {
-    val filteredBitmap = getOrCreateStaticBuffer(destination)
+  def apply(
+      settingValidatorFactory: SettingValidatorFactory,
+      bitmapValidatorFunctionFactory: BitmapValidatorFunctionFactory): Unit = {
 
-    val ds = destination.drawingSurface
-    ds.clearUsing(DefaultBackgroundColor, useSourceColorLiterally = true)
-    ds.drawBitmap(filteredBitmap)
+    IntSetting(
+      key = "ColorVisualizationTileSideLengthInPixels",
+      initialValue = 80,
+      validator = new SettingValidatorFactory().conditionFalseValidator[Int]({
+        _ < 20
+      }, "Side length of color visualization tiles' must be at least 20 pixels"))
+
+    ObjectSetting[AwtAffineTransformationInterpolationMethod](
+      key = "AffineTransformationInterpolationMethod",
+      initialValue = NearestNeighbor,
+      validator = settingValidatorFactory.EmptyValidator)
+
   }
 
 }

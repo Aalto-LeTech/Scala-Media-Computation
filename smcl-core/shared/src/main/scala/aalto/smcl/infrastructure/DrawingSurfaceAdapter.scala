@@ -16,8 +16,10 @@
 
 package aalto.smcl.infrastructure
 
+
 import aalto.smcl.colors.{ColorValidator, RGBAColor}
 import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.settings._
 
 
 
@@ -36,7 +38,7 @@ trait DrawingSurfaceAdapter {
    * @param color
    */
   def clearUsing(
-      color: RGBAColor = GS.colorFor(DefaultBackground),
+      color: RGBAColor = DefaultBackgroundColor,
       useSourceColorLiterally: Boolean = false): Unit
 
   /**
@@ -105,12 +107,12 @@ trait DrawingSurfaceAdapter {
   def drawEllipse(
       boundingBoxUpperLeftX: Int,
       boundingBoxUpperLeftY: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -129,14 +131,14 @@ trait DrawingSurfaceAdapter {
   def drawArc(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDegrees),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      startAngleInDegrees: Int = DefaultArcStartAngleInDegrees,
+      arcAngleInDegrees: Int = DefaultArcAngleInDegrees,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -153,12 +155,12 @@ trait DrawingSurfaceAdapter {
   def drawRectangle(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -177,14 +179,14 @@ trait DrawingSurfaceAdapter {
   def drawRoundedRectangle(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -198,7 +200,7 @@ trait DrawingSurfaceAdapter {
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit
+      color: RGBAColor = DefaultPrimaryColor): Unit
 
   /**
    *
@@ -215,10 +217,10 @@ trait DrawingSurfaceAdapter {
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -234,6 +236,6 @@ trait DrawingSurfaceAdapter {
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit
+      color: RGBAColor = DefaultPrimaryColor): Unit
 
 }

@@ -21,8 +21,8 @@ import java.awt.{AlphaComposite, Graphics2D}
 
 import aalto.smcl.colors.{ColorValidator, RGBAColor}
 import aalto.smcl.geometry.AffineTransformation
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, DefaultArcAngleInDegrees, DefaultArcStartAngleInDegrees, DefaultBackground, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, DefaultPrimary, DefaultRoundingHeightInPixels, DefaultRoundingWidthInPixels, DefaultSecondary, DrawingSurfaceAdapter, GS, ShapesHaveBordersByDefault, ShapesHaveFillingsByDefault}
-
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter}
+import aalto.smcl.settings._
 
 
 
@@ -64,7 +64,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
    * @param color
    */
   override def clearUsing(
-      color: RGBAColor = GS.colorFor(DefaultBackground),
+      color: RGBAColor = DefaultBackgroundColor,
       useSourceColorLiterally: Boolean = false): Unit = {
 
     withDrawingSurface{ds =>
@@ -165,12 +165,12 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
   override def drawEllipse(
       boundingBoxUpperLeftX: Int,
       boundingBoxUpperLeftY: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -206,14 +206,14 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
   override def drawArc(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      startAngleInDegrees: Int = GS.intFor(DefaultArcStartAngleInDegrees),
-      arcAngleInDegrees: Int = GS.intFor(DefaultArcAngleInDegrees),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      startAngleInDegrees: Int = DefaultArcStartAngleInDegrees,
+      arcAngleInDegrees: Int = DefaultArcAngleInDegrees,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -249,12 +249,12 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
   override def drawRectangle(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -290,14 +290,14 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
   override def drawRoundedRectangle(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels),
-      roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-      roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -330,7 +330,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit = {
+      color: RGBAColor = DefaultPrimaryColor): Unit = {
 
     withDrawingSurface{ds =>
       ds.setColor(color.toAwtColor)
@@ -353,10 +353,10 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-      hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      fillColor: RGBAColor = GS.colorFor(DefaultSecondary)): Unit = {
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: RGBAColor = DefaultPrimaryColor,
+      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -385,7 +385,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary)): Unit = {
+      color: RGBAColor = DefaultPrimaryColor): Unit = {
 
     withDrawingSurface{ds =>
       ds.setColor(color.toAwtColor)

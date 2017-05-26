@@ -17,9 +17,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.bitmaps.ViewerUpdateStyle.{PreventViewerUpdates, UpdateViewerPerDefaults}
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.{DefaultBackground, DefaultPrimary, GS, NewBitmapsAreDisplayedAutomatically}
+import aalto.smcl.settings._
 
 
 
@@ -52,9 +51,9 @@ class LineCreator private[bitmaps]() {
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      color: RGBAColor = DefaultPrimaryColor,
+      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(color != null, "The line color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
@@ -79,7 +78,7 @@ class LineCreator private[bitmaps]() {
     val newLine = newBitmap.drawLine(x0, y0, x1, y1, color, PreventViewerUpdates)
 
     if (viewerHandling == UpdateViewerPerDefaults) {
-      if (GS.isTrueThat(NewBitmapsAreDisplayedAutomatically))
+      if (NewBitmapsAreDisplayedAutomatically)
         newLine.display()
     }
 

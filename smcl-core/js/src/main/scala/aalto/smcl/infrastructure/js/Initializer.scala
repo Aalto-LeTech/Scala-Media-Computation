@@ -17,8 +17,9 @@
 package aalto.smcl.infrastructure.js
 
 
-import aalto.smcl.bitmaps.BitmapValidator
-import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, SMCLInitializer, SettingValidatorFactory, SharedSettingInitializer}
+import aalto.smcl.bitmaps.{BitmapValidator, BitmapValidatorFunctionFactory}
+import aalto.smcl.infrastructure.SMCLInitializer
+import aalto.smcl.settings.{SettingValidatorFactory, SharedSettingInitializer}
 
 
 
@@ -90,10 +91,9 @@ object Initializer extends SMCLInitializer {
     val bitmapValidatorFunctionFactory = new BitmapValidatorFunctionFactory(
       settingValidatorFactory, new BitmapValidator())
 
-    val settingInitializer = new SharedSettingInitializer(
-      settingValidatorFactory, bitmapValidatorFunctionFactory)
+    val settingInitializer = new SharedSettingInitializer()
 
-    settingInitializer.init()
+    settingInitializer(settingValidatorFactory, bitmapValidatorFunctionFactory)
   }
 
 }

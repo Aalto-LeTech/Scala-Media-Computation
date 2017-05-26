@@ -20,6 +20,7 @@ package aalto.smcl.bitmaps.operations
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.{DefaultBackgroundColor, DefaultPaddingInPixels}
 
 
 
@@ -38,8 +39,8 @@ private[bitmaps]
 case class ReplicateVertically(
     bitmapToReplicate: Bitmap,
     numberOfReplicas: Int,
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    paddingInPixels: Int = DefaultPaddingInPixels,
+    backgroundColor: RGBAColor = DefaultBackgroundColor,
     private val bitmapValidator: BitmapValidator)
     extends AbstractOperation
             with BufferProvider

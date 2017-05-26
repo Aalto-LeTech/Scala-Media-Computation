@@ -18,6 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels}
 
 
 
@@ -32,8 +33,8 @@ import aalto.smcl.infrastructure._
  */
 private[bitmaps]
 case class CreateBitmap(
-    widthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    heightInPixels: Int = GS.intFor(DefaultBitmapHeightInPixels))
+    widthInPixels: Int = DefaultBitmapWidthInPixels,
+    heightInPixels: Int = DefaultBitmapHeightInPixels)
     extends AbstractOperation
             with BufferProvider
             with Immutable {

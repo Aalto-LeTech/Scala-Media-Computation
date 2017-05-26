@@ -19,13 +19,14 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.colors.RGBAColor
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.DefaultBackgroundColor
 
 
 
 
 /**
  * Operation to clear a bitmap with a given color. If a color is not given,
- * the default background color will be used, as defined in the [[aalto.smcl.GS]].
+ * the default background color will be used.
  *
  * @param color
  *
@@ -33,7 +34,7 @@ import aalto.smcl.infrastructure._
  */
 private[bitmaps]
 case class Clear(
-    color: RGBAColor = GS.colorFor(DefaultBackground))
+    color: RGBAColor = DefaultBackgroundColor)
     extends AbstractOperation
             with Renderable
             with Immutable {

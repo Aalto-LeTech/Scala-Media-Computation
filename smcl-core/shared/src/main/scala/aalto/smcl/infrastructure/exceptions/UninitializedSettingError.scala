@@ -17,11 +17,6 @@
 package aalto.smcl.infrastructure.exceptions
 
 
-import aalto.smcl.infrastructure.BaseSettingKeys
-
-
-
-
 /**
  *
  *
@@ -36,7 +31,7 @@ object UninitializedSettingError {
    *
    * @return
    */
-  def apply(settingKey: BaseSettingKeys.Value[_]): UninitializedSettingError =
+  def apply(settingKey: String): UninitializedSettingError =
     UninitializedSettingError(settingKey, null)
 
 }
@@ -50,7 +45,7 @@ object UninitializedSettingError {
  * @author Aleksi Lukkarinen
  */
 final case class UninitializedSettingError private[smcl](
-    settingKey: BaseSettingKeys.Value[_], override val cause: Throwable)
+    settingKey: String, override val cause: Throwable)
     extends SMCLBaseError(
-      s"""No setting with name "${settingKey.toString}" is initialized.""",
+      s"""No setting with name "$settingKey" is initialized.""",
       cause)

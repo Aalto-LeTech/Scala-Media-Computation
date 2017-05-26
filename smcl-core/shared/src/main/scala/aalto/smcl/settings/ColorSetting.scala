@@ -14,36 +14,62 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.operations
+package aalto.smcl.settings
 
 
-import aalto.smcl.infrastructure.BitmapBufferAdapter
-import aalto.smcl.settings.DefaultBackgroundColor
+import aalto.smcl.colors.RGBAColor
 
 
 
 
 /**
- *
+ * An companion object for [[ColorSetting]] class.
  *
  * @author Aleksi Lukkarinen
  */
-trait OneSourceFilter
-    extends Renderable
-            with Buffered {
-  this: AbstractOperation =>
+private[smcl]
+object ColorSetting extends SettingCompanionMethods[RGBAColor, ColorSetting] {
+
+  /** Name of the related [[Setting]] subclass. */
+  val FullTypeName = "ColorSetting"
+
+  /** Singular form of the "layman's name" of the setting's data type in lower case. */
+  val TypeNameSingular = "color"
+
+  /** Plural form of the "layman's name" of the setting's data type in lower case. */
+  val TypeNamePlural = "colors"
 
   /**
-   * Applies this convolution filter operation to the given bitmap.
+   * A factory method for creating a new setting instance.
    *
-   * @param destination
+   * @param key          identification string for the setting
+   * @param initialValue initial value of the setting
+   * @param validator    validator function for the setting
+   *
+   * @return a new setting instance
    */
-  def render(destination: BitmapBufferAdapter): Unit = {
-    val filteredBitmap = getOrCreateStaticBuffer(destination)
+  override protected
+  def newSettingInstance(
+      key: String,
+      initialValue: RGBAColor,
+      validator: SettingValidator[RGBAColor]): ColorSetting = {
 
-    val ds = destination.drawingSurface
-    ds.clearUsing(DefaultBackgroundColor, useSourceColorLiterally = true)
-    ds.drawBitmap(filteredBitmap)
+    new ColorSetting(key, initialValue, validator)
   }
 
 }
+
+
+
+
+/**
+ * Setting of type `RGBAColor`.
+ *
+ * @author Aleksi Lukkarinen
+ */
+case class ColorSetting private(
+    override val key: String,
+    override val initialValue: RGBAColor,
+    override val validator: SettingValidator[RGBAColor])
+    extends Setting[RGBAColor](
+      key, initialValue, validator, ColorSetting)

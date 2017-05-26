@@ -20,12 +20,12 @@ package aalto.smcl.bitmaps.metadata
 import java.awt.image.BufferedImage
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.bitmaps.ViewerUpdateStyle.PreventViewerUpdates
 import aalto.smcl.colors.{Black, Gray, RGBAColor, White}
-import aalto.smcl.infrastructure.GS
 import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.StaticGeneralBitmapSource
 import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
+import aalto.smcl.settings.PreventViewerUpdates
+import aalto.smcl.settings.jvmawt.ColorVisualizationTileSideLengthInPixels
 
 
 
@@ -104,11 +104,9 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    * @return
    */
   def createSingleColorTile(): Bitmap = {
-    val tileSideLength = GS.intFor(ColorVisualizationTileSideLengthInPixels)
-
     var colorTile = Bitmap(
-      widthInPixels = tileSideLength,
-      heightInPixels = tileSideLength,
+      widthInPixels = ColorVisualizationTileSideLengthInPixels,
+      heightInPixels = ColorVisualizationTileSideLengthInPixels,
       viewerHandling = PreventViewerUpdates)
 
     colorTile = colorTile.drawRectangle(
@@ -132,11 +130,9 @@ case class RGBAColorMetadataSource(relatedRGBAColor: RGBAColor)
    * @return
    */
   def createDoubleColorTile(backgroundColor: RGBAColor): Bitmap = {
-    val tileSideLength = GS.intFor(ColorVisualizationTileSideLengthInPixels)
-
     var colorTile = Bitmap(
-      widthInPixels = tileSideLength,
-      heightInPixels = tileSideLength,
+      widthInPixels = ColorVisualizationTileSideLengthInPixels,
+      heightInPixels = ColorVisualizationTileSideLengthInPixels,
       viewerHandling = PreventViewerUpdates)
 
     colorTile = colorTile.drawRectangle(0, 0, colorTile.widthInPixels, colorTile.heightInPixels,

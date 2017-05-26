@@ -17,9 +17,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.bitmaps.ViewerUpdateStyle.UpdateViewerPerDefaults
 import aalto.smcl.colors.RGBAColor
-import aalto.smcl.infrastructure.{DefaultBitmapWidthInPixels, DefaultPrimary, GS}
+import aalto.smcl.settings.{DefaultBitmapWidthInPixels, DefaultPrimaryColor, UpdateViewerPerDefaults, ViewerUpdateStyle}
 
 
 
@@ -42,9 +41,9 @@ class SquareCreator private[bitmaps]() {
    * @return
    */
   def createOne(
-      sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-      color: RGBAColor = GS.colorFor(DefaultPrimary),
-      viewerHandling: ViewerUpdateStyle.Value = UpdateViewerPerDefaults): Bitmap = {
+      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      color: RGBAColor = DefaultPrimaryColor,
+      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(sideLengthInPixels > 0, s"Side length of the square must be at least 1 pixel (was $sideLengthInPixels)")
     require(color != null, "The color argument has to be a Color instance (was null).")

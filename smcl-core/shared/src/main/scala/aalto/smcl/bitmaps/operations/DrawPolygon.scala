@@ -19,13 +19,14 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.{DefaultPrimaryColor, DefaultSecondaryColor, ShapesHaveBordersByDefault, ShapesHaveFillingsByDefault}
 
 
 
 
 /**
  * Operation to draw a polygon with given colors. If a color is not given, the default primary/secondary
- * color will be used, as defined in the [[aalto.smcl.GS]]. The resulting polyline will be automatically closed.
+ * color will be used. The resulting polyline will be automatically closed.
  *
  * @param xCoordinates
  * @param yCoordinates
@@ -42,10 +43,10 @@ case class DrawPolygon(
     xCoordinates: Seq[Int],
     yCoordinates: Seq[Int],
     numberOfCoordinatesToDraw: Int,
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
+    hasBorder: Boolean = ShapesHaveBordersByDefault,
+    hasFilling: Boolean = ShapesHaveFillingsByDefault,
+    color: RGBAColor = DefaultPrimaryColor,
+    fillColor: RGBAColor = DefaultSecondaryColor)
     extends AbstractOperation
             with Renderable
             with Immutable {
@@ -53,7 +54,7 @@ case class DrawPolygon(
   require(xCoordinates != null, "The x coordinate argument has to be an Seq[Int] instance (was null).")
   require(yCoordinates != null, "The y coordinate argument has to be an Seq[Int] instance (was null).")
 
-  val numberOfCoordinatesPresent = xCoordinates.length.min(yCoordinates.length)
+  val numberOfCoordinatesPresent: Int = xCoordinates.length.min(yCoordinates.length)
 
   require(numberOfCoordinatesPresent > 1, s"The coordinate sequences must have at least two coordinate pairs present.")
 

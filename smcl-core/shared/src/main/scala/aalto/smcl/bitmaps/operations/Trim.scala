@@ -20,6 +20,7 @@ package aalto.smcl.bitmaps.operations
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.DefaultBackgroundColor
 
 
 
@@ -36,7 +37,7 @@ import aalto.smcl.infrastructure._
 private[bitmaps]
 case class Trim(
     sourceBitmap: Bitmap,
-    colorToTrim: RGBAColor = GS.colorFor(DefaultBackground))
+    colorToTrim: RGBAColor = DefaultBackgroundColor)
     extends AbstractOperation
             with BufferProvider
             with Immutable {

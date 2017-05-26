@@ -31,18 +31,6 @@ private[smcl]
 class PackageInitializer {
 
 /*
-  //
-  // Initialize settings
-  //
-  addInitializer(PackageInitializationPhase.Early) {() =>
-    GS += new Setting[Int](
-      key = ColorVisualizationTileSideLengthInPixels,
-      initialValue = 80,
-      validator = new SettingValidatorFactory().conditionFalseValidator[Int]({
-        _ < 20
-      }, "Side length of color visualization tiles' must be at least 20 pixels"))
-  }
-
 
   //
   // Register metadata source providers

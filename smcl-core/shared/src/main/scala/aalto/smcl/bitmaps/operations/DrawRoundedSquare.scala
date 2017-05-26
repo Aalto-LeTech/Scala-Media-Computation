@@ -19,14 +19,14 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings._
 
 
 
 
 /**
  * Operation to draw a rounded-corner square with given colors. If a color is not
- * given, the default primary/secondary colors will be used, as defined in the
- * [[aalto.smcl.infrastructure.GS]].
+ * given, the default primary/secondary colors will be used.
  *
  * @param upperLeftCornerXInPixels
  * @param upperLeftCornerYInPixels
@@ -44,13 +44,13 @@ private[bitmaps]
 case class DrawRoundedSquare(
     upperLeftCornerXInPixels: Int,
     upperLeftCornerYInPixels: Int,
-    sideLengthInPixels: Int = GS.intFor(DefaultBitmapWidthInPixels),
-    roundingWidthInPixels: Int = GS.intFor(DefaultRoundingWidthInPixels),
-    roundingHeightInPixels: Int = GS.intFor(DefaultRoundingHeightInPixels),
-    hasBorder: Boolean = GS.isTrueThat(ShapesHaveBordersByDefault),
-    hasFilling: Boolean = GS.isTrueThat(ShapesHaveFillingsByDefault),
-    color: RGBAColor = GS.colorFor(DefaultPrimary),
-    fillColor: RGBAColor = GS.colorFor(DefaultSecondary))
+    sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+    roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+    roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+    hasBorder: Boolean = ShapesHaveBordersByDefault,
+    hasFilling: Boolean = ShapesHaveFillingsByDefault,
+    color: RGBAColor = DefaultPrimaryColor,
+    fillColor: RGBAColor = DefaultSecondaryColor)
     extends AbstractOperation
             with Renderable
             with Immutable {

@@ -14,10 +14,12 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure
+package aalto.smcl.settings
 
 
-import aalto.smcl.colors.{RGBAColor, Black, White}
+import aalto.smcl.bitmaps.BitmapValidatorFunctionFactory
+import aalto.smcl.colors.{Black, White}
+import aalto.smcl.infrastructure.SettingInitializer
 
 
 
@@ -28,122 +30,123 @@ import aalto.smcl.colors.{RGBAColor, Black, White}
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class SharedSettingInitializer(
-    settingValidatorFactory: SettingValidatorFactory,
-    bitmapValidatorFunctionFactory: BitmapValidatorFunctionFactory) {
+class SharedSettingInitializer() extends SettingInitializer {
 
   /**
    *
-   *
    */
-  def init(): Unit = {
-    GS += new Setting[Boolean](
-      key = NewBitmapsAreDisplayedAutomatically,
+  def apply(
+      settingValidatorFactory: SettingValidatorFactory,
+      bitmapValidatorFunctionFactory: BitmapValidatorFunctionFactory): Unit = {
+
+    BooleanSetting(
+      key = SIdNewBitmapsAreDisplayedAutomatically,
       initialValue = false,
       validator = settingValidatorFactory.EmptyValidator)
 
-    GS += new Setting[Boolean](
-      key = BitmapsAreDisplayedAutomaticallyAfterOperations,
+    BooleanSetting(
+      key = SIdBitmapsAreDisplayedAutomaticallyAfterOperations,
       initialValue = false,
       validator = settingValidatorFactory.EmptyValidator)
 
-    GS += new Setting[Boolean](
-      key = ShapesHaveBordersByDefault,
+    BooleanSetting(
+      key = SIdShapesHaveBordersByDefault,
       initialValue = true,
       validator = settingValidatorFactory.EmptyValidator)
 
-    GS += new Setting[Boolean](
-      key = ShapesHaveFillingsByDefault,
+    BooleanSetting(
+      key = SIdShapesHaveFillingsByDefault,
       initialValue = false,
       validator = settingValidatorFactory.EmptyValidator)
 
-    GS += new Setting[Boolean](
-      key = CanvasesAreResizedBasedOnTransformations,
+    BooleanSetting(
+      key = SIdCanvasesAreResizedBasedOnTransformations,
       initialValue = true,
       validator = settingValidatorFactory.EmptyValidator)
 
-    GS += new Setting[Int](
-      key = DefaultBitmapWidthInPixels,
+    IntSetting(
+      key = SIdDefaultBitmapWidthInPixels,
       initialValue = 50,
       validator = bitmapValidatorFunctionFactory.BitmapWidthValidator())
 
-    GS += new Setting[Int](
-      key = DefaultBitmapHeightInPixels,
+    IntSetting(
+      key = SIdDefaultBitmapHeightInPixels,
       initialValue = 50,
       validator = bitmapValidatorFunctionFactory.BitmapHeightValidator())
 
-    GS += new Setting[Int](
-      key = BitmapWidthWarningLimitInPixels,
+    IntSetting(
+      key = SIdBitmapWidthWarningLimitInPixels,
       initialValue = 800,
       validator = bitmapValidatorFunctionFactory.BitmapWidthValidator())
 
-    GS += new Setting[Int](
-      key = BitmapHeightWarningLimitInPixels,
+    IntSetting(
+      key = SIdBitmapHeightWarningLimitInPixels,
       initialValue = 800,
       validator = bitmapValidatorFunctionFactory.BitmapHeightValidator())
 
-    GS += new Setting[Int](
-      key = DefaultCircleRadiusInPixels,
+    IntSetting(
+      key = SIdDefaultCircleRadiusInPixels,
       initialValue = 10,
       validator = settingValidatorFactory.conditionFalseValidator[Int]({
         _ < 1
       }, "Circle radius must be at least 1 pixel"))
 
-    GS += new Setting[Int](
-      key = DefaultRoundingWidthInPixels,
+    IntSetting(
+      key = SIdDefaultRoundingWidthInPixels,
       initialValue = 20,
       validator = settingValidatorFactory.conditionFalseValidator[Int]({
         _ < 1
       }, "Rounding width must be at least 1 pixel"))
 
-    GS += new Setting[Int](
-      key = DefaultRoundingHeightInPixels,
+    IntSetting(
+      key = SIdDefaultRoundingHeightInPixels,
       initialValue = 20,
       validator = settingValidatorFactory.conditionFalseValidator[Int]({
         _ < 1
       }, "Rounding height must be at least 1 pixel"))
 
-    GS += new Setting[Int](
-      key = DefaultPaddingInPixels,
+    IntSetting(
+      key = SIdDefaultPaddingInPixels,
       initialValue = 5,
       validator = settingValidatorFactory.conditionFalseValidator[Int]({
         _ < 0
       }, "Padding cannot be negative"))
 
-    GS += new Setting[Int](
-      key = DefaultArcStartAngleInDegrees,
+    IntSetting(
+      key = SIdDefaultArcStartAngleInDegrees,
       initialValue = 0,
       validator = settingValidatorFactory.EmptyValidator)
 
-    GS += new Setting[Int](
-      key = DefaultArcAngleInDegrees,
+    IntSetting(
+      key = SIdDefaultArcAngleInDegrees,
       initialValue = 180,
       validator = settingValidatorFactory.EmptyValidator)
 
-    GS += new Setting[RGBAColor](
-      key = DefaultBackground,
+    ColorSetting(
+      key = SIdDefaultBackgroundColor,
       initialValue = White.withAbsoluteOpacity(0),
       validator = settingValidatorFactory.IsNullValidator("Color cannot be null"))
 
-    GS += new Setting[RGBAColor](
-      key = DefaultPrimary,
+    ColorSetting(
+      key = SIdDefaultPrimaryColor,
       initialValue = Black,
       validator = settingValidatorFactory.IsNullValidator("Color cannot be null"))
 
-    GS += new Setting[RGBAColor](
-      key = DefaultSecondary,
+    ColorSetting(
+      key = SIdDefaultSecondaryColor,
       initialValue = Black,
       validator = settingValidatorFactory.IsNullValidator("Color cannot be null"))
 
-    GS += new Setting[HorizontalAlignment.Value](
-      key = DefaultHorizontalAlignment,
-      initialValue = HorizontalAlignment.Left,
+    ObjectSetting[HorizontalAlignment](
+      key = SIdDefaultHorizontalAlignment,
+      initialValue = Left,
       validator = settingValidatorFactory.EmptyValidator)
 
-    GS += new Setting[VerticalAlignment.Value](
-      key = DefaultVerticalAlignment,
-      initialValue = VerticalAlignment.Middle,
+    ObjectSetting[VerticalAlignment](
+      key = SIdDefaultVerticalAlignment,
+      initialValue = Middle,
       validator = settingValidatorFactory.EmptyValidator)
+
   }
 
 }

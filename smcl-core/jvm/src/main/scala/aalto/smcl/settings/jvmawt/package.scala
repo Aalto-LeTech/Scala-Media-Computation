@@ -14,14 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure
-
-
-import java.awt.{Toolkit, Color => LowLevelColor}
-
-import scala.language.implicitConversions
-
-import aalto.smcl.colors.RGBAColor
+package aalto.smcl.settings
 
 
 /**
@@ -29,27 +22,67 @@ import aalto.smcl.colors.RGBAColor
  *
  * @author Aleksi Lukkarinen
  */
-package object jvmawt {
+package object jvmawt
+    extends AwtAffineTransformationInterpolationMethodDefinition {
+
+  /** An internal setting ID for the "AffineTransformationInterpolationMethod" setting. */
+  private[smcl]
+  val SIdAffineTransformationInterpolationMethod =
+    "AffineTransformationInterpolationMethod"
 
   /** */
-  private[infrastructure]
-  lazy val UIProvider: AwtSwingUIProvider = new AwtSwingUIProvider()
-
-  /** */
-  private[infrastructure]
-  lazy val AWTToolkit: Toolkit = UIProvider.awtToolkit
+  private lazy val AffineTransformationInterpolationMethod0 = {
+    Settings(SIdAffineTransformationInterpolationMethod)
+        .asInstanceOf[ObjectSetting[AwtAffineTransformationInterpolationMethod]]
+  }
 
   /**
    *
+   *
+   * @return
    */
-  private[infrastructure]
-  implicit def AwtColorWrapper(self: LowLevelColor): RichAwtColor = new RichAwtColor(self)
+  def AffineTransformationInterpolationMethod: AwtAffineTransformationInterpolationMethod = {
+    AffineTransformationInterpolationMethod0.value
+  }
 
   /**
    *
+   *
+   * @param newValue
    */
-  private[infrastructure]
-  implicit def RGBAColorExtendedWrapper(self: RGBAColor): ExtendedRichRGBAColor =
-    new ExtendedRichRGBAColor(self)
+  def AffineTransformationInterpolationMethod_=(
+      newValue: AwtAffineTransformationInterpolationMethod): Unit = {
+
+    AffineTransformationInterpolationMethod0.value = newValue
+  }
+
+
+  /** An internal setting ID for the "ColorVisualizationTileSideLengthInPixels" setting. */
+  private[smcl]
+  val SIdColorVisualizationTileSideLengthInPixels =
+    "ColorVisualizationTileSideLengthInPixels"
+
+  /** */
+  private lazy val ColorVisualizationTileSideLengthInPixels0 = {
+    Settings(SIdColorVisualizationTileSideLengthInPixels).asInstanceOf[IntSetting]
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def ColorVisualizationTileSideLengthInPixels: Int = {
+    ColorVisualizationTileSideLengthInPixels0.value
+  }
+
+  /**
+   *
+   *
+   * @param newValue
+   */
+  def ColorVisualizationTileSideLengthInPixels_=(newValue: Int): Unit = {
+    ColorVisualizationTileSideLengthInPixels0.value = newValue
+  }
 
 }

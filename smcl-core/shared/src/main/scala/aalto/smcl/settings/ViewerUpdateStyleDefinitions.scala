@@ -14,13 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.operations
-
-
-import aalto.smcl.infrastructure.BitmapBufferAdapter
-import aalto.smcl.settings.DefaultBackgroundColor
-
-
+package aalto.smcl.settings
 
 
 /**
@@ -28,22 +22,33 @@ import aalto.smcl.settings.DefaultBackgroundColor
  *
  * @author Aleksi Lukkarinen
  */
-trait OneSourceFilter
-    extends Renderable
-            with Buffered {
-  this: AbstractOperation =>
+trait ViewerUpdateStyleDefinitions {
+
+
+
 
   /**
-   * Applies this convolution filter operation to the given bitmap.
    *
-   * @param destination
    */
-  def render(destination: BitmapBufferAdapter): Unit = {
-    val filteredBitmap = getOrCreateStaticBuffer(destination)
+  sealed abstract class ViewerUpdateStyle
 
-    val ds = destination.drawingSurface
-    ds.clearUsing(DefaultBackgroundColor, useSourceColorLiterally = true)
-    ds.drawBitmap(filteredBitmap)
-  }
+
+
+
+  /**
+   *
+   */
+  case object UpdateViewerPerDefaults extends ViewerUpdateStyle
+
+
+
+
+  /**
+   *
+   */
+  case object PreventViewerUpdates extends ViewerUpdateStyle
+
+
+
 
 }

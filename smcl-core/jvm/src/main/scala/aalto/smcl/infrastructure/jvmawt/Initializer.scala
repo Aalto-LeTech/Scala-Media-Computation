@@ -17,9 +17,11 @@
 package aalto.smcl.infrastructure.jvmawt
 
 
-import aalto.smcl.bitmaps.{Bitmap, BitmapValidator, Bitmaps}
+import aalto.smcl.bitmaps.{Bitmap, BitmapValidator, BitmapValidatorFunctionFactory, Bitmaps}
 import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable, RGBATranslationTableValidator, RichRGBAColor}
-import aalto.smcl.infrastructure.{BitmapValidatorFunctionFactory, CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, GS, InjectablesRegistry, RicherString, SMCLInitializer, Setting, SettingValidatorFactory, SharedSettingInitializer, StringUtils}
+import aalto.smcl.infrastructure.{CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, InjectablesRegistry, RicherString, SMCLInitializer, SettingInitializer, StringUtils}
+import aalto.smcl.settings._
+import aalto.smcl.settings.jvmawt.JVMAWTSettingInitializer
 
 
 
@@ -51,6 +53,9 @@ object Initializer extends SMCLInitializer {
   private val bitmapValidator = new BitmapValidator()
 
   /** */
+  private val settingRegisterer = new SettingRegisterer()
+
+  /** */
   private val bitmapValidatorFunctionFactory =
     new BitmapValidatorFunctionFactory(
       settingValidatorFactory,
@@ -64,11 +69,8 @@ object Initializer extends SMCLInitializer {
 
     injectMiscellaneousDependencies()
 
+    initSettings()
     initPlatformResourceFactory()
-
-    initSharedSettings()
-    initAwtSettings()
-
     initSwingLookAndFeel()
   }
 
@@ -77,6 +79,7 @@ object Initializer extends SMCLInitializer {
    */
   private def injectMiscellaneousDependencies(): Unit = {
     val registry = Map[String, Any](
+      InjectablesRegistry.IIdSettingRegisterer -> settingRegisterer,
       InjectablesRegistry.IIdStringUtils -> stringUtils,
       InjectablesRegistry.IIdCommonValidators -> commonValidators,
       InjectablesRegistry.IIdColorValidator -> colorValidator,
@@ -88,6 +91,11 @@ object Initializer extends SMCLInitializer {
       RicherString,
       RGBAColor,
       RichRGBAColor,
+      BooleanSetting,
+      ColorSetting,
+      ObjectSetting,
+      IntSetting,
+      StringSetting,
       RGBAComponentTranslationTable,
       AwtBitmapBufferAdapter,
       Bitmap,
@@ -97,6 +105,18 @@ object Initializer extends SMCLInitializer {
     injectionTargets foreach {
       _.setInjectables(registry)
     }
+  }
+
+  /**
+   * Initialize settings.
+   */
+  private def initSettings(): Unit = {
+    val initializers = Seq[SettingInitializer](
+      new SharedSettingInitializer(),
+      new JVMAWTSettingInitializer())
+
+    for (initializer <- initializers)
+      initializer(settingValidatorFactory, bitmapValidatorFunctionFactory)
   }
 
   /**
@@ -121,27 +141,6 @@ object Initializer extends SMCLInitializer {
    */
   private def initSwingLookAndFeel(): Unit = {
     UIProvider.tryToInitializeSpecificLookAndFeel(UIProvider.NimbusLookAndFeelName)
-  }
-
-  /**
-   * Initialize settings specific to SMCL's JVM/AWT implementation.
-   */
-  private def initAwtSettings(): Unit = {
-    GS += new Setting[AwtAffineTransformationInterpolationMethod.Value](
-      key = AffineTransformationInterpolationMethod,
-      initialValue = AwtAffineTransformationInterpolationMethod.NearestNeighbor,
-      validator = settingValidatorFactory.EmptyValidator)
-  }
-
-  /**
-   *
-   */
-  private def initSharedSettings(): Unit = {
-    val settingInitializer = new SharedSettingInitializer(
-      settingValidatorFactory,
-      bitmapValidatorFunctionFactory)
-
-    settingInitializer.init()
   }
 
 }

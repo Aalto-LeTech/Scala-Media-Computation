@@ -17,18 +17,13 @@
 package aalto.smcl.infrastructure.exceptions
 
 
-import aalto.smcl.infrastructure.BaseSettingKeys
-
-
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 final case class SettingValidationError private[smcl](
-    setting: BaseSettingKeys.Value[_], override val cause: Throwable)
+    settingKey: String, override val cause: Throwable)
     extends SMCLBaseError(
-      s"""Validation of setting "${setting.toString}" failed (see the upstream exception).""",
+      s"""Validation of setting "$settingKey" failed (see the upstream exception).""",
       cause)

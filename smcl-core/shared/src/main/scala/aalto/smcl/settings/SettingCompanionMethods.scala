@@ -14,13 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.operations
-
-
-import aalto.smcl.infrastructure.BitmapBufferAdapter
-import aalto.smcl.settings.DefaultBackgroundColor
-
-
+package aalto.smcl.settings
 
 
 /**
@@ -28,22 +22,43 @@ import aalto.smcl.settings.DefaultBackgroundColor
  *
  * @author Aleksi Lukkarinen
  */
-trait OneSourceFilter
-    extends Renderable
-            with Buffered {
-  this: AbstractOperation =>
+trait SettingCompanionMethods[SettingDataType, +SettingType <: Setting[SettingDataType]]
+    extends SettingCompanionConstants {
 
   /**
-   * Applies this convolution filter operation to the given bitmap.
+   * A factory method for creating a new setting instance.
    *
-   * @param destination
+   * @param key          identification string for the setting
+   * @param initialValue initial value of the setting
+   * @param validator    validator function for the setting
+   *
+   * @return a new setting instance
    */
-  def render(destination: BitmapBufferAdapter): Unit = {
-    val filteredBitmap = getOrCreateStaticBuffer(destination)
+  protected
+  def newSettingInstance(
+      key: String,
+      initialValue: SettingDataType,
+      validator: SettingValidator[SettingDataType]): SettingType
 
-    val ds = destination.drawingSurface
-    ds.clearUsing(DefaultBackgroundColor, useSourceColorLiterally = true)
-    ds.drawBitmap(filteredBitmap)
+  /**
+   * Creates a new setting instance and registers it to the global [[Settings]] map.
+   *
+   * @param key          identification string for the setting
+   * @param initialValue initial value of the setting
+   * @param validator    validator function for the setting
+   *
+   * @return a new setting instance
+   */
+  def apply(
+      key: String,
+      initialValue: SettingDataType,
+      validator: SettingValidator[SettingDataType]): SettingType = {
+
+    val newSetting = newSettingInstance(key, initialValue, validator)
+
+    settingRegisterer.register(newSetting)
+
+    newSetting
   }
 
 }

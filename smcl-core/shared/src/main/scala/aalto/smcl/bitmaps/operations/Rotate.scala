@@ -21,6 +21,7 @@ import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 
 
 
@@ -39,8 +40,8 @@ private[bitmaps]
 case class Rotate(
     sourceBitmap: Bitmap,
     angleInDegrees: Double,
-    resizeCanvasBasedOnTransformation: Boolean = GS.isTrueThat(CanvasesAreResizedBasedOnTransformations),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground))
+    resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
+    backgroundColor: RGBAColor = DefaultBackgroundColor)
     extends AbstractOperation
             with BufferProvider
             with Immutable {

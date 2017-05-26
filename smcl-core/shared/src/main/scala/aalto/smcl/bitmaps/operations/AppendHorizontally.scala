@@ -22,6 +22,7 @@ import scala.collection.mutable.ArrayBuffer
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.{RGBAColor, _}
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.{Bottom, DefaultBackgroundColor, DefaultPaddingInPixels, DefaultVerticalAlignment, Middle, Top, VerticalAlignment}
 
 
 
@@ -39,9 +40,9 @@ import aalto.smcl.infrastructure._
 private[bitmaps]
 case class AppendHorizontally(
     bitmapsToCombine: Seq[Bitmap])(
-    verticalAlignment: VerticalAlignment.Value = GS.optionFor(DefaultVerticalAlignment),
-    paddingInPixels: Int = GS.intFor(DefaultPaddingInPixels),
-    backgroundColor: RGBAColor = GS.colorFor(DefaultBackground),
+    verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
+    paddingInPixels: Int = DefaultPaddingInPixels,
+    backgroundColor: RGBAColor = DefaultBackgroundColor,
     private val bitmapValidator: BitmapValidator)
     extends AbstractOperation
             with BufferProvider
@@ -79,13 +80,13 @@ case class AppendHorizontally(
 
   /** Vertical offsets of the bitmaps to be combined. */
   val verticalOffsets: Seq[Int] = verticalAlignment match {
-    case VerticalAlignment.Top =>
+    case Top =>
       ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toSeq
 
-    case VerticalAlignment.Bottom =>
+    case Bottom =>
       bitmapsToCombine map {heightInPixels - _.heightInPixels}
 
-    case VerticalAlignment.Middle =>
+    case Middle =>
       bitmapsToCombine map {bmp =>
         (heightInPixels.toDouble / 2 - bmp.heightInPixels.toDouble / 2).floor.toInt
       }
@@ -126,7 +127,8 @@ case class AppendHorizontally(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer()
+  }
 
 }

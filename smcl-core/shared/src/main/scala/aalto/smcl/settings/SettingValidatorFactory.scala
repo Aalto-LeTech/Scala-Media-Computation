@@ -14,13 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.operations
-
-
-import aalto.smcl.infrastructure.BitmapBufferAdapter
-import aalto.smcl.settings.DefaultBackgroundColor
-
-
+package aalto.smcl.settings
 
 
 /**
@@ -28,22 +22,46 @@ import aalto.smcl.settings.DefaultBackgroundColor
  *
  * @author Aleksi Lukkarinen
  */
-trait OneSourceFilter
-    extends Renderable
-            with Buffered {
-  this: AbstractOperation =>
+private[smcl]
+class SettingValidatorFactory() {
+
+  /** */
+  val EmptyValidator: Null = null
 
   /**
-   * Applies this convolution filter operation to the given bitmap.
    *
-   * @param destination
+   *
+   * @param testFailingIfTrue
+   * @param errorMessage
+   * @tparam SettingDataType
+   *
+   * @return
    */
-  def render(destination: BitmapBufferAdapter): Unit = {
-    val filteredBitmap = getOrCreateStaticBuffer(destination)
+  def conditionFalseValidator[SettingDataType](
+      testFailingIfTrue: SettingDataType => Boolean,
+      errorMessage: String): SettingValidator[SettingDataType] = {
 
-    val ds = destination.drawingSurface
-    ds.clearUsing(DefaultBackgroundColor, useSourceColorLiterally = true)
-    ds.drawBitmap(filteredBitmap)
+    {
+      value =>
+        if (testFailingIfTrue(value)) Option(new IllegalArgumentException(errorMessage))
+        else None
+    }
+  }
+
+  /**
+   *
+   *
+   * @param errorMessage
+   * @tparam SettingDataType
+   *
+   * @return
+   */
+  def IsNullValidator[SettingDataType](
+      errorMessage: String): SettingValidator[SettingDataType] = {
+
+    conditionFalseValidator({
+      _ == null
+    }, errorMessage)
   }
 
 }

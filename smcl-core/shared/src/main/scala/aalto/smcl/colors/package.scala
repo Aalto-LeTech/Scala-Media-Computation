@@ -19,8 +19,6 @@ package aalto.smcl
 
 import scala.language.implicitConversions
 
-import aalto.smcl.infrastructure.CommonValidators
-
 
 /**
  *
