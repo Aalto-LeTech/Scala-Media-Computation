@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings._
 
@@ -49,8 +49,8 @@ case class DrawRoundedSquare(
     roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
     hasBorder: Boolean = ShapesHaveBordersByDefault,
     hasFilling: Boolean = ShapesHaveFillingsByDefault,
-    color: RGBAColor = DefaultPrimaryColor,
-    fillColor: RGBAColor = DefaultSecondaryColor)
+    color: Color = DefaultPrimaryColor,
+    fillColor: Color = DefaultSecondaryColor)
     extends AbstractOperation
             with Renderable
             with Immutable {

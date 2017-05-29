@@ -21,7 +21,7 @@ import java.util.Calendar
 
 import scala.util.Try
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure._
 import aalto.smcl.interfaces.Timestamp
 
@@ -99,7 +99,7 @@ class DefaultJvmAwtPlatformResourceFactory(
    *
    * @return
    */
-  override def createPlatformColor(source: RGBAColor): ColorAdapter = {
+  override def createPlatformColor(source: Color): ColorAdapter = {
     AwtColorAdapter(source)
   }
 

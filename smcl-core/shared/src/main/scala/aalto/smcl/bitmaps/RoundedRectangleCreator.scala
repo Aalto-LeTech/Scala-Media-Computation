@@ -17,8 +17,7 @@
 package aalto.smcl.bitmaps
 
 
-
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
 
@@ -50,8 +49,8 @@ class RoundedRectangleCreator private[bitmaps]() {
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels >= 5, s"Width of the rectangle must be at least 5 pixels (was $widthInPixels)")

@@ -17,7 +17,7 @@
 package aalto.smcl.settings
 
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 
 
 
@@ -28,7 +28,7 @@ import aalto.smcl.colors.RGBAColor
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object ColorSetting extends SettingCompanionMethods[RGBAColor, ColorSetting] {
+object ColorSetting extends SettingCompanionMethods[Color, ColorSetting] {
 
   /** Name of the related [[Setting]] subclass. */
   val FullTypeName = "ColorSetting"
@@ -51,8 +51,8 @@ object ColorSetting extends SettingCompanionMethods[RGBAColor, ColorSetting] {
   override protected
   def newSettingInstance(
       key: String,
-      initialValue: RGBAColor,
-      validator: SettingValidator[RGBAColor]): ColorSetting = {
+      initialValue: Color,
+      validator: SettingValidator[Color]): ColorSetting = {
 
     new ColorSetting(key, initialValue, validator)
   }
@@ -69,7 +69,7 @@ object ColorSetting extends SettingCompanionMethods[RGBAColor, ColorSetting] {
  */
 case class ColorSetting private(
     override val key: String,
-    override val initialValue: RGBAColor,
-    override val validator: SettingValidator[RGBAColor])
-    extends Setting[RGBAColor](
+    override val initialValue: Color,
+    override val validator: SettingValidator[Color])
+    extends Setting[Color](
       key, initialValue, validator, ColorSetting)

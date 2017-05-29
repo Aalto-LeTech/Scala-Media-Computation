@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings.DefaultPrimaryColor
 
@@ -41,7 +41,7 @@ case class DrawPolyline(
     xCoordinates: Seq[Int],
     yCoordinates: Seq[Int],
     numberOfCoordinatesToDraw: Int,
-    color: RGBAColor = DefaultPrimaryColor)
+    color: Color = DefaultPrimaryColor)
     extends AbstractOperation
             with Renderable
             with Immutable {

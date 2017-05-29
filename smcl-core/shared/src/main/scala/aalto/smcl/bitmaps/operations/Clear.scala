@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings.DefaultBackgroundColor
 
@@ -34,7 +34,7 @@ import aalto.smcl.settings.DefaultBackgroundColor
  */
 private[bitmaps]
 case class Clear(
-    color: RGBAColor = DefaultBackgroundColor)
+    color: Color = DefaultBackgroundColor)
     extends AbstractOperation
             with Renderable
             with Immutable {
@@ -46,7 +46,7 @@ case class Clear(
 
   /** Information about this operation instance */
   lazy val describedProperties = Map(
-    "background-color" -> Option("0x${_color.asArgbInt.toArgbHexColorString}")
+    "background-color" -> Option(s"0x${color.toARGBInt.toARGBHexColorString}")
   )
 
   /**

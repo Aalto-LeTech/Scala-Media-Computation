@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure.jvmawt
 
 import java.awt.{Color => LowLevelColor}
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 
 
 
@@ -34,10 +34,10 @@ import aalto.smcl.colors.RGBAColor
 private[infrastructure]
 class RichAwtColor(val self: LowLevelColor) {
 
-  /** This `java.awt.Color` as a [[RGBAColor]]. */
-  final def toApplicationColor: RGBAColor = AwtColorAdapter(self).applicationColor
+  /** This `java.awt.Color` as a [[Color]]. */
+  final def toApplicationColor: Color = AwtColorAdapter(self).applicationColor
 
-  /** This `java.awt.Color` as a [[RGBAColor]] with full opacity. */
-  final def withFullOpacity: RGBAColor = AwtColorAdapter(self).applicationColor.withFullOpacity
+  /** This `java.awt.Color` as a [[Color]] with full opacity. */
+  final def withFullOpacity: Color = AwtColorAdapter(self).applicationColor.withFullOpacity
 
 }

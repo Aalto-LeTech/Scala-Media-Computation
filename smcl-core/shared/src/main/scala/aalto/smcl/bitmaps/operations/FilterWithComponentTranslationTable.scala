@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.colors.RGBAComponentTranslationTable
+import aalto.smcl.colors.rgb.ColorComponentTranslationTable
 import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
@@ -31,7 +31,7 @@ import aalto.smcl.infrastructure.BitmapBufferAdapter
  * @author Aleksi Lukkarinen
  */
 private[bitmaps]
-case class FilterWithComponentTranslationTable(translator: RGBAComponentTranslationTable)
+case class FilterWithComponentTranslationTable(translator: ColorComponentTranslationTable)
     extends AbstractOperation
             with OneSourceFilter
             with Immutable {

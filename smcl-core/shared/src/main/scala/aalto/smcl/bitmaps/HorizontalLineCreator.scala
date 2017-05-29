@@ -17,8 +17,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.colors.RGBAColor
-import aalto.smcl.settings.{DefaultBitmapWidthInPixels, DefaultPrimaryColor, ViewerUpdateStyle, UpdateViewerPerDefaults}
+import aalto.smcl.colors.rgb.Color
+import aalto.smcl.settings.{DefaultBitmapWidthInPixels, DefaultPrimaryColor, UpdateViewerPerDefaults, ViewerUpdateStyle}
 
 
 
@@ -42,7 +42,7 @@ class HorizontalLineCreator private[bitmaps]() {
    */
   def createOne(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
+      color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels > 0, s"Width of the line must be at least 1 pixel (was $widthInPixels)")

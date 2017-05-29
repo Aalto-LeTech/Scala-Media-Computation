@@ -17,7 +17,7 @@
 package aalto.smcl
 
 
-import scala.language.implicitConversions
+import aalto.smcl.colors.rgb.PresetColors
 
 
 /**
@@ -26,19 +26,13 @@ import scala.language.implicitConversions
  * @author Aleksi Lukkarinen
  */
 package object colors
-    extends PresetColors with ColorOperationsAPI {
+    extends PresetColors
+            with ColorOperationsAPI {
 
   /** Color component value representing maximal opacity. */
-  val FullyOpaque: Int = ColorValidator.MaximumRGBAOpacity
+  val FullyOpaque: Int = ColorValidator.MaximumOpacity
 
   /** Color component value representing minimal opacity. */
-  val FullyTransparent: Int = ColorValidator.MinimumRGBAOpacity
-
-
-  /** Application of the RichARGBInt class. */
-  implicit def ARGBIntWrapper(self: Int): RichARGBInt = new RichARGBInt(self)
-
-  /** Application of the RichRGBAColor class. */
-  implicit def RGBAColorWrapper(self: RGBAColor): RichRGBAColor = RichRGBAColor(self)
+  val FullyTransparent: Int = ColorValidator.MinimumOpacity
 
 }

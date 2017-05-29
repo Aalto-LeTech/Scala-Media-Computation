@@ -18,7 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.colors.rgb._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
@@ -42,7 +42,7 @@ case class Shear(
     shearingFactorHorizontal: Double = 0.0,
     shearingFactorVertical: Double = 0.0,
     resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-    backgroundColor: RGBAColor = DefaultBackgroundColor)
+    backgroundColor: Color = DefaultBackgroundColor)
     extends AbstractOperation
             with BufferProvider
             with Immutable {

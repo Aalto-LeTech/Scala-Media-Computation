@@ -21,7 +21,8 @@ import scala.collection.mutable
 import scala.ref.WeakReference
 
 import aalto.smcl.bitmaps.operations._
-import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
+import aalto.smcl.colors.ColorValidator
+import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, _}
 import aalto.smcl.settings._
@@ -53,7 +54,7 @@ object Bitmap extends InjectablesRegistry {
   def apply(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      initialBackgroundColor: RGBAColor = DefaultBackgroundColor,
+      initialBackgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
@@ -160,7 +161,7 @@ case class Bitmap private[bitmaps](
    * Returns the initial background color of this [[Bitmap]]
    * (may not be the actual background color at a later time).
    */
-  val initialBackgroundColor: RGBAColor = {
+  val initialBackgroundColor: Color = {
     operations.initialBackgroundColor
   }
 
@@ -269,7 +270,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def clear(
-      color: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(Clear(color), viewerHandling)
@@ -299,7 +300,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def filterWith(
-      translator: RGBAComponentTranslationTable,
+      translator: ColorComponentTranslationTable,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(FilterWithComponentTranslationTable(translator), viewerHandling)
@@ -599,7 +600,7 @@ case class Bitmap private[bitmaps](
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: RGBAColor = DefaultPrimaryColor,
+      color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -627,7 +628,7 @@ case class Bitmap private[bitmaps](
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      color: RGBAColor = DefaultPrimaryColor,
+      color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -659,8 +660,8 @@ case class Bitmap private[bitmaps](
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -695,8 +696,8 @@ case class Bitmap private[bitmaps](
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -733,8 +734,8 @@ case class Bitmap private[bitmaps](
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -774,8 +775,8 @@ case class Bitmap private[bitmaps](
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -818,8 +819,8 @@ case class Bitmap private[bitmaps](
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -857,8 +858,8 @@ case class Bitmap private[bitmaps](
       radiusInPixels: Int = DefaultCircleRadiusInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -895,8 +896,8 @@ case class Bitmap private[bitmaps](
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -938,8 +939,8 @@ case class Bitmap private[bitmaps](
       arcAngleInDegrees: Int = DefaultArcAngleInDegrees,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -966,7 +967,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def trim(
-      colorToTrim: RGBAColor = DefaultBackgroundColor,
+      colorToTrim: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(Trim(this, colorToTrim), viewerHandling)
@@ -1017,7 +1018,7 @@ case class Bitmap private[bitmaps](
       extraPixelsOntoTopEdge: Int = 0,
       extraPixelsOntoRightEdge: Int = 0,
       extraPixelsOntoBottomEdge: Int = 0,
-      color: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1044,8 +1045,8 @@ case class Bitmap private[bitmaps](
       topBitmap: Bitmap,
       topBitmapUpperLeftX: Int,
       topBitmapUpperLeftY: Int,
-      topBitmapOpacity: Int = ColorValidator.MaximumRGBAOpacity,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      topBitmapOpacity: Int = ColorValidator.MaximumOpacity,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1075,8 +1076,8 @@ case class Bitmap private[bitmaps](
       bottomBitmap: Bitmap,
       upperLeftX: Int,
       upperLeftY: Int,
-      opacity: Int = ColorValidator.MaximumRGBAOpacity,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      opacity: Int = ColorValidator.MaximumOpacity,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1211,8 +1212,8 @@ case class Bitmap private[bitmaps](
       bitmapsToLayOverThisFromBottomToTop: Bitmap*)(
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
-      opacityForAllBitmaps: Int = ColorValidator.MaximumRGBAOpacity,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      opacityForAllBitmaps: Int = ColorValidator.MaximumOpacity,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1238,7 +1239,7 @@ case class Bitmap private[bitmaps](
       bitmapsToCombineWith: Bitmap*)(
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1264,7 +1265,7 @@ case class Bitmap private[bitmaps](
       bitmapsToCombineWith: Bitmap*)(
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1301,7 +1302,7 @@ case class Bitmap private[bitmaps](
       bitmapsToCombineWith: Bitmap*)(
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1338,7 +1339,7 @@ case class Bitmap private[bitmaps](
       bitmapsToCombineWith: Bitmap*)(
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1480,7 +1481,7 @@ case class Bitmap private[bitmaps](
       shearingFactorHorizontal: Double = 0.0,
       shearingFactorVertical: Double = 0.0,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1517,7 +1518,7 @@ case class Bitmap private[bitmaps](
   def shearHorizontally(
       shearingFactor: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     shear(
@@ -1540,7 +1541,7 @@ case class Bitmap private[bitmaps](
   def shearVertically(
       shearingFactor: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     shear(
@@ -1563,7 +1564,7 @@ case class Bitmap private[bitmaps](
   def rotateDegs(
       angleInDegrees: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1586,7 +1587,7 @@ case class Bitmap private[bitmaps](
    */
   def rotate90DegsCw(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1609,7 +1610,7 @@ case class Bitmap private[bitmaps](
    */
   def rotate90DegsCcw(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1632,7 +1633,7 @@ case class Bitmap private[bitmaps](
    */
   def rotate180Degs(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1655,7 +1656,7 @@ case class Bitmap private[bitmaps](
    */
   def turn(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     rotate90DegsCw(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
@@ -1672,7 +1673,7 @@ case class Bitmap private[bitmaps](
    */
   def unturn(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     rotate90DegsCcw(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
@@ -1691,7 +1692,7 @@ case class Bitmap private[bitmaps](
   def replicateHorizontally(
       numberOfReplicas: Int,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(
@@ -1717,7 +1718,7 @@ case class Bitmap private[bitmaps](
   def replicateVertically(
       numberOfReplicas: Int,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(

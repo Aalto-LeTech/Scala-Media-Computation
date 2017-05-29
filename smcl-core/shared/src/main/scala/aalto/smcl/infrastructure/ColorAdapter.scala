@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 
 
 
@@ -62,6 +62,6 @@ trait ColorAdapter {
    *
    * @return
    */
-  def applicationColor: RGBAColor
+  def applicationColor: Color
 
 }

@@ -20,7 +20,8 @@ package aalto.smcl.bitmaps.operations
 import scala.collection.mutable.ArrayBuffer
 
 import aalto.smcl.bitmaps._
-import aalto.smcl.colors.{ColorValidator, RGBAColor, _}
+import aalto.smcl.colors.ColorValidator
+import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, PRF}
 import aalto.smcl.settings._
 
@@ -42,8 +43,8 @@ case class OverlayPerAlignments(
     bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
     horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
     verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
-    opacityForAllBitmaps: Int = ColorValidator.MaximumRGBAOpacity,
-    backgroundColor: RGBAColor = DefaultBackgroundColor,
+    opacityForAllBitmaps: Int = ColorValidator.MaximumOpacity,
+    backgroundColor: Color = DefaultBackgroundColor,
     private val colorValidator: ColorValidator)
     extends AbstractOperation
             with BufferProvider
@@ -56,7 +57,7 @@ case class OverlayPerAlignments(
 
   require(colorValidator != null, "The color validator argument has to be a ColorValidator instance (was null).")
 
-  colorValidator.validateRGBAOpacityComponent(opacityForAllBitmaps)
+  colorValidator.validateOpacityComponent(opacityForAllBitmaps)
 
   /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

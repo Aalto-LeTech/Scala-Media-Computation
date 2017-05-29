@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
 
@@ -45,8 +45,8 @@ class EllipseCreator private[bitmaps]() {
   def createOne(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(widthInPixels > 0, s"Width of the ellipse must be at least 1 pixel (was $widthInPixels)")

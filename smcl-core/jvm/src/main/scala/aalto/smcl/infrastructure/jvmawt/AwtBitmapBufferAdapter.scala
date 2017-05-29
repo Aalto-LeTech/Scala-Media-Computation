@@ -27,11 +27,14 @@ import scala.util.{Failure, Try}
 
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
+import aalto.smcl.colors.rgb._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
-import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 import aalto.smcl.settings.jvmawt.AffineTransformationInterpolationMethod
+import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
+
+
 
 
 /**
@@ -199,7 +202,7 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def trim(colorToTrim: RGBAColor = DefaultBackgroundColor): AwtBitmapBufferAdapter = {
+  override def trim(colorToTrim: Color = DefaultBackgroundColor): AwtBitmapBufferAdapter = {
     val (reds, greens, blues, opacities) = colorComponentArrays
 
     val redToTrim = colorToTrim.red
@@ -334,7 +337,7 @@ class AwtBitmapBufferAdapter private(
     val (reds, greens, blues, opacities) = newBuffer.colorComponentArrays
 
     var index: Int = 0
-    val resultRgbaTuplesTry = Try{
+    val resultRGBATuplesTry = Try{
       while (index < reds.length) {
         val (newRed, newGreen, newBlue, newOpacity) = function(
           reds(index),
@@ -353,10 +356,10 @@ class AwtBitmapBufferAdapter private(
       }
     }
 
-    if (resultRgbaTuplesTry.isFailure) {
+    if (resultRGBATuplesTry.isFailure) {
       throw FunctionExecutionError(
         "The given pixel iteration function did not get executed correctly (see the chained exceptions)",
-        resultRgbaTuplesTry.failed.get
+        resultRGBATuplesTry.failed.get
       )
     }
 
@@ -370,14 +373,17 @@ class AwtBitmapBufferAdapter private(
    * @return
    */
   override def colorComponentArrays: (Array[Int], Array[Int], Array[Int], Array[Int]) = {
-    import aalto.smcl.colors.RGBASampleBand._
+    import aalto.smcl.colors.rgb.SampleBands._
 
     val getSamples =
       awtBufferedImage.getRaster.getSamples(
         0, 0, widthInPixels, heightInPixels, _: Int,
         null.asInstanceOf[Array[Int]])
 
-    (getSamples(Red.id), getSamples(Green.id), getSamples(Blue.id), getSamples(Opacity.id))
+    (getSamples(Red.ordinal),
+        getSamples(Green.ordinal),
+        getSamples(Blue.ordinal),
+        getSamples(Opacity.ordinal))
   }
 
   /**
@@ -412,15 +418,15 @@ class AwtBitmapBufferAdapter private(
             s"$areaInPixels, but actually was ${opacities.length}")
 
 
-    import aalto.smcl.colors.RGBASampleBand._
+    import aalto.smcl.colors.rgb.SampleBands._
 
     val raster = awtBufferedImage.getRaster
     val setSamples = raster.setSamples(0, 0, widthInPixels, heightInPixels, _: Int, _: Array[Int])
 
-    setSamples(Red.id, reds)
-    setSamples(Green.id, greens)
-    setSamples(Blue.id, blues)
-    setSamples(Opacity.id, opacities)
+    setSamples(Red.ordinal, reds)
+    setSamples(Green.ordinal, greens)
+    setSamples(Blue.ordinal, blues)
+    setSamples(Opacity.ordinal, opacities)
 
     awtBufferedImage.setData(raster)
   }
@@ -437,7 +443,7 @@ class AwtBitmapBufferAdapter private(
   override def createTransformedVersionWith(
       transformation: AffineTransformation,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor): AwtBitmapBufferAdapter = {
+      backgroundColor: Color = DefaultBackgroundColor): AwtBitmapBufferAdapter = {
 
     val globalInterpolationMethod = AffineTransformationInterpolationMethod.lowLevelValue
     var resultingImageWidth: Int = awtBufferedImage.getWidth
@@ -524,7 +530,7 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def createFilteredVersionWith(translator: RGBAComponentTranslationTable): AwtBitmapBufferAdapter = {
+  override def createFilteredVersionWith(translator: ColorComponentTranslationTable): AwtBitmapBufferAdapter = {
     val lowLevelLookupTable = new ShortLookupTable(0, translator.toArray)
     val operation = new LookupOp(lowLevelLookupTable, null)
 

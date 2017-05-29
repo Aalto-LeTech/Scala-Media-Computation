@@ -17,7 +17,8 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.colors.{ColorValidator, RGBAColor}
+import aalto.smcl.colors.ColorValidator
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.settings._
 
@@ -38,7 +39,7 @@ trait DrawingSurfaceAdapter {
    * @param color
    */
   def clearUsing(
-      color: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultBackgroundColor,
       useSourceColorLiterally: Boolean = false): Unit
 
   /**
@@ -64,7 +65,7 @@ trait DrawingSurfaceAdapter {
       bitmap: BitmapBufferAdapter,
       x: Int,
       y: Int,
-      opacity: Int = ColorValidator.MaximumRGBAOpacity): Boolean
+      opacity: Int = ColorValidator.MaximumOpacity): Boolean
 
   /**
    *
@@ -111,8 +112,8 @@ trait DrawingSurfaceAdapter {
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -137,8 +138,8 @@ trait DrawingSurfaceAdapter {
       arcAngleInDegrees: Int = DefaultArcAngleInDegrees,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -159,8 +160,8 @@ trait DrawingSurfaceAdapter {
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -185,8 +186,8 @@ trait DrawingSurfaceAdapter {
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -200,7 +201,7 @@ trait DrawingSurfaceAdapter {
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      color: RGBAColor = DefaultPrimaryColor): Unit
+      color: Color = DefaultPrimaryColor): Unit
 
   /**
    *
@@ -219,8 +220,8 @@ trait DrawingSurfaceAdapter {
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit
 
   /**
    *
@@ -236,6 +237,6 @@ trait DrawingSurfaceAdapter {
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: RGBAColor = DefaultPrimaryColor): Unit
+      color: Color = DefaultPrimaryColor): Unit
 
 }

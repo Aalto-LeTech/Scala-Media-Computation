@@ -129,7 +129,7 @@ class BitmapSpec extends ImageSpecBase {
     //      val testColors = Table("c", 0xFF9EADBC, 0xFF000000, 0xFF123456)
     //
     //      forAll(testColors) { c =>
-    //        info(s"testing argbInt value: 0x${c.toArgbHexColorString}  (${c})")
+    //        info(s"testing argbInt value: 0x${c.toAGRBHexColorString}  (${c})")
     //
     //        val b = Bitmap()
     //
@@ -145,7 +145,7 @@ class BitmapSpec extends ImageSpecBase {
     //      val testColors = Table("c", 0xFF9EADBC, 0xFF000000, 0xFF123456)
     //
     //      forAll(testColors) { c =>
-    //        info(s"testing argbInt value: 0x${c.toArgbHexColorString}  (${c})")
+    //        info(s"testing argbInt value: 0x${c.toAGRBHexColorString}  (${c})")
     //
     //        val b = Bitmap(initialBackgroundColorOption = Option(c))
     //

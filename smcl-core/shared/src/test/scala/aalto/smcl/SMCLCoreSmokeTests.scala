@@ -17,12 +17,14 @@
 package aalto.smcl
 
 
-
 import org.scalatest.DoNotDiscover
 
 import aalto.smcl.bitmaps.{Bitmap, circle}
-import aalto.smcl.colors.{LightBlue, RGBAColor}
+import aalto.smcl.colors.LightBlue
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.tests.SharedIntegrationSpecBase
+
+
 
 
 /**
@@ -37,7 +39,7 @@ class SMCLCoreSmokeTests extends SharedIntegrationSpecBase {
     "list all settings" in {aalto.smcl.settings.Settings.list()}
     "create a bitmap" in {Bitmap(widthInPixels = 15)}
     "create a circle" in {circle(50)}
-    "create a new RGBA color" in {RGBAColor(1, 2, 3, 4)}
+    "create a new RGBA color" in {Color(1, 2, 3, 4)}
     "recall a preset RGBA color" in LightBlue
   }
 

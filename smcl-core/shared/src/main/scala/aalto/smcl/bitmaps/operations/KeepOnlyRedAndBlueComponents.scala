@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.colors.RGBAComponentTranslationTable
+import aalto.smcl.colors.rgb.ColorComponentTranslationTable
 import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
@@ -53,7 +53,7 @@ case class KeepOnlyRedAndBlueComponents()
     require(sources.length == 1,
       s"Negative creation requires exactly one source image (provided: ${sources.length}).")
 
-    sources(0).createFilteredVersionWith(RGBAComponentTranslationTable.forKeepingOnlyRedAndBlue)
+    sources(0).createFilteredVersionWith(ColorComponentTranslationTable.forKeepingOnlyRedAndBlue)
   }
 
 }

@@ -20,9 +20,9 @@ package aalto.smcl.bitmaps.operations
 import scala.collection.mutable.ArrayBuffer
 
 import aalto.smcl.bitmaps._
-import aalto.smcl.colors.{RGBAColor, _}
+import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
-import aalto.smcl.settings.{Bottom, DefaultBackgroundColor, DefaultPaddingInPixels, DefaultVerticalAlignment, Middle, Top, VerticalAlignment}
+import aalto.smcl.settings._
 
 
 
@@ -42,7 +42,7 @@ case class AppendHorizontally(
     bitmapsToCombine: Seq[Bitmap])(
     verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
     paddingInPixels: Int = DefaultPaddingInPixels,
-    backgroundColor: RGBAColor = DefaultBackgroundColor,
+    backgroundColor: Color = DefaultBackgroundColor,
     private val bitmapValidator: BitmapValidator)
     extends AbstractOperation
             with BufferProvider

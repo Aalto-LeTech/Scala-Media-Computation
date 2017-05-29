@@ -19,7 +19,8 @@ package aalto.smcl.infrastructure.jvmawt
 
 import java.awt.{AlphaComposite, Graphics2D}
 
-import aalto.smcl.colors.{ColorValidator, RGBAColor}
+import aalto.smcl.colors.ColorValidator
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter}
 import aalto.smcl.settings._
@@ -64,7 +65,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
    * @param color
    */
   override def clearUsing(
-      color: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultBackgroundColor,
       useSourceColorLiterally: Boolean = false): Unit = {
 
     withDrawingSurface{ds =>
@@ -100,9 +101,9 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       bitmap: BitmapBufferAdapter,
       x: Int,
       y: Int,
-      opacity: Int = ColorValidator.MaximumRGBAOpacity): Boolean = {
+      opacity: Int = ColorValidator.MaximumOpacity): Boolean = {
 
-    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumRGBAOpacity
+    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumOpacity
 
     withDrawingSurface{ds =>
       ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
@@ -125,7 +126,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       transformation: AffineTransformation,
       opacity: Int): Boolean = {
 
-    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumRGBAOpacity
+    val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumOpacity
 
     withDrawingSurface{ds =>
       ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
@@ -148,7 +149,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
   override def drawBitmap(
       bitmap: BitmapBufferAdapter,
       transformation: AffineTransformation): Boolean =
-    drawBitmap(bitmap, transformation, ColorValidator.MaximumRGBAOpacity)
+    drawBitmap(bitmap, transformation, ColorValidator.MaximumOpacity)
 
   /**
    *
@@ -169,8 +170,8 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -212,8 +213,8 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       arcAngleInDegrees: Int = DefaultArcAngleInDegrees,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -253,8 +254,8 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -296,8 +297,8 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -330,7 +331,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      color: RGBAColor = DefaultPrimaryColor): Unit = {
+      color: Color = DefaultPrimaryColor): Unit = {
 
     withDrawingSurface{ds =>
       ds.setColor(color.toAwtColor)
@@ -355,8 +356,8 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor): Unit = {
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor): Unit = {
 
     withDrawingSurface{ds =>
       if (hasFilling) {
@@ -385,7 +386,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: RGBAColor = DefaultPrimaryColor): Unit = {
+      color: Color = DefaultPrimaryColor): Unit = {
 
     withDrawingSurface{ds =>
       ds.setColor(color.toAwtColor)

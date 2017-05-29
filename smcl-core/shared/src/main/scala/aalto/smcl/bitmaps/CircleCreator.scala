@@ -20,7 +20,7 @@ package aalto.smcl.bitmaps
 import scala.collection.mutable
 
 import aalto.smcl.bitmaps
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
 
@@ -46,8 +46,8 @@ class CircleCreator {
    */
   def createOne(
       diameter: Int = DefaultBitmapWidthInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(diameter > 0, s"Diameter of the circle must be at least 1 pixel (was $diameter)")
@@ -95,8 +95,8 @@ class CircleCreator {
   def createArrayOf(
       collectionSize: Int = 5,
       diameter: Int = DefaultBitmapWidthInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor): Array[Bitmap] = {
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
     require(collectionSize >= 0, s"Size of the collection cannot be negative (was $collectionSize)")
 

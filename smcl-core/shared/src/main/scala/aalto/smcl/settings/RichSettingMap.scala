@@ -17,7 +17,7 @@
 package aalto.smcl.settings
 
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 
 
 
@@ -86,8 +86,8 @@ class RichSettingMap private[settings](val self: SettingMap) {
    *
    * @return
    */
-  def getColorSetting(key: String): Setting[RGBAColor] = {
-    self.get(key).asInstanceOf[Setting[RGBAColor]]
+  def getColorSetting(key: String): Setting[Color] = {
+    self.get(key).asInstanceOf[Setting[Color]]
   }
 
   /**

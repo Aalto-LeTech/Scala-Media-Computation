@@ -21,7 +21,7 @@ import java.awt.{Toolkit, Color => LowLevelColor}
 
 import scala.language.implicitConversions
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 
 
 /**
@@ -49,7 +49,7 @@ package object jvmawt {
    *
    */
   private[infrastructure]
-  implicit def RGBAColorExtendedWrapper(self: RGBAColor): ExtendedRichRGBAColor =
+  implicit def RGBAColorExtendedWrapper(self: Color): ExtendedRichRGBAColor =
     new ExtendedRichRGBAColor(self)
 
 }

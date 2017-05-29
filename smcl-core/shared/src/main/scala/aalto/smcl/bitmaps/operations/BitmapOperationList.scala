@@ -19,7 +19,8 @@ package aalto.smcl.bitmaps.operations
 
 import scala.annotation.tailrec
 
-import aalto.smcl.colors.{RGBAColor, White}
+import aalto.smcl.colors.White
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
@@ -76,7 +77,7 @@ case class BitmapOperationList private(
   /**
    *
    */
-  def initialBackgroundColor: RGBAColor =
+  def initialBackgroundColor: Color =
     operations.lastOption.getOrElse(None) match {
       case Clear(color) => color
       case _            => White

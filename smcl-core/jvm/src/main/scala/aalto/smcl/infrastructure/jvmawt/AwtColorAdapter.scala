@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure.jvmawt
 
 import java.awt.{Color => LowLevelColor}
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.ColorAdapter
 
 
@@ -40,7 +40,7 @@ object AwtColorAdapter {
    *
    * @return
    */
-  def apply(applicationColor: RGBAColor): AwtColorAdapter =
+  def apply(applicationColor: Color): AwtColorAdapter =
     new AwtColorAdapter(
       applicationColor.red,
       applicationColor.green,
@@ -87,8 +87,8 @@ case class AwtColorAdapter(
    *
    * @return
    */
-  def applicationColor: RGBAColor =
-    RGBAColor(redComponent, greenComponent, blueComponent, opacityComponent)
+  def applicationColor: Color =
+    Color(redComponent, greenComponent, blueComponent, opacityComponent)
 
   /**
    *

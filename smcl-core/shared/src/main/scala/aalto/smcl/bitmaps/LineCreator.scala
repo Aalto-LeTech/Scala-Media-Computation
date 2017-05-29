@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
 
@@ -51,8 +51,8 @@ class LineCreator private[bitmaps]() {
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(color != null, "The line color argument has to be a Color instance (was null).")

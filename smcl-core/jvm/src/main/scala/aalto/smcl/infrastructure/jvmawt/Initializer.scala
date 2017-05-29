@@ -18,7 +18,8 @@ package aalto.smcl.infrastructure.jvmawt
 
 
 import aalto.smcl.bitmaps.{Bitmap, BitmapValidator, BitmapValidatorFunctionFactory, Bitmaps}
-import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable, RGBATranslationTableValidator, RichRGBAColor}
+import aalto.smcl.colors.ColorValidator
+import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, RichColor}
 import aalto.smcl.infrastructure.{CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, InjectablesRegistry, RicherString, SMCLInitializer, SettingInitializer, StringUtils}
 import aalto.smcl.settings._
 import aalto.smcl.settings.jvmawt.JVMAWTSettingInitializer
@@ -47,7 +48,7 @@ object Initializer extends SMCLInitializer {
 
   /** */
   private val rgbaTranslationTableValidator =
-    new RGBATranslationTableValidator(colorValidator)
+    new ColorTranslationTableValidator(colorValidator)
 
   /** */
   private val bitmapValidator = new BitmapValidator()
@@ -89,14 +90,14 @@ object Initializer extends SMCLInitializer {
 
     val injectionTargets: Seq[InjectablesRegistry] = Seq(
       RicherString,
-      RGBAColor,
-      RichRGBAColor,
+      Color,
+      RichColor,
+      ColorComponentTranslationTable,
       BooleanSetting,
       ColorSetting,
       ObjectSetting,
       IntSetting,
       StringSetting,
-      RGBAComponentTranslationTable,
       AwtBitmapBufferAdapter,
       Bitmap,
       Bitmaps

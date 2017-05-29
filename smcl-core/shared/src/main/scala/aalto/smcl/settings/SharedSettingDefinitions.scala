@@ -17,7 +17,7 @@
 package aalto.smcl.settings
 
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 
 
 
@@ -319,11 +319,11 @@ trait SharedSettingDefinitions {
   private lazy val DefaultBackgroundColor0 =
     Settings(SIdDefaultBackgroundColor).asInstanceOf[ColorSetting]
 
-  def DefaultBackgroundColor: RGBAColor = {
+  def DefaultBackgroundColor: Color = {
     DefaultBackgroundColor0.value
   }
 
-  def DefaultBackgroundColor_=(newValue: RGBAColor): Unit = {
+  def DefaultBackgroundColor_=(newValue: Color): Unit = {
     DefaultBackgroundColor0.value = newValue
   }
 
@@ -335,11 +335,11 @@ trait SharedSettingDefinitions {
   private lazy val DefaultPrimaryColor0 =
     Settings(SIdDefaultPrimaryColor).asInstanceOf[ColorSetting]
 
-  def DefaultPrimaryColor: RGBAColor = {
+  def DefaultPrimaryColor: Color = {
     DefaultPrimaryColor0.value
   }
 
-  def DefaultPrimaryColor_=(newValue: RGBAColor): Unit = {
+  def DefaultPrimaryColor_=(newValue: Color): Unit = {
     DefaultPrimaryColor0.value = newValue
   }
 
@@ -351,11 +351,11 @@ trait SharedSettingDefinitions {
   private lazy val DefaultSecondaryColor0 =
     Settings(SIdDefaultSecondaryColor).asInstanceOf[ColorSetting]
 
-  def DefaultSecondaryColor: RGBAColor = {
+  def DefaultSecondaryColor: Color = {
     DefaultSecondaryColor0.value
   }
 
-  def DefaultSecondaryColor_=(newValue: RGBAColor): Unit = {
+  def DefaultSecondaryColor_=(newValue: Color): Unit = {
     DefaultSecondaryColor0.value = newValue
   }
 

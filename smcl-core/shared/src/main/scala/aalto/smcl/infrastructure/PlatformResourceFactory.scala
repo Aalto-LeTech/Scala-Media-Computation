@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure
 
 import scala.util.Try
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.interfaces.Timestamp
 
 
@@ -70,7 +70,7 @@ trait PlatformResourceFactory {
    *
    * @return
    */
-  def createPlatformColor(source: RGBAColor): ColorAdapter
+  def createPlatformColor(source: Color): ColorAdapter
 
   /**
    *

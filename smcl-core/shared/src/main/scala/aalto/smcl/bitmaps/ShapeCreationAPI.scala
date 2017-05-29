@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
 
@@ -47,8 +47,8 @@ trait ShapeCreationAPI {
    */
   def circle(
       diameter: Int = DefaultBitmapWidthInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     _circleCreator.createOne(diameter, color, backgroundColor, viewerHandling)
@@ -67,8 +67,8 @@ trait ShapeCreationAPI {
   def circleArray(
       collectionSize: Int = 5,
       diameter: Int = DefaultBitmapWidthInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor): Array[Bitmap] = {
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
     _circleCreator.createArrayOf(collectionSize, diameter, color, backgroundColor)
   }
@@ -86,8 +86,8 @@ trait ShapeCreationAPI {
   def circleSeq(
       collectionSize: Int = 5,
       diameter: Int = DefaultBitmapWidthInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor): Seq[Bitmap] = {
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
     _circleCreator.createArrayOf(collectionSize, diameter, color, backgroundColor).toSeq
   }
@@ -110,8 +110,8 @@ trait ShapeCreationAPI {
   def ellipse(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     _ellipseCreator.createOne(
@@ -137,7 +137,7 @@ trait ShapeCreationAPI {
    */
   def hLine(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
+      color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     _horizontalLineCreator.createOne(widthInPixels, color, viewerHandling)
@@ -165,8 +165,8 @@ trait ShapeCreationAPI {
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     _lineCreator.createOne(
@@ -197,7 +197,7 @@ trait ShapeCreationAPI {
   def rectangle(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
+      color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     _rectangleCreator.createOne(widthInPixels, heightInPixels, color, viewerHandling)
@@ -225,8 +225,8 @@ trait ShapeCreationAPI {
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     _roundedRectangleCreator.createOne(
@@ -260,8 +260,8 @@ trait ShapeCreationAPI {
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
       roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     _roundedSquareCreator.createOne(
@@ -289,7 +289,7 @@ trait ShapeCreationAPI {
    */
   def square(
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
+      color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     _squareCreator.createOne(sideLengthInPixels, color, viewerHandling)
@@ -310,7 +310,7 @@ trait ShapeCreationAPI {
    */
   def vLine(
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
+      color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     _verticalLineCreator.createOne(heightInPixels, color, viewerHandling)

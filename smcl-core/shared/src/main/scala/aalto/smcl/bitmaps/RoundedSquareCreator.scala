@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
 
@@ -47,8 +47,8 @@ class RoundedSquareCreator private[bitmaps]() {
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
       roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
-      color: RGBAColor = DefaultPrimaryColor,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(sideLengthInPixels >= 5, s"Side length of the square must be at least 5 pixels (was $sideLengthInPixels)")

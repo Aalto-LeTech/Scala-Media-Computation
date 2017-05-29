@@ -18,6 +18,9 @@ package aalto.smcl.colors
 
 
 import aalto.smcl.colors.exceptions._
+import aalto.smcl.colors.hsi.exceptions.{IntensityComponentOutOfRangeError, SaturationComponentOutOfRangeError}
+import aalto.smcl.colors.hsv.exceptions.{SaturationComponentOutOfRangeError, ValueComponentOutOfRangeError}
+import aalto.smcl.colors.rgb.exceptions.{BlueComponentOutOfRangeError, GreenComponentOutOfRangeError, RedComponentOutOfRangeError}
 import aalto.smcl.infrastructure._
 
 
@@ -31,79 +34,79 @@ import aalto.smcl.infrastructure._
 object ColorValidator {
 
   /** An RGB color component value representing minimal amount of red. */
-  val MinimumRGBRed: Int = ByteRange.start
+  val MinimumRed: Int = ByteRange.start
 
   /** An RGB color component value representing maximal amount of red. */
-  val MaximumRGBRed: Int = ByteRange.end
+  val MaximumRed: Int = ByteRange.end
 
   /** Range for valid values of the red color component of an RGB color. */
-  val rgbRedRange = ByteRange
+  val RedRange = ByteRange
 
   /** An RGB color component value representing minimal amount of green. */
-  val MinimumRGBGreen: Int = ByteRange.start
+  val MinimumGreen: Int = ByteRange.start
 
   /** An RGB color component value representing maximal amount of green. */
-  val MaximumRGBGreen: Int = ByteRange.end
+  val MaximumGreen: Int = ByteRange.end
 
   /** Range for valid values of the green color component of an RGB color. */
-  val rgbGreenRange = ByteRange
+  val GreenRange = ByteRange
 
   /** An RGB color component value representing minimal amount of blue. */
-  val MinimumRGBBlue: Int = ByteRange.start
+  val MinimumBlue: Int = ByteRange.start
 
   /** An RGB color component value representing maximal amount of blue. */
-  val MaximumRGBBlue: Int = ByteRange.end
+  val MaximumBlue: Int = ByteRange.end
 
   /** Range for valid values of the blue color component of an RGB color. */
-  val rgbBlueRange = ByteRange
+  val BlueRange = ByteRange
 
   /** A color component value representing minimal amount of gray. */
-  val MinimumRGBGray: Int = ByteRange.start
+  val MinimumGray: Int = ByteRange.start
 
   /** A color component value representing maximal amount of gray. */
-  val MaximumRGBGray: Int = ByteRange.end
+  val MaximumGray: Int = ByteRange.end
 
   /** Range for valid values of gray color component. */
-  val rgbGrayRange = ByteRange
+  val GrayRange = ByteRange
 
   /** An RGBA color component value representing minimal opacity. */
-  val MinimumRGBAOpacity: Int = ByteRange.start
+  val MinimumOpacity: Int = ByteRange.start
 
   /** An RGBA color component value representing maximal opacity. */
-  val MaximumRGBAOpacity: Int = ByteRange.end
+  val MaximumOpacity: Int = ByteRange.end
 
   /** Range for valid values of the opacity color component of an RGBA color. */
-  val rgbaOpacityRange = ByteRange
+  val OpacityRange = ByteRange
 
   /** Color component value representing normalized minimal amount of red. */
-  val MinimumNormalizedRGBRed: Double = 0.0
+  val MinimumNormalizedRed: Double = 0.0
 
   /** Color component value representing normalized maximal amount of red. */
-  val MaximumNormalizedRGBRed: Double = 1.0
+  val MaximumNormalizedRed: Double = 1.0
 
   /** Color component value representing normalized minimal amount of green. */
-  val MinimumNormalizedRGBGreen: Double = 0.0
+  val MinimumNormalizedGreen: Double = 0.0
 
   /** Color component value representing normalized maximal amount of green. */
-  val MaximumNormalizedRGBGreen: Double = 1.0
+  val MaximumNormalizedGreen: Double = 1.0
 
   /** Color component value representing normalized minimal amount of blue. */
-  val MinimumNormalizedRGBBlue: Double = 0.0
+  val MinimumNormalizedBlue: Double = 0.0
 
   /** Color component value representing normalized maximal amount of blue. */
-  val MaximumNormalizedRGBBlue: Double = 1.0
+  val MaximumNormalizedBlue: Double = 1.0
 
   /** Color component value representing normalized minimal amount of gray. */
-  val MinimumNormalizedRGBGray: Double = 0.0
+  val MinimumNormalizedGray: Double = 0.0
 
   /** Color component value representing normalized maximal amount of gray. */
-  val MaximumNormalizedRGBGray: Double = 1.0
+  val MaximumNormalizedGray: Double = 1.0
 
   /** Color component value representing normalized minimal opacity. */
-  val MinimumNormalizedRGBAOpacity: Double = 0.0
+  val MinimumNormalizedOpacity: Double = 0.0
 
   /** Color component value representing normalized maximal opacity. */
-  val MaximumNormalizedRGBAOpacity: Double = 1.0
+  val MaximumNormalizedOpacity: Double = 1.0
 
   /** Color component value representing start of the hue cycle. */
   val MinimumHSIHue: Double = 0.0
@@ -159,6 +162,9 @@ object ColorValidator {
  */
 class ColorValidator() {
 
+  /** A shortcut to the companion object. */
+  private val Const = ColorValidator
+
   /**
    *
    *
@@ -167,8 +173,8 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbRedComponentIsInRange(redCandidate: Int): Boolean = {
-    ColorValidator.rgbRedRange.contains(redCandidate)
+  def redComponentIsInRange(redCandidate: Int): Boolean = {
+    Const.RedRange.contains(redCandidate)
   }
 
   /**
@@ -179,8 +185,8 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbGreenComponentIsInRange(greenCandidate: Int): Boolean = {
-    ColorValidator.rgbGreenRange.contains(greenCandidate)
+  def greenComponentIsInRange(greenCandidate: Int): Boolean = {
+    Const.GreenRange.contains(greenCandidate)
   }
 
   /**
@@ -191,8 +197,8 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbBlueComponentIsInRange(blueCandidate: Int): Boolean = {
-    ColorValidator.rgbBlueRange.contains(blueCandidate)
+  def blueComponentIsInRange(blueCandidate: Int): Boolean = {
+    Const.BlueRange.contains(blueCandidate)
   }
 
   /**
@@ -203,8 +209,8 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbGrayComponentIsInRange(grayCandidate: Int): Boolean = {
-    ColorValidator.rgbGrayRange.contains(grayCandidate)
+  def grayComponentIsInRange(grayCandidate: Int): Boolean = {
+    Const.GrayRange.contains(grayCandidate)
   }
 
   /**
@@ -215,8 +221,8 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbaOpacityComponentIsInRange(opacityCandidate: Int): Boolean = {
-    ColorValidator.rgbaOpacityRange.contains(opacityCandidate)
+  def opacityComponentIsInRange(opacityCandidate: Int): Boolean = {
+    Const.OpacityRange.contains(opacityCandidate)
   }
 
   /**
@@ -227,9 +233,9 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbNormalizedRedComponentIsInRange(redCandidate: Double): Boolean = {
-    redCandidate >= ColorValidator.MinimumNormalizedRGBRed &&
-        redCandidate <= ColorValidator.MaximumNormalizedRGBRed
+  def normalizedRedComponentIsInRange(redCandidate: Double): Boolean = {
+    redCandidate >= Const.MinimumNormalizedRed &&
+        redCandidate <= Const.MaximumNormalizedRed
   }
 
   /**
@@ -240,9 +246,9 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbNormalizedGreenComponentIsInRange(greenCandidate: Double): Boolean = {
-    greenCandidate >= ColorValidator.MinimumNormalizedRGBGreen &&
-        greenCandidate <= ColorValidator.MaximumNormalizedRGBGreen
+  def normalizedGreenComponentIsInRange(greenCandidate: Double): Boolean = {
+    greenCandidate >= Const.MinimumNormalizedGreen &&
+        greenCandidate <= Const.MaximumNormalizedGreen
   }
 
   /**
@@ -253,9 +259,9 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbNormalizedBlueComponentIsInRange(blueCandidate: Double): Boolean = {
-    blueCandidate >= ColorValidator.MinimumNormalizedRGBBlue &&
-        blueCandidate <= ColorValidator.MaximumNormalizedRGBGreen
+  def normalizedBlueComponentIsInRange(blueCandidate: Double): Boolean = {
+    blueCandidate >= Const.MinimumNormalizedBlue &&
+        blueCandidate <= Const.MaximumNormalizedGreen
   }
 
   /**
@@ -266,9 +272,9 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbNormalizedGrayComponentIsInRange(grayCandidate: Double): Boolean = {
-    grayCandidate >= ColorValidator.MinimumNormalizedRGBGray &&
-        grayCandidate <= ColorValidator.MaximumNormalizedRGBGray
+  def normalizedGrayComponentIsInRange(grayCandidate: Double): Boolean = {
+    grayCandidate >= Const.MinimumNormalizedGray &&
+        grayCandidate <= Const.MaximumNormalizedGray
   }
 
   /**
@@ -279,9 +285,9 @@ class ColorValidator() {
    * @return
    */
   @inline
-  def rgbaNormalizedOpacityComponentIsInRange(opacityCandidate: Int): Boolean = {
-    opacityCandidate >= ColorValidator.MinimumNormalizedRGBAOpacity &&
-        opacityCandidate <= ColorValidator.MaximumNormalizedRGBGreen
+  def normalizedOpacityComponentIsInRange(opacityCandidate: Int): Boolean = {
+    opacityCandidate >= Const.MinimumNormalizedOpacity &&
+        opacityCandidate <= Const.MaximumNormalizedGreen
   }
 
   /**
@@ -293,8 +299,8 @@ class ColorValidator() {
    */
   @inline
   def hsiSaturationComponentIsInRange(saturationCandidate: Double): Boolean = {
-    saturationCandidate >= ColorValidator.MinimumHSISaturation &&
-        saturationCandidate <= ColorValidator.MaximumHSISaturation
+    saturationCandidate >= Const.MinimumHSISaturation &&
+        saturationCandidate <= Const.MaximumHSISaturation
   }
 
   /**
@@ -306,8 +312,8 @@ class ColorValidator() {
    */
   @inline
   def hsiIntensityComponentIsInRange(intensityCandidate: Double): Boolean = {
-    intensityCandidate >= ColorValidator.MinimumHSIIntensity &&
-        intensityCandidate <= ColorValidator.MaximumHSIIntensity
+    intensityCandidate >= Const.MinimumHSIIntensity &&
+        intensityCandidate <= Const.MaximumHSIIntensity
   }
 
   /**
@@ -319,8 +325,8 @@ class ColorValidator() {
    */
   @inline
   def hsvSaturationComponentIsInRange(saturationCandidate: Double): Boolean = {
-    saturationCandidate >= ColorValidator.MinimumHSVSaturation &&
-        saturationCandidate <= ColorValidator.MaximumHSVSaturation
+    saturationCandidate >= Const.MinimumHSVSaturation &&
+        saturationCandidate <= Const.MaximumHSVSaturation
   }
 
   /**
@@ -332,8 +338,8 @@ class ColorValidator() {
    */
   @inline
   def hsvValueComponentIsInRange(valueCandidate: Double): Boolean = {
-    valueCandidate >= ColorValidator.MinimumHSVValue &&
-        valueCandidate <= ColorValidator.MaximumHSVValue
+    valueCandidate >= Const.MinimumHSVValue &&
+        valueCandidate <= Const.MaximumHSVValue
   }
 
   /**
@@ -341,13 +347,13 @@ class ColorValidator() {
    *
    * @param redCandidate
    *
-   * @throws RGBRedComponentOutOfRangeError
+   * @throws RedComponentOutOfRangeError
    */
   @inline
-  def validateRGBRedComponent(redCandidate: Int): Unit = {
-    if (!rgbRedComponentIsInRange(redCandidate)) {
-      throw RGBRedComponentOutOfRangeError(redCandidate,
-        ColorValidator.MinimumRGBRed, ColorValidator.MaximumRGBRed)
+  def validateRedComponent(redCandidate: Int): Unit = {
+    if (!redComponentIsInRange(redCandidate)) {
+      throw RedComponentOutOfRangeError(redCandidate,
+        Const.MinimumRed, Const.MaximumRed)
     }
   }
 
@@ -356,13 +362,13 @@ class ColorValidator() {
    *
    * @param greenCandidate
    *
-   * @throws RGBGreenComponentOutOfRangeError
+   * @throws GreenComponentOutOfRangeError
    */
   @inline
-  def validateRGBGreenComponent(greenCandidate: Int): Unit = {
-    if (!rgbGreenComponentIsInRange(greenCandidate)) {
-      throw RGBGreenComponentOutOfRangeError(greenCandidate,
-        ColorValidator.MinimumRGBGreen, ColorValidator.MaximumRGBGreen)
+  def validateGreenComponent(greenCandidate: Int): Unit = {
+    if (!greenComponentIsInRange(greenCandidate)) {
+      throw GreenComponentOutOfRangeError(greenCandidate,
+        Const.MinimumGreen, Const.MaximumGreen)
     }
   }
 
@@ -371,13 +377,13 @@ class ColorValidator() {
    *
    * @param blueCandidate
    *
-   * @throws RGBBlueComponentOutOfRangeError
+   * @throws BlueComponentOutOfRangeError
    */
   @inline
-  def validateRGBBlueComponent(blueCandidate: Int): Unit = {
-    if (!rgbBlueComponentIsInRange(blueCandidate)) {
-      throw RGBBlueComponentOutOfRangeError(blueCandidate,
-        ColorValidator.MinimumRGBBlue, ColorValidator.MaximumRGBBlue)
+  def validateBlueComponent(blueCandidate: Int): Unit = {
+    if (!blueComponentIsInRange(blueCandidate)) {
+      throw BlueComponentOutOfRangeError(blueCandidate,
+        Const.MinimumBlue, Const.MaximumBlue)
     }
   }
 
@@ -386,13 +392,13 @@ class ColorValidator() {
    *
    * @param grayCandidate
    *
-   * @throws RGBGrayComponentOutOfRangeError
+   * @throws GrayComponentOutOfRangeError
    */
   @inline
   def validateRGBGrayComponent(grayCandidate: Int): Unit = {
-    if (!rgbGrayComponentIsInRange(grayCandidate)) {
-      throw RGBGrayComponentOutOfRangeError(grayCandidate,
-        ColorValidator.MinimumRGBGray, ColorValidator.MaximumRGBGray)
+    if (!grayComponentIsInRange(grayCandidate)) {
+      throw GrayComponentOutOfRangeError(grayCandidate,
+        Const.MinimumGray, Const.MaximumGray)
     }
   }
 
@@ -401,13 +407,13 @@ class ColorValidator() {
    *
    * @param opacityCandidate
    *
-   * @throws RGBAOpacityComponentOutOfRangeError
+   * @throws OpacityComponentOutOfRangeError
    */
   @inline
-  def validateRGBAOpacityComponent(opacityCandidate: Int): Unit = {
-    if (!rgbaOpacityComponentIsInRange(opacityCandidate)) {
-      throw RGBAOpacityComponentOutOfRangeError(opacityCandidate,
-        ColorValidator.MinimumRGBAOpacity, ColorValidator.MaximumRGBAOpacity)
+  def validateOpacityComponent(opacityCandidate: Int): Unit = {
+    if (!opacityComponentIsInRange(opacityCandidate)) {
+      throw OpacityComponentOutOfRangeError(opacityCandidate,
+        Const.MinimumOpacity, Const.MaximumOpacity)
     }
   }
 
@@ -416,13 +422,13 @@ class ColorValidator() {
    *
    * @param saturationCandidate
    *
-   * @throws HSISaturationComponentOutOfRangeError
+   * @throws SaturationComponentOutOfRangeError
    */
   @inline
   def validateHSISaturationComponent(saturationCandidate: Double): Unit = {
     if (!hsiSaturationComponentIsInRange(saturationCandidate)) {
-      throw HSISaturationComponentOutOfRangeError(saturationCandidate,
-        ColorValidator.MinimumHSISaturation, ColorValidator.MaximumHSISaturation)
+      throw hsi.exceptions.SaturationComponentOutOfRangeError(saturationCandidate,
+        Const.MinimumHSISaturation, Const.MaximumHSISaturation)
     }
   }
 
@@ -431,13 +437,13 @@ class ColorValidator() {
    *
    * @param intensityCandidate
    *
-   * @throws HSIIntensityComponentOutOfRangeError
+   * @throws IntensityComponentOutOfRangeError
    */
   @inline
   def validateHSIIntensityComponent(intensityCandidate: Double): Unit = {
     if (!hsiIntensityComponentIsInRange(intensityCandidate)) {
-      throw HSIIntensityComponentOutOfRangeError(intensityCandidate,
-        ColorValidator.MinimumHSIIntensity, ColorValidator.MaximumHSIIntensity)
+      throw IntensityComponentOutOfRangeError(intensityCandidate,
+        Const.MinimumHSIIntensity, Const.MaximumHSIIntensity)
     }
   }
 
@@ -446,13 +452,13 @@ class ColorValidator() {
    *
    * @param saturationCandidate
    *
-   * @throws HSVSaturationComponentOutOfRangeError
+   * @throws SaturationComponentOutOfRangeError
    */
   @inline
   def validateHSVSaturationComponent(saturationCandidate: Double): Unit = {
     if (!hsvSaturationComponentIsInRange(saturationCandidate)) {
-      throw HSVSaturationComponentOutOfRangeError(saturationCandidate,
-        ColorValidator.MinimumHSVSaturation, ColorValidator.MaximumHSVSaturation)
+      throw hsv.exceptions.SaturationComponentOutOfRangeError(saturationCandidate,
+        Const.MinimumHSVSaturation, Const.MaximumHSVSaturation)
     }
   }
 
@@ -461,13 +467,13 @@ class ColorValidator() {
    *
    * @param valueCandidate
    *
-   * @throws HSVValueComponentOutOfRangeError
+   * @throws ValueComponentOutOfRangeError
    */
   @inline
   def validateHSVValueComponent(valueCandidate: Double): Unit = {
     if (!hsvValueComponentIsInRange(valueCandidate)) {
-      throw HSVValueComponentOutOfRangeError(valueCandidate,
-        ColorValidator.MinimumHSVValue, ColorValidator.MaximumHSVValue)
+      throw ValueComponentOutOfRangeError(valueCandidate,
+        Const.MinimumHSVValue, Const.MaximumHSVValue)
     }
   }
 
@@ -476,13 +482,13 @@ class ColorValidator() {
    *
    * @param grayCandidate
    *
-   * @throws RGBGrayComponentOutOfRangeError
+   * @throws GrayComponentOutOfRangeError
    */
   @inline
-  def validateRGBGray(grayCandidate: Int): Unit = {
-    if (!rgbGrayComponentIsInRange(grayCandidate)) {
-      throw RGBGrayComponentOutOfRangeError(grayCandidate,
-        ColorValidator.MinimumRGBGray, ColorValidator.MaximumRGBGray)
+  def validateGray(grayCandidate: Int): Unit = {
+    if (!grayComponentIsInRange(grayCandidate)) {
+      throw GrayComponentOutOfRangeError(grayCandidate,
+        Const.MinimumGray, Const.MaximumGray)
     }
   }
 
@@ -493,15 +499,15 @@ class ColorValidator() {
    * @param greenCandidate
    * @param blueCandidate
    *
-   * @throws RGBRedComponentOutOfRangeError
-   * @throws RGBGreenComponentOutOfRangeError
-   * @throws RGBBlueComponentOutOfRangeError
+   * @throws RedComponentOutOfRangeError
+   * @throws GreenComponentOutOfRangeError
+   * @throws BlueComponentOutOfRangeError
    */
   @inline
   def validateRGBColor(redCandidate: Int, greenCandidate: Int, blueCandidate: Int): Unit = {
-    validateRGBRedComponent(redCandidate)
-    validateRGBGreenComponent(greenCandidate)
-    validateRGBBlueComponent(blueCandidate)
+    validateRedComponent(redCandidate)
+    validateGreenComponent(greenCandidate)
+    validateBlueComponent(blueCandidate)
   }
 
   /**
@@ -509,13 +515,13 @@ class ColorValidator() {
    *
    * @param grayCandidate
    *
-   * @throws RGBGrayComponentOutOfRangeError
-   * @throws RGBAOpacityComponentOutOfRangeError
+   * @throws GrayComponentOutOfRangeError
+   * @throws OpacityComponentOutOfRangeError
    */
   @inline
   def validateRGBGrayAndOpacity(grayCandidate: Int, opacityCandidate: Int): Unit = {
     validateRGBGrayComponent(grayCandidate)
-    validateRGBAOpacityComponent(opacityCandidate)
+    validateOpacityComponent(opacityCandidate)
   }
 
   /**
@@ -525,10 +531,10 @@ class ColorValidator() {
    * @param greenCandidate
    * @param blueCandidate
    *
-   * @throws RGBRedComponentOutOfRangeError
-   * @throws RGBGreenComponentOutOfRangeError
-   * @throws RGBBlueComponentOutOfRangeError
-   * @throws RGBAOpacityComponentOutOfRangeError
+   * @throws RedComponentOutOfRangeError
+   * @throws GreenComponentOutOfRangeError
+   * @throws BlueComponentOutOfRangeError
+   * @throws OpacityComponentOutOfRangeError
    */
   @inline
   def validateRGBAColor(
@@ -538,7 +544,7 @@ class ColorValidator() {
       opacityCandidate: Int): Unit = {
 
     validateRGBColor(redCandidate, greenCandidate, blueCandidate)
-    validateRGBAOpacityComponent(opacityCandidate)
+    validateOpacityComponent(opacityCandidate)
   }
 
   /**
@@ -546,10 +552,10 @@ class ColorValidator() {
    *
    * @param rgbaTuple
    *
-   * @throws RGBRedComponentOutOfRangeError
-   * @throws RGBGreenComponentOutOfRangeError
-   * @throws RGBBlueComponentOutOfRangeError
-   * @throws RGBAOpacityComponentOutOfRangeError
+   * @throws RedComponentOutOfRangeError
+   * @throws GreenComponentOutOfRangeError
+   * @throws BlueComponentOutOfRangeError
+   * @throws OpacityComponentOutOfRangeError
    */
   //noinspection ScalaUnnecessaryParentheses
   def validateRGBAColor(rgbaTuple: (Int, Int, Int, Int)): Unit = {
@@ -563,8 +569,8 @@ class ColorValidator() {
    * @param saturationCandidate
    * @param intensityCandidate
    *
-   * @throws HSISaturationComponentOutOfRangeError
-   * @throws HSIIntensityComponentOutOfRangeError
+   * @throws SaturationComponentOutOfRangeError
+   * @throws IntensityComponentOutOfRangeError
    */
   @inline
   def validateHSIColor(
@@ -583,8 +589,8 @@ class ColorValidator() {
    * @param saturationCandidate
    * @param valueCandidate
    *
-   * @throws HSVSaturationComponentOutOfRangeError
-   * @throws HSVValueComponentOutOfRangeError
+   * @throws SaturationComponentOutOfRangeError
+   * @throws ValueComponentOutOfRangeError
    */
   @inline
   def validateHSVColor(

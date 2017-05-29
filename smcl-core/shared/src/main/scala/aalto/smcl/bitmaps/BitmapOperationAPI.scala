@@ -17,7 +17,8 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.colors.{ColorValidator, RGBAColor, RGBAComponentTranslationTable}
+import aalto.smcl.colors.ColorValidator
+import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import aalto.smcl.settings._
 
 
@@ -63,7 +64,7 @@ trait BitmapOperationAPI {
    */
   def filterWith(
       bmp: Bitmap,
-      translator: RGBAComponentTranslationTable,
+      translator: ColorComponentTranslationTable,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -158,7 +159,7 @@ trait BitmapOperationAPI {
    */
   def trim(
       bmp: Bitmap,
-      colorToTrim: RGBAColor = DefaultBackgroundColor,
+      colorToTrim: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -215,7 +216,7 @@ trait BitmapOperationAPI {
       extraPixelsOntoTopEdge: Int = 0,
       extraPixelsOntoRightEdge: Int = 0,
       extraPixelsOntoBottomEdge: Int = 0,
-      color: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -247,8 +248,8 @@ trait BitmapOperationAPI {
       topBitmap: Bitmap,
       topBitmapUpperLeftX: Int,
       topBitmapUpperLeftY: Int,
-      topBitmapOpacity: Int = ColorValidator.MaximumRGBAOpacity,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      topBitmapOpacity: Int = ColorValidator.MaximumOpacity,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     bottomBitmap.underlayBehind(
@@ -276,8 +277,8 @@ trait BitmapOperationAPI {
       bitmapsToOverlayFromBottomToTop: Bitmap*)(
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
-      opacityForAllBitmaps: Int = ColorValidator.MaximumRGBAOpacity,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      opacityForAllBitmaps: Int = ColorValidator.MaximumOpacity,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     bitmapsToOverlayFromBottomToTop.head.overlayPerAlignments(bitmapsToOverlayFromBottomToTop.tail: _*)(
@@ -536,7 +537,7 @@ trait BitmapOperationAPI {
    */
   def clear(
       bmp: Bitmap,
-      color: RGBAColor = DefaultBackgroundColor,
+      color: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap to be cleared cannot be null.")
@@ -563,7 +564,7 @@ trait BitmapOperationAPI {
       fromYInPixels: Int,
       toXInPixels: Int,
       toYInPixels: Int,
-      color: RGBAColor = DefaultPrimaryColor,
+      color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -594,7 +595,7 @@ trait BitmapOperationAPI {
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
-      color: RGBAColor = DefaultPrimaryColor,
+      color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -629,8 +630,8 @@ trait BitmapOperationAPI {
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -668,8 +669,8 @@ trait BitmapOperationAPI {
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -709,8 +710,8 @@ trait BitmapOperationAPI {
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -753,8 +754,8 @@ trait BitmapOperationAPI {
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -800,8 +801,8 @@ trait BitmapOperationAPI {
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -841,8 +842,8 @@ trait BitmapOperationAPI {
       radiusInPixels: Int = DefaultCircleRadiusInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -881,8 +882,8 @@ trait BitmapOperationAPI {
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -927,8 +928,8 @@ trait BitmapOperationAPI {
       arcAngleInDegrees: Int = DefaultArcAngleInDegrees,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: RGBAColor = DefaultPrimaryColor,
-      fillColor: RGBAColor = DefaultSecondaryColor,
+      color: Color = DefaultPrimaryColor,
+      fillColor: Color = DefaultSecondaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -961,7 +962,7 @@ trait BitmapOperationAPI {
       bitmapsToCombine: Bitmap*)(
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
@@ -999,7 +1000,7 @@ trait BitmapOperationAPI {
       bitmapsToCombine: Bitmap*)(
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bitmapsToCombine.length > 1, s"There must be at least two bitmaps to combine (was $bitmapsToCombine)")
@@ -1089,7 +1090,7 @@ trait BitmapOperationAPI {
       bmp: Bitmap,
       angleInDegrees: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1114,7 +1115,7 @@ trait BitmapOperationAPI {
   def rotate90DegsCw(
       bmp: Bitmap,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1138,7 +1139,7 @@ trait BitmapOperationAPI {
   def rotate90DegsCcw(
       bmp: Bitmap,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1162,7 +1163,7 @@ trait BitmapOperationAPI {
   def rotate180Degs(
       bmp: Bitmap,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1186,7 +1187,7 @@ trait BitmapOperationAPI {
   def turn(
       bmp: Bitmap,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1210,7 +1211,7 @@ trait BitmapOperationAPI {
   def unturn(
       bmp: Bitmap,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1323,7 +1324,7 @@ trait BitmapOperationAPI {
       shearingFactorHorizontal: Double = 0.0,
       shearingFactorVertical: Double = 0.0,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1366,7 +1367,7 @@ trait BitmapOperationAPI {
       bmp: Bitmap,
       shearingFactor: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1393,7 +1394,7 @@ trait BitmapOperationAPI {
       bmp: Bitmap,
       shearingFactor: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1421,7 +1422,7 @@ trait BitmapOperationAPI {
       bmp: Bitmap,
       numberOfReplicas: Int,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1448,7 +1449,7 @@ trait BitmapOperationAPI {
       bmp: Bitmap,
       numberOfReplicas: Int,
       paddingInPixels: Int = DefaultPaddingInPixels,
-      backgroundColor: RGBAColor = DefaultBackgroundColor,
+      backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
@@ -1486,7 +1487,7 @@ trait BitmapOperationAPI {
 //  /**
 //   *
 //   */
-//  def setArgbIntAt(x: Int, y: Int, argbInt: Int): Unit = {
+//  def setARGBIntAt(x: Int, y: Int, argbInt: Int): Unit = {
 //    require(widthRange.contains(x),
 //      s"The x coordinate must be >= zero and less than the width of the image (was $x)")
 //
@@ -1518,7 +1519,7 @@ trait BitmapOperationAPI {
 //   *
 //   */
 //  def setRedComponentAt(x: Int, y: Int, red: Int): Unit =
-//    setArgbIntAt(x, y, withNewRedComponent(argbIntAt(x, y), red))
+//    setARGBIntAt(x, y, withNewRedComponent(argbIntAt(x, y), red))
 //
 //  /**
 //   *
@@ -1529,7 +1530,7 @@ trait BitmapOperationAPI {
 //   *
 //   */
 //  def setGreenComponentAt(x: Int, y: Int, green: Int): Unit =
-//    setArgbIntAt(x, y, withNewGreenComponent(argbIntAt(x, y), green))
+//    setARGBIntAt(x, y, withNewGreenComponent(argbIntAt(x, y), green))
 //
 //  /**
 //   *
@@ -1540,7 +1541,7 @@ trait BitmapOperationAPI {
 //   *
 //   */
 //  def setBlueComponentAt(x: Int, y: Int, blue: Int): Unit =
-//    setArgbIntAt(x, y, withNewBlueComponent(argbIntAt(x, y), blue))
+//    setARGBIntAt(x, y, withNewBlueComponent(argbIntAt(x, y), blue))
 //
 //  /**
 //   *
@@ -1551,4 +1552,4 @@ trait BitmapOperationAPI {
 //   *
 //   */
 //  def opacityComponentAt_=(x: Int, y: Int, opacity: Int): Unit =
-//    setArgbIntAt(x, y, withNewOpacityComponent(argbIntAt(x, y), opacity))
+//    setARGBIntAt(x, y, withNewOpacityComponent(argbIntAt(x, y), opacity))

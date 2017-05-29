@@ -18,7 +18,8 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps._
-import aalto.smcl.colors.{ColorValidator, RGBAColor, _}
+import aalto.smcl.colors.ColorValidator
+import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings.DefaultBackgroundColor
 
@@ -42,8 +43,8 @@ case class OverlayFreely(
     topBitmap: Bitmap,
     topBitmapUpperLeftX: Int,
     topBitmapUpperLeftY: Int,
-    topBitmapOpacity: Int = ColorValidator.MaximumRGBAOpacity,
-    backgroundColor: RGBAColor = DefaultBackgroundColor,
+    topBitmapOpacity: Int = ColorValidator.MaximumOpacity,
+    backgroundColor: Color = DefaultBackgroundColor,
     private val colorValidator: ColorValidator)
     extends AbstractOperation
             with BufferProvider
@@ -54,7 +55,7 @@ case class OverlayFreely(
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
   require(colorValidator != null, "The color validator argument has to be a ColorValidator instance (was null).")
 
-  colorValidator.validateRGBAOpacityComponent(topBitmapOpacity)
+  colorValidator.validateOpacityComponent(topBitmapOpacity)
 
   /** The [[BitmapOperationList]] instances resulting the bitmaps to be combined. */
   val childOperationListsOption: Option[Seq[BitmapOperationList]] =

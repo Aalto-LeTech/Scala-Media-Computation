@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure
 
 import scala.util.Try
 
-import aalto.smcl.colors.RGBAColor
+import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
 import aalto.smcl.interfaces.Timestamp
 
@@ -84,7 +84,7 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def createPlatformColor(source: RGBAColor): ColorAdapter = {
+  override def createPlatformColor(source: Color): ColorAdapter = {
     implementation.createPlatformColor(source)
   }
 

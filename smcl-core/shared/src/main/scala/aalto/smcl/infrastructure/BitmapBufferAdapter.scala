@@ -18,9 +18,10 @@ package aalto.smcl.infrastructure
 
 
 import aalto.smcl.bitmaps.ConvolutionKernel
-import aalto.smcl.colors.{RGBAColor, RGBAComponentTranslationTable}
+import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
+
 
 
 
@@ -67,7 +68,7 @@ trait BitmapBufferAdapter {
    *
    * @return
    */
-  def trim(colorToTrim: RGBAColor = DefaultBackgroundColor): BitmapBufferAdapter
+  def trim(colorToTrim: Color = DefaultBackgroundColor): BitmapBufferAdapter
 
   /**
    *
@@ -108,7 +109,7 @@ trait BitmapBufferAdapter {
   def createTransformedVersionWith(
       transformation: AffineTransformation,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: RGBAColor = DefaultBackgroundColor): BitmapBufferAdapter
+      backgroundColor: Color = DefaultBackgroundColor): BitmapBufferAdapter
 
   /**
    *
@@ -142,7 +143,7 @@ trait BitmapBufferAdapter {
    *
    * @return
    */
-  def createFilteredVersionWith(translator: RGBAComponentTranslationTable): BitmapBufferAdapter
+  def createFilteredVersionWith(translator: ColorComponentTranslationTable): BitmapBufferAdapter
 
   /**
    *
