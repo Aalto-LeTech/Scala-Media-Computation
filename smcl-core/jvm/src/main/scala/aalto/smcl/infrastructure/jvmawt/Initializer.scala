@@ -20,7 +20,7 @@ package aalto.smcl.infrastructure.jvmawt
 import aalto.smcl.bitmaps.{Bitmap, BitmapValidator, BitmapValidatorFunctionFactory, Bitmaps}
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, RichColor}
-import aalto.smcl.infrastructure.{CommonValidators, DefaultJvmCalendarProvider, DefaultJvmUniqueIdProvider, DefaultPlatformResourceFactory, InjectablesRegistry, RicherString, SMCLInitializer, SettingInitializer, StringUtils}
+import aalto.smcl.infrastructure.{CommonValidators, DefaultJVMCalendarProvider, DefaultJVMUniqueIDProvider, DefaultPlatformResourceFactory, InjectablesRegistry, RicherString, SMCLInitializer, SettingInitializer, StringUtils}
 import aalto.smcl.settings._
 import aalto.smcl.settings.jvmawt.JVMAWTSettingInitializer
 
@@ -98,7 +98,7 @@ object Initializer extends SMCLInitializer {
       ObjectSetting,
       IntSetting,
       StringSetting,
-      AwtBitmapBufferAdapter,
+      AWTBitmapBufferAdapter,
       Bitmap,
       Bitmaps
     )
@@ -124,13 +124,13 @@ object Initializer extends SMCLInitializer {
    * Initialize platform resource factory.
    */
   private def initPlatformResourceFactory(): Unit = {
-    val calendarProvider = new DefaultJvmCalendarProvider()
-    val uuidProvider = new DefaultJvmUniqueIdProvider()
-    val fontProvider = new DefaultAwtFontProvider()
-    val imageProvider = new DefaultAwtImageProvider(bitmapValidator)
-    val screenInfoProvider = new DefaultAwtScreenInformationProvider()
+    val calendarProvider = new DefaultJVMCalendarProvider()
+    val uuidProvider = new DefaultJVMUniqueIDProvider()
+    val fontProvider = new DefaultAWTFontProvider()
+    val imageProvider = new DefaultAWTImageProvider(bitmapValidator)
+    val screenInfoProvider = new DefaultAWTScreenInformationProvider()
 
-    val factory = new DefaultJvmAwtPlatformResourceFactory(
+    val factory = new DefaultJVMAWTPlatformResourceFactory(
       calendarProvider, uuidProvider, fontProvider, imageProvider, screenInfoProvider)
 
     DefaultPlatformResourceFactory.setImplementation(factory)

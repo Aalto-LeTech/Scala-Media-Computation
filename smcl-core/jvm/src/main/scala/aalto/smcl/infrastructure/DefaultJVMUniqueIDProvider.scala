@@ -25,7 +25,7 @@ package aalto.smcl.infrastructure
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class DefaultJvmUniqueIdProvider() extends JvmUniqueIdProvider {
+class DefaultJVMUniqueIDProvider() extends JVMUniqueIDProvider {
 
   /**
    *

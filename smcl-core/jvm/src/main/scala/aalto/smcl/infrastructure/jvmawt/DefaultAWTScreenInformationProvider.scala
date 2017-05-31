@@ -14,25 +14,37 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure
+package aalto.smcl.infrastructure.jvmawt
 
 
-import java.util.Calendar
+import aalto.smcl.geometry.Dimension
+import aalto.smcl.infrastructure.ScreenInformationProvider
 
 
 
 
 /**
  *
+ *
+ * @author Aleksi Lukkarinen
  */
-private[smcl]
-class DefaultJvmCalendarProvider extends JvmCalendarProvider {
+class DefaultAWTScreenInformationProvider extends ScreenInformationProvider {
+
+  /**
+   * Dimensions of the screen.
+   *
+   * @return
+   */
+  override def dimensionsInPixels: Dimension = {
+    val screenSize = AWTToolkit.getScreenSize
+    Dimension(screenSize.width, screenSize.height)
+  }
 
   /**
    *
    *
    * @return
    */
-  override def currentMoment: Calendar = Calendar.getInstance()
+  override def resolutionInDotsPerInch: Int = AWTToolkit.getScreenResolution
 
 }

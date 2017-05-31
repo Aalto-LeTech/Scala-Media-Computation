@@ -24,7 +24,7 @@ import scala.util.Try
 
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.geometry.AffineTransformation
-import aalto.smcl.infrastructure.jvmawt.{AwtAffineTransformationAdapter, AwtBitmapBufferAdapter}
+import aalto.smcl.infrastructure.jvmawt.{AWTAffineTransformationAdapter, AWTBitmapBufferAdapter}
 
 
 
@@ -56,7 +56,7 @@ class ImageDisplayPanel
     super.paintComponent(lowLevelGraphics2D)
 
     val bufferRetrievalTry =
-      Try(_bitmapOption.get.toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage)
+      Try(_bitmapOption.get.toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage)
     if (bufferRetrievalTry.isFailure)
       return
 
@@ -69,7 +69,7 @@ class ImageDisplayPanel
       drawingSurface.drawImage(
         bufferRetrievalTry.get,
         _zoomingTransformation.platformAffineTransform
-            .asInstanceOf[AwtAffineTransformationAdapter].awtAffineTransformation,
+            .asInstanceOf[AWTAffineTransformationAdapter].awtAffineTransformation,
         null)
     }
     finally {

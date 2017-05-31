@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure.jvmawt
 
 
-import java.awt.geom.{AffineTransform => LowLevelAwtAffineTransform}
+import java.awt.geom.{AffineTransform => AWTAfTform}
 
 import aalto.smcl.infrastructure.AffineTransformationAdapter
 
@@ -30,15 +30,18 @@ import aalto.smcl.infrastructure.AffineTransformationAdapter
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object AwtAffineTransformationAdapter {
+object AWTAffineTransformationAdapter {
 
   /**
    *
    *
    * @return
    */
-  def apply(): AwtAffineTransformationAdapter =
-    new AwtAffineTransformationAdapter(new LowLevelAwtAffineTransform())
+  def apply(): AWTAffineTransformationAdapter = {
+    val llTransform = new AWTAfTform()
+
+    new AWTAffineTransformationAdapter(llTransform)
+  }
 
   /**
    *
@@ -46,8 +49,11 @@ object AwtAffineTransformationAdapter {
    * @return
    */
   private[infrastructure]
-  def apply(awtAffineTransform: LowLevelAwtAffineTransform): AwtAffineTransformationAdapter =
-    new AwtAffineTransformationAdapter(awtAffineTransform)
+  def apply(
+      awtAffineTransform: AWTAfTform): AWTAffineTransformationAdapter = {
+
+    new AWTAffineTransformationAdapter(awtAffineTransform)
+  }
 
 }
 
@@ -60,8 +66,9 @@ object AwtAffineTransformationAdapter {
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class AwtAffineTransformationAdapter private(
-    val awtAffineTransformation: LowLevelAwtAffineTransform) extends AffineTransformationAdapter {
+class AWTAffineTransformationAdapter private(
+    val awtAffineTransformation: AWTAfTform)
+    extends AffineTransformationAdapter {
 
   /**
    *
@@ -71,8 +78,10 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def scale(factorX: Double, factorY: Double): AwtAffineTransformationAdapter = {
-    awtAffineTransformation.scale(factorX, factorY)
+  override def scale(factorX: Double, factorY: Double): AWTAffineTransformationAdapter = {
+    awtAffineTransformation
+        .scale(factorX, factorY)
+
     this
   }
 
@@ -84,8 +93,10 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def translate(amountX: Double, amountY: Double): AwtAffineTransformationAdapter = {
-    awtAffineTransformation.translate(amountX, amountY)
+  override def translate(amountX: Double, amountY: Double): AWTAffineTransformationAdapter = {
+    awtAffineTransformation
+        .translate(amountX, amountY)
+
     this
   }
 
@@ -96,8 +107,10 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def rotateDegs(angleInDegrees: Double): AwtAffineTransformationAdapter = {
-    awtAffineTransformation.rotate(Math.toRadians(-angleInDegrees))
+  override def rotateDegs(angleInDegrees: Double): AWTAffineTransformationAdapter = {
+    awtAffineTransformation
+        .rotate(Math.toRadians(-angleInDegrees))
+
     this
   }
 
@@ -113,9 +126,11 @@ class AwtAffineTransformationAdapter private(
   override def rotateDegsAround(
       angleInDegrees: Double,
       anchorX: Double,
-      anchorY: Double): AwtAffineTransformationAdapter = {
+      anchorY: Double): AWTAffineTransformationAdapter = {
 
-    awtAffineTransformation.rotate(Math.toRadians(-angleInDegrees), anchorX, anchorY)
+    awtAffineTransformation
+        .rotate(Math.toRadians(-angleInDegrees), anchorX, anchorY)
+
     this
   }
 
@@ -124,8 +139,10 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def rotate90DegsCw(): AwtAffineTransformationAdapter = {
-    awtAffineTransformation.quadrantRotate(OneQuadrantClockwise)
+  override def rotate90DegsCW: AWTAffineTransformationAdapter = {
+    awtAffineTransformation
+        .quadrantRotate(OneQuadrantClockwise)
+
     this
   }
 
@@ -137,11 +154,13 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def rotate90DegsCwAround(
+  override def rotate90DegsCWAround(
       anchorX: Double,
-      anchorY: Double): AwtAffineTransformationAdapter = {
+      anchorY: Double): AWTAffineTransformationAdapter = {
 
-    awtAffineTransformation.quadrantRotate(OneQuadrantClockwise, anchorX, anchorY)
+    awtAffineTransformation.quadrantRotate(
+      OneQuadrantClockwise, anchorX, anchorY)
+
     this
   }
 
@@ -150,8 +169,9 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def rotate90DegsCcw(): AwtAffineTransformationAdapter = {
+  override def rotate90DegsCCW: AWTAffineTransformationAdapter = {
     awtAffineTransformation.quadrantRotate(OneQuadrantCounterClockwise)
+
     this
   }
 
@@ -163,11 +183,14 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def rotate90DegsCcwAround(
+  override def rotate90DegsCCWAround(
       anchorX: Double,
-      anchorY: Double): AwtAffineTransformationAdapter = {
+      anchorY: Double): AWTAffineTransformationAdapter = {
 
-    awtAffineTransformation.quadrantRotate(OneQuadrantCounterClockwise, anchorX, anchorY)
+    awtAffineTransformation
+        .quadrantRotate(
+          OneQuadrantCounterClockwise, anchorX, anchorY)
+
     this
   }
 
@@ -176,8 +199,10 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def rotate180Degs(): AwtAffineTransformationAdapter = {
-    awtAffineTransformation.quadrantRotate(TwoQuadrants)
+  override def rotate180Degs: AWTAffineTransformationAdapter = {
+    awtAffineTransformation
+        .quadrantRotate(TwoQuadrants)
+
     this
   }
 
@@ -191,9 +216,11 @@ class AwtAffineTransformationAdapter private(
    */
   override def rotate180DegsAround(
       anchorX: Double,
-      anchorY: Double): AwtAffineTransformationAdapter = {
+      anchorY: Double): AWTAffineTransformationAdapter = {
 
-    awtAffineTransformation.quadrantRotate(TwoQuadrants, anchorX, anchorY)
+    awtAffineTransformation
+        .quadrantRotate(TwoQuadrants, anchorX, anchorY)
+
     this
   }
 
@@ -205,8 +232,13 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def shear(amountX: Double, amountY: Double): AwtAffineTransformationAdapter = {
-    awtAffineTransformation.shear(amountX, amountY)
+  override def shear(
+      amountX: Double,
+      amountY: Double): AWTAffineTransformationAdapter = {
+
+    awtAffineTransformation
+        .shear(amountX, amountY)
+
     this
   }
 
@@ -215,7 +247,10 @@ class AwtAffineTransformationAdapter private(
    *
    * @return
    */
-  override def copy(): AwtAffineTransformationAdapter =
-    AwtAffineTransformationAdapter(new LowLevelAwtAffineTransform(awtAffineTransformation))
+  override def copy: AWTAffineTransformationAdapter = {
+    val llCopy = new AWTAfTform(awtAffineTransformation)
+
+    AWTAffineTransformationAdapter(llCopy)
+  }
 
 }

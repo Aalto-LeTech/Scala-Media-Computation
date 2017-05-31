@@ -17,8 +17,6 @@
 package aalto.smcl.infrastructure
 
 
-
-
 /**
  *
  *
@@ -85,7 +83,7 @@ trait AffineTransformationAdapter {
    *
    * @return
    */
-  def rotate90DegsCw(): AffineTransformationAdapter
+  def rotate90DegsCW: AffineTransformationAdapter
 
   /**
    *
@@ -95,7 +93,7 @@ trait AffineTransformationAdapter {
    *
    * @return
    */
-  def rotate90DegsCwAround(
+  def rotate90DegsCWAround(
       anchorX: Double,
       anchorY: Double): AffineTransformationAdapter
 
@@ -104,7 +102,7 @@ trait AffineTransformationAdapter {
    *
    * @return
    */
-  def rotate90DegsCcw(): AffineTransformationAdapter
+  def rotate90DegsCCW: AffineTransformationAdapter
 
   /**
    *
@@ -114,7 +112,7 @@ trait AffineTransformationAdapter {
    *
    * @return
    */
-  def rotate90DegsCcwAround(
+  def rotate90DegsCCWAround(
       anchorX: Double,
       anchorY: Double): AffineTransformationAdapter
 
@@ -123,7 +121,7 @@ trait AffineTransformationAdapter {
    *
    * @return
    */
-  def rotate180Degs(): AffineTransformationAdapter
+  def rotate180Degs: AffineTransformationAdapter
 
   /**
    *

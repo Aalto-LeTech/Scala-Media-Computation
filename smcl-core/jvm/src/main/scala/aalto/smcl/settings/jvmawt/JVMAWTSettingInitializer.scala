@@ -46,7 +46,7 @@ class JVMAWTSettingInitializer() extends SettingInitializer {
         _ < 20
       }, "Side length of color visualization tiles' must be at least 20 pixels"))
 
-    ObjectSetting[AwtAffineTransformationInterpolationMethod](
+    ObjectSetting[AWTAffineTransformationInterpolationMethod](
       key = "AffineTransformationInterpolationMethod",
       initialValue = NearestNeighbor,
       validator = settingValidatorFactory.EmptyValidator)

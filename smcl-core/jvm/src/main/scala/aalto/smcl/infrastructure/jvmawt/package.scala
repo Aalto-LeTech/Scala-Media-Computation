@@ -33,7 +33,7 @@ package object jvmawt {
 
   /** */
   private[infrastructure]
-  lazy val UIProvider: AwtSwingUIProvider = new AwtSwingUIProvider()
+  lazy val UIProvider: AWTSwingUIProvider = new AWTSwingUIProvider()
 
   /** */
   private[infrastructure]
@@ -43,13 +43,14 @@ package object jvmawt {
    *
    */
   private[infrastructure]
-  implicit def AwtColorWrapper(self: LowLevelColor): RichAwtColor = new RichAwtColor(self)
+  implicit def AWTColorWrapper(self: LowLevelColor): RichAWTColor =
+    new RichAWTColor(self)
 
   /**
    *
    */
   private[infrastructure]
-  implicit def RGBAColorExtendedWrapper(self: Color): ExtendedRichRGBAColor =
-    new ExtendedRichRGBAColor(self)
+  implicit def ColorRicherWrapper(self: Color): RicherColor =
+    new RicherColor(self)
 
 }

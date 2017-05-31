@@ -43,7 +43,7 @@ import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBac
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object AwtBitmapBufferAdapter extends InjectablesRegistry {
+object AWTBitmapBufferAdapter extends InjectablesRegistry {
 
   /** A constant for buffer of a 'normalized' type. */
   val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB
@@ -66,12 +66,12 @@ object AwtBitmapBufferAdapter extends InjectablesRegistry {
    *
    * @return
    */
-  def apply(widthInPixels: Int, heightInPixels: Int): AwtBitmapBufferAdapter = {
+  def apply(widthInPixels: Int, heightInPixels: Int): AWTBitmapBufferAdapter = {
     bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
     val newBuffer = createNormalizedLowLevelBitmapBufferOf(widthInPixels, heightInPixels)
 
-    new AwtBitmapBufferAdapter(newBuffer, colorValidator)
+    new AWTBitmapBufferAdapter(newBuffer, colorValidator)
   }
 
   /**
@@ -81,14 +81,14 @@ object AwtBitmapBufferAdapter extends InjectablesRegistry {
    *
    * @return
    */
-  def apply(awtBufferedImage: BufferedImage): AwtBitmapBufferAdapter = {
+  def apply(awtBufferedImage: BufferedImage): AWTBitmapBufferAdapter = {
     require(awtBufferedImage != null, "Provided image buffer cannot be null.")
 
     bitmapValidator.validateBitmapSize(awtBufferedImage.getWidth, awtBufferedImage.getHeight)
 
-    val normalizedAwtBuffer = convertToNormalizedLowLevelBitmapBufferIfNecessary(awtBufferedImage)
+    val normalizedAWTBuffer = convertToNormalizedLowLevelBitmapBufferIfNecessary(awtBufferedImage)
 
-    new AwtBitmapBufferAdapter(normalizedAwtBuffer, colorValidator)
+    new AWTBitmapBufferAdapter(normalizedAWTBuffer, colorValidator)
   }
 
   /**
@@ -109,7 +109,7 @@ object AwtBitmapBufferAdapter extends InjectablesRegistry {
     try {
       drawingSurface = newBuffer.createGraphics()
       drawingSurface.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
-      drawingSurface.setColor(DefaultBackgroundColor.toAwtColor)
+      drawingSurface.setColor(DefaultBackgroundColor.toAWTColor)
       drawingSurface.fillRect(0, 0, widthInPixels, heightInPixels)
     }
     finally {
@@ -162,7 +162,7 @@ object AwtBitmapBufferAdapter extends InjectablesRegistry {
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class AwtBitmapBufferAdapter private(
+class AWTBitmapBufferAdapter private(
     val awtBufferedImage: BufferedImage,
     private val colorValidator: ColorValidator) extends BitmapBufferAdapter {
 
@@ -192,7 +192,7 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def drawingSurface: AwtDrawingSurfaceAdapter = AwtDrawingSurfaceAdapter(this)
+  override def drawingSurface: AWTDrawingSurfaceAdapter = AWTDrawingSurfaceAdapter(this)
 
 
   /**
@@ -202,7 +202,7 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def trim(colorToTrim: Color = DefaultBackgroundColor): AwtBitmapBufferAdapter = {
+  override def trim(colorToTrim: Color = DefaultBackgroundColor): AWTBitmapBufferAdapter = {
     val (reds, greens, blues, opacities) = colorComponentArrays
 
     val redToTrim = colorToTrim.red
@@ -234,7 +234,7 @@ class AwtBitmapBufferAdapter private(
     }
     if (column >= widthInPixels && !deviationFound) {
       // Raster was fully "empty" ==> return 1 x 1 bitmap
-      return AwtBitmapBufferAdapter(1, 1)
+      return AWTBitmapBufferAdapter(1, 1)
     }
 
     val firstNonEmptyColumn = column - 1
@@ -331,7 +331,7 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): AwtBitmapBufferAdapter = {
+  override def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): AWTBitmapBufferAdapter = {
     val newBuffer = copyPortionXYWH(0, 0, widthInPixels, heightInPixels)
 
     val (reds, greens, blues, opacities) = newBuffer.colorComponentArrays
@@ -443,13 +443,13 @@ class AwtBitmapBufferAdapter private(
   override def createTransformedVersionWith(
       transformation: AffineTransformation,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: Color = DefaultBackgroundColor): AwtBitmapBufferAdapter = {
+      backgroundColor: Color = DefaultBackgroundColor): AWTBitmapBufferAdapter = {
 
     val globalInterpolationMethod = AffineTransformationInterpolationMethod.lowLevelValue
     var resultingImageWidth: Int = awtBufferedImage.getWidth
     var resultingImageHeight: Int = awtBufferedImage.getHeight
     val lowLevelTransformation =
-      transformation.platformAffineTransform.asInstanceOf[AwtAffineTransformationAdapter].awtAffineTransformation
+      transformation.platformAffineTransform.asInstanceOf[AWTAffineTransformationAdapter].awtAffineTransformation
     val transformedContentBoundaries: Rectangle2D =
       new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
           .getBounds2D(awtBufferedImage)
@@ -472,7 +472,7 @@ class AwtBitmapBufferAdapter private(
     }
 
     val finalTransformOperation = new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
-    val resultingBuffer: AwtBitmapBufferAdapter = AwtBitmapBufferAdapter(resultingImageWidth, resultingImageHeight)
+    val resultingBuffer: AWTBitmapBufferAdapter = AWTBitmapBufferAdapter(resultingImageWidth, resultingImageHeight)
 
     resultingBuffer.drawingSurface clearUsing backgroundColor
 
@@ -512,7 +512,7 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def createFilteredVersionWith(kernel: ConvolutionKernel): AwtBitmapBufferAdapter = {
+  override def createFilteredVersionWith(kernel: ConvolutionKernel): AWTBitmapBufferAdapter = {
     val lowLevelKernel = new Kernel(kernel.width, kernel.height, kernel.toRowMajorArray)
     val operation = new ConvolveOp(lowLevelKernel)
 
@@ -520,7 +520,7 @@ class AwtBitmapBufferAdapter private(
       awtBufferedImage,
       emptyAlike.awtBufferedImage)
 
-    AwtBitmapBufferAdapter(newLowLevelBitmap)
+    AWTBitmapBufferAdapter(newLowLevelBitmap)
   }
 
   /**
@@ -530,7 +530,7 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def createFilteredVersionWith(translator: ColorComponentTranslationTable): AwtBitmapBufferAdapter = {
+  override def createFilteredVersionWith(translator: ColorComponentTranslationTable): AWTBitmapBufferAdapter = {
     val lowLevelLookupTable = new ShortLookupTable(0, translator.toArray)
     val operation = new LookupOp(lowLevelLookupTable, null)
 
@@ -538,7 +538,7 @@ class AwtBitmapBufferAdapter private(
       awtBufferedImage,
       emptyAlike.awtBufferedImage)
 
-    AwtBitmapBufferAdapter(newLowLevelBitmap)
+    AWTBitmapBufferAdapter(newLowLevelBitmap)
   }
 
   /**
@@ -546,8 +546,8 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def copy: AwtBitmapBufferAdapter = {
-    AwtBitmapBufferAdapter(BitmapUtils.deepCopy(awtBufferedImage))
+  override def copy: AWTBitmapBufferAdapter = {
+    AWTBitmapBufferAdapter(BitmapUtils.deepCopy(awtBufferedImage))
   }
 
   /**
@@ -564,7 +564,7 @@ class AwtBitmapBufferAdapter private(
       topLeftX: Int,
       topLeftY: Int,
       bottomRightX: Int,
-      bottomRightY: Int): AwtBitmapBufferAdapter = {
+      bottomRightY: Int): AWTBitmapBufferAdapter = {
 
     val (x0, x1) =
       if (topLeftX > bottomRightX)
@@ -598,12 +598,12 @@ class AwtBitmapBufferAdapter private(
       topLeftX: Int,
       topLeftY: Int,
       width: Int,
-      height: Int): AwtBitmapBufferAdapter = {
+      height: Int): AWTBitmapBufferAdapter = {
 
     val sourceBufferArea =
       awtBufferedImage.getSubimage(topLeftX, topLeftY, width, height)
 
-    val newBuffer = AwtBitmapBufferAdapter.createNormalizedLowLevelBitmapBufferOf(width, height)
+    val newBuffer = AWTBitmapBufferAdapter.createNormalizedLowLevelBitmapBufferOf(width, height)
 
     var drawingSurface: Graphics2D = null
     try {
@@ -614,7 +614,7 @@ class AwtBitmapBufferAdapter private(
       drawingSurface.dispose()
     }
 
-    AwtBitmapBufferAdapter(newBuffer)
+    AWTBitmapBufferAdapter(newBuffer)
   }
 
   /**
@@ -622,8 +622,8 @@ class AwtBitmapBufferAdapter private(
    *
    * @return
    */
-  override def emptyAlike: AwtBitmapBufferAdapter = {
-    AwtBitmapBufferAdapter(widthInPixels, heightInPixels)
+  override def emptyAlike: AWTBitmapBufferAdapter = {
+    AWTBitmapBufferAdapter(widthInPixels, heightInPixels)
   }
 
   /**

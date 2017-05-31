@@ -23,7 +23,7 @@ import scala.collection.GenTraversableLike
 import scala.collection.mutable.ArrayBuffer
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
+import aalto.smcl.infrastructure.jvmawt.AWTBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 
@@ -158,7 +158,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
   override def generalBitmapOption(bitmapNumber: Int = 0): Option[BufferedImage] = {
     validateBitmapNumber(bitmapNumber)
 
-    Some(_bitmaps(bitmapNumber).toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage)
+    Some(_bitmaps(bitmapNumber).toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage)
   }
 
   /**
@@ -174,7 +174,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
    * @return
    */
   override def generalBitmapsOption(): Option[Seq[BufferedImage]] =
-    Some(_bitmaps map (_.toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage))
+    Some(_bitmaps map (_.toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage))
 
   /**
    *
@@ -195,7 +195,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
     // TODO: After Bitmap can tell a suitable scaling factor for a given target size and has scaling operation, refactor the following code to utilize them
 
     val bitmap = _bitmaps(thumbnailNumber)
-    var buffer = bitmap.toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage
+    var buffer = bitmap.toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage
 
     if (bitmap.widthInPixels > maximumWidthInPixels
         || bitmap.heightInPixels > maximumHeightInPixels) {
@@ -206,7 +206,7 @@ case class GenTraversableLikeMetadataSource(collection: GenTraversableLike[_, _]
         else
           maximumHeightInPixels.toDouble / bitmap.heightInPixels
 
-      buffer = bitmap.scale(scalingFactor).toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage
+      buffer = bitmap.scale(scalingFactor).toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage
     }
 
     Some(buffer)

@@ -33,11 +33,11 @@ import aalto.smcl.interfaces.Timestamp
  *
  * @author Aleksi Lukkarinen
  */
-class DefaultJvmAwtPlatformResourceFactory(
-    calendarProvider: JvmCalendarProvider,
-    uuidProvider: JvmUniqueIdProvider,
-    fontProvider: AwtFontProvider,
-    imageProvider: AwtImageProvider,
+class DefaultJVMAWTPlatformResourceFactory(
+    calendarProvider: JVMCalendarProvider,
+    uuidProvider: JVMUniqueIDProvider,
+    fontProvider: AWTFontProvider,
+    imageProvider: AWTImageProvider,
     val screenInformationProvider: ScreenInformationProvider)
     extends PlatformResourceFactory {
 
@@ -76,7 +76,7 @@ class DefaultJvmAwtPlatformResourceFactory(
    * @return
    */
   override def createPlatformAffineTransformation: AffineTransformationAdapter = {
-    AwtAffineTransformationAdapter()
+    AWTAffineTransformationAdapter()
   }
 
   /**
@@ -91,7 +91,7 @@ class DefaultJvmAwtPlatformResourceFactory(
       widthInPixels: Int,
       heightInPixels: Int): BitmapBufferAdapter = {
 
-    AwtBitmapBufferAdapter(widthInPixels, heightInPixels)
+    AWTBitmapBufferAdapter(widthInPixels, heightInPixels)
   }
 
   /**
@@ -100,7 +100,7 @@ class DefaultJvmAwtPlatformResourceFactory(
    * @return
    */
   override def createPlatformColor(source: Color): ColorAdapter = {
-    AwtColorAdapter(source)
+    AWTColorAdapter(source)
   }
 
   /**

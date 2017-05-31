@@ -23,7 +23,7 @@ package aalto.smcl.settings
  * @author Aleksi Lukkarinen
  */
 package object jvmawt
-    extends AwtAffineTransformationInterpolationMethodDefinition {
+    extends AWTAffineTransformationInterpolationMethodDefinition {
 
   /** An internal setting ID for the "AffineTransformationInterpolationMethod" setting. */
   private[smcl]
@@ -33,7 +33,7 @@ package object jvmawt
   /** */
   private lazy val AffineTransformationInterpolationMethod0 = {
     Settings(SIdAffineTransformationInterpolationMethod)
-        .asInstanceOf[ObjectSetting[AwtAffineTransformationInterpolationMethod]]
+        .asInstanceOf[ObjectSetting[AWTAffineTransformationInterpolationMethod]]
   }
 
   /**
@@ -41,7 +41,7 @@ package object jvmawt
    *
    * @return
    */
-  def AffineTransformationInterpolationMethod: AwtAffineTransformationInterpolationMethod = {
+  def AffineTransformationInterpolationMethod: AWTAffineTransformationInterpolationMethod = {
     AffineTransformationInterpolationMethod0.value
   }
 
@@ -51,7 +51,7 @@ package object jvmawt
    * @param newValue
    */
   def AffineTransformationInterpolationMethod_=(
-      newValue: AwtAffineTransformationInterpolationMethod): Unit = {
+      newValue: AWTAffineTransformationInterpolationMethod): Unit = {
 
     AffineTransformationInterpolationMethod0.value = newValue
   }

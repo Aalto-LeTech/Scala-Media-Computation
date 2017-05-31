@@ -20,7 +20,7 @@ package aalto.smcl.bitmaps.metadata
 import java.awt.image.BufferedImage
 
 import aalto.smcl.bitmaps.Bitmap
-import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
+import aalto.smcl.infrastructure.jvmawt.AWTBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.{StaticGeneralBitmapSource, StaticThumbnailBitmapSource}
 import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 
@@ -143,7 +143,7 @@ case class ImmutableBitmapMetadataSource(relatedBitmap: Bitmap)
   override def generalBitmapOption(bitmapNumber: Int = FirstImageIndex): Option[BufferedImage] = {
     validateBitmapNumber(bitmapNumber)
 
-    Some(relatedBitmap.toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage)
+    Some(relatedBitmap.toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage)
   }
 
   /**
@@ -159,7 +159,7 @@ case class ImmutableBitmapMetadataSource(relatedBitmap: Bitmap)
    * @return
    */
   override def generalBitmapsOption(): Option[Seq[BufferedImage]] =
-    Some(Seq(relatedBitmap.toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage))
+    Some(Seq(relatedBitmap.toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage))
 
   /**
    *
@@ -179,7 +179,7 @@ case class ImmutableBitmapMetadataSource(relatedBitmap: Bitmap)
 
     // TODO: After Bitmap can tell a suitable scaling factor for a given target size and has scaling operation, refactor the following code to utilize them
 
-    var buffer = relatedBitmap.toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage
+    var buffer = relatedBitmap.toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage
 
     if (relatedBitmap.widthInPixels > maximumWidthInPixels
         || relatedBitmap.heightInPixels > maximumHeightInPixels) {
@@ -190,7 +190,7 @@ case class ImmutableBitmapMetadataSource(relatedBitmap: Bitmap)
         else
           maximumHeightInPixels.toDouble / relatedBitmap.heightInPixels
 
-      buffer = relatedBitmap.scale(scalingFactor).toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage
+      buffer = relatedBitmap.scale(scalingFactor).toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage
     }
 
     Some(buffer)

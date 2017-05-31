@@ -14,57 +14,31 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.settings.jvmawt
+package aalto.smcl.infrastructure.jvmawt
 
-import java.awt.image.AffineTransformOp
+
+import java.awt.{Color => LowLevelColor}
+
+import aalto.smcl.colors.rgb._
 
 
 
 
 /**
- * Methods for performing interpolation needed during AWT-performed affine transformations.
+ *
+ *
+ * @param self
  *
  * @author Aleksi Lukkarinen
  */
-trait AwtAffineTransformationInterpolationMethodDefinition {
+private[infrastructure]
+class RicherColor(val self: Color) {
 
+  /** This [[Color]] as a `java.awt.Color`. */
+  def toAWTColor: LowLevelColor = AWTColorAdapter(self).awtColor
 
-
-
-  /**
-   * Type alias for this enumeration.
-   */
-  sealed abstract class AwtAffineTransformationInterpolationMethod(
-      val lowLevelValue: Int)
-
-
-
-
-  /**
-   * Utilize "nearest neighbor" interpolation method.
-   */
-  case object NearestNeighbor extends AwtAffineTransformationInterpolationMethod(
-    AffineTransformOp.TYPE_NEAREST_NEIGHBOR)
-
-
-
-
-  /**
-   * Utilize bilinear interpolation method.
-   */
-  case object Bilinear extends AwtAffineTransformationInterpolationMethod(
-    AffineTransformOp.TYPE_BILINEAR)
-
-
-
-
-  /**
-   * Utilize bicubic interpolation method.
-   */
-  case object Bicubic extends AwtAffineTransformationInterpolationMethod(
-    AffineTransformOp.TYPE_BICUBIC)
-
-
-
+  /** This [[Color]] as a `java.awt.Color` with full opacity. */
+  def toOpaqueAWTColor: LowLevelColor =
+    AWTColorAdapter(self.withFullOpacity).awtColor
 
 }

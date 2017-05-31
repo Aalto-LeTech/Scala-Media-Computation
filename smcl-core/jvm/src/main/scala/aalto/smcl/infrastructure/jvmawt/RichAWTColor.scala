@@ -19,8 +19,7 @@ package aalto.smcl.infrastructure.jvmawt
 
 import java.awt.{Color => LowLevelColor}
 
-import aalto.smcl.colors.rgb.Color
-import aalto.smcl.infrastructure.ColorAdapter
+import aalto.smcl.colors.rgb._
 
 
 
@@ -28,94 +27,17 @@ import aalto.smcl.infrastructure.ColorAdapter
 /**
  *
  *
- * @author Aleksi Lukkarinen
- */
-private[smcl]
-object AwtColorAdapter {
-
-  /**
-   *
-   *
-   * @param applicationColor
-   *
-   * @return
-   */
-  def apply(applicationColor: Color): AwtColorAdapter =
-    new AwtColorAdapter(
-      applicationColor.red,
-      applicationColor.green,
-      applicationColor.blue,
-      applicationColor.opacity)
-
-  /**
-   *
-   *
-   * @param awtColor
-   *
-   * @return
-   */
-  def apply(awtColor: LowLevelColor): AwtColorAdapter =
-    new AwtColorAdapter(
-      awtColor.getRed,
-      awtColor.getGreen,
-      awtColor.getBlue,
-      awtColor.getAlpha)
-
-}
-
-
-
-
-/**
- *
+ * @param self
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl]
-case class AwtColorAdapter(
-    private val redComponent: Int,
-    private val greenComponent: Int,
-    private val blueComponent: Int,
-    private val opacityComponent: Int) extends ColorAdapter {
+private[infrastructure]
+class RichAWTColor(val self: LowLevelColor) {
 
-  /** */
-  private[infrastructure]
-  lazy val awtColor = new LowLevelColor(redComponent, greenComponent, blueComponent, opacityComponent)
+  /** This `java.awt.Color` as a [[Color]]. */
+  final def toApplicationColor: Color = AWTColorAdapter(self).applicationColor
 
-  /**
-   *
-   *
-   * @return
-   */
-  def applicationColor: Color =
-    Color(redComponent, greenComponent, blueComponent, opacityComponent)
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def red: Int = redComponent
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def green: Int = greenComponent
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def blue: Int = blueComponent
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def opacity: Int = opacityComponent
+  /** This `java.awt.Color` as a [[Color]] with full opacity. */
+  final def withFullOpacity: Color = AWTColorAdapter(self).applicationColor.withFullOpacity
 
 }

@@ -27,13 +27,14 @@ import aalto.smcl.settings._
 
 
 
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object AwtDrawingSurfaceAdapter {
+object AWTDrawingSurfaceAdapter {
 
   /**
    *
@@ -42,8 +43,8 @@ object AwtDrawingSurfaceAdapter {
    *
    * @return
    */
-  def apply(owner: AwtBitmapBufferAdapter): AwtDrawingSurfaceAdapter = {
-    new AwtDrawingSurfaceAdapter(owner)
+  def apply(owner: AWTBitmapBufferAdapter): AWTDrawingSurfaceAdapter = {
+    new AWTDrawingSurfaceAdapter(owner)
   }
 
 }
@@ -57,7 +58,8 @@ object AwtDrawingSurfaceAdapter {
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extends DrawingSurfaceAdapter {
+class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
+    extends DrawingSurfaceAdapter {
 
   /**
    *
@@ -72,7 +74,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       if (useSourceColorLiterally)
         ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
 
-      ds.setColor(AwtColorAdapter(color).awtColor)
+      ds.setColor(AWTColorAdapter(color).awtColor)
       ds.fillRect(0, 0, owner.widthInPixels, owner.heightInPixels)
     }
   }
@@ -84,8 +86,9 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
    *
    * @return
    */
-  override def drawBitmap(bitmap: BitmapBufferAdapter): Boolean =
+  override def drawBitmap(bitmap: BitmapBufferAdapter): Boolean = {
     drawBitmap(bitmap, 0, 0)
+  }
 
   /**
    *
@@ -108,7 +111,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
     withDrawingSurface{ds =>
       ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
 
-      ds.drawImage(bitmap.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage, x, y, null)
+      ds.drawImage(bitmap.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage, x, y, null)
     }
   }
 
@@ -132,8 +135,8 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
 
       ds.drawImage(
-        bitmap.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage,
-        transformation.platformAffineTransform.asInstanceOf[AwtAffineTransformationAdapter].awtAffineTransformation,
+        bitmap.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage,
+        transformation.platformAffineTransform.asInstanceOf[AWTAffineTransformationAdapter].awtAffineTransformation,
         null)
     }
   }
@@ -148,8 +151,10 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
    */
   override def drawBitmap(
       bitmap: BitmapBufferAdapter,
-      transformation: AffineTransformation): Boolean =
+      transformation: AffineTransformation): Boolean = {
+
     drawBitmap(bitmap, transformation, ColorValidator.MaximumOpacity)
+  }
 
   /**
    *
@@ -175,14 +180,14 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
 
     withDrawingSurface{ds =>
       if (hasFilling) {
-        ds.setColor(fillColor.toAwtColor)
+        ds.setColor(fillColor.toAWTColor)
         ds.fillOval(
           boundingBoxUpperLeftX, boundingBoxUpperLeftY,
           widthInPixels, heightInPixels)
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAwtColor)
+        ds.setColor(color.toAWTColor)
         ds.drawOval(
           boundingBoxUpperLeftX, boundingBoxUpperLeftY,
           widthInPixels, heightInPixels)
@@ -218,7 +223,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
 
     withDrawingSurface{ds =>
       if (hasFilling) {
-        ds.setColor(fillColor.toAwtColor)
+        ds.setColor(fillColor.toAWTColor)
         ds.fillArc(
           upperLeftCornerXInPixels, upperLeftCornerYInPixels,
           widthInPixels, heightInPixels,
@@ -226,7 +231,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAwtColor)
+        ds.setColor(color.toAWTColor)
         ds.drawArc(
           upperLeftCornerXInPixels, upperLeftCornerYInPixels,
           widthInPixels, heightInPixels,
@@ -259,14 +264,14 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
 
     withDrawingSurface{ds =>
       if (hasFilling) {
-        ds.setColor(fillColor.toAwtColor)
+        ds.setColor(fillColor.toAWTColor)
         ds.fillRect(
           upperLeftCornerXInPixels, upperLeftCornerYInPixels,
           widthInPixels, heightInPixels)
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAwtColor)
+        ds.setColor(color.toAWTColor)
         ds.drawRect(
           upperLeftCornerXInPixels, upperLeftCornerYInPixels,
           widthInPixels, heightInPixels)
@@ -302,7 +307,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
 
     withDrawingSurface{ds =>
       if (hasFilling) {
-        ds.setColor(fillColor.toAwtColor)
+        ds.setColor(fillColor.toAWTColor)
         ds.fillRoundRect(
           upperLeftCornerXInPixels, upperLeftCornerYInPixels,
           widthInPixels, heightInPixels,
@@ -310,7 +315,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAwtColor)
+        ds.setColor(color.toAWTColor)
         ds.drawRoundRect(
           upperLeftCornerXInPixels, upperLeftCornerYInPixels,
           widthInPixels, heightInPixels,
@@ -334,7 +339,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       color: Color = DefaultPrimaryColor): Unit = {
 
     withDrawingSurface{ds =>
-      ds.setColor(color.toAwtColor)
+      ds.setColor(color.toAWTColor)
       ds.drawPolyline(xCoordinates.toArray, yCoordinates.toArray, numberOfCoordinatesToDraw)
     }
   }
@@ -361,12 +366,12 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
 
     withDrawingSurface{ds =>
       if (hasFilling) {
-        ds.setColor(fillColor.toAwtColor)
+        ds.setColor(fillColor.toAWTColor)
         ds.fillPolygon(xCoordinates.toArray, yCoordinates.toArray, numberOfCoordinatesToDraw)
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAwtColor)
+        ds.setColor(color.toAWTColor)
         ds.drawPolygon(xCoordinates.toArray, yCoordinates.toArray, numberOfCoordinatesToDraw)
       }
     }
@@ -389,7 +394,7 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
       color: Color = DefaultPrimaryColor): Unit = {
 
     withDrawingSurface{ds =>
-      ds.setColor(color.toAwtColor)
+      ds.setColor(color.toAWTColor)
       ds.drawLine(
         fromXInPixels, fromYInPixels,
         toXInPixels, toYInPixels)
@@ -404,8 +409,9 @@ class AwtDrawingSurfaceAdapter private(val owner: AwtBitmapBufferAdapter) extend
    *
    * @return
    */
-  def use[ResultType](workUnit: Graphics2D => ResultType): ResultType =
+  def use[ResultType](workUnit: Graphics2D => ResultType): ResultType = {
     withDrawingSurface[ResultType](workUnit)
+  }
 
   /**
    *

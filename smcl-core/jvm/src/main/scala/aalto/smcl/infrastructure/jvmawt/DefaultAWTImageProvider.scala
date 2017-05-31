@@ -40,7 +40,7 @@ import aalto.smcl.infrastructure.{BitmapBufferAdapter, CommonFileUtils, EnsureCl
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImageProvider {
+class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImageProvider {
 
   /** */
   lazy val supportedReadableMimeTypes: Seq[String] =
@@ -193,7 +193,7 @@ class DefaultAwtImageProvider(bitmapValidator: BitmapValidator) extends AwtImage
 
     readImage <- Try(reader.read(imageIndex))
 
-  } yield AwtBitmapBufferAdapter(readImage)
+  } yield AWTBitmapBufferAdapter(readImage)
 
   /**
    *

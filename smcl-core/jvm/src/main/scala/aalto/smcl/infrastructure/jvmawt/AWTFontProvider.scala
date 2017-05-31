@@ -14,10 +14,10 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure
+package aalto.smcl.infrastructure.jvmawt
 
 
-import java.io.File
+import java.awt.{Font => LowLevelFont}
 
 
 
@@ -27,47 +27,14 @@ import java.io.File
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl]
-class JvmFileUtils {
+private[infrastructure]
+trait AWTFontProvider {
 
   /**
    *
    *
-   * @param f
-   *
    * @return
    */
-  def representsReadableFile(f: File): Boolean =
-    f.isFile && f.canRead
-
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def doesNotRepresentReadableFile(f: File): Boolean =
-    !representsReadableFile(f)
-
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def representsReadableDirectory(f: File): Boolean =
-    f.isDirectory && f.canRead
-
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def doesNotRepresentReadableDirectory(f: File): Boolean =
-    !representsReadableDirectory(f)
+  def availableFonts: Seq[LowLevelFont]
 
 }

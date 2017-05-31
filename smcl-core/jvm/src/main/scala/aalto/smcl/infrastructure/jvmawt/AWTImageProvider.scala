@@ -17,28 +17,34 @@
 package aalto.smcl.infrastructure.jvmawt
 
 
-import java.awt.{Color => LowLevelColor}
+import scala.util.Try
 
-import aalto.smcl.colors.rgb._
+import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
 
 
 /**
  *
- *
- * @param self
- *
- * @author Aleksi Lukkarinen
  */
-private[infrastructure]
-class ExtendedRichRGBAColor(val self: Color) {
+trait AWTImageProvider {
 
-  /** This [[Color]] as a `java.awt.Color`. */
-  def toAwtColor: LowLevelColor = AwtColorAdapter(self).awtColor
+  /**
+   *
+   *
+   * @param path
+   *
+   * @return
+   */
+  def tryToLoadImageFromFile(path: String): Try[BitmapBufferAdapter]
 
-  /** This [[Color]] as a `java.awt.Color` with full opacity. */
-  def toOpaqueAwtColor: LowLevelColor =
-    AwtColorAdapter(self.withFullOpacity).awtColor
+  /**
+   *
+   *
+   * @param path
+   *
+   * @return
+   */
+  def tryToLoadImagesFromFile(path: String): Try[Seq[Try[BitmapBufferAdapter]]]
 
 }

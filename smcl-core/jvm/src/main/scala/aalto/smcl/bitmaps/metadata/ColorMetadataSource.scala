@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage
 import aalto.smcl.bitmaps.Bitmap
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.colors.{Black, Gray, White}
-import aalto.smcl.infrastructure.jvmawt.AwtBitmapBufferAdapter
+import aalto.smcl.infrastructure.jvmawt.AWTBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.StaticGeneralBitmapSource
 import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
 import aalto.smcl.settings._
@@ -45,10 +45,10 @@ case class ColorMetadataSource(relatedRGBAColor: Color)
   /** General bitmaps */
   private[this] val _generalBitmaps =
     Seq[BufferedImage](
-      createSingleColorTile().toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage,
-      createDoubleColorTile(Black).toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage,
-      createDoubleColorTile(Gray).toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage,
-      createDoubleColorTile(White).toRenderedRepresentation.asInstanceOf[AwtBitmapBufferAdapter].awtBufferedImage)
+      createSingleColorTile().toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage,
+      createDoubleColorTile(Black).toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage,
+      createDoubleColorTile(Gray).toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage,
+      createDoubleColorTile(White).toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage)
 
   /** Indices of general bitmaps. */
   val GeneralBitmapIndices: Range = _generalBitmaps.indices

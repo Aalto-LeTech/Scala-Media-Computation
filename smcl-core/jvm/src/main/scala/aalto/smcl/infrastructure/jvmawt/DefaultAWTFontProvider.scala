@@ -28,13 +28,13 @@ import java.awt.{Font => LowLevelFont}
  * @author Aleksi Lukkarinen
  */
 private[infrastructure]
-trait AwtFontProvider {
+class DefaultAWTFontProvider extends AWTFontProvider {
 
   /**
    *
    *
    * @return
    */
-  def availableFonts: Seq[LowLevelFont]
+  override def availableFonts: Seq[LowLevelFont] = UIProvider.awtGraphEnv.getAllFonts.toSeq
 
 }
