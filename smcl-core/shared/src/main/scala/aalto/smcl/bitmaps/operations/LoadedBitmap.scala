@@ -50,7 +50,7 @@ case class LoadedBitmap(
   override def heightInPixels: Int = bitmap.heightInPixels
 
   /** First text paragraph of the description of this class. */
-  override def descriptionTitle: String = "LoadedBitmap"
+  val descriptionTitle: String = "LoadedBitmap"
 
   /** Information about this [[Renderable]] instance */
   lazy override val describedProperties = Map(
@@ -75,7 +75,8 @@ case class LoadedBitmap(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer()
+  }
 
 }
