@@ -72,8 +72,14 @@ object ColorValidator {
   /** An RGBA color component value representing minimal opacity. */
   val MinimumOpacity: Int = ByteRange.start
 
+  /** Color component value representing minimal opacity. */
+  val FullyTransparent: Int = MinimumOpacity
+
   /** An RGBA color component value representing maximal opacity. */
   val MaximumOpacity: Int = ByteRange.end
+
+  /** Color component value representing maximal opacity. */
+  val FullyOpaque: Int = MaximumOpacity
 
   /** Range for valid values of the opacity color component of an RGBA color. */
   val OpacityRange = ByteRange

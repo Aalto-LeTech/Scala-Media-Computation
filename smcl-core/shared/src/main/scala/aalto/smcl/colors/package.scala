@@ -17,22 +17,44 @@
 package aalto.smcl
 
 
-import aalto.smcl.colors.rgb.PresetColors
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 package object colors
-    extends PresetColors
+    extends rgb.PresetColors
             with ColorOperationsAPI {
 
-  /** Color component value representing maximal opacity. */
-  val FullyOpaque: Int = ColorValidator.MaximumOpacity
+  /** A type alias for RGB color class. */
+  type Color = rgb.Color
 
-  /** Color component value representing minimal opacity. */
-  val FullyTransparent: Int = ColorValidator.MinimumOpacity
+  /** A companion object alias for RGB color. */
+  val Color = rgb.Color
+
+  /** An alias for RGB color components object. */
+  val ColorComponents = rgb.ColorComponents
+
+  /** A type alias for RGB color component translation table class. */
+  type ColorComponentTranslationTable =
+    rgb.ColorComponentTranslationTable
+
+  /** A companion object alias for RGB color component translation table. */
+  val ColorComponentTranslationTable =
+    rgb.ColorComponentTranslationTable
+
+  /** A type alias for RGB color translator trait. */
+  type ColorTranslator = rgb.ColorTranslator
+
+  /** An alias for RGB sample bands object. */
+  val SampleBands = rgb.SampleBands
+
+  /** An alias for the RichARGBInt application. */
+  implicit def ARGBIntWrapper(self: Int): rgb.RichARGBInt =
+    rgb.ARGBIntWrapper(self)
+
+  /** An alias for the RichRGBAColor application. */
+  implicit def ColorWrapper(self: Color): rgb.RichColor =
+    rgb.ColorWrapper(self)
 
 }

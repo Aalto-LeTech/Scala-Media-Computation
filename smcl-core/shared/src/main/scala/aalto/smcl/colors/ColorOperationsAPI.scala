@@ -19,7 +19,6 @@ package aalto.smcl.colors
 
 import aalto.smcl.colors
 import aalto.smcl.colors.hsi.exceptions.InvalidColorComponentCombinationError
-import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure._
 
 
