@@ -25,9 +25,6 @@ import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, _}
-import aalto.smcl.settings.HorizontalAlignments.{Center, HorizontalAlignment, Left, Right}
-import aalto.smcl.settings.VerticalAlignments.{Bottom, Middle, Top, VerticalAlignment}
-import aalto.smcl.settings.ViewerUpdateStyles.{PreventViewerUpdates, UpdateViewerPerDefaults, ViewerUpdateStyle}
 import aalto.smcl.settings._
 import aalto.smcl.viewers.{display => displayInViewer}
 
@@ -1106,7 +1103,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def :|++| (other: Bitmap): Bitmap = {
-    overlayPerAlignments(this, other)(Left, Top)
+    overlayPerAlignments(this, other)(HALeft, VATop)
   }
 
   /**
@@ -1117,7 +1114,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def :|+*| (other: Bitmap): Bitmap = {
-    overlayPerAlignments(this, other)(Left, Middle)
+    overlayPerAlignments(this, other)(HALeft, VAMiddle)
   }
 
   /**
@@ -1128,7 +1125,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def :|+-| (other: Bitmap): Bitmap = {
-    overlayPerAlignments(this, other)(Left, Bottom)
+    overlayPerAlignments(this, other)(HALeft, VABottom)
   }
 
   /**
@@ -1139,7 +1136,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def :|*+| (other: Bitmap): Bitmap = {
-    overlayPerAlignments(this, other)(Center, Top)
+    overlayPerAlignments(this, other)(HACenter, VATop)
   }
 
   /**
@@ -1150,7 +1147,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def :|**| (other: Bitmap): Bitmap = {
-    overlayPerAlignments(this, other)(Center, Middle)
+    overlayPerAlignments(this, other)(HACenter, VAMiddle)
   }
 
   /**
@@ -1161,7 +1158,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def :|*-| (other: Bitmap): Bitmap = {
-    overlayPerAlignments(this, other)(Center, Bottom)
+    overlayPerAlignments(this, other)(HACenter, VABottom)
   }
 
   /**
@@ -1172,7 +1169,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def :|-+| (other: Bitmap): Bitmap = {
-    overlayPerAlignments(this, other)(Right, Top)
+    overlayPerAlignments(this, other)(HARight, VATop)
   }
 
   /**
@@ -1183,7 +1180,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def :|-*| (other: Bitmap): Bitmap = {
-    overlayPerAlignments(this, other)(Right, Middle)
+    overlayPerAlignments(this, other)(HARight, VAMiddle)
   }
 
   /**
@@ -1194,7 +1191,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def :|--| (other: Bitmap): Bitmap = {
-    overlayPerAlignments(this, other)(Right, Bottom)
+    overlayPerAlignments(this, other)(HARight, VABottom)
   }
 
   // ----------------------------------------------------------------------------------------------
@@ -1288,7 +1285,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def sewOnLeftOf(bitmap: Bitmap): Bitmap = {
-    appendOnRight(bitmap)(Middle)
+    appendOnRight(bitmap)(VAMiddle)
   }
 
   /**
@@ -1325,7 +1322,7 @@ case class Bitmap private[bitmaps](
    * @return
    */
   def pileOnTopOf(bitmap: Bitmap): Bitmap = {
-    appendOnBottom(bitmap)(Center)
+    appendOnBottom(bitmap)(HACenter)
   }
 
   /**

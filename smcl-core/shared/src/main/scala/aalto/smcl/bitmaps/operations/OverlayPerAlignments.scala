@@ -23,8 +23,6 @@ import aalto.smcl.bitmaps._
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, PRF}
-import aalto.smcl.settings.HorizontalAlignments.{Center, HorizontalAlignment, Left, Right}
-import aalto.smcl.settings.VerticalAlignments.{Bottom, Middle, Top, VerticalAlignment}
 import aalto.smcl.settings._
 
 
@@ -84,13 +82,13 @@ case class OverlayPerAlignments(
 
   /** Future horizontal offsets of the bitmaps to be overlaid. */
   val horizontalOffsets: Seq[Int] = horizontalAlignment match {
-    case Left =>
+    case HALeft =>
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0)
 
-    case Right =>
+    case HARight =>
       bitmapsToOverlayFromBottomToTop map {widthInPixels - _.widthInPixels}
 
-    case Center =>
+    case HACenter =>
       val canvasWidth = widthInPixels.toDouble / 2
 
       bitmapsToOverlayFromBottomToTop map {bmp =>
@@ -100,13 +98,13 @@ case class OverlayPerAlignments(
 
   /** Future vertical offsets of the bitmaps to be overlaid. */
   val verticalOffsets: Seq[Int] = verticalAlignment match {
-    case Top =>
+    case VATop =>
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0).toSeq
 
-    case Bottom =>
+    case VABottom =>
       bitmapsToOverlayFromBottomToTop map {heightInPixels - _.heightInPixels}
 
-    case Middle =>
+    case VAMiddle =>
       val canvasMiddle = heightInPixels.toDouble / 2
 
       bitmapsToOverlayFromBottomToTop map {bmp =>

@@ -32,8 +32,99 @@ package object settings
   /** A type for setting validator functions. */
   type SettingValidator[SettingDataType] = SettingDataType => Option[Throwable]
 
+
+
+
   /**
-   * Application of the RichSettingMap class.
+   * Base class for horizontal alignment constants.
+   */
+  sealed abstract class HorizontalAlignment
+
+
+
+
+  /**
+   * A constant for setting horizontal alignment to the left.
+   */
+  case object HALeft extends HorizontalAlignment
+
+
+
+
+  /**
+   * A constant for setting horizontal alignment to the center.
+   */
+  case object HACenter extends HorizontalAlignment
+
+
+
+
+  /**
+   * A constant for setting horizontal alignment to the right.
+   */
+  case object HARight extends HorizontalAlignment
+
+
+
+
+  /**
+   * Base class for vertical alignment constants.
+   */
+  sealed abstract class VerticalAlignment
+
+
+
+
+  /**
+   * A constant for setting vertical alignment to the left.
+   */
+  case object VATop extends VerticalAlignment
+
+
+
+
+  /**
+   * A constant for setting vertical alignment to the center.
+   */
+  case object VAMiddle extends VerticalAlignment
+
+
+
+
+  /**
+   * A constant for setting vertical alignment to the right.
+   */
+  case object VABottom extends VerticalAlignment
+
+
+
+
+  /**
+   * Base class for viewer update style constants.
+   */
+  sealed abstract class ViewerUpdateStyle
+
+
+
+
+  /**
+   * A constant for updating viewer per default setting.
+   */
+  case object UpdateViewerPerDefaults extends ViewerUpdateStyle
+
+
+
+
+  /**
+   * A constant for preventing viewer updates.
+   */
+  case object PreventViewerUpdates extends ViewerUpdateStyle
+
+
+
+
+  /**
+   * Application of the [[RichSettingMap]] class.
    */
   implicit def SettingMapWrapper(self: SettingMap): RichSettingMap = {
     new RichSettingMap(self)

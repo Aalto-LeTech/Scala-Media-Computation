@@ -19,7 +19,6 @@ package aalto.smcl.settings.jvmawt
 
 import aalto.smcl.bitmaps.BitmapValidatorFunctionFactory
 import aalto.smcl.infrastructure.SettingInitializer
-import aalto.smcl.settings.jvmawt.AWTAffineTransformationInterpolationMethods.{AWTAffineTransformationInterpolationMethod, NearestNeighbor}
 import aalto.smcl.settings.{IntSetting, ObjectSetting, SettingValidatorFactory}
 
 

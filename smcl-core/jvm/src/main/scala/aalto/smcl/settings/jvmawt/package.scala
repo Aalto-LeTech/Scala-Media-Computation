@@ -17,7 +17,7 @@
 package aalto.smcl.settings
 
 
-import aalto.smcl.settings.jvmawt.AWTAffineTransformationInterpolationMethods.AWTAffineTransformationInterpolationMethod
+import java.awt.image.AffineTransformOp
 
 
 /**
@@ -26,6 +26,49 @@ import aalto.smcl.settings.jvmawt.AWTAffineTransformationInterpolationMethods.AW
  * @author Aleksi Lukkarinen
  */
 package object jvmawt {
+
+
+
+
+  /**
+   * A base class for constants that represent methods for performing
+   * interpolation needed during AWT-performed affine transformations.
+   */
+  sealed abstract class AWTAffineTransformationInterpolationMethod(
+      val lowLevelValue: Int)
+
+
+
+
+  /**
+   * A constant for utilizing the "nearest neighbor" interpolation method.
+   */
+  case object NearestNeighbor
+      extends AWTAffineTransformationInterpolationMethod(
+        lowLevelValue = AffineTransformOp.TYPE_NEAREST_NEIGHBOR)
+
+
+
+
+  /**
+   * A constant for utilizing the bilinear interpolation method.
+   */
+  case object Bilinear
+      extends AWTAffineTransformationInterpolationMethod(
+        lowLevelValue = AffineTransformOp.TYPE_BILINEAR)
+
+
+
+
+  /**
+   * A constant for utilizing the bicubic interpolation method.
+   */
+  case object Bicubic
+      extends AWTAffineTransformationInterpolationMethod(
+        lowLevelValue = AffineTransformOp.TYPE_BICUBIC)
+
+
+
 
   /** An internal setting ID for the "AffineTransformationInterpolationMethod" setting. */
   private[smcl]

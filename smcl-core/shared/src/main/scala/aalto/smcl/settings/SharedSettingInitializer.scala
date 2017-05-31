@@ -20,8 +20,6 @@ package aalto.smcl.settings
 import aalto.smcl.bitmaps.BitmapValidatorFunctionFactory
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure.SettingInitializer
-import aalto.smcl.settings.HorizontalAlignments.{HorizontalAlignment, Left}
-import aalto.smcl.settings.VerticalAlignments.{Middle, VerticalAlignment}
 
 
 
@@ -141,12 +139,12 @@ class SharedSettingInitializer() extends SettingInitializer {
 
     ObjectSetting[HorizontalAlignment](
       key = SIdDefaultHorizontalAlignment,
-      initialValue = Left,
+      initialValue = HALeft,
       validator = settingValidatorFactory.EmptyValidator)
 
     ObjectSetting[VerticalAlignment](
       key = SIdDefaultVerticalAlignment,
-      initialValue = Middle,
+      initialValue = VAMiddle,
       validator = settingValidatorFactory.EmptyValidator)
 
   }

@@ -19,9 +19,6 @@ package aalto.smcl.bitmaps
 
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
-import aalto.smcl.settings.HorizontalAlignments.{Center, HorizontalAlignment}
-import aalto.smcl.settings.VerticalAlignments.{Middle, VerticalAlignment}
-import aalto.smcl.settings.ViewerUpdateStyles.{UpdateViewerPerDefaults, ViewerUpdateStyle}
 import aalto.smcl.settings._
 
 
@@ -986,7 +983,7 @@ trait BitmapOperationAPI {
    * @return
    */
   def sew(bitmapLeft: Bitmap, bitmapRight: Bitmap): Bitmap = {
-    appendHorizontally(bitmapLeft, bitmapRight)(Middle)
+    appendHorizontally(bitmapLeft, bitmapRight)(VAMiddle)
   }
 
   /**
@@ -1024,7 +1021,7 @@ trait BitmapOperationAPI {
    * @return
    */
   def pile(bitmapTop: Bitmap, bitmapBottom: Bitmap): Bitmap = {
-    appendVertically(bitmapTop, bitmapBottom)(Center)
+    appendVertically(bitmapTop, bitmapBottom)(HACenter)
   }
 
   /**

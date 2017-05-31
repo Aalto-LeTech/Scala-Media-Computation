@@ -22,7 +22,6 @@ import scala.collection.mutable.ArrayBuffer
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
-import aalto.smcl.settings.VerticalAlignments.{Bottom, Middle, Top, VerticalAlignment}
 import aalto.smcl.settings._
 
 
@@ -81,13 +80,13 @@ case class AppendHorizontally(
 
   /** Vertical offsets of the bitmaps to be combined. */
   val verticalOffsets: Seq[Int] = verticalAlignment match {
-    case Top =>
+    case VATop =>
       ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toSeq
 
-    case Bottom =>
+    case VABottom =>
       bitmapsToCombine map {heightInPixels - _.heightInPixels}
 
-    case Middle =>
+    case VAMiddle =>
       bitmapsToCombine map {bmp =>
         (heightInPixels.toDouble / 2 - bmp.heightInPixels.toDouble / 2).floor.toInt
       }

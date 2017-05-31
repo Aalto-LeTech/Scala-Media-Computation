@@ -18,8 +18,6 @@ package aalto.smcl.settings
 
 
 import aalto.smcl.colors.rgb.Color
-import aalto.smcl.settings.HorizontalAlignments.HorizontalAlignment
-import aalto.smcl.settings.VerticalAlignments.VerticalAlignment
 
 
 
