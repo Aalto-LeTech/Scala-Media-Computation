@@ -17,13 +17,15 @@
 package aalto.smcl.settings
 
 
+import aalto.smcl.settings.jvmawt.AWTAffineTransformationInterpolationMethods.AWTAffineTransformationInterpolationMethod
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-package object jvmawt
-    extends AWTAffineTransformationInterpolationMethodDefinition {
+package object jvmawt {
 
   /** An internal setting ID for the "AffineTransformationInterpolationMethod" setting. */
   private[smcl]

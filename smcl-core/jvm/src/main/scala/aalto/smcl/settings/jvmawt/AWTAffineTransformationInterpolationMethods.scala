@@ -27,7 +27,7 @@ import java.awt.image.AffineTransformOp
  *
  * @author Aleksi Lukkarinen
  */
-trait AWTAffineTransformationInterpolationMethodDefinition {
+object AWTAffineTransformationInterpolationMethods {
 
 
 
@@ -44,8 +44,9 @@ trait AWTAffineTransformationInterpolationMethodDefinition {
   /**
    * Utilize "nearest neighbor" interpolation method.
    */
-  case object NearestNeighbor extends AWTAffineTransformationInterpolationMethod(
-    lowLevelValue = AffineTransformOp.TYPE_NEAREST_NEIGHBOR)
+  case object NearestNeighbor
+      extends AWTAffineTransformationInterpolationMethod(
+        lowLevelValue = AffineTransformOp.TYPE_NEAREST_NEIGHBOR)
 
 
 
@@ -53,8 +54,9 @@ trait AWTAffineTransformationInterpolationMethodDefinition {
   /**
    * Utilize bilinear interpolation method.
    */
-  case object Bilinear extends AWTAffineTransformationInterpolationMethod(
-    lowLevelValue = AffineTransformOp.TYPE_BILINEAR)
+  case object Bilinear
+      extends AWTAffineTransformationInterpolationMethod(
+        lowLevelValue = AffineTransformOp.TYPE_BILINEAR)
 
 
 
@@ -62,8 +64,9 @@ trait AWTAffineTransformationInterpolationMethodDefinition {
   /**
    * Utilize bicubic interpolation method.
    */
-  case object Bicubic extends AWTAffineTransformationInterpolationMethod(
-    lowLevelValue = AffineTransformOp.TYPE_BICUBIC)
+  case object Bicubic
+      extends AWTAffineTransformationInterpolationMethod(
+        lowLevelValue = AffineTransformOp.TYPE_BICUBIC)
 
 
 
