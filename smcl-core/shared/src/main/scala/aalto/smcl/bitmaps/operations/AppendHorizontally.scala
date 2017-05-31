@@ -22,6 +22,7 @@ import scala.collection.mutable.ArrayBuffer
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
+import aalto.smcl.settings.VerticalAlignments.{Bottom, Middle, Top, VerticalAlignment}
 import aalto.smcl.settings._
 
 

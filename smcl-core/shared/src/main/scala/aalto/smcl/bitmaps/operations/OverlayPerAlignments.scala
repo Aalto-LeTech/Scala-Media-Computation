@@ -23,6 +23,7 @@ import aalto.smcl.bitmaps._
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, PRF}
+import aalto.smcl.settings.VerticalAlignments.{Bottom, Middle, Top, VerticalAlignment}
 import aalto.smcl.settings._
 
 

@@ -27,7 +27,6 @@ import scala.language.implicitConversions
  */
 package object settings
     extends HorizontalAlignmentDefinitions
-            with VerticalAlignmentDefinitions
             with SettingRegistry
             with SharedSettingDefinitions {
 
