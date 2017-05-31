@@ -20,6 +20,7 @@ package aalto.smcl.settings
 import aalto.smcl.bitmaps.BitmapValidatorFunctionFactory
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure.SettingInitializer
+import aalto.smcl.settings.HorizontalAlignments.{HorizontalAlignment, Left}
 import aalto.smcl.settings.VerticalAlignments.{Middle, VerticalAlignment}
 
 

@@ -26,8 +26,7 @@ import scala.language.implicitConversions
  * @author Aleksi Lukkarinen
  */
 package object settings
-    extends HorizontalAlignmentDefinitions
-            with SettingRegistry
+    extends SettingRegistry
             with SharedSettingDefinitions {
 
   /** A type for setting validator functions. */
