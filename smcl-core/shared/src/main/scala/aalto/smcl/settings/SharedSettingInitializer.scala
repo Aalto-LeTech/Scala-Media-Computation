@@ -18,7 +18,7 @@ package aalto.smcl.settings
 
 
 import aalto.smcl.bitmaps.BitmapValidatorFunctionFactory
-import aalto.smcl.colors.{Black, White}
+import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure.SettingInitializer
 
 

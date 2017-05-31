@@ -647,7 +647,7 @@ class Color protected(
   }
 
   /** */
-  lazy val toGray: Color = Color(toHSIIntensity.toInt, FullyOpaque)
+  lazy val toGray: Color = Color(toHSIIntensity.toInt, ColorValidator.FullyOpaque)
 
   /** */
   lazy val toHSI: (Double, Double, Double) = colors.toHSI(this)
@@ -688,7 +688,7 @@ class Color protected(
       red,
       ColorValidator.MinimumGreen,
       ColorValidator.MinimumBlue,
-      FullyOpaque)
+      ColorValidator.FullyOpaque)
   }
   /** */
   lazy val keepingOnlyGreenComponent: Color = {
@@ -696,7 +696,7 @@ class Color protected(
       ColorValidator.MinimumRed,
       green,
       ColorValidator.MinimumBlue,
-      FullyOpaque)
+      ColorValidator.FullyOpaque)
   }
 
   /** */
@@ -705,7 +705,7 @@ class Color protected(
       ColorValidator.MinimumRed,
       ColorValidator.MinimumGreen,
       blue,
-      FullyOpaque)
+      ColorValidator.FullyOpaque)
   }
 
   /** */
@@ -714,7 +714,7 @@ class Color protected(
       red,
       green,
       ColorValidator.MinimumBlue,
-      FullyOpaque)
+      ColorValidator.FullyOpaque)
   }
 
   /** */
@@ -723,7 +723,7 @@ class Color protected(
       red,
       ColorValidator.MinimumGreen,
       blue,
-      FullyOpaque)
+      ColorValidator.FullyOpaque)
   }
 
   /** */
@@ -732,7 +732,7 @@ class Color protected(
       ColorValidator.MinimumRed,
       green,
       blue,
-      FullyOpaque)
+      ColorValidator.FullyOpaque)
   }
 
   /** */
@@ -741,7 +741,7 @@ class Color protected(
       opacity,
       opacity,
       opacity,
-      FullyOpaque)
+      ColorValidator.FullyOpaque)
   }
 
   /**

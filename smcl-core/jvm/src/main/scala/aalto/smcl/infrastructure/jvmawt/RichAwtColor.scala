@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure.jvmawt
 
 import java.awt.{Color => LowLevelColor}
 
-import aalto.smcl.colors.rgb.Color
+import aalto.smcl.colors.rgb._
 
 
 

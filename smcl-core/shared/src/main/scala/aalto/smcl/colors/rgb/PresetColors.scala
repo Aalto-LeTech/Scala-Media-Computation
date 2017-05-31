@@ -17,11 +17,6 @@
 package aalto.smcl.colors.rgb
 
 
-import aalto.smcl.colors.{blueComponentOf, greenComponentOf, opacityComponentOf, redComponentOf}
-
-
-
-
 /**
  * This trait defines all preset colors available in SMCL. These color form a superset
  * of the colors defined in 5.7.2017 draft of the

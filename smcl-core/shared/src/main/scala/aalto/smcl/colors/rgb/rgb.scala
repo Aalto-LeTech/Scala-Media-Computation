@@ -25,12 +25,16 @@ import scala.language.implicitConversions
  *
  * @author Aleksi Lukkarinen
  */
-package object rgb {
+package object rgb
+    extends PresetColors
+            with ColorOperationsAPI {
 
   /** Application of the RichARGBInt class. */
-  implicit def ARGBIntWrapper(self: Int): RichARGBInt = new RichARGBInt(self)
+  implicit def ARGBIntWrapper(self: Int): RichARGBInt =
+    new RichARGBInt(self)
 
   /** Application of the RichRGBAColor class. */
-  implicit def ColorWrapper(self: Color): RichColor = RichColor(self)
+  implicit def ColorWrapper(self: Color): RichColor =
+    RichColor(self)
 
 }

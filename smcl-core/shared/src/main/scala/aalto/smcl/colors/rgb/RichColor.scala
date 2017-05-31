@@ -17,7 +17,7 @@
 package aalto.smcl.colors.rgb
 
 
-import aalto.smcl.colors.{ColorValidator, FullyOpaque, adjustHueOfRGBByDegrees}
+import aalto.smcl.colors.ColorValidator
 import aalto.smcl.infrastructure.{CommonValidators, InjectablesRegistry}
 
 
@@ -392,7 +392,7 @@ class RichColor private[smcl](
   final def withAbsoluteOpacityFactor(newAbsoluteOpacityFactorFromZeroToOne: Double): Color = {
     commonValidators.validateZeroToOneFactor(newAbsoluteOpacityFactorFromZeroToOne, Option("Opacity"))
 
-    withAbsoluteOpacity((newAbsoluteOpacityFactorFromZeroToOne * FullyOpaque).toInt)
+    withAbsoluteOpacity((newAbsoluteOpacityFactorFromZeroToOne * ColorValidator.FullyOpaque).toInt)
   }
 
   /**
@@ -502,7 +502,7 @@ class RichColor private[smcl](
     val weightedBlue = blueWeight * self.blue
     val grayIntensity = (weightedRed + weightedGreen + weightedBlue).toInt.min(ColorValidator.MaximumGray)
 
-    Color(grayIntensity, FullyOpaque)
+    Color(grayIntensity, ColorValidator.FullyOpaque)
   }
 
   /**

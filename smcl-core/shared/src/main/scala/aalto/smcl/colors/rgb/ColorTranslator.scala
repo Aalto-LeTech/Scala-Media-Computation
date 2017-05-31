@@ -17,11 +17,6 @@
 package aalto.smcl.colors.rgb
 
 
-import aalto.smcl.colors.{argbIntFrom, rgbaTupleFrom}
-
-
-
-
 /**
  *
  *

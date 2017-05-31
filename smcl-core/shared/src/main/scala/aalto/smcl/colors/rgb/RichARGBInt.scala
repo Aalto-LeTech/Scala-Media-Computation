@@ -16,7 +16,7 @@
 
 package aalto.smcl.colors.rgb
 
-import aalto.smcl.colors.{blueComponentOf, colorComponentMapFrom, greenComponentOf, opacityComponentOf, redComponentOf}
+
 import aalto.smcl.infrastructure._
 
 
