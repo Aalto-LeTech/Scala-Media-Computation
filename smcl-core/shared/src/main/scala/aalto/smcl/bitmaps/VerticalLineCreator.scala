@@ -18,7 +18,8 @@ package aalto.smcl.bitmaps
 
 
 import aalto.smcl.colors.rgb.Color
-import aalto.smcl.settings.{DefaultBitmapHeightInPixels, DefaultPrimaryColor, UpdateViewerPerDefaults, ViewerUpdateStyle}
+import aalto.smcl.settings.ViewerUpdateStyles.{UpdateViewerPerDefaults, ViewerUpdateStyle}
+import aalto.smcl.settings.{DefaultBitmapHeightInPixels, DefaultPrimaryColor}
 
 
 

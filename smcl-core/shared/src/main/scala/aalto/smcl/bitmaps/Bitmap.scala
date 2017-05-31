@@ -25,6 +25,7 @@ import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, _}
+import aalto.smcl.settings.ViewerUpdateStyles.{PreventViewerUpdates, UpdateViewerPerDefaults, ViewerUpdateStyle}
 import aalto.smcl.settings._
 import aalto.smcl.viewers.{display => displayInViewer}
 

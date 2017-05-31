@@ -22,7 +22,7 @@ package aalto.smcl.settings
  *
  * @author Aleksi Lukkarinen
  */
-trait ViewerUpdateStyleDefinitions {
+object ViewerUpdateStyles {
 
 
 

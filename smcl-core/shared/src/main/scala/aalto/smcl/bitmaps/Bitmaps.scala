@@ -22,7 +22,8 @@ import scala.util.{Failure, Success}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.infrastructure._
-import aalto.smcl.settings.{NewBitmapsAreDisplayedAutomatically, UpdateViewerPerDefaults, ViewerUpdateStyle}
+import aalto.smcl.settings.NewBitmapsAreDisplayedAutomatically
+import aalto.smcl.settings.ViewerUpdateStyles.{UpdateViewerPerDefaults, ViewerUpdateStyle}
 
 
 

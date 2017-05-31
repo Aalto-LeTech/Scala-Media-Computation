@@ -25,7 +25,7 @@ import aalto.smcl.colors.{Black, Gray, White}
 import aalto.smcl.infrastructure.jvmawt.AWTBitmapBufferAdapter
 import aalto.smcl.interfaces.awt.StaticGeneralBitmapSource
 import aalto.smcl.interfaces.{MetaInterfaceBase, ResourceMetadataSource, Timestamp}
-import aalto.smcl.settings._
+import aalto.smcl.settings.ViewerUpdateStyles.PreventViewerUpdates
 import aalto.smcl.settings.jvmawt.ColorVisualizationTileSideLengthInPixels
 
 
