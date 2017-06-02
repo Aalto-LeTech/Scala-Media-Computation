@@ -17,6 +17,7 @@
 package aalto.smcl.bitmaps
 
 
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.infrastructure.BitmapBufferAdapter
 import aalto.smcl.infrastructure.exceptions.InvalidColorComponentArrayLengthError
 
@@ -28,34 +29,34 @@ import aalto.smcl.infrastructure.exceptions.InvalidColorComponentArrayLengthErro
  *
  * @author Aleksi Lukkarinen
  */
-class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
-    extends Iterable[Pixel]
+class PixelSnapshot[BitmapType <: AbstractBitmap] private[bitmaps](
+    val widthInPixels: Int,
+    val heightInPixels: Int,
+    val relatedBitmap: BitmapType,
+    private[this] val buffer: BitmapBufferAdapter,
+    private[this] val receiver: PixelSnapshotReceiver[BitmapType])
+    extends Iterable[Pixel[BitmapType]]
             with PixelRectangle {
 
-  /** */
-  val widthInPixels: Int = relatedBitmap.widthInPixels
-
-  /** */
-  val heightInPixels: Int = relatedBitmap.heightInPixels
-
-  /** */
-  private[this] val buffer: BitmapBufferAdapter =
-    relatedBitmap.toRenderedRepresentation.copyPortionXYWH(0, 0, widthInPixels, heightInPixels)
-
-  private[this] var (_reds, _greens, _blues, _opacities) =
+  private[this]
+  var (_reds, _greens, _blues, _opacities) =
     buffer.colorComponentArrays
 
   /** */
-  private[bitmaps] def reds: Array[Int] = _reds
+  private[bitmaps]
+  def reds: Array[Int] = _reds
 
   /** */
-  private[bitmaps] def greens: Array[Int] = _greens
+  private[bitmaps]
+  def greens: Array[Int] = _greens
 
   /** */
-  private[bitmaps] def blues: Array[Int] = _blues
+  private[bitmaps]
+  def blues: Array[Int] = _blues
 
   /** */
-  private[bitmaps] def opacities: Array[Int] = _opacities
+  private[bitmaps]
+  def opacities: Array[Int] = _opacities
 
 
   /**
@@ -91,7 +92,7 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    *
    * @return
    */
-  def componentArrays(): (Array[Int], Array[Int], Array[Int], Array[Int]) =
+  def componentArrays: (Array[Int], Array[Int], Array[Int], Array[Int]) =
     (redComponentArray, greenComponentArray, blueComponentArray, opacityComponentArray)
 
 
@@ -163,10 +164,10 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
   /**
    *
    */
-  def toBitmap: Bitmap = {
+  def toBitmap: BitmapType = {
     buffer.setColorComponentArrays(_reds, _greens, _blues, _opacities)
 
-    relatedBitmap.applyPixelSnapshot(buffer)
+    receiver.applyPixelSnapshot(buffer)
   }
 
   /**
@@ -177,67 +178,77 @@ class PixelSnapshot private[smcl](relatedBitmap: Bitmap)
    *
    * @return
    */
-  def pixel(x: Int, y: Int) = Pixel(
-    this,
-    0, widthInPixels - 1,
-    0, heightInPixels - 1,
-    x, y)
+  def pixel(x: Int, y: Int): Pixel[BitmapType] = {
+    Pixel(
+      this,
+      0, widthInPixels - 1,
+      0, heightInPixels - 1,
+      x, y)
+  }
 
   /**
    *
    * @return
    */
-  override def iterator: PixelSnapshotRightwardsDownwardsIterator =
-    new PixelSnapshotRightwardsDownwardsIterator(this)
+  override def iterator: PixelSnapshotRightwardsDownwardsIterator[BitmapType] = {
+    PixelSnapshotRightwardsDownwardsIterator[BitmapType](this)
+  }
 
   /**
    *
    * @return
    */
-  def downwardsLeftwardsIterator: PixelSnapshotDownwardsLeftwardsIterator =
-    new PixelSnapshotDownwardsLeftwardsIterator(this)
+  def downwardsLeftwardsIterator: PixelSnapshotDownwardsLeftwardsIterator[BitmapType] = {
+    PixelSnapshotDownwardsLeftwardsIterator[BitmapType](this)
+  }
 
   /**
    *
    * @return
    */
-  def leftwardsDownwardsIterator: PixelSnapshotLeftwardsDownwardsIterator =
-    new PixelSnapshotLeftwardsDownwardsIterator(this)
+  def leftwardsDownwardsIterator: PixelSnapshotLeftwardsDownwardsIterator[BitmapType] = {
+    PixelSnapshotLeftwardsDownwardsIterator[BitmapType](this)
+  }
 
   /**
    *
    * @return
    */
-  def leftwardsUpwardsIterator: PixelSnapshotLeftwardsUpwardsIterator =
-    new PixelSnapshotLeftwardsUpwardsIterator(this)
+  def leftwardsUpwardsIterator: PixelSnapshotLeftwardsUpwardsIterator[BitmapType] = {
+    PixelSnapshotLeftwardsUpwardsIterator[BitmapType](this)
+  }
 
   /**
    *
    * @return
    */
-  def downwardsRightwardsIterator: PixelSnapshotDownwardsRightwardsIterator =
-    new PixelSnapshotDownwardsRightwardsIterator(this)
+  def downwardsRightwardsIterator: PixelSnapshotDownwardsRightwardsIterator[BitmapType] = {
+    PixelSnapshotDownwardsRightwardsIterator[BitmapType](this)
+  }
 
   /**
    *
    * @return
    */
-  def rightwardsUpwardsIterator: PixelSnapshotRightwardsUpwardsIterator =
-    new PixelSnapshotRightwardsUpwardsIterator(this)
+  def rightwardsUpwardsIterator: PixelSnapshotRightwardsUpwardsIterator[BitmapType] = {
+    PixelSnapshotRightwardsUpwardsIterator[BitmapType](this)
+  }
 
   /**
    *
    * @return
    */
-  def upwardsLeftwardsIterator: PixelSnapshotUpwardsLeftwardsIterator =
-    new PixelSnapshotUpwardsLeftwardsIterator(this)
+  def upwardsLeftwardsIterator: PixelSnapshotUpwardsLeftwardsIterator[BitmapType] = {
+    PixelSnapshotUpwardsLeftwardsIterator[BitmapType](this)
+  }
 
   /**
    *
    * @return
    */
-  def upwardsRightwardsIterator: PixelSnapshotUpwardsRightwardsIterator =
-    new PixelSnapshotUpwardsRightwardsIterator(this)
+  def upwardsRightwardsIterator: PixelSnapshotUpwardsRightwardsIterator[BitmapType] = {
+    PixelSnapshotUpwardsRightwardsIterator[BitmapType](this)
+  }
 
   /**
    *

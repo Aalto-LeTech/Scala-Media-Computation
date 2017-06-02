@@ -19,7 +19,7 @@ package aalto.smcl.viewers.bitmaps.jvmawt
 
 import rx.lang.scala.{JavaConversions, Subject}
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.Bitmap
 import aalto.smcl.infrastructure.jvmawt.SwingUtils
 import aalto.smcl.viewers.bitmaps.DisplayBitmapEvent
 import aalto.smcl.viewers.{BitmapViewerApplication, ExternalViewerEvent, ForceAllViewersToCloseEvent}

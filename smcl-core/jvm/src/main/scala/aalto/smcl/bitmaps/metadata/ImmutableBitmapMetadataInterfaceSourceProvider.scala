@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.metadata
 
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.Bitmap
 import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
 
 

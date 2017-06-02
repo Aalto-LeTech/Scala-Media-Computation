@@ -14,12 +14,10 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps
-
+package aalto.smcl.bitmaps.simplified
 
 import scala.collection.mutable
 
-import aalto.smcl.bitmaps
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
@@ -40,15 +38,13 @@ class CircleCreator {
    * @param diameter
    * @param color
    * @param backgroundColor
-   * @param viewerHandling
    *
    * @return
    */
   def createOne(
       diameter: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
     require(diameter > 0, s"Diameter of the circle must be at least 1 pixel (was $diameter)")
     require(color != null, "The circle color argument has to be a Color instance (was null).")
@@ -59,31 +55,35 @@ class CircleCreator {
     val newBitmap = Bitmap(
       widthInPixels = imageSide,
       heightInPixels = imageSide,
-      initialBackgroundColor = backgroundColor,
-      viewerHandling = PreventViewerUpdates)
+      initialBackgroundColor = backgroundColor)
 
     val radius = (imageSide - 2) / 2
 
-    val newCircle = newBitmap.drawCircle(
-      centerXInPixels = radius + 1,
-      centerYInPixels = radius + 1,
-      radiusInPixels = radius,
-      hasBorder = true,
-      hasFilling = true,
-      color = color,
-      fillColor = color,
-      viewerHandling = PreventViewerUpdates)
+    val oldViewerUpdatePolicy = NewBitmapsAreDisplayedAutomatically
+    try {
+      DoNotDisplayBitmapsAutomaticallyAfterOperations()
 
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (NewBitmapsAreDisplayedAutomatically)
-        newCircle.display()
+      val newCircle = newBitmap.drawCircle(
+        centerXInPixels = radius + 1,
+        centerYInPixels = radius + 1,
+        radiusInPixels = radius,
+        hasBorder = true,
+        hasFilling = true,
+        color = color,
+        fillColor = color)
     }
+    finally {
+      NewBitmapsAreDisplayedAutomatically = oldViewerUpdatePolicy
+    }
+
+    if (NewBitmapsAreDisplayedAutomatically)
+      newCircle.display()
 
     newCircle
   }
 
   /**
-   * Creates an array of [[bitmaps.Bitmap]]
+   * Creates an array of [[Bitmap]]
    * instances with a circle drawn on each bitmap.
    *
    * @param diameter

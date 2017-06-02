@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
@@ -38,7 +38,7 @@ import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBac
  */
 private[bitmaps]
 case class Rotate(
-    sourceBitmap: Bitmap,
+    sourceBitmap: AbstractBitmap,
     angleInDegrees: Double,
     resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
     backgroundColor: Color = DefaultBackgroundColor)
@@ -98,7 +98,8 @@ case class Rotate(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
+  }
 
 }

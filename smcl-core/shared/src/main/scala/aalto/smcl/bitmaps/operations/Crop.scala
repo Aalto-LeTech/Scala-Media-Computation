@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 
@@ -36,7 +36,7 @@ import aalto.smcl.infrastructure.BitmapBufferAdapter
  */
 private[bitmaps]
 case class Crop(
-    sourceBitmap: Bitmap,
+    sourceBitmap: AbstractBitmap,
     windowTopLeftX: Int,
     windowTopLeftY: Int,
     windowBottomRightX: Int,
@@ -105,7 +105,8 @@ case class Crop(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
+  }
 
 }

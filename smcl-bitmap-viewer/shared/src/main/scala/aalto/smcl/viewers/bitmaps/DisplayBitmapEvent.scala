@@ -17,7 +17,7 @@
 package aalto.smcl.viewers.bitmaps
 
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.Bitmap
 import aalto.smcl.viewers.ExternalViewerEvent
 
 

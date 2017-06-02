@@ -18,6 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps._
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings.{DefaultBackgroundColor, DefaultPaddingInPixels}
@@ -37,7 +38,7 @@ import aalto.smcl.settings.{DefaultBackgroundColor, DefaultPaddingInPixels}
  */
 private[bitmaps]
 case class ReplicateHorizontally(
-    bitmapToReplicate: Bitmap,
+    bitmapToReplicate: AbstractBitmap,
     numberOfReplicas: Int,
     paddingInPixels: Int = DefaultPaddingInPixels,
     backgroundColor: Color = DefaultBackgroundColor,
@@ -110,7 +111,8 @@ case class ReplicateHorizontally(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer()
+  }
 
 }

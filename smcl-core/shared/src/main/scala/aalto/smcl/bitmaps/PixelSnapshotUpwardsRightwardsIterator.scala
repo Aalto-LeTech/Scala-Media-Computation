@@ -19,6 +19,8 @@ package aalto.smcl.bitmaps
 
 import scala.collection.AbstractIterator
 
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
+
 
 
 
@@ -27,8 +29,9 @@ import scala.collection.AbstractIterator
  *
  * @author Aleksi Lukkarinen
  */
-class PixelSnapshotUpwardsRightwardsIterator(val relatedPixelSnapshot: PixelSnapshot)
-    extends AbstractIterator[Pixel] {
+case class PixelSnapshotUpwardsRightwardsIterator[BitmapType <: AbstractBitmap](
+    relatedPixelSnapshot: PixelSnapshot[BitmapType])
+    extends AbstractIterator[Pixel[BitmapType]] {
 
   /** */
   lazy val widthInPixels: Int = relatedPixelSnapshot.widthInPixels
@@ -107,11 +110,11 @@ class PixelSnapshotUpwardsRightwardsIterator(val relatedPixelSnapshot: PixelSnap
    *
    * @return
    */
-  def next(): Pixel = {
+  def next(): Pixel[BitmapType] = {
     if (!hasNext)
       return Iterator.empty.next()
 
-    val nextResult: Pixel = new Pixel(
+    val nextResult = Pixel[BitmapType](
       relatedPixelSnapshot,
       MinXInPixels, MaxXInPixels,
       MinYInPixels, MaxYInPixels,

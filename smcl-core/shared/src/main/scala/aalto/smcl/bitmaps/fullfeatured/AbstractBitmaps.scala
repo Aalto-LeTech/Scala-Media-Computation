@@ -14,11 +14,12 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps
+package aalto.smcl.bitmaps.fullfeatured
 
 
 import scala.util.{Failure, Success}
 
+import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.infrastructure._
@@ -32,7 +33,8 @@ import aalto.smcl.settings.{NewBitmapsAreDisplayedAutomatically, UpdateViewerPer
  *
  * @author Aleksi Lukkarinen
  */
-object Bitmaps extends InjectablesRegistry {
+private[smcl]
+object AbstractBitmaps extends InjectablesRegistry {
 
   /** The ColorValidator instance to be used by this object. */
   private lazy val colorValidator: ColorValidator = {
@@ -54,7 +56,7 @@ object Bitmaps extends InjectablesRegistry {
    */
   def apply(
       sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle): Seq[Bitmap] = {
+      viewerHandling: ViewerUpdateStyle): Seq[AbstractBitmap] = {
 
     // The ImageProvider is trusted with validation of the source resource path.
     val loadedBuffersTry = PRF.tryToLoadImagesFromPath(sourceResourcePath)
@@ -86,7 +88,7 @@ object Bitmaps extends InjectablesRegistry {
    *
    * @return
    */
-  def apply(sourceResourcePath: String): Seq[Bitmap] = {
+  def apply(sourceResourcePath: String): Seq[AbstractBitmap] = {
     apply(sourceResourcePath, UpdateViewerPerDefaults)
   }
 

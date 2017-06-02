@@ -14,9 +14,9 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps
+package aalto.smcl.bitmaps.fullfeatured
 
-
+import aalto.smcl.bitmaps.ConvolutionKernel
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import aalto.smcl.settings._
@@ -25,7 +25,7 @@ import aalto.smcl.settings._
 
 
 /**
- * Provides a way to modify [[aalto.smcl.bitmaps.Bitmap]]
+ * Provides a way to modify [[Bitmap]]
  * instances using "stand-alone" functions instead of OOP-based `object.operation`
  * approach. The functions are made available by the package object.
  *
@@ -99,13 +99,13 @@ trait BitmapOperationAPI {
    *
    * @return
    */
-  def convertToGrayscaleByLuminocity(
+  def toGrayscaleByLuminocity(
       bmp: Bitmap,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.convertToGrayscaleByLuminocity(viewerHandling)
+    bmp.toGrayscaleByLuminocity(viewerHandling)
   }
 
   /**
@@ -116,13 +116,13 @@ trait BitmapOperationAPI {
    *
    * @return
    */
-  def convertToGrayscaleByLightness(
+  def toGrayscaleByLightness(
       bmp: Bitmap,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.convertToGrayscaleByLightness(viewerHandling)
+    bmp.toGrayscaleByLightness(viewerHandling)
   }
 
   /**
@@ -136,7 +136,7 @@ trait BitmapOperationAPI {
    *
    * @return
    */
-  def convertToGrayscale(
+  def toGrayscale(
       bmp: Bitmap,
       redWeight: Double,
       greenWeight: Double,
@@ -145,7 +145,7 @@ trait BitmapOperationAPI {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.convertToGrayscale(redWeight, greenWeight, blueWeight, viewerHandling)
+    bmp.toGrayscale(redWeight, greenWeight, blueWeight, viewerHandling)
   }
 
   /**
@@ -1112,7 +1112,7 @@ trait BitmapOperationAPI {
    *
    * @return
    */
-  def rotate90DegsCw(
+  def rotate90DegsCW(
       bmp: Bitmap,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
@@ -1120,7 +1120,7 @@ trait BitmapOperationAPI {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.rotate90DegsCw(
+    bmp.rotate90DegsCW(
       resizeCanvasBasedOnTransformation,
       backgroundColor,
       viewerHandling)
@@ -1136,7 +1136,7 @@ trait BitmapOperationAPI {
    *
    * @return
    */
-  def rotate90DegsCcw(
+  def rotate90DegsCCW(
       bmp: Bitmap,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
@@ -1144,7 +1144,7 @@ trait BitmapOperationAPI {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.rotate90DegsCcw(
+    bmp.rotate90DegsCCW(
       resizeCanvasBasedOnTransformation,
       backgroundColor,
       viewerHandling)
@@ -1192,7 +1192,7 @@ trait BitmapOperationAPI {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.rotate90DegsCw(
+    bmp.rotate90DegsCW(
       resizeCanvasBasedOnTransformation,
       backgroundColor,
       viewerHandling)
@@ -1216,7 +1216,7 @@ trait BitmapOperationAPI {
 
     require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
 
-    bmp.rotate90DegsCcw(
+    bmp.rotate90DegsCCW(
       resizeCanvasBasedOnTransformation,
       backgroundColor,
       viewerHandling)

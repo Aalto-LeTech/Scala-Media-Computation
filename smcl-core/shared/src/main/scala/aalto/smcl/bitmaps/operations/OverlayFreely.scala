@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps._
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
@@ -39,8 +39,8 @@ import aalto.smcl.settings.DefaultBackgroundColor
  */
 private[bitmaps]
 case class OverlayFreely(
-    bottomBitmap: Bitmap,
-    topBitmap: Bitmap,
+    bottomBitmap: AbstractBitmap,
+    topBitmap: AbstractBitmap,
     topBitmapUpperLeftX: Int,
     topBitmapUpperLeftY: Int,
     topBitmapOpacity: Int = ColorValidator.MaximumOpacity,
@@ -136,7 +136,8 @@ case class OverlayFreely(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer()
+  }
 
 }

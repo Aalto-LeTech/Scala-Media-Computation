@@ -19,7 +19,7 @@ package aalto.smcl.bitmaps.metadata
 
 import java.awt.image.BufferedImage
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.colors.{Black, Gray, White}
 import aalto.smcl.infrastructure.jvmawt.AWTBitmapBufferAdapter
@@ -104,8 +104,8 @@ case class ColorMetadataSource(relatedRGBAColor: Color)
    *
    * @return
    */
-  def createSingleColorTile(): Bitmap = {
-    var colorTile = Bitmap(
+  def createSingleColorTile(): fullfeatured.Bitmap = {
+    var colorTile = fullfeatured.Bitmap(
       widthInPixels = ColorVisualizationTileSideLengthInPixels,
       heightInPixels = ColorVisualizationTileSideLengthInPixels,
       viewerHandling = PreventViewerUpdates)
@@ -130,8 +130,8 @@ case class ColorMetadataSource(relatedRGBAColor: Color)
    *
    * @return
    */
-  def createDoubleColorTile(backgroundColor: Color): Bitmap = {
-    var colorTile = Bitmap(
+  def createDoubleColorTile(backgroundColor: Color): fullfeatured.Bitmap = {
+    var colorTile = fullfeatured.Bitmap(
       widthInPixels = ColorVisualizationTileSideLengthInPixels,
       heightInPixels = ColorVisualizationTileSideLengthInPixels,
       viewerHandling = PreventViewerUpdates)

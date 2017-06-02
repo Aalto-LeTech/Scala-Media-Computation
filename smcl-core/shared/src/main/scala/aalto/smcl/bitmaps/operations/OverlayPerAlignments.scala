@@ -19,7 +19,7 @@ package aalto.smcl.bitmaps.operations
 
 import scala.collection.mutable.ArrayBuffer
 
-import aalto.smcl.bitmaps._
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, PRF}
@@ -40,7 +40,7 @@ import aalto.smcl.settings._
  */
 private[bitmaps]
 case class OverlayPerAlignments(
-    bitmapsToOverlayFromBottomToTop: Seq[Bitmap])(
+    bitmapsToOverlayFromBottomToTop: Seq[AbstractBitmap])(
     horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
     verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
     opacityForAllBitmaps: Int = ColorValidator.MaximumOpacity,

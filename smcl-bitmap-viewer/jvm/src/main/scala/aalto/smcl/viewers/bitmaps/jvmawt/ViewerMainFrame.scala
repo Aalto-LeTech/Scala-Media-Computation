@@ -25,7 +25,7 @@ import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
 
 import aalto.smcl.SMCLLibrary._
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.Bitmap
 import aalto.smcl.infrastructure.PRF
 import aalto.smcl.infrastructure.exceptions.UnexpectedInternalError
 import aalto.smcl.infrastructure.jvmawt.SwingUtils

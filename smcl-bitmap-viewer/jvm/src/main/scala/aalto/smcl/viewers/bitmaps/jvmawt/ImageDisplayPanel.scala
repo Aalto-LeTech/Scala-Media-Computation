@@ -22,7 +22,7 @@ import java.awt.{RenderingHints, Graphics2D => JGraphics2D}
 import scala.swing._
 import scala.util.Try
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.Bitmap
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure.jvmawt.{AWTAffineTransformationAdapter, AWTBitmapBufferAdapter}
 

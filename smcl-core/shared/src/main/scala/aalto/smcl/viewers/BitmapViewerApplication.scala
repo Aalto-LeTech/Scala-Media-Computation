@@ -17,7 +17,7 @@
 package aalto.smcl.viewers
 
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.Bitmap
 
 
 

@@ -14,19 +14,17 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps
+package aalto.smcl.bitmaps.fullfeatured
 
 
 import scala.collection.mutable
-import scala.ref.WeakReference
 
 import aalto.smcl.bitmaps.operations._
+import aalto.smcl.bitmaps.{BitmapValidator, ConvolutionKernel, PixelSnapshot, PixelSnapshotReceiver}
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
-import aalto.smcl.geometry.AffineTransformation
-import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, _}
+import aalto.smcl.infrastructure._
 import aalto.smcl.settings._
-import aalto.smcl.viewers.{display => displayInViewer}
 
 
 
@@ -36,17 +34,7 @@ import aalto.smcl.viewers.{display => displayInViewer}
  *
  * @author Aleksi Lukkarinen
  */
-object Bitmap extends InjectablesRegistry {
-
-  /** The ColorValidator instance to be used by this object. */
-  private lazy val colorValidator: ColorValidator = {
-    injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
-  }
-
-  /** The BitmapValidator instance to be used by this object. */
-  private lazy val bitmapValidator: BitmapValidator = {
-    injectable(InjectablesRegistry.IIdBitmapValidator).asInstanceOf[BitmapValidator]
-  }
+object Bitmap {
 
   /**
    * Creates a new empty [[Bitmap]] instance.
@@ -57,27 +45,11 @@ object Bitmap extends InjectablesRegistry {
       initialBackgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
-    bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
-
-    if (bitmapValidator.warningSizeLimitsAreExceeded(widthInPixels, heightInPixels)) {
-      println("\n\nWarning: The image is larger than the recommended maximum size")
-    }
-
-    require(initialBackgroundColor != null,
-      "The background color argument has to be a Color instance (was null).")
-
-    val operationList =
-      Clear(initialBackgroundColor) +:
-          BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
-
-    val newBitmap = new Bitmap(operationList, bitmapValidator, colorValidator, Identity())
-
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (NewBitmapsAreDisplayedAutomatically)
-        newBitmap.display()
-    }
-
-    newBitmap
+    AbstractBitmap(
+      widthInPixels,
+      heightInPixels,
+      initialBackgroundColor,
+      viewerHandling).asInstanceOf[Bitmap]
   }
 
   /**
@@ -92,22 +64,9 @@ object Bitmap extends InjectablesRegistry {
       sourceResourcePath: String,
       viewerHandling: ViewerUpdateStyle): Bitmap = {
 
-    // The ImageProvider is trusted with validation of the source resource path.
-    val loadedBufferTry = PRF.tryToLoadImageFromPath(sourceResourcePath)
-    if (loadedBufferTry.isFailure)
-      throw loadedBufferTry.failed.get
-
-    val operationList = BitmapOperationList(
-      LoadedBitmap(loadedBufferTry.get, Option(sourceResourcePath), Option(0)))
-    val newBitmap = new Bitmap(
-      operationList, bitmapValidator, colorValidator, Identity())
-
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (NewBitmapsAreDisplayedAutomatically)
-        newBitmap.display()
-    }
-
-    newBitmap
+    AbstractBitmap(
+      sourceResourcePath,
+      viewerHandling).asInstanceOf[Bitmap]
   }
 
   /**
@@ -118,7 +77,9 @@ object Bitmap extends InjectablesRegistry {
    * @return
    */
   def apply(sourceResourcePath: String): Bitmap = {
-    apply(sourceResourcePath, UpdateViewerPerDefaults)
+    AbstractBitmap(
+      sourceResourcePath,
+      UpdateViewerPerDefaults).asInstanceOf[Bitmap]
   }
 
 }
@@ -136,34 +97,16 @@ object Bitmap extends InjectablesRegistry {
  * @author Aleksi Lukkarinen
  */
 case class Bitmap private[bitmaps](
-    private[bitmaps] val operations: BitmapOperationList,
+    override private[bitmaps] val operations: BitmapOperationList,
     private val bitmapValidator: BitmapValidator,
     private val colorValidator: ColorValidator,
-    uniqueIdentifier: Identity) extends {
-
-  /** Width of this [[Bitmap]]. */
-  val widthInPixels: Int = operations.widthInPixels
-
-  /** Height of this [[Bitmap]]. */
-  val heightInPixels: Int = operations.heightInPixels
-
-  /** Rendering buffer for this image. */
-  private[this] var _renderingBuffer: WeakReference[BitmapBufferAdapter] =
-    WeakReference[BitmapBufferAdapter](null)
-
-} with Displayable
-       with RenderableBitmap
-       with PixelRectangle
-       with Immutable
-       with TimestampedCreation {
-
-  /**
-   * Returns the initial background color of this [[Bitmap]]
-   * (may not be the actual background color at a later time).
-   */
-  val initialBackgroundColor: Color = {
-    operations.initialBackgroundColor
-  }
+    uniqueIdentifier: Identity)
+    extends AbstractBitmap(
+      operations,
+      bitmapValidator,
+      colorValidator,
+      uniqueIdentifier)
+            with PixelSnapshotReceiver[Bitmap] {
 
   /**
    * Applies an [[Renderable]] to this [[Bitmap]].
@@ -173,20 +116,12 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  private[bitmaps] def apply(
+  private[bitmaps]
+  override def apply(
       newOperation: Renderable,
       viewerHandling: ViewerUpdateStyle): Bitmap = {
 
-    require(newOperation != null, "Operation argument cannot be null.")
-
-    val newBitmap = copy(operations = newOperation +: operations)
-
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (BitmapsAreDisplayedAutomaticallyAfterOperations)
-        newBitmap.display()
-    }
-
-    newBitmap
+    super.apply(newOperation, viewerHandling).asInstanceOf[Bitmap]
   }
 
   /**
@@ -196,8 +131,10 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  private[bitmaps] def applyInitialization(newOperation: Renderable): Bitmap =
-    apply(newOperation, PreventViewerUpdates)
+  private[bitmaps]
+  override def applyInitialization(newOperation: Renderable): Bitmap = {
+    super.apply(newOperation, PreventViewerUpdates).asInstanceOf[Bitmap]
+  }
 
   /**
    * Applies an [[BufferProvider]] to this [[Bitmap]].
@@ -207,21 +144,12 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  private[bitmaps] def apply(
+  private[bitmaps]
+  override def apply(
       newOperation: BufferProvider,
       viewerHandling: ViewerUpdateStyle): Bitmap = {
 
-    require(newOperation != null, "Operation argument cannot be null.")
-
-    val newOperationList = BitmapOperationList(newOperation)
-    val newBitmap = copy(operations = newOperationList)
-
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (BitmapsAreDisplayedAutomaticallyAfterOperations)
-        newBitmap.display()
-    }
-
-    newBitmap
+    super.apply(newOperation, viewerHandling).asInstanceOf[Bitmap]
   }
 
   /**
@@ -231,19 +159,9 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  private[bitmaps] def applyInitialization(newOperation: BufferProvider): Bitmap = {
-    apply(newOperation, PreventViewerUpdates)
-  }
-
-  /**
-   *
-   *
-   * @param filename
-   *
-   * @return
-   */
-  def saveAsPngTo(filename: String): String = {
-    toRenderedRepresentation.saveAsPngTo(filename)
+  private[bitmaps]
+  override def applyInitialization(newOperation: BufferProvider): Bitmap = {
+    super.apply(newOperation, PreventViewerUpdates).asInstanceOf[Bitmap]
   }
 
   /**
@@ -325,6 +243,20 @@ case class Bitmap private[bitmaps](
    *
    *
    * @param snapshotBuffer
+   */
+  private[smcl]
+  def applyPixelSnapshot(
+      snapshotBuffer: BitmapBufferAdapter): Bitmap = {
+
+    apply(
+      ApplyPixelSnapshot(snapshotBuffer),
+      UpdateViewerPerDefaults)
+  }
+
+  /**
+   *
+   *
+   * @param snapshotBuffer
    * @param viewerHandling
    */
   private[smcl] def applyPixelSnapshot(
@@ -339,8 +271,17 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  def createPixelSnapshot: PixelSnapshot = {
-    new PixelSnapshot(this)
+  def createPixelSnapshot: PixelSnapshot[Bitmap] = {
+    val buffer =
+      toRenderedRepresentation.copyPortionXYWH(
+        0, 0, widthInPixels, heightInPixels)
+
+    new PixelSnapshot[Bitmap](
+      widthInPixels,
+      heightInPixels,
+      this,
+      buffer,
+      this)
   }
 
   /**
@@ -350,7 +291,7 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  def convertToGrayscaleByLuminocity(
+  def toGrayscaleByLuminocity(
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(ToGrayscaleByLuminocity(), viewerHandling)
@@ -363,7 +304,7 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  def convertToGrayscaleByLightness(
+  def toGrayscaleByLightness(
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(ToGrayscaleByLightness(), viewerHandling)
@@ -379,7 +320,7 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  def convertToGrayscale(
+  def toGrayscale(
       redWeight: Double,
       greenWeight: Double,
       blueWeight: Double,
@@ -1585,7 +1526,7 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  def rotate90DegsCw(
+  def rotate90DegsCW(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
@@ -1608,7 +1549,7 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  def rotate90DegsCcw(
+  def rotate90DegsCCW(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
@@ -1659,7 +1600,7 @@ case class Bitmap private[bitmaps](
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
-    rotate90DegsCw(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
+    rotate90DegsCW(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
 
   /**
@@ -1676,7 +1617,7 @@ case class Bitmap private[bitmaps](
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
-    rotate90DegsCcw(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
+    rotate90DegsCCW(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
 
   /**
@@ -2034,48 +1975,6 @@ case class Bitmap private[bitmaps](
 
 
   /**
-   * Renders this [[Bitmap]] onto a drawing surface using specified coordinates.
-   *
-   * @param drawingSurface
-   * @param x
-   * @param y
-   */
-  def renderOnto(drawingSurface: DrawingSurfaceAdapter, x: Int, y: Int): Unit = {
-    require(drawingSurface != null, "Drawing surface argument cannot be null.")
-
-    val rendition = toRenderedRepresentation
-    drawingSurface.drawBitmap(rendition, x, y)
-  }
-
-  /**
-   * Renders this [[Bitmap]] onto a drawing surface using specified affine transformation.
-   *
-   * @param drawingSurface
-   * @param transformation
-   */
-  def renderOnto(
-      drawingSurface: DrawingSurfaceAdapter,
-      transformation: AffineTransformation): Unit = {
-
-    require(drawingSurface != null, "Drawing surface argument cannot be null.")
-
-    val rendition = toRenderedRepresentation
-    drawingSurface.drawBitmap(rendition, transformation)
-  }
-
-  /**
-   * Returns a `BufferedImage` instance representing this [[Bitmap]].
-   */
-  def toRenderedRepresentation: BitmapBufferAdapter =
-    _renderingBuffer.get getOrElse {
-      val rendition = operations.render()
-
-      _renderingBuffer = WeakReference[BitmapBufferAdapter](rendition)
-
-      return rendition
-    }
-
-  /**
    * Returns a mutable `ArrayBuffer` containing a given number of copies of this [[Bitmap]] instance.
    *
    * @param size
@@ -2119,15 +2018,6 @@ case class Bitmap private[bitmaps](
    */
   def propagateToSeq(size: Int): Seq[Bitmap] = {
     propagateToArrayBuffer(size)
-  }
-
-  /**
-   *
-   */
-  def display(): Bitmap = {
-    displayInViewer(this)
-
-    this
   }
 
 }

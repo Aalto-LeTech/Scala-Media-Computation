@@ -20,6 +20,7 @@ package aalto.smcl.bitmaps.operations
 import scala.collection.mutable.ArrayBuffer
 
 import aalto.smcl.bitmaps._
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings._
@@ -39,7 +40,7 @@ import aalto.smcl.settings._
  */
 private[bitmaps]
 case class AppendHorizontally(
-    bitmapsToCombine: Seq[Bitmap])(
+    bitmapsToCombine: Seq[AbstractBitmap])(
     verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
     paddingInPixels: Int = DefaultPaddingInPixels,
     backgroundColor: Color = DefaultBackgroundColor,

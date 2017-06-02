@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure._
@@ -38,7 +38,7 @@ import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBac
  */
 private[bitmaps]
 case class Shear(
-    sourceBitmap: Bitmap,
+    sourceBitmap: AbstractBitmap,
     shearingFactorHorizontal: Double = 0.0,
     shearingFactorVertical: Double = 0.0,
     resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
@@ -96,7 +96,8 @@ case class Shear(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
+  }
 
 }

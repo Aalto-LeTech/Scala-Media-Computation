@@ -17,17 +17,27 @@
 package aalto.smcl.bitmaps
 
 
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
+
+
+
+
 /**
  *
  *
  * @param relatedPixelSnapshot
+ * @param MinXInPixels
+ * @param MaxXInPixels
+ * @param MinYInPixels
+ * @param MaxYInPixels
  * @param currentXInPixels
  * @param currentYInPixels
+ * @tparam BitmapType
  *
  * @author Aleksi Lukkarinen
  */
-case class Pixel private[bitmaps](
-    relatedPixelSnapshot: PixelSnapshot,
+case class Pixel[BitmapType <: AbstractBitmap] private[bitmaps](
+    relatedPixelSnapshot: PixelSnapshot[BitmapType],
     MinXInPixels: Int,
     MaxXInPixels: Int,
     MinYInPixels: Int,
@@ -36,7 +46,8 @@ case class Pixel private[bitmaps](
     currentYInPixels: Int) {
 
   /** */
-  private[this] lazy val linearPosition: Int =
+  private[this]
+  lazy val linearPosition: Int =
     currentYInPixels * (MaxXInPixels - MinXInPixels + 1) + currentXInPixels
 
 

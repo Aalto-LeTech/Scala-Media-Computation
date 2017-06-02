@@ -19,6 +19,8 @@ package aalto.smcl.bitmaps.operations
 
 import scala.annotation.tailrec
 
+import aalto.smcl.bitmaps.fullfeatured
+import aalto.smcl.bitmaps.fullfeatured.Bitmap
 import aalto.smcl.colors.White
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.BitmapBufferAdapter
@@ -64,13 +66,13 @@ case class BitmapOperationList private(
   val heightInPixels: Int = bufferProvider.heightInPixels
 
   /**
-   * Adds a new [[aalto.smcl.bitmaps.Bitmap]] to the beginning of this [[BitmapOperationList]].
+   * Adds a new [[Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
   private[bitmaps] def add(newOperation: Renderable) =
     BitmapOperationList(bufferProvider, newOperation +: operations)
 
   /**
-   * Adds a new [[aalto.smcl.bitmaps.Bitmap]] to the beginning of this [[BitmapOperationList]].
+   * Adds a new [[fullfeatured.Bitmap]] to the beginning of this [[BitmapOperationList]].
    */
   private[bitmaps] def +: (newOperation: Renderable) = this.add(newOperation)
 

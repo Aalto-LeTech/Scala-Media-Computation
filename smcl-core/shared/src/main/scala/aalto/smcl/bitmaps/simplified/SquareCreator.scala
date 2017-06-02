@@ -14,8 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps
-
+package aalto.smcl.bitmaps.simplified
 
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._

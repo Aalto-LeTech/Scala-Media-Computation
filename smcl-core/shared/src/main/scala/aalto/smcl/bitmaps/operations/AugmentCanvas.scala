@@ -18,6 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps._
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings.DefaultBackgroundColor
@@ -39,7 +40,7 @@ import aalto.smcl.settings.DefaultBackgroundColor
  */
 private[bitmaps]
 case class AugmentCanvas(
-    sourceBitmap: Bitmap,
+    sourceBitmap: AbstractBitmap,
     extraPixelsOntoLeftEdge: Int = 0,
     extraPixelsOntoTopEdge: Int = 0,
     extraPixelsOntoRightEdge: Int = 0,

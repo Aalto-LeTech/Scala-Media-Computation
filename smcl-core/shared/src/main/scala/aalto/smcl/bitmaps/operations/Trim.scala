@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.bitmaps.Bitmap
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings.DefaultBackgroundColor
@@ -36,7 +36,7 @@ import aalto.smcl.settings.DefaultBackgroundColor
  */
 private[bitmaps]
 case class Trim(
-    sourceBitmap: Bitmap,
+    sourceBitmap: AbstractBitmap,
     colorToTrim: Color = DefaultBackgroundColor)
     extends AbstractOperation
             with BufferProvider
@@ -86,7 +86,8 @@ case class Trim(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter =
+  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
+  }
 
 }

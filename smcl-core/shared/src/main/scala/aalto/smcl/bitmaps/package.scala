@@ -19,6 +19,8 @@ package aalto.smcl
 
 import scala.language.implicitConversions
 
+import aalto.smcl.bitmaps.fullfeatured.ShapeCreationAPI
+
 
 /**
  *
@@ -26,8 +28,15 @@ import scala.language.implicitConversions
  * @author Aleksi Lukkarinen
  */
 package object bitmaps
-    extends BitmapOperationAPI
+    extends simplified.BitmapOperationAPI
             with ShapeCreationAPI {
+
+  /** A type alias for default bitmap class. */
+  type Bitmap = simplified.Bitmap
+
+  /** A companion object alias for default bitmap. */
+  val Bitmap = simplified.Bitmap
+
 
   /**
    *
@@ -36,7 +45,7 @@ package object bitmaps
    *
    * @return
    */
-  implicit def BitmapCreationStringContextWrapper(sc: StringContext): BitmapCreationStringInterpolator =
-    new BitmapCreationStringInterpolator(sc)
+  implicit def BitmapCreationStringContextWrapper(sc: StringContext): simplified.BitmapCreationStringInterpolator =
+    simplified.BitmapCreationStringContextWrapper(sc)
 
 }

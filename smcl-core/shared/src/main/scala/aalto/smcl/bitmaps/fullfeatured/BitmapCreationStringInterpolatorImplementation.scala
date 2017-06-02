@@ -14,33 +14,31 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps
+package aalto.smcl.bitmaps.fullfeatured
 
 
 /**
- * A string interpolator for creating [[aalto.smcl.bitmaps.Bitmap]] instances.
- *
- * @param sc
+ * A string interpolator implementation for creating bitmap instances.
  *
  * @author Aleksi Lukkarinen
  */
-class BitmapCreationStringInterpolator(val sc: StringContext)
-    extends AnyVal {
-
+private[bitmaps]
+object BitmapCreationStringInterpolatorImplementation {
 
   /**
-   * Loads a bitmap from a file.
+   * Loads the first bitmap from a file.
    *
    * @param args path to the image file to be loaded
    *
    * @return
    */
-  def bmpf(args: Any*): Bitmap = {
+  def bmpf[BitmapType <: AbstractBitmap](
+      sc: StringContext, args: Any*): BitmapType = {
+
     val pathStringCandidate = sc.standardInterpolator(StringContext.processEscapes, args)
 
-    Bitmap(pathStringCandidate)
+    Bitmap(pathStringCandidate).asInstanceOf[BitmapType]
   }
-
 
   /**
    * Loads all bitmaps from a file.
@@ -49,10 +47,12 @@ class BitmapCreationStringInterpolator(val sc: StringContext)
    *
    * @return
    */
-  def bmpsf(args: Any*): Seq[Bitmap] = {
+  def bmpsf[BitmapType <: AbstractBitmap](
+      sc: StringContext, args: Any*): Seq[BitmapType] = {
+
     val pathStringCandidate = sc.standardInterpolator(StringContext.processEscapes, args)
 
-    Bitmaps(pathStringCandidate)
+    Bitmaps(pathStringCandidate).map(_.asInstanceOf[BitmapType])
   }
 
 }

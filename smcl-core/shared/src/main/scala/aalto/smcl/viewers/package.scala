@@ -32,13 +32,15 @@ package object viewers {
    *
    * @param resource
    */
-  def display(resource: Displayable): Unit =
+  def display(resource: Displayable): Unit = {
     DefaultViewerApplicationClient.display(resource)
+  }
 
   /**
    *
    */
-  def closeAllViewersWithoutSaving(): Unit =
+  def closeAllViewersWithoutSaving(): Unit = {
     DefaultViewerApplicationClient.closeAllViewersWithoutSaving()
+  }
 
 }
