@@ -17,8 +17,9 @@
 package aalto.smcl.infrastructure.jvmawt
 
 
-import aalto.smcl.bitmaps.fullfeatured.{AbstractBitmap, AbstractBitmaps}
-import aalto.smcl.bitmaps.{BitmapValidator, BitmapValidatorFunctionFactory}
+import aalto.smcl.bitmaps.fullfeatured.AbstractBitmaps
+import aalto.smcl.bitmaps.{fullfeatured, simplified}
+import aalto.smcl.bitmaps.{BitmapValidator, BitmapValidatorFunctionFactory, fullfeatured}
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, RichColor}
 import aalto.smcl.infrastructure.{CommonValidators, DefaultJVMCalendarProvider, DefaultJVMUniqueIDProvider, DefaultPlatformResourceFactory, InjectablesRegistry, RicherString, SMCLInitializer, SettingInitializer, StringUtils}
@@ -100,7 +101,8 @@ object Initializer extends SMCLInitializer {
       IntSetting,
       StringSetting,
       AWTBitmapBufferAdapter,
-      AbstractBitmap,
+      fullfeatured.Bitmap,
+      simplified.Bitmap,
       AbstractBitmaps
     )
 

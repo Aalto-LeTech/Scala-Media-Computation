@@ -19,7 +19,7 @@ package aalto.smcl.bitmaps.simplified
 
 import scala.collection.mutable
 
-import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
+import aalto.smcl.bitmaps.fullfeatured.{AbstractBitmap, BitmapCompanion}
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{BitmapValidator, ConvolutionKernel, PixelSnapshot, PixelSnapshotReceiver}
 import aalto.smcl.colors.ColorValidator
@@ -35,21 +35,51 @@ import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultArc
  *
  * @author Aleksi Lukkarinen
  */
-object Bitmap {
+object Bitmap extends BitmapCompanion[Bitmap] {
 
   /**
    * Creates a new empty [[Bitmap]] instance.
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param initialBackgroundColor
+   *
+   * @return
    */
   def apply(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      initialBackgroundColor: Color = DefaultBackgroundColor): Bitmap = {
+      widthInPixels: Int,
+      heightInPixels: Int,
+      initialBackgroundColor: Color): Bitmap = {
 
-    AbstractBitmap(
+    super.apply(
       widthInPixels,
       heightInPixels,
       initialBackgroundColor,
-      UpdateViewerPerDefaults).asInstanceOf[Bitmap]
+      UpdateViewerPerDefaults)
+  }
+
+  /**
+   *
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param initialBackgroundColor
+   * @param processor
+   *
+   * @return
+   */
+  def apply(
+      widthInPixels: Int,
+      heightInPixels: Int,
+      initialBackgroundColor: Color,
+      processor: Option[(Bitmap) => Bitmap]): Bitmap = {
+
+    super.apply(
+      widthInPixels,
+      heightInPixels,
+      initialBackgroundColor,
+      processor,
+      PreventViewerUpdates)
   }
 
   /**
@@ -60,9 +90,34 @@ object Bitmap {
    * @return
    */
   def apply(sourceResourcePath: String): Bitmap = {
-    AbstractBitmap(
+    super.apply(
       sourceResourcePath,
-      UpdateViewerPerDefaults).asInstanceOf[Bitmap]
+      UpdateViewerPerDefaults)
+  }
+
+  /**
+   *
+   *
+   * @param operations
+   * @param bitmapValidator
+   * @param colorValidator
+   * @param uniqueIdentifier
+   *
+   * @return
+   */
+  override
+  protected
+  def instantiateBitmap(
+      operations: BitmapOperationList,
+      bitmapValidator: BitmapValidator,
+      colorValidator: ColorValidator,
+      uniqueIdentifier: Identity): Bitmap = {
+
+    new Bitmap(
+      operations,
+      bitmapValidator,
+      colorValidator,
+      uniqueIdentifier)
   }
 
 }
@@ -82,7 +137,7 @@ object Bitmap {
  *
  * @author Aleksi Lukkarinen
  */
-case class Bitmap private[bitmaps](
+class Bitmap private[bitmaps](
     override private[bitmaps] val operations: BitmapOperationList,
     private val bitmapValidator: BitmapValidator,
     private val colorValidator: ColorValidator,
@@ -1330,7 +1385,8 @@ case class Bitmap private[bitmaps](
    *
    * @return
    */
-  private def propagateToArrayBuffer(size: Int): mutable.ArrayBuffer[Bitmap] = {
+  private
+  def propagateToArrayBuffer(size: Int): mutable.ArrayBuffer[Bitmap] = {
     require(size >= 0, s"Size of the collection cannot be negative (was $size)")
 
     mutable.ArrayBuffer.fill[Bitmap](size)(this)
@@ -1367,6 +1423,31 @@ case class Bitmap private[bitmaps](
    */
   def propagateToSeq(size: Int): Seq[Bitmap] = {
     propagateToArrayBuffer(size)
+  }
+
+  /**
+   *
+   *
+   * @param operations
+   * @param bitmapValidator
+   * @param colorValidator
+   * @param uniqueIdentifier
+   *
+   * @return
+   */
+  override
+  protected
+  def instantiateBitmap(
+      operations: BitmapOperationList,
+      bitmapValidator: BitmapValidator,
+      colorValidator: ColorValidator,
+      uniqueIdentifier: Identity): Bitmap = {
+
+    Bitmap.instantiateBitmap(
+      operations,
+      bitmapValidator,
+      colorValidator,
+      uniqueIdentifier)
   }
 
 }

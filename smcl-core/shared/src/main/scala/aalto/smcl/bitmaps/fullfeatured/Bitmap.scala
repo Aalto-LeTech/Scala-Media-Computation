@@ -34,22 +34,23 @@ import aalto.smcl.settings._
  *
  * @author Aleksi Lukkarinen
  */
-object Bitmap {
+object Bitmap extends BitmapCompanion[Bitmap] {
 
   /**
    * Creates a new empty [[Bitmap]] instance.
    */
+  override
   def apply(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       initialBackgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
-    AbstractBitmap(
+    super.apply(
       widthInPixels,
       heightInPixels,
       initialBackgroundColor,
-      viewerHandling).asInstanceOf[Bitmap]
+      viewerHandling)
   }
 
   /**
@@ -60,13 +61,14 @@ object Bitmap {
    *
    * @return
    */
+  override
   def apply(
       sourceResourcePath: String,
       viewerHandling: ViewerUpdateStyle): Bitmap = {
 
-    AbstractBitmap(
+    super.apply(
       sourceResourcePath,
-      viewerHandling).asInstanceOf[Bitmap]
+      viewerHandling)
   }
 
   /**
@@ -77,9 +79,32 @@ object Bitmap {
    * @return
    */
   def apply(sourceResourcePath: String): Bitmap = {
-    AbstractBitmap(
-      sourceResourcePath,
-      UpdateViewerPerDefaults).asInstanceOf[Bitmap]
+    apply(sourceResourcePath, UpdateViewerPerDefaults)
+  }
+
+  /**
+   *
+   *
+   * @param operations
+   * @param bitmapValidator
+   * @param colorValidator
+   * @param uniqueIdentifier
+   *
+   * @return
+   */
+  override
+  protected
+  def instantiateBitmap(
+      operations: BitmapOperationList,
+      bitmapValidator: BitmapValidator,
+      colorValidator: ColorValidator,
+      uniqueIdentifier: Identity): Bitmap = {
+
+    new Bitmap(
+      operations,
+      bitmapValidator,
+      colorValidator,
+      uniqueIdentifier)
   }
 
 }
@@ -2018,6 +2043,31 @@ case class Bitmap private[bitmaps](
    */
   def propagateToSeq(size: Int): Seq[Bitmap] = {
     propagateToArrayBuffer(size)
+  }
+
+  /**
+   *
+   *
+   * @param operations
+   * @param bitmapValidator
+   * @param colorValidator
+   * @param uniqueIdentifier
+   *
+   * @return
+   */
+  override
+  protected
+  def instantiateBitmap(
+      operations: BitmapOperationList,
+      bitmapValidator: BitmapValidator,
+      colorValidator: ColorValidator,
+      uniqueIdentifier: Identity): Bitmap = {
+
+    Bitmap.instantiateBitmap(
+      operations,
+      bitmapValidator,
+      colorValidator,
+      uniqueIdentifier)
   }
 
 }

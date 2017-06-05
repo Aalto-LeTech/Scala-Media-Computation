@@ -40,17 +40,15 @@ trait ShapeCreationAPI {
    * @param diameter
    * @param color
    * @param backgroundColor
-   * @param viewerHandling
    *
    * @return
    */
   def circle(
       diameter: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
-    _circleCreator.createOne(diameter, color, backgroundColor, viewerHandling)
+    _circleCreator.createOne(diameter, color, backgroundColor)
   }
 
   /**
@@ -102,7 +100,6 @@ trait ShapeCreationAPI {
    * @param heightInPixels
    * @param color
    * @param backgroundColor
-   * @param viewerHandling
    *
    * @return
    */
@@ -110,15 +107,13 @@ trait ShapeCreationAPI {
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
     _ellipseCreator.createOne(
       widthInPixels,
       heightInPixels,
       color,
-      backgroundColor,
-      viewerHandling)
+      backgroundColor)
   }
 
 
@@ -130,16 +125,14 @@ trait ShapeCreationAPI {
    *
    * @param widthInPixels
    * @param color
-   * @param viewerHandling
    *
    * @return
    */
   def hLine(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
-      color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      color: Color = DefaultPrimaryColor): Bitmap = {
 
-    _horizontalLineCreator.createOne(widthInPixels, color, viewerHandling)
+    _horizontalLineCreator.createOne(widthInPixels, color)
   }
 
 
@@ -155,7 +148,6 @@ trait ShapeCreationAPI {
    * @param toYInPixels
    * @param color
    * @param backgroundColor
-   * @param viewerHandling
    *
    * @return
    */
@@ -165,8 +157,7 @@ trait ShapeCreationAPI {
       toXInPixels: Int,
       toYInPixels: Int,
       color: Color = DefaultPrimaryColor,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
     _lineCreator.createOne(
       fromXInPixels,
@@ -174,8 +165,7 @@ trait ShapeCreationAPI {
       toXInPixels,
       toYInPixels,
       color,
-      backgroundColor,
-      viewerHandling
+      backgroundColor
     )
   }
 
@@ -189,17 +179,15 @@ trait ShapeCreationAPI {
    * @param widthInPixels
    * @param heightInPixels
    * @param color
-   * @param viewerHandling
    *
    * @return
    */
   def rectangle(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      color: Color = DefaultPrimaryColor): Bitmap = {
 
-    _rectangleCreator.createOne(widthInPixels, heightInPixels, color, viewerHandling)
+    _rectangleCreator.createOne(widthInPixels, heightInPixels, color)
   }
 
 
@@ -215,7 +203,6 @@ trait ShapeCreationAPI {
    * @param roundingHeightInPixels
    * @param color
    * @param backgroundColor
-   * @param viewerHandling
    *
    * @return
    */
@@ -225,8 +212,7 @@ trait ShapeCreationAPI {
       roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
     _roundedRectangleCreator.createOne(
       widthInPixels,
@@ -234,8 +220,7 @@ trait ShapeCreationAPI {
       roundingWidthInPixels,
       roundingHeightInPixels,
       color,
-      backgroundColor,
-      viewerHandling
+      backgroundColor
     )
   }
 
@@ -251,7 +236,6 @@ trait ShapeCreationAPI {
    * @param roundingHeightInPixels
    * @param color
    * @param backgroundColor
-   * @param viewerHandling
    *
    * @return
    */
@@ -260,16 +244,14 @@ trait ShapeCreationAPI {
       roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
     _roundedSquareCreator.createOne(
       sideLengthInPixels,
       roundingWidthInPixels,
       roundingHeightInPixels,
       color,
-      backgroundColor,
-      viewerHandling
+      backgroundColor
     )
   }
 
@@ -282,16 +264,14 @@ trait ShapeCreationAPI {
    *
    * @param sideLengthInPixels
    * @param color
-   * @param viewerHandling
    *
    * @return
    */
   def square(
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      color: Color = DefaultPrimaryColor): Bitmap = {
 
-    _squareCreator.createOne(sideLengthInPixels, color, viewerHandling)
+    _squareCreator.createOne(sideLengthInPixels, color)
   }
 
 
@@ -303,16 +283,14 @@ trait ShapeCreationAPI {
    *
    * @param heightInPixels
    * @param color
-   * @param viewerHandling
    *
    * @return
    */
   def vLine(
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      color: Color = DefaultPrimaryColor): Bitmap = {
 
-    _verticalLineCreator.createOne(heightInPixels, color, viewerHandling)
+    _verticalLineCreator.createOne(heightInPixels, color)
   }
 
 }

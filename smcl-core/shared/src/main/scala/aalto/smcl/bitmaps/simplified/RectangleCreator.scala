@@ -16,6 +16,7 @@
 
 package aalto.smcl.bitmaps.simplified
 
+
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
@@ -36,21 +37,19 @@ class RectangleCreator private[bitmaps]() {
    * @param widthInPixels
    * @param heightInPixels
    * @param color
-   * @param viewerHandling
    *
    * @return
    */
   def createOne(
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      color: Color = DefaultPrimaryColor): Bitmap = {
 
     require(widthInPixels > 0, s"Width of the rectangle must be at least 1 pixel (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the rectangle must be at least 1 pixel (was $heightInPixels)")
     require(color != null, "The color argument has to be a Color instance (was null).")
 
-    Bitmap(widthInPixels, heightInPixels, color, viewerHandling)
+    Bitmap(widthInPixels, heightInPixels, color)
   }
 
 }

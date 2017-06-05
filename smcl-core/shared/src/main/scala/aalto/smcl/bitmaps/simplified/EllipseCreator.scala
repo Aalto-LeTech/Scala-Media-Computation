@@ -16,6 +16,10 @@
 
 package aalto.smcl.bitmaps.simplified
 
+
+import scala.collection.mutable
+
+import aalto.smcl.bitmaps.operations.DrawEllipse
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
@@ -37,7 +41,6 @@ class EllipseCreator private[bitmaps]() {
    * @param heightInPixels
    * @param color
    * @param backgroundColor
-   * @param viewerHandling
    *
    * @return
    */
@@ -45,43 +48,72 @@ class EllipseCreator private[bitmaps]() {
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
+    val newCircle = createArrayOf(1, widthInPixels, heightInPixels, color, backgroundColor)(0)
+
+    if (NewBitmapsAreDisplayedAutomatically)
+      newCircle.display()
+
+    newCircle
+  }
+
+  /**
+   * Creates an array of [[Bitmap]]
+   * instances with an ellipse drawn on each bitmap.
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def createArrayOf(
+      collectionSize: Int = 5,
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
+
+    require(collectionSize >= 0, s"Size of the collection cannot be negative (was $collectionSize)")
     require(widthInPixels > 0, s"Width of the ellipse must be at least 1 pixel (was $widthInPixels)")
     require(heightInPixels > 0, s"Height of the ellipse must be at least 1 pixel (was $heightInPixels)")
     require(color != null, "The ellipse color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
+    val newCollection = mutable.ArrayBuffer.empty[Bitmap]
     val bitmapWidth = if (widthInPixels % 2 == 0) widthInPixels + 1 else widthInPixels
     val bitmapHeight = if (heightInPixels % 2 == 0) heightInPixels + 1 else heightInPixels
 
-    val newBitmap = Bitmap(
-      widthInPixels = bitmapWidth,
-      heightInPixels = bitmapHeight,
-      initialBackgroundColor = backgroundColor,
-      viewerHandling = PreventViewerUpdates)
+    def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      val ellipseWidth = bitmapWidth - 3
+      val ellipseHeight = bitmapHeight - 3
+      val ellipseCenterX = (ellipseWidth / 2) + 1
+      val ellipseCenterY = (ellipseHeight / 2) + 1
 
-    val ellipseWidth = bitmapWidth - 3
-    val ellipseHeight = bitmapHeight - 3
-    val ellipseCenterX = (ellipseWidth / 2) + 1
-    val ellipseCenterY = (ellipseHeight / 2) + 1
-
-    val newEllipse = newBitmap.drawEllipse(
-      ellipseCenterX, ellipseCenterY,
-      ellipseWidth, ellipseHeight,
-      hasBorder = true,
-      hasFilling = true,
-      color = color,
-      fillColor = color,
-      PreventViewerUpdates)
-
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (NewBitmapsAreDisplayedAutomatically)
-        newEllipse.display()
+      bmp.applyInitialization(
+        DrawEllipse(
+          centerXInPixels = ellipseCenterX,
+          centerYInPixels = ellipseCenterY,
+          widthInPixels = ellipseWidth,
+          heightInPixels = ellipseHeight,
+          hasBorder = true,
+          hasFilling = true,
+          color = color,
+          fillColor = color
+        ))
     }
 
-    newEllipse
+    for (i <- 1 to collectionSize) {
+      newCollection += Bitmap(
+        bitmapWidth,
+        bitmapHeight,
+        backgroundColor,
+        Some(postCreationProcessor _))
+    }
+
+    newCollection.toArray
   }
 
 }

@@ -16,6 +16,9 @@
 
 package aalto.smcl.bitmaps.simplified
 
+import scala.collection.mutable
+
+import aalto.smcl.bitmaps.operations.DrawRoundedRectangle
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
@@ -38,7 +41,6 @@ class RoundedSquareCreator private[bitmaps]() {
    * @param roundingHeightInPixels
    * @param color
    * @param backgroundColor
-   * @param viewerHandling
    *
    * @return
    */
@@ -47,37 +49,69 @@ class RoundedSquareCreator private[bitmaps]() {
       roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
       roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
+    val newCircle = createArrayOf(1,
+      sideLengthInPixels,
+      roundingWidthInPixels, roundingHeightInPixels,
+      color, backgroundColor)(0)
+
+    if (NewBitmapsAreDisplayedAutomatically)
+      newCircle.display()
+
+    newCircle
+  }
+
+  /**
+   * Creates an array of [[Bitmap]] instances with a rounded-corner square drawn on each bitmap.
+   *
+   * @param sideLengthInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def createArrayOf(
+      collectionSize: Int = 5,
+      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
+
+    require(collectionSize >= 0, s"Size of the collection cannot be negative (was $collectionSize)")
     require(sideLengthInPixels >= 5, s"Side length of the square must be at least 5 pixels (was $sideLengthInPixels)")
     require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
     require(roundingHeightInPixels > 0, s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
-    require(color != null, "The rectangle color argument has to be a Color instance (was null).")
+    require(color != null, "The ellipse color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
-    val newBitmap = Bitmap(
-      sideLengthInPixels,
-      sideLengthInPixels,
-      backgroundColor,
-      viewerHandling = PreventViewerUpdates)
+    val newCollection = mutable.ArrayBuffer.empty[Bitmap]
 
-    val newRSquare = newBitmap.drawRoundedRectangle(
-      0, 0,
-      sideLengthInPixels - 1, sideLengthInPixels - 1,
-      roundingWidthInPixels, roundingHeightInPixels,
-      hasBorder = true,
-      hasFilling = true,
-      color = color,
-      fillColor = color,
-      PreventViewerUpdates)
-
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (NewBitmapsAreDisplayedAutomatically)
-        newRSquare.display()
+    def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      bmp.applyInitialization(
+        DrawRoundedRectangle(
+          0, 0,
+          sideLengthInPixels - 1, sideLengthInPixels - 1,
+          roundingWidthInPixels, roundingHeightInPixels,
+          hasBorder = true,
+          hasFilling = true,
+          color = color,
+          fillColor = color
+        ))
     }
 
-    newRSquare
+    for (i <- 1 to collectionSize) {
+      newCollection += Bitmap(
+        sideLengthInPixels,
+        sideLengthInPixels,
+        backgroundColor,
+        Some(postCreationProcessor _))
+    }
+
+    newCollection.toArray
   }
 
 }

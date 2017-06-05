@@ -20,6 +20,7 @@ package aalto.smcl
 import org.scalatest.DoNotDiscover
 
 import aalto.smcl.bitmaps.circle
+import aalto.smcl.bitmaps.fullfeatured.Bitmap
 import aalto.smcl.colors.LightBlue
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.tests.SharedIntegrationSpecBase
