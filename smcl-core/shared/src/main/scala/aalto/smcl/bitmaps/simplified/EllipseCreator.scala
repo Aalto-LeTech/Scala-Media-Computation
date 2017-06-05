@@ -59,9 +59,9 @@ class EllipseCreator private[bitmaps]() {
   }
 
   /**
-   * Creates an array of [[Bitmap]]
-   * instances with an ellipse drawn on each bitmap.
+   * Creates an array of [[Bitmap]] instances with an ellipse drawn on each bitmap.
    *
+   * @param collectionSize
    * @param widthInPixels
    * @param heightInPixels
    * @param color
@@ -105,7 +105,7 @@ class EllipseCreator private[bitmaps]() {
         ))
     }
 
-    for (i <- 1 to collectionSize) {
+    for (_ <- 1 to collectionSize) {
       newCollection += Bitmap(
         bitmapWidth,
         bitmapHeight,

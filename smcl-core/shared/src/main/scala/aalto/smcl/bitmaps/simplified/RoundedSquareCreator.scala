@@ -65,6 +65,7 @@ class RoundedSquareCreator private[bitmaps]() {
   /**
    * Creates an array of [[Bitmap]] instances with a rounded-corner square drawn on each bitmap.
    *
+   * @param collectionSize
    * @param sideLengthInPixels
    * @param roundingWidthInPixels
    * @param roundingHeightInPixels
@@ -85,7 +86,7 @@ class RoundedSquareCreator private[bitmaps]() {
     require(sideLengthInPixels >= 5, s"Side length of the square must be at least 5 pixels (was $sideLengthInPixels)")
     require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
     require(roundingHeightInPixels > 0, s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
-    require(color != null, "The ellipse color argument has to be a Color instance (was null).")
+    require(color != null, "The square color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val newCollection = mutable.ArrayBuffer.empty[Bitmap]
@@ -103,7 +104,7 @@ class RoundedSquareCreator private[bitmaps]() {
         ))
     }
 
-    for (i <- 1 to collectionSize) {
+    for (_ <- 1 to collectionSize) {
       newCollection += Bitmap(
         sideLengthInPixels,
         sideLengthInPixels,

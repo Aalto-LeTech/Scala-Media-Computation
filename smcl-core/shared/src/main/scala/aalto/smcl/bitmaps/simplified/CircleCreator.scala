@@ -57,9 +57,9 @@ class CircleCreator {
   }
 
   /**
-   * Creates an array of [[Bitmap]]
-   * instances with a circle drawn on each bitmap.
+   * Creates an array of [[Bitmap]] instances with a circle drawn on each bitmap.
    *
+   * @param collectionSize
    * @param diameter
    * @param color
    * @param backgroundColor
@@ -95,7 +95,7 @@ class CircleCreator {
         ))
     }
 
-    for (i <- 1 to collectionSize) {
+    for (_ <- 1 to collectionSize) {
       newCollection += Bitmap(
         imageSide,
         imageSide,

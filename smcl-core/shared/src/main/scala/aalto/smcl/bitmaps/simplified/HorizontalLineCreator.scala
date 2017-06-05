@@ -17,6 +17,8 @@
 package aalto.smcl.bitmaps.simplified
 
 
+import scala.collection.mutable
+
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 
@@ -34,19 +36,48 @@ class HorizontalLineCreator private[bitmaps]() {
   /**
    * Creates a new empty [[Bitmap]] instance with a horizontal line drawn on it.
    *
-   * @param widthInPixels
+   * @param lengthInPixels
    * @param color
    *
    * @return
    */
   def createOne(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Bitmap = {
 
-    require(widthInPixels > 0, s"Width of the line must be at least 1 pixel (was $widthInPixels)")
+    val newShape = createArrayOf(1, lengthInPixels, color)(0)
+
+    if (NewBitmapsAreDisplayedAutomatically)
+      newShape.display()
+
+    newShape
+  }
+
+  /**
+   * Creates an array of [[Bitmap]] instances with a horizontal line drawn on each bitmap.
+   *
+   * @param collectionSize
+   * @param lengthInPixels
+   * @param color
+   *
+   * @return
+   */
+  def createArrayOf(
+      collectionSize: Int = 5,
+      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      color: Color = DefaultPrimaryColor): Array[Bitmap] = {
+
+    require(collectionSize >= 0, s"Size of the collection cannot be negative (was $collectionSize)")
+    require(lengthInPixels > 0, s"Length of the line must be at least 1 pixel (was $lengthInPixels)")
     require(color != null, "The color argument has to be a Color instance (was null).")
 
-    Bitmap(widthInPixels, 1, color)
+    val newCollection = mutable.ArrayBuffer.empty[Bitmap]
+
+    for (_ <- 1 to collectionSize) {
+      newCollection += Bitmap(lengthInPixels, 1, color)
+    }
+
+    newCollection.toArray
   }
 
 }

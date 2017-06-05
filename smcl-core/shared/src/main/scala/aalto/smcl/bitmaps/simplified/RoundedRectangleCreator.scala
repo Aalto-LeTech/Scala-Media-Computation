@@ -68,6 +68,7 @@ class RoundedRectangleCreator private[bitmaps]() {
   /**
    * Creates an array of [[Bitmap]] instances with a rounded-corner rectangle drawn on each bitmap.
    *
+   * @param collectionSize
    * @param widthInPixels
    * @param heightInPixels
    * @param roundingWidthInPixels
@@ -91,7 +92,7 @@ class RoundedRectangleCreator private[bitmaps]() {
     require(heightInPixels >= 5, s"Height of the rectangle must be at least 5 pixels (was $heightInPixels)")
     require(roundingWidthInPixels > 0, s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
     require(roundingHeightInPixels > 0, s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
-    require(color != null, "The ellipse color argument has to be a Color instance (was null).")
+    require(color != null, "The rectangle color argument has to be a Color instance (was null).")
     require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
 
     val newCollection = mutable.ArrayBuffer.empty[Bitmap]
@@ -109,7 +110,7 @@ class RoundedRectangleCreator private[bitmaps]() {
         ))
     }
 
-    for (i <- 1 to collectionSize) {
+    for (_ <- 1 to collectionSize) {
       newCollection += Bitmap(
         widthInPixels,
         heightInPixels,
