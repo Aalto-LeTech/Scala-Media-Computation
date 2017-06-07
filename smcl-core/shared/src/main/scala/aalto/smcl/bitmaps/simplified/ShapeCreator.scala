@@ -14,28 +14,31 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl
+package aalto.smcl.bitmaps.simplified
 
 
-import scala.language.implicitConversions
-
+import aalto.smcl.bitmaps.operations.{DrawCircle, DrawEllipse, DrawLine, DrawRoundedRectangle, DrawRoundedSquare}
 import aalto.smcl.colors.rgb.Color
+import aalto.smcl.infrastructure.{CollectionCreator, InjectablesRegistry}
 import aalto.smcl.settings._
 
 
+
+
 /**
- *
+ * Functionality for creating single shapes and shape collections.
  *
  * @author Aleksi Lukkarinen
  */
-package object bitmaps
-    extends simplified.BitmapOperationAPI {
+private[smcl]
+object ShapeCreator
+    extends InjectablesRegistry {
 
-  /** A type alias for default bitmap class. */
-  type Bitmap = simplified.Bitmap
-
-  /** A companion object alias for default bitmap. */
-  val Bitmap = simplified.Bitmap
+  /** The [[CollectionCreator]] instance to be used by this object. */
+  private lazy val collectionCreator: CollectionCreator = {
+    injectable(InjectablesRegistry.IIdCollectionCreator)
+        .asInstanceOf[CollectionCreator]
+  }
 
   /**
    * Creates a new empty [[Bitmap]] instance with a circle drawn on it.
@@ -51,7 +54,10 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
-    simplified.circle(diameterInPixels, color, backgroundColor)
+    validateCircleParameters(diameterInPixels, color, backgroundColor)
+
+    displayAsNewIfNecessary(
+      instantiateCircle(diameterInPixels, color, backgroundColor))
   }
 
   /**
@@ -70,7 +76,11 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
-    simplified.circleArray(collectionSize, diameterInPixels, color, backgroundColor)
+    validateCircleParameters(diameterInPixels, color, backgroundColor)
+
+    collectionCreator.array[Bitmap](collectionSize){
+      instantiateCircle(diameterInPixels, color, backgroundColor)
+    }
   }
 
   /**
@@ -89,7 +99,11 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
-    simplified.circleSeq(collectionSize, diameterInPixels, color, backgroundColor)
+    validateCircleParameters(diameterInPixels, color, backgroundColor)
+
+    collectionCreator.sequence[Bitmap](collectionSize){
+      instantiateCircle(diameterInPixels, color, backgroundColor)
+    }
   }
 
   /**
@@ -108,7 +122,70 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
-    simplified.circleList(collectionSize, diameterInPixels, color, backgroundColor)
+    validateCircleParameters(diameterInPixels, color, backgroundColor)
+
+    collectionCreator.list[Bitmap](collectionSize){
+      instantiateCircle(diameterInPixels, color, backgroundColor)
+    }
+  }
+
+  /**
+   * Validates parameters for a circle.
+   *
+   * @param diameterInPixels diameter of the circle
+   * @param color            color ot the circle
+   * @param backgroundColor  color of the background
+   */
+  private
+  def validateCircleParameters(
+      diameterInPixels: Int,
+      color: Color,
+      backgroundColor: Color): Unit = {
+
+    require(
+      diameterInPixels > 0,
+      s"Diameter of the circle must be at least 1 pixel (was $diameterInPixels)")
+
+    validateColors(color, backgroundColor)
+  }
+
+  /**
+   * Instantiates a circle.
+   *
+   * @param diameterInPixels diameter of the circle
+   * @param color            color ot the circle
+   * @param backgroundColor  color of the background
+   *
+   * @return a bitmap containing the circle
+   */
+  private
+  def instantiateCircle(
+      diameterInPixels: Int,
+      color: Color,
+      backgroundColor: Color): Bitmap = {
+
+    val imageSide = if (diameterInPixels % 2 == 0) diameterInPixels + 1 else diameterInPixels
+
+    def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      val radius = (imageSide - 2) / 2
+
+      bmp.applyInitialization(
+        DrawCircle(
+          centerXInPixels = radius + 1,
+          centerYInPixels = radius + 1,
+          radiusInPixels = radius,
+          hasBorder = true,
+          hasFilling = true,
+          color = color,
+          fillColor = color
+        ))
+    }
+
+    Bitmap.createAndInitialize(
+      imageSide,
+      imageSide,
+      backgroundColor,
+      Some(postCreationProcessor _))
   }
 
   /**
@@ -127,7 +204,10 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
-    simplified.ellipse(widthInPixels, heightInPixels, color, backgroundColor)
+    validateEllipseParameters(widthInPixels, heightInPixels, color, backgroundColor)
+
+    displayAsNewIfNecessary(
+      instantiateEllipse(widthInPixels, heightInPixels, color, backgroundColor))
   }
 
   /**
@@ -148,10 +228,11 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
-    simplified.ellipseArray(
-      collectionSize,
-      widthInPixels, heightInPixels,
-      color, backgroundColor)
+    validateEllipseParameters(widthInPixels, heightInPixels, color, backgroundColor)
+
+    collectionCreator.array[Bitmap](collectionSize){
+      instantiateEllipse(widthInPixels, heightInPixels, color, backgroundColor)
+    }
   }
 
   /**
@@ -172,10 +253,11 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
-    simplified.ellipseSeq(
-      collectionSize,
-      widthInPixels, heightInPixels,
-      color, backgroundColor)
+    validateEllipseParameters(widthInPixels, heightInPixels, color, backgroundColor)
+
+    collectionCreator.sequence[Bitmap](collectionSize){
+      instantiateEllipse(widthInPixels, heightInPixels, color, backgroundColor)
+    }
   }
 
   /**
@@ -196,10 +278,83 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
-    simplified.ellipseList(
-      collectionSize,
-      widthInPixels, heightInPixels,
-      color, backgroundColor)
+    validateEllipseParameters(widthInPixels, heightInPixels, color, backgroundColor)
+
+    collectionCreator.list[Bitmap](collectionSize){
+      instantiateEllipse(widthInPixels, heightInPixels, color, backgroundColor)
+    }
+  }
+
+  /**
+   * Validates parameters for an ellipse.
+   *
+   * @param widthInPixels   width of the ellipse in pixels
+   * @param heightInPixels  height of the ellipse in pixels
+   * @param color           color ot the ellipse
+   * @param backgroundColor color of the background
+   */
+  private
+  def validateEllipseParameters(
+      widthInPixels: Int,
+      heightInPixels: Int,
+      color: Color,
+      backgroundColor: Color): Unit = {
+
+    require(
+      widthInPixels > 0,
+      s"Width of the ellipse must be at least 1 pixel (was $widthInPixels)")
+
+    require(
+      heightInPixels > 0,
+      s"Height of the ellipse must be at least 1 pixel (was $heightInPixels)")
+
+    validateColors(color, backgroundColor)
+  }
+
+  /**
+   * Instantiates an ellipse.
+   *
+   * @param widthInPixels   width of the ellipse in pixels
+   * @param heightInPixels  height of the ellipse in pixels
+   * @param color           color ot the ellipse
+   * @param backgroundColor color of the background
+   *
+   * @return a bitmap containing the ellipse
+   */
+  private
+  def instantiateEllipse(
+      widthInPixels: Int,
+      heightInPixels: Int,
+      color: Color,
+      backgroundColor: Color): Bitmap = {
+
+    val bitmapWidth = if (widthInPixels % 2 == 0) widthInPixels + 1 else widthInPixels
+    val bitmapHeight = if (heightInPixels % 2 == 0) heightInPixels + 1 else heightInPixels
+
+    def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      val ellipseWidth = bitmapWidth - 3
+      val ellipseHeight = bitmapHeight - 3
+      val ellipseCenterX = (ellipseWidth / 2) + 1
+      val ellipseCenterY = (ellipseHeight / 2) + 1
+
+      bmp.applyInitialization(
+        DrawEllipse(
+          centerXInPixels = ellipseCenterX,
+          centerYInPixels = ellipseCenterY,
+          widthInPixels = ellipseWidth,
+          heightInPixels = ellipseHeight,
+          hasBorder = true,
+          hasFilling = true,
+          color = color,
+          fillColor = color
+        ))
+    }
+
+    Bitmap.createAndInitialize(
+      bitmapWidth,
+      bitmapHeight,
+      backgroundColor,
+      Some(postCreationProcessor _))
   }
 
   /**
@@ -214,7 +369,10 @@ package object bitmaps
       lengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Bitmap = {
 
-    simplified.hLine(lengthInPixels, color)
+    validateHorizontalLineParameters(lengthInPixels, color)
+
+    displayAsNewIfNecessary(
+      instantiateHorizontalLine(lengthInPixels, color))
   }
 
   /**
@@ -231,7 +389,11 @@ package object bitmaps
       lengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Array[Bitmap] = {
 
-    simplified.hLineArray(collectionSize, lengthInPixels, color)
+    validateHorizontalLineParameters(lengthInPixels, color)
+
+    collectionCreator.array[Bitmap](collectionSize){
+      instantiateHorizontalLine(lengthInPixels, color)
+    }
   }
 
   /**
@@ -248,7 +410,11 @@ package object bitmaps
       lengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
 
-    simplified.hLineSeq(collectionSize, lengthInPixels, color)
+    validateHorizontalLineParameters(lengthInPixels, color)
+
+    collectionCreator.sequence[Bitmap](collectionSize){
+      instantiateHorizontalLine(lengthInPixels, color)
+    }
   }
 
   /**
@@ -265,7 +431,39 @@ package object bitmaps
       lengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): List[Bitmap] = {
 
-    simplified.hLineList(collectionSize, lengthInPixels, color)
+    validateHorizontalLineParameters(lengthInPixels, color)
+
+    collectionCreator.list[Bitmap](collectionSize){
+      instantiateHorizontalLine(lengthInPixels, color)
+    }
+  }
+
+  /**
+   * Validates parameters for a horizontal line.
+   *
+   * @param lengthInPixels length of the line in pixels
+   * @param color          color ot the line
+   */
+  private
+  def validateHorizontalLineParameters(lengthInPixels: Int, color: Color): Unit = {
+    require(
+      lengthInPixels > 0,
+      s"Length of the line must be at least 1 pixel (was $lengthInPixels)")
+
+    validateShapeColor(color)
+  }
+
+  /**
+   * Instantiates a horizontal line.
+   *
+   * @param lengthInPixels length of the line in pixels
+   * @param color          color ot the line
+   *
+   * @return a bitmap containing the line
+   */
+  private
+  def instantiateHorizontalLine(lengthInPixels: Int, color: Color): Bitmap = {
+    Bitmap(lengthInPixels, 1, color)
   }
 
   /**
@@ -290,10 +488,16 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
-    simplified.line(
-      fromXInPixels, fromYInPixels,
-      toXInPixels, toYInPixels,
-      color, backgroundColor)
+    val (bitmapWidth, bitmapHeight, isAscending) =
+      calculateAndValidateLineParameters(
+        fromXInPixels, fromYInPixels,
+        toXInPixels, toYInPixels,
+        color, backgroundColor)
+
+    displayAsNewIfNecessary(
+      instantiateLine(
+        bitmapWidth, bitmapHeight, isAscending,
+        color, backgroundColor))
   }
 
   /**
@@ -321,11 +525,17 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
-    simplified.lineArray(
-      collectionSize,
-      fromXInPixels, fromYInPixels,
-      toXInPixels, toYInPixels,
-      color, backgroundColor)
+    val (bitmapWidth, bitmapHeight, isAscending) =
+      calculateAndValidateLineParameters(
+        fromXInPixels, fromYInPixels,
+        toXInPixels, toYInPixels,
+        color, backgroundColor)
+
+    collectionCreator.array[Bitmap](collectionSize){
+      instantiateLine(
+        bitmapWidth, bitmapHeight, isAscending,
+        color, backgroundColor)
+    }
   }
 
   /**
@@ -353,11 +563,17 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
-    simplified.lineSeq(
-      collectionSize,
-      fromXInPixels, fromYInPixels,
-      toXInPixels, toYInPixels,
-      color, backgroundColor)
+    val (bitmapWidth, bitmapHeight, isAscending) =
+      calculateAndValidateLineParameters(
+        fromXInPixels, fromYInPixels,
+        toXInPixels, toYInPixels,
+        color, backgroundColor)
+
+    collectionCreator.sequence[Bitmap](collectionSize){
+      instantiateLine(
+        bitmapWidth, bitmapHeight, isAscending,
+        color, backgroundColor)
+    }
   }
 
   /**
@@ -385,11 +601,110 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
-    simplified.lineList(
-      collectionSize,
-      fromXInPixels, fromYInPixels,
-      toXInPixels, toYInPixels,
-      color, backgroundColor)
+    val (bitmapWidth, bitmapHeight, isAscending) =
+      calculateAndValidateLineParameters(
+        fromXInPixels, fromYInPixels,
+        toXInPixels, toYInPixels,
+        color, backgroundColor)
+
+    collectionCreator.list[Bitmap](collectionSize){
+      instantiateLine(
+        bitmapWidth, bitmapHeight, isAscending,
+        color, backgroundColor)
+    }
+  }
+
+  /**
+   * Calculates and validates parameters for an arbitrary straight line.
+   *
+   * @param fromXInPixels   the X coordinate of the starting point of the line
+   * @param fromYInPixels   the Y coordinate of the starting point of the line
+   * @param toXInPixels     the X coordinate of the ending point of the line
+   * @param toYInPixels     the Y coordinate of the ending point of the line
+   * @param color           color ot the line
+   * @param backgroundColor color of the background
+   */
+  private
+  def calculateAndValidateLineParameters(
+      fromXInPixels: Int,
+      fromYInPixels: Int,
+      toXInPixels: Int,
+      toYInPixels: Int,
+      color: Color,
+      backgroundColor: Color): (Int, Int, Boolean) = {
+
+    val differenceX = toXInPixels - fromXInPixels
+    val differenceY = toYInPixels - fromYInPixels
+    val bitmapWidth = Math.abs(differenceX)
+    val bitmapHeight = Math.abs(differenceY)
+    val slopeSign = Math.signum(differenceY.toDouble / differenceX)
+    val isAscending = slopeSign > 0
+
+    validateLineParameters(bitmapWidth, bitmapHeight, color, backgroundColor)
+
+    (bitmapWidth, bitmapHeight, isAscending)
+  }
+
+  /**
+   * Validates parameters for an arbitrary straight line.
+   *
+   * @param bitmapWidth     width of the bitmap containing the line
+   * @param bitmapHeight    height of the bitmap containing the line
+   * @param color           color ot the line
+   * @param backgroundColor color of the background
+   */
+  private
+  def validateLineParameters(
+      bitmapWidth: Int,
+      bitmapHeight: Int,
+      color: Color,
+      backgroundColor: Color): Unit = {
+
+    require(
+      bitmapWidth > 0,
+      s"Difference of the x coordinates must be at least 1 pixel (was $bitmapWidth)")
+
+    require(
+      bitmapHeight > 0,
+      s"Difference of the y coordinates must be at least 1 pixel (was $bitmapHeight)")
+
+    validateColors(color, backgroundColor)
+  }
+
+  /**
+   * Instantiates an arbitrary straight line.
+   *
+   * @param bitmapWidth     width of the bitmap containing the line
+   * @param bitmapHeight    height of the bitmap containing the line
+   * @param isAscending     <code>true</code> if the line is ascending; otherwise <code>false</code>
+   * @param color           color ot the line
+   * @param backgroundColor color of the background
+   *
+   * @return a bitmap containing the line
+   */
+  private
+  def instantiateLine(
+      bitmapWidth: Int,
+      bitmapHeight: Int,
+      isAscending: Boolean,
+      color: Color,
+      backgroundColor: Color): Bitmap = {
+
+    def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      val (x0, y0, x1, y1) =
+        if (isAscending)
+          (0, 0, bitmapWidth - 1, bitmapHeight - 1)
+        else
+          (0, bitmapHeight - 1, bitmapWidth - 1, 0)
+
+      bmp.applyInitialization(DrawLine(x0, y0, x1, y1, color))
+    }
+
+    Bitmap.createAndInitialize(
+      bitmapWidth,
+      bitmapHeight,
+      backgroundColor,
+      Some(postCreationProcessor _))
   }
 
   /**
@@ -406,8 +721,10 @@ package object bitmaps
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): Bitmap = {
 
-    simplified.rectangle(
-      widthInPixels, heightInPixels, color)
+    validateRectangleParameters(widthInPixels, heightInPixels, color)
+
+    displayAsNewIfNecessary(
+      instantiateRectangle(widthInPixels, heightInPixels, color))
   }
 
   /**
@@ -426,9 +743,11 @@ package object bitmaps
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): Array[Bitmap] = {
 
-    simplified.rectangleArray(
-      collectionSize,
-      widthInPixels, heightInPixels, color)
+    validateRectangleParameters(widthInPixels, heightInPixels, color)
+
+    collectionCreator.array[Bitmap](collectionSize){
+      instantiateRectangle(widthInPixels, heightInPixels, color)
+    }
   }
 
   /**
@@ -447,9 +766,11 @@ package object bitmaps
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
 
-    simplified.rectangleSeq(
-      collectionSize,
-      widthInPixels, heightInPixels, color)
+    validateRectangleParameters(widthInPixels, heightInPixels, color)
+
+    collectionCreator.sequence[Bitmap](collectionSize){
+      instantiateRectangle(widthInPixels, heightInPixels, color)
+    }
   }
 
   /**
@@ -468,9 +789,53 @@ package object bitmaps
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): List[Bitmap] = {
 
-    simplified.rectangleList(
-      collectionSize,
-      widthInPixels, heightInPixels, color)
+    validateRectangleParameters(widthInPixels, heightInPixels, color)
+
+    collectionCreator.list[Bitmap](collectionSize){
+      instantiateRectangle(widthInPixels, heightInPixels, color)
+    }
+  }
+
+  /**
+   * Validates parameters for a rectangle.
+   *
+   * @param widthInPixels  width of the rectangle in pixels
+   * @param heightInPixels height of the rectangle in pixels
+   * @param color          color ot the rectangle
+   */
+  private
+  def validateRectangleParameters(
+      widthInPixels: Int,
+      heightInPixels: Int,
+      color: Color): Unit = {
+
+    require(
+      widthInPixels > 0,
+      s"Width of the rectangle must be at least 1 pixel (was $widthInPixels)")
+
+    require(
+      heightInPixels > 0,
+      s"Height of the rectangle must be at least 1 pixel (was $heightInPixels)")
+
+    validateShapeColor(color)
+  }
+
+  /**
+   * Instantiates a rectangle.
+   *
+   * @param widthInPixels  width of the rectangle in pixels
+   * @param heightInPixels height of the rectangle in pixels
+   * @param color          color ot the rectangle
+   *
+   * @return a bitmap containing the rectangle
+   */
+  private
+  def instantiateRectangle(
+      widthInPixels: Int,
+      heightInPixels: Int,
+      color: Color): Bitmap = {
+
+    Bitmap(widthInPixels, heightInPixels, color)
   }
 
   /**
@@ -493,10 +858,16 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
-    simplified.rRectangle(
+    validateRoundedRectangleParameters(
       widthInPixels, heightInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       color, backgroundColor)
+
+    displayAsNewIfNecessary(
+      instantiateRoundedRectangle(
+        widthInPixels, heightInPixels,
+        roundingWidthInPixels, roundingHeightInPixels,
+        color, backgroundColor))
   }
 
   /**
@@ -521,11 +892,17 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
-    simplified.rRectangleArray(
-      collectionSize,
+    validateRoundedRectangleParameters(
       widthInPixels, heightInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       color, backgroundColor)
+
+    collectionCreator.array[Bitmap](collectionSize){
+      instantiateRoundedRectangle(
+        widthInPixels, heightInPixels,
+        roundingWidthInPixels, roundingHeightInPixels,
+        color, backgroundColor)
+    }
   }
 
   /**
@@ -550,11 +927,17 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
-    simplified.rRectangleSeq(
-      collectionSize,
+    validateRoundedRectangleParameters(
       widthInPixels, heightInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       color, backgroundColor)
+
+    collectionCreator.sequence[Bitmap](collectionSize){
+      instantiateRoundedRectangle(
+        widthInPixels, heightInPixels,
+        roundingWidthInPixels, roundingHeightInPixels,
+        color, backgroundColor)
+    }
   }
 
   /**
@@ -579,11 +962,96 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
-    simplified.rRectangleList(
-      collectionSize,
+    validateRoundedRectangleParameters(
       widthInPixels, heightInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       color, backgroundColor)
+
+    collectionCreator.list[Bitmap](collectionSize){
+      instantiateRoundedRectangle(
+        widthInPixels, heightInPixels,
+        roundingWidthInPixels, roundingHeightInPixels,
+        color, backgroundColor)
+    }
+  }
+
+  /**
+   * Validates parameters for a rounded-corner rectangle.
+   *
+   * @param widthInPixels          width of the rectangle in pixels
+   * @param heightInPixels         height of the rectangle in pixels
+   * @param roundingWidthInPixels  width of the corner rounding of the rectangle in pixels
+   * @param roundingHeightInPixels height of the corner rounding of the rectangle in pixels
+   * @param color                  color ot the rectangle
+   * @param backgroundColor        color of the background
+   */
+  private
+  def validateRoundedRectangleParameters(
+      widthInPixels: Int,
+      heightInPixels: Int,
+      roundingWidthInPixels: Int,
+      roundingHeightInPixels: Int,
+      color: Color,
+      backgroundColor: Color): Unit = {
+
+    require(
+      widthInPixels >= 5,
+      s"Width of the rectangle must be at least 5 pixels (was $widthInPixels)")
+
+    require(
+      heightInPixels >= 5,
+      s"Height of the rectangle must be at least 5 pixels (was $heightInPixels)")
+
+    require(
+      roundingWidthInPixels > 0,
+      s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
+
+    require(
+      roundingHeightInPixels > 0,
+      s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
+
+    validateColors(color, backgroundColor)
+  }
+
+  /**
+   * Instantiates a rounded-corner rectangle.
+   *
+   * @param widthInPixels          width of the rectangle in pixels
+   * @param heightInPixels         height of the rectangle in pixels
+   * @param roundingWidthInPixels  width of the corner rounding of the rectangle in pixels
+   * @param roundingHeightInPixels height of the corner rounding of the rectangle in pixels
+   * @param color                  color ot the rectangle
+   * @param backgroundColor        color of the background
+   *
+   * @return a bitmap containing the rectangle
+   */
+  private
+  def instantiateRoundedRectangle(
+      widthInPixels: Int,
+      heightInPixels: Int,
+      roundingWidthInPixels: Int,
+      roundingHeightInPixels: Int,
+      color: Color,
+      backgroundColor: Color): Bitmap = {
+
+    def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      bmp.applyInitialization(
+        DrawRoundedRectangle(
+          0, 0,
+          widthInPixels - 1, heightInPixels - 1,
+          roundingWidthInPixels, roundingHeightInPixels,
+          hasBorder = true,
+          hasFilling = true,
+          color = color,
+          fillColor = color
+        ))
+    }
+
+    Bitmap.createAndInitialize(
+      widthInPixels,
+      heightInPixels,
+      backgroundColor,
+      Some(postCreationProcessor _))
   }
 
   /**
@@ -604,10 +1072,16 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
-    simplified.rSquare(
+    validateRoundedSquareParameters(
       sideLengthInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       color, backgroundColor)
+
+    displayAsNewIfNecessary(
+      instantiateRoundedSquare(
+        sideLengthInPixels,
+        roundingWidthInPixels, roundingHeightInPixels,
+        color, backgroundColor))
   }
 
   /**
@@ -630,11 +1104,17 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
-    simplified.rSquareArray(
-      collectionSize,
+    validateRoundedSquareParameters(
       sideLengthInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       color, backgroundColor)
+
+    collectionCreator.array[Bitmap](collectionSize){
+      instantiateRoundedSquare(
+        sideLengthInPixels,
+        roundingWidthInPixels, roundingHeightInPixels,
+        color, backgroundColor)
+    }
   }
 
   /**
@@ -657,11 +1137,17 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
-    simplified.rSquareSeq(
-      collectionSize,
+    validateRoundedSquareParameters(
       sideLengthInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       color, backgroundColor)
+
+    collectionCreator.sequence[Bitmap](collectionSize){
+      instantiateRoundedSquare(
+        sideLengthInPixels,
+        roundingWidthInPixels, roundingHeightInPixels,
+        color, backgroundColor)
+    }
   }
 
   /**
@@ -684,11 +1170,88 @@ package object bitmaps
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
-    simplified.rSquareList(
-      collectionSize,
+    validateRoundedSquareParameters(
       sideLengthInPixels,
       roundingWidthInPixels, roundingHeightInPixels,
       color, backgroundColor)
+
+    collectionCreator.list[Bitmap](collectionSize){
+      instantiateRoundedSquare(
+        sideLengthInPixels,
+        roundingWidthInPixels, roundingHeightInPixels,
+        color, backgroundColor)
+    }
+  }
+
+  /**
+   * Validates parameters for a rounded-corner square.
+   *
+   * @param sideLengthInPixels     side length of the square in pixels
+   * @param roundingWidthInPixels  width of the corner rounding of the square in pixels
+   * @param roundingHeightInPixels height of the corner rounding of the square in pixels
+   * @param color                  color ot the square
+   * @param backgroundColor        color of the background
+   */
+  private
+  def validateRoundedSquareParameters(
+      sideLengthInPixels: Int,
+      roundingWidthInPixels: Int,
+      roundingHeightInPixels: Int,
+      color: Color,
+      backgroundColor: Color): Unit = {
+
+    require(
+      sideLengthInPixels >= 5,
+      s"A side of the square must be at least 5 pixels (was $sideLengthInPixels)")
+
+    require(
+      roundingWidthInPixels > 0,
+      s"The rounding width argument must be greater than zero (was $roundingWidthInPixels).")
+
+    require(
+      roundingHeightInPixels > 0,
+      s"The rounding height argument must be greater than zero (was $roundingHeightInPixels).")
+
+    validateColors(color, backgroundColor)
+  }
+
+  /**
+   * Instantiates a rounded-corner square.
+   *
+   * @param sideLengthInPixels     side length of the square in pixels
+   * @param roundingWidthInPixels  width of the corner rounding of the square in pixels
+   * @param roundingHeightInPixels height of the corner rounding of the square in pixels
+   * @param color                  color ot the square
+   * @param backgroundColor        color of the background
+   *
+   * @return a bitmap containing the square
+   */
+  private
+  def instantiateRoundedSquare(
+      sideLengthInPixels: Int,
+      roundingWidthInPixels: Int,
+      roundingHeightInPixels: Int,
+      color: Color,
+      backgroundColor: Color): Bitmap = {
+
+    def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      bmp.applyInitialization(
+        DrawRoundedSquare(
+          0, 0,
+          sideLengthInPixels - 1,
+          roundingWidthInPixels, roundingHeightInPixels,
+          hasBorder = true,
+          hasFilling = true,
+          color = color,
+          fillColor = color
+        ))
+    }
+
+    Bitmap.createAndInitialize(
+      sideLengthInPixels,
+      sideLengthInPixels,
+      backgroundColor,
+      Some(postCreationProcessor _))
   }
 
   /**
@@ -703,7 +1266,10 @@ package object bitmaps
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Bitmap = {
 
-    simplified.square(sideLengthInPixels, color)
+    validateSquareParameters(sideLengthInPixels, color)
+
+    displayAsNewIfNecessary(
+      instantiateSquare(sideLengthInPixels, color))
   }
 
   /**
@@ -720,7 +1286,11 @@ package object bitmaps
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Array[Bitmap] = {
 
-    simplified.squareArray(collectionSize, sideLengthInPixels, color)
+    validateSquareParameters(sideLengthInPixels, color)
+
+    collectionCreator.array[Bitmap](collectionSize){
+      instantiateSquare(sideLengthInPixels, color)
+    }
   }
 
   /**
@@ -737,7 +1307,11 @@ package object bitmaps
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
 
-    simplified.squareSeq(collectionSize, sideLengthInPixels, color)
+    validateSquareParameters(sideLengthInPixels, color)
+
+    collectionCreator.sequence[Bitmap](collectionSize){
+      instantiateSquare(sideLengthInPixels, color)
+    }
   }
 
   /**
@@ -754,7 +1328,45 @@ package object bitmaps
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): List[Bitmap] = {
 
-    simplified.squareList(collectionSize, sideLengthInPixels, color)
+    validateSquareParameters(sideLengthInPixels, color)
+
+    collectionCreator.list[Bitmap](collectionSize){
+      instantiateSquare(sideLengthInPixels, color)
+    }
+  }
+
+  /**
+   * Validates parameters for a square.
+   *
+   * @param sideLengthInPixels side length of the square in pixels
+   * @param color              color ot the square
+   */
+  private
+  def validateSquareParameters(
+      sideLengthInPixels: Int,
+      color: Color): Unit = {
+
+    require(
+      sideLengthInPixels > 0,
+      s"Width of the square must be at least 1 pixel (was $sideLengthInPixels)")
+
+    validateShapeColor(color)
+  }
+
+  /**
+   * Instantiates a square.
+   *
+   * @param sideLengthInPixels side length of the square in pixels
+   * @param color              color ot the square
+   *
+   * @return a bitmap containing the square
+   */
+  private
+  def instantiateSquare(
+      sideLengthInPixels: Int,
+      color: Color): Bitmap = {
+
+    Bitmap(sideLengthInPixels, sideLengthInPixels, color)
   }
 
   /**
@@ -769,7 +1381,10 @@ package object bitmaps
       lengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Bitmap = {
 
-    simplified.vLine(lengthInPixels, color)
+    validateVerticalLineParameters(lengthInPixels, color)
+
+    displayAsNewIfNecessary(
+      instantiateVerticalLine(lengthInPixels, color))
   }
 
   /**
@@ -786,7 +1401,11 @@ package object bitmaps
       lengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Array[Bitmap] = {
 
-    simplified.vLineArray(collectionSize, lengthInPixels, color)
+    validateVerticalLineParameters(lengthInPixels, color)
+
+    collectionCreator.array[Bitmap](collectionSize){
+      instantiateVerticalLine(lengthInPixels, color)
+    }
   }
 
   /**
@@ -803,7 +1422,11 @@ package object bitmaps
       lengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
 
-    simplified.vLineSeq(collectionSize, lengthInPixels, color)
+    validateVerticalLineParameters(lengthInPixels, color)
+
+    collectionCreator.sequence[Bitmap](collectionSize){
+      instantiateVerticalLine(lengthInPixels, color)
+    }
   }
 
   /**
@@ -820,20 +1443,71 @@ package object bitmaps
       lengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): List[Bitmap] = {
 
-    simplified.vLineList(collectionSize, lengthInPixels, color)
+    validateVerticalLineParameters(lengthInPixels, color)
+
+    collectionCreator.list[Bitmap](collectionSize){
+      instantiateVerticalLine(lengthInPixels, color)
+    }
   }
 
   /**
+   * Validates parameters for a vertical line.
    *
-   *
-   * @param sc
-   *
-   * @return
+   * @param lengthInPixels length of the line in pixels
+   * @param color          color ot the line
    */
-  implicit def BitmapCreationStringContextWrapper(
-      sc: StringContext): simplified.BitmapCreationStringInterpolator = {
+  private
+  def validateVerticalLineParameters(lengthInPixels: Int, color: Color): Unit = {
+    require(
+      lengthInPixels > 0,
+      s"Length of the line must be at least 1 pixel (was $lengthInPixels)")
 
-    simplified.BitmapCreationStringContextWrapper(sc)
+    validateShapeColor(color)
+  }
+
+  /**
+   * Instantiates a vertical line.
+   *
+   * @param lengthInPixels length of the line in pixels
+   * @param color          color ot the line
+   *
+   * @return a bitmap containing the line
+   */
+  private
+  def instantiateVerticalLine(lengthInPixels: Int, color: Color): Bitmap = {
+    Bitmap(1, lengthInPixels, color)
+  }
+
+  /**
+   * Validates foreground and background colors.
+   *
+   * @param color           color ot the shape
+   * @param backgroundColor color of the background
+   */
+  private
+  def validateColors(color: Color, backgroundColor: Color): Unit = {
+    validateShapeColor(color)
+    validateBackgroundColor(color)
+  }
+
+  /**
+   * Validates a foreground color.
+   *
+   * @param color color ot the shape
+   */
+  private
+  def validateShapeColor(color: Color): Unit = {
+    require(color != null, "The shape color argument has to be a Color instance (was null).")
+  }
+
+  /**
+   * Validates a background color.
+   *
+   * @param color color of the background
+   */
+  private
+  def validateBackgroundColor(color: Color): Unit = {
+    require(color != null, "The background color argument has to be a Color instance (was null).")
   }
 
 }

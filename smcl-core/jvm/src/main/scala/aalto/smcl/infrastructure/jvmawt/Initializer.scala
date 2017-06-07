@@ -18,11 +18,10 @@ package aalto.smcl.infrastructure.jvmawt
 
 
 import aalto.smcl.bitmaps.fullfeatured.AbstractBitmaps
-import aalto.smcl.bitmaps.{fullfeatured, simplified}
-import aalto.smcl.bitmaps.{BitmapValidator, BitmapValidatorFunctionFactory, fullfeatured}
+import aalto.smcl.bitmaps.{BitmapValidator, BitmapValidatorFunctionFactory, fullfeatured, simplified}
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, RichColor}
-import aalto.smcl.infrastructure.{CommonValidators, DefaultJVMCalendarProvider, DefaultJVMUniqueIDProvider, DefaultPlatformResourceFactory, InjectablesRegistry, RicherString, SMCLInitializer, SettingInitializer, StringUtils}
+import aalto.smcl.infrastructure.{CollectionCreator, CommonValidators, DefaultJVMCalendarProvider, DefaultJVMUniqueIDProvider, DefaultPlatformResourceFactory, InjectablesRegistry, RicherString, SMCLInitializer, SettingInitializer, StringUtils}
 import aalto.smcl.settings._
 import aalto.smcl.settings.jvmawt.JVMAWTSettingInitializer
 
@@ -64,6 +63,9 @@ object Initializer extends SMCLInitializer {
       settingValidatorFactory,
       bitmapValidator)
 
+  /** */
+  private val collectionCreator = new CollectionCreator()
+
   /**
    * Initialize SMCL.
    */
@@ -86,8 +88,9 @@ object Initializer extends SMCLInitializer {
       InjectablesRegistry.IIdStringUtils -> stringUtils,
       InjectablesRegistry.IIdCommonValidators -> commonValidators,
       InjectablesRegistry.IIdColorValidator -> colorValidator,
-      InjectablesRegistry.IIdRGBATranslationTableValidator -> rgbaTranslationTableValidator,
-      InjectablesRegistry.IIdBitmapValidator -> bitmapValidator
+      InjectablesRegistry.IIdColorTranslationTableValidator -> rgbaTranslationTableValidator,
+      InjectablesRegistry.IIdBitmapValidator -> bitmapValidator,
+      InjectablesRegistry.IIdCollectionCreator -> collectionCreator
     )
 
     val injectionTargets: Seq[InjectablesRegistry] = Seq(
@@ -103,6 +106,7 @@ object Initializer extends SMCLInitializer {
       AWTBitmapBufferAdapter,
       fullfeatured.Bitmap,
       simplified.Bitmap,
+      simplified.ShapeCreator,
       AbstractBitmaps
     )
 

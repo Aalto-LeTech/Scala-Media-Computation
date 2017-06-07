@@ -29,23 +29,26 @@ import aalto.smcl.infrastructure.exceptions.{ImplementationNotSetError, Injectab
  */
 object InjectablesRegistry {
 
-  /** Injectable ID for the StringUtils class. */
+  /** Injectable ID for the [[StringUtils]] class. */
   val IIdStringUtils = "StringUtils"
 
-  /** Injectable ID for the CommonValidators class. */
+  /** Injectable ID for the [[CommonValidators]] class. */
   val IIdCommonValidators = "CommonValidators"
 
-  /** Injectable ID for the ColorValidator class. */
+  /** Injectable ID for the [[aalto.smcl.colors.ColorValidator]] class. */
   val IIdColorValidator = "ColorValidator"
 
-  /** Injectable ID for the RGBATranslationTableValidator class. */
-  val IIdRGBATranslationTableValidator = "RGBATranslationTableValidator"
+  /** Injectable ID for the [[aalto.smcl.colors.rgb.ColorTranslationTableValidator]] class. */
+  val IIdColorTranslationTableValidator = "ColorTranslationTableValidator"
 
-  /** Injectable ID for the BitmapValidator class. */
+  /** Injectable ID for the [[aalto.smcl.bitmaps.BitmapValidator]] class. */
   val IIdBitmapValidator = "BitmapValidator"
 
-  /** Injectable ID for the SettingRegisterer class. */
+  /** Injectable ID for the [[aalto.smcl.settings.SettingRegistry.SettingRegisterer]] class. */
   val IIdSettingRegisterer = "SettingRegisterer"
+
+  /** Injectable ID for the [[CollectionCreator]] class. */
+  val IIdCollectionCreator = "CollectionCreator"
 
 }
 

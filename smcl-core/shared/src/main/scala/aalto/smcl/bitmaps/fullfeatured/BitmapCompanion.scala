@@ -136,7 +136,8 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
    * @return
    */
   protected
-  def createEmptyBitmap(widthInPixels: Int = DefaultBitmapWidthInPixels,
+  def createEmptyBitmap(
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       initialBackgroundColor: Color = DefaultBackgroundColor,
       processor: Option[(BitmapType) => BitmapType]): BitmapType = {

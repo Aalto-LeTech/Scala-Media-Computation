@@ -61,6 +61,20 @@ object Bitmap extends BitmapCompanion[Bitmap] {
   /**
    *
    *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  def apply(sourceResourcePath: String): Bitmap = {
+    super.apply(
+      sourceResourcePath,
+      UpdateViewerPerDefaults)
+  }
+
+  /**
+   * Creates a new empty [[Bitmap]] instance and applies a processing function
+   * to it. Does NOT display the bitmap with the bitmap viewer.
+   *
    * @param widthInPixels
    * @param heightInPixels
    * @param initialBackgroundColor
@@ -68,7 +82,8 @@ object Bitmap extends BitmapCompanion[Bitmap] {
    *
    * @return
    */
-  def apply(
+  private[bitmaps]
+  def createAndInitialize(
       widthInPixels: Int,
       heightInPixels: Int,
       initialBackgroundColor: Color,
@@ -80,19 +95,6 @@ object Bitmap extends BitmapCompanion[Bitmap] {
       initialBackgroundColor,
       processor,
       PreventViewerUpdates)
-  }
-
-  /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   */
-  def apply(sourceResourcePath: String): Bitmap = {
-    super.apply(
-      sourceResourcePath,
-      UpdateViewerPerDefaults)
   }
 
   /**
@@ -123,11 +125,6 @@ object Bitmap extends BitmapCompanion[Bitmap] {
 }
 
 
-/**
- *
- *
- * @author Aleksi Lukkarinen
- */
 /**
  *
  *

@@ -36,8 +36,11 @@ class BitmapCreationStringInterpolator(
    * @return
    */
   def bmpf(args: Any*): Bitmap = {
-    BitmapCreationStringInterpolatorImplementation
-        .bmpf[Bitmap](sc, args)
+    val pathStringCandidate =
+      sc.standardInterpolator(
+        StringContext.processEscapes, args)
+
+    Bitmap(pathStringCandidate)
   }
 
   /**
@@ -48,8 +51,11 @@ class BitmapCreationStringInterpolator(
    * @return
    */
   def bmpsf(args: Any*): Seq[Bitmap] = {
-    BitmapCreationStringInterpolatorImplementation
-        .bmpsf[Bitmap](sc, args)
+    val pathStringCandidate =
+      sc.standardInterpolator(
+        StringContext.processEscapes, args)
+
+    Bitmaps(pathStringCandidate)
   }
 
 }

@@ -31,7 +31,7 @@ import aalto.smcl.settings._
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps]
+private[fullfeatured]
 trait BitmapOperationAPI {
 
   /**

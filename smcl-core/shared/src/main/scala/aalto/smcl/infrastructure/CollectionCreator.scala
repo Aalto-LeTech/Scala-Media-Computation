@@ -14,45 +14,85 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.fullfeatured
+package aalto.smcl.infrastructure
 
 
 /**
- * A string interpolator implementation for creating bitmap instances.
+ *
  *
  * @author Aleksi Lukkarinen
  */
-private[bitmaps]
-object BitmapCreationStringInterpolatorImplementation {
+class CollectionCreator {
 
   /**
-   * Loads the first bitmap from a file.
    *
-   * @param args path to the image file to be loaded
+   *
+   * @param collectionSize
+   * @param contentProvider
+   * @tparam ItemType
    *
    * @return
    */
-  def bmpf[BitmapType <: AbstractBitmap](
-      sc: StringContext, args: Any*): BitmapType = {
+  def array[ItemType](
+      collectionSize: Int = 5)(
+      contentProvider: => ItemType): Array[ItemType] = {
 
-    val pathStringCandidate = sc.standardInterpolator(StringContext.processEscapes, args)
+    validateCollectionSize(collectionSize)
 
-    Bitmap(pathStringCandidate).asInstanceOf[BitmapType]
+    Array.fill[Any](
+      collectionSize)(
+      contentProvider).asInstanceOf[Array[ItemType]]
   }
 
   /**
-   * Loads all bitmaps from a file.
    *
-   * @param args path to the image file to be loaded
+   *
+   * @param collectionSize
+   * @param contentProvider
+   * @tparam ItemType
    *
    * @return
    */
-  def bmpsf[BitmapType <: AbstractBitmap](
-      sc: StringContext, args: Any*): Seq[BitmapType] = {
+  def sequence[ItemType](
+      collectionSize: Int = 5)(
+      contentProvider: => ItemType): Seq[ItemType] = {
 
-    val pathStringCandidate = sc.standardInterpolator(StringContext.processEscapes, args)
+    validateCollectionSize(collectionSize)
 
-    Bitmaps(pathStringCandidate).map(_.asInstanceOf[BitmapType])
+    Seq.fill[ItemType](collectionSize){
+      contentProvider
+    }
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param contentProvider
+   * @tparam ItemType
+   *
+   * @return
+   */
+  def list[ItemType](
+      collectionSize: Int = 5)(
+      contentProvider: => ItemType): List[ItemType] = {
+
+    validateCollectionSize(collectionSize)
+
+    List.fill[ItemType](collectionSize){
+      contentProvider
+    }
+  }
+
+  /**
+   *
+   *
+   * @param size
+   */
+  def validateCollectionSize(size: Int): Unit = {
+    require(
+      size >= 0,
+      s"Size of the collection cannot be negative (was $size)")
   }
 
 }

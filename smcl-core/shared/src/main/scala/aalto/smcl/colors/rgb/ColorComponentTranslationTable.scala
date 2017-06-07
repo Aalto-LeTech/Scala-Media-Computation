@@ -30,19 +30,19 @@ import aalto.smcl.infrastructure._
  */
 object ColorComponentTranslationTable extends InjectablesRegistry {
 
-  /** The CommonValidators instance to be used by this object. */
+  /** The [[CommonValidators]] instance to be used by this object. */
   private lazy val commonValidators: CommonValidators = {
     injectable(InjectablesRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
   }
 
-  /** The ColorValidator instance to be used by this object. */
+  /** The [[ColorValidator]] instance to be used by this object. */
   private lazy val colorValidator: ColorValidator = {
     injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
   }
 
-  /** The RGBATranslationTableValidator instance to be used by this object. */
-  private lazy val rgbaTranslationTableValidator: ColorTranslationTableValidator = {
-    injectable(InjectablesRegistry.IIdRGBATranslationTableValidator)
+  /** The [[ColorTranslationTableValidator]] instance to be used by this object. */
+  private lazy val colorTranslationTableValidator: ColorTranslationTableValidator = {
+    injectable(InjectablesRegistry.IIdColorTranslationTableValidator)
         .asInstanceOf[ColorTranslationTableValidator]
   }
 
@@ -62,7 +62,7 @@ object ColorComponentTranslationTable extends InjectablesRegistry {
       blues: Seq[Short],
       opacities: Seq[Short]): ColorComponentTranslationTable = {
 
-    rgbaTranslationTableValidator.validateSeparateDimensions(reds, greens, blues, opacities)
+    colorTranslationTableValidator.validateSeparateDimensions(reds, greens, blues, opacities)
 
     new ColorComponentTranslationTable(
       Seq(reds, greens, blues, opacities),
@@ -84,7 +84,7 @@ object ColorComponentTranslationTable extends InjectablesRegistry {
     for (rowIndex <- ByteRange) {
       val rgbaRowCandidate: (Short, Short, Short, Short) = valueProvider(rowIndex.toShort)
 
-      rgbaTranslationTableValidator.validateFunctionProvidedComponents(rgbaRowCandidate)
+      colorTranslationTableValidator.validateFunctionProvidedComponents(rgbaRowCandidate)
 
       tableArray(0)(rowIndex) = rgbaRowCandidate._1
       tableArray(1)(rowIndex) = rgbaRowCandidate._2

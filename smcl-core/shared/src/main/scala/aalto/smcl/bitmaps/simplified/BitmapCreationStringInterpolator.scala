@@ -17,11 +17,6 @@
 package aalto.smcl.bitmaps.simplified
 
 
-import aalto.smcl.bitmaps.fullfeatured
-
-
-
-
 /**
  * A string interpolator for creating [[Bitmap]] instances.
  *
@@ -41,8 +36,11 @@ class BitmapCreationStringInterpolator(
    * @return
    */
   def bmpf(args: Any*): Bitmap = {
-    fullfeatured.BitmapCreationStringInterpolatorImplementation
-        .bmpf[Bitmap](sc, args)
+    val pathStringCandidate =
+      sc.standardInterpolator(
+        StringContext.processEscapes, args)
+
+    Bitmap(pathStringCandidate)
   }
 
   /**
@@ -53,8 +51,11 @@ class BitmapCreationStringInterpolator(
    * @return
    */
   def bmpsf(args: Any*): Seq[Bitmap] = {
-    fullfeatured.BitmapCreationStringInterpolatorImplementation
-        .bmpsf[Bitmap](sc, args)
+    val pathStringCandidate =
+      sc.standardInterpolator(
+        StringContext.processEscapes, args)
+
+    Bitmaps(pathStringCandidate)
   }
 
 }
