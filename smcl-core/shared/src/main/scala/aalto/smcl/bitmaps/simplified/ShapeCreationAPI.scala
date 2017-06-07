@@ -116,6 +116,58 @@ trait ShapeCreationAPI {
       backgroundColor)
   }
 
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def ellipseArray(
+      collectionSize: Int = 5,
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
+
+    _ellipseCreator.createArrayOf(
+      collectionSize,
+      widthInPixels,
+      heightInPixels,
+      color,
+      backgroundColor)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def ellipseSeq(
+      collectionSize: Int = 5,
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
+
+    _ellipseCreator.createArrayOf(
+      collectionSize,
+      widthInPixels,
+      heightInPixels,
+      color,
+      backgroundColor).toSeq
+  }
+
 
   /** */
   private[this] lazy val _horizontalLineCreator: HorizontalLineCreator = new HorizontalLineCreator()
@@ -133,6 +185,46 @@ trait ShapeCreationAPI {
       color: Color = DefaultPrimaryColor): Bitmap = {
 
     _horizontalLineCreator.createOne(widthInPixels, color)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param widthInPixels
+   * @param color
+   *
+   * @return
+   */
+  def hLineArray(
+      collectionSize: Int = 5,
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      color: Color = DefaultPrimaryColor): Array[Bitmap] = {
+
+    _horizontalLineCreator.createArrayOf(
+      collectionSize,
+      widthInPixels,
+      color)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param widthInPixels
+   * @param color
+   *
+   * @return
+   */
+  def hLineSeq(
+      collectionSize: Int = 5,
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
+
+    _horizontalLineCreator.createArrayOf(
+      collectionSize,
+      widthInPixels,
+      color).toSeq
   }
 
 
@@ -165,8 +257,71 @@ trait ShapeCreationAPI {
       toXInPixels,
       toYInPixels,
       color,
-      backgroundColor
-    )
+      backgroundColor)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param fromXInPixels
+   * @param fromYInPixels
+   * @param toXInPixels
+   * @param toYInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def lineArray(
+      collectionSize: Int = 5,
+      fromXInPixels: Int,
+      fromYInPixels: Int,
+      toXInPixels: Int,
+      toYInPixels: Int,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
+
+    _lineCreator.createArrayOf(
+      collectionSize,
+      fromXInPixels,
+      fromYInPixels,
+      toXInPixels,
+      toYInPixels,
+      color,
+      backgroundColor)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param fromXInPixels
+   * @param fromYInPixels
+   * @param toXInPixels
+   * @param toYInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def lineSeq(
+      collectionSize: Int = 5,
+      fromXInPixels: Int,
+      fromYInPixels: Int,
+      toXInPixels: Int,
+      toYInPixels: Int,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
+
+    _lineCreator.createArrayOf(
+      collectionSize,
+      fromXInPixels,
+      fromYInPixels,
+      toXInPixels,
+      toYInPixels,
+      color,
+      backgroundColor).toSeq
   }
 
 
@@ -187,7 +342,56 @@ trait ShapeCreationAPI {
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): Bitmap = {
 
-    _rectangleCreator.createOne(widthInPixels, heightInPixels, color)
+    _rectangleCreator.createOne(
+      widthInPixels,
+      heightInPixels,
+      color)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param color
+   *
+   * @return
+   */
+  def rectangleArray(
+      collectionSize: Int = 5,
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      color: Color = DefaultPrimaryColor): Array[Bitmap] = {
+
+    _rectangleCreator.createArrayOf(
+      collectionSize,
+      widthInPixels,
+      heightInPixels,
+      color)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param color
+   *
+   * @return
+   */
+  def rectangleSeq(
+      collectionSize: Int = 5,
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
+
+    _rectangleCreator.createArrayOf(
+      collectionSize,
+      widthInPixels,
+      heightInPixels,
+      color).toSeq
   }
 
 
@@ -220,8 +424,71 @@ trait ShapeCreationAPI {
       roundingWidthInPixels,
       roundingHeightInPixels,
       color,
-      backgroundColor
-    )
+      backgroundColor)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def rRectangleArray(
+      collectionSize: Int = 5,
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
+
+    _roundedRectangleCreator.createArrayOf(
+      collectionSize,
+      widthInPixels,
+      heightInPixels,
+      roundingWidthInPixels,
+      roundingHeightInPixels,
+      color,
+      backgroundColor)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def rRectangleSeq(
+      collectionSize: Int = 5,
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
+
+    _roundedRectangleCreator.createArrayOf(
+      collectionSize,
+      widthInPixels,
+      heightInPixels,
+      roundingWidthInPixels,
+      roundingHeightInPixels,
+      color,
+      backgroundColor).toSeq
   }
 
 
@@ -251,8 +518,65 @@ trait ShapeCreationAPI {
       roundingWidthInPixels,
       roundingHeightInPixels,
       color,
-      backgroundColor
-    )
+      backgroundColor)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param sideLengthInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def rSquareArray(
+      collectionSize: Int = 5,
+      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
+
+    _roundedSquareCreator.createArrayOf(
+      collectionSize,
+      sideLengthInPixels,
+      roundingWidthInPixels,
+      roundingHeightInPixels,
+      color,
+      backgroundColor)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param sideLengthInPixels
+   * @param roundingWidthInPixels
+   * @param roundingHeightInPixels
+   * @param color
+   * @param backgroundColor
+   *
+   * @return
+   */
+  def rSquareSeq(
+      collectionSize: Int = 5,
+      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      color: Color = DefaultPrimaryColor,
+      backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
+
+    _roundedSquareCreator.createArrayOf(
+      collectionSize,
+      sideLengthInPixels,
+      roundingWidthInPixels,
+      roundingHeightInPixels,
+      color,
+      backgroundColor).toSeq
   }
 
 
@@ -271,7 +595,49 @@ trait ShapeCreationAPI {
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Bitmap = {
 
-    _squareCreator.createOne(sideLengthInPixels, color)
+    _squareCreator.createOne(
+      sideLengthInPixels,
+      color)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param sideLengthInPixels
+   * @param color
+   *
+   * @return
+   */
+  def squareArray(
+      collectionSize: Int = 5,
+      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      color: Color = DefaultPrimaryColor): Array[Bitmap] = {
+
+    _squareCreator.createArrayOf(
+      collectionSize,
+      sideLengthInPixels,
+      color)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param sideLengthInPixels
+   * @param color
+   *
+   * @return
+   */
+  def squareSeq(
+      collectionSize: Int = 5,
+      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
+
+    _squareCreator.createArrayOf(
+      collectionSize,
+      sideLengthInPixels,
+      color).toSeq
   }
 
 
@@ -290,7 +656,49 @@ trait ShapeCreationAPI {
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): Bitmap = {
 
-    _verticalLineCreator.createOne(heightInPixels, color)
+    _verticalLineCreator.createOne(
+      heightInPixels,
+      color)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param heightInPixels
+   * @param color
+   *
+   * @return
+   */
+  def vLineArray(
+      collectionSize: Int = 5,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      color: Color = DefaultPrimaryColor): Array[Bitmap] = {
+
+    _verticalLineCreator.createArrayOf(
+      collectionSize,
+      heightInPixels,
+      color)
+  }
+
+  /**
+   *
+   *
+   * @param collectionSize
+   * @param heightInPixels
+   * @param color
+   *
+   * @return
+   */
+  def vLineSeq(
+      collectionSize: Int = 5,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
+
+    _verticalLineCreator.createArrayOf(
+      collectionSize,
+      heightInPixels,
+      color).toSeq
   }
 
 }
