@@ -105,6 +105,7 @@ object Initializer extends SMCLInitializer {
       StringSetting,
       AWTBitmapBufferAdapter,
       fullfeatured.Bitmap,
+      fullfeatured.ShapeCreator,
       simplified.Bitmap,
       simplified.ShapeCreator,
       AbstractBitmaps
