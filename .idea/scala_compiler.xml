@@ -14,7 +14,7 @@
         <plugin path="/../../l/dev/local-ivy-repo/cache/org.scala-js/scalajs-compiler_2.12.2/jars/scalajs-compiler_2.12.2-0.6.15.jar" />
       </plugins>
     </profile>
-    <profile name="SBT 2" modules="smcl-bitmap-viewer-jvm,smcl-core-jvm">
+    <profile name="SBT 2" modules="smcl-bitmap-viewer-jvm,smcl-core-jvm,smcl-core-jvm">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <option name="featureWarnings" value="true" />

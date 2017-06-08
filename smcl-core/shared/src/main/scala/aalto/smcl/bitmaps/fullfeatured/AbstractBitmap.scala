@@ -40,7 +40,7 @@ abstract class AbstractBitmap private[bitmaps](
     private[bitmaps] val operations: BitmapOperationList,
     private val bitmapValidator: BitmapValidator,
     private val colorValidator: ColorValidator,
-    uniqueIdentifier: Identity) extends {
+    val uniqueIdentifier: Identity) extends {
 
   /** Width of this [[BitmapCompanion]]. */
   val widthInPixels: Int = operations.widthInPixels

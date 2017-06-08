@@ -22,7 +22,7 @@ import aalto.smcl.bitmaps.operations._
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.{Identity, InjectablesRegistry, PRF}
-import aalto.smcl.settings.{DefaultBackgroundColor, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, NewBitmapsAreDisplayedAutomatically, UpdateViewerPerDefaults, ViewerUpdateStyle}
+import aalto.smcl.settings.{DefaultBackgroundColor, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, UpdateViewerPerDefaults, ViewerUpdateStyle}
 
 
 
@@ -59,24 +59,19 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
       sourceResourcePath: String,
       viewerHandling: ViewerUpdateStyle): BitmapType = {
 
-    displayIfNeeded(loadNewBitmap(
-      sourceResourcePath,
-      viewerHandling))(viewerHandling)
+    displayAsNewIfNecessary(viewerHandling)(
+      loadNewBitmap(sourceResourcePath))
   }
 
   /**
    *
    *
    * @param sourceResourcePath
-   * @param viewerHandling
    *
    * @return
    */
   protected
-  def loadNewBitmap(
-      sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle): BitmapType = {
-
+  def loadNewBitmap(sourceResourcePath: String): BitmapType = {
     // The ImageProvider is trusted with validation of the source resource path.
     val loadedBufferTry = PRF.tryToLoadImageFromPath(sourceResourcePath)
     if (loadedBufferTry.isFailure)
@@ -117,12 +112,13 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
       processor: Option[(BitmapType) => BitmapType],
       viewerHandling: ViewerUpdateStyle): BitmapType = {
 
-    displayIfNeeded(createEmptyBitmap(
-      widthInPixels,
-      heightInPixels,
-      initialBackgroundColor,
-      processor
-    ))(viewerHandling)
+    displayAsNewIfNecessary(viewerHandling)(
+      createEmptyBitmap(
+        widthInPixels,
+        heightInPixels,
+        initialBackgroundColor,
+        processor
+      ))
   }
 
   /**
@@ -162,27 +158,6 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
       case None    => bitmap
       case Some(p) => p(bitmap)
     }
-  }
-
-  /**
-   *
-   *
-   * @param bitmap
-   * @param viewerHandling
-   *
-   * @return
-   */
-  protected
-  def displayIfNeeded(
-      bitmap: BitmapType)(
-      implicit viewerHandling: ViewerUpdateStyle): BitmapType = {
-
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (NewBitmapsAreDisplayedAutomatically)
-        bitmap.display()
-    }
-
-    bitmap
   }
 
   /**

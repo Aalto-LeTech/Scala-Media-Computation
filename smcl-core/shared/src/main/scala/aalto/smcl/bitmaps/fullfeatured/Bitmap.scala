@@ -72,6 +72,30 @@ object Bitmap extends BitmapCompanion[Bitmap] {
   }
 
   /**
+   * Creates a new empty [[Bitmap]] instance and applies a processing function to it.
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param initialBackgroundColor
+   * @param processor
+   *
+   * @return
+   */
+  def apply(
+      widthInPixels: Int,
+      heightInPixels: Int,
+      initialBackgroundColor: Color,
+      processor: Option[(Bitmap) => Bitmap]): Bitmap = {
+
+    super.apply(
+      widthInPixels,
+      heightInPixels,
+      initialBackgroundColor,
+      processor,
+      PreventViewerUpdates)
+  }
+
+  /**
    *
    *
    * @param sourceResourcePath
@@ -121,7 +145,7 @@ object Bitmap extends BitmapCompanion[Bitmap] {
  *
  * @author Aleksi Lukkarinen
  */
-case class Bitmap private[bitmaps](
+class Bitmap private[bitmaps](
     override private[bitmaps] val operations: BitmapOperationList,
     private val bitmapValidator: BitmapValidator,
     private val colorValidator: ColorValidator,

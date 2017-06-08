@@ -834,11 +834,11 @@ package object simplified
   }
 
   /**
+   * Application of the [[BitmapCreationStringInterpolator]] class.
    *
+   * @param sc string context
    *
-   * @param sc
-   *
-   * @return
+   * @return a new [[BitmapCreationStringInterpolator]] instance for the given [[StringContext]] instance
    */
   implicit def BitmapCreationStringContextWrapper(
       sc: StringContext): BitmapCreationStringInterpolator = {

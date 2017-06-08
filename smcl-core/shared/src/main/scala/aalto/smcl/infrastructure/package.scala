@@ -79,7 +79,13 @@ package object infrastructure extends Constants {
   }
 
   /**
-   * Application of the RichGenTraversable class.
+   * Application of the [[RichGenTraversable]] class.
+   *
+   * @param self
+   * @tparam E
+   * @tparam C
+   *
+   * @return
    */
   //noinspection TypeParameterShadow
   private[smcl]
@@ -90,14 +96,22 @@ package object infrastructure extends Constants {
   }
 
   /**
-   * Application of the RicherString class.
+   * Application of the [[RicherString]] class.
+   *
+   * @param self
+   *
+   * @return
    */
   implicit def StringWrapper(self: String): RicherString = {
     RicherString(self)
   }
 
   /**
-   * Application of the RichOptionString class.
+   * Application of the [[RichOptionString]] class.
+   *
+   * @param self
+   *
+   * @return
    */
   implicit def OptionStringWrapper(self: Option[String]): RichOptionString = {
     RichOptionString(self)
