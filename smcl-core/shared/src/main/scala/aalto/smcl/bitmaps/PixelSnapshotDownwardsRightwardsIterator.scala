@@ -65,14 +65,14 @@ case class PixelSnapshotDownwardsRightwardsIterator[BitmapType <: AbstractBitmap
    *
    * @return
    */
-  private def currentXInPixels: Int = _currentXInPixels
+  def currentXInPixels: Int = _currentXInPixels
 
   /**
    *
    *
    * @return
    */
-  private def currentYInPixels: Int = _currentYInPixels
+  def currentYInPixels: Int = _currentYInPixels
 
   /**
    *
