@@ -35,7 +35,6 @@ class MetadataInterfaceSourceProviderRegistry private[interfaces]() {
     new mutable.HashMap[Class[_], mutable.Set[MetadataInterfaceSourceProvider]]
         with mutable.MultiMap[Class[_], MetadataInterfaceSourceProvider]
 
-
   /**
    *
    *

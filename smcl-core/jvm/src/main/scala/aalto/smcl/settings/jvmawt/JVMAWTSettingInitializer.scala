@@ -19,7 +19,7 @@ package aalto.smcl.settings.jvmawt
 
 import aalto.smcl.bitmaps.BitmapValidatorFunctionFactory
 import aalto.smcl.infrastructure.SettingInitializer
-import aalto.smcl.settings.{IntSetting, ObjectSetting, SettingValidatorFactory}
+import aalto.smcl.settings.{ObjectSetting, SettingValidatorFactory}
 
 
 
@@ -38,13 +38,6 @@ class JVMAWTSettingInitializer() extends SettingInitializer {
   def apply(
       settingValidatorFactory: SettingValidatorFactory,
       bitmapValidatorFunctionFactory: BitmapValidatorFunctionFactory): Unit = {
-
-    IntSetting(
-      key = "ColorVisualizationTileSideLengthInPixels",
-      initialValue = 80,
-      validator = new SettingValidatorFactory().conditionFalseValidator[Int]({
-        _ < 20
-      }, "Side length of color visualization tiles' must be at least 20 pixels"))
 
     ObjectSetting[AWTAffineTransformationInterpolationMethod](
       key = "AffineTransformationInterpolationMethod",

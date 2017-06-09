@@ -14,46 +14,57 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.metadata
-
-
-import aalto.smcl.bitmaps.fullfeatured.Bitmap
-import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
-
-
+package aalto.smcl.interfaces
 
 
 /**
- *
+ * Interface for querying objects for bitmap representations.
  *
  * @author Aleksi Lukkarinen
  */
-private[metadata]
-class ImmutableBitmapMetadataInterfaceSourceProvider()
-    extends MetadataInterfaceSourceProvider {
+trait StaticGeneralBitmapMetadata[MetaImageType] {
 
-  /** */
-  private[this] lazy val _bitmapClass = Bitmap().getClass           // TODO: Get class objects some other way (classOf[] ?)
+  /** Type for metadata bitmap indices. */
+  type MetaBitmapIndex = Int
 
-  /** */
-  private[this] lazy val _immutableBitmapClass = Bitmap().getClass  // TODO: Get class objects some other way (classOf[] ?)
-
+  /** Constant for the first meta bitmap index (zero). */
+  val FirstMetaBitmapIndex = 0
 
   /**
    *
    *
-   * @param interestingObject
+   * @param r
+   * @param m
    *
    * @return
    */
-  override def querySourceFor(interestingObject: Any): Option[Any] = {
-    val c = interestingObject.getClass
+  def generalMetadataBitmapFor(
+      r: ResourceIndex = FirstResourceIndex,
+      m: MetaBitmapIndex = FirstMetaBitmapIndex): MetaImageType
 
-    if (_immutableBitmapClass.isAssignableFrom(c)) {
-      return Some(ImmutableBitmapMetadataSource(interestingObject.asInstanceOf[Bitmap]))
-    }
+  /**
+   *
+   *
+   * @param r
+   *
+   * @return
+   */
+  def generalMetadataBitmapsFor(
+      r: ResourceIndex = FirstResourceIndex): Seq[MetaImageType]
 
-    None
-  }
+  /**
+   *
+   *
+   * @return
+   */
+  def numberOfGeneralMetadataBitmapsFor(
+      r: ResourceIndex = FirstResourceIndex): Int
+
+  /**
+   *
+   *
+   * @return
+   */
+  def generalMetadataBitmaps: Vector[Seq[MetaImageType]]
 
 }

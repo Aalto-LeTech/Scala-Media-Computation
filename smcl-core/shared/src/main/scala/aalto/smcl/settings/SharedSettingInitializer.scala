@@ -122,6 +122,13 @@ class SharedSettingInitializer() extends SettingInitializer {
       initialValue = 180,
       validator = settingValidatorFactory.EmptyValidator)
 
+    IntSetting(
+      key = SIdColorVisualizationTileSideLengthInPixels,
+      initialValue = 80,
+      validator = settingValidatorFactory.conditionFalseValidator[Int]({
+        _ < 20
+      }, "Side length of color visualization tiles must be at least 20 pixels"))
+
     ColorSetting(
       key = SIdDefaultBackgroundColor,
       initialValue = White.withAbsoluteOpacity(0),

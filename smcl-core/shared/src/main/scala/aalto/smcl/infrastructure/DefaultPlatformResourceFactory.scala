@@ -21,7 +21,6 @@ import scala.util.Try
 
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
-import aalto.smcl.interfaces.Timestamp
 
 
 

@@ -14,42 +14,61 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.interfaces.awt
-
-
-import java.awt.image.BufferedImage
-
-
+package aalto.smcl.infrastructure
 
 
 /**
- * Interface for querying objects for bitmap representations.
  *
- * @author Aleksi Lukkarinen
  */
-trait StaticGeneralBitmapSource {
+trait Timestamp {
 
   /**
    *
    *
    * @return
    */
-  def numberOfGeneralBitmaps(): Int
+  def day: Int
 
   /**
    *
    *
    * @return
    */
-  def generalBitmapsOption(): Option[Seq[BufferedImage]]
+  def month: Int
 
   /**
    *
    *
-   * @param bitmapNumber
+   * @return
+   */
+  def year: Int
+
+  /**
+   *
    *
    * @return
    */
-  def generalBitmapOption(bitmapNumber: Int = 0): Option[BufferedImage]
+  def hour: Int
+
+  /**
+   *
+   *
+   * @return
+   */
+  def minute: Int
+
+  /**
+   *
+   *
+   * @return
+   */
+  def second: Int
+
+  /**
+   *
+   *
+   * @return
+   */
+  def milliSecond: Int
 
 }

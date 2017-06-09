@@ -47,9 +47,9 @@ object Bitmap extends BitmapCompanion[Bitmap] {
    * @return
    */
   def apply(
-      widthInPixels: Int,
-      heightInPixels: Int,
-      initialBackgroundColor: Color): Bitmap = {
+      widthInPixels: Int = DefaultBitmapWidthInPixels,
+      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      initialBackgroundColor: Color = DefaultBackgroundColor): Bitmap = {
 
     super.apply(
       widthInPixels,
@@ -145,6 +145,17 @@ class Bitmap private[bitmaps](
       colorValidator,
       uniqueIdentifier)
             with PixelSnapshotReceiver[Bitmap] {
+
+  /**
+   *
+   *
+   * @param f
+   *
+   * @return
+   */
+  def map(f: (Bitmap) => Bitmap): Bitmap = {
+    f(this)
+  }
 
   /**
    * Applies an [[Renderable]] to this [[Bitmap]].

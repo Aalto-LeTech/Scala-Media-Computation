@@ -14,52 +14,47 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.interfaces.awt
+package aalto.smcl.bitmaps.metadata.jvmawt
 
 
-import java.awt.image.BufferedImage
+import aalto.smcl.bitmaps.fullfeatured
+import aalto.smcl.interfaces.MetadataInterfaceSourceProvider
 
 
 
 
 /**
- * Interface for querying objects for thumbnail bitmap representation.
+ *
  *
  * @author Aleksi Lukkarinen
  */
-trait StaticThumbnailBitmapSource {
+class AWTFullFeaturedBitmapMetadataInterfaceSourceProvider()
+    extends MetadataInterfaceSourceProvider {
+
+  // TODO: Get class objects some other way (classOf[] ?)
+
+  /** */
+  private[this] lazy val _bitmapClass = fullfeatured.Bitmap().getClass
+
 
   /**
    *
    *
+   * @param interestingObject
+   *
    * @return
    */
-  def numberOfThumbnailBitmaps(): Int
+  override def querySourceFor(interestingObject: Any): Option[Any] = {
+    val c = interestingObject.getClass
 
-  /**
-   *
-   *
-   * @param maximumWidthInPixels
-   * @param maximumHeightInPixels
-   *
-   * @return
-   */
-  def thumbnailBitmapsOption(
-      maximumWidthInPixels: Int,
-      maximumHeightInPixels: Int): Option[Seq[BufferedImage]]
+    if (_bitmapClass.isAssignableFrom(c)) {
+      val source = new AWTFullFeaturedBitmapMetadataSource(
+        interestingObject.asInstanceOf[fullfeatured.Bitmap])
 
-  /**
-   *
-   *
-   * @param thumbnailNumber
-   * @param maximumWidthInPixels
-   * @param maximumHeightInPixels
-   *
-   * @return
-   */
-  def thumbnailBitmapOption(
-      thumbnailNumber: Int = 0,
-      maximumWidthInPixels: Int,
-      maximumHeightInPixels: Int): Option[BufferedImage]
+      return Some(source)
+    }
+
+    None
+  }
 
 }

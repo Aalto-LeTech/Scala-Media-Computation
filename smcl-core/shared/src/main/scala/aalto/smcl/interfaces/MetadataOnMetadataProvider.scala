@@ -17,58 +17,85 @@
 package aalto.smcl.interfaces
 
 
+import aalto.smcl.SMCLLibrary
+
+
+
+
 /**
+ * Interface for querying objects for provider-related metadata.
  *
+ * @author Aleksi Lukkarinen
  */
-trait Timestamp {
+trait MetadataOnMetadataProvider extends Immutable {
+
+  // TODO: Implement ADTs to return personal information of several developers
+  // TODO: Implement ADT to return institutional information (address etc.)
 
   /**
-   *
+   * Returns the canonical name of the provider.
    *
    * @return
    */
-  def day: Int
+  def providerName: Option[String] = {
+    Some(SMCLLibrary.FullName)
+  }
 
   /**
-   *
+   * Returns a description describing the provider.
    *
    * @return
    */
-  def month: Int
+  def providerDescription: Option[String] = {
+    Some(SMCLLibrary.Description)
+  }
 
   /**
-   *
+   * Returns the major version number of the provider.
    *
    * @return
    */
-  def year: Int
+  def providerMajorVersion: Option[Int] = {
+    Some(SMCLLibrary.VersionMajor)
+  }
 
   /**
-   *
+   * Returns the minor version number of the provider.
    *
    * @return
    */
-  def hour: Int
+  def providerMinorVersion: Option[Int] = {
+    Some(SMCLLibrary.VersionMinor)
+  }
 
   /**
-   *
+   * Returns the name of the authoring organization.
    *
    * @return
    */
-  def minute: Int
+  def providerAuthorOrganizationName: Option[String] = {
+    val name = SMCLLibrary.OriginalDeveloperOrganizationName
+    val country = SMCLLibrary.OriginalDeveloperOrganizationCountry
+
+    Some(s"$name, $country")
+  }
 
   /**
-   *
+   * Returns the first name of the authoring person.
    *
    * @return
    */
-  def second: Int
+  def providerAuthorPersonFirstName: Option[String] = {
+    Some(SMCLLibrary.OriginalDeveloperFirstName)
+  }
 
   /**
-   *
+   * Returns the last name of the authoring person.
    *
    * @return
    */
-  def milliSecond: Int
+  def providerAuthorPersonLastName: Option[String] = {
+    Some(SMCLLibrary.OriginalDeveloperLastName)
+  }
 
 }

@@ -22,8 +22,7 @@ import java.util.Calendar
 import scala.util.Try
 
 import aalto.smcl.colors.rgb.Color
-import aalto.smcl.infrastructure._
-import aalto.smcl.interfaces.Timestamp
+import aalto.smcl.infrastructure.{Timestamp, _}
 
 
 

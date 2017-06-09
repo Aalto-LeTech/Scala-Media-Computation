@@ -24,6 +24,12 @@ package aalto.smcl
  */
 package object interfaces {
 
+  /** Type for resource indices. */
+  type ResourceIndex = Int
+
+  /** Constant for the first resource index (zero). */
+  val FirstResourceIndex = 0
+
   /** Global registry for metadata providers. */
   val GlobalMetadataInterfaceSourceProviderRegistry =
     new MetadataInterfaceSourceProviderRegistry()

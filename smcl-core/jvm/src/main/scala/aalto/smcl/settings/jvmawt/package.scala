@@ -101,33 +101,4 @@ package object jvmawt {
     AffineTransformationInterpolationMethod0.value = newValue
   }
 
-
-  /** An internal setting ID for the "ColorVisualizationTileSideLengthInPixels" setting. */
-  private[smcl]
-  val SIdColorVisualizationTileSideLengthInPixels =
-    "ColorVisualizationTileSideLengthInPixels"
-
-  /** */
-  private lazy val ColorVisualizationTileSideLengthInPixels0 = {
-    Settings(SIdColorVisualizationTileSideLengthInPixels).asInstanceOf[IntSetting]
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def ColorVisualizationTileSideLengthInPixels: Int = {
-    ColorVisualizationTileSideLengthInPixels0.value
-  }
-
-  /**
-   *
-   *
-   * @param newValue
-   */
-  def ColorVisualizationTileSideLengthInPixels_=(newValue: Int): Unit = {
-    ColorVisualizationTileSideLengthInPixels0.value = newValue
-  }
-
 }

@@ -14,46 +14,58 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.metadata
-
-
-import scala.language.implicitConversions
-
-
+package aalto.smcl.interfaces
 
 
 /**
- *
+ * Interface for querying objects for general and thumbnail bitmap representations.
  *
  * @author Aleksi Lukkarinen
  */
-private[smcl]
-class PackageInitializer {
+trait StaticGeneralAndThumbnailBitmapMetadata[MetaImageType]
+    extends StaticGeneralBitmapMetadata[MetaImageType] {
 
-/*
+  /**
+   *
+   *
+   * @param r
+   * @param m
+   *
+   * @return
+   */
+  def thumbnailMetadataBitmapFor(
+      r: ResourceIndex = FirstResourceIndex,
+      m: MetaBitmapIndex = FirstMetaBitmapIndex,
+      maximumWidthInPixels: Int,
+      maximumHeightInPixels: Int): MetaImageType
 
-  //
-  // Register metadata source providers
-  //
-  addInitializer(PackageInitializationPhase.Late) {() =>
-    val bitmapProvider = new ImmutableBitmapMetadataInterfaceSourceProvider()
-    val rgbaColorProvider = new RGBAColorMetadataInterfaceSourceProvider()
+  /**
+   *
+   *
+   * @param r
+   *
+   * @return
+   */
+  def thumbnailMetadataBitmapsFor(
+      r: ResourceIndex = FirstResourceIndex,
+      maximumWidthInPixels: Int,
+      maximumHeightInPixels: Int): Seq[MetaImageType]
 
-    val _providerMap = Map[Class[_], MetadataInterfaceSourceProvider](
-      Bitmap().getClass -> bitmapProvider,
+  /**
+   *
+   *
+   * @return
+   */
+  def numberOfThumbnailMetadataBitmapsFor(
+      r: ResourceIndex = FirstResourceIndex): Int
 
-      ImmutableBitmap().getClass -> bitmapProvider,
+  /**
+   *
+   *
+   * @return
+   */
+  def thumbnailMetadataBitmaps(
+      maximumWidthInPixels: Int,
+      maximumHeightInPixels: Int): Vector[Seq[MetaImageType]]
 
-      RGBAColor(0).getClass -> rgbaColorProvider,
-
-      PresetRGBAColor(0, Option("<dummy>")).getClass -> rgbaColorProvider,
-
-      classOf[GenTraversableLike[_, _]] -> new GenTraversableLikeMetadataInterfaceSourceProvider()
-    )
-
-    _providerMap foreach {case (clazz, provider) =>
-      GlobalMetadataInterfaceSourceProviderRegistry.registerProvider(clazz, provider)
-    }
-  }
-*/
 }

@@ -17,11 +17,6 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.interfaces.Timestamp
-
-
-
-
 /**
  * Adds a timestamp into a public field to mark the approximate time of object's creation.
  *

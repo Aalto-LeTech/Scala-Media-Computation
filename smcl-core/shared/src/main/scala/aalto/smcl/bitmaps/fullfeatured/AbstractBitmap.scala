@@ -25,7 +25,7 @@ import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.geometry.AffineTransformation
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, Displayable, DrawingSurfaceAdapter, Identity, RenderableBitmap, TimestampedCreation}
-import aalto.smcl.settings.{BitmapsAreDisplayedAutomaticallyAfterOperations, PreventViewerUpdates, UpdateViewerPerDefaults, ViewerUpdateStyle}
+import aalto.smcl.settings.{PreventViewerUpdates, ViewerUpdateStyle}
 import aalto.smcl.viewers.{display => displayInViewer}
 
 
@@ -140,19 +140,13 @@ abstract class AbstractBitmap private[bitmaps](
 
     require(newOperation != null, "Operation argument cannot be null.")
 
-    val newBitmap = instantiateBitmap(
-      newOperation +: operations,
-      bitmapValidator,
-      colorValidator,
-      uniqueIdentifier
-    )
-
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (BitmapsAreDisplayedAutomaticallyAfterOperations)
-        newBitmap.display()
-    }
-
-    newBitmap
+    displayAsNewIfNecessary(viewerHandling)(
+      instantiateBitmap(
+        newOperation +: operations,
+        bitmapValidator,
+        colorValidator,
+        uniqueIdentifier
+      ))
   }
 
   /**
@@ -183,19 +177,14 @@ abstract class AbstractBitmap private[bitmaps](
     require(newOperation != null, "Operation argument cannot be null.")
 
     val newOperationList = BitmapOperationList(newOperation)
-    val newBitmap = instantiateBitmap(
-      newOperationList,
-      bitmapValidator,
-      colorValidator,
-      uniqueIdentifier
-    )
 
-    if (viewerHandling == UpdateViewerPerDefaults) {
-      if (BitmapsAreDisplayedAutomaticallyAfterOperations)
-        newBitmap.display()
-    }
-
-    newBitmap
+    displayAsNewIfNecessary(viewerHandling)(
+      instantiateBitmap(
+        newOperationList,
+        bitmapValidator,
+        colorValidator,
+        uniqueIdentifier
+      ))
   }
 
   /**

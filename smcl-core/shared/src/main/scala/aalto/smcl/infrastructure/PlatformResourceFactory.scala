@@ -20,7 +20,6 @@ package aalto.smcl.infrastructure
 import scala.util.Try
 
 import aalto.smcl.colors.rgb.Color
-import aalto.smcl.interfaces.Timestamp
 
 
 

@@ -22,7 +22,7 @@ import aalto.smcl.bitmaps.operations._
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.{Identity, InjectablesRegistry, PRF}
-import aalto.smcl.settings.{DefaultBackgroundColor, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, UpdateViewerPerDefaults, ViewerUpdateStyle}
+import aalto.smcl.settings.{DefaultBackgroundColor, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, ViewerUpdateStyle}
 
 
 
@@ -88,10 +88,10 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
    */
   protected
   def apply(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      initialBackgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): BitmapType = {
+      widthInPixels: Int,
+      heightInPixels: Int,
+      initialBackgroundColor: Color,
+      viewerHandling: ViewerUpdateStyle): BitmapType = {
 
     apply(
       widthInPixels,

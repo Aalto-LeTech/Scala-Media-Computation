@@ -158,6 +158,17 @@ class Bitmap private[bitmaps](
             with PixelSnapshotReceiver[Bitmap] {
 
   /**
+   *
+   *
+   * @param f
+   *
+   * @return
+   */
+  def map(f: (Bitmap) => Bitmap): Bitmap = {
+    f(this)
+  }
+
+  /**
    * Applies an [[Renderable]] to this [[Bitmap]].
    *
    * @param newOperation
