@@ -31,27 +31,14 @@ object Len {
    *
    * @return
    */
-  def apply(valueInPixels: Double): Len[Double] = {
-    validateLength(valueInPixels)
-
-    new Len(valueInPixels)
-  }
-
-  /**
-   * Creates a new [[Len]] instance.
-   *
-   * @param valueInPixels
-   *
-   * @return
-   */
-  def apply(valueInPixels: Int): Len[Int] = {
+  def apply(valueInPixels: Int): Len = {
     validateLength(valueInPixels)
 
     new Len(valueInPixels)
   }
 
   private
-  def validateLength(valueInPixels: Double): Unit = {
+  def validateLength(valueInPixels: Int): Unit = {
     require(
       valueInPixels >= 0,
       s"Length cannot be negative (was $valueInPixels)")
@@ -63,15 +50,14 @@ object Len {
 
 
 /**
- * Length of an object.
+ * Length of an object expressed as an [[Int]] value.
  *
  * @param valueInPixels
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-case class Len[ValueType] private(
-    valueInPixels: ValueType)
-    extends Magnitude[ValueType](valueInPixels) {
+case class Len private(
+    override val valueInPixels: Int)
+    extends AbstractLength[Int](valueInPixels) {
 
 }

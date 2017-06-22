@@ -32,13 +32,12 @@ object Pos {
    *
    * @param xInPixels
    * @param yInPixels
-   * @tparam ValueType
    *
    * @return
    */
-  def apply[ValueType](
-      xInPixels: ValueType,
-      yInPixels: ValueType): Pos[ValueType] = {
+  def apply(
+      xInPixels: Int,
+      yInPixels: Int): Pos = {
 
     new Pos(xInPixels, yInPixels)
   }
@@ -53,13 +52,40 @@ object Pos {
  *
  * @param xInPixels
  * @param yInPixels
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-case class Pos[ValueType] private(
-    xInPixels: ValueType,
-    yInPixels: ValueType)
-    extends CartesianPosition(Seq(xInPixels, yInPixels)) {
+case class Pos private(
+    xInPixels: Int,
+    yInPixels: Int)
+    extends CartesianPosition(Seq(xInPixels, yInPixels))
+            with Movable[Pos] {
+
+  /**
+   *
+   *
+   * @param dX
+   * @param dY
+   *
+   * @return
+   */
+  def moveBy(dX: Int, dY: Int): Pos = {
+    Pos(xInPixels + dX, yInPixels + dY)
+  }
+
+  /**
+   *
+   *
+   * @param deltas
+   *
+   * @return
+   */
+  override def moveBy(deltas: Int*): Pos = {
+    require(
+      deltas.length == 2,
+      s"Pos represents exactly two coordinates (given: ${deltas.length})")
+
+    moveBy(deltas: _*)
+  }
 
 }

@@ -30,10 +30,10 @@ import aalto.smcl.infrastructure.Identity
  */
 class Line private(
     override val identity: Identity,
-    val position: Pos[Int],
-    val start: Pos[Int],
-    val end: Pos[Int])
-    extends Polygon[Pos[Int], Int](
+    val position: Pos,
+    val start: Pos,
+    val end: Pos)
+    extends Polygon(
       identity,
       Seq(start, end),
       position) {

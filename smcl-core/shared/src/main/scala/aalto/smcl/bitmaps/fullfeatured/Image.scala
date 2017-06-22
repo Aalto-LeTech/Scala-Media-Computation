@@ -32,9 +32,9 @@ class Image(
     override val identity: Identity,
     val widthInPixels: Int,
     val heightInPixels: Int,
-    val position: Pos[Int])
+    val position: Pos)
     extends ImageElement(identity)
-            with HasPos[Int]
+            with HasPos
             with HasBounds {
 
   // TODO: Tarkistukset

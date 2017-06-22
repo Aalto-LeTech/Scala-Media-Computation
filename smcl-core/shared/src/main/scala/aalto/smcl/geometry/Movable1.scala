@@ -18,16 +18,11 @@ package aalto.smcl.geometry
 
 
 /**
- * Object that has a position.
  *
- * @param position
- * @tparam ValueType
+ *
+ * @tparam ReturnType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class PositionableObject[ValueType](
-    val position: Pos[ValueType])
-    extends GeometryObject
-            with HasPos[ValueType] {
-
-}
+trait Movable1[ReturnType]
+    extends GeneralMovable[Int, ReturnType]

@@ -14,29 +14,20 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.fullfeatured
-
-
-import aalto.smcl.colors.rgb
-import aalto.smcl.geometry.{HasPos, Pos}
-import aalto.smcl.infrastructure.Identity
-
-
+package aalto.smcl.geometry
 
 
 /**
+ * Object that has two dimensions.
  *
+ * @tparam DimensionType
+ * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPoint(
-    override val identity: Identity,
-    val position: Pos,
-    val color: rgb.Color)
-    extends VectorGraphic(identity)
-            with HasPos {
+trait HasDimensions[DimensionType <: AbstractDimensions[ValueType], ValueType] {
 
-  /** Tells if this [[AbstractPoint]] can be rendered on a bitmap. */
-  override def isRenderable: Boolean = true
+  /** Dimensions of the object. */
+  def dimensions: DimensionType
 
 }

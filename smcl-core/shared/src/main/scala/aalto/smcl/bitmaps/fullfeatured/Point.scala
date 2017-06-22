@@ -45,7 +45,7 @@ class Point private(
     val xInPixels: Int,
     val yInPixels: Int,
     override val color: rgb.Color)
-    extends AbstractPoint[Pos[Int], Int](
+    extends AbstractPoint(
       identity,
       Pos(xInPixels, yInPixels),
       color) {

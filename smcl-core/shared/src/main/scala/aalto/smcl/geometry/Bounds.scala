@@ -73,8 +73,8 @@ object Bounds {
    * @return
    */
   def apply(
-      upperLeft: Pos[Int],
-      lowerRight: Pos[Int]): Bounds = {
+      upperLeft: Pos,
+      lowerRight: Pos): Bounds = {
 
     apply(
       upperLeft.xInPixels, upperLeft.yInPixels,
@@ -99,13 +99,16 @@ object Bounds {
  * @author Aleksi Lukkarinen
  */
 case class Bounds private(
-    upperLeft: Pos[Int],
-    lowerRight: Pos[Int],
+    upperLeft: Pos,
+    lowerRight: Pos,
     widthInPixels: Int,
     heightInPixels: Int,
-    length: Len[Int],
+    length: Len,
     area: Area[Int])
-    extends PositionableObject(upperLeft)
+    extends GeometryObject
+            with HasPos
             with HasArea[Int] {
+
+  val position: Pos = upperLeft
 
 }

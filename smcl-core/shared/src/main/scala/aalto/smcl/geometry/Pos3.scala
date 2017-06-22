@@ -33,14 +33,13 @@ object Pos3 {
    * @param xInPixels
    * @param yInPixels
    * @param zInPixels
-   * @tparam ValueType
    *
    * @return
    */
-  def apply[ValueType](
-      xInPixels: ValueType,
-      yInPixels: ValueType,
-      zInPixels: ValueType): Pos3[ValueType] = {
+  def apply(
+      xInPixels: Int,
+      yInPixels: Int,
+      zInPixels: Int): Pos3 = {
 
     new Pos3(xInPixels, yInPixels, zInPixels)
   }
@@ -56,15 +55,42 @@ object Pos3 {
  * @param xInPixels
  * @param yInPixels
  * @param zInPixels
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-case class Pos3[ValueType] private(
-    xInPixels: ValueType,
-    yInPixels: ValueType,
-    zInPixels: ValueType)
+case class Pos3 private(
+    xInPixels: Int,
+    yInPixels: Int,
+    zInPixels: Int)
     extends CartesianPosition(
-      Seq(xInPixels, yInPixels, zInPixels)) {
+      Seq(xInPixels, yInPixels, zInPixels))
+            with Movable[Pos3] {
+
+  /**
+   *
+   *
+   * @param dX
+   * @param dY
+   *
+   * @return
+   */
+  def moveBy(dX: Int, dY: Int, dZ: Int): Pos3 = {
+    Pos3(xInPixels + dX, yInPixels + dY, zInPixels + dZ)
+  }
+
+  /**
+   *
+   *
+   * @param deltas
+   *
+   * @return
+   */
+  override def moveBy(deltas: Int*): Pos3 = {
+    require(
+      deltas.length == 3,
+      s"Pos represents exactly three coordinates (given: ${deltas.length})")
+
+    moveBy(deltas: _*)
+  }
 
 }

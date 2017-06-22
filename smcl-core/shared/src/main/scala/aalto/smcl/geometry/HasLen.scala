@@ -18,13 +18,13 @@ package aalto.smcl.geometry
 
 
 /**
- * Object that has a length.
+ * Object that has a length expressed as an [[Int]] value.
  *
  * @author Aleksi Lukkarinen
  */
-trait HasLen[ValueType] {
+trait HasLen {
 
   /** Length of the object. */
-  def length: Option[Len[ValueType]]
+  def length: Len
 
 }

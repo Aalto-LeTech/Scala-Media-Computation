@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
-import aalto.smcl.geometry.{AbstractPosition, HasPos}
+import aalto.smcl.geometry.{HasPos, Pos}
 import aalto.smcl.infrastructure.Identity
 
 
@@ -12,15 +12,14 @@ import aalto.smcl.infrastructure.Identity
  * @param identity
  * @param points
  * @param position
- * @tparam PositionType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class Polygon[PositionType <: AbstractPosition[ValueType], ValueType](
+abstract class Polygon(
     identity: Identity,
-    points: Seq[PositionType],
-    position: PositionType)
+    points: Seq[Pos],
+    position: Pos)
     extends VectorGraphic(identity)
-            with HasPos[ValueType] {
+            with HasPos {
 
 }

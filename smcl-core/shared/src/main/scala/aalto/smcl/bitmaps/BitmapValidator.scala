@@ -31,13 +31,13 @@ import aalto.smcl.settings.{BitmapHeightWarningLimitInPixels, BitmapWidthWarning
 object BitmapValidator {
 
   /** */
-  val MinimumBitmapWidthInPixels: Int = 1
+  val MinimumBitmapWidthInPixels: Int = 0
 
   /** */
   val MaximumBitmapWidthInPixels: Int = 65000
 
   /** */
-  val MinimumBitmapHeightInPixels: Int = 1
+  val MinimumBitmapHeightInPixels: Int = 0
 
   /** */
   val MaximumBitmapHeightInPixels: Int = 65000

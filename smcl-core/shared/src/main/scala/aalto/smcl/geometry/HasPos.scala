@@ -18,13 +18,9 @@ package aalto.smcl.geometry
 
 
 /**
- * Object that has a two-dimensional position.
+ * Object that has a two-dimensional position based on [[Int]] coordinates.
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPos[ValueType] {
-
-  /** Position of the object. */
-  def position: Pos[ValueType]
-
-}
+trait HasPos
+    extends HasPosition[Pos, Int]

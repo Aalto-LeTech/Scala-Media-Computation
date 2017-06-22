@@ -234,7 +234,7 @@ object Area {
  * @author Aleksi Lukkarinen
  */
 case class Area[ValueType] private(
-    valueInPixels: ValueType)
+    override val valueInPixels: ValueType)
     extends Magnitude[ValueType](valueInPixels) {
 
 }

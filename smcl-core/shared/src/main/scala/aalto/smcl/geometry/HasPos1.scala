@@ -18,13 +18,9 @@ package aalto.smcl.geometry
 
 
 /**
- * Object that has an one-dimensional position.
+ * Object that has a one-dimensional position based on one [[Int]] coordinate.
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPos1[ValueType] {
-
-  /** Position of the object. */
-  def position: Pos1[ValueType]
-
-}
+trait HasPos1
+    extends HasPosition[Pos1, Int]

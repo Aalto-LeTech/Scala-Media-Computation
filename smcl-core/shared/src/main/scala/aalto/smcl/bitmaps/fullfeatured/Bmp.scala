@@ -55,13 +55,9 @@ object Bmp
       widthInPixels: Int,
       heightInPixels: Int): Bmp = {
 
-    require(
-      widthInPixels >= 0,
-      "Width of a bitmap cannot be negative")
-
-    require(
-      heightInPixels >= 0,
-      "Height of a bitmap cannot be negative")
+    bitmapValidator.validateBitmapSize(
+      widthInPixels,
+      heightInPixels)
 
     val identity: Identity = Identity()
 
@@ -116,15 +112,15 @@ class Bmp private(
     val isRenderable: Boolean,
     val widthInPixels: Int,
     val heightInPixels: Int,
-    val position: Pos[Int],
+    val position: Pos,
     override val boundary: Option[Bounds],
     private[this] val buffer: Option[BitmapBufferAdapter])
     extends ImageElement(identity)
-            with HasPos[Int]
+            with HasPos
             with HasBounds {
 
   /** Length of the bitmap. As bitmap has no length, this equals <code>None</code>. */
-  val length: Option[Len[Int]] = None
+  val length: Option[Len] = None
 
   /**
    *

@@ -31,11 +31,10 @@ object Pos1 {
    * Creates a new [[Pos1]] instance.
    *
    * @param valuePixels
-   * @tparam ValueType
    *
    * @return
    */
-  def apply[ValueType](valuePixels: ValueType): Pos1[ValueType] = {
+  def apply(valuePixels: Int): Pos1 = {
     new Pos1(valuePixels)
   }
 
@@ -48,12 +47,71 @@ object Pos1 {
  * Position in a one-dimensional coordinate system.
  *
  * @param valueInPixels
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-case class Pos1[ValueType] private(
-    valueInPixels: ValueType)
-    extends CartesianPosition(Seq(valueInPixels)) {
+case class Pos1 private(
+    valueInPixels: Int)
+    extends CartesianPosition(Seq(valueInPixels))
+            with Movable[Pos1] {
+
+  /**
+   *
+   *
+   * @param deltas
+   *
+   * @return
+   */
+  override def moveBy(deltas: Int*): Pos1 = {
+    require(
+      deltas.length == 1,
+      s"Pos1 represents exactly one coordinate (given: ${deltas.length})")
+
+    Pos1(valueInPixels + deltas(0))
+  }
+
+  /**
+   *
+   *
+   * @param delta
+   *
+   * @return
+   */
+  def + (delta: Int): Pos1 = {
+    Pos1(valueInPixels + delta)
+  }
+
+  /**
+   *
+   *
+   * @param delta
+   *
+   * @return
+   */
+  def - (delta: Int): Pos1 = {
+    Pos1(valueInPixels - delta)
+  }
+
+  /**
+   *
+   *
+   * @param delta
+   *
+   * @return
+   */
+  def + (delta: Len): Pos1 = {
+    Pos1(valueInPixels * delta.valueInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param delta
+   *
+   * @return
+   */
+  def - (delta: Len): Pos1 = {
+    Pos1(valueInPixels - delta.valueInPixels)
+  }
 
 }

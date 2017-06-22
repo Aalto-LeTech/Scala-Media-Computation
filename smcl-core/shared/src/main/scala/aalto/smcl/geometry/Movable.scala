@@ -14,29 +14,39 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.fullfeatured
-
-
-import aalto.smcl.colors.rgb
-import aalto.smcl.geometry.{HasPos, Pos}
-import aalto.smcl.infrastructure.Identity
-
-
+package aalto.smcl.geometry
 
 
 /**
  *
  *
+ * @tparam ReturnType
+ *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPoint(
-    override val identity: Identity,
-    val position: Pos,
-    val color: rgb.Color)
-    extends VectorGraphic(identity)
-            with HasPos {
+trait Movable[ReturnType]
+    extends GeneralMovable[Int, ReturnType] {
 
-  /** Tells if this [[AbstractPoint]] can be rendered on a bitmap. */
-  override def isRenderable: Boolean = true
+  /**
+   *
+   *
+   * @param deltas
+   *
+   * @return
+   */
+  def + (deltas: (Int, Int)): ReturnType = {
+    moveBy(deltas._1, deltas._2)
+  }
+
+  /**
+   *
+   *
+   * @param deltas
+   *
+   * @return
+   */
+  def - (deltas: (Int, Int)): ReturnType = {
+    moveBy(-deltas._1, -deltas._2)
+  }
 
 }

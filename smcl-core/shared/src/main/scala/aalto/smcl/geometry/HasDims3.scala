@@ -18,13 +18,11 @@ package aalto.smcl.geometry
 
 
 /**
- * Object that has three dimensions.
+ * Object that has three dimensions based on [[Int]] values.
+ *
+ * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-trait HasDims3[ValueType] {
-
-  /** Dimensions of the object. */
-  def dimensions: Dims3[ValueType]
-
-}
+trait HasDims3[ValueType]
+    extends HasDimensions[Dims3[Int], Int]
