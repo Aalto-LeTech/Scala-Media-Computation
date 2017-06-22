@@ -14,38 +14,46 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.fullfeatured
+package aalto.smcl.geometry
 
 
-import aalto.smcl.infrastructure.BitmapBufferAdapter
+/**
+ * Companion object for [[Pos1]].
+ *
+ * @author Aleksi Lukkarinen
+ */
+object Pos1 {
+
+  /** The origo of a one-dimensional coordinate system. */
+  val Origo = new Pos1(0)
+
+  /**
+   * Creates a new [[Pos1]] instance.
+   *
+   * @param valuePixels
+   * @tparam ValueType
+   *
+   * @return
+   */
+  def apply[ValueType](valuePixels: ValueType): Pos1[ValueType] = {
+    new Pos1(valuePixels)
+  }
+
+}
 
 
 
 
 /**
+ * Position in a one-dimensional coordinate system.
  *
+ * @param valueInPixels
+ * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-trait DrawingSurface {
-
-  /**
-   *
-   * @param x
-   * @param y
-   */
-  def drawPoint(x: Int, y: Int): Unit = {
-
-  }
-
-
-  /**
-   *
-   *
-   * @param buffer
-   */
-  def drawBitmap(buffer: BitmapBufferAdapter): Unit = {
-
-  }
+case class Pos1[ValueType] private(
+    valueInPixels: ValueType)
+    extends CartesianPosition(Seq(valueInPixels)) {
 
 }

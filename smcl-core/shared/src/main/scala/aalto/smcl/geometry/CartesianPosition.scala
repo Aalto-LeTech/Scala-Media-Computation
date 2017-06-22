@@ -17,13 +17,16 @@
 package aalto.smcl.geometry
 
 
-
-
 /**
+ * Position in a Cartesian coordinate system.
  *
+ * @param coordinates
+ * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-case class Dimension(widthInPixels: Int, heightInPixels: Int) {
+abstract class CartesianPosition[ValueType](
+    override val coordinates: Seq[ValueType])
+    extends AbstractPosition(coordinates) {
 
 }

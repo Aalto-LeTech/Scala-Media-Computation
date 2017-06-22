@@ -14,38 +14,17 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.fullfeatured
-
-
-import aalto.smcl.infrastructure.BitmapBufferAdapter
-
-
+package aalto.smcl.geometry
 
 
 /**
- *
+ * Object that has two dimensions.
  *
  * @author Aleksi Lukkarinen
  */
-trait DrawingSurface {
+trait HasDims[ValueType] {
 
-  /**
-   *
-   * @param x
-   * @param y
-   */
-  def drawPoint(x: Int, y: Int): Unit = {
-
-  }
-
-
-  /**
-   *
-   *
-   * @param buffer
-   */
-  def drawBitmap(buffer: BitmapBufferAdapter): Unit = {
-
-  }
+  /** Dimensions of the object. */
+  def dimensions: Dims[ValueType]
 
 }

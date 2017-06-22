@@ -17,7 +17,9 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
-import aalto.smcl.infrastructure.BitmapBufferAdapter
+import aalto.smcl.colors.rgb
+import aalto.smcl.geometry.{HasPos, Pos}
+import aalto.smcl.infrastructure.Identity
 
 
 
@@ -27,25 +29,14 @@ import aalto.smcl.infrastructure.BitmapBufferAdapter
  *
  * @author Aleksi Lukkarinen
  */
-trait DrawingSurface {
+abstract class AbstractPoint[PositionType <: Pos[ValueType], ValueType](
+    override val identity: Identity,
+    val position: PositionType,
+    val color: rgb.Color)
+    extends VectorGraphic(identity)
+            with HasPos[ValueType] {
 
-  /**
-   *
-   * @param x
-   * @param y
-   */
-  def drawPoint(x: Int, y: Int): Unit = {
-
-  }
-
-
-  /**
-   *
-   *
-   * @param buffer
-   */
-  def drawBitmap(buffer: BitmapBufferAdapter): Unit = {
-
-  }
+  /** Tells if this [[AbstractPoint]] can be rendered on a bitmap. */
+  override def isRenderable: Boolean = true
 
 }

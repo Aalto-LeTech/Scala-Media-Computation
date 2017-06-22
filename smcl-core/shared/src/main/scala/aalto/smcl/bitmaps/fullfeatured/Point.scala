@@ -1,6 +1,8 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
+import aalto.smcl.colors.rgb
+import aalto.smcl.geometry.Pos
 import aalto.smcl.infrastructure.Identity
 
 
@@ -13,8 +15,6 @@ import aalto.smcl.infrastructure.Identity
  */
 object Point {
 
-  /** The origo of a 2-dimensional coordinate system. */
-  val Origo = new Point(Identity(), 0, 0)
 
   /**
    *
@@ -24,9 +24,10 @@ object Point {
    */
   def apply(
       xInPixels: Int,
-      yInPixels: Int): Point = {
+      yInPixels: Int,
+      color: rgb.Color): Point = {
 
-    new Point(Identity(), xInPixels, yInPixels)
+    new Point(Identity(), xInPixels, yInPixels, color)
   }
 
 }
@@ -42,8 +43,12 @@ object Point {
 class Point private(
     override val identity: Identity,
     val xInPixels: Int,
-    val yInPixels: Int)
-    extends PointBase(identity, Seq(xInPixels, yInPixels)) {
+    val yInPixels: Int,
+    override val color: rgb.Color)
+    extends AbstractPoint[Pos[Int], Int](
+      identity,
+      Pos(xInPixels, yInPixels),
+      color) {
 
   /**
    *
@@ -63,6 +68,15 @@ class Point private(
    */
   override def rotateDegs(angleInDegrees: Double): Point = {
     this
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def toBitmap: Bmp = {
+    Bmp(1, 1)
   }
 
 }

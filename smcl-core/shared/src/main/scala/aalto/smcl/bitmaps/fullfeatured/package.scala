@@ -19,6 +19,7 @@ package aalto.smcl.bitmaps
 
 import scala.language.implicitConversions
 
+import aalto.smcl.bitmaps.fullfeatured.ShapeCreator
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.settings._
 

@@ -1,6 +1,23 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.fullfeatured
 
 
+import aalto.smcl.geometry.Pos
 import aalto.smcl.infrastructure.Identity
 
 
@@ -13,10 +30,10 @@ import aalto.smcl.infrastructure.Identity
  */
 class Line private(
     override val identity: Identity,
-    val position: Point,
-    val start: Point,
-    val end: Point)
-    extends Polygon[Point](
+    val position: Pos[Int],
+    val start: Pos[Int],
+    val end: Pos[Int])
+    extends Polygon[Pos[Int], Int](
       identity,
       Seq(start, end),
       position) {
@@ -43,6 +60,16 @@ class Line private(
    */
   override def rotateDegs(angleInDegrees: Double): Line = {
     this
+  }
+
+  /**
+   *
+   * 1   *
+   *
+   * @return
+   */
+  override def toBitmap: Bmp = {
+    Bmp(1, 1)
   }
 
 }

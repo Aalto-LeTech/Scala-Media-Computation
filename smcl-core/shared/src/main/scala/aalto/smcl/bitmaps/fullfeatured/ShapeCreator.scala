@@ -16,7 +16,6 @@
 
 package aalto.smcl.bitmaps.fullfeatured
 
-
 import aalto.smcl.bitmaps.operations.{DrawCircle, DrawEllipse, DrawLine, DrawRoundedRectangle, DrawRoundedSquare}
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.{CollectionCreator, InjectablesRegistry}

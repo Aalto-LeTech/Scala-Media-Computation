@@ -1,8 +1,25 @@
+/* .            .           .                   .                 +             .          +      */
+/*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
+/*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
+/*         |   +-------+  |     \   /     |  |   +-------+  |   |   .                        .    */
+/*         |   |          |      \ /      |  |   |          |   |         Aalto University        */
+/*       . |   +-------+  |   .   V   .   |  |   |   .      |   |      .   Espoo, Finland       . */
+/*  +      |           |  |   |\     /|   |  |   |          |   |                  .    +         */
+/*         +------+    |  |   | \   / |   |  |   |          |   |    +        *                   */
+/*    *           |    |  |   |  \ /  |   |  |   |      *   |   |                     .      +    */
+/*      -- +------+    |  |   |   V  *|   |  |   +-------+  |   +-------+ --    .                 */
+/*    ---  |           |  |   | .     |   |  |           |  |           |  ---      +      *      */
+/*  ------ +-----------+  +---+       +---+  +-----------+  +-----------+ ------               .  */
+/*                                                                                     .          */
+/*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
+/*                                                                                    *           */
+
 package aalto.smcl.bitmaps.fullfeatured
 
 
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.colors.ColorValidator
+import aalto.smcl.geometry.{Bounds, HasBounds, HasPos, Len, Pos}
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, Identity, InjectablesRegistry, PRF}
 
 
@@ -48,8 +65,8 @@ object Bmp
 
     val identity: Identity = Identity()
 
-    val boundary: Option[Boundary] =
-      Boundary(
+    val boundary: Bounds =
+      Bounds(
         upperLeftXInPixels = 0,
         upperLeftYInPixels = 0,
         lowerRightXInPixels = widthInPixels,
@@ -69,8 +86,8 @@ object Bmp
       isrenderable,
       widthInPixels,
       heightInPixels,
-      Point.Origo,
-      boundary,
+      Pos.Origo,
+      Some(boundary),
       buffer)
 
     bitmap
@@ -99,15 +116,15 @@ class Bmp private(
     val isRenderable: Boolean,
     val widthInPixels: Int,
     val heightInPixels: Int,
-    val position: Point,
-    override val boundary: Option[Boundary],
+    val position: Pos[Int],
+    override val boundary: Option[Bounds],
     private[this] val buffer: Option[BitmapBufferAdapter])
     extends ImageElement(identity)
-            with HasPosition[Point]
-            with Has2DBoundary {
+            with HasPos[Int]
+            with HasBounds {
 
   /** Length of the bitmap. As bitmap has no length, this equals <code>None</code>. */
-  val length: Option[Length] = None
+  val length: Option[Len[Int]] = None
 
   /**
    *
@@ -126,6 +143,15 @@ class Bmp private(
    * @return
    */
   override def rotateDegs(angleInDegrees: Double): Bmp = {
+    this
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def toBitmap: Bmp = {
     this
   }
 

@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.geometry.Dimension
+import aalto.smcl.geometry.Dims
 
 
 
@@ -34,7 +34,7 @@ trait ScreenInformationProvider {
    *
    * @return
    */
-  def dimensionsInPixels: Dimension
+  def dimensionsInPixels: Dims[Int]
 
   /**
    *
