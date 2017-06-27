@@ -19,7 +19,7 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
-import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure._
 import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 

@@ -19,8 +19,8 @@ package aalto.smcl.bitmaps.fullfeatured
 
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.colors.ColorValidator
-import aalto.smcl.geometry.Len
-import aalto.smcl.geometry.d2.{Bounds, HasBounds, HasPos, Pos}
+import aalto.smcl.modeling.Len
+import aalto.smcl.modeling.d2.{Bounds, HasBounds, HasPos, Pos}
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter, Identity, InjectablesRegistry, PRF}
 
 

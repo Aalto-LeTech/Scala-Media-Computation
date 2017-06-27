@@ -1,7 +1,7 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
-import aalto.smcl.geometry.d2.{HasPos, Pos}
+import aalto.smcl.modeling.d2.{HasPos, Pos}
 import aalto.smcl.infrastructure.Identity
 
 

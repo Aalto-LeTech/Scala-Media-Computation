@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
-import aalto.smcl.geometry.d2.Pos
+import aalto.smcl.modeling.d2.Pos
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
 
 

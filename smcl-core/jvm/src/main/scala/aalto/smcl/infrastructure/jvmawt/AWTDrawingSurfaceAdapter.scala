@@ -21,7 +21,7 @@ import java.awt.{AlphaComposite, Graphics2D}
 
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.Color
-import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter}
 import aalto.smcl.settings._
 

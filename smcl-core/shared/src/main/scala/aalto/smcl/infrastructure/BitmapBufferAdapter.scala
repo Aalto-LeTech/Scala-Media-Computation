@@ -19,7 +19,7 @@ package aalto.smcl.infrastructure
 
 import aalto.smcl.bitmaps.ConvolutionKernel
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
-import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 
 

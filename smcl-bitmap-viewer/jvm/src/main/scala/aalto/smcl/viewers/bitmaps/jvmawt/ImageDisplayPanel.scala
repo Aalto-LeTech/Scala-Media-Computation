@@ -23,7 +23,7 @@ import scala.swing._
 import scala.util.Try
 
 import aalto.smcl.bitmaps.fullfeatured.Bitmap
-import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure.jvmawt.{AWTAffineTransformationAdapter, AWTBitmapBufferAdapter}
 
 

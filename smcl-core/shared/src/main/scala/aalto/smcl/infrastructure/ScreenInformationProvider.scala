@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.geometry.d2.Dims
+import aalto.smcl.modeling.d2.Dims
 
 
 

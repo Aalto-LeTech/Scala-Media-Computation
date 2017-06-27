@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure.BitmapBufferAdapter
 
 

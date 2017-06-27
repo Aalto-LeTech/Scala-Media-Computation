@@ -28,7 +28,7 @@ import scala.util.{Failure, Try}
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
 import aalto.smcl.colors.rgb._
-import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
 import aalto.smcl.settings.jvmawt.AffineTransformationInterpolationMethod

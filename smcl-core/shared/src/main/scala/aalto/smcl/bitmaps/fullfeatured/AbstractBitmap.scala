@@ -23,7 +23,7 @@ import aalto.smcl.bitmaps.operations._
 import aalto.smcl.bitmaps.{BitmapValidator, PixelRectangle}
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.Color
-import aalto.smcl.geometry.AffineTransformation
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, Displayable, DrawingSurfaceAdapter, Identity, RenderableBitmap, TimestampedCreation}
 import aalto.smcl.settings.{PreventViewerUpdates, ViewerUpdateStyle}
 import aalto.smcl.viewers.{display => displayInViewer}
