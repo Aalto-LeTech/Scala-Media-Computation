@@ -26,6 +26,16 @@ package aalto.smcl.geometry
  */
 abstract class AbstractPosition(
     val coordinates: Seq[Double])
-    extends GeometryObject {
+    extends GeometryObject
+            with Iterable[Double] {
+
+  /**
+   * Provides an iterator for the dimension values.
+   *
+   * @return
+   */
+  override def iterator: Iterator[Double] = {
+    coordinates.iterator
+  }
 
 }

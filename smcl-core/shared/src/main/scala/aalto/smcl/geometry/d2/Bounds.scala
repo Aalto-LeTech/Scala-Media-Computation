@@ -110,8 +110,7 @@ case class Bounds private(
     heightInPixels: Double,
     length: Len,
     area: Area)
-    extends GeometryObject
-            with HasPos
+    extends AbstractBoundary[Pos](Seq(upperLeft, lowerRight))
             with HasArea {
 
   val position: Pos = upperLeft

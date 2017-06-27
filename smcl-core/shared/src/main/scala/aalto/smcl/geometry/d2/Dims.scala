@@ -63,7 +63,7 @@ object Dims {
   def apply(dimensions: Double*): Dims = {
     require(
       dimensions.length == 2,
-      s"Exactly two coordinates must be given (currently: ${dimensions.length})")
+      s"Exactly two dimensions must be given (currently: ${dimensions.length})")
 
     apply(dimensions: _*)
   }
