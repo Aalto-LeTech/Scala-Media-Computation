@@ -18,7 +18,7 @@ package aalto.smcl.geometry
 
 
 /**
- * Object that has a length expressed as an [[Int]] value.
+ * Object that has a length.
  *
  * @author Aleksi Lukkarinen
  */

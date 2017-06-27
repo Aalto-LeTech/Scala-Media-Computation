@@ -14,15 +14,18 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
+package aalto.smcl.geometry.d3
+
+
+import aalto.smcl.geometry.HasPosition
+
+
 
 
 /**
- * Object that has three dimensions based on [[Int]] values.
- *
- * @tparam ValueType
+ * Object that has a three-dimensional position.
  *
  * @author Aleksi Lukkarinen
  */
-trait HasDims3[ValueType]
-    extends HasDimensions[Dims3[Int], Int]
+trait HasPos
+    extends HasPosition[Pos]

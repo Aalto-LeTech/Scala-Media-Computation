@@ -14,13 +14,25 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
+package aalto.smcl.infrastructure
 
 
 /**
- * Object that has a two-dimensional position based on [[Int]] coordinates.
+ * Map operation for processing a collection of Double values while preserving the items' type.
+ *
+ * @tparam CollectionType
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPos
-    extends HasPosition[Pos, Int]
+trait DoubleDoubleMap[CollectionType] {
+
+  /**
+   *
+   * @param f
+   *
+   * @return
+   */
+  @inline
+  def map(f: (Double) => Double): CollectionType
+
+}

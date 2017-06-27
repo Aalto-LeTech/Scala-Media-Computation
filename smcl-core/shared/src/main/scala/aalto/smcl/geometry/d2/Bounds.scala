@@ -14,7 +14,12 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
+package aalto.smcl.geometry.d2
+
+
+import aalto.smcl.geometry._
+
+
 
 
 /**
@@ -39,18 +44,18 @@ object Bounds {
    * @return
    */
   def apply(
-      upperLeftXInPixels: Int,
-      upperLeftYInPixels: Int,
-      lowerRightXInPixels: Int,
-      lowerRightYInPixels: Int): Bounds = {
+      upperLeftXInPixels: Double,
+      upperLeftYInPixels: Double,
+      lowerRightXInPixels: Double,
+      lowerRightYInPixels: Double): Bounds = {
 
     val x0 :: x1 :: _ = Seq(upperLeftXInPixels, lowerRightXInPixels).sorted
     val y0 :: y1 :: _ = Seq(upperLeftYInPixels, lowerRightYInPixels).sorted
 
-    val widthInPixels: Int = x1 - x0 + 1
-    val heightInPixels: Int = y1 - y0 + 1
+    val widthInPixels: Double = x1 - x0 + 1
+    val heightInPixels: Double = y1 - y0 + 1
 
-    val lengthInPixels: Int =
+    val lengthInPixels: Double =
       2 * widthInPixels +
           2 * heightInPixels -
           NumberOfCorners
@@ -101,13 +106,13 @@ object Bounds {
 case class Bounds private(
     upperLeft: Pos,
     lowerRight: Pos,
-    widthInPixels: Int,
-    heightInPixels: Int,
+    widthInPixels: Double,
+    heightInPixels: Double,
     length: Len,
-    area: Area[Int])
+    area: Area)
     extends GeometryObject
             with HasPos
-            with HasArea[Int] {
+            with HasArea {
 
   val position: Pos = upperLeft
 

@@ -14,32 +14,33 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
+package aalto.smcl.geometry.d1
+
+
+import aalto.smcl.geometry.{CartesianPosition, Len}
+
+
 
 
 /**
- * Companion object for the [[Pos]] class.
+ * Companion object for [[Pos]].
  *
  * @author Aleksi Lukkarinen
  */
 object Pos {
 
-  /** The origo of a two-dimensional Cartesian coordinate system. */
-  val Origo = new Pos(0, 0)
+  /** The origo of a one-dimensional coordinate system. */
+  val Origo = new Pos(0.0)
 
   /**
    * Creates a new [[Pos]] instance.
    *
-   * @param xInPixels
-   * @param yInPixels
+   * @param valuePixels
    *
    * @return
    */
-  def apply(
-      xInPixels: Int,
-      yInPixels: Int): Pos = {
-
-    new Pos(xInPixels, yInPixels)
+  def apply(valuePixels: Double): Pos = {
+    new Pos(valuePixels)
   }
 
 }
@@ -48,30 +49,16 @@ object Pos {
 
 
 /**
- * Position in a two-dimensional Cartesian coordinate system.
+ * Position in a one-dimensional coordinate system.
  *
- * @param xInPixels
- * @param yInPixels
+ * @param valueInPixels
  *
  * @author Aleksi Lukkarinen
  */
 case class Pos private(
-    xInPixels: Int,
-    yInPixels: Int)
-    extends CartesianPosition(Seq(xInPixels, yInPixels))
+    valueInPixels: Double)
+    extends CartesianPosition(Seq(valueInPixels))
             with Movable[Pos] {
-
-  /**
-   *
-   *
-   * @param dX
-   * @param dY
-   *
-   * @return
-   */
-  def moveBy(dX: Int, dY: Int): Pos = {
-    Pos(xInPixels + dX, yInPixels + dY)
-  }
 
   /**
    *
@@ -80,12 +67,56 @@ case class Pos private(
    *
    * @return
    */
-  override def moveBy(deltas: Int*): Pos = {
+  override def moveBy(deltas: Double*): Pos = {
     require(
-      deltas.length == 2,
-      s"Pos represents exactly two coordinates (given: ${deltas.length})")
+      deltas.length == 1,
+      s"Pos1 represents exactly one coordinate (given: ${deltas.length})")
 
-    moveBy(deltas: _*)
+    Pos(valueInPixels + deltas(0))
+  }
+
+  /**
+   *
+   *
+   * @param delta
+   *
+   * @return
+   */
+  def + (delta: Int): Pos = {
+    Pos(valueInPixels + delta)
+  }
+
+  /**
+   *
+   *
+   * @param delta
+   *
+   * @return
+   */
+  def - (delta: Int): Pos = {
+    Pos(valueInPixels - delta)
+  }
+
+  /**
+   *
+   *
+   * @param delta
+   *
+   * @return
+   */
+  def + (delta: Len): Pos = {
+    Pos(valueInPixels * delta.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param delta
+   *
+   * @return
+   */
+  def - (delta: Len): Pos = {
+    Pos(valueInPixels - delta.inPixels)
   }
 
 }

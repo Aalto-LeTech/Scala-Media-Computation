@@ -20,13 +20,12 @@ package aalto.smcl.geometry
 /**
  * Base class for magnitudes, such as length, area, and volume.
  *
- * @param valueInPixels
- * @tparam ValueType
+ * @param inPixels
  *
  * @author Aleksi Lukkarinen
  */
-abstract class Magnitude[ValueType](
-    val valueInPixels: ValueType)
+abstract class Magnitude(
+    val inPixels: Double)
     extends GeometryObject {
 
 }

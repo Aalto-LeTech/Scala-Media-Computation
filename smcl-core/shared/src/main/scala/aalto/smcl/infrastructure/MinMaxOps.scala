@@ -14,38 +14,31 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.fullfeatured
-
-
-import aalto.smcl.infrastructure.BitmapBufferAdapter
-
-
-
+package aalto.smcl.infrastructure
 
 /**
+ * Operations for findinging minimum and maximum of given objects.
  *
+ * @tparam ObjectType
  *
  * @author Aleksi Lukkarinen
  */
-trait DrawingSurface {
+trait MinMaxOps[ObjectType] {
 
   /**
+   * Returns the minimum of the given objects.
    *
-   * @param x
-   * @param y
+   * @return
    */
-  def drawPoint(x: Int, y: Int): Unit = {
-
-  }
-
+  @inline
+  def min(others: ObjectType*): ObjectType
 
   /**
+   * Returns the maximum of the given objects.
    *
-   *
-   * @param buffer
+   * @return
    */
-  def drawBitmap(buffer: BitmapBufferAdapter): Unit = {
-
-  }
+  @inline
+  def max(others: ObjectType*): ObjectType
 
 }

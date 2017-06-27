@@ -14,8 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
-
+package aalto.smcl.geometry.d2
 
 import scala.annotation.tailrec
 
@@ -45,7 +44,7 @@ trait HasBounds {
     @tailrec
     def calculateOuterBoundaryRecursion(
         it: Iterator[ImageElement],
-        x0: Int, y0: Int, x1: Int, y1: Int): Option[(Int, Int, Int, Int)] = {
+        x0: Double, y0: Double, x1: Double, y1: Double): Option[(Double, Double, Double, Double)] = {
 
       if (!it.hasNext)
         return Some((x0, y0, x1, y1))
@@ -80,8 +79,8 @@ trait HasBounds {
       else
         calculateOuterBoundaryRecursion(
           elements.iterator,
-          Int.MaxValue, Int.MaxValue,
-          Int.MinValue, Int.MinValue)
+          Double.MaxValue, Double.MaxValue,
+          Double.MinValue, Double.MinValue)
 
     resolvedBoundaryValues map[Bounds] {newBounds =>
       Bounds(newBounds._1, newBounds._2, newBounds._3, newBounds._4)

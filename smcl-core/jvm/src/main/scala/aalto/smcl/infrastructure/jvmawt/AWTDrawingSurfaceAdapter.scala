@@ -159,6 +159,22 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
   /**
    *
    *
+   * @param xInPixels
+   * @param yInPixels
+   * @param color
+   */
+  override def drawPoint(xInPixels: Double, yInPixels: Double, color: Color): Unit = {
+    val x = math.floor(xInPixels).toInt
+    val y = math.floor(yInPixels).toInt
+
+    withDrawingSurface{ds =>
+      ds.drawLine(x, y, x, y)
+    }
+  }
+
+  /**
+   *
+   *
    * @param boundingBoxUpperLeftX
    * @param boundingBoxUpperLeftY
    * @param widthInPixels

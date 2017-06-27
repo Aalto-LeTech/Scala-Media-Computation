@@ -21,12 +21,11 @@ package aalto.smcl.geometry
  * Dimensions in a Cartesian coordinate system.
  *
  * @param dimensions
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class CartesianDimensions[ValueType](
-    override val dimensions: Seq[ValueType])
+abstract class CartesianDimensions(
+    override val dimensions: Seq[Double])
     extends AbstractDimensions(dimensions) {
 
 }

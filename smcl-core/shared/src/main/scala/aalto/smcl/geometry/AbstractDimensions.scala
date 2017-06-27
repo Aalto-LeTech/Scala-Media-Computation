@@ -21,12 +21,21 @@ package aalto.smcl.geometry
  * A sequence of dimensions.
  *
  * @param dimensions
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractDimensions[ValueType](
-    val dimensions: Seq[ValueType])
-    extends GeometryObject {
+abstract class AbstractDimensions(
+    val dimensions: Seq[Double])
+    extends GeometryObject
+            with Iterable[Double] {
+
+  /**
+   * Provides an iterator for the dimension values.
+   *
+   * @return
+   */
+  override def iterator: Iterator[Double] = {
+    dimensions.iterator
+  }
 
 }

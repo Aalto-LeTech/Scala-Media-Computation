@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure.jvmawt
 
 
-import aalto.smcl.geometry.Dims
+import aalto.smcl.geometry.d2.Dims
 import aalto.smcl.infrastructure.ScreenInformationProvider
 
 
@@ -35,7 +35,7 @@ class DefaultAWTScreenInformationProvider extends ScreenInformationProvider {
    *
    * @return
    */
-  override def dimensionsInPixels: Dims[Int] = {
+  override def dimensionsInPixels: Dims = {
     val screenSize = AWTToolkit.getScreenSize
     Dims(screenSize.width, screenSize.height)
   }

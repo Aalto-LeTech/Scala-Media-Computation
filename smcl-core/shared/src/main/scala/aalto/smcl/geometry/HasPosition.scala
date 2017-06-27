@@ -21,11 +21,10 @@ package aalto.smcl.geometry
  * Object that has a position.
  *
  * @tparam PositionType
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPosition[PositionType <: AbstractPosition[ValueType], ValueType] {
+trait HasPosition[PositionType <: AbstractPosition] {
 
   /** Position of the object. */
   def position: PositionType

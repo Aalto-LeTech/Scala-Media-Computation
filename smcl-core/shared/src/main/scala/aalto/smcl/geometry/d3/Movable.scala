@@ -14,36 +14,44 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
+package aalto.smcl.geometry.d3
+
+
+import aalto.smcl.geometry.AbstractMovable
+
+
 
 
 /**
- * Circle in two-dimensional Cartesian coordinate system with [[Int]] coordinates.
  *
- * @param position
- * @param radiusInPixels
+ *
+ * @tparam ReturnType
  *
  * @author Aleksi Lukkarinen
  */
-case class Circle private(
-    override val position: Pos,
-    override val radiusInPixels: Int)
-    extends AbstractCircle[Pos, Int](position, radiusInPixels)
-            with Movable[Circle] {
+trait Movable[ReturnType]
+    extends AbstractMovable[ReturnType] {
 
   /**
    *
    *
-   * @param deltas
+   * @param offsets
    *
    * @return
    */
-  override def moveBy(deltas: Int*): Circle = {
-    require(
-      deltas.length == 2,
-      s"Circle uses exactly two coordinates (given: ${deltas.length})")
+  def + (offsets: (Double, Double, Double)): ReturnType = {
+    moveBy(offsets._1, offsets._2, offsets._3)
+  }
 
-    Circle(position + deltas, radiusInPixels)
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  def - (offsets: (Double, Double, Double)): ReturnType = {
+    moveBy(-offsets._1, -offsets._2, -offsets._3)
   }
 
 }

@@ -21,11 +21,10 @@ package aalto.smcl.geometry
  * Object that has two dimensions.
  *
  * @tparam DimensionType
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-trait HasDimensions[DimensionType <: AbstractDimensions[ValueType], ValueType] {
+trait HasDimensions[DimensionType <: AbstractDimensions] {
 
   /** Dimensions of the object. */
   def dimensions: DimensionType

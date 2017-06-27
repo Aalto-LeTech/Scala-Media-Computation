@@ -14,21 +14,26 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
+package aalto.smcl.geometry.d3
+
+
+import aalto.smcl.geometry.CartesianPosition
+
+
 
 
 /**
- * Companion object for [[Pos3]].
+ * Companion object for [[Pos]].
  *
  * @author Aleksi Lukkarinen
  */
-object Pos3 {
+object Pos {
 
   /** The origo of a three-dimensional Cartesian coordinate system. */
-  val Origo = new Pos3(0, 0, 0)
+  val Origo = new Pos(0.0, 0.0, 0.0)
 
   /**
-   * Creates a new [[Pos3]] instance.
+   * Creates a new [[Pos]] instance.
    *
    * @param xInPixels
    * @param yInPixels
@@ -37,11 +42,11 @@ object Pos3 {
    * @return
    */
   def apply(
-      xInPixels: Int,
-      yInPixels: Int,
-      zInPixels: Int): Pos3 = {
+      xInPixels: Double,
+      yInPixels: Double,
+      zInPixels: Double): Pos = {
 
-    new Pos3(xInPixels, yInPixels, zInPixels)
+    new Pos(xInPixels, yInPixels, zInPixels)
   }
 
 }
@@ -58,13 +63,13 @@ object Pos3 {
  *
  * @author Aleksi Lukkarinen
  */
-case class Pos3 private(
-    xInPixels: Int,
-    yInPixels: Int,
-    zInPixels: Int)
+case class Pos private(
+    xInPixels: Double,
+    yInPixels: Double,
+    zInPixels: Double)
     extends CartesianPosition(
       Seq(xInPixels, yInPixels, zInPixels))
-            with Movable[Pos3] {
+            with Movable[Pos] {
 
   /**
    *
@@ -74,8 +79,8 @@ case class Pos3 private(
    *
    * @return
    */
-  def moveBy(dX: Int, dY: Int, dZ: Int): Pos3 = {
-    Pos3(xInPixels + dX, yInPixels + dY, zInPixels + dZ)
+  def moveBy(dX: Double, dY: Double, dZ: Double): Pos = {
+    Pos(xInPixels + dX, yInPixels + dY, zInPixels + dZ)
   }
 
   /**
@@ -85,7 +90,7 @@ case class Pos3 private(
    *
    * @return
    */
-  override def moveBy(deltas: Int*): Pos3 = {
+  override def moveBy(deltas: Double*): Pos = {
     require(
       deltas.length == 3,
       s"Pos represents exactly three coordinates (given: ${deltas.length})")

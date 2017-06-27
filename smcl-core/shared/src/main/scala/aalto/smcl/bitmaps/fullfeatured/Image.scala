@@ -17,8 +17,8 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
-import aalto.smcl.geometry.{Bounds, HasBounds, HasPos, Pos}
-import aalto.smcl.infrastructure.Identity
+import aalto.smcl.geometry.d2.{Bounds, HasBounds, HasPos, Pos}
+import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
 
 
 
@@ -55,26 +55,39 @@ class Image(
    *
    * @param drawingSurface
    */
-  override def renderOn(drawingSurface: DrawingSurface): Unit = {
+  override def renderOn(drawingSurface: DrawingSurfaceAdapter): Unit = {
 
   }
 
   /**
-   * Rotates this [[Image]].
+   *
+   *
+   * @return
+   */
+  override def toBitmap: Bmp = {
+    Bmp(1, 1)
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
    *
    * @param angleInDegrees
    *
    * @return
    */
-  override def rotateDegs(angleInDegrees: Double): Image = {
+  override def rotateBy(angleInDegrees: Double, centerOfRotation: Pos): ImageElement = {
     this
   }
 
   /**
    *
    *
+   * @param offsets
+   *
    * @return
    */
-  override def toBitmap: Bmp = ???
+  override def moveBy(offsets: Double*): ImageElement = {
+    this
+  }
 
 }

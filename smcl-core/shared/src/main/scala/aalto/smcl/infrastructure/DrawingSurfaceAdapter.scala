@@ -96,6 +96,18 @@ trait DrawingSurfaceAdapter {
   /**
    *
    *
+   * @param xInPixels
+   * @param yInPixels
+   * @param color
+   */
+  def drawPoint(
+      xInPixels: Double,
+      yInPixels: Double,
+      color: Color): Unit
+
+  /**
+   *
+   *
    * @param boundingBoxUpperLeftX
    * @param boundingBoxUpperLeftY
    * @param widthInPixels

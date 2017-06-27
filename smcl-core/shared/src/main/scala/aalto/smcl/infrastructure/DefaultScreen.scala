@@ -17,7 +17,7 @@
 package aalto.smcl.infrastructure
 
 
-import aalto.smcl.geometry.Dims
+import aalto.smcl.geometry.d2.Dims
 
 
 
@@ -35,7 +35,7 @@ class DefaultScreen(private val _informationProvider: ScreenInformationProvider)
    *
    * @return
    */
-  def dimensionsInPixels: Dims[Int] = _informationProvider.dimensionsInPixels
+  def dimensionsInPixels: Dims = _informationProvider.dimensionsInPixels
 
   /**
    *
@@ -49,20 +49,20 @@ class DefaultScreen(private val _informationProvider: ScreenInformationProvider)
    *
    * @return
    */
-  def widthInPixels: Int = dimensionsInPixels.widthInPixels
+  def widthInPixels: Double = dimensionsInPixels.widthInPixels
 
   /**
    * Height of the screen.
    *
    * @return
    */
-  def heightInPixels: Int = dimensionsInPixels.heightInPixels
+  def heightInPixels: Double = dimensionsInPixels.heightInPixels
 
   /**
    * Area of the screen.
    *
    * @return
    */
-  def areaInPixels: Int = widthInPixels * heightInPixels
+  def areaInPixels: Double = widthInPixels * heightInPixels
 
 }

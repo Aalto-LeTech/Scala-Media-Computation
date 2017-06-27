@@ -24,4 +24,7 @@ package aalto.smcl
  */
 package object geometry {
 
+  /** A type for a two-dimensional coordinate pair. */
+  type CoordinateTuple = d2.CoordinateTuple
+
 }

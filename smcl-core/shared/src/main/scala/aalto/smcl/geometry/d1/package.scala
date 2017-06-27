@@ -17,36 +17,14 @@
 package aalto.smcl.geometry
 
 
-
-
 /**
  *
  *
- * @tparam DeltaValueType
- * @tparam ReturnType
- *
  * @author Aleksi Lukkarinen
  */
-trait GeneralMovable[DeltaValueType, ReturnType] {
+package object d1 {
 
-  /**
-   *
-   *
-   * @param deltas
-   *
-   * @return
-   */
-  def moveBy(deltas: DeltaValueType*): ReturnType
-
-  /**
-   *
-   *
-   * @param deltas
-   *
-   * @return
-   */
-  def +(deltas: Seq[DeltaValueType]): ReturnType = {
-    moveBy(deltas: _*)
-  }
+  /** A type for an one-dimensional coordinate tuple. */
+  type CoordinateTuple = (Double)
 
 }

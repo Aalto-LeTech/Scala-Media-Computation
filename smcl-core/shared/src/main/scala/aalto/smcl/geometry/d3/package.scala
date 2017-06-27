@@ -18,78 +18,13 @@ package aalto.smcl.geometry
 
 
 /**
- * Companion object for the [[Dims]] class.
+ *
  *
  * @author Aleksi Lukkarinen
  */
-object Dims {
+package object d3 {
 
-  /**
-   * Creates a new [[Dims]] instance.
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   *
-   * @return
-   */
-  def apply(
-      widthInPixels: Int,
-      heightInPixels: Int): Dims[Int] = {
-
-    validateDimensions(widthInPixels, heightInPixels)
-
-    new Dims(widthInPixels, heightInPixels)
-  }
-
-  /**
-   * Creates a new [[Dims]] instance.
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   *
-   * @return
-   */
-  def apply(
-      widthInPixels: Double,
-      heightInPixels: Double): Dims[Double] = {
-
-    validateDimensions(widthInPixels, heightInPixels)
-
-    new Dims(widthInPixels, heightInPixels)
-  }
-
-  private
-  def validateDimensions(
-      widthInPixels: Double,
-      heightInPixels: Double): Unit = {
-
-    require(
-      widthInPixels >= 0,
-      s"Width cannot be negative (was $widthInPixels)")
-
-    require(
-      heightInPixels >= 0,
-      s"Height cannot be negative (was $heightInPixels)")
-  }
-
-}
-
-
-
-
-/**
- * Dimensions in two-dimensional Cartesian coordinate system.
- *
- * @param widthInPixels
- * @param heightInPixels
- * @tparam ValueType
- *
- * @author Aleksi Lukkarinen
- */
-case class Dims[ValueType] private(
-    widthInPixels: ValueType,
-    heightInPixels: ValueType)
-    extends CartesianDimensions(
-      Seq(widthInPixels, heightInPixels)) {
+  /** A type for a three-dimensional coordinate triple. */
+  type CoordinateTuple = (Double, Double, Double)
 
 }

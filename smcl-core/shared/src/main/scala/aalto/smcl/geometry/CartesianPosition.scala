@@ -21,12 +21,11 @@ package aalto.smcl.geometry
  * Position in a Cartesian coordinate system.
  *
  * @param coordinates
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class CartesianPosition[ValueType](
-    override val coordinates: Seq[ValueType])
+abstract class CartesianPosition(
+    override val coordinates: Seq[Double])
     extends AbstractPosition(coordinates) {
 
 }

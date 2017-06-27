@@ -17,7 +17,7 @@
 package aalto.smcl.bitmaps
 
 
-import aalto.smcl.geometry.Dims
+import aalto.smcl.geometry.d2.Dims
 
 
 
@@ -43,7 +43,7 @@ trait PixelRectangle {
   lazy val heightRangeInPixels: Range = 0 until heightInPixels
 
   /** Dimensions (width and height) of this rectangle. */
-  private[smcl] lazy val sizeInPixels: Dims[Int] = Dims(widthInPixels, heightInPixels)
+  private[smcl] lazy val sizeInPixels: Dims = Dims(widthInPixels, heightInPixels)
 
   /** Area of this rectangle in pixels (equals to `pixelCount`). */
   lazy val areaInPixels: Int = widthInPixels * heightInPixels

@@ -17,7 +17,8 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
-import aalto.smcl.infrastructure.Identity
+import aalto.smcl.geometry.d2.{Movable, Rotatable}
+import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
 
 
 
@@ -30,7 +31,9 @@ import aalto.smcl.infrastructure.Identity
  * @author Aleksi Lukkarinen
  */
 abstract class ImageElement(
-    val identity: Identity) {
+    val identity: Identity)
+    extends Movable[ImageElement]
+            with Rotatable[ImageElement] {
 
   /** Tells if this [[ImageElement]] can be rendered on a bitmap. */
   def isRenderable: Boolean
@@ -40,16 +43,7 @@ abstract class ImageElement(
    *
    * @param drawingSurface
    */
-  def renderOn(drawingSurface: DrawingSurface): Unit
-
-  /**
-   * Rotates this [[ImageElement]].
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  def rotateDegs(angleInDegrees: Double): ImageElement
+  def renderOn(drawingSurface: DrawingSurfaceAdapter): Unit
 
   /**
    *

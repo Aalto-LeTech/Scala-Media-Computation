@@ -18,17 +18,13 @@ package aalto.smcl.geometry
 
 
 /**
- * Circle.
  *
- * @param position
- * @param radiusInPixels
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractCircle[PositionType <: AbstractPosition](
-    val position: PositionType,
-    val radiusInPixels: Double)
-    extends GeometryObject
-            with HasPosition[PositionType] {
+package object d2 {
+
+  /** A type for a two-dimensional coordinate pair. */
+  type CoordinateTuple = (Double, Double)
 
 }

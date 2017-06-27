@@ -18,17 +18,32 @@ package aalto.smcl.geometry
 
 
 /**
- * Circle.
  *
- * @param position
- * @param radiusInPixels
+ *
+ * @tparam ReturnType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractCircle[PositionType <: AbstractPosition](
-    val position: PositionType,
-    val radiusInPixels: Double)
-    extends GeometryObject
-            with HasPosition[PositionType] {
+trait AbstractMovable[ReturnType] {
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  def moveBy(offsets: Double*): ReturnType
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  def + (offsets: Seq[Double]): ReturnType = {
+    moveBy(offsets: _*)
+  }
 
 }

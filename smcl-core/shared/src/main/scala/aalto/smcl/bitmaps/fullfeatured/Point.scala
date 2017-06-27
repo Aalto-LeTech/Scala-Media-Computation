@@ -2,8 +2,9 @@ package aalto.smcl.bitmaps.fullfeatured
 
 
 import aalto.smcl.colors.rgb
-import aalto.smcl.geometry.Pos
-import aalto.smcl.infrastructure.Identity
+import aalto.smcl.geometry.Transformer
+import aalto.smcl.geometry.d2.Pos
+import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
 
 
 
@@ -15,7 +16,6 @@ import aalto.smcl.infrastructure.Identity
  */
 object Point {
 
-
   /**
    *
    *
@@ -23,11 +23,31 @@ object Point {
    * @param yInPixels
    */
   def apply(
-      xInPixels: Int,
-      yInPixels: Int,
+      xInPixels: Double,
+      yInPixels: Double,
       color: rgb.Color): Point = {
 
-    new Point(Identity(), xInPixels, yInPixels, color)
+    new Point(
+      Identity(),
+      xInPixels,
+      yInPixels,
+      color)
+  }
+
+  /**
+   *
+   *
+   * @param position
+   * @param color
+   */
+  def apply(
+      position: Pos,
+      color: rgb.Color): Point = {
+
+    Point(
+      position.xInPixels,
+      position.yInPixels,
+      color)
   }
 
 }
@@ -42,8 +62,8 @@ object Point {
  */
 class Point private(
     override val identity: Identity,
-    val xInPixels: Int,
-    val yInPixels: Int,
+    val xInPixels: Double,
+    val yInPixels: Double,
     override val color: rgb.Color)
     extends AbstractPoint(
       identity,
@@ -55,19 +75,8 @@ class Point private(
    *
    * @param drawingSurface
    */
-  override def renderOn(drawingSurface: DrawingSurface): Unit = {
-    drawingSurface.drawPoint(xInPixels, yInPixels)
-  }
-
-  /**
-   * Rotates this [[Point]] around its center, i.e., just returns the object being rotated.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  override def rotateDegs(angleInDegrees: Double): Point = {
-    this
+  override def renderOn(drawingSurface: DrawingSurfaceAdapter): Unit = {
+    drawingSurface.drawPoint(xInPixels, yInPixels, color)
   }
 
   /**
@@ -77,6 +86,45 @@ class Point private(
    */
   override def toBitmap: Bmp = {
     Bmp(1, 1)
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  override
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): Point = {
+
+    val pos = Transformer.rotate(position, angleInDegrees, centerOfRotation)
+
+    Point(
+      pos.xInPixels,
+      pos.yInPixels,
+      color)
+  }
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  override
+  def moveBy(offsets: Double*): Point = {
+    require(
+      offsets.length == 2,
+      s"Exactly two offsets has to be given (given: ${offsets.length})")
+
+    Point(
+      xInPixels + offsets(0),
+      yInPixels + offsets(1),
+      color)
   }
 
 }

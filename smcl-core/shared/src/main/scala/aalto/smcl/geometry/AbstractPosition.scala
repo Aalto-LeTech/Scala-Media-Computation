@@ -21,12 +21,11 @@ package aalto.smcl.geometry
  * Position in some coordinate system.
  *
  * @param coordinates
- * @tparam ValueType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPosition[ValueType](
-    val coordinates: Seq[ValueType])
+abstract class AbstractPosition(
+    val coordinates: Seq[Double])
     extends GeometryObject {
 
 }

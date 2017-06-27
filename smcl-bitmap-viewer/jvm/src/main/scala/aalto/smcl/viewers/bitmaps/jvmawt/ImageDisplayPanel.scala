@@ -144,9 +144,9 @@ class ImageDisplayPanel
       throw new IllegalStateException(
         "Internal error: Bitmap to be displayed has to be set before calling this method.")
 
-    val bitmapSize = _bitmapOption.get.sizeInPixels
+    val bitmapSize = _bitmapOption.get.sizeInPixels.toIntTuple
     val newSize = _zoomFactor.scaleToDimension(
-      new java.awt.Dimension(bitmapSize.widthInPixels, bitmapSize.heightInPixels))
+      new java.awt.Dimension(bitmapSize._1, bitmapSize._2))
 
     if (minimumSize != newSize) {
       minimumSize = newSize

@@ -14,71 +14,36 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
+package aalto.smcl.geometry.d2
+
+import aalto.smcl.geometry.CartesianPosition
+
+
 
 
 /**
- * Companion object for the [[Dims3]] class.
+ * Companion object for the [[Pos]] class.
  *
  * @author Aleksi Lukkarinen
  */
-object Dims3 {
+object Pos {
+
+  /** The origo of a two-dimensional Cartesian coordinate system. */
+  val Origo = new Pos(0.0, 0.0)
 
   /**
-   * Creates a new [[Dims3]] instance.
+   * Creates a new [[Pos]] instance.
    *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param depthInPixels
+   * @param xInPixels
+   * @param yInPixels
    *
    * @return
    */
   def apply(
-      widthInPixels: Int,
-      heightInPixels: Int,
-      depthInPixels: Int): Dims3[Int] = {
+      xInPixels: Double,
+      yInPixels: Double): Pos = {
 
-    validateDimensions(widthInPixels, heightInPixels, depthInPixels)
-
-    new Dims3(widthInPixels, heightInPixels, depthInPixels)
-  }
-
-  /**
-   * Creates a new [[Dims3]] instance.
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param depthInPixels
-   *
-   * @return
-   */
-  def apply(
-      widthInPixels: Double,
-      heightInPixels: Double,
-      depthInPixels: Double): Dims3[Double] = {
-
-    validateDimensions(widthInPixels, heightInPixels, depthInPixels)
-
-    new Dims3(widthInPixels, heightInPixels, depthInPixels)
-  }
-
-  private
-  def validateDimensions(
-      widthInPixels: Double,
-      heightInPixels: Double,
-      depthInPixels: Double): Unit = {
-
-    require(
-      widthInPixels >= 0,
-      s"Width cannot be negative (was $widthInPixels)")
-
-    require(
-      heightInPixels >= 0,
-      s"Height cannot be negative (was $heightInPixels)")
-
-    require(
-      depthInPixels >= 0,
-      s"Depth cannot be negative (was $depthInPixels)")
+    new Pos(xInPixels, yInPixels)
   }
 
 }
@@ -87,20 +52,44 @@ object Dims3 {
 
 
 /**
- * Dimensions in three-dimensional Cartesian coordinate system.
+ * Position in a two-dimensional Cartesian coordinate system.
  *
- * @param widthInPixels
- * @param heightInPixels
- * @param depthInPixels
- * @tparam ValueType
+ * @param xInPixels
+ * @param yInPixels
  *
  * @author Aleksi Lukkarinen
  */
-case class Dims3[ValueType] private(
-    widthInPixels: ValueType,
-    heightInPixels: ValueType,
-    depthInPixels: ValueType)
-    extends CartesianDimensions(
-      Seq(widthInPixels, heightInPixels, depthInPixels)) {
+case class Pos private(
+    xInPixels: Double,
+    yInPixels: Double)
+    extends CartesianPosition(Seq(xInPixels, yInPixels))
+            with Movable[Pos] {
+
+  /**
+   *
+   *
+   * @param dX
+   * @param dY
+   *
+   * @return
+   */
+  def moveBy(dX: Double, dY: Double): Pos = {
+    Pos(xInPixels + dX, yInPixels + dY)
+  }
+
+  /**
+   *
+   *
+   * @param deltas
+   *
+   * @return
+   */
+  override def moveBy(deltas: Double*): Pos = {
+    require(
+      deltas.length == 2,
+      s"Pos represents exactly two coordinates (given: ${deltas.length})")
+
+    moveBy(deltas: _*)
+  }
 
 }

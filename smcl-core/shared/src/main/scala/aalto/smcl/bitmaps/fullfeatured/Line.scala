@@ -17,8 +17,8 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
-import aalto.smcl.geometry.Pos
-import aalto.smcl.infrastructure.Identity
+import aalto.smcl.geometry.d2.Pos
+import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
 
 
 
@@ -47,19 +47,8 @@ class Line private(
    *
    * @param drawingSurface
    */
-  override def renderOn(drawingSurface: DrawingSurface): Unit = {
+  override def renderOn(drawingSurface: DrawingSurfaceAdapter): Unit = {
 
-  }
-
-  /**
-   * Rotates this [[Line]].
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  override def rotateDegs(angleInDegrees: Double): Line = {
-    this
   }
 
   /**
@@ -70,6 +59,28 @@ class Line private(
    */
   override def toBitmap: Bmp = {
     Bmp(1, 1)
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  override def rotateBy(angleInDegrees: Double, centerOfRotation: Pos): ImageElement = {
+    this
+  }
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  override def moveBy(offsets: Double*): ImageElement = {
+    this
   }
 
 }

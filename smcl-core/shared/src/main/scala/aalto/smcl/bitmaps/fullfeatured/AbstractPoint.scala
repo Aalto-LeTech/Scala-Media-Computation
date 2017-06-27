@@ -18,7 +18,7 @@ package aalto.smcl.bitmaps.fullfeatured
 
 
 import aalto.smcl.colors.rgb
-import aalto.smcl.geometry.{HasPos, Pos}
+import aalto.smcl.geometry.d2.{HasPos, Pos}
 import aalto.smcl.infrastructure.Identity
 
 

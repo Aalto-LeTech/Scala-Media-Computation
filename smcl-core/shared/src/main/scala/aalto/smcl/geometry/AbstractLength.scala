@@ -20,13 +20,12 @@ package aalto.smcl.geometry
 /**
  * Length of some object.
  *
- * @param valueInPixels
- * @tparam ValueType
+ * @param inPixels
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractLength[ValueType](
-    override val valueInPixels: ValueType)
-    extends Magnitude[ValueType](valueInPixels) {
+abstract class AbstractLength(
+    override val inPixels: Double)
+    extends Magnitude(inPixels) {
 
 }

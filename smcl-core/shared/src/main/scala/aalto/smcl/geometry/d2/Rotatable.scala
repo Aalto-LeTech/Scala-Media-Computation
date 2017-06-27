@@ -14,21 +14,40 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
+package aalto.smcl.geometry.d2
+
+
 
 
 /**
- * Circle.
  *
- * @param position
- * @param radiusInPixels
+ *
+ * @tparam ReturnType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractCircle[PositionType <: AbstractPosition](
-    val position: PositionType,
-    val radiusInPixels: Double)
-    extends GeometryObject
-            with HasPosition[PositionType] {
+trait Rotatable[ReturnType] {
+
+  /**
+   * Rotates this object around the origo (0,0) of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  def rotateBy(angleInDegrees: Double): ReturnType = {
+    rotateBy(angleInDegrees, Pos.Origo)
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): ReturnType
 
 }

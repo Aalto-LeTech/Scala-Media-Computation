@@ -22,9 +22,9 @@ package aalto.smcl.geometry
  *
  * @author Aleksi Lukkarinen
  */
-trait HasArea[ValueType] {
+trait HasArea {
 
   /** Area of the object. */
-  def area: Area[ValueType]
+  def area: Area
 
 }

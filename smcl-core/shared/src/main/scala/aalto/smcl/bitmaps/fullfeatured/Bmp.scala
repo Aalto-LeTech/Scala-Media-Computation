@@ -19,8 +19,9 @@ package aalto.smcl.bitmaps.fullfeatured
 
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.colors.ColorValidator
-import aalto.smcl.geometry.{Bounds, HasBounds, HasPos, Len, Pos}
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, Identity, InjectablesRegistry, PRF}
+import aalto.smcl.geometry.Len
+import aalto.smcl.geometry.d2.{Bounds, HasBounds, HasPos, Pos}
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter, Identity, InjectablesRegistry, PRF}
 
 
 
@@ -127,19 +128,8 @@ class Bmp private(
    *
    * @param drawingSurface
    */
-  override def renderOn(drawingSurface: DrawingSurface): Unit = {
-    buffer foreach drawingSurface.drawBitmap
-  }
+  def renderOn(drawingSurface: DrawingSurfaceAdapter): Unit = {
 
-  /**
-   * Rotates this [[Bmp]].
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  override def rotateDegs(angleInDegrees: Double): Bmp = {
-    this
   }
 
   /**
@@ -148,6 +138,31 @@ class Bmp private(
    * @return
    */
   override def toBitmap: Bmp = {
+    this
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  override def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): ImageElement = {
+
+    this
+  }
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  override def moveBy(offsets: Double*): ImageElement = {
     this
   }
 

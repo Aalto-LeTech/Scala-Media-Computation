@@ -14,15 +14,41 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.geometry
+package aalto.smcl.geometry.d2
+
+
+import aalto.smcl.geometry.AbstractCircle
+
+
 
 
 /**
- * Object that has two dimensions based on [[Int]] values.
+ * Circle in two-dimensional Cartesian coordinate system with [[Int]] coordinates.
  *
- * @tparam ValueType
+ * @param position
+ * @param radiusInPixels
  *
  * @author Aleksi Lukkarinen
  */
-trait HasDims[ValueType]
-    extends HasDimensions[Dims[Int], Int]
+case class Circle private(
+    override val position: Pos,
+    override val radiusInPixels: Double)
+    extends AbstractCircle[Pos](position, radiusInPixels)
+            with Movable[Circle] {
+
+  /**
+   *
+   *
+   * @param deltas
+   *
+   * @return
+   */
+  override def moveBy(deltas: Double*): Circle = {
+    require(
+      deltas.length == 2,
+      s"Circle uses exactly two coordinates (given: ${deltas.length})")
+
+    Circle(position + deltas, radiusInPixels)
+  }
+
+}
