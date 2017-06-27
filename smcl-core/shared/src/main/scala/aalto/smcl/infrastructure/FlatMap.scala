@@ -18,75 +18,24 @@ package aalto.smcl.infrastructure
 
 
 /**
- * An interface for some common mathematical operations that use Double values.
+ * Map operation for generating a new instance of an object by processing it.
+ *
+ * @tparam ObjectType
  *
  * @author Aleksi Lukkarinen
  */
-trait CommonDoubleMathOps[ElementType]
-    extends CommonMathOps[ElementType] {
+trait FlatMap[ObjectType] {
 
-  this: ItemItemMap[ElementType, Double] =>
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def abs: ElementType = {
-    this.map(math.abs)
-  }
+  this: ObjectType =>
 
   /**
    *
+   * @param f
    *
    * @return
    */
-  @inline
-  def floor: ElementType = {
-    this.map(math.floor)
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def ceiling: ElementType = {
-    this.map(math.ceil)
-  }
-
-  /**
-   *
-   *
-   * @param exponent
-   *
-   * @return
-   */
-  @inline
-  def power(exponent: Double): ElementType = {
-    this.map(math.pow(_, exponent))
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def round: ElementType = {
-    this.map(d => math.round(d))
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def signum: ElementType = {
-    this.map(math.signum)
+  def flatMap(f: (ObjectType) => ObjectType): ObjectType = {
+    f(this)
   }
 
 }

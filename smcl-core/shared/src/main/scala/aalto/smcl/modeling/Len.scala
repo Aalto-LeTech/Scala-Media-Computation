@@ -53,6 +53,16 @@ object Len {
  */
 case class Len private(
     override val inPixels: Double)
-    extends AbstractLength(inPixels) {
+    extends Magnitude[Len](inPixels) {
+
+  /**
+   *
+   * @param f
+   *
+   * @return
+   */
+  override def map(f: (Double) => Double): Len = {
+    Len(f(inPixels))
+  }
 
 }

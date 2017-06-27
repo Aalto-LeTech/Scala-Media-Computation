@@ -57,11 +57,11 @@ trait HasBounds {
           else {
             val boundary = elementWithBoundary.boundary.get
 
-            val ul = boundary.upperLeft
+            val ul = boundary.upperLeftMarker
             val x0New = math.min(ul.xInPixels, x0)
             val y0New = math.min(ul.yInPixels, y0)
 
-            val lr = boundary.lowerRight
+            val lr = boundary.lowerRightMarker
             val x1New = math.max(lr.xInPixels, x1)
             val y1New = math.max(lr.yInPixels, y1)
 

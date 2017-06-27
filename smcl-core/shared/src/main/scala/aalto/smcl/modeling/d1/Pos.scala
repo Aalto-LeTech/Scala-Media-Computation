@@ -17,6 +17,7 @@
 package aalto.smcl.modeling.d1
 
 
+import aalto.smcl.infrastructure.FlatMap
 import aalto.smcl.modeling.{CartesianPosition, Len}
 
 
@@ -58,6 +59,7 @@ object Pos {
 case class Pos private(
     valueInPixels: Double)
     extends CartesianPosition(Seq(valueInPixels))
+            with FlatMap[Pos]
             with Movable[Pos] {
 
   /**

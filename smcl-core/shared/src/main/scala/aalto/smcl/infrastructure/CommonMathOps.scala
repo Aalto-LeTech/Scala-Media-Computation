@@ -22,7 +22,7 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-trait CommonMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] {
+trait CommonMathOps[ElementType] {
 
   /**
    *
@@ -38,16 +38,6 @@ trait CommonMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] {
    * @return
    */
   @inline
-  def toAbsTuple: ItemTupleType = {
-    this.abs.toTuple
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
   def floor: ElementType
 
   /**
@@ -56,27 +46,7 @@ trait CommonMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] {
    * @return
    */
   @inline
-  def toFlooredTuple: ItemTupleType = {
-    this.floor.toTuple
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
   def ceiling: ElementType
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def toCeilingTuple: ItemTupleType = {
-    this.ceiling.toTuple
-  }
 
   /**
    *
@@ -94,16 +64,6 @@ trait CommonMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] {
    * @return
    */
   @inline
-  def toPowerTuple(exponent: Double): ItemTupleType = {
-    this.power(exponent).toTuple
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
   def round: ElementType
 
   /**
@@ -112,26 +72,6 @@ trait CommonMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] {
    * @return
    */
   @inline
-  def toRoundedTuple: ItemTupleType = {
-    this.round.toTuple
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
   def signum: ElementType
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def toSignumTuple: ItemTupleType = {
-    this.signum.toTuple
-  }
 
 }

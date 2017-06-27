@@ -24,15 +24,5 @@ package aalto.smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-trait DoubleDoubleMap[CollectionType] {
-
-  /**
-   *
-   * @param f
-   *
-   * @return
-   */
-  @inline
-  def map(f: (Double) => Double): CollectionType
-
-}
+trait DoubleDoubleMap[CollectionType]
+    extends ItemItemMap[CollectionType, Double]

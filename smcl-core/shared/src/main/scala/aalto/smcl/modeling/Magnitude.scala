@@ -17,6 +17,11 @@
 package aalto.smcl.modeling
 
 
+import aalto.smcl.infrastructure.{CommonDoubleMathOps, ItemItemMap, ToTuple}
+
+
+
+
 /**
  * Base class for magnitudes, such as length, area, and volume.
  *
@@ -24,8 +29,29 @@ package aalto.smcl.modeling
  *
  * @author Aleksi Lukkarinen
  */
-abstract class Magnitude(
+abstract class Magnitude[ElementType](
     val inPixels: Double)
-    extends GeometryObject {
+    extends GeometryObject
+            with ToTuple[Tuple1[Double]]
+            with ItemItemMap[ElementType, Double]
+            with CommonDoubleMathOps[ElementType] {
+
+  /**
+   * Converts the object to a tuple.
+   *
+   * @return
+   */
+  override def toTuple: Tuple1[Double] = {
+    Tuple1(inPixels)
+  }
+
+  /**
+   * Converts the object to a tuple.
+   *
+   * @return
+   */
+  def toIntTuple: Tuple1[Int] = {
+    Tuple1(inPixels.toInt)
+  }
 
 }

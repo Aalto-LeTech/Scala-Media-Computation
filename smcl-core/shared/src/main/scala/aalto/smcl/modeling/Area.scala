@@ -17,6 +17,11 @@
 package aalto.smcl.modeling
 
 
+import aalto.smcl.infrastructure.FlatMap
+
+
+
+
 /**
  * Companion object for the [[Area]] class.
  *
@@ -128,6 +133,17 @@ object Area {
  */
 case class Area private(
     override val inPixels: Double)
-    extends Magnitude(inPixels) {
+    extends Magnitude[Area](inPixels)
+            with FlatMap[Area] {
+
+  /**
+   *
+   * @param f
+   *
+   * @return
+   */
+  override def map(f: (Double) => Double): Area = {
+    Area(f(inPixels))
+  }
 
 }

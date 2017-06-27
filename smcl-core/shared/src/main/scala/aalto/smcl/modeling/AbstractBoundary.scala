@@ -17,6 +17,11 @@
 package aalto.smcl.modeling
 
 
+import aalto.smcl.infrastructure.FlatMap
+
+
+
+
 /**
  * Boundary of an object.
  *
@@ -27,7 +32,8 @@ package aalto.smcl.modeling
 abstract class AbstractBoundary[PositionType <: AbstractPosition](
     val markers: Seq[PositionType])
     extends GeometryObject
-            with Iterable[PositionType] {
+            with Iterable[PositionType]
+            with FlatMap[AbstractBoundary[PositionType]] {
 
   /**
    * Provides an iterator for the boundary marker positions.

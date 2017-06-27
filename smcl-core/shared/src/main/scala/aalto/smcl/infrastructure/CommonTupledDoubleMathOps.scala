@@ -18,75 +18,11 @@ package aalto.smcl.infrastructure
 
 
 /**
- * An interface for some common mathematical operations that use Double values.
+ * An interface for some common mathematical operations.
  *
  * @author Aleksi Lukkarinen
  */
-trait CommonDoubleMathOps[ElementType]
-    extends CommonMathOps[ElementType] {
-
-  this: ItemItemMap[ElementType, Double] =>
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def abs: ElementType = {
-    this.map(math.abs)
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def floor: ElementType = {
-    this.map(math.floor)
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def ceiling: ElementType = {
-    this.map(math.ceil)
-  }
-
-  /**
-   *
-   *
-   * @param exponent
-   *
-   * @return
-   */
-  @inline
-  def power(exponent: Double): ElementType = {
-    this.map(math.pow(_, exponent))
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def round: ElementType = {
-    this.map(d => math.round(d))
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def signum: ElementType = {
-    this.map(math.signum)
-  }
-
-}
+trait CommonTupledDoubleMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType]
+    extends ItemItemMap[ElementType, Double]
+            with CommonDoubleMathOps[ElementType]
+            with CommonTupledMathOps[ElementType, ItemTupleType]

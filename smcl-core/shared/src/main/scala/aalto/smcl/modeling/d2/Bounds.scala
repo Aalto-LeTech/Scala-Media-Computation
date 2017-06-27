@@ -86,6 +86,21 @@ object Bounds {
       lowerRight.xInPixels, lowerRight.yInPixels)
   }
 
+  /**
+   * Creates a new [[Bounds]] instance.
+   *
+   * @param markers
+   *
+   * @return
+   */
+  def apply(markers: Pos*): Dims = {
+    require(
+      markers.length == 2,
+      s"Exactly two marker positions must be given (currently: ${markers.length})")
+
+    apply(markers: _*)
+  }
+
 }
 
 
@@ -94,8 +109,8 @@ object Bounds {
 /**
  * Rectangular boundary in two-dimensional Cartesian coordinate system.
  *
- * @param upperLeft
- * @param lowerRight
+ * @param upperLeftMarker
+ * @param lowerRightMarker
  * @param widthInPixels
  * @param heightInPixels
  * @param length
@@ -104,15 +119,27 @@ object Bounds {
  * @author Aleksi Lukkarinen
  */
 case class Bounds private(
-    upperLeft: Pos,
-    lowerRight: Pos,
+    upperLeftMarker: Pos,
+    lowerRightMarker: Pos,
     widthInPixels: Double,
     heightInPixels: Double,
     length: Len,
     area: Area)
-    extends AbstractBoundary[Pos](Seq(upperLeft, lowerRight))
+    extends AbstractBoundary[Pos](Seq(upperLeftMarker, lowerRightMarker))
             with HasArea {
 
-  val position: Pos = upperLeft
+  /** Position of this boundary. */
+  val position: Pos = upperLeftMarker
+
+  /**
+   *
+   *
+   * @param f
+   *
+   * @return
+   */
+  def flatMap(f: (Bounds) => Bounds): Bounds = {
+    f(this)
+  }
 
 }
