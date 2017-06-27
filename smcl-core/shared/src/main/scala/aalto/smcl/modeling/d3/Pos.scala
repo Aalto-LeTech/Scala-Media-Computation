@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d3
 
 
-import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, MinMaxItemOps, ToTuple}
+import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, ToTuple, TupledMinMaxItemOps}
 import aalto.smcl.modeling.CartesianPosition
 
 
@@ -57,7 +57,7 @@ object Pos {
    *
    * @return
    */
-  def apply(coordinates: Double*): Dims = {
+  def apply(coordinates: Double*): Pos = {
     require(
       coordinates.length == 3,
       s"Exactly three coordinates must be given (currently: ${coordinates.length})")
@@ -88,7 +88,7 @@ case class Pos private(
             with ItemItemMap[Pos, Double]
             with FlatMap[Pos]
             with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
-            with MinMaxItemOps[Pos, Double, CoordinateTuple]
+            with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
             with Movable[Pos] {
 
   /**
@@ -186,6 +186,36 @@ case class Pos private(
     val minZ = positions.maxBy(_.zInPixels).zInPixels
 
     Pos(minX, minY, minZ)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def + (offset: Dims): Pos = {
+    val x = xInPixels + offset.widthInPixels
+    val y = yInPixels + offset.heightInPixels
+    val z = zInPixels + offset.depthInPixels
+
+    Pos(x, y, z)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def - (offset: Dims): Pos = {
+    val x = xInPixels - offset.widthInPixels
+    val y = yInPixels - offset.heightInPixels
+    val z = zInPixels - offset.depthInPixels
+
+    Pos(x, y, z)
   }
 
 }

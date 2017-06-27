@@ -22,18 +22,12 @@ package aalto.smcl.infrastructure
  *
  * @tparam ContainerType
  * @tparam ItemType
+ * @tparam ItemTupleType
  *
  * @author Aleksi Lukkarinen
  */
-trait MinMaxItemOps[ContainerType, ItemType] {
-
-  /**
-   * Returns the minimum of the items contained by this container.
-   *
-   * @return
-   */
-  @inline
-  def minItem: ItemType
+trait TupledMinMaxItemOps[ContainerType <: ToTuple[ItemTupleType], ItemType, ItemTupleType]
+    extends MinMaxItemOps[ContainerType, ItemType] {
 
   /**
    * Returns the minimums of the different types of items
@@ -42,15 +36,9 @@ trait MinMaxItemOps[ContainerType, ItemType] {
    * @return
    */
   @inline
-  def minItems(others: ContainerType*): ContainerType
-
-  /**
-   * Returns the maximum of the items contained by this container.
-   *
-   * @return
-   */
-  @inline
-  def maxItem: ItemType
+  def minItemsTuple(others: ContainerType*): ItemTupleType = {
+    minItems(others: _*).toTuple
+  }
 
   /**
    * Returns the maximums of the different types of items
@@ -59,6 +47,8 @@ trait MinMaxItemOps[ContainerType, ItemType] {
    * @return
    */
   @inline
-  def maxItems(others: ContainerType*): ContainerType
+  def maxItemsTuple(others: ContainerType*): ItemTupleType = {
+    maxItems(others: _*).toTuple
+  }
 
 }

@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d3
 
 
-import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, MinMaxItemOps, ToTuple}
+import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, ToTuple, TupledMinMaxItemOps}
 import aalto.smcl.modeling.CartesianDimensions
 
 
@@ -97,7 +97,7 @@ case class Dims private(
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims]
             with CommonTupledDoubleMathOps[Dims, CoordinateTuple]
-            with MinMaxItemOps[Dims, Double, CoordinateTuple] {
+            with TupledMinMaxItemOps[Dims, Double, CoordinateTuple] {
 
   /**
    * Converts the object to a tuple.

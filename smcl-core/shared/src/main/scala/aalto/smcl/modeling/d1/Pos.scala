@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d1
 
 
-import aalto.smcl.infrastructure.FlatMap
+import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, MinMaxOps}
 import aalto.smcl.modeling.{CartesianPosition, Len}
 
 
@@ -52,73 +52,126 @@ object Pos {
 /**
  * Position in a one-dimensional coordinate system.
  *
- * @param valueInPixels
+ * @param inPixels
  *
  * @author Aleksi Lukkarinen
  */
 case class Pos private(
-    valueInPixels: Double)
-    extends CartesianPosition(Seq(valueInPixels))
+    inPixels: Double)
+    extends CartesianPosition(Seq(inPixels))
+            with ItemItemMap[Pos, Double]
             with FlatMap[Pos]
+            with CommonDoubleMathOps[Pos]
+            with MinMaxOps[Pos]
             with Movable[Pos] {
 
   /**
    *
    *
-   * @param deltas
+   * @param offsets
    *
    * @return
    */
-  override def moveBy(deltas: Double*): Pos = {
+  override def moveBy(offsets: Double*): Pos = {
     require(
-      deltas.length == 1,
-      s"Pos1 represents exactly one coordinate (given: ${deltas.length})")
+      offsets.length == 1,
+      s"Pos1 represents exactly one coordinate (given: ${offsets.length})")
 
-    Pos(valueInPixels + deltas(0))
+    Pos(inPixels + offsets(0))
   }
 
   /**
    *
    *
-   * @param delta
+   * @param offset
    *
    * @return
    */
-  def + (delta: Int): Pos = {
-    Pos(valueInPixels + delta)
+  def + (offset: Double): Pos = {
+    Pos(inPixels + offset)
   }
 
   /**
    *
    *
-   * @param delta
+   * @param offset
    *
    * @return
    */
-  def - (delta: Int): Pos = {
-    Pos(valueInPixels - delta)
+  def - (offset: Double): Pos = {
+    Pos(inPixels - offset)
   }
 
   /**
    *
    *
-   * @param delta
+   * @param offset
    *
    * @return
    */
-  def + (delta: Len): Pos = {
-    Pos(valueInPixels * delta.inPixels)
+  def + (offset: Len): Pos = {
+    Pos(inPixels * offset.inPixels)
   }
 
   /**
    *
    *
-   * @param delta
+   * @param offset
    *
    * @return
    */
-  def - (delta: Len): Pos = {
-    Pos(valueInPixels - delta.inPixels)
+  def - (offset: Len): Pos = {
+    Pos(inPixels - offset.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def + (offset: Pos): Pos = {
+    Pos(inPixels * offset.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def - (offset: Pos): Pos = {
+    Pos(inPixels - offset.inPixels)
+  }
+
+  /**
+   *
+   * @param f
+   *
+   * @return
+   */
+  override def map(f: (Double) => Double): Pos = {
+    Pos(f(inPixels))
+  }
+
+  /**
+   * Returns the minimum of the given objects.
+   *
+   * @return
+   */
+  override def min(others: Pos*): Pos = {
+    (this +: others).minBy(_.inPixels)
+  }
+
+  /**
+   * Returns the maximum of the given objects.
+   *
+   * @return
+   */
+  override def max(others: Pos*): Pos = {
+    (this +: others).maxBy(_.inPixels)
   }
 
 }
