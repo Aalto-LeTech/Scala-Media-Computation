@@ -66,4 +66,116 @@ package object modeling {
   /** A type alias for 2D [[d2.Rotatable]] trait. */
   type Rotatable[ReturnType] = d2.Rotatable[ReturnType]
 
+  /**
+   *
+   *
+   * @param first
+   * @param second
+   *
+   * @return
+   */
+  @inline
+  def distanceBetween(
+      first: d1.Pos,
+      second: d1.Pos): Len = {
+
+    first.distanceTo(second)
+  }
+
+  /**
+   *
+   *
+   * @param first
+   * @param second
+   *
+   * @return
+   */
+  @inline
+  def distanceBetween(
+      first: d2.Pos,
+      second: d2.Pos): Len = {
+
+    first.distanceTo(second)
+  }
+
+  /**
+   *
+   *
+   * @param first
+   * @param second
+   *
+   * @return
+   */
+  @inline
+  def distanceBetween(
+      first: d3.Pos,
+      second: d3.Pos): Len = {
+
+    first.distanceTo(second)
+  }
+
+  /**
+   *
+   *
+   * @param first
+   * @param second
+   *
+   * @return
+   */
+  @inline
+  def boundsFrom(
+      first: d2.Pos,
+      second: d2.Pos): Bounds = {
+
+    Bounds(first, second)
+  }
+
+  /**
+   *
+   *
+   * @param first
+   * @param second
+   *
+   * @return
+   */
+  @inline
+  def toMinMax(
+      first: d1.Pos,
+      second: d1.Pos): (d1.Pos, d1.Pos) = {
+
+    first.toMinMaxWith(second)
+  }
+
+  /**
+   *
+   *
+   * @param first
+   * @param second
+   *
+   * @return
+   */
+  @inline
+  def toMinMax(
+      first: d2.Pos,
+      second: d2.Pos): (d2.Pos, d2.Pos) = {
+
+    first.toMinMaxWith(second)
+  }
+
+  /**
+   *
+   *
+   * @param first
+   * @param second
+   *
+   * @return
+   */
+  @inline
+  def toMinMax(
+      first: d3.Pos,
+      second: d3.Pos): (d3.Pos, d3.Pos) = {
+
+    first.toMinMaxWith(second)
+  }
+
 }

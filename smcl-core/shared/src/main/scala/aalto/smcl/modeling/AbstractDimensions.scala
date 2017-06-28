@@ -17,6 +17,11 @@
 package aalto.smcl.modeling
 
 
+import scala.annotation.tailrec
+
+
+
+
 /**
  * A sequence of dimensions.
  *
@@ -27,6 +32,7 @@ package aalto.smcl.modeling
 abstract class AbstractDimensions(
     val dimensions: Seq[Double])
     extends GeometryObject
+            with Equals
             with Iterable[Double] {
 
   /**
@@ -34,8 +40,65 @@ abstract class AbstractDimensions(
    *
    * @return
    */
-  override def iterator: Iterator[Double] = {
+  @inline
+  override
+  def iterator: Iterator[Double] = {
     dimensions.iterator
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  lazy val hashCode: Int = {
+    val prime = 31
+
+    @tailrec
+    def hashCodeRecursive(
+        dimensions: Seq[Double],
+        sum: Int): Int = {
+
+      if (dimensions.isEmpty)
+        return sum
+
+      hashCodeRecursive(
+        dimensions.tail,
+        prime * sum + dimensions.head.##)
+    }
+
+    hashCodeRecursive(dimensions, 1)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def equals(other: Any): Boolean = {
+    other match {
+      case that: AbstractDimensions =>
+        that.canEqual(this) &&
+            that.dimensions == this.dimensions
+
+      case _ => false
+    }
   }
 
 }

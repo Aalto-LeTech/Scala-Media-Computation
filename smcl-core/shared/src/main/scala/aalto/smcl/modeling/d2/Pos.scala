@@ -17,8 +17,8 @@
 package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, ToTuple, TupledMinMaxItemOps}
-import aalto.smcl.modeling.CartesianPosition
+import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, MathUtils, ToTuple, TupledMinMaxItemOps}
+import aalto.smcl.modeling.{CartesianPosition, Len}
 
 
 
@@ -41,6 +41,7 @@ object Pos {
    *
    * @return
    */
+  @inline
   def apply(
       xInPixels: Double,
       yInPixels: Double): Pos = {
@@ -55,6 +56,7 @@ object Pos {
    *
    * @return
    */
+  @inline
   def apply(coordinates: Double*): Pos = {
     require(
       coordinates.length == 2,
@@ -82,7 +84,7 @@ case class Pos private(
     extends CartesianPosition(Seq(xInPixels, yInPixels))
             with ToTuple[CoordinateTuple]
             with ItemItemMap[Pos, Double]
-            with FlatMap[Pos]
+            with FlatMap[Pos, CoordinateTuple]
             with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
             with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
             with Movable[Pos] {
@@ -92,20 +94,50 @@ case class Pos private(
    *
    * @return
    */
-  override def toTuple: (Double, Double) = {
+  @inline
+  override
+  def toTuple: (Double, Double) = {
     (xInPixels, yInPixels)
   }
 
   /**
    *
+   *
    * @param f
    *
    * @return
    */
-  override def map(f: (Double) => Double): Pos = {
+  @inline
+  override
+  def map(f: (Double) => Double): Pos = {
     Pos(
       f(xInPixels),
       f(yInPixels))
+  }
+
+  /**
+   *
+   *
+   * @param f
+   *
+   * @return
+   */
+  @inline
+  def flatMap(f: (CoordinateTuple) => Pos): Pos = {
+    f(toTuple)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean = {
+    other.isInstanceOf[Pos]
   }
 
   /**
@@ -116,6 +148,7 @@ case class Pos private(
    *
    * @return
    */
+  @inline
   def moveBy(dX: Double, dY: Double): Pos = {
     Pos(xInPixels + dX, yInPixels + dY)
   }
@@ -127,7 +160,9 @@ case class Pos private(
    *
    * @return
    */
-  override def moveBy(deltas: Double*): Pos = {
+  @inline
+  override
+  def moveBy(deltas: Double*): Pos = {
     require(
       deltas.length == 2,
       s"Pos represents exactly two coordinates (given: ${deltas.length})")
@@ -140,7 +175,9 @@ case class Pos private(
    *
    * @return
    */
-  override def minItem: Double = {
+  @inline
+  override
+  def minItem: Double = {
     math.min(xInPixels, yInPixels)
   }
 
@@ -150,7 +187,9 @@ case class Pos private(
    *
    * @return
    */
-  override def minItems(others: Pos*): Pos = {
+  @inline
+  override
+  def minItems(others: Pos*): Pos = {
     val positions = this +: others
     val minX = positions.minBy(_.xInPixels).xInPixels
     val minY = positions.minBy(_.yInPixels).yInPixels
@@ -163,7 +202,9 @@ case class Pos private(
    *
    * @return
    */
-  override def maxItem: Double = {
+  @inline
+  override
+  def maxItem: Double = {
     math.max(xInPixels, yInPixels)
   }
 
@@ -173,7 +214,9 @@ case class Pos private(
    *
    * @return
    */
-  override def maxItems(others: Pos*): Pos = {
+  @inline
+  override
+  def maxItems(others: Pos*): Pos = {
     val positions = this +: others
     val maxX = positions.maxBy(_.xInPixels).xInPixels
     val maxY = positions.maxBy(_.yInPixels).yInPixels
@@ -188,6 +231,7 @@ case class Pos private(
    *
    * @return
    */
+  @inline
   def + (offset: Dims): Pos = {
     val x = xInPixels + offset.widthInPixels
     val y = yInPixels + offset.heightInPixels
@@ -202,11 +246,55 @@ case class Pos private(
    *
    * @return
    */
+  @inline
   def - (offset: Dims): Pos = {
     val x = xInPixels - offset.widthInPixels
     val y = yInPixels - offset.heightInPixels
 
     Pos(x, y)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def distanceTo(other: Pos): Len = {
+    val diffX = math.abs(other.xInPixels - xInPixels)
+    val diffY = math.abs(other.yInPixels - yInPixels)
+    val distance = math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2))
+
+    Len(distance)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def toBoundsWith(other: Pos): Bounds = {
+    Bounds(this, other)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def toMinMaxWith(other: Pos): (Pos, Pos) = {
+    val (xMin, xMax) = MathUtils.sort(xInPixels, other.xInPixels)
+    val (yMin, yMax) = MathUtils.sort(yInPixels, other.yInPixels)
+
+    (Pos(xMin, yMin), Pos(xMax, yMax))
   }
 
 }

@@ -17,6 +17,11 @@
 package aalto.smcl.modeling
 
 
+import scala.annotation.tailrec
+
+
+
+
 /**
  * Position in some coordinate system.
  *
@@ -27,6 +32,7 @@ package aalto.smcl.modeling
 abstract class AbstractPosition(
     val coordinates: Seq[Double])
     extends GeometryObject
+            with Equals
             with Iterable[Double] {
 
   /**
@@ -34,8 +40,65 @@ abstract class AbstractPosition(
    *
    * @return
    */
-  override def iterator: Iterator[Double] = {
+  @inline
+  override
+  def iterator: Iterator[Double] = {
     coordinates.iterator
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  lazy val hashCode: Int = {
+    val prime = 31
+
+    @tailrec
+    def hashCodeRecursive(
+        coordinates: Seq[Double],
+        sum: Int): Int = {
+
+      if (coordinates.isEmpty)
+        return sum
+
+      hashCodeRecursive(
+        coordinates.tail,
+        prime * sum + coordinates.head.##)
+    }
+
+    hashCodeRecursive(coordinates, 1)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def equals(other: Any): Boolean = {
+    other match {
+      case that: AbstractPosition =>
+        that.canEqual(this) &&
+            that.coordinates == this.coordinates
+
+      case _ => false
+    }
   }
 
 }

@@ -17,7 +17,7 @@
 package aalto.smcl.modeling
 
 
-import aalto.smcl.infrastructure.{CommonDoubleMathOps, ItemItemMap, ToTuple}
+import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, ToTuple}
 
 
 
@@ -25,14 +25,16 @@ import aalto.smcl.infrastructure.{CommonDoubleMathOps, ItemItemMap, ToTuple}
 /**
  * Base class for magnitudes, such as length, area, and volume.
  *
- * @param inPixels
+ * @param value
  *
  * @author Aleksi Lukkarinen
  */
 abstract class Magnitude[ElementType](
-    val inPixels: Double)
+    private val value: Double)
     extends GeometryObject
+            with Equals
             with ToTuple[Tuple1[Double]]
+            with FlatMap[ElementType, Double]
             with ItemItemMap[ElementType, Double]
             with CommonDoubleMathOps[ElementType] {
 
@@ -41,8 +43,10 @@ abstract class Magnitude[ElementType](
    *
    * @return
    */
-  override def toTuple: Tuple1[Double] = {
-    Tuple1(inPixels)
+  @inline
+  override
+  def toTuple: Tuple1[Double] = {
+    Tuple1(value)
   }
 
   /**
@@ -50,8 +54,63 @@ abstract class Magnitude[ElementType](
    *
    * @return
    */
+  @inline
   def toIntTuple: Tuple1[Int] = {
-    Tuple1(inPixels.toInt)
+    Tuple1(value.toInt)
+  }
+
+  /**
+   *
+   * @param f
+   *
+   * @return
+   */
+  @inline
+  override
+  def flatMap(f: (Double) => ElementType): ElementType = {
+    f(value)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  lazy val hashCode: Int = {
+    val prime = 31
+
+    prime + value.##
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def equals(other: Any): Boolean = {
+    other match {
+      case that: Magnitude[ElementType] =>
+        that.canEqual(this) &&
+            that.value == this.value
+
+      case _ => false
+    }
   }
 
 }

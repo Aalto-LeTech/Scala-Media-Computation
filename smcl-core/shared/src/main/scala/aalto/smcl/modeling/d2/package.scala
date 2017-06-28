@@ -27,4 +27,7 @@ package object d2 {
   /** A type for a two-dimensional coordinate pair. */
   type CoordinateTuple = (Double, Double)
 
+  /** A type for a two-dimensional dimension pair. */
+  type DimensionTuple = (Double, Double)
+
 }

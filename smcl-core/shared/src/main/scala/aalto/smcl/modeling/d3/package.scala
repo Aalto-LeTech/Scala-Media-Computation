@@ -27,4 +27,7 @@ package object d3 {
   /** A type for a three-dimensional coordinate triple. */
   type CoordinateTuple = (Double, Double, Double)
 
+  /** A type for a three-dimensional dimension triple. */
+  type DimensionTuple = (Double, Double, Double)
+
 }

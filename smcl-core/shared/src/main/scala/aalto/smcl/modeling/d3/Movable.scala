@@ -39,6 +39,7 @@ trait Movable[ReturnType]
    *
    * @return
    */
+  @inline
   def + (offsets: (Double, Double, Double)): ReturnType = {
     moveBy(offsets._1, offsets._2, offsets._3)
   }
@@ -50,6 +51,7 @@ trait Movable[ReturnType]
    *
    * @return
    */
+  @inline
   def - (offsets: (Double, Double, Double)): ReturnType = {
     moveBy(-offsets._1, -offsets._2, -offsets._3)
   }

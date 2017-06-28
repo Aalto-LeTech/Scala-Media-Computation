@@ -35,6 +35,7 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
+  @inline
   def rotateBy(angleInDegrees: Double): ReturnType = {
     rotateBy(angleInDegrees, Pos.Origo)
   }

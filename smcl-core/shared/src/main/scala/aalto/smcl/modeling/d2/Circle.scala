@@ -43,6 +43,7 @@ case class Circle private(
    *
    * @return
    */
+  @inline
   override def moveBy(deltas: Double*): Circle = {
     require(
       deltas.length == 2,

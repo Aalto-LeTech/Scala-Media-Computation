@@ -39,6 +39,7 @@ object Dims {
    *
    * @return
    */
+  @inline
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -66,6 +67,7 @@ object Dims {
    *
    * @return
    */
+  @inline
   def apply(dimensions: Double*): Dims = {
     require(
       dimensions.length == 3,
@@ -93,11 +95,11 @@ case class Dims private(
     heightInPixels: Double,
     depthInPixels: Double)
     extends CartesianDimensions(Seq(widthInPixels, heightInPixels, depthInPixels))
-            with ToTuple[CoordinateTuple]
+            with ToTuple[DimensionTuple]
             with ItemItemMap[Dims, Double]
-            with FlatMap[Dims]
-            with CommonTupledDoubleMathOps[Dims, CoordinateTuple]
-            with TupledMinMaxItemOps[Dims, Double, CoordinateTuple] {
+            with FlatMap[Dims, DimensionTuple]
+            with CommonTupledDoubleMathOps[Dims, DimensionTuple]
+            with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
 
   /**
    * Converts the object to a tuple.
@@ -105,7 +107,8 @@ case class Dims private(
    * @return
    */
   @inline
-  override def toTuple: CoordinateTuple = {
+  override
+  def toTuple: DimensionTuple = {
     (widthInPixels, heightInPixels, depthInPixels)
   }
 
@@ -125,6 +128,7 @@ case class Dims private(
    *
    * @return
    */
+  @inline
   def map(f: (Double) => Double): Dims = {
     Dims(
       f(widthInPixels),
@@ -133,11 +137,38 @@ case class Dims private(
   }
 
   /**
+   *
+   *
+   * @param f
+   *
+   * @return
+   */
+  @inline
+  def flatMap(f: (DimensionTuple) => Dims): Dims = {
+    f(toTuple)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean = {
+    other.isInstanceOf[Dims]
+  }
+
+  /**
    * Returns the minimum of the items contained by this container.
    *
    * @return
    */
-  override def minItem: Double = {
+  @inline
+  override
+  def minItem: Double = {
     math.min(math.min(widthInPixels, heightInPixels), depthInPixels)
   }
 
@@ -147,7 +178,9 @@ case class Dims private(
    *
    * @return
    */
-  override def minItems(others: Dims*): Dims = {
+  @inline
+  override
+  def minItems(others: Dims*): Dims = {
     val dims = this +: others
     val minWidth = dims.minBy(_.widthInPixels).widthInPixels
     val minHeight = dims.minBy(_.heightInPixels).heightInPixels
@@ -161,7 +194,9 @@ case class Dims private(
    *
    * @return
    */
-  override def maxItem: Double = {
+  @inline
+  override
+  def maxItem: Double = {
     math.max(math.max(widthInPixels, heightInPixels), depthInPixels)
   }
 
@@ -171,6 +206,7 @@ case class Dims private(
    *
    * @return
    */
+  @inline
   override def maxItems(others: Dims*): Dims = {
     val dims = this +: others
     val maxWidth = dims.maxBy(_.widthInPixels).widthInPixels
@@ -178,6 +214,38 @@ case class Dims private(
     val maxDepth = dims.maxBy(_.depthInPixels).depthInPixels
 
     Dims(maxWidth, maxHeight, maxDepth)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def + (offset: Dims): Pos = {
+    val width = widthInPixels + offset.widthInPixels
+    val height = heightInPixels + offset.heightInPixels
+    val depth = depthInPixels + offset.depthInPixels
+
+    Pos(width, height, depth)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def - (offset: Dims): Pos = {
+    val width = widthInPixels - offset.widthInPixels
+    val height = heightInPixels - offset.heightInPixels
+    val depth = depthInPixels - offset.depthInPixels
+
+    Pos(width, height, depth)
   }
 
 }

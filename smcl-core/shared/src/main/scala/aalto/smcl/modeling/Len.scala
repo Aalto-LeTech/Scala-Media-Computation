@@ -52,17 +52,41 @@ object Len {
  * @author Aleksi Lukkarinen
  */
 case class Len private(
-    override val inPixels: Double)
+    inPixels: Double)
     extends Magnitude[Len](inPixels) {
 
   /**
+   *
    *
    * @param f
    *
    * @return
    */
-  override def map(f: (Double) => Double): Len = {
+  override
+  def map(f: (Double) => Double): Len = {
     Len(f(inPixels))
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def + (offset: Len): Len = {
+    Len(inPixels + offset.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def - (offset: Len): Len = {
+    Len(inPixels - offset.inPixels)
   }
 
 }

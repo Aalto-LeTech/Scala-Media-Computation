@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d1
 
 
-import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, MinMaxOps}
+import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, MathUtils, MinMaxOps}
 import aalto.smcl.modeling.{CartesianPosition, Len}
 
 
@@ -40,6 +40,7 @@ object Pos {
    *
    * @return
    */
+  @inline
   def apply(valuePixels: Double): Pos = {
     new Pos(valuePixels)
   }
@@ -60,7 +61,7 @@ case class Pos private(
     inPixels: Double)
     extends CartesianPosition(Seq(inPixels))
             with ItemItemMap[Pos, Double]
-            with FlatMap[Pos]
+            with FlatMap[Pos, Double]
             with CommonDoubleMathOps[Pos]
             with MinMaxOps[Pos]
             with Movable[Pos] {
@@ -72,7 +73,9 @@ case class Pos private(
    *
    * @return
    */
-  override def moveBy(offsets: Double*): Pos = {
+  @inline
+  override
+  def moveBy(offsets: Double*): Pos = {
     require(
       offsets.length == 1,
       s"Pos1 represents exactly one coordinate (given: ${offsets.length})")
@@ -82,11 +85,37 @@ case class Pos private(
 
   /**
    *
+   * @param f
+   *
+   * @return
+   */
+  @inline
+  override
+  def flatMap(f: (Double) => Pos): Pos = {
+    f(inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean = {
+    other.isInstanceOf[Pos]
+  }
+
+  /**
+   *
    *
    * @param offset
    *
    * @return
    */
+  @inline
   def + (offset: Double): Pos = {
     Pos(inPixels + offset)
   }
@@ -98,6 +127,7 @@ case class Pos private(
    *
    * @return
    */
+  @inline
   def - (offset: Double): Pos = {
     Pos(inPixels - offset)
   }
@@ -109,8 +139,9 @@ case class Pos private(
    *
    * @return
    */
+  @inline
   def + (offset: Len): Pos = {
-    Pos(inPixels * offset.inPixels)
+    Pos(inPixels + offset.inPixels)
   }
 
   /**
@@ -120,6 +151,7 @@ case class Pos private(
    *
    * @return
    */
+  @inline
   def - (offset: Len): Pos = {
     Pos(inPixels - offset.inPixels)
   }
@@ -131,8 +163,9 @@ case class Pos private(
    *
    * @return
    */
+  @inline
   def + (offset: Pos): Pos = {
-    Pos(inPixels * offset.inPixels)
+    Pos(inPixels + offset.inPixels)
   }
 
   /**
@@ -142,6 +175,7 @@ case class Pos private(
    *
    * @return
    */
+  @inline
   def - (offset: Pos): Pos = {
     Pos(inPixels - offset.inPixels)
   }
@@ -152,7 +186,9 @@ case class Pos private(
    *
    * @return
    */
-  override def map(f: (Double) => Double): Pos = {
+  @inline
+  override
+  def map(f: (Double) => Double): Pos = {
     Pos(f(inPixels))
   }
 
@@ -161,7 +197,9 @@ case class Pos private(
    *
    * @return
    */
-  override def min(others: Pos*): Pos = {
+  @inline
+  override
+  def min(others: Pos*): Pos = {
     (this +: others).minBy(_.inPixels)
   }
 
@@ -170,8 +208,36 @@ case class Pos private(
    *
    * @return
    */
-  override def max(others: Pos*): Pos = {
+  @inline
+  override
+  def max(others: Pos*): Pos = {
     (this +: others).maxBy(_.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def distanceTo(other: Pos): Len = {
+    Len(math.abs(other.inPixels - inPixels))
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def toMinMaxWith(other: Pos): (Pos, Pos) = {
+    val (min, max) = MathUtils.sort(inPixels, other.inPixels)
+
+    (Pos(min), Pos(max))
   }
 
 }

@@ -132,17 +132,19 @@ object Area {
  * @author Aleksi Lukkarinen
  */
 case class Area private(
-    override val inPixels: Double)
+    inPixels: Double)
     extends Magnitude[Area](inPixels)
-            with FlatMap[Area] {
+            with FlatMap[Area, Double] {
 
   /**
+   *
    *
    * @param f
    *
    * @return
    */
-  override def map(f: (Double) => Double): Area = {
+  override
+  def map(f: (Double) => Double): Area = {
     Area(f(inPixels))
   }
 

@@ -17,36 +17,80 @@
 package aalto.smcl.modeling
 
 
-import scala.annotation.tailrec
-
-import aalto.smcl.infrastructure.FlatMap
+import aalto.smcl.infrastructure.{FlatMap, MathUtils}
 
 
 
 
 /**
- * Boundary of an object.
- *
- * @param markers
+ * Companion object for the [[Angle]] class.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractBoundary[PositionType <: AbstractPosition](
-    val markers: Seq[PositionType])
-    extends GeometryObject
-            with Equals
-            with Iterable[PositionType]
-            with FlatMap[AbstractBoundary[PositionType], Seq[PositionType]] {
+object Angle {
+
+  /** A full circle in degrees. */
+  val FullCircleInDegrees: Int = 360
+
+  /** A half circle in degrees. */
+  val HalfCircleInDegrees: Int = FullCircleInDegrees / 2
+
+  /** A quarter circle in degrees. */
+  val QuarterCircleInDegrees: Int = FullCircleInDegrees / 4
+
+  /** A full circle in radians. */
+  val FullCircleInRadians: Double = 2.0 * math.Pi
+
+  /** A half circle in radians. */
+  val HalfCircleInRadians: Double = math.Pi
+
+  /** A quarter circle in radians. */
+  val QuarterCircleInRadians: Double = math.Pi / 2.0
+
+  /** Number of degrees in a radian. */
+  val DegreesPerRadian: Double = FullCircleInDegrees / FullCircleInRadians
+
+  /** Number of radians in a degree. */
+  val RadiansPerDegree: Double = FullCircleInRadians / FullCircleInDegrees
 
   /**
-   * Provides an iterator for the boundary marker positions.
+   * Creates a new [[Angle]] instance on the basis of given angle value.
    *
-   * @return
+   * @param valueInDegrees
    */
-  @inline
-  override
-  def iterator: Iterator[PositionType] = {
-    markers.iterator
+  def apply(valueInDegrees: Double): Angle = {
+    new Angle(valueInDegrees)
+  }
+
+  /**
+   * Creates a new [[Angle]] instance on the basis of given angle value.
+   *
+   * @param valueInDegrees
+   */
+  def normalized(valueInDegrees: Double): Angle = {
+    apply(valueInDegrees)
+  }
+
+}
+
+
+
+
+/**
+ * Angle.
+ *
+ * @param inDegrees
+ *
+ * @author Aleksi Lukkarinen
+ */
+case class Angle private(
+    inDegrees: Double)
+    extends Magnitude[Angle](inDegrees)
+            with FlatMap[Angle, Double] {
+
+  /** The value of this angle in radians. */
+  lazy val inRadians: Double = {
+    inDegrees * Angle.RadiansPerDegree
   }
 
   /**
@@ -57,10 +101,8 @@ abstract class AbstractBoundary[PositionType <: AbstractPosition](
    */
   @inline
   override
-  def flatMap(
-      f: (Seq[PositionType]) => AbstractBoundary[PositionType]): AbstractBoundary[PositionType] = {
-
-    f(markers)
+  def map(f: (Double) => Double): Angle = {
+    Angle(f(inDegrees))
   }
 
   /**
@@ -68,54 +110,19 @@ abstract class AbstractBoundary[PositionType <: AbstractPosition](
    *
    * @return
    */
-  override
-  lazy val hashCode: Int = {
-    val prime = 31
-
-    @tailrec
-    def hashCodeRecursive(
-        markers: Seq[PositionType],
-        sum: Int): Int = {
-
-      if (markers.isEmpty)
-        return sum
-
-      hashCodeRecursive(
-        markers.tail,
-        prime * sum + markers.head.##)
-    }
-
-    hashCodeRecursive(markers, 1)
+  @inline
+  def normalize: Angle = {
+    Angle(MathUtils.normalizeDegs(inDegrees))
   }
 
   /**
    *
    *
-   * @param other
-   *
    * @return
    */
   @inline
-  override
-  def canEqual(other: Any): Boolean
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: AbstractBoundary[PositionType] =>
-        that.canEqual(this) &&
-            that.markers == this.markers
-
-      case _ => false
-    }
+  def sin: Double = {
+    MathUtils.sinFor(inDegrees)
   }
 
 }

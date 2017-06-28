@@ -17,6 +17,7 @@
 package aalto.smcl.modeling.d2
 
 
+import aalto.smcl.infrastructure.MathUtils
 import aalto.smcl.modeling._
 
 
@@ -49,8 +50,8 @@ object Bounds {
       lowerRightXInPixels: Double,
       lowerRightYInPixels: Double): Bounds = {
 
-    val x0 :: x1 :: _ = Seq(upperLeftXInPixels, lowerRightXInPixels).sorted
-    val y0 :: y1 :: _ = Seq(upperLeftYInPixels, lowerRightYInPixels).sorted
+    val (x0, x1) = MathUtils.sort(upperLeftXInPixels, lowerRightXInPixels)
+    val (y0, y1) = MathUtils.sort(upperLeftYInPixels, lowerRightYInPixels)
 
     val widthInPixels: Double = x1 - x0 + 1
     val heightInPixels: Double = y1 - y0 + 1
@@ -77,6 +78,7 @@ object Bounds {
    *
    * @return
    */
+  @inline
   def apply(
       upperLeft: Pos,
       lowerRight: Pos): Bounds = {
@@ -93,6 +95,7 @@ object Bounds {
    *
    * @return
    */
+  @inline
   def apply(markers: Pos*): Dims = {
     require(
       markers.length == 2,
@@ -134,12 +137,14 @@ case class Bounds private(
   /**
    *
    *
-   * @param f
+   * @param other
    *
    * @return
    */
-  def flatMap(f: (Bounds) => Bounds): Bounds = {
-    f(this)
+  @inline
+  override
+  def canEqual(other: Any): Boolean = {
+    other.isInstanceOf[Bounds]
   }
 
 }

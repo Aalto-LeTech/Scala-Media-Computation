@@ -27,4 +27,7 @@ package object d1 {
   /** A type for an one-dimensional coordinate tuple. */
   type CoordinateTuple = (Double)
 
+  /** A type for an one-dimensional dimension tuple. */
+  type DimensionTuple = (Double)
+
 }

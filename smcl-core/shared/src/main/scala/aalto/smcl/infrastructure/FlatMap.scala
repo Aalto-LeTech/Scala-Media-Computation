@@ -18,15 +18,15 @@ package aalto.smcl.infrastructure
 
 
 /**
- * Map operation for generating a new instance of an object by processing it.
+ * Map operation for generating a new instance of
+ * a container object by processing its content.
  *
- * @tparam ObjectType
+ * @tparam ContainerType
+ * @tparam ItemType
  *
  * @author Aleksi Lukkarinen
  */
-trait FlatMap[ObjectType] {
-
-  this: ObjectType =>
+trait FlatMap[ContainerType, ItemType] {
 
   /**
    *
@@ -34,8 +34,6 @@ trait FlatMap[ObjectType] {
    *
    * @return
    */
-  def flatMap(f: (ObjectType) => ObjectType): ObjectType = {
-    f(this)
-  }
+  def flatMap(f: (ItemType) => ContainerType): ContainerType
 
 }
