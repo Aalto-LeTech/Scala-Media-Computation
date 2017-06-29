@@ -38,7 +38,7 @@ object MathUtils {
    */
   @inline
   def normalizeDegs(valueInDegrees: Double): Double = {
-    valueInDegrees % Angle.FullCircleInDegrees
+    valueInDegrees % Angle.FullAngleInDegrees
   }
 
   /**
@@ -53,7 +53,7 @@ object MathUtils {
     val tmp = normalizeDegs(valueInDegrees)
 
     if (tmp < 0)
-      Angle.FullCircleInDegrees - tmp
+      Angle.FullAngleInDegrees - tmp
     else
       tmp
   }
@@ -70,7 +70,7 @@ object MathUtils {
     val tmp = normalizeDegs(valueInDegrees)
 
     if (tmp > 0)
-      -Angle.FullCircleInDegrees + tmp
+      -Angle.FullAngleInDegrees + tmp
     else
       tmp
   }
@@ -84,7 +84,7 @@ object MathUtils {
    */
   @inline
   def normalizeRads(valueInRadians: Double): Double = {
-    valueInRadians % Angle.FullCircleInDegrees
+    valueInRadians % Angle.FullAngleInRadians
   }
 
   /**
@@ -96,10 +96,10 @@ object MathUtils {
    */
   @inline
   def normalizeToPosRads(valueInRadians: Double): Double = {
-    val tmp = normalizeDegs(valueInRadians)
+    val tmp = normalizeRads(valueInRadians)
 
     if (tmp < 0)
-      Angle.FullCircleInRadians - tmp
+      Angle.FullAngleInRadians - tmp
     else
       tmp
   }
@@ -113,10 +113,56 @@ object MathUtils {
    */
   @inline
   def normalizeToNegRads(valueInRadians: Double): Double = {
-    val tmp = normalizeDegs(valueInRadians)
+    val tmp = normalizeRads(valueInRadians)
 
     if (tmp > 0)
-      -Angle.FullCircleInRadians + tmp
+      -Angle.FullAngleInRadians + tmp
+    else
+      tmp
+  }
+
+  /**
+   *
+   *
+   * @param valueInGradians
+   *
+   * @return
+   */
+  @inline
+  def normalizeGrads(valueInGradians: Double): Double = {
+    valueInGradians % Angle.FullAngleInGradians
+  }
+
+  /**
+   *
+   *
+   * @param valueInGradians
+   *
+   * @return
+   */
+  @inline
+  def normalizeToPosGrads(valueInGradians: Double): Double = {
+    val tmp = normalizeGrads(valueInGradians)
+
+    if (tmp < 0)
+      Angle.FullAngleInGradians - tmp
+    else
+      tmp
+  }
+
+  /**
+   *
+   *
+   * @param valueInGradians
+   *
+   * @return
+   */
+  @inline
+  def normalizeToNegGrads(valueInGradians: Double): Double = {
+    val tmp = normalizeGrads(valueInGradians)
+
+    if (tmp > 0)
+      -Angle.FullAngleInGradians + tmp
     else
       tmp
   }
