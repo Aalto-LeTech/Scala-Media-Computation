@@ -239,6 +239,27 @@ object Angle {
     apply(MathUtils.normalizeDegs(valueInDegrees))
   }
 
+  /** */
+  def fromSin(radianBasedSin: Double): Angle = {
+    val angleValue = MathUtils.asinRads(radianBasedSin)
+
+    apply(angleValue)
+  }
+
+  /** */
+  def fromCos(radianBasedCos: Double): Angle = {
+    val angleValue = MathUtils.acosRads(radianBasedCos)
+
+    apply(angleValue)
+  }
+
+  /** */
+  def fromTan(radianBasedTan: Double): Angle = {
+    val angleValue = MathUtils.atanRads(radianBasedTan)
+
+    apply(angleValue)
+  }
+
 }
 
 
@@ -266,6 +287,39 @@ case class Angle private(
     inDegrees * Angle.DegreeInGradians
   }
 
+  /** */
+  lazy val normalized: Angle = {
+    Angle(MathUtils.normalizeDegs(inDegrees))
+  }
+
+  /** */
+  lazy val normalizedPos: Angle = {
+    Angle(MathUtils.normalizeToPosDegs(inDegrees))
+  }
+
+  /** */
+  lazy val normalizedNeg: Angle = {
+    Angle(MathUtils.normalizeToNegDegs(inDegrees))
+  }
+
+  /** */
+  lazy val sin: Double = MathUtils.sinRads(inRadians)
+
+  /** */
+  lazy val sinh: Double = MathUtils.sinhRads(inRadians)
+
+  /** */
+  lazy val cos: Double = MathUtils.cosRads(inRadians)
+
+  /** */
+  lazy val cosh: Double = MathUtils.coshRads(inRadians)
+
+  /** */
+  lazy val tan: Double = MathUtils.tanRads(inRadians)
+
+  /** */
+  lazy val tanh: Double = MathUtils.tanhRads(inRadians)
+
   /**
    *
    * @param f
@@ -276,26 +330,6 @@ case class Angle private(
   override
   def map(f: (Double) => Double): Angle = {
     Angle(f(inDegrees))
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def normalize: Angle = {
-    Angle(MathUtils.normalizeDegs(inDegrees))
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def sin: Double = {
-    MathUtils.sinFor(inDegrees)
   }
 
 }

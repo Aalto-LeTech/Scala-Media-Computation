@@ -170,14 +170,13 @@ object MathUtils {
   /**
    *
    *
-   * @param angleInRadians
+   * @param angleInDegrees
    *
    * @return
    */
   @inline
-  def sinCosFor(angleInRadians: Double): (Double, Double) = {
-    (math.sin(angleInRadians): @inline,
-        math.cos(angleInRadians): @inline)
+  def sinCos(angleInDegrees: Double): (Double, Double) = {
+    sinCosRads(math.toRadians(angleInDegrees))
   }
 
   /**
@@ -188,8 +187,23 @@ object MathUtils {
    * @return
    */
   @inline
-  def sinFor(angleInRadians: Double): Double = {
-    math.sin(angleInRadians): @inline
+  def sinCosRads(angleInRadians: Double): (Double, Double) = {
+    val sin = sinRads(angleInRadians)
+    val cos = cosRads(angleInRadians)
+
+    (sin, cos)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def sin(angleInDegrees: Double): Double = {
+    sinRads(math.toRadians(angleInDegrees))
   }
 
   /**
@@ -200,8 +214,200 @@ object MathUtils {
    * @return
    */
   @inline
-  def cosFor(angleInRadians: Double): Double = {
-    math.cos(angleInRadians): @inline
+  def sinRads(angleInRadians: Double): Double = {
+    math.sin(angleInRadians)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def sinh(angleInDegrees: Double): Double = {
+    sinhRads(math.toRadians(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param angleInRadians
+   *
+   * @return
+   */
+  @inline
+  def sinhRads(angleInRadians: Double): Double = {
+    math.sinh(angleInRadians)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def asin(angleInDegrees: Double): Double = {
+    asinRads(math.toRadians(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param angleInRadians
+   *
+   * @return
+   */
+  @inline
+  def asinRads(angleInRadians: Double): Double = {
+    math.asin(angleInRadians)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def cos(angleInDegrees: Double): Double = {
+    cosRads(math.toRadians(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param angleInRadians
+   *
+   * @return
+   */
+  @inline
+  def cosRads(angleInRadians: Double): Double = {
+    math.cos(angleInRadians)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def cosh(angleInDegrees: Double): Double = {
+    coshRads(math.toRadians(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param angleInRadians
+   *
+   * @return
+   */
+  @inline
+  def coshRads(angleInRadians: Double): Double = {
+    math.cosh(angleInRadians)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def acos(angleInDegrees: Double): Double = {
+    acosRads(math.toRadians(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param angleInRadians
+   *
+   * @return
+   */
+  @inline
+  def acosRads(angleInRadians: Double): Double = {
+    math.acos(angleInRadians)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def tan(angleInDegrees: Double): Double = {
+    tanRads(math.toRadians(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param angleInRadians
+   *
+   * @return
+   */
+  @inline
+  def tanRads(angleInRadians: Double): Double = {
+    math.tan(angleInRadians)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def tanh(angleInDegrees: Double): Double = {
+    tanhRads(math.toRadians(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param angleInRadians
+   *
+   * @return
+   */
+  @inline
+  def tanhRads(angleInRadians: Double): Double = {
+    math.tanh(angleInRadians)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def atan(angleInDegrees: Double): Double = {
+    atanRads(math.toRadians(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param angleInRadians
+   *
+   * @return
+   */
+  @inline
+  def atanRads(angleInRadians: Double): Double = {
+    math.atan(angleInRadians)
   }
 
   /**

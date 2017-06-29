@@ -43,7 +43,7 @@ object Transformer {
       angleInDegrees: Double): Pos = {
 
     val (sin, cos) =
-      MathUtils.sinCosFor(math.toRadians(angleInDegrees))
+      MathUtils.sinCosRads(math.toRadians(angleInDegrees))
 
     val x = position.xInPixels
     val y = position.yInPixels
@@ -70,7 +70,7 @@ object Transformer {
       centerOfRotation: Pos): Pos = {
 
     val (sin, cos) =
-      MathUtils.sinCosFor(math.toRadians(angleInDegrees))
+      MathUtils.sinCosRads(math.toRadians(angleInDegrees))
 
     val x = position.xInPixels - centerOfRotation.xInPixels
     val y = position.yInPixels - centerOfRotation.yInPixels
@@ -95,7 +95,7 @@ object Transformer {
       angleInDegrees: Double): Seq[Pos] = {
 
     val (sin, cos) =
-      MathUtils.sinCosFor(math.toRadians(angleInDegrees))
+      MathUtils.sinCosRads(math.toRadians(angleInDegrees))
 
     for {
       p <- positions
@@ -124,7 +124,7 @@ object Transformer {
       centerOfRotation: Pos): Seq[Pos] = {
 
     val (sin, cos) =
-      MathUtils.sinCosFor(math.toRadians(angleInDegrees))
+      MathUtils.sinCosRads(math.toRadians(angleInDegrees))
 
     for {
       p <- positions
