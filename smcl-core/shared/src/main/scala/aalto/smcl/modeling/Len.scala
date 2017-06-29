@@ -89,4 +89,70 @@ case class Len private(
     Len(inPixels - offset.inPixels)
   }
 
+  /**
+   *
+   *
+   * @param factor
+   *
+   * @return
+   */
+  def * (factor: Len): Area = {
+    Area(inPixels * factor.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Len): Double = {
+    inPixels / divider.inPixels
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def + (offset: Double): Len = {
+    Len(inPixels + offset)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def - (offset: Double): Len = {
+    Len(inPixels - offset)
+  }
+
+  /**
+   *
+   *
+   * @param factor
+   *
+   * @return
+   */
+  def * (factor: Double): Len = {
+    Len(inPixels * factor)
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Double): Len = {
+    Len(inPixels / divider)
+  }
+
 }

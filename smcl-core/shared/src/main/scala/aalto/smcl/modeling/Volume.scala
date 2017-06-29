@@ -260,4 +260,103 @@ case class Volume private(
     Volume(f(inPixels))
   }
 
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def + (offset: Volume): Volume = {
+    Volume(inPixels + offset.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def - (offset: Volume): Volume = {
+    Volume(inPixels - offset.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Volume): Double = {
+    inPixels / divider.inPixels
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Area): Len = {
+    Len(inPixels / divider.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Len): Area = {
+    Area(inPixels / divider.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def + (offset: Double): Volume = {
+    Volume(inPixels + offset)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def - (offset: Double): Volume = {
+    Volume(inPixels - offset)
+  }
+
+  /**
+   *
+   *
+   * @param factor
+   *
+   * @return
+   */
+  def * (factor: Double): Volume = {
+    Volume(inPixels * factor)
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Double): Volume = {
+    Volume(inPixels / divider)
+  }
+
 }

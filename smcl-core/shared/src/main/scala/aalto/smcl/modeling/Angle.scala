@@ -231,7 +231,7 @@ object Angle {
   }
 
   /**
-   * Creates a new [[Angle]] instance on the basis of given angle value.
+   *
    *
    * @param valueInDegrees
    */
@@ -239,23 +239,62 @@ object Angle {
     apply(MathUtils.normalizeDegs(valueInDegrees))
   }
 
-  /** */
-  def fromSin(radianBasedSin: Double): Angle = {
-    val angleValue = MathUtils.asinRads(radianBasedSin)
+  /**
+   * Creates a new [[Angle]] instance on the basis of given angle value.
+   *
+   * @param valueInDegrees
+   */
+  def normalizedPos(valueInDegrees: Double): Angle = {
+    apply(MathUtils.normalizeToPosDegs(valueInDegrees))
+  }
+
+  /**
+   * Creates a new [[Angle]] instance on the basis of given angle value.
+   *
+   * @param valueInDegrees
+   */
+  def normalizedNeg(valueInDegrees: Double): Angle = {
+    apply(MathUtils.normalizeToNegDegs(valueInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param sin
+   *
+   * @return
+   */
+  def fromSin(sin: Double): Angle = {
+    val angleValue =
+      math.toDegrees(MathUtils.asin(sin))
 
     apply(angleValue)
   }
 
-  /** */
-  def fromCos(radianBasedCos: Double): Angle = {
-    val angleValue = MathUtils.acosRads(radianBasedCos)
+  /**
+   *
+   *
+   * @param cos
+   *
+   * @return
+   */
+  def fromCos(cos: Double): Angle = {
+    val angleValue =
+      math.toDegrees(MathUtils.acos(cos))
 
     apply(angleValue)
   }
 
-  /** */
-  def fromTan(radianBasedTan: Double): Angle = {
-    val angleValue = MathUtils.atanRads(radianBasedTan)
+  /**
+   *
+   *
+   * @param tan
+   *
+   * @return
+   */
+  def fromTan(tan: Double): Angle = {
+    val angleValue =
+      math.toDegrees(MathUtils.atan(tan))
 
     apply(angleValue)
   }
@@ -322,6 +361,7 @@ case class Angle private(
 
   /**
    *
+   *
    * @param f
    *
    * @return
@@ -330,6 +370,83 @@ case class Angle private(
   override
   def map(f: (Double) => Double): Angle = {
     Angle(f(inDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  def + (other: Angle): Angle = {
+    Angle(inDegrees + other.inDegrees)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  def - (other: Angle): Angle = {
+    Angle(inDegrees - other.inDegrees)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  def / (other: Angle): Double = {
+    inDegrees / other.inDegrees
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  def + (angleInDegrees: Double): Angle = {
+    Angle(inDegrees + angleInDegrees)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  def - (angleInDegrees: Double): Angle = {
+    Angle(inDegrees - angleInDegrees)
+  }
+
+  /**
+   *
+   *
+   * @param factor
+   *
+   * @return
+   */
+  def * (factor: Double): Angle = {
+    Angle(inDegrees * factor)
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Double): Angle = {
+    Angle(inDegrees / divider)
   }
 
 }

@@ -148,4 +148,103 @@ case class Area private(
     Area(f(inPixels))
   }
 
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def + (offset: Area): Area = {
+    Area(inPixels + offset.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def - (offset: Area): Area = {
+    Area(inPixels - offset.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def + (offset: Double): Area = {
+    Area(inPixels + offset)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  def - (offset: Double): Area = {
+    Area(inPixels - offset)
+  }
+
+  /**
+   *
+   *
+   * @param factor
+   *
+   * @return
+   */
+  def * (factor: Len): Volume = {
+    Volume(inPixels * factor.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Area): Double = {
+    inPixels / divider.inPixels
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Len): Len = {
+    Len(inPixels / divider.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param factor
+   *
+   * @return
+   */
+  def * (factor: Double): Area = {
+    Area(inPixels * factor)
+  }
+
+  /**
+   *
+   *
+   * @param divider
+   *
+   * @return
+   */
+  def / (divider: Double): Area = {
+    Area(inPixels / divider)
+  }
+
 }
