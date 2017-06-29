@@ -29,6 +29,120 @@ import aalto.smcl.infrastructure.{FlatMap, MathUtils}
  */
 object Angle {
 
+  /** An angle of 10 degrees. */
+  lazy val Deg10 = Angle(10)
+
+  /** An angle of 20 degrees. */
+  lazy val Deg20 = Angle(20)
+
+  /** An angle of 30 degrees. */
+  lazy val Deg30 = Angle(30)
+
+  /** An angle of 40 degrees. */
+  lazy val Deg40 = Angle(40)
+
+  /** An angle of 45 degrees. */
+  lazy val Deg45 = Angle(45)
+
+  /** An angle of 50 degrees. */
+  lazy val Deg50 = Angle(50)
+
+  /** An angle of 60 degrees. */
+  lazy val Deg60 = Angle(60)
+
+  /** An angle of 70 degrees. */
+  lazy val Deg70 = Angle(70)
+
+  /** An angle of 80 degrees. */
+  lazy val Deg80 = Angle(80)
+
+  /** An angle of 90 degrees. */
+  lazy val Deg90 = Angle(90)
+
+  /** An angle of 100 degrees. */
+  lazy val Deg100 = Angle(100)
+
+  /** An angle of 110 degrees. */
+  lazy val Deg110 = Angle(110)
+
+  /** An angle of 120 degrees. */
+  lazy val Deg120 = Angle(120)
+
+  /** An angle of 130 degrees. */
+  lazy val Deg130 = Angle(130)
+
+  /** An angle of 45 degrees. */
+  lazy val Deg135 = Angle(135)
+
+  /** An angle of 140 degrees. */
+  lazy val Deg140 = Angle(140)
+
+  /** An angle of 150 degrees. */
+  lazy val Deg150 = Angle(150)
+
+  /** An angle of 160 degrees. */
+  lazy val Deg160 = Angle(160)
+
+  /** An angle of 170 degrees. */
+  lazy val Deg170 = Angle(170)
+
+  /** An angle of 180 degrees. */
+  lazy val Deg180 = Angle(180)
+
+  /** An angle of 190 degrees. */
+  lazy val Deg190 = Angle(190)
+
+  /** An angle of 200 degrees. */
+  lazy val Deg200 = Angle(200)
+
+  /** An angle of 210 degrees. */
+  lazy val Deg210 = Angle(210)
+
+  /** An angle of 220 degrees. */
+  lazy val Deg220 = Angle(220)
+
+  /** An angle of 255 degrees. */
+  lazy val Deg225 = Angle(225)
+
+  /** An angle of 230 degrees. */
+  lazy val Deg230 = Angle(230)
+
+  /** An angle of 240 degrees. */
+  lazy val Deg240 = Angle(240)
+
+  /** An angle of 250 degrees. */
+  lazy val Deg250 = Angle(250)
+
+  /** An angle of 260 degrees. */
+  lazy val Deg260 = Angle(260)
+
+  /** An angle of 270 degrees. */
+  lazy val Deg270 = Angle(270)
+
+  /** An angle of 280 degrees. */
+  lazy val Deg280 = Angle(280)
+
+  /** An angle of 290 degrees. */
+  lazy val Deg290 = Angle(290)
+
+  /** An angle of 300 degrees. */
+  lazy val Deg300 = Angle(300)
+
+  /** An angle of 300 degrees. */
+  lazy val Deg310 = Angle(310)
+
+  /** An angle of 320 xdegrees. */
+  lazy val Deg320 = Angle(320)
+
+  /** An angle of 330 degrees. */
+  lazy val Deg330 = Angle(330)
+
+  /** An angle of 340 degrees. */
+  lazy val Deg340 = Angle(340)
+
+  /** An angle of 350 degrees. */
+  lazy val Deg350 = Angle(350)
+
   /** Number of divisions to a full angle to get a radian. */
   val RadianDivisions: Double = 2.0 * math.Pi
 
@@ -221,6 +335,10 @@ object Angle {
   val BinaryDegree = Angle(BinaryDegreeInDegrees)
 
 
+  /** A zero angle. */
+  val Zero = Angle(0)
+
+
   /**
    * Creates a new [[Angle]] instance on the basis of given angle value.
    *
@@ -358,6 +476,21 @@ case class Angle private(
 
   /** */
   lazy val tanh: Double = MathUtils.tanhRads(inRadians)
+
+  /** */
+  lazy val isZero: Boolean = inDegrees == 0
+
+  /** */
+  lazy val isRight: Boolean =
+    inDegrees == Angle.RightAngleInDegrees
+
+  /** */
+  lazy val isStraight: Boolean =
+    inDegrees == Angle.StraightAngleInDegrees
+
+  /** */
+  lazy val isFull: Boolean =
+    inDegrees == Angle.FullAngleInDegrees
 
   /**
    *
