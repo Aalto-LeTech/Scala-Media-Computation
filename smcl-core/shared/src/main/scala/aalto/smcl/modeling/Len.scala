@@ -24,6 +24,21 @@ package aalto.smcl.modeling
  */
 object Len {
 
+  /**  */
+  lazy val Zero = Len(0.0)
+
+  /**  */
+  lazy val One = Len(1.0)
+
+  /**  */
+  lazy val PositiveInfinity = Len(Double.PositiveInfinity)
+
+  /**  */
+  lazy val NegativeInfinity = Len(Double.NegativeInfinity)
+
+  /**  */
+  lazy val NaN = Len(Double.NaN)
+
   /**
    * Creates a new [[Len]] instance.
    *
@@ -153,6 +168,27 @@ case class Len private(
    */
   def / (divider: Double): Len = {
     Len(inPixels / divider)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def unary_-(): Len = {
+    Len(-inPixels)
+  }
+
+
+  /**
+   *
+   *
+   * @param that
+   *
+   * @return
+   */
+  override def compare(that: Len): Int = {
+    inPixels.compare(that.inPixels)
   }
 
 }

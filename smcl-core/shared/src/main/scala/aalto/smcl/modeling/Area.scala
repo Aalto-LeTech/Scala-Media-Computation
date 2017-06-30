@@ -29,6 +29,22 @@ import aalto.smcl.infrastructure.FlatMap
  */
 object Area {
 
+  /**  */
+  lazy val Zero = Area(0.0)
+
+  /**  */
+  lazy val One = Area(1.0)
+
+  /**  */
+  lazy val PositiveInfinity = Area(Double.PositiveInfinity)
+
+  /**  */
+  lazy val NegativeInfinity = Area(Double.NegativeInfinity)
+
+  /**  */
+  lazy val NaN = Area(Double.NaN)
+
+
   /**
    * Creates a new [[Area]] instance on the basis of given area value.
    *
@@ -134,7 +150,8 @@ object Area {
 case class Area private(
     inPixels: Double)
     extends AbstractMagnitude[Area](inPixels)
-            with FlatMap[Area, Double] {
+            with FlatMap[Area, Double]
+            with Ordered[Area] {
 
   /**
    *
@@ -146,6 +163,17 @@ case class Area private(
   override
   def map(f: (Double) => Double): Area = {
     Area(f(inPixels))
+  }
+
+  /**
+   *
+   *
+   * @param that
+   *
+   * @return
+   */
+  override def compare(that: Area): Int = {
+    inPixels.compare(that.inPixels)
   }
 
   /**
@@ -245,6 +273,15 @@ case class Area private(
    */
   def / (divider: Double): Area = {
     Area(inPixels / divider)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def unary_-(): Area = {
+    Area(-inPixels)
   }
 
 }

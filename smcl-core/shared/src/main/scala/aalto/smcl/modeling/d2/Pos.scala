@@ -90,6 +90,32 @@ case class Pos private(
             with Movable[Pos] {
 
   /**
+   *
+   *
+   * @return
+   */
+  lazy val quadrant: Option[Short] = {
+    if (isOnHorizontalAxis || isOnVerticalAxis)
+      None
+    else {
+      if (xInPixels > 0) {
+        if (yInPixels > 0) Some(1) else Some(4)
+      }
+      else {
+        if (yInPixels > 0) Some(2) else Some(3)
+      }
+    }
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def isOrigo: Boolean = this == Pos.Origo
+
+  /**
    * Converts the object to a tuple.
    *
    * @return
@@ -296,5 +322,53 @@ case class Pos private(
 
     (Pos(xMin, yMin), Pos(xMax, yMax))
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def isOnHorizontalAxis: Boolean = yInPixels == 0.0
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def isOnVerticalAxis: Boolean = xInPixels == 0.0
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def isOnFirstQuadrant: Boolean = quadrant.contains(1)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def isOnSecondQuadrant: Boolean = quadrant.contains(2)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def isOnThirdQuadrant: Boolean = quadrant.contains(3)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def isOnFourthQuadrant: Boolean = quadrant.contains(4)
 
 }

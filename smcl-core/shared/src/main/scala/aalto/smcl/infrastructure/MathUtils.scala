@@ -99,7 +99,7 @@ object MathUtils {
     val tmp = normalizeRads(valueInRadians)
 
     if (tmp < 0)
-      Angle.FullAngleInRadians - tmp
+      tmp + Angle.FullAngleInRadians
     else
       tmp
   }
@@ -116,7 +116,7 @@ object MathUtils {
     val tmp = normalizeRads(valueInRadians)
 
     if (tmp > 0)
-      -Angle.FullAngleInRadians + tmp
+      tmp - Angle.FullAngleInRadians
     else
       tmp
   }

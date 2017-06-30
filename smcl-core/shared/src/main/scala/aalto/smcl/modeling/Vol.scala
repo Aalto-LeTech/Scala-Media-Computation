@@ -29,8 +29,23 @@ import aalto.smcl.infrastructure.FlatMap
  */
 object Vol {
 
+  /**  */
+  lazy val Zero = Vol(0.0)
+
+  /**  */
+  lazy val One = Vol(1.0)
+
+  /**  */
+  lazy val PositiveInfinity = Vol(Double.PositiveInfinity)
+
+  /**  */
+  lazy val NegativeInfinity = Vol(Double.NegativeInfinity)
+
+  /**  */
+  lazy val NaN = Vol(Double.NaN)
+
   /**
-   * Creates a new [[Vol]] instance on the basis of given area value.
+   * Creates a new [[aalto.smcl.modeling.Vol]] instance on the basis of given area value.
    *
    * @param valueInPixels
    */
@@ -246,7 +261,8 @@ object Vol {
 case class Vol private(
     inPixels: Double)
     extends AbstractMagnitude[Vol](inPixels)
-            with FlatMap[Vol, Double] {
+            with FlatMap[Vol, Double]
+            with Ordered[Vol] {
 
   /**
    *
@@ -258,6 +274,17 @@ case class Vol private(
   override
   def map(f: (Double) => Double): Vol = {
     Vol(f(inPixels))
+  }
+
+  /**
+   *
+   *
+   * @param that
+   *
+   * @return
+   */
+  override def compare(that: Vol): Int = {
+    inPixels.compare(that.inPixels)
   }
 
   /**
@@ -357,6 +384,15 @@ case class Vol private(
    */
   def / (divider: Double): Vol = {
     Vol(inPixels / divider)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def unary_-(): Vol = {
+    Vol(-inPixels)
   }
 
 }

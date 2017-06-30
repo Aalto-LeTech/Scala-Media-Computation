@@ -33,10 +33,44 @@ abstract class AbstractMagnitude[ElementType](
     private val value: Double)
     extends AbstractGeometryObject
             with Equals
+            with Ordered[ElementType]
             with ToTuple[Tuple1[Double]]
             with FlatMap[ElementType, Double]
             with ItemItemMap[ElementType, Double]
             with CommonDoubleMathOps[ElementType] {
+
+
+  /** */
+  @inline
+  def isZero: Boolean = value == 0.0
+
+  /** */
+  @inline
+  def isPositive: Boolean = value > 0.0
+
+  /** */
+  @inline
+  def isNegative: Boolean = value < 0.0
+
+  /** */
+  @inline
+  def isInfinity: Boolean = value.isInfinity
+
+  /** */
+  @inline
+  def isPosInfinity: Boolean = value.isPosInfinity
+
+  /** */
+  @inline
+  def isNegInfinity: Boolean = value.isNegInfinity
+
+  /** */
+  @inline
+  def isNaN: Boolean = value.isNaN
+
+  /** */
+  @inline
+  def isWholeNumber: Boolean = value.isWhole
 
   /**
    * Converts the object to a tuple.
@@ -111,6 +145,334 @@ abstract class AbstractMagnitude[ElementType](
 
       case _ => false
     }
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isBetweenExclExcl[E <: AbstractMagnitude[E]](
+      rangeStart: E,
+      rangeEnd: E): Boolean = {
+
+    rangeStart.value < this.value &&
+        this.value < rangeEnd.value
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isAbsBetweenExclExcl[E <: AbstractMagnitude[E]](
+      rangeStart: E,
+      rangeEnd: E): Boolean = {
+
+    val a = math.abs(value)
+
+    rangeStart.value < a && a < rangeEnd.value
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isBetweenExclExcl(
+      rangeStart: Double,
+      rangeEnd: Double): Boolean = {
+
+    rangeStart < this.value &&
+        this.value < rangeEnd
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isAbsBetweenExclExcl(
+      rangeStart: Double,
+      rangeEnd: Double): Boolean = {
+
+    val a = math.abs(value)
+
+    rangeStart < a && a < rangeEnd
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isBetweenExclIncl[E <: AbstractMagnitude[E]](
+      rangeStart: E,
+      rangeEnd: E): Boolean = {
+
+    rangeStart.value < this.value &&
+        this.value <= rangeEnd.value
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isAbsBetweenExclIncl[E <: AbstractMagnitude[E]](
+      rangeStart: E,
+      rangeEnd: E): Boolean = {
+
+    val a = math.abs(value)
+
+    rangeStart.value < a && a <= rangeEnd.value
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isBetweenExclIncl(
+      rangeStart: Double,
+      rangeEnd: Double): Boolean = {
+
+    rangeStart < this.value &&
+        this.value <= rangeEnd
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isAbsBetweenExclIncl(
+      rangeStart: Double,
+      rangeEnd: Double): Boolean = {
+
+    val a = math.abs(value)
+
+    rangeStart < a && a <= rangeEnd
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isBetweenInclExcl[E <: AbstractMagnitude[E]](
+      rangeStart: E,
+      rangeEnd: E): Boolean = {
+
+    rangeStart.value <= this.value &&
+        this.value < rangeEnd.value
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isAbsBetweenInclExcl[E <: AbstractMagnitude[E]](
+      rangeStart: E,
+      rangeEnd: E): Boolean = {
+
+    val a = math.abs(value)
+
+    rangeStart.value <= a && a < rangeEnd.value
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isBetweenInclExcl(
+      rangeStart: Double,
+      rangeEnd: Double): Boolean = {
+
+    rangeStart <= this.value &&
+        this.value < rangeEnd
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isAbsBetweenInclExcl(
+      rangeStart: Double,
+      rangeEnd: Double): Boolean = {
+
+    val a = math.abs(value)
+
+    rangeStart <= a && a < rangeEnd
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isBetweenInclIncl[E <: AbstractMagnitude[E]](
+      rangeStart: E,
+      rangeEnd: E): Boolean = {
+
+    rangeStart.value <= this.value &&
+        this.value <= rangeEnd.value
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isAbsBetweenInclIncl[E <: AbstractMagnitude[E]](
+      rangeStart: E,
+      rangeEnd: E): Boolean = {
+
+    val a = math.abs(value)
+
+    rangeStart.value <= a && a <= rangeEnd.value
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isBetweenInclIncl(
+      rangeStart: Double,
+      rangeEnd: Double): Boolean = {
+
+    rangeStart <= this.value &&
+        this.value <= rangeEnd
+  }
+
+  /**
+   *
+   *
+   * @param rangeStart
+   * @param rangeEnd
+   *
+   * @return
+   */
+  @inline
+  def isAbsBetweenInclIncl(
+      rangeStart: Double,
+      rangeEnd: Double): Boolean = {
+
+    val a = math.abs(value)
+
+    rangeStart <= a && a <= rangeEnd
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def <[E <: AbstractMagnitude[E]] (other: Double): Boolean = {
+    this.value < other
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def <=[E <: AbstractMagnitude[E]] (other: Double): Boolean = {
+    this.value <= other
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def >[E <: AbstractMagnitude[E]] (other: Double): Boolean = {
+    this.value > other
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def >=[E <: AbstractMagnitude[E]] (other: Double): Boolean = {
+    this.value >= other
   }
 
 }

@@ -30,8 +30,20 @@ import aalto.smcl.modeling.{AbstractCartesianPosition, Len}
  */
 object Pos {
 
-  /** The origo of a one-dimensional coordinate system. */
-  val Origo = new Pos(0.0)
+  /** The zero of a one-dimensional coordinate system. */
+  lazy val Zero = new Pos(0.0)
+
+  /** Positive one in a one-dimensional coordinate system. */
+  lazy val One = Pos(1.0)
+
+  /** A [[Pos]] instance that represents positive infinity. */
+  lazy val PositiveInfinity = Pos(Double.PositiveInfinity)
+
+  /** A [[Pos]] instance that represents negative infinity. */
+  lazy val NegativeInfinity = Pos(Double.NegativeInfinity)
+
+  /** A [[Pos]] instance that represents a not-a-number. */
+  lazy val NaN = Pos(Double.NaN)
 
   /**
    * Creates a new [[Pos]] instance.
@@ -60,11 +72,38 @@ object Pos {
 case class Pos private(
     inPixels: Double)
     extends AbstractCartesianPosition(Seq(inPixels))
+            with Ordered[Pos]
             with ItemItemMap[Pos, Double]
             with FlatMap[Pos, Double]
             with CommonDoubleMathOps[Pos]
             with MinMaxOps[Pos]
             with Movable[Pos] {
+
+  /**
+   * Returns <code>true</code> if this instance represents
+   * the zero position; otherwise <code>false</code>.
+   */
+  val isZero: Boolean = inPixels == 0.0
+
+  /**
+   * Returns <code>true</code> if this instance represents
+   * positive infinity; otherwise <code>false</code>.
+   */
+  val isPositiveInfinity: Boolean =
+    inPixels.isPosInfinity
+
+  /**
+   * Returns <code>true</code> if this instance represents
+   * negative infinity; otherwise <code>false</code>.
+   */
+  val isNegativeInfinity: Boolean =
+    inPixels.isNegInfinity
+
+  /**
+   * Returns <code>true</code> if this instance represents
+   * a not-a-number; otherwise <code>false</code>.
+   */
+  val isNaN: Boolean = inPixels.isNaN
 
   /**
    *
@@ -106,6 +145,18 @@ case class Pos private(
   override
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Pos]
+  }
+
+  /**
+   *
+   *
+   * @param that
+   *
+   * @return
+   */
+  override
+  def compare(that: Pos): Int = {
+    inPixels.compare(that.inPixels)
   }
 
   /**
@@ -178,6 +229,15 @@ case class Pos private(
   @inline
   def - (offset: Pos): Pos = {
     Pos(inPixels - offset.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def unary_-(): Pos = {
+    Pos(-inPixels)
   }
 
   /**

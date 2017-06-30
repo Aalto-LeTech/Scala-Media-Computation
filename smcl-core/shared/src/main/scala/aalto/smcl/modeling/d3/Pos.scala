@@ -94,6 +94,14 @@ case class Pos private(
             with Movable[Pos] {
 
   /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def isOrigo: Boolean = this == Pos.Origo
+
+  /**
    * Converts the object to a tuple.
    *
    * @return
