@@ -31,7 +31,7 @@ import scala.annotation.tailrec
  */
 abstract class AbstractPosition(
     val coordinates: Seq[Double])
-    extends GeometryObject
+    extends AbstractGeometryObject
             with Equals
             with Iterable[Double] {
 

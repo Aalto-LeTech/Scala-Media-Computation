@@ -133,7 +133,7 @@ object Area {
  */
 case class Area private(
     inPixels: Double)
-    extends Magnitude[Area](inPixels)
+    extends AbstractMagnitude[Area](inPixels)
             with FlatMap[Area, Double] {
 
   /**
@@ -199,8 +199,8 @@ case class Area private(
    *
    * @return
    */
-  def * (factor: Len): Volume = {
-    Volume(inPixels * factor.inPixels)
+  def * (factor: Len): Vol = {
+    Vol(inPixels * factor.inPixels)
   }
 
   /**

@@ -31,7 +31,7 @@ import scala.annotation.tailrec
  */
 abstract class AbstractDimensions(
     val dimensions: Seq[Double])
-    extends GeometryObject
+    extends AbstractGeometryObject
             with Equals
             with Iterable[Double] {
 

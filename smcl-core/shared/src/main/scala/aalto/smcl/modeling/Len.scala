@@ -53,7 +53,7 @@ object Len {
  */
 case class Len private(
     inPixels: Double)
-    extends Magnitude[Len](inPixels) {
+    extends AbstractMagnitude[Len](inPixels) {
 
   /**
    *

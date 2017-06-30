@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d3
 
 
 import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, ToTuple, TupledMinMaxItemOps}
-import aalto.smcl.modeling.CartesianDimensions
+import aalto.smcl.modeling.AbstractCartesianDimensions
 
 
 
@@ -94,7 +94,7 @@ case class Dims private(
     widthInPixels: Double,
     heightInPixels: Double,
     depthInPixels: Double)
-    extends CartesianDimensions(Seq(widthInPixels, heightInPixels, depthInPixels))
+    extends AbstractCartesianDimensions(Seq(widthInPixels, heightInPixels, depthInPixels))
             with ToTuple[DimensionTuple]
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims, DimensionTuple]

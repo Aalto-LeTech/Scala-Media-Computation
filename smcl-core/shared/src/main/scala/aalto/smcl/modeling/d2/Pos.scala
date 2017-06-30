@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, MathUtils, ToTuple, TupledMinMaxItemOps}
-import aalto.smcl.modeling.{CartesianPosition, Len}
+import aalto.smcl.modeling.{AbstractCartesianPosition, Len}
 
 
 
@@ -81,7 +81,7 @@ object Pos {
 case class Pos private(
     xInPixels: Double,
     yInPixels: Double)
-    extends CartesianPosition(Seq(xInPixels, yInPixels))
+    extends AbstractCartesianPosition(Seq(xInPixels, yInPixels))
             with ToTuple[CoordinateTuple]
             with ItemItemMap[Pos, Double]
             with FlatMap[Pos, CoordinateTuple]

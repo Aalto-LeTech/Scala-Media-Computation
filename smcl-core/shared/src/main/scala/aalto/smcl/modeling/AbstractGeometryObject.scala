@@ -18,14 +18,10 @@ package aalto.smcl.modeling
 
 
 /**
- * Position in a Cartesian coordinate system.
- *
- * @param coordinates
+ * Base class for all geometrical objects.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class CartesianPosition(
-    override val coordinates: Seq[Double])
-    extends AbstractPosition(coordinates) {
+abstract class AbstractGeometryObject {
 
 }

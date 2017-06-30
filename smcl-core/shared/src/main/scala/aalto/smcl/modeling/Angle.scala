@@ -29,6 +29,9 @@ import aalto.smcl.infrastructure.{FlatMap, MathUtils}
  */
 object Angle {
 
+  /** A zero angle. */
+  val Zero = Angle(0)
+
   /** An angle of 10 degrees. */
   lazy val Deg10 = Angle(10)
 
@@ -335,10 +338,6 @@ object Angle {
   val BinaryDegree = Angle(BinaryDegreeInDegrees)
 
 
-  /** A zero angle. */
-  val Zero = Angle(0)
-
-
   /**
    * Creates a new [[Angle]] instance on the basis of given angle value.
    *
@@ -431,7 +430,7 @@ object Angle {
  */
 case class Angle private(
     inDegrees: Double)
-    extends Magnitude[Angle](inDegrees)
+    extends AbstractMagnitude[Angle](inDegrees)
             with FlatMap[Angle, Double] {
 
   /** The value of this angle in radians. */

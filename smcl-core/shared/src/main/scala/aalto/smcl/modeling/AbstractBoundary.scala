@@ -33,7 +33,7 @@ import aalto.smcl.infrastructure.FlatMap
  */
 abstract class AbstractBoundary[PositionType <: AbstractPosition](
     val markers: Seq[PositionType])
-    extends GeometryObject
+    extends AbstractGeometryObject
             with Equals
             with Iterable[PositionType]
             with FlatMap[AbstractBoundary[PositionType], Seq[PositionType]] {

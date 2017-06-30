@@ -28,7 +28,7 @@ package aalto.smcl.modeling
 abstract class AbstractCircle[PositionType <: AbstractPosition](
     val position: PositionType,
     val radiusInPixels: Double)
-    extends GeometryObject
+    extends AbstractGeometryObject
             with HasPosition[PositionType] {
 
 }

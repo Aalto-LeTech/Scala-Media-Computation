@@ -23,33 +23,33 @@ import aalto.smcl.infrastructure.FlatMap
 
 
 /**
- * Companion object for the [[Volume]] class.
+ * Companion object for the [[Vol]] class.
  *
  * @author Aleksi Lukkarinen
  */
-object Volume {
+object Vol {
 
   /**
-   * Creates a new [[Volume]] instance on the basis of given area value.
+   * Creates a new [[Vol]] instance on the basis of given area value.
    *
    * @param valueInPixels
    */
-  def apply(valueInPixels: Double): Volume = {
+  def apply(valueInPixels: Double): Vol = {
     require(
       valueInPixels >= 0,
       s"Volume cannot be negative (was $valueInPixels)")
 
-    new Volume(valueInPixels)
+    new Vol(valueInPixels)
   }
 
   /**
-   * Creates a new [[Volume]] instance on the basis of cube's side length.
+   * Creates a new [[Vol]] instance on the basis of cube's side length.
    *
    * @param sideLengthInPixels
    *
    * @return
    */
-  def forCube(sideLengthInPixels: Double): Volume = {
+  def forCube(sideLengthInPixels: Double): Vol = {
     require(
       sideLengthInPixels >= 0,
       s"Cube's side length cannot be negative (was $sideLengthInPixels)")
@@ -58,7 +58,7 @@ object Volume {
   }
 
   /**
-   * Creates a new [[Volume]] instance on the basis of
+   * Creates a new [[Vol]] instance on the basis of
    * cuboid's length, width, and height.
    *
    * @param lengthInPixels
@@ -70,7 +70,7 @@ object Volume {
   def forCuboid(
       lengthInPixels: Double,
       widthInPixels: Double,
-      heightInPixels: Double): Volume = {
+      heightInPixels: Double): Vol = {
 
     require(
       lengthInPixels >= 0,
@@ -88,7 +88,7 @@ object Volume {
   }
 
   /**
-   * Creates a new [[Volume]] instance on the basis of
+   * Creates a new [[Vol]] instance on the basis of
    * cuboid's base area and height.
    *
    * @param baseArea
@@ -98,7 +98,7 @@ object Volume {
    */
   def forCuboid(
       baseArea: Area,
-      heightInPixels: Double): Volume = {
+      heightInPixels: Double): Vol = {
 
     require(
       baseArea.inPixels >= 0,
@@ -112,7 +112,7 @@ object Volume {
   }
 
   /**
-   * Creates a new [[Volume]] instance on the basis
+   * Creates a new [[Vol]] instance on the basis
    * of cylinder's radius and height.
    *
    * @param radiusInPixels
@@ -120,7 +120,7 @@ object Volume {
    *
    * @return
    */
-  def forCylinder(radiusInPixels: Double, heightInPixels: Double): Volume = {
+  def forCylinder(radiusInPixels: Double, heightInPixels: Double): Vol = {
     require(
       radiusInPixels >= 0,
       s"Cylinder's radius cannot be negative (was $radiusInPixels)")
@@ -133,7 +133,7 @@ object Volume {
   }
 
   /**
-   * Creates a new [[Volume]] instance on the basis
+   * Creates a new [[Vol]] instance on the basis
    * of cone's base radius and height.
    *
    * @param radiusInPixels
@@ -141,7 +141,7 @@ object Volume {
    *
    * @return
    */
-  def forCone(radiusInPixels: Double, heightInPixels: Double): Volume = {
+  def forCone(radiusInPixels: Double, heightInPixels: Double): Vol = {
     require(
       radiusInPixels >= 0,
       s"Cone's radius cannot be negative (was $radiusInPixels)")
@@ -154,13 +154,13 @@ object Volume {
   }
 
   /**
-   * Creates a new [[Volume]] instance on the sphere's radius.
+   * Creates a new [[Vol]] instance on the sphere's radius.
    *
    * @param radiusInPixels
    *
    * @return
    */
-  def forSphere(radiusInPixels: Double): Volume = {
+  def forSphere(radiusInPixels: Double): Vol = {
     require(
       radiusInPixels >= 0,
       s"Sphere's radius cannot be negative (was $radiusInPixels)")
@@ -169,7 +169,7 @@ object Volume {
   }
 
   /**
-   * Creates a new [[Volume]] instance on the basis
+   * Creates a new [[Vol]] instance on the basis
    * of cylinder's radius and height.
    *
    * @param baseArea
@@ -177,7 +177,7 @@ object Volume {
    *
    * @return
    */
-  def forCylinder(baseArea: Area, heightInPixels: Double): Volume = {
+  def forCylinder(baseArea: Area, heightInPixels: Double): Vol = {
     require(
       baseArea.inPixels >= 0,
       s"Cylinder's base area cannot be negative (was ${baseArea.inPixels})")
@@ -190,7 +190,7 @@ object Volume {
   }
 
   /**
-   * Creates a new [[Volume]] instance on the basis
+   * Creates a new [[Vol]] instance on the basis
    * of pyramid's base area and height.
    *
    * @param baseArea
@@ -198,7 +198,7 @@ object Volume {
    *
    * @return
    */
-  def forPyramid(baseArea: Area, heightInPixels: Double): Volume = {
+  def forPyramid(baseArea: Area, heightInPixels: Double): Vol = {
     require(
       baseArea.inPixels >= 0,
       s"Pyramid's base area cannot be negative (was ${baseArea.inPixels})")
@@ -211,7 +211,7 @@ object Volume {
   }
 
   /**
-   * Creates a new [[Volume]] instance on the basis
+   * Creates a new [[Vol]] instance on the basis
    * of prism's base area and height.
    *
    * @param baseArea
@@ -219,7 +219,7 @@ object Volume {
    *
    * @return
    */
-  def forPrism(baseArea: Area, heightInPixels: Double): Volume = {
+  def forPrism(baseArea: Area, heightInPixels: Double): Vol = {
     require(
       baseArea.inPixels >= 0,
       s"Prism's base area cannot be negative (was ${baseArea.inPixels})")
@@ -243,10 +243,10 @@ object Volume {
  *
  * @author Aleksi Lukkarinen
  */
-case class Volume private(
+case class Vol private(
     inPixels: Double)
-    extends Magnitude[Volume](inPixels)
-            with FlatMap[Volume, Double] {
+    extends AbstractMagnitude[Vol](inPixels)
+            with FlatMap[Vol, Double] {
 
   /**
    *
@@ -256,8 +256,8 @@ case class Volume private(
    */
   @inline
   override
-  def map(f: (Double) => Double): Volume = {
-    Volume(f(inPixels))
+  def map(f: (Double) => Double): Vol = {
+    Vol(f(inPixels))
   }
 
   /**
@@ -267,8 +267,8 @@ case class Volume private(
    *
    * @return
    */
-  def + (offset: Volume): Volume = {
-    Volume(inPixels + offset.inPixels)
+  def + (offset: Vol): Vol = {
+    Vol(inPixels + offset.inPixels)
   }
 
   /**
@@ -278,8 +278,8 @@ case class Volume private(
    *
    * @return
    */
-  def - (offset: Volume): Volume = {
-    Volume(inPixels - offset.inPixels)
+  def - (offset: Vol): Vol = {
+    Vol(inPixels - offset.inPixels)
   }
 
   /**
@@ -289,7 +289,7 @@ case class Volume private(
    *
    * @return
    */
-  def / (divider: Volume): Double = {
+  def / (divider: Vol): Double = {
     inPixels / divider.inPixels
   }
 
@@ -322,8 +322,8 @@ case class Volume private(
    *
    * @return
    */
-  def + (offset: Double): Volume = {
-    Volume(inPixels + offset)
+  def + (offset: Double): Vol = {
+    Vol(inPixels + offset)
   }
 
   /**
@@ -333,8 +333,8 @@ case class Volume private(
    *
    * @return
    */
-  def - (offset: Double): Volume = {
-    Volume(inPixels - offset)
+  def - (offset: Double): Vol = {
+    Vol(inPixels - offset)
   }
 
   /**
@@ -344,8 +344,8 @@ case class Volume private(
    *
    * @return
    */
-  def * (factor: Double): Volume = {
-    Volume(inPixels * factor)
+  def * (factor: Double): Vol = {
+    Vol(inPixels * factor)
   }
 
   /**
@@ -355,8 +355,8 @@ case class Volume private(
    *
    * @return
    */
-  def / (divider: Double): Volume = {
-    Volume(inPixels / divider)
+  def / (divider: Double): Vol = {
+    Vol(inPixels / divider)
   }
 
 }

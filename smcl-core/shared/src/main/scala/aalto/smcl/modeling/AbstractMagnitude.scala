@@ -17,15 +17,100 @@
 package aalto.smcl.modeling
 
 
+import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, ToTuple}
+
+
+
+
 /**
- * Dimensions in a Cartesian coordinate system.
+ * Base class for magnitudes, such as length, area, and volume.
  *
- * @param dimensions
+ * @param value
  *
  * @author Aleksi Lukkarinen
  */
-abstract class CartesianDimensions(
-    override val dimensions: Seq[Double])
-    extends AbstractDimensions(dimensions) {
+abstract class AbstractMagnitude[ElementType](
+    private val value: Double)
+    extends AbstractGeometryObject
+            with Equals
+            with ToTuple[Tuple1[Double]]
+            with FlatMap[ElementType, Double]
+            with ItemItemMap[ElementType, Double]
+            with CommonDoubleMathOps[ElementType] {
+
+  /**
+   * Converts the object to a tuple.
+   *
+   * @return
+   */
+  @inline
+  override
+  def toTuple: Tuple1[Double] = {
+    Tuple1(value)
+  }
+
+  /**
+   * Converts the object to a tuple.
+   *
+   * @return
+   */
+  @inline
+  def toIntTuple: Tuple1[Int] = {
+    Tuple1(value.toInt)
+  }
+
+  /**
+   *
+   * @param f
+   *
+   * @return
+   */
+  @inline
+  override
+  def flatMap(f: (Double) => ElementType): ElementType = {
+    f(value)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  lazy val hashCode: Int = {
+    val prime = 31
+
+    prime + value.##
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def equals(other: Any): Boolean = {
+    other match {
+      case that: AbstractMagnitude[ElementType] =>
+        that.canEqual(this) &&
+            that.value == this.value
+
+      case _ => false
+    }
+  }
 
 }
