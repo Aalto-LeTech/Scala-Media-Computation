@@ -24,19 +24,19 @@ package aalto.smcl.modeling
  */
 object Len {
 
-  /**  */
+  /** */
   lazy val Zero = Len(0.0)
 
-  /**  */
+  /** */
   lazy val One = Len(1.0)
 
-  /**  */
+  /** */
   lazy val PositiveInfinity = Len(Double.PositiveInfinity)
 
-  /**  */
+  /** */
   lazy val NegativeInfinity = Len(Double.NegativeInfinity)
 
-  /**  */
+  /** */
   lazy val NaN = Len(Double.NaN)
 
   /**
@@ -81,6 +81,20 @@ case class Len private(
   def map(f: (Double) => Double): Len = {
     Len(f(inPixels))
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def inverse: Len = Len(-inPixels)
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def unary_+(): Len = this
 
   /**
    *
@@ -169,16 +183,6 @@ case class Len private(
   def / (divider: Double): Len = {
     Len(inPixels / divider)
   }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def unary_-(): Len = {
-    Len(-inPixels)
-  }
-
 
   /**
    *

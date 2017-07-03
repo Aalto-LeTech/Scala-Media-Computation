@@ -630,6 +630,13 @@ case class Angle private(
   /**
    *
    *
+   * @return
+   */
+  override def inverse: Angle = Angle(-inDegrees)
+
+  /**
+   *
+   *
    * @param rangeStart
    * @param rangeEnd
    *
@@ -797,8 +804,6 @@ case class Angle private(
    *
    * @return
    */
-  def unary_-(): Angle = {
-    Angle(-inDegrees)
-  }
+  override def unary_+(): Angle = this
 
 }

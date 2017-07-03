@@ -179,7 +179,7 @@ case class Pos private(
       deltas.length == 3,
       s"Pos represents exactly three coordinates (given: ${deltas.length})")
 
-    moveBy(deltas: _*)
+    moveBy(deltas(0), deltas(1), deltas(2))
   }
 
   /**
@@ -237,6 +237,21 @@ case class Pos private(
 
     Pos(minX, minY, minZ)
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def unary_+(): Pos = this
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def inverse: Pos =
+    Pos(-xInPixels, -yInPixels, -zInPixels)
 
   /**
    *

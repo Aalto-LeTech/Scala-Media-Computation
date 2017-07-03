@@ -29,19 +29,19 @@ import aalto.smcl.infrastructure.FlatMap
  */
 object Vol {
 
-  /**  */
+  /** */
   lazy val Zero = Vol(0.0)
 
-  /**  */
+  /** */
   lazy val One = Vol(1.0)
 
-  /**  */
+  /** */
   lazy val PositiveInfinity = Vol(Double.PositiveInfinity)
 
-  /**  */
+  /** */
   lazy val NegativeInfinity = Vol(Double.NegativeInfinity)
 
-  /**  */
+  /** */
   lazy val NaN = Vol(Double.NaN)
 
   /**
@@ -290,6 +290,20 @@ case class Vol private(
   /**
    *
    *
+   * @return
+   */
+  def inverse: Vol = Vol(-inPixels)
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def unary_+(): Vol = this
+
+  /**
+   *
+   *
    * @param offset
    *
    * @return
@@ -384,15 +398,6 @@ case class Vol private(
    */
   def / (divider: Double): Vol = {
     Vol(inPixels / divider)
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def unary_-(): Vol = {
-    Vol(-inPixels)
   }
 
 }

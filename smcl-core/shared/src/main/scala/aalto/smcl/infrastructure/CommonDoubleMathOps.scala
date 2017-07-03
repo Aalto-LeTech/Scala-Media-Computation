@@ -27,6 +27,7 @@ trait CommonDoubleMathOps[ElementType]
 
   this: ItemItemMap[ElementType, Double] =>
 
+
   /**
    *
    *

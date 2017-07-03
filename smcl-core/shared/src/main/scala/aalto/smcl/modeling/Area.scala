@@ -29,19 +29,19 @@ import aalto.smcl.infrastructure.FlatMap
  */
 object Area {
 
-  /**  */
+  /** */
   lazy val Zero = Area(0.0)
 
-  /**  */
+  /** */
   lazy val One = Area(1.0)
 
-  /**  */
+  /** */
   lazy val PositiveInfinity = Area(Double.PositiveInfinity)
 
-  /**  */
+  /** */
   lazy val NegativeInfinity = Area(Double.NegativeInfinity)
 
-  /**  */
+  /** */
   lazy val NaN = Area(Double.NaN)
 
 
@@ -156,6 +156,15 @@ case class Area private(
   /**
    *
    *
+   * @return
+   */
+  def inverse: Area = {
+    Area(-inPixels)
+  }
+
+  /**
+   *
+   *
    * @param f
    *
    * @return
@@ -175,6 +184,13 @@ case class Area private(
   override def compare(that: Area): Int = {
     inPixels.compare(that.inPixels)
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def unary_+(): Area = this
 
   /**
    *
@@ -273,15 +289,6 @@ case class Area private(
    */
   def / (divider: Double): Area = {
     Area(inPixels / divider)
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def unary_-(): Area = {
-    Area(-inPixels)
   }
 
 }

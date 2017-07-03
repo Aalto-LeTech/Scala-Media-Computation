@@ -216,6 +216,21 @@ case class Dims private(
   /**
    *
    *
+   * @return
+   */
+  override def unary_+(): Dims = this
+
+  /**
+   *
+   *
+   * @return
+   */
+  override def inverse: Dims =
+    Dims(-widthInPixels, -heightInPixels)
+
+  /**
+   *
+   *
    * @param offset
    *
    * @return

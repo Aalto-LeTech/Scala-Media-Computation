@@ -17,6 +17,8 @@
 package aalto.smcl.infrastructure
 
 
+
+
 /**
  * An interface for some common mathematical operations.
  *
@@ -47,6 +49,30 @@ trait CommonMathOps[ElementType] {
    */
   @inline
   def ceiling: ElementType
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def unary_+(): ElementType
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def unary_-(): ElementType = inverse
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def inverse: ElementType
 
   /**
    *

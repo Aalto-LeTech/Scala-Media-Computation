@@ -62,6 +62,16 @@ trait CommonTupledMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] 
    * @return
    */
   @inline
+  def toInversedTuple: ItemTupleType = {
+    this.inverse.toTuple
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   def toPowerTuple(exponent: Double): ItemTupleType = {
     this.power(exponent).toTuple
   }
