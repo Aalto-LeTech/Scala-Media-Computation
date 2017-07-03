@@ -14,94 +14,46 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
-
-
-import scala.annotation.tailrec
-
-
+package aalto.smcl.infrastructure
 
 
 /**
- * Position in some coordinate system.
  *
- * @param coordinates
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPosition(
-    val coordinates: Seq[Double])
-    extends AbstractGeometryObject
-            with Equals
-            with Iterable[Double] {
-
-  //lazy val intCoordinates: Seq[Int] =
-  //  coordinates.map(_.c)
-
-  /**
-   * Provides an iterator for the dimension values.
-   *
-   * @return
-   */
-  @inline
-  override
-  def iterator: Iterator[Double] = {
-    coordinates.iterator
-  }
+private[smcl]
+class RichInt(val value: Int) {
 
   /**
    *
    *
+   * @param minimum
+   *
    * @return
    */
-  override
-  lazy val hashCode: Int = {
-    val prime = 31
-
-    @tailrec
-    def hashCodeRecursive(
-        coordinates: Seq[Double],
-        sum: Int): Int = {
-
-      if (coordinates.isEmpty)
-        return sum
-
-      hashCodeRecursive(
-        coordinates.tail,
-        prime * sum + coordinates.head.##)
-    }
-
-    hashCodeRecursive(coordinates, 1)
-  }
+  def atLeast(minimum: Int): Int =
+    this.value.max(minimum)
 
   /**
    *
    *
-   * @param other
+   * @param maximum
    *
    * @return
    */
-  @inline
-  override
-  def canEqual(other: Any): Boolean
+  def atMost(maximum: Int): Int =
+    this.value.min(maximum)
 
   /**
    *
    *
-   * @param other
+   * @param low
+   * @param high
    *
    * @return
    */
-  @inline
-  override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: AbstractPosition =>
-        that.canEqual(this) &&
-            that.coordinates == this.coordinates
-
-      case _ => false
-    }
-  }
+  def isBetween(low: Int, high: Int): Boolean =
+    this.value >= low && this.value < high
 
 }

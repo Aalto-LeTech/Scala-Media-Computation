@@ -79,6 +79,28 @@ package object infrastructure extends Constants {
   }
 
   /**
+   * Application of the [[RichDouble]] class.
+   *
+   * @param self
+   *
+   * @return
+   */
+  implicit def DoubleWrapper(self: Double): RichDouble = {
+    new RichDouble(self)
+  }
+
+  /**
+   * Application of the [[RichFloat]] class.
+   *
+   * @param self
+   *
+   * @return
+   */
+  implicit def FloatWrapper(self: Float): RichFloat = {
+    new RichFloat(self)
+  }
+
+  /**
    * Application of the [[RichGenTraversable]] class.
    *
    * @param self
@@ -93,6 +115,28 @@ package object infrastructure extends Constants {
       self: C[E]): RichGenTraversable[E, C] = {
 
     new RichGenTraversable[E, C](self)
+  }
+
+  /**
+   * Application of the [[RichInt]] class.
+   *
+   * @param self
+   *
+   * @return
+   */
+  implicit def IntWrapper(self: Int): RichInt = {
+    new RichInt(self)
+  }
+
+  /**
+   * Application of the [[RichLong]] class.
+   *
+   * @param self
+   *
+   * @return
+   */
+  implicit def LongWrapper(self: Long): RichLong = {
+    new RichLong(self)
   }
 
   /**

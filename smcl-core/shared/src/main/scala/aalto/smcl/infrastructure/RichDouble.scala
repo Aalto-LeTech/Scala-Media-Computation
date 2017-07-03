@@ -14,94 +14,60 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
-
-
-import scala.annotation.tailrec
-
-
+package aalto.smcl.infrastructure
 
 
 /**
- * Position in some coordinate system.
  *
- * @param coordinates
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPosition(
-    val coordinates: Seq[Double])
-    extends AbstractGeometryObject
-            with Equals
-            with Iterable[Double] {
-
-  //lazy val intCoordinates: Seq[Int] =
-  //  coordinates.map(_.c)
-
-  /**
-   * Provides an iterator for the dimension values.
-   *
-   * @return
-   */
-  @inline
-  override
-  def iterator: Iterator[Double] = {
-    coordinates.iterator
-  }
+private[smcl]
+class RichDouble(val value: Double) {
 
   /**
    *
    *
+   * @param minimum
+   *
    * @return
    */
-  override
-  lazy val hashCode: Int = {
-    val prime = 31
-
-    @tailrec
-    def hashCodeRecursive(
-        coordinates: Seq[Double],
-        sum: Int): Int = {
-
-      if (coordinates.isEmpty)
-        return sum
-
-      hashCodeRecursive(
-        coordinates.tail,
-        prime * sum + coordinates.head.##)
-    }
-
-    hashCodeRecursive(coordinates, 1)
-  }
+  def atLeast(minimum: Double): Double =
+    this.value.max(minimum)
 
   /**
    *
    *
-   * @param other
+   * @param maximum
    *
    * @return
    */
-  @inline
-  override
-  def canEqual(other: Any): Boolean
+  def atMost(maximum: Double): Double =
+    this.value.min(maximum)
 
   /**
    *
    *
-   * @param other
+   * @param low
+   * @param high
    *
    * @return
    */
-  @inline
-  override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: AbstractPosition =>
-        that.canEqual(this) &&
-            that.coordinates == this.coordinates
+  def isBetween(low: Double, high: Double): Boolean =
+    this.value >= low && this.value < high
 
-      case _ => false
-    }
+  /**
+   *
+   *
+   * @return
+   */
+  def closestInt: Int = {
+    val longValue = value.round
+
+    if (longValue > Int.MaxValue || longValue < Int.MinValue)
+      throw new IllegalArgumentException("Integer out of bounds: " + longValue)
+
+    longValue.toInt
   }
 
 }

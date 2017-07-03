@@ -39,7 +39,6 @@ abstract class AbstractMagnitude[ElementType](
             with ItemItemMap[ElementType, Double]
             with CommonDoubleMathOps[ElementType] {
 
-
   /** */
   @inline
   def isZero: Boolean = value == 0.0

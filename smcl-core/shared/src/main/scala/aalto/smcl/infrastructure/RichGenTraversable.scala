@@ -43,4 +43,21 @@ class RichGenTraversable[E, C[E] <: GenTraversable[E]](val self: C[E]) {
     self
   }
 
+  /**
+   *
+   *
+   * @param formKey
+   * @param formValue
+   * @tparam Key
+   * @tparam Value
+   *
+   * @return
+   */
+  def mapify[Key, Value](
+      formKey: E => Key)(
+      formValue: E => Value): Map[Key, Value] = {
+
+    self.map(elem => formKey(elem) -> formValue(elem))(collection.breakOut)
+  }
+
 }
