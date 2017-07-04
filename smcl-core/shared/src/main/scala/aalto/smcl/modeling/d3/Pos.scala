@@ -262,9 +262,9 @@ case class Pos private(
    */
   @inline
   def + (offset: Dims): Pos = {
-    val x = xInPixels + offset.widthInPixels
-    val y = yInPixels + offset.heightInPixels
-    val z = zInPixels + offset.depthInPixels
+    val x = xInPixels + offset.width.inPixels
+    val y = yInPixels + offset.height.inPixels
+    val z = zInPixels + offset.depth.inPixels
 
     Pos(x, y, z)
   }
@@ -278,9 +278,9 @@ case class Pos private(
    */
   @inline
   def - (offset: Dims): Pos = {
-    val x = xInPixels - offset.widthInPixels
-    val y = yInPixels - offset.heightInPixels
-    val z = zInPixels - offset.depthInPixels
+    val x = xInPixels - offset.width.inPixels
+    val y = yInPixels - offset.height.inPixels
+    val z = zInPixels - offset.depth.inPixels
 
     Pos(x, y, z)
   }

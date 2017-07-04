@@ -18,6 +18,7 @@ package aalto.smcl.infrastructure
 
 
 import aalto.smcl.modeling.d2.Dims
+import aalto.smcl.modeling.{Area, Len}
 
 
 
@@ -25,44 +26,48 @@ import aalto.smcl.modeling.d2.Dims
 /**
  *
  *
+ * @param _informationProvider
+ *
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class DefaultScreen(private val _informationProvider: ScreenInformationProvider) {
+class DefaultScreen(
+    private val _informationProvider: ScreenInformationProvider) {
 
   /**
    * Dimensions of the screen.
    *
    * @return
    */
-  def dimensionsInPixels: Dims = _informationProvider.dimensionsInPixels
+  def dimensions: Dims = _informationProvider.dimensions
 
   /**
    *
    *
    * @return
    */
-  def resolutionInDotsPerInch: Int = _informationProvider.resolutionInDotsPerInch
+  def resolutionInDotsPerInch: Int =
+    _informationProvider.resolutionInDotsPerInch
 
   /**
    *
    *
    * @return
    */
-  def widthInPixels: Double = dimensionsInPixels.widthInPixels
+  def width: Len = dimensions.width
 
   /**
    * Height of the screen.
    *
    * @return
    */
-  def heightInPixels: Double = dimensionsInPixels.heightInPixels
+  def height: Len = dimensions.height
 
   /**
    * Area of the screen.
    *
    * @return
    */
-  def areaInPixels: Double = widthInPixels * heightInPixels
+  def area: Area = Area.forRectangle(width, height)
 
 }

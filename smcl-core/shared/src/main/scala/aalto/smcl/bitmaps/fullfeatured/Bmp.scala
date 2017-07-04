@@ -19,9 +19,9 @@ package aalto.smcl.bitmaps.fullfeatured
 
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.colors.ColorValidator
-import aalto.smcl.modeling.Len
-import aalto.smcl.modeling.d2.{Bounds, HasBounds, HasPos, Pos}
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter, Identity, InjectablesRegistry, PRF}
+import aalto.smcl.modeling.Len
+import aalto.smcl.modeling.d2._
 
 
 
@@ -56,9 +56,26 @@ object Bmp
       widthInPixels: Int,
       heightInPixels: Int): Bmp = {
 
+    apply(
+      Len(widthInPixels),
+      Len(heightInPixels))
+  }
+
+  /**
+   *
+   *
+   * @param width
+   * @param height
+   *
+   * @return
+   */
+  def apply(
+      width: Len,
+      height: Len): Bmp = {
+
     bitmapValidator.validateBitmapSize(
-      widthInPixels,
-      heightInPixels)
+      width,
+      height)
 
     val identity: Identity = Identity()
 
@@ -66,23 +83,21 @@ object Bmp
       Bounds(
         upperLeftXInPixels = 0,
         upperLeftYInPixels = 0,
-        lowerRightXInPixels = widthInPixels,
-        lowerRightYInPixels = heightInPixels)
+        lowerRightXInPixels = 0 + width.inPixels,
+        lowerRightYInPixels = 0 + height.inPixels)
 
-    val isrenderable =
-      widthInPixels > 0 && heightInPixels > 0
+    val isrenderable = width > 0 && height > 0
 
     val buffer =
       if (isrenderable)
-        Some(PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels))
+        Some(PRF.createPlatformBitmapBuffer(width, height))
       else
         None
 
     val bitmap = new Bmp(
       identity,
       isrenderable,
-      widthInPixels,
-      heightInPixels,
+      Dims(width, height),
       Pos.Origo,
       Some(boundary),
       buffer)
@@ -100,8 +115,7 @@ object Bmp
  *
  * @param identity
  * @param isRenderable
- * @param widthInPixels
- * @param heightInPixels
+ * @param dimensions
  * @param position
  * @param boundary
  * @param buffer
@@ -111,13 +125,13 @@ object Bmp
 class Bmp private(
     override val identity: Identity,
     val isRenderable: Boolean,
-    val widthInPixels: Int,
-    val heightInPixels: Int,
+    val dimensions: Dims,
     val position: Pos,
     override val boundary: Option[Bounds],
     private[this] val buffer: Option[BitmapBufferAdapter])
     extends ImageElement(identity)
             with HasPos
+            with HasDims
             with HasBounds {
 
   /** Length of the bitmap. As bitmap has no length, this equals <code>None</code>. */

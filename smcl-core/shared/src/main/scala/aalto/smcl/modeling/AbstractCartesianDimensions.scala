@@ -25,7 +25,7 @@ package aalto.smcl.modeling
  * @author Aleksi Lukkarinen
  */
 abstract class AbstractCartesianDimensions(
-    override val dimensions: Seq[Double])
+    override val dimensions: Seq[Len])
     extends AbstractDimensions(dimensions) {
 
 }

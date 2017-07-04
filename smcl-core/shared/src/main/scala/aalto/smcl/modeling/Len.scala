@@ -87,14 +87,11 @@ case class Len private(
    *
    * @return
    */
-  def inverse: Len = Len(-inPixels)
+  def center: Pos = {
+    val c = inPixels / 2.0
 
-  /**
-   *
-   *
-   * @return
-   */
-  override def unary_+(): Len = this
+    Pos(c)
+  }
 
   /**
    *
@@ -187,12 +184,43 @@ case class Len private(
   /**
    *
    *
+   * @return
+   */
+  def squared: Area = this * this
+
+  /**
+   *
+   *
+   * @return
+   */
+  def cubed: Vol = squared * this
+
+  /**
+   *
+   *
    * @param that
    *
    * @return
    */
-  override def compare(that: Len): Int = {
+  override
+  def compare(that: Len): Int = {
     inPixels.compare(that.inPixels)
   }
+
+  /**
+   * Returns the minimum of the given objects.
+   *
+   * @return
+   */
+  override
+  def min(others: Len*): Len = (this +: others).min
+
+  /**
+   * Returns the maximum of the given objects.
+   *
+   * @return
+   */
+  override
+  def max(others: Len*): Len = (this +: others).max
 
 }

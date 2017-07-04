@@ -76,13 +76,13 @@ object ViewerMainFrame {
    * @return
    */
   def initialViewAreaSizeFor(bitmap: Bitmap): Dimension = {
-    val screenSize = PRF.screenInformationProvider.dimensionsInPixels
+    val screenSize = PRF.screenInformationProvider.dimensions
 
-    val width = (screenSize.widthInPixels * 0.8).toInt
+    val width = (0.8 * screenSize.width).inPixels.toInt
         .min((bitmap.widthInPixels * 1.1).toInt)
         .max(MinimumFrameSize.width)
 
-    val height = (screenSize.heightInPixels * 0.8).toInt
+    val height = (0.8 * screenSize.height).inPixels.toInt
         .min((bitmap.heightInPixels * 1.1).toInt)
         .max(MinimumFrameSize.height)
 

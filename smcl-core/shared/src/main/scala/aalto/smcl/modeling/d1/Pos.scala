@@ -233,20 +233,6 @@ case class Pos private(
 
   /**
    *
-   *
-   * @return
-   */
-  def unary_+(): Pos = this
-
-  /**
-   *
-   *
-   * @return
-   */
-  def inverse: Pos = Pos(-inPixels)
-
-  /**
-   *
    * @param f
    *
    * @return

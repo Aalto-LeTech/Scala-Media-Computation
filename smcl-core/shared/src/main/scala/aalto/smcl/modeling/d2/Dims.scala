@@ -17,8 +17,8 @@
 package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, ToTuple, TupledMinMaxItemOps}
-import aalto.smcl.modeling.AbstractCartesianDimensions
+import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.{AbstractCartesianDimensions, Len}
 
 
 
@@ -59,7 +59,23 @@ object Dims {
       heightInPixels >= 0,
       s"Height cannot be negative (was $heightInPixels)")
 
-    new Dims(widthInPixels, heightInPixels)
+    new Dims(Len(widthInPixels), Len(heightInPixels))
+  }
+
+  /**
+   * Creates a new [[Dims]] instance.
+   *
+   * @param width
+   * @param height
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      width: Len,
+      height: Len): Dims = {
+
+    new Dims(width, height)
   }
 
   /**
@@ -70,12 +86,14 @@ object Dims {
    * @return
    */
   @inline
-  def apply(dimensions: Double*): Dims = {
+  def apply(dimensions: Seq[Double]): Dims = {
     require(
       dimensions.length == 2,
       s"Exactly two dimensions must be given (currently: ${dimensions.length})")
 
-    apply(dimensions: _*)
+    apply(
+      dimensions.head,
+      dimensions(1))
   }
 
 }
@@ -86,20 +104,20 @@ object Dims {
 /**
  * Dimensions in two-dimensional Cartesian coordinate system.
  *
- * @param widthInPixels
- * @param heightInPixels
+ * @param width
+ * @param height
  *
  * @author Aleksi Lukkarinen
  */
 case class Dims private(
-    widthInPixels: Double,
-    heightInPixels: Double)
-    extends AbstractCartesianDimensions(Seq(widthInPixels, heightInPixels))
+    width: Len,
+    height: Len)
+    extends AbstractCartesianDimensions(Seq(width, height))
             with ToTuple[DimensionTuple]
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims, DimensionTuple]
             with CommonTupledDoubleMathOps[Dims, DimensionTuple]
-            with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
+            with TupledMinMaxItemOps[Dims, Len, DimensionTuple] {
 
   /**
    *
@@ -108,7 +126,17 @@ case class Dims private(
    */
   @inline
   def toTuple: DimensionTuple = {
-    (widthInPixels, heightInPixels)
+    (width, height)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toDoubleTuple: (Double, Double) = {
+    (width.inPixels, height.inPixels)
   }
 
   /**
@@ -118,7 +146,10 @@ case class Dims private(
    */
   @inline
   def toIntTuple: (Int, Int) = {
-    (widthInPixels.toInt, heightInPixels.toInt)
+    val w = width.inPixels.closestInt
+    val h = height.inPixels.closestInt
+
+    (w, h)
   }
 
   /**
@@ -131,7 +162,7 @@ case class Dims private(
   @inline
   override
   def map(f: (Double) => Double): Dims = {
-    Dims(f(widthInPixels), f(heightInPixels))
+    Dims(f(width.inPixels), f(height.inPixels))
   }
 
   /**
@@ -166,9 +197,7 @@ case class Dims private(
    */
   @inline
   override
-  def minItem: Double = {
-    math.min(widthInPixels, heightInPixels)
-  }
+  def minItem: Len = dimensions.min
 
   /**
    * Returns the minimums of the different types of items
@@ -180,8 +209,8 @@ case class Dims private(
   override
   def minItems(others: Dims*): Dims = {
     val dims = this +: others
-    val minWidth = dims.minBy(_.widthInPixels).widthInPixels
-    val minHeight = dims.minBy(_.heightInPixels).heightInPixels
+    val minWidth = dims.map(_.width).min
+    val minHeight = dims.map(_.height).min
 
     Dims(minWidth, minHeight)
   }
@@ -193,9 +222,7 @@ case class Dims private(
    */
   @inline
   override
-  def maxItem: Double = {
-    math.max(widthInPixels, heightInPixels)
-  }
+  def maxItem: Len = dimensions.max
 
   /**
    * Returns the maximums of the different types of items
@@ -207,8 +234,8 @@ case class Dims private(
   override
   def maxItems(others: Dims*): Dims = {
     val dims = this +: others
-    val maxWidth = dims.maxBy(_.widthInPixels).widthInPixels
-    val maxHeight = dims.maxBy(_.heightInPixels).heightInPixels
+    val maxWidth = dims.map(_.width).max
+    val maxHeight = dims.map(_.height).max
 
     Dims(maxWidth, maxHeight)
   }
@@ -216,31 +243,16 @@ case class Dims private(
   /**
    *
    *
-   * @return
-   */
-  override def unary_+(): Dims = this
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def inverse: Dims =
-    Dims(-widthInPixels, -heightInPixels)
-
-  /**
-   *
-   *
    * @param offset
    *
    * @return
    */
   @inline
-  def + (offset: Dims): Pos = {
-    val width = widthInPixels + offset.widthInPixels
-    val height = heightInPixels + offset.heightInPixels
+  def + (offset: Dims): Dims = {
+    val newWidth = this.width + offset.width
+    val newHeight = this.height + offset.height
 
-    Pos(width, height)
+    Dims(newWidth, newHeight)
   }
 
   /**
@@ -251,11 +263,11 @@ case class Dims private(
    * @return
    */
   @inline
-  def - (offset: Dims): Pos = {
-    val width = widthInPixels - offset.widthInPixels
-    val height = heightInPixels - offset.heightInPixels
+  def - (offset: Dims): Dims = {
+    val newWidth = this.width - offset.width
+    val newHeight = this.height - offset.height
 
-    Pos(width, height)
+    Dims(newWidth, newHeight)
   }
 
 }

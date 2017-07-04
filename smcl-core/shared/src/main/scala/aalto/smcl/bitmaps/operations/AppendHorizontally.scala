@@ -23,6 +23,7 @@ import aalto.smcl.bitmaps._
 import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.Len
 import aalto.smcl.settings._
 
 
@@ -77,7 +78,7 @@ case class AppendHorizontally(
     childOperationListsOption.get.foldLeft[Int](0)({_ + _.widthInPixels}) +
         (childOperationListsOption.get.length - 1) * paddingInPixels
 
-  bitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
+  bitmapValidator.validateBitmapSize(Len(heightInPixels), Len(widthInPixels))
 
   /** Vertical offsets of the bitmaps to be combined. */
   val verticalOffsets: Seq[Int] = verticalAlignment match {
@@ -101,7 +102,7 @@ case class AppendHorizontally(
    * @return
    */
   override def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
-    val newBuffer = PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+    val newBuffer = PRF.createPlatformBitmapBuffer(Len(widthInPixels), Len(heightInPixels))
     val drawingSurface = newBuffer.drawingSurface
 
     drawingSurface clearUsing backgroundColor

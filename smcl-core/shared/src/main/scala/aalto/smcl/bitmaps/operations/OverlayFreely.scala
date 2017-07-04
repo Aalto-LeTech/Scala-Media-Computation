@@ -21,6 +21,7 @@ import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.Len
 import aalto.smcl.settings.DefaultBackgroundColor
 
 
@@ -114,7 +115,7 @@ case class OverlayFreely(
       topY = topBitmapUpperLeftY
     }
 
-    val newBuffer = PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+    val newBuffer = PRF.createPlatformBitmapBuffer(Len(widthInPixels), Len(heightInPixels))
     val drawingSurface = newBuffer.drawingSurface
 
     drawingSurface.clearUsing(backgroundColor)

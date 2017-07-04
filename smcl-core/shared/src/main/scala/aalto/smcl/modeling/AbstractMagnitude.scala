@@ -17,7 +17,7 @@
 package aalto.smcl.modeling
 
 
-import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, ToTuple}
+import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, MinMaxOps, ToTuple}
 
 
 
@@ -37,7 +37,8 @@ abstract class AbstractMagnitude[ElementType](
             with ToTuple[Tuple1[Double]]
             with FlatMap[ElementType, Double]
             with ItemItemMap[ElementType, Double]
-            with CommonDoubleMathOps[ElementType] {
+            with CommonDoubleMathOps[ElementType]
+            with MinMaxOps[ElementType] {
 
   /** */
   @inline

@@ -56,7 +56,7 @@ trait CommonMathOps[ElementType] {
    * @return
    */
   @inline
-  def unary_+(): ElementType
+  def doubled: ElementType
 
   /**
    *
@@ -64,7 +64,7 @@ trait CommonMathOps[ElementType] {
    * @return
    */
   @inline
-  def unary_-(): ElementType = inverse
+  def halfed: ElementType
 
   /**
    *
@@ -90,6 +90,14 @@ trait CommonMathOps[ElementType] {
    * @return
    */
   @inline
+  def quartered: ElementType
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   def round: ElementType
 
   /**
@@ -99,5 +107,29 @@ trait CommonMathOps[ElementType] {
    */
   @inline
   def signum: ElementType
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def tripled: ElementType
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def unary_+(): ElementType
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def unary_-(): ElementType = inverse
 
 }

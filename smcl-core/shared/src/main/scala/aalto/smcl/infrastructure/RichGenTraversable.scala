@@ -29,6 +29,7 @@ import scala.language.higherKinds
  * @param self
  *
  * @author Aleksi Lukkarinen
+ * @author Juha Sorva
  */
 //noinspection TypeParameterShadow
 private[smcl]

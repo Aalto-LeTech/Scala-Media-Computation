@@ -21,6 +21,7 @@ import aalto.smcl.bitmaps._
 import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.Len
 import aalto.smcl.settings.{DefaultBackgroundColor, DefaultPaddingInPixels}
 
 
@@ -76,7 +77,7 @@ case class ReplicateVertically(
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int = bitmapToReplicate.widthInPixels
 
-  bitmapValidator.validateBitmapSize(heightInPixels, widthInPixels)
+  bitmapValidator.validateBitmapSize(Len(widthInPixels), Len(heightInPixels))
 
   /**
    * Creates the buffer which contains the results of applying this operation
@@ -88,7 +89,7 @@ case class ReplicateVertically(
   override def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     val bufferToReplicate = childOperationListsOption.get.head.render()
 
-    val newBuffer = PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+    val newBuffer = PRF.createPlatformBitmapBuffer(Len(widthInPixels), Len(heightInPixels))
     val drawingSurface = newBuffer.drawingSurface
 
     drawingSurface.clearUsing(backgroundColor)

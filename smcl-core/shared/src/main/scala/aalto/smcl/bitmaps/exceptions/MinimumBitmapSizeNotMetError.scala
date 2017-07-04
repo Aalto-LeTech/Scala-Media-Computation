@@ -18,6 +18,7 @@ package aalto.smcl.bitmaps.exceptions
 
 
 import aalto.smcl.infrastructure.exceptions.SMCLBaseError
+import aalto.smcl.modeling.Len
 
 
 
@@ -28,18 +29,18 @@ import aalto.smcl.infrastructure.exceptions.SMCLBaseError
  * @author Aleksi Lukkarinen
  */
 final case class MinimumBitmapSizeNotMetError private[smcl](
-    actualWidthInPixels: Int,
-    actualHeightInPixels: Int,
-    minimumBitmapWidthInPixels: Int,
-    minimumBitmapHeightInPixels: Int,
+    actualWidth: Len,
+    actualHeight: Len,
+    minimumBitmapWidth: Len,
+    minimumBitmapHeight: Len,
     resourcePath: Option[String] = None,
     imageIndexInResource: Option[Int] = None)
     extends SMCLBaseError({
       val sb = new StringBuilder(200)
 
-      sb ++= s"The minimum image size of $minimumBitmapWidthInPixels x " ++=
-          s"$minimumBitmapHeightInPixels px has not been met " ++=
-          s"(was $actualWidthInPixels x $actualHeightInPixels)."
+      sb ++= s"The minimum image size of ${minimumBitmapWidth.inPixels} x " ++=
+          s"${minimumBitmapHeight.inPixels} px has not been met " ++=
+          s"(was ${actualWidth.inPixels} x ${actualHeight.inPixels})."
 
       resourcePath foreach {path => sb ++= s""" Resource: "$path"."""}
       imageIndexInResource foreach {index =>

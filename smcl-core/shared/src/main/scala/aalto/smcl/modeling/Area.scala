@@ -79,6 +79,18 @@ object Area {
   }
 
   /**
+   * Creates a new [[Area]] instance on the basis of triangle's width and height.
+   *
+   * @param baseLength
+   * @param height
+   *
+   * @return
+   */
+  def forTriangle(baseLength: Len, height: Len): Area = {
+    baseLength * height / 2.0
+  }
+
+  /**
    * Creates a new [[Area]] instance on the basis of circle's radius.
    *
    * @param radiusInPixels
@@ -89,6 +101,15 @@ object Area {
       s"Circle's radius cannot be negative (was $radiusInPixels)")
 
     apply(math.Pi * math.pow(radiusInPixels, 2))
+  }
+
+  /**
+   * Creates a new [[Area]] instance on the basis of circle's radius.
+   *
+   * @param radius
+   */
+  def forCircle(radius: Len): Area = {
+    apply(math.Pi * radius.doubled.inPixels)
   }
 
   /**
@@ -105,6 +126,15 @@ object Area {
   }
 
   /**
+   * Creates a new [[Area]] instance on the basis of circle's diameter.
+   *
+   * @param diameter
+   */
+  def forCircleByDiam(diameter: Len): Area = {
+    apply(math.Pi * diameter.doubled.inPixels / 4.0)
+  }
+
+  /**
    * Creates a new [[Area]] instance on the basis of square's side length.
    *
    * @param sideLengthInPixels
@@ -116,6 +146,13 @@ object Area {
 
     apply(math.pow(sideLengthInPixels, 2))
   }
+
+  /**
+   * Creates a new [[Area]] instance on the basis of square's side length.
+   *
+   * @param sideLength
+   */
+  def forSquare(sideLength: Len): Area = sideLength * sideLength
 
   /**
    * Creates a new [[Area]] instance on the basis of rectangle's width and height.
@@ -135,6 +172,14 @@ object Area {
     apply(widthInPixels * heightInPixels)
   }
 
+  /**
+   * Creates a new [[Area]] instance on the basis of rectangle's width and height.
+   *
+   * @param width
+   * @param height
+   */
+  def forRectangle(width: Len, height: Len): Area = width * height
+
 }
 
 
@@ -152,15 +197,6 @@ case class Area private(
     extends AbstractMagnitude[Area](inPixels)
             with FlatMap[Area, Double]
             with Ordered[Area] {
-
-  /**
-   *
-   *
-   * @return
-   */
-  def inverse: Area = {
-    Area(-inPixels)
-  }
 
   /**
    *
@@ -184,13 +220,6 @@ case class Area private(
   override def compare(that: Area): Int = {
     inPixels.compare(that.inPixels)
   }
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def unary_+(): Area = this
 
   /**
    *
@@ -290,5 +319,28 @@ case class Area private(
   def / (divider: Double): Area = {
     Area(inPixels / divider)
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def squareRoot: Len = Len(math.sqrt(this.inPixels))
+
+  /**
+   * Returns the minimum of the given objects.
+   *
+   * @return
+   */
+  override
+  def min(others: Area*): Area = (this +: others).min
+
+  /**
+   * Returns the maximum of the given objects.
+   *
+   * @return
+   */
+  override
+  def max(others: Area*): Area = (this +: others).max
 
 }

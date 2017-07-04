@@ -20,6 +20,7 @@ package aalto.smcl.infrastructure
 import scala.util.Try
 
 import aalto.smcl.colors.rgb.Color
+import aalto.smcl.modeling.Len
 
 
 
@@ -57,12 +58,12 @@ trait PlatformResourceFactory {
   /**
    *
    *
-   * @param widthInPixels
-   * @param heightInPixels
+   * @param width
+   * @param height
    *
    * @return
    */
-  def createPlatformBitmapBuffer(widthInPixels: Int, heightInPixels: Int): BitmapBufferAdapter
+  def createPlatformBitmapBuffer(width: Len, height: Len): BitmapBufferAdapter
 
   /**
    *

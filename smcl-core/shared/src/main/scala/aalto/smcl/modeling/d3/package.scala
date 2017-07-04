@@ -28,6 +28,6 @@ package object d3 {
   type CoordinateTuple = (Double, Double, Double)
 
   /** A type for a three-dimensional dimension triple. */
-  type DimensionTuple = (Double, Double, Double)
+  type DimensionTuple = (Len, Len, Len)
 
 }

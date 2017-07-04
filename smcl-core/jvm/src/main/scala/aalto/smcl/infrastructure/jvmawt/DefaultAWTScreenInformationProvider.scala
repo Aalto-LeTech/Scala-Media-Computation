@@ -35,7 +35,7 @@ class DefaultAWTScreenInformationProvider extends ScreenInformationProvider {
    *
    * @return
    */
-  override def dimensionsInPixels: Dims = {
+  override def dimensions: Dims = {
     val screenSize = AWTToolkit.getScreenSize
     Dims(screenSize.width, screenSize.height)
   }

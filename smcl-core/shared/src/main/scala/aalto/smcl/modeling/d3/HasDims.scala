@@ -16,7 +16,8 @@
 
 package aalto.smcl.modeling.d3
 
-import aalto.smcl.modeling.HasDimensions
+
+import aalto.smcl.modeling.{HasDimensions, Len}
 
 
 
@@ -27,4 +28,15 @@ import aalto.smcl.modeling.HasDimensions
  * @author Aleksi Lukkarinen
  */
 trait HasDims
-    extends HasDimensions[Dims]
+    extends HasDimensions[Dims] {
+
+  /** */
+  lazy val width: Len = dimensions.width
+
+  /** */
+  lazy val height: Len = dimensions.height
+
+  /** */
+  lazy val depth: Len = dimensions.depth
+
+}

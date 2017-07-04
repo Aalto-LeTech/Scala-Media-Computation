@@ -21,8 +21,9 @@ import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.bitmaps.operations._
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.Color
-import aalto.smcl.infrastructure.{Identity, InjectablesRegistry, PRF}
-import aalto.smcl.settings.{DefaultBackgroundColor, DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels, ViewerUpdateStyle}
+import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.d2.Dims
+import aalto.smcl.settings.{DefaultBackgroundColor, ViewerUpdateStyle}
 
 
 
@@ -114,8 +115,7 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
 
     displayAsNewIfNecessary(viewerHandling)(
       createEmptyBitmap(
-        widthInPixels,
-        heightInPixels,
+        Dims(widthInPixels, heightInPixels),
         initialBackgroundColor,
         processor
       ))
@@ -124,8 +124,7 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
   /**
    *
    *
-   * @param widthInPixels
-   * @param heightInPixels
+   * @param dimensions
    * @param initialBackgroundColor
    * @param processor
    *
@@ -133,14 +132,13 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
    */
   protected
   def createEmptyBitmap(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      dimensions: Dims,
       initialBackgroundColor: Color = DefaultBackgroundColor,
       processor: Option[(BitmapType) => BitmapType]): BitmapType = {
 
-    bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+    bitmapValidator.validateBitmapSize(dimensions.width, dimensions.height)
 
-    if (bitmapValidator.warningSizeLimitsAreExceeded(widthInPixels, heightInPixels)) {
+    if (bitmapValidator.warningSizeLimitsAreExceeded(dimensions.width, dimensions.height)) {
       println("\n\nWarning: The image is larger than the recommended maximum size")
     }
 
@@ -149,7 +147,8 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
 
     val operationList =
       Clear(initialBackgroundColor) +:
-          BitmapOperationList(CreateBitmap(widthInPixels, heightInPixels))
+          BitmapOperationList(CreateBitmap(
+            dimensions.width.inPixels.closestInt, dimensions.height.inPixels.closestInt))
 
     val bitmap = instantiateBitmap(operationList, bitmapValidator, colorValidator, Identity())
 

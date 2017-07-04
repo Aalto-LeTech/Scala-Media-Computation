@@ -18,6 +18,7 @@ package aalto.smcl.bitmaps.exceptions
 
 
 import aalto.smcl.infrastructure.exceptions.SMCLBaseError
+import aalto.smcl.modeling.Len
 
 
 
@@ -28,18 +29,18 @@ import aalto.smcl.infrastructure.exceptions.SMCLBaseError
  * @author Aleksi Lukkarinen
  */
 final case class MaximumBitmapSizeExceededError private[smcl](
-    actualWidthInPixels: Int,
-    actualHeightInPixels: Int,
-    maximumBitmapWidthInPixels: Int,
-    maximumBitmapHeightInPixels: Int,
+    actualWidth: Len,
+    actualHeight: Len,
+    maximumBitmapWidth: Len,
+    maximumBitmapHeight: Len,
     resourcePath: Option[String] = None,
     imageIndexInResource: Option[Int] = None)
     extends SMCLBaseError({
       val sb = new StringBuilder(200)
 
-      sb ++= s"The maximum image size of $maximumBitmapWidthInPixels x " ++=
-          s"$maximumBitmapHeightInPixels px has been exceeded " ++=
-          s"(was $actualWidthInPixels x $actualHeightInPixels)."
+      sb ++= s"The maximum image size of ${maximumBitmapWidth.inPixels} x " ++=
+          s"${maximumBitmapHeight.inPixels} px has been exceeded " ++=
+          s"(was ${actualWidth.inPixels} x ${actualHeight.inPixels})."
 
       resourcePath foreach {path => sb ++= s""" Resource: "$path"."""}
       imageIndexInResource foreach {index =>

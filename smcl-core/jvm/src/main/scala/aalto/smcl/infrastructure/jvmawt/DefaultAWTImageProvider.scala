@@ -30,6 +30,7 @@ import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.bitmaps.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
 import aalto.smcl.infrastructure.exceptions._
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, CommonFileUtils, EnsureClosingOfAfter}
+import aalto.smcl.modeling.Len
 
 
 
@@ -170,23 +171,26 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImage
       reader: ImageReader,
       filePath: String): Try[BitmapBufferAdapter] = for {
 
-    width <- Try(reader.getWidth(imageIndex))
-    height <- Try(reader.getHeight(imageIndex))
+    widthInPixels <- Try(reader.getWidth(imageIndex))
+    width = Len(widthInPixels)
+
+    heightInPixels <- Try(reader.getHeight(imageIndex))
+    height = Len(heightInPixels)
 
     _ = {
       if (bitmapValidator.maximumSizeLimitsAreExceeded(width, height)) {
         throw MaximumBitmapSizeExceededError(
           width, height,
-          BitmapValidator.MaximumBitmapWidthInPixels,
-          BitmapValidator.MaximumBitmapHeightInPixels,
+          BitmapValidator.MaximumBitmapWidth,
+          BitmapValidator.MaximumBitmapHeight,
           Option(filePath), Option(imageIndex))
       }
 
       if (bitmapValidator.minimumSizeLimitsAreNotMet(width, height)) {
         throw MinimumBitmapSizeNotMetError(
           width, height,
-          BitmapValidator.MinimumBitmapWidthInPixels,
-          BitmapValidator.MinimumBitmapHeightInPixels,
+          BitmapValidator.MinimumBitmapWidth,
+          BitmapValidator.MinimumBitmapHeight,
           Option(filePath), Option(imageIndex))
       }
     }

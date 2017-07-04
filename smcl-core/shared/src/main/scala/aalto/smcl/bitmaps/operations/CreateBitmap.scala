@@ -18,6 +18,7 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.Len
 import aalto.smcl.settings.{DefaultBitmapHeightInPixels, DefaultBitmapWidthInPixels}
 
 
@@ -57,7 +58,7 @@ case class CreateBitmap(
    * @return
    */
   override def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter =
-    PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+    PRF.createPlatformBitmapBuffer(Len(widthInPixels), Len(heightInPixels))
 
   /**
    * Returns the buffer from which the provided buffer copies are made.

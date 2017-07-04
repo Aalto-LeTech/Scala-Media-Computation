@@ -29,7 +29,7 @@ import aalto.smcl.modeling.{Angle, Area, Len, Vol}
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class RichLong(val value: Long) {
+class RichShort(val value: Short) {
 
   /**
    *
@@ -38,7 +38,7 @@ class RichLong(val value: Long) {
    *
    * @return
    */
-  def atLeast(minimum: Long): Long =
+  def atLeast(minimum: Short): Short =
     this.value.max(minimum)
 
   /**
@@ -48,7 +48,7 @@ class RichLong(val value: Long) {
    *
    * @return
    */
-  def atMost(maximum: Long): Long =
+  def atMost(maximum: Short): Short =
     this.value.min(maximum)
 
   /**
@@ -59,7 +59,7 @@ class RichLong(val value: Long) {
    *
    * @return
    */
-  def isBetween(low: Long, high: Long): Boolean =
+  def isBetween(low: Short, high: Short): Boolean =
     this.value >= low && this.value < high
 
   /**

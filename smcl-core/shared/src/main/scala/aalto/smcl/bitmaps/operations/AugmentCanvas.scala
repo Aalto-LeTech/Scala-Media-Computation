@@ -21,6 +21,7 @@ import aalto.smcl.bitmaps._
 import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.Len
 import aalto.smcl.settings.DefaultBackgroundColor
 
 
@@ -86,7 +87,7 @@ case class AugmentCanvas(
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int = extraPixelsOntoTopEdge + sourceBitmap.heightInPixels + extraPixelsOntoBottomEdge
 
-  bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+  bitmapValidator.validateBitmapSize(Len(widthInPixels), Len(heightInPixels))
 
   /**
    * Creates the buffer which contains the results of applying this operation
@@ -98,7 +99,7 @@ case class AugmentCanvas(
    * @return
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
-    val newBuffer = PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+    val newBuffer = PRF.createPlatformBitmapBuffer(Len(widthInPixels), Len(heightInPixels))
 
     newBuffer.drawingSurface.clearUsing(color, useSourceColorLiterally = true)
     newBuffer.drawingSurface.drawBitmap(

@@ -73,6 +73,15 @@ object Vol {
   }
 
   /**
+   * Creates a new [[Vol]] instance on the basis of cube's side length.
+   *
+   * @param sideLength
+   *
+   * @return
+   */
+  def forCube(sideLength: Len): Vol = sideLength.cubed
+
+  /**
    * Creates a new [[Vol]] instance on the basis of
    * cuboid's length, width, and height.
    *
@@ -104,6 +113,24 @@ object Vol {
 
   /**
    * Creates a new [[Vol]] instance on the basis of
+   * cuboid's length, width, and height.
+   *
+   * @param lengthInPixels
+   * @param widthInPixels
+   * @param heightInPixels
+   *
+   * @return
+   */
+  def forCuboid(
+      lengthInPixels: Len,
+      widthInPixels: Len,
+      heightInPixels: Len): Vol = {
+
+    lengthInPixels * widthInPixels * heightInPixels
+  }
+
+  /**
+   * Creates a new [[Vol]] instance on the basis of
    * cuboid's base area and height.
    *
    * @param baseArea
@@ -124,6 +151,22 @@ object Vol {
       s"Cuboid's height cannot be negative (was $heightInPixels)")
 
     apply(baseArea.inPixels * heightInPixels)
+  }
+
+  /**
+   * Creates a new [[Vol]] instance on the basis of
+   * cuboid's base area and height.
+   *
+   * @param baseArea
+   * @param heightInPixels
+   *
+   * @return
+   */
+  def forCuboid(
+      baseArea: Area,
+      heightInPixels: Len): Vol = {
+
+    baseArea * heightInPixels
   }
 
   /**
@@ -149,6 +192,19 @@ object Vol {
 
   /**
    * Creates a new [[Vol]] instance on the basis
+   * of cylinder's radius and height.
+   *
+   * @param radius
+   * @param height
+   *
+   * @return
+   */
+  def forCylinder(radius: Len, height: Len): Vol = {
+    math.Pi * radius.squared * height
+  }
+
+  /**
+   * Creates a new [[Vol]] instance on the basis
    * of cone's base radius and height.
    *
    * @param radiusInPixels
@@ -169,6 +225,19 @@ object Vol {
   }
 
   /**
+   * Creates a new [[Vol]] instance on the basis
+   * of cone's base radius and height.
+   *
+   * @param radius
+   * @param height
+   *
+   * @return
+   */
+  def forCone(radius: Len, height: Len): Vol = {
+    math.Pi * radius.squared * height / 3.0
+  }
+
+  /**
    * Creates a new [[Vol]] instance on the sphere's radius.
    *
    * @param radiusInPixels
@@ -184,6 +253,17 @@ object Vol {
   }
 
   /**
+   * Creates a new [[Vol]] instance on the sphere's radius.
+   *
+   * @param radius
+   *
+   * @return
+   */
+  def forSphere(radius: Len): Vol = {
+    4.0 * math.Pi * radius.cubed / 3.0
+  }
+
+  /**
    * Creates a new [[Vol]] instance on the basis
    * of cylinder's radius and height.
    *
@@ -192,16 +272,28 @@ object Vol {
    *
    * @return
    */
-  def forCylinder(baseArea: Area, heightInPixels: Double): Vol = {
-    require(
-      baseArea.inPixels >= 0,
-      s"Cylinder's base area cannot be negative (was ${baseArea.inPixels})")
+  def forCylinder(
+      baseArea: Area,
+      heightInPixels: Double): Vol = {
 
     require(
       heightInPixels >= 0,
       s"Cylinder's height cannot be negative (was $heightInPixels)")
 
     apply(baseArea.inPixels * heightInPixels)
+  }
+
+  /**
+   * Creates a new [[Vol]] instance on the basis
+   * of cylinder's radius and height.
+   *
+   * @param baseArea
+   * @param height
+   *
+   * @return
+   */
+  def forCylinder(baseArea: Area, height: Len): Vol = {
+    baseArea * height
   }
 
   /**
@@ -215,14 +307,23 @@ object Vol {
    */
   def forPyramid(baseArea: Area, heightInPixels: Double): Vol = {
     require(
-      baseArea.inPixels >= 0,
-      s"Pyramid's base area cannot be negative (was ${baseArea.inPixels})")
-
-    require(
       heightInPixels >= 0,
       s"Pyramid's height cannot be negative (was $heightInPixels)")
 
     apply(baseArea.inPixels * heightInPixels / 3.0)
+  }
+
+  /**
+   * Creates a new [[Vol]] instance on the basis
+   * of pyramid's base area and height.
+   *
+   * @param baseArea
+   * @param height
+   *
+   * @return
+   */
+  def forPyramid(baseArea: Area, height: Len): Vol = {
+    baseArea * height / 3.0
   }
 
   /**
@@ -236,14 +337,23 @@ object Vol {
    */
   def forPrism(baseArea: Area, heightInPixels: Double): Vol = {
     require(
-      baseArea.inPixels >= 0,
-      s"Prism's base area cannot be negative (was ${baseArea.inPixels})")
-
-    require(
       heightInPixels >= 0,
       s"Prism's height cannot be negative (was $heightInPixels)")
 
     apply(baseArea.inPixels * heightInPixels)
+  }
+
+  /**
+   * Creates a new [[Vol]] instance on the basis
+   * of prism's base area and height.
+   *
+   * @param baseArea
+   * @param height
+   *
+   * @return
+   */
+  def forPrism(baseArea: Area, height: Len): Vol = {
+    baseArea * height
   }
 
 }
@@ -286,20 +396,6 @@ case class Vol private(
   override def compare(that: Vol): Int = {
     inPixels.compare(that.inPixels)
   }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def inverse: Vol = Vol(-inPixels)
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def unary_+(): Vol = this
 
   /**
    *
@@ -399,5 +495,21 @@ case class Vol private(
   def / (divider: Double): Vol = {
     Vol(inPixels / divider)
   }
+
+  /**
+   * Returns the minimum of the given objects.
+   *
+   * @return
+   */
+  override
+  def min(others: Vol*): Vol = (this +: others).min
+
+  /**
+   * Returns the maximum of the given objects.
+   *
+   * @return
+   */
+  override
+  def max(others: Vol*): Vol = (this +: others).max
 
 }

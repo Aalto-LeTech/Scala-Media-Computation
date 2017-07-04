@@ -23,6 +23,7 @@ import scala.util.Try
 
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.{Timestamp, _}
+import aalto.smcl.modeling.Len
 
 
 
@@ -81,16 +82,16 @@ class DefaultJVMAWTPlatformResourceFactory(
   /**
    *
    *
-   * @param widthInPixels
-   * @param heightInPixels
+   * @param width
+   * @param height
    *
    * @return
    */
   def createPlatformBitmapBuffer(
-      widthInPixels: Int,
-      heightInPixels: Int): BitmapBufferAdapter = {
+      width: Len,
+      height: Len): BitmapBufferAdapter = {
 
-    AWTBitmapBufferAdapter(widthInPixels, heightInPixels)
+    AWTBitmapBufferAdapter(width, height)
   }
 
   /**

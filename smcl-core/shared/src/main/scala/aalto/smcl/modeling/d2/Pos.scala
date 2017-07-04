@@ -253,29 +253,14 @@ case class Pos private(
   /**
    *
    *
-   * @return
-   */
-  override def unary_+(): Pos = this
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def inverse: Pos =
-    Pos(-xInPixels, -yInPixels)
-
-  /**
-   *
-   *
    * @param offset
    *
    * @return
    */
   @inline
   def + (offset: Dims): Pos = {
-    val x = xInPixels + offset.widthInPixels
-    val y = yInPixels + offset.heightInPixels
+    val x = xInPixels + offset.width.inPixels
+    val y = yInPixels + offset.height.inPixels
 
     Pos(x, y)
   }
@@ -289,8 +274,8 @@ case class Pos private(
    */
   @inline
   def - (offset: Dims): Pos = {
-    val x = xInPixels - offset.widthInPixels
-    val y = yInPixels - offset.heightInPixels
+    val x = xInPixels - offset.width.inPixels
+    val y = yInPixels - offset.height.inPixels
 
     Pos(x, y)
   }

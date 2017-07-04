@@ -23,6 +23,7 @@ import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, PRF}
+import aalto.smcl.modeling.Len
 import aalto.smcl.settings._
 
 
@@ -120,7 +121,7 @@ case class OverlayPerAlignments(
    * @return
    */
   override def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
-    val newBuffer = PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+    val newBuffer = PRF.createPlatformBitmapBuffer(Len(widthInPixels), Len(heightInPixels))
     val drawingSurface = newBuffer.drawingSurface
 
     drawingSurface.clearUsing(backgroundColor)

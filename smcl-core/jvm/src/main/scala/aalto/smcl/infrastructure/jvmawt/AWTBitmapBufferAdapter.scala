@@ -28,9 +28,9 @@ import scala.util.{Failure, Try}
 import aalto.smcl.bitmaps._
 import aalto.smcl.colors._
 import aalto.smcl.colors.rgb._
-import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
+import aalto.smcl.modeling.{AffineTransformation, Len}
 import aalto.smcl.settings.jvmawt.AffineTransformationInterpolationMethod
 import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 
@@ -66,10 +66,29 @@ object AWTBitmapBufferAdapter extends InjectablesRegistry {
    *
    * @return
    */
-  def apply(widthInPixels: Int, heightInPixels: Int): AWTBitmapBufferAdapter = {
+  def apply(widthInPixels: Len, heightInPixels: Len): AWTBitmapBufferAdapter = {
     bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
     val newBuffer = createNormalizedLowLevelBitmapBufferOf(widthInPixels, heightInPixels)
+
+    new AWTBitmapBufferAdapter(newBuffer, colorValidator)
+  }
+
+  /**
+   *
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   *
+   * @return
+   */
+  def apply(widthInPixels: Int, heightInPixels: Int): AWTBitmapBufferAdapter = {
+    val width = Len(widthInPixels)
+    val height = Len(heightInPixels)
+
+    bitmapValidator.validateBitmapSize(width, height)
+
+    val newBuffer = createNormalizedLowLevelBitmapBufferOf(width, height)
 
     new AWTBitmapBufferAdapter(newBuffer, colorValidator)
   }
@@ -84,7 +103,7 @@ object AWTBitmapBufferAdapter extends InjectablesRegistry {
   def apply(awtBufferedImage: BufferedImage): AWTBitmapBufferAdapter = {
     require(awtBufferedImage != null, "Provided image buffer cannot be null.")
 
-    bitmapValidator.validateBitmapSize(awtBufferedImage.getWidth, awtBufferedImage.getHeight)
+    bitmapValidator.validateBitmapSize(Len(awtBufferedImage.getWidth), Len(awtBufferedImage.getHeight))
 
     val normalizedAWTBuffer = convertToNormalizedLowLevelBitmapBufferIfNecessary(awtBufferedImage)
 
@@ -94,23 +113,28 @@ object AWTBitmapBufferAdapter extends InjectablesRegistry {
   /**
    *
    *
-   * @param widthInPixels
-   * @param heightInPixels
+   * @param width
+   * @param height
    *
    * @return
    */
   private[infrastructure] def createNormalizedLowLevelBitmapBufferOf(
-      widthInPixels: Int,
-      heightInPixels: Int): BufferedImage = {
+      width: Len,
+      height: Len): BufferedImage = {
 
-    val newBuffer = new BufferedImage(widthInPixels, heightInPixels, NormalizedBufferType)
+    val newBuffer = new BufferedImage(
+      width.inPixels.closestInt,
+      height.inPixels.closestInt, NormalizedBufferType)
 
     var drawingSurface: Graphics2D = null
     try {
       drawingSurface = newBuffer.createGraphics()
       drawingSurface.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
       drawingSurface.setColor(DefaultBackgroundColor.toAWTColor)
-      drawingSurface.fillRect(0, 0, widthInPixels, heightInPixels)
+      drawingSurface.fillRect(
+        0, 0,
+        width.inPixels.closestInt,
+        height.inPixels.closestInt)
     }
     finally {
       drawingSurface.dispose()
@@ -134,7 +158,8 @@ object AWTBitmapBufferAdapter extends InjectablesRegistry {
 
     if (bufferCandidate.getType != NormalizedBufferType) {
       val newBuffer = createNormalizedLowLevelBitmapBufferOf(
-        bufferCandidate.getWidth, bufferCandidate.getHeight)
+        Len(bufferCandidate.getWidth),
+        Len(bufferCandidate.getHeight))
 
       var drawingSurface: Graphics2D = null
       try {
@@ -603,7 +628,7 @@ class AWTBitmapBufferAdapter private(
     val sourceBufferArea =
       awtBufferedImage.getSubimage(topLeftX, topLeftY, width, height)
 
-    val newBuffer = AWTBitmapBufferAdapter.createNormalizedLowLevelBitmapBufferOf(width, height)
+    val newBuffer = AWTBitmapBufferAdapter.createNormalizedLowLevelBitmapBufferOf(Len(width), Len(height))
 
     var drawingSurface: Graphics2D = null
     try {

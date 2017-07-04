@@ -34,7 +34,7 @@ trait ScreenInformationProvider {
    *
    * @return
    */
-  def dimensionsInPixels: Dims
+  def dimensions: Dims
 
   /**
    *

@@ -17,8 +17,8 @@
 package aalto.smcl.modeling.d3
 
 
-import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, ToTuple, TupledMinMaxItemOps}
-import aalto.smcl.modeling.AbstractCartesianDimensions
+import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.{AbstractCartesianDimensions, Len}
 
 
 
@@ -66,7 +66,29 @@ object Dims {
       depthInPixels >= 0,
       s"Depth cannot be negative (was $depthInPixels)")
 
-    new Dims(widthInPixels, heightInPixels, depthInPixels)
+    val w = Len(widthInPixels)
+    val h = Len(heightInPixels)
+    val d = Len(depthInPixels)
+
+    new Dims(w, h, d)
+  }
+
+  /**
+   * Creates a new [[Dims]] instance.
+   *
+   * @param width
+   * @param height
+   * @param depth
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      width: Len,
+      height: Len,
+      depth: Len): Dims = {
+
+    new Dims(width, height, depth)
   }
 
   /**
@@ -77,12 +99,15 @@ object Dims {
    * @return
    */
   @inline
-  def apply(dimensions: Double*): Dims = {
+  def apply(dimensions: Seq[Double]): Dims = {
     require(
       dimensions.length == 3,
       s"Exactly three dimensions must be given (currently: ${dimensions.length})")
 
-    apply(dimensions: _*)
+    apply(
+      dimensions.head,
+      dimensions(1),
+      dimensions(2))
   }
 
 }
@@ -93,22 +118,22 @@ object Dims {
 /**
  * Dimensions in three-dimensional Cartesian coordinate system.
  *
- * @param widthInPixels
- * @param heightInPixels
- * @param depthInPixels
+ * @param width
+ * @param height
+ * @param depth
  *
  * @author Aleksi Lukkarinen
  */
 case class Dims private(
-    widthInPixels: Double,
-    heightInPixels: Double,
-    depthInPixels: Double)
-    extends AbstractCartesianDimensions(Seq(widthInPixels, heightInPixels, depthInPixels))
+    width: Len,
+    height: Len,
+    depth: Len)
+    extends AbstractCartesianDimensions(Seq(width, height, depth))
             with ToTuple[DimensionTuple]
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims, DimensionTuple]
             with CommonTupledDoubleMathOps[Dims, DimensionTuple]
-            with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
+            with TupledMinMaxItemOps[Dims, Len, DimensionTuple] {
 
   /**
    * Converts the object to a tuple.
@@ -118,7 +143,22 @@ case class Dims private(
   @inline
   override
   def toTuple: DimensionTuple = {
-    (widthInPixels, heightInPixels, depthInPixels)
+    (width, height, depth)
+  }
+
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toDoubleTuple: (Double, Double, Double) = {
+    val w = width.inPixels
+    val h = height.inPixels
+    val d = depth.inPixels
+
+    (w, h, d)
   }
 
   /**
@@ -127,8 +167,12 @@ case class Dims private(
    * @return
    */
   @inline
-  def toIntTuple: (Int, Int) = {
-    (widthInPixels.toInt, heightInPixels.toInt)
+  def toIntTuple: (Int, Int, Int) = {
+    val w = width.inPixels.closestInt
+    val h = height.inPixels.closestInt
+    val d = depth.inPixels.closestInt
+
+    (w, h, d)
   }
 
   /**
@@ -140,9 +184,9 @@ case class Dims private(
   @inline
   def map(f: (Double) => Double): Dims = {
     Dims(
-      f(widthInPixels),
-      f(heightInPixels),
-      f(depthInPixels))
+      f(width.inPixels),
+      f(height.inPixels),
+      f(depth.inPixels))
   }
 
   /**
@@ -177,9 +221,7 @@ case class Dims private(
    */
   @inline
   override
-  def minItem: Double = {
-    math.min(math.min(widthInPixels, heightInPixels), depthInPixels)
-  }
+  def minItem: Len = dimensions.min
 
   /**
    * Returns the minimums of the different types of items
@@ -191,9 +233,9 @@ case class Dims private(
   override
   def minItems(others: Dims*): Dims = {
     val dims = this +: others
-    val minWidth = dims.minBy(_.widthInPixels).widthInPixels
-    val minHeight = dims.minBy(_.heightInPixels).heightInPixels
-    val minDepth = dims.minBy(_.depthInPixels).depthInPixels
+    val minWidth = dims.minBy(_.width).width
+    val minHeight = dims.minBy(_.height).height
+    val minDepth = dims.minBy(_.depth).depth
 
     Dims(minWidth, minHeight, minDepth)
   }
@@ -205,9 +247,7 @@ case class Dims private(
    */
   @inline
   override
-  def maxItem: Double = {
-    math.max(math.max(widthInPixels, heightInPixels), depthInPixels)
-  }
+  def maxItem: Len = dimensions.max
 
   /**
    * Returns the maximums of the different types of items
@@ -218,9 +258,9 @@ case class Dims private(
   @inline
   override def maxItems(others: Dims*): Dims = {
     val dims = this +: others
-    val maxWidth = dims.maxBy(_.widthInPixels).widthInPixels
-    val maxHeight = dims.maxBy(_.heightInPixels).heightInPixels
-    val maxDepth = dims.maxBy(_.depthInPixels).depthInPixels
+    val maxWidth = dims.maxBy(_.width).width
+    val maxHeight = dims.maxBy(_.height).height
+    val maxDepth = dims.maxBy(_.depth).depth
 
     Dims(maxWidth, maxHeight, maxDepth)
   }
@@ -228,32 +268,17 @@ case class Dims private(
   /**
    *
    *
-   * @return
-   */
-  override def unary_+(): Dims = this
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def inverse: Dims =
-    Dims(-widthInPixels, -heightInPixels, -depthInPixels)
-
-  /**
-   *
-   *
    * @param offset
    *
    * @return
    */
   @inline
-  def + (offset: Dims): Pos = {
-    val width = widthInPixels + offset.widthInPixels
-    val height = heightInPixels + offset.heightInPixels
-    val depth = depthInPixels + offset.depthInPixels
+  def + (offset: Dims): Dims = {
+    val newWidth = this.width + offset.width
+    val newHeight = this.height + offset.height
+    val newDepth = this.depth + offset.depth
 
-    Pos(width, height, depth)
+    Dims(newWidth, newHeight, newDepth)
   }
 
   /**
@@ -264,12 +289,12 @@ case class Dims private(
    * @return
    */
   @inline
-  def - (offset: Dims): Pos = {
-    val width = widthInPixels - offset.widthInPixels
-    val height = heightInPixels - offset.heightInPixels
-    val depth = depthInPixels - offset.depthInPixels
+  def - (offset: Dims): Dims = {
+    val newWidth = this.width - offset.width
+    val newHeight = this.height - offset.height
+    val newDepth = this.depth - offset.depth
 
-    Pos(width, height, depth)
+    Dims(newWidth, newHeight, newDepth)
   }
 
 }

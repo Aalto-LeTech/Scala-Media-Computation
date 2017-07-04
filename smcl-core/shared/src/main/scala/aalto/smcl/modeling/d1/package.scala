@@ -28,6 +28,6 @@ package object d1 {
   type CoordinateTuple = (Double)
 
   /** A type for an one-dimensional dimension tuple. */
-  type DimensionTuple = (Double)
+  type DimensionTuple = (Len)
 
 }

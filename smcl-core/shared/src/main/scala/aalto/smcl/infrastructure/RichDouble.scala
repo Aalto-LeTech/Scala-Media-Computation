@@ -17,9 +17,15 @@
 package aalto.smcl.infrastructure
 
 
+import aalto.smcl.modeling.{Angle, Area, Len, Vol}
+
+
+
+
 /**
  *
  *
+ * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
 private[smcl]
@@ -69,5 +75,41 @@ class RichDouble(val value: Double) {
 
     longValue.toInt
   }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  def * (other: Len): Len = other * value
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  def * (other: Area): Area = other * value
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  def * (other: Vol): Vol = other * value
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  def * (other: Angle): Angle = other * value
 
 }

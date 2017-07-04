@@ -30,10 +30,10 @@ import scala.annotation.tailrec
  * @author Aleksi Lukkarinen
  */
 abstract class AbstractDimensions(
-    val dimensions: Seq[Double])
+    val dimensions: Seq[Len])
     extends AbstractGeometryObject
             with Equals
-            with Iterable[Double] {
+            with Iterable[Len] {
 
   /**
    * Provides an iterator for the dimension values.
@@ -42,7 +42,7 @@ abstract class AbstractDimensions(
    */
   @inline
   override
-  def iterator: Iterator[Double] = {
+  def iterator: Iterator[Len] = {
     dimensions.iterator
   }
 
@@ -57,7 +57,7 @@ abstract class AbstractDimensions(
 
     @tailrec
     def hashCodeRecursive(
-        dimensions: Seq[Double],
+        dimensions: Seq[Len],
         sum: Int): Int = {
 
       if (dimensions.isEmpty)

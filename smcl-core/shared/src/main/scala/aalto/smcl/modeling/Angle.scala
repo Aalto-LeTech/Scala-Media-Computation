@@ -221,7 +221,6 @@ object Angle {
   val BinaryDegree = Angle(BinaryDegreeInDegrees)
 
 
-
   /** An angle that represents positive infinity. */
   lazy val PositiveInfinity = Angle(Double.PositiveInfinity)
 
@@ -805,5 +804,21 @@ case class Angle private(
    * @return
    */
   override def unary_+(): Angle = this
+
+  /**
+   * Returns the minimum of the given objects.
+   *
+   * @return
+   */
+  override
+  def min(others: Angle*): Angle = (this +: others).min
+
+  /**
+   * Returns the maximum of the given objects.
+   *
+   * @return
+   */
+  override
+  def max(others: Angle*): Angle = (this +: others).max
 
 }

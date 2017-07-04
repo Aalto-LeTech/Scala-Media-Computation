@@ -14,10 +14,10 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure
+package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.modeling.{Angle, Area, Len, Vol}
+import aalto.smcl.modeling.AbstractAnchor
 
 
 
@@ -28,74 +28,36 @@ import aalto.smcl.modeling.{Angle, Area, Len, Vol}
  * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-private[smcl]
-class RichLong(val value: Long) {
+trait HasAnchor extends HasDims {
+
+  self: HasPos =>
+
+
+  /** */
+  def anchor: AbstractAnchor
 
   /**
    *
    *
-   * @param minimum
-   *
    * @return
    */
-  def atLeast(minimum: Long): Long =
-    this.value.max(minimum)
+  def internalAnchorPos: Pos =
+    anchor.internalPosWithin(this)
 
   /**
    *
    *
-   * @param maximum
-   *
    * @return
    */
-  def atMost(maximum: Long): Long =
-    this.value.min(maximum)
+  def internalAnchorX: Double =
+    anchor.internalXWithin(this)
 
   /**
    *
    *
-   * @param low
-   * @param high
-   *
    * @return
    */
-  def isBetween(low: Long, high: Long): Boolean =
-    this.value >= low && this.value < high
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  def * (other: Len): Len = other * value
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  def * (other: Area): Area = other * value
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  def * (other: Vol): Vol = other * value
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  def * (other: Angle): Angle = other * value
+  def internalAnchorY: Double =
+    anchor.internalYWithin(this)
 
 }

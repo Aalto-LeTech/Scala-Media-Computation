@@ -21,6 +21,7 @@ import scala.util.Try
 
 import aalto.smcl.colors.rgb.Color
 import aalto.smcl.infrastructure.exceptions.ImplementationNotSetError
+import aalto.smcl.modeling.Len
 
 
 
@@ -66,16 +67,16 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
   /**
    *
    *
-   * @param widthInPixels
-   * @param heightInPixels
+   * @param width
+   * @param height
    *
    * @return
    */
   override def createPlatformBitmapBuffer(
-      widthInPixels: Int,
-      heightInPixels: Int): BitmapBufferAdapter = {
+      width: Len,
+      height: Len): BitmapBufferAdapter = {
 
-    implementation.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+    implementation.createPlatformBitmapBuffer(width, height)
   }
 
   /**
