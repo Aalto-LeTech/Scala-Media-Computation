@@ -29,6 +29,6 @@ abstract class AbstractCircle[PositionType <: AbstractPosition](
     val position: PositionType,
     val radiusInPixels: Double)
     extends AbstractGeometryObject
-            with HasPosition[PositionType] {
+            with AbstractHasPos[PositionType] {
 
 }

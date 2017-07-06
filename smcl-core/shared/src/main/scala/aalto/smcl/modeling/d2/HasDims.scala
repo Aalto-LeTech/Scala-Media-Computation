@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.modeling.{HasDimensions, Len}
+import aalto.smcl.modeling.{AbstractHasDims, Len}
 
 
 
@@ -28,14 +28,12 @@ import aalto.smcl.modeling.{HasDimensions, Len}
  * @author Aleksi Lukkarinen
  */
 trait HasDims
-    extends HasDimensions[Dims] {
+    extends AbstractHasDims[Dims] {
 
-  self: HasPos =>
-
-  /**  */
+  /** */
   lazy val width: Len = dimensions.width
 
-  /**  */
+  /** */
   lazy val height: Len = dimensions.height
 
   /**
@@ -43,12 +41,10 @@ trait HasDims
    *
    * @return
    */
-  def centerFromTopLeft: Pos = {
-    val offset = Dims(
-      dimensions.width / 2.0,
-      dimensions.height / 2.0)
-
-    position + offset
+  lazy val internalCenter: Dims = {
+    Dims(
+      width.half.inPixels,
+      height.half.inPixels)
   }
 
 }

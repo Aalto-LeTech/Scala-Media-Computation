@@ -17,15 +17,75 @@
 package aalto.smcl.modeling.d3
 
 
-import aalto.smcl.modeling.AbstractHasPos
+import aalto.smcl.modeling.Len
 
 
 
 
 /**
- * Object that has a three-dimensional position.
  *
+ *
+ * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-trait HasPos
-    extends AbstractHasPos[Pos]
+trait HasAnchor {
+
+  self: HasDims =>
+
+
+  /** */
+  def anchor: Anchor
+
+  /** */
+  @inline
+  def width: Len = self.width
+
+  /** */
+  @inline
+  def height: Len = self.height
+
+  /** */
+  @inline
+  def depth: Len = self.depth
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def internalAnchorDims: Dims = {
+    anchor.internalDimsWithin(self)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def internalAnchorX: Double = {
+    anchor.internalXWithin(self)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def internalAnchorY: Double = {
+    anchor.internalYWithin(self)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def internalAnchorZ: Double = {
+    anchor.internalZWithin(self)
+  }
+
+}

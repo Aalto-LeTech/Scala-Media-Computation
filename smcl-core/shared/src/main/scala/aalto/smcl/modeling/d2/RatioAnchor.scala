@@ -14,91 +14,94 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
+package aalto.smcl.modeling.d2
 
 
-import scala.annotation.tailrec
+import aalto.smcl.infrastructure.{CommonValidators, InjectablesRegistry}
+import aalto.smcl.modeling.AbstractRatioAnchor
 
 
 
 
 /**
- * A sequence of dimensions.
  *
- * @param lengths
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractDimensions(
-    val lengths: Seq[Double])
-    extends AbstractGeometryObject
-            with Equals
-            with Iterable[Double] {
+object RatioAnchor
+    extends InjectablesRegistry {
 
-  /**
-   * Provides an iterator for the dimension values.
-   *
-   * @return
-   */
-  @inline
-  override
-  def iterator: Iterator[Double] = {
-    lengths.iterator
+  /** The [[CommonValidators]] instance to be used by this object. */
+  protected lazy val commonValidators: CommonValidators = {
+    injectable(InjectablesRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
   }
 
   /**
    *
    *
+   * @param widthRatio
+   * @param heightRatio
+   * @param name
+   *
+   * @return
+   */
+  def apply(
+      widthRatio: Double,
+      heightRatio: Double,
+      name: Option[String]): RatioAnchor = {
+
+    commonValidators.validateZeroToOneFactor(widthRatio, Some("width ratio"))
+    commonValidators.validateZeroToOneFactor(heightRatio, Some("height ratio"))
+
+    // TODO: Validate name
+
+    RatioAnchor(widthRatio, heightRatio, name)
+  }
+
+}
+
+
+
+
+/**
+ *
+ *
+ * @param widthRatio  ratio of the whole width representing the intended anchor position in X direction
+ * @param heightRatio ratio of the whole height representing the intended anchor position in Y direction
+ * @param name        name of this anchor
+ *
+ * @author Aleksi Lukkarinen
+ */
+case class RatioAnchor private(
+    widthRatio: Double,
+    heightRatio: Double,
+    override val name: Option[String])
+    extends AbstractRatioAnchor[Dims](
+      Seq(widthRatio, heightRatio), name)
+            with Anchor {
+
+  /**
+   *
+   *
+   * @param anchored
+   *
    * @return
    */
   override
-  lazy val hashCode: Int = {
-    val prime = 31
-
-    @tailrec
-    def hashCodeRecursive(
-        lengths: Seq[Double],
-        sum: Int): Int = {
-
-      if (lengths.isEmpty)
-        return sum
-
-      hashCodeRecursive(
-        lengths.tail,
-        prime * sum + lengths.head.##)
-    }
-
-    hashCodeRecursive(lengths, 1)
+  def internalXWithin(anchored: HasAnchor): Double = {
+    widthRatio * anchored.width.inPixels
   }
 
   /**
    *
    *
-   * @param other
+   * @param anchored
    *
    * @return
    */
-  @inline
   override
-  def canEqual(other: Any): Boolean
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: AbstractDimensions =>
-        that.canEqual(this) &&
-            that.lengths == this.lengths
-
-      case _ => false
-    }
+  def internalYWithin(anchored: HasAnchor): Double = {
+    heightRatio * anchored.height.inPixels
   }
 
 }

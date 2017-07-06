@@ -22,6 +22,8 @@ import aalto.smcl.bitmaps.{BitmapValidator, BitmapValidatorFunctionFactory, full
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, RichColor}
 import aalto.smcl.infrastructure.{CollectionCreator, CommonValidators, DefaultJVMCalendarProvider, DefaultJVMUniqueIDProvider, DefaultPlatformResourceFactory, InjectablesRegistry, RicherString, SMCLInitializer, SettingInitializer, StringUtils}
+import aalto.smcl.modeling
+import aalto.smcl.modeling.{d1, d2, d3}
 import aalto.smcl.settings._
 import aalto.smcl.settings.jvmawt.JVMAWTSettingInitializer
 
@@ -104,6 +106,12 @@ object Initializer extends SMCLInitializer {
       IntSetting,
       StringSetting,
       AWTBitmapBufferAdapter,
+      d1.PointAnchor,
+      d1.RatioAnchor,
+      d2.PointAnchor,
+      d2.RatioAnchor,
+      d3.PointAnchor,
+      d3.RatioAnchor,
       fullfeatured.Bitmap,
       ShapeCreator,
       simplified.Bitmap,

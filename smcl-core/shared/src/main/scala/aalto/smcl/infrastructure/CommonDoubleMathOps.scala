@@ -50,7 +50,7 @@ trait CommonDoubleMathOps[ElementType]
    * @return
    */
   @inline
-  def doubled: ElementType = map(2 * _)
+  def double: ElementType = map(2 * _)
 
   /**
    *
@@ -66,7 +66,7 @@ trait CommonDoubleMathOps[ElementType]
    * @return
    */
   @inline
-  def halfed: ElementType = map(_ / 2.0)
+  def half: ElementType = map(_ / 2.0)
 
   /**
    *
@@ -101,7 +101,7 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  def quartered: ElementType = map(_ / 4.0)
+  def quarter: ElementType = map(_ / 4.0)
 
   /**
    *
@@ -125,6 +125,6 @@ trait CommonDoubleMathOps[ElementType]
    * @return
    */
   @inline
-  def tripled: ElementType = map(3 * _)
+  def triple: ElementType = map(3 * _)
 
 }

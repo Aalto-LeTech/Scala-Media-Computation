@@ -70,7 +70,7 @@ object Dims {
     val h = Len(heightInPixels)
     val d = Len(depthInPixels)
 
-    new Dims(w, h, d)
+    apply(w, h, d)
   }
 
   /**
@@ -102,7 +102,7 @@ object Dims {
   def apply(dimensions: Seq[Double]): Dims = {
     require(
       dimensions.length == 3,
-      s"Exactly three dimensions must be given (currently: ${dimensions.length})")
+      s"Exactly $NumberOfDimensions dimensions must be given (currently: ${dimensions.length})")
 
     apply(
       dimensions.head,
@@ -128,12 +128,13 @@ case class Dims private(
     width: Len,
     height: Len,
     depth: Len)
-    extends AbstractCartesianDimensions(Seq(width, height, depth))
+    extends AbstractCartesianDimensions(
+      Seq(width.inPixels, height.inPixels, depth.inPixels))
             with ToTuple[DimensionTuple]
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims, DimensionTuple]
             with CommonTupledDoubleMathOps[Dims, DimensionTuple]
-            with TupledMinMaxItemOps[Dims, Len, DimensionTuple] {
+            with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
 
   /**
    * Converts the object to a tuple.
@@ -221,7 +222,7 @@ case class Dims private(
    */
   @inline
   override
-  def minItem: Len = dimensions.min
+  def minItem: Double = lengths.min
 
   /**
    * Returns the minimums of the different types of items
@@ -247,7 +248,7 @@ case class Dims private(
    */
   @inline
   override
-  def maxItem: Len = dimensions.max
+  def maxItem: Double = lengths.max
 
   /**
    * Returns the maximums of the different types of items

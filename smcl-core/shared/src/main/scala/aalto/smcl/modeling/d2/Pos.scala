@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, MathUtils, ToTuple, TupledMinMaxItemOps}
+import aalto.smcl.infrastructure._
 import aalto.smcl.modeling.{AbstractCartesianPosition, Len}
 
 
@@ -288,7 +288,7 @@ case class Pos private(
    * @return
    */
   @inline
-  def distanceTo(other: Pos): Len = {
+  def distanceFrom(other: Pos): Len = {
     val diffX = math.abs(other.xInPixels - xInPixels)
     val diffY = math.abs(other.yInPixels - yInPixels)
     val distance = math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2))

@@ -56,7 +56,7 @@ trait CommonMathOps[ElementType] {
    * @return
    */
   @inline
-  def doubled: ElementType
+  def double: ElementType
 
   /**
    *
@@ -64,7 +64,7 @@ trait CommonMathOps[ElementType] {
    * @return
    */
   @inline
-  def halfed: ElementType
+  def half: ElementType
 
   /**
    *
@@ -90,7 +90,7 @@ trait CommonMathOps[ElementType] {
    * @return
    */
   @inline
-  def quartered: ElementType
+  def quarter: ElementType
 
   /**
    *
@@ -114,7 +114,7 @@ trait CommonMathOps[ElementType] {
    * @return
    */
   @inline
-  def tripled: ElementType
+  def triple: ElementType
 
   /**
    *

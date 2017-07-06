@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d1
 
 
-import aalto.smcl.modeling.HasPosition
+import aalto.smcl.modeling.AbstractHasPos
 
 
 
@@ -28,4 +28,4 @@ import aalto.smcl.modeling.HasPosition
  * @author Aleksi Lukkarinen
  */
 trait HasPos
-    extends HasPosition[Pos]
+    extends AbstractHasPos[Pos]

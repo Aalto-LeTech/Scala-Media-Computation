@@ -293,7 +293,7 @@ case class Pos private(
    * @return
    */
   @inline
-  def distanceTo(other: Pos): Len = {
+  def distanceFrom(other: Pos): Len = {
     val diffX = math.abs(other.xInPixels - xInPixels)
     val diffY = math.abs(other.yInPixels - yInPixels)
     val diffZ = math.abs(other.zInPixels - zInPixels)

@@ -14,18 +14,16 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling.d3
-
-
-import aalto.smcl.modeling.AbstractHasPos
-
-
+package aalto.smcl.modeling
 
 
 /**
- * Object that has a three-dimensional position.
+ *
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPos
-    extends AbstractHasPos[Pos]
+abstract class AbstractRatioAnchor[DimensionType <: AbstractDimensions](
+    val ratiosOfWholeDimensions: Seq[Double],
+    val name: Option[String]) {
+
+}

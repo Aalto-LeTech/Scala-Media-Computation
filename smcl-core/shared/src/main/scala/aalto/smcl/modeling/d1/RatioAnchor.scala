@@ -14,18 +14,76 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling.d3
+package aalto.smcl.modeling.d1
 
 
-import aalto.smcl.modeling.AbstractHasPos
+import aalto.smcl.infrastructure.{CommonValidators, InjectablesRegistry}
+import aalto.smcl.modeling.AbstractRatioAnchor
 
 
 
 
 /**
- * Object that has a three-dimensional position.
+ *
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPos
-    extends AbstractHasPos[Pos]
+object RatioAnchor
+    extends InjectablesRegistry {
+
+  /** The [[CommonValidators]] instance to be used by this object. */
+  protected lazy val commonValidators: CommonValidators = {
+    injectable(InjectablesRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
+  }
+
+  /**
+   *
+   *
+   * @param ratio
+   * @param name
+   *
+   * @return
+   */
+  def apply(
+      ratio: Double,
+      name: Option[String]): RatioAnchor = {
+
+    commonValidators.validateZeroToOneFactor(ratio, Some("ratio"))
+
+    // TODO: Validate name
+
+    RatioAnchor(ratio, name)
+  }
+
+}
+
+
+
+
+/**
+ *
+ *
+ * @param ratio ratio of the whole width representing the intended anchor position in X direction
+ * @param name  name of this anchor
+ *
+ * @author Aleksi Lukkarinen
+ */
+case class RatioAnchor private(
+    ratio: Double,
+    override val name: Option[String])
+    extends AbstractRatioAnchor[Dims](Seq(ratio), name)
+            with Anchor {
+
+  /**
+   *
+   *
+   * @param anchored
+   *
+   * @return
+   */
+  override
+  def internalXWithin(anchored: HasAnchor): Double = {
+    ratio * anchored.inPixels
+  }
+
+}

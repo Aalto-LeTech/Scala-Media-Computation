@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.modeling.AbstractAnchor
+import aalto.smcl.modeling.Len
 
 
 
@@ -28,36 +28,50 @@ import aalto.smcl.modeling.AbstractAnchor
  * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-trait HasAnchor extends HasDims {
+trait HasAnchor {
 
-  self: HasPos =>
+  self: HasDims =>
 
 
   /** */
-  def anchor: AbstractAnchor
+  def anchor: Anchor
+
+  /** */
+  @inline
+  def width: Len = self.width
+
+  /** */
+  @inline
+  def height: Len = self.height
 
   /**
    *
    *
    * @return
    */
-  def internalAnchorPos: Pos =
-    anchor.internalPosWithin(this)
+  @inline
+  def internalAnchorDims: Dims = {
+    anchor.internalDimsWithin(self)
+  }
 
   /**
    *
    *
    * @return
    */
-  def internalAnchorX: Double =
-    anchor.internalXWithin(this)
+  @inline
+  def internalAnchorX: Double = {
+    anchor.internalXWithin(self)
+  }
 
   /**
    *
    *
    * @return
    */
-  def internalAnchorY: Double =
-    anchor.internalYWithin(this)
+  @inline
+  def internalAnchorY: Double = {
+    anchor.internalYWithin(self)
+  }
 
 }

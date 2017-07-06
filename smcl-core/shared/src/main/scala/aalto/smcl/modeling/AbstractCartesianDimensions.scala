@@ -20,12 +20,12 @@ package aalto.smcl.modeling
 /**
  * Dimensions in a Cartesian coordinate system.
  *
- * @param dimensions
+ * @param lengths
  *
  * @author Aleksi Lukkarinen
  */
 abstract class AbstractCartesianDimensions(
-    override val dimensions: Seq[Len])
-    extends AbstractDimensions(dimensions) {
+    override val lengths: Seq[Double])
+    extends AbstractDimensions(lengths) {
 
 }

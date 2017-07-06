@@ -24,6 +24,9 @@ package aalto.smcl.modeling
  */
 package object d2 {
 
+  /** Number of dimensions in a two-dimensional coordinate system. */
+  val NumberOfDimensions: Short = 2
+
   /** A type for a two-dimensional coordinate pair. */
   type CoordinateTuple = (Double, Double)
 

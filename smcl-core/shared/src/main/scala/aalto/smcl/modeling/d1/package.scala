@@ -24,10 +24,7 @@ package aalto.smcl.modeling
  */
 package object d1 {
 
-  /** A type for an one-dimensional coordinate tuple. */
-  type CoordinateTuple = (Double)
-
-  /** A type for an one-dimensional dimension tuple. */
-  type DimensionTuple = (Len)
+  /** Number of dimensions in an one-dimensional coordinate system. */
+  val NumberOfDimensions: Short = 1
 
 }

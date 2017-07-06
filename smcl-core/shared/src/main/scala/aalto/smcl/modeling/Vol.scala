@@ -79,7 +79,7 @@ object Vol {
    *
    * @return
    */
-  def forCube(sideLength: Len): Vol = sideLength.cubed
+  def forCube(sideLength: Len): Vol = sideLength.cube
 
   /**
    * Creates a new [[Vol]] instance on the basis of
@@ -200,7 +200,7 @@ object Vol {
    * @return
    */
   def forCylinder(radius: Len, height: Len): Vol = {
-    math.Pi * radius.squared * height
+    math.Pi * radius.square * height
   }
 
   /**
@@ -234,7 +234,7 @@ object Vol {
    * @return
    */
   def forCone(radius: Len, height: Len): Vol = {
-    math.Pi * radius.squared * height / 3.0
+    math.Pi * radius.square * height / 3.0
   }
 
   /**
@@ -260,7 +260,7 @@ object Vol {
    * @return
    */
   def forSphere(radius: Len): Vol = {
-    4.0 * math.Pi * radius.cubed / 3.0
+    4.0 * math.Pi * radius.cube / 3.0
   }
 
   /**

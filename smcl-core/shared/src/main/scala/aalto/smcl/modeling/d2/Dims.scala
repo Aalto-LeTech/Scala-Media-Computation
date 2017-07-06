@@ -88,8 +88,8 @@ object Dims {
   @inline
   def apply(dimensions: Seq[Double]): Dims = {
     require(
-      dimensions.length == 2,
-      s"Exactly two dimensions must be given (currently: ${dimensions.length})")
+      dimensions.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions dimensions must be given (currently: ${dimensions.length})")
 
     apply(
       dimensions.head,
@@ -112,12 +112,13 @@ object Dims {
 case class Dims private(
     width: Len,
     height: Len)
-    extends AbstractCartesianDimensions(Seq(width, height))
+    extends AbstractCartesianDimensions(
+      Seq(width.inPixels, height.inPixels))
             with ToTuple[DimensionTuple]
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims, DimensionTuple]
             with CommonTupledDoubleMathOps[Dims, DimensionTuple]
-            with TupledMinMaxItemOps[Dims, Len, DimensionTuple] {
+            with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
 
   /**
    *
@@ -197,7 +198,7 @@ case class Dims private(
    */
   @inline
   override
-  def minItem: Len = dimensions.min
+  def minItem: Double = lengths.min
 
   /**
    * Returns the minimums of the different types of items
@@ -222,7 +223,7 @@ case class Dims private(
    */
   @inline
   override
-  def maxItem: Len = dimensions.max
+  def maxItem: Double = lengths.max
 
   /**
    * Returns the maximums of the different types of items

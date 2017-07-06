@@ -14,18 +14,22 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling.d3
-
-
-import aalto.smcl.modeling.AbstractHasPos
-
-
+package aalto.smcl.modeling
 
 
 /**
- * Object that has a three-dimensional position.
+ * An object that has dimensions.
+ *
+ * @tparam DimensionType
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPos
-    extends AbstractHasPos[Pos]
+trait AbstractHasDims[DimensionType <: AbstractDimensions] {
+
+  /** Dimensions of this object. */
+  def dimensions: DimensionType
+
+  /** Dimensions to the internal center point of this object. */
+  def internalCenter: DimensionType
+
+}

@@ -109,7 +109,7 @@ object Area {
    * @param radius
    */
   def forCircle(radius: Len): Area = {
-    apply(math.Pi * radius.doubled.inPixels)
+    apply(math.Pi * radius.double.inPixels)
   }
 
   /**
@@ -131,7 +131,7 @@ object Area {
    * @param diameter
    */
   def forCircleByDiam(diameter: Len): Area = {
-    apply(math.Pi * diameter.doubled.inPixels / 4.0)
+    apply(math.Pi * diameter.double.inPixels / 4.0)
   }
 
   /**

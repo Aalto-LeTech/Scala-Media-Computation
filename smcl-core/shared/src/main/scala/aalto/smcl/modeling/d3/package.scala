@@ -24,6 +24,9 @@ package aalto.smcl.modeling
  */
 package object d3 {
 
+  /** Number of dimensions in a three-dimensional coordinate system. */
+  val NumberOfDimensions: Short = 3
+
   /** A type for a three-dimensional coordinate triple. */
   type CoordinateTuple = (Double, Double, Double)
 

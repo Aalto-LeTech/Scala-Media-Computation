@@ -66,8 +66,7 @@ object Len {
  *
  * @author Aleksi Lukkarinen
  */
-case class Len private(
-    inPixels: Double)
+case class Len private(inPixels: Double)
     extends AbstractMagnitude[Len](inPixels) {
 
   /**
@@ -77,7 +76,7 @@ case class Len private(
    *
    * @return
    */
-  override
+  @inline
   def map(f: (Double) => Double): Len = {
     Len(f(inPixels))
   }
@@ -85,13 +84,23 @@ case class Len private(
   /**
    *
    *
+   * @param that
+   *
    * @return
    */
-  def center: Pos = {
-    val c = inPixels / 2.0
-
-    Pos(c)
+  @inline
+  override
+  def compare(that: Len): Int = {
+    inPixels.compare(that.inPixels)
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def center: d1.Pos = d1.Pos(inPixels / 2.0)
 
   /**
    *
@@ -100,6 +109,7 @@ case class Len private(
    *
    * @return
    */
+  @inline
   def + (offset: Len): Len = {
     Len(inPixels + offset.inPixels)
   }
@@ -111,6 +121,7 @@ case class Len private(
    *
    * @return
    */
+  @inline
   def - (offset: Len): Len = {
     Len(inPixels - offset.inPixels)
   }
@@ -122,6 +133,7 @@ case class Len private(
    *
    * @return
    */
+  @inline
   def * (factor: Len): Area = {
     Area(inPixels * factor.inPixels)
   }
@@ -133,6 +145,7 @@ case class Len private(
    *
    * @return
    */
+  @inline
   def / (divider: Len): Double = {
     inPixels / divider.inPixels
   }
@@ -144,6 +157,7 @@ case class Len private(
    *
    * @return
    */
+  @inline
   def + (offset: Double): Len = {
     Len(inPixels + offset)
   }
@@ -155,6 +169,7 @@ case class Len private(
    *
    * @return
    */
+  @inline
   def - (offset: Double): Len = {
     Len(inPixels - offset)
   }
@@ -166,6 +181,7 @@ case class Len private(
    *
    * @return
    */
+  @inline
   def * (factor: Double): Len = {
     Len(inPixels * factor)
   }
@@ -177,6 +193,7 @@ case class Len private(
    *
    * @return
    */
+  @inline
   def / (divider: Double): Len = {
     Len(inPixels / divider)
   }
@@ -186,32 +203,23 @@ case class Len private(
    *
    * @return
    */
-  def squared: Area = this * this
+  @inline
+  def square: Area = Area(inPixels * inPixels)
 
   /**
    *
    *
    * @return
    */
-  def cubed: Vol = squared * this
-
-  /**
-   *
-   *
-   * @param that
-   *
-   * @return
-   */
-  override
-  def compare(that: Len): Int = {
-    inPixels.compare(that.inPixels)
-  }
+  @inline
+  def cube: Vol = Vol(inPixels * inPixels * inPixels)
 
   /**
    * Returns the minimum of the given objects.
    *
    * @return
    */
+  @inline
   override
   def min(others: Len*): Len = (this +: others).min
 
@@ -220,6 +228,7 @@ case class Len private(
    *
    * @return
    */
+  @inline
   override
   def max(others: Len*): Len = (this +: others).max
 

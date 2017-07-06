@@ -95,7 +95,7 @@ package object modeling {
       first: d2.Pos,
       second: d2.Pos): Len = {
 
-    first.distanceTo(second)
+    first.distanceFrom(second)
   }
 
   /**
@@ -111,7 +111,7 @@ package object modeling {
       first: d3.Pos,
       second: d3.Pos): Len = {
 
-    first.distanceTo(second)
+    first.distanceFrom(second)
   }
 
   /**
