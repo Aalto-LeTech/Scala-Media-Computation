@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d1
 
 
-import aalto.smcl.modeling.AbstractHasDims
+import aalto.smcl.modeling.misc.AbstractHasDims
 
 
 
@@ -31,9 +31,9 @@ trait HasDims
     extends AbstractHasDims[Dims] {
 
   /** */
-  lazy val inPixels: Double = dimensions.inPixels
+  lazy val lengthInPixels: Double = dimensions.lengthInPixels
 
   /** */
-  lazy val internalCenter: Dims = Dims(dimensions.half.inPixels)
+  lazy val internalCenter: Dims = Dims(dimensions.half.lengthInPixels)
 
 }

@@ -29,7 +29,7 @@ trait HasAnchor {
 
 
   /** */
-  def anchor: Anchor
+  def anchor: Anchor[HasAnchor]
 
   /**
    *
@@ -37,7 +37,9 @@ trait HasAnchor {
    * @return
    */
   @inline
-  def inPixels: Double = self.inPixels
+  def lengthInPixels: Double = {
+    self.lengthInPixels
+  }
 
   /**
    *

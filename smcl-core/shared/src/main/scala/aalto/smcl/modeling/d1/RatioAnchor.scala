@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d1
 
 
 import aalto.smcl.infrastructure.{CommonValidators, InjectablesRegistry}
-import aalto.smcl.modeling.AbstractRatioAnchor
+import aalto.smcl.modeling.misc.AbstractRatioAnchor
 
 
 
@@ -40,6 +40,18 @@ object RatioAnchor
    *
    *
    * @param ratio
+   *
+   * @return
+   */
+  @inline
+  def apply(ratio: Double): RatioAnchor = {
+    apply(ratio, None)
+  }
+
+  /**
+   *
+   *
+   * @param ratio
    * @param name
    *
    * @return
@@ -52,7 +64,7 @@ object RatioAnchor
 
     // TODO: Validate name
 
-    RatioAnchor(ratio, name)
+    new RatioAnchor(ratio, name)
   }
 
 }
@@ -72,7 +84,7 @@ case class RatioAnchor private(
     ratio: Double,
     override val name: Option[String])
     extends AbstractRatioAnchor[Dims](Seq(ratio), name)
-            with Anchor {
+            with Anchor[HasAnchor] {
 
   /**
    *
@@ -81,9 +93,10 @@ case class RatioAnchor private(
    *
    * @return
    */
+  @inline
   override
   def internalXWithin(anchored: HasAnchor): Double = {
-    ratio * anchored.inPixels
+    ratio * anchored.lengthInPixels
   }
 
 }

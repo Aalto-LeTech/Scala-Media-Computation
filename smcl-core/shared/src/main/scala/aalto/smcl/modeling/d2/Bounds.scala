@@ -19,6 +19,7 @@ package aalto.smcl.modeling.d2
 
 import aalto.smcl.infrastructure.MathUtils
 import aalto.smcl.modeling._
+import aalto.smcl.modeling.misc.AbstractBoundary
 
 
 

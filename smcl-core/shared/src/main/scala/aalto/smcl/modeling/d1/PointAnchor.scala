@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d1
 
 
 import aalto.smcl.infrastructure.InjectablesRegistry
-import aalto.smcl.modeling.AbstractPointAnchor
+import aalto.smcl.modeling.misc.AbstractPointAnchor
 
 
 
@@ -36,19 +36,29 @@ object PointAnchor
    *
    *
    * @param xInPixels
-   * @param yInPixels
+   *
+   * @return
+   */
+  @inline
+  def apply(xInPixels: Double): PointAnchor = {
+    apply(xInPixels, None)
+  }
+
+  /**
+   *
+   *
+   * @param xInPixels
    * @param name
    *
    * @return
    */
   def apply(
       xInPixels: Double,
-      yInPixels: Double,
       name: Option[String]): PointAnchor = {
 
     // TODO: Validate name
 
-    PointAnchor(xInPixels, yInPixels, name)
+    new PointAnchor(xInPixels, name)
   }
 
 }
@@ -59,26 +69,15 @@ object PointAnchor
 /**
  *
  *
- * @param inPixels
+ * @param xInPixels
  * @param name
  *
  * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
 case class PointAnchor private(
-    inPixels: Double,
+    xInPixels: Double,
     override val name: Option[String])
-    extends AbstractPointAnchor[Dims](Seq(inPixels), name)
-            with Anchor {
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  override def internalXWithin(
-      anchored: HasAnchor): Double = inPixels
-
-}
+    extends AbstractPointAnchor[Dims](Seq(xInPixels), name)
+            with Anchor[HasAnchor]
+            with PointAnchorMembers[HasAnchor]

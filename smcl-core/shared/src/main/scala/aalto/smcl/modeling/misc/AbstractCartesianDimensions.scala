@@ -14,22 +14,20 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
+package aalto.smcl.modeling.misc
+
+
 
 
 /**
- * An object that has dimensions.
+ * Dimensions in a Cartesian coordinate system.
  *
- * @tparam DimensionType
+ * @param lengths
  *
  * @author Aleksi Lukkarinen
  */
-trait AbstractHasDims[DimensionType <: AbstractDimensions] {
-
-  /** Dimensions of this object. */
-  def dimensions: DimensionType
-
-  /** Dimensions to the internal center point of this object. */
-  def internalCenter: DimensionType
+abstract class AbstractCartesianDimensions(
+    override val lengths: Seq[Double])
+    extends AbstractDimensions(lengths) {
 
 }

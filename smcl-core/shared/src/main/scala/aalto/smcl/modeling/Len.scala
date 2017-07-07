@@ -17,6 +17,11 @@
 package aalto.smcl.modeling
 
 
+import aalto.smcl.modeling.misc.AbstractMagnitude
+
+
+
+
 /**
  * Companion object for the [[Len]] class.
  *

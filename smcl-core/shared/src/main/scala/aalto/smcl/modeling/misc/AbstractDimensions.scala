@@ -14,8 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
-
+package aalto.smcl.modeling.misc
 
 import scala.annotation.tailrec
 
@@ -23,20 +22,17 @@ import scala.annotation.tailrec
 
 
 /**
- * Position in some coordinate system.
+ * A sequence of dimensions.
  *
- * @param coordinates
+ * @param lengths
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPosition(
-    val coordinates: Seq[Double])
+abstract class AbstractDimensions(
+    val lengths: Seq[Double])
     extends AbstractGeometryObject
             with Equals
             with Iterable[Double] {
-
-  //lazy val intCoordinates: Seq[Int] =
-  //  coordinates.map(_.c)
 
   /**
    * Provides an iterator for the dimension values.
@@ -46,7 +42,7 @@ abstract class AbstractPosition(
   @inline
   override
   def iterator: Iterator[Double] = {
-    coordinates.iterator
+    lengths.iterator
   }
 
   /**
@@ -60,18 +56,18 @@ abstract class AbstractPosition(
 
     @tailrec
     def hashCodeRecursive(
-        coordinates: Seq[Double],
+        lengths: Seq[Double],
         sum: Int): Int = {
 
-      if (coordinates.isEmpty)
+      if (lengths.isEmpty)
         return sum
 
       hashCodeRecursive(
-        coordinates.tail,
-        prime * sum + coordinates.head.##)
+        lengths.tail,
+        prime * sum + lengths.head.##)
     }
 
-    hashCodeRecursive(coordinates, 1)
+    hashCodeRecursive(lengths, 1)
   }
 
   /**
@@ -96,9 +92,9 @@ abstract class AbstractPosition(
   override
   def equals(other: Any): Boolean = {
     other match {
-      case that: AbstractPosition =>
+      case that: AbstractDimensions =>
         that.canEqual(this) &&
-            that.coordinates == this.coordinates
+            that.lengths == this.lengths
 
       case _ => false
     }

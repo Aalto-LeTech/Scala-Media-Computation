@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d3
 
 
 import aalto.smcl.infrastructure.{CommonValidators, InjectablesRegistry}
-import aalto.smcl.modeling.AbstractRatioAnchor
+import aalto.smcl.modeling.misc.AbstractRatioAnchor
 
 
 
@@ -39,8 +39,55 @@ object RatioAnchor
   /**
    *
    *
+   * @param ratios
+   *
+   * @return
+   */
+  @inline
+  def apply(ratios: Seq[Double]): RatioAnchor = {
+    apply(ratios.head, ratios(1), ratios(2), None)
+  }
+
+  /**
+   *
+   *
+   * @param ratios
+   * @param name
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      ratios: Seq[Double],
+      name: Option[String]): RatioAnchor = {
+
+    apply(ratios.head, ratios(1), ratios(2), name)
+  }
+
+  /**
+   *
+   *
    * @param widthRatio
    * @param heightRatio
+   * @param depthRatio
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      widthRatio: Double,
+      heightRatio: Double,
+      depthRatio: Double): RatioAnchor = {
+
+    apply(widthRatio, heightRatio, depthRatio, None)
+  }
+
+  /**
+   *
+   *
+   * @param widthRatio
+   * @param heightRatio
+   * @param depthRatio
    * @param name
    *
    * @return
@@ -57,7 +104,7 @@ object RatioAnchor
 
     // TODO: Validate name
 
-    RatioAnchor(widthRatio, heightRatio, depthRatio, name)
+    new RatioAnchor(widthRatio, heightRatio, depthRatio, name)
   }
 
 }
@@ -82,7 +129,7 @@ case class RatioAnchor private(
     override val name: Option[String])
     extends AbstractRatioAnchor[Dims](
       Seq(widthRatio, heightRatio, depthRatio), name)
-            with Anchor {
+            with Anchor[HasAnchor] {
 
   /**
    *
@@ -91,6 +138,7 @@ case class RatioAnchor private(
    *
    * @return
    */
+  @inline
   override
   def internalXWithin(anchored: HasAnchor): Double = {
     widthRatio * anchored.width.inPixels
@@ -103,6 +151,7 @@ case class RatioAnchor private(
    *
    * @return
    */
+  @inline
   override
   def internalYWithin(anchored: HasAnchor): Double = {
     heightRatio * anchored.height.inPixels
@@ -115,6 +164,7 @@ case class RatioAnchor private(
    *
    * @return
    */
+  @inline
   override
   def internalZWithin(anchored: HasAnchor): Double = {
     depthRatio * anchored.depth.inPixels

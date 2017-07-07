@@ -18,6 +18,7 @@ package aalto.smcl.modeling
 
 
 import aalto.smcl.infrastructure.{FlatMap, MathUtils}
+import aalto.smcl.modeling.misc.AbstractMagnitude
 
 
 

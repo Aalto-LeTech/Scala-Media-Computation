@@ -17,8 +17,6 @@
 package aalto.smcl.modeling.d2
 
 
-
-
 /**
  *
  *

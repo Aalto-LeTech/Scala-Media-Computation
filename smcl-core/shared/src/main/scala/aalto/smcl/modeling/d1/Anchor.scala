@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d1
 
 
 /**
- *
+ * Anchor presets and functionality for creating new anchors.
  *
  * @author Aleksi Lukkarinen
  */
@@ -27,20 +27,16 @@ object Anchor {
 }
 
 
+
+
 /**
  *
  *
  * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-trait Anchor {
-
-  /**
-   * Name of this anchor.
-   *
-   * @return
-   */
-  def name: Option[String]
+trait Anchor[HasAnchorType]
+    extends CommonAnchorAPI[HasAnchorType] {
 
   /**
    *
@@ -49,7 +45,7 @@ trait Anchor {
    *
    * @return
    */
-  def toPointAnchor(anchored: HasAnchor): PointAnchor = {
+  def toPointAnchor(anchored: HasAnchorType): PointAnchor = {
     PointAnchor(internalXWithin(anchored), name)
   }
 
@@ -60,17 +56,8 @@ trait Anchor {
    *
    * @return
    */
-  def internalDimsWithin(anchored: HasAnchor): Dims = {
+  def internalDimsWithin(anchored: HasAnchorType): Dims = {
     Dims(internalXWithin(anchored))
   }
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  def internalXWithin(anchored: HasAnchor): Double
 
 }

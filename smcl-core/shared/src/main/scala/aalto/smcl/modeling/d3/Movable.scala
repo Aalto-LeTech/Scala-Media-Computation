@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d3
 
 
-import aalto.smcl.modeling.AbstractMovable
+import aalto.smcl.modeling.misc.AbstractMovable
 
 
 

@@ -17,7 +17,8 @@
 package aalto.smcl.modeling.d3
 
 
-import aalto.smcl.modeling.{AbstractHasDims, Len}
+import aalto.smcl.modeling.Len
+import aalto.smcl.modeling.misc.AbstractHasDims
 
 
 
@@ -33,10 +34,10 @@ trait HasDims
   /** Width of this object. */
   lazy val width: Len = dimensions.width
 
-  /** Height of this object.*/
+  /** Height of this object. */
   lazy val height: Len = dimensions.height
 
-  /** Depth of this object.*/
+  /** Depth of this object. */
   lazy val depth: Len = dimensions.depth
 
   /** Internal center point of this object. */

@@ -16,6 +16,7 @@
 
 package aalto.smcl.modeling.d2
 
+
 import scala.annotation.tailrec
 
 import aalto.smcl.bitmaps.fullfeatured.ImageElement

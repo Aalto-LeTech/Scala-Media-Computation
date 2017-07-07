@@ -18,7 +18,8 @@ package aalto.smcl.modeling.d3
 
 
 import aalto.smcl.infrastructure._
-import aalto.smcl.modeling.{AbstractCartesianDimensions, Len}
+import aalto.smcl.modeling.Len
+import aalto.smcl.modeling.misc.AbstractCartesianDimensions
 
 
 

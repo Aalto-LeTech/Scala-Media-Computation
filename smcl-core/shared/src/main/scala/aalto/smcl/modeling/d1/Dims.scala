@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d1
 
 
 import aalto.smcl.infrastructure._
-import aalto.smcl.modeling.AbstractCartesianDimensions
+import aalto.smcl.modeling.misc.AbstractCartesianDimensions
 
 
 
@@ -39,22 +39,6 @@ object Dims {
   /**
    * Creates a new [[Dims]] instance.
    *
-   * @param inPixels
-   *
-   * @return
-   */
-  @inline
-  def apply(inPixels: Double): Dims = {
-    require(
-      inPixels >= 0.0,
-      s"Magnitude cannot be negative (was $inPixels)")
-
-    new Dims(inPixels)
-  }
-
-  /**
-   * Creates a new [[Dims]] instance.
-   *
    * @param dimensions
    *
    * @return
@@ -68,6 +52,22 @@ object Dims {
     apply(dimensions.head)
   }
 
+  /**
+   * Creates a new [[Dims]] instance.
+   *
+   * @param inPixels
+   *
+   * @return
+   */
+  @inline
+  def apply(inPixels: Double): Dims = {
+    require(
+      inPixels >= 0.0,
+      s"Magnitude cannot be negative (was $inPixels)")
+
+    new Dims(inPixels)
+  }
+
 }
 
 
@@ -76,12 +76,12 @@ object Dims {
 /**
  * A dimension in one-dimensional Cartesian coordinate system.
  *
- * @param inPixels
+ * @param lengthInPixels
  *
  * @author Aleksi Lukkarinen
  */
-case class Dims private(inPixels: Double)
-    extends AbstractCartesianDimensions(Seq(inPixels))
+case class Dims private(lengthInPixels: Double)
+    extends AbstractCartesianDimensions(Seq(lengthInPixels))
             with Ordered[Dims]
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims, Double]
@@ -97,7 +97,7 @@ case class Dims private(inPixels: Double)
    */
   @inline
   override
-  def map(f: (Double) => Double): Dims = Dims(f(inPixels))
+  def map(f: (Double) => Double): Dims = Dims(f(lengthInPixels))
 
   /**
    *
@@ -107,7 +107,7 @@ case class Dims private(inPixels: Double)
    * @return
    */
   @inline
-  def flatMap(f: (Double) => Dims): Dims = f(inPixels)
+  def flatMap(f: (Double) => Dims): Dims = f(lengthInPixels)
 
   /**
    *
@@ -119,7 +119,7 @@ case class Dims private(inPixels: Double)
   @inline
   override
   def compare(that: Dims): Int = {
-    inPixels.compare(that.inPixels)
+    lengthInPixels.compare(that.lengthInPixels)
   }
 
   /**
@@ -159,7 +159,9 @@ case class Dims private(inPixels: Double)
    * @return
    */
   @inline
-  def + (offset: Dims): Dims = Dims(inPixels + offset.inPixels)
+  def + (offset: Dims): Dims = {
+    Dims(lengthInPixels + offset.lengthInPixels)
+  }
 
   /**
    *
@@ -169,6 +171,8 @@ case class Dims private(inPixels: Double)
    * @return
    */
   @inline
-  def - (offset: Dims): Dims = Dims(inPixels - offset.inPixels)
+  def - (offset: Dims): Dims = {
+    Dims(lengthInPixels - offset.lengthInPixels)
+  }
 
 }

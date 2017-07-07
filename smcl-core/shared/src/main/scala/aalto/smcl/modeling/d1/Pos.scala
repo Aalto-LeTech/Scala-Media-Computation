@@ -18,7 +18,8 @@ package aalto.smcl.modeling.d1
 
 
 import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, MathUtils, MinMaxOps}
-import aalto.smcl.modeling.{AbstractCartesianPosition, Len}
+import aalto.smcl.modeling.Len
+import aalto.smcl.modeling.misc.AbstractCartesianPosition
 
 
 
@@ -31,7 +32,7 @@ import aalto.smcl.modeling.{AbstractCartesianPosition, Len}
 object Pos {
 
   /** The zero of a one-dimensional coordinate system. */
-  lazy val Zero = new Pos(0.0)
+  lazy val Zero = Pos(0.0)
 
   /** Positive one in a one-dimensional coordinate system. */
   lazy val One = Pos(1.0)
@@ -116,8 +117,8 @@ case class Pos private(
   override
   def moveBy(offsets: Double*): Pos = {
     require(
-      offsets.length == 1,
-      s"Pos1 represents exactly one coordinate (given: ${offsets.length})")
+      offsets.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions offsets must be given (found: ${offsets.length})")
 
     Pos(inPixels + offsets(0))
   }

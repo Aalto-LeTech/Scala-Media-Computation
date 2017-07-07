@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d3
 
 
 import aalto.smcl.infrastructure.InjectablesRegistry
-import aalto.smcl.modeling.AbstractPointAnchor
+import aalto.smcl.modeling.misc.AbstractPointAnchor
 
 
 
@@ -31,6 +31,60 @@ import aalto.smcl.modeling.AbstractPointAnchor
  */
 object PointAnchor
     extends InjectablesRegistry {
+
+  /**
+   *
+   *
+   * @param coordinates
+   *
+   * @return
+   */
+  @inline
+  def apply(coordinates: Seq[Double]): PointAnchor = {
+    apply(
+      coordinates.head,
+      coordinates(1),
+      coordinates(2),
+      None)
+  }
+
+  /**
+   *
+   *
+   * @param coordinates
+   * @param name
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      coordinates: Seq[Double],
+      name: Option[String]): PointAnchor = {
+
+    apply(
+      coordinates.head,
+      coordinates(1),
+      coordinates(2),
+      name)
+  }
+
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param yInPixels
+   * @param zInPixels
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      xInPixels: Double,
+      yInPixels: Double,
+      zInPixels: Double): PointAnchor = {
+
+    apply(xInPixels, yInPixels, zInPixels, None)
+  }
 
   /**
    *
@@ -50,7 +104,7 @@ object PointAnchor
 
     // TODO: Validate name
 
-    PointAnchor(xInPixels, yInPixels, zInPixels, name)
+    new PointAnchor(xInPixels, yInPixels, zInPixels, name)
   }
 
 }
@@ -76,39 +130,5 @@ case class PointAnchor private(
     override val name: Option[String])
     extends AbstractPointAnchor[Dims](
       Seq(xInPixels, yInPixels, zInPixels), name)
-            with Anchor {
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  override
-  def internalXWithin(
-      anchored: HasAnchor): Double = xInPixels
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  override
-  def internalYWithin(
-      anchored: HasAnchor): Double = yInPixels
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  override
-  def internalZWithin(
-      anchored: HasAnchor): Double = zInPixels
-
-}
+            with Anchor[HasAnchor]
+            with PointAnchorMembers[HasAnchor]

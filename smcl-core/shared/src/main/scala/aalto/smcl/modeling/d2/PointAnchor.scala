@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.infrastructure.InjectablesRegistry
-import aalto.smcl.modeling.AbstractPointAnchor
+import aalto.smcl.modeling.misc.AbstractPointAnchor
 
 
 
@@ -35,12 +35,61 @@ object PointAnchor
   /**
    *
    *
+   * @param coordinates
+   *
+   * @return
+   */
+  @inline
+  def apply(coordinates: Seq[Double]): PointAnchor = {
+    apply(coordinates, None)
+  }
+
+  /**
+   *
+   *
+   * @param coordinates
+   * @param name
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      coordinates: Seq[Double],
+      name: Option[String]): PointAnchor = {
+
+    require(coordinates.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must " +
+          s"be given (found: ${coordinates.length})")
+
+    apply(coordinates.head, coordinates(1), name)
+  }
+
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param yInPixels
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      xInPixels: Double,
+      yInPixels: Double): PointAnchor = {
+
+    apply(xInPixels, yInPixels, None)
+  }
+
+  /**
+   *
+   *
    * @param xInPixels
    * @param yInPixels
    * @param name
    *
    * @return
    */
+  @inline
   def apply(
       xInPixels: Double,
       yInPixels: Double,
@@ -48,7 +97,7 @@ object PointAnchor
 
     // TODO: Validate name
 
-    PointAnchor(xInPixels, yInPixels, name)
+    new PointAnchor(xInPixels, yInPixels, name)
   }
 
 }
@@ -59,6 +108,8 @@ object PointAnchor
 /**
  *
  *
+ * @param xInPixels
+ * @param yInPixels
  * @param name
  *
  * @author Juha Sorva
@@ -68,27 +119,7 @@ case class PointAnchor private(
     xInPixels: Double,
     yInPixels: Double,
     override val name: Option[String])
-    extends AbstractPointAnchor[Dims](Seq(xInPixels, yInPixels), name)
-            with Anchor {
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  override def internalXWithin(
-      anchored: HasAnchor): Double = xInPixels
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  override def internalYWithin(
-      anchored: HasAnchor): Double = yInPixels
-
-}
+    extends AbstractPointAnchor[Dims](
+      Seq(xInPixels, yInPixels), name)
+            with Anchor[HasAnchor]
+            with PointAnchorMembers[HasAnchor]

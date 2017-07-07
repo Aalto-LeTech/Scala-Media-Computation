@@ -14,18 +14,36 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
+package aalto.smcl.modeling.d3
+
+
+import aalto.smcl.modeling.d2
+
+
 
 
 /**
- * Position in a Cartesian coordinate system.
  *
- * @param coordinates
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractCartesianPosition(
-    override val coordinates: Seq[Double])
-    extends AbstractPosition(coordinates) {
+trait PointAnchorMembers[HasAnchorType]
+    extends CommonAnchorAPI[HasAnchorType]
+            with d2.PointAnchorMembers[HasAnchorType] {
+
+  /** */
+  def zInPixels: Double
+
+  /**
+   *
+   *
+   * @param anchored
+   *
+   * @return
+   */
+  @inline
+  override
+  def internalZWithin(
+      anchored: HasAnchorType): Double = zInPixels
 
 }

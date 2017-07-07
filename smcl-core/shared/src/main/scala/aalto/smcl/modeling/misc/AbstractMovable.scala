@@ -14,21 +14,35 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
-
+package aalto.smcl.modeling.misc
 
 /**
- * Circle.
  *
- * @param position
- * @param radiusInPixels
+ *
+ * @tparam ReturnType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractCircle[PositionType <: AbstractPosition](
-    val position: PositionType,
-    val radiusInPixels: Double)
-    extends AbstractGeometryObject
-            with AbstractHasPos[PositionType] {
+trait AbstractMovable[ReturnType] {
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  def moveBy(offsets: Double*): ReturnType
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  def + (offsets: Seq[Double]): ReturnType = {
+    moveBy(offsets: _*)
+  }
 
 }

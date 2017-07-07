@@ -14,36 +14,30 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
+package aalto.smcl.modeling.d1
 
 
 /**
  *
  *
- * @tparam ReturnType
- *
  * @author Aleksi Lukkarinen
  */
-trait AbstractMovable[ReturnType] {
+trait CommonAnchorAPI[HasAnchorType] {
+
+  /**
+   * Name of this anchor.
+   *
+   * @return
+   */
+  def name: Option[String]
 
   /**
    *
    *
-   * @param offsets
+   * @param anchored
    *
    * @return
    */
-  def moveBy(offsets: Double*): ReturnType
-
-  /**
-   *
-   *
-   * @param offsets
-   *
-   * @return
-   */
-  def + (offsets: Seq[Double]): ReturnType = {
-    moveBy(offsets: _*)
-  }
+  def internalXWithin(anchored: HasAnchorType): Double
 
 }

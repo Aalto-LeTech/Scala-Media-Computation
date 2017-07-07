@@ -17,7 +17,8 @@
 package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.modeling.{AbstractHasDims, Len}
+import aalto.smcl.modeling.Len
+import aalto.smcl.modeling.misc.AbstractHasDims
 
 
 

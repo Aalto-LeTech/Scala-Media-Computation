@@ -34,7 +34,7 @@ trait HasAnchor {
 
 
   /** */
-  def anchor: Anchor
+  def anchor: Anchor[HasAnchor]
 
   /** */
   @inline

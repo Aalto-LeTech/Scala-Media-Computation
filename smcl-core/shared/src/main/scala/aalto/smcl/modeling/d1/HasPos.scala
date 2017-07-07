@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d1
 
 
-import aalto.smcl.modeling.AbstractHasPos
+import aalto.smcl.modeling.misc.AbstractHasPos
 
 
 

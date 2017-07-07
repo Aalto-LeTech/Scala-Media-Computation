@@ -14,91 +14,24 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
-
-
-import scala.annotation.tailrec
+package aalto.smcl.modeling.misc
 
 
 
 
 /**
- * A sequence of dimensions.
+ * An object that has dimensions.
  *
- * @param lengths
+ * @tparam DimensionType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractDimensions(
-    val lengths: Seq[Double])
-    extends AbstractGeometryObject
-            with Equals
-            with Iterable[Double] {
+trait AbstractHasDims[DimensionType <: AbstractDimensions] {
 
-  /**
-   * Provides an iterator for the dimension values.
-   *
-   * @return
-   */
-  @inline
-  override
-  def iterator: Iterator[Double] = {
-    lengths.iterator
-  }
+  /** Dimensions of this object. */
+  def dimensions: DimensionType
 
-  /**
-   *
-   *
-   * @return
-   */
-  override
-  lazy val hashCode: Int = {
-    val prime = 31
-
-    @tailrec
-    def hashCodeRecursive(
-        lengths: Seq[Double],
-        sum: Int): Int = {
-
-      if (lengths.isEmpty)
-        return sum
-
-      hashCodeRecursive(
-        lengths.tail,
-        prime * sum + lengths.head.##)
-    }
-
-    hashCodeRecursive(lengths, 1)
-  }
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def canEqual(other: Any): Boolean
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: AbstractDimensions =>
-        that.canEqual(this) &&
-            that.lengths == this.lengths
-
-      case _ => false
-    }
-  }
+  /** Dimensions to the internal center point of this object. */
+  def internalCenter: DimensionType
 
 }

@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.infrastructure.{CommonValidators, InjectablesRegistry}
-import aalto.smcl.modeling.AbstractRatioAnchor
+import aalto.smcl.modeling.misc.AbstractRatioAnchor
 
 
 
@@ -34,6 +34,53 @@ object RatioAnchor
   /** The [[CommonValidators]] instance to be used by this object. */
   protected lazy val commonValidators: CommonValidators = {
     injectable(InjectablesRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
+  }
+
+  /**
+   *
+   *
+   * @param ratios
+   *
+   * @return
+   */
+  @inline
+  def apply(ratios: Seq[Double]): RatioAnchor = {
+    apply(ratios, None)
+  }
+
+  /**
+   *
+   *
+   * @param ratios
+   * @param name
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      ratios: Seq[Double],
+      name: Option[String]): RatioAnchor = {
+
+    require(ratios.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions ratios must be given (found: ${ratios.length})")
+
+    apply(ratios.head, ratios(1), name)
+  }
+
+  /**
+   *
+   *
+   * @param widthRatio
+   * @param heightRatio
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      widthRatio: Double,
+      heightRatio: Double): RatioAnchor = {
+
+    apply(widthRatio, heightRatio, None)
   }
 
   /**
@@ -55,7 +102,7 @@ object RatioAnchor
 
     // TODO: Validate name
 
-    RatioAnchor(widthRatio, heightRatio, name)
+    new RatioAnchor(widthRatio, heightRatio, name)
   }
 
 }
@@ -78,7 +125,7 @@ case class RatioAnchor private(
     override val name: Option[String])
     extends AbstractRatioAnchor[Dims](
       Seq(widthRatio, heightRatio), name)
-            with Anchor {
+            with Anchor[HasAnchor] {
 
   /**
    *
@@ -87,6 +134,7 @@ case class RatioAnchor private(
    *
    * @return
    */
+  @inline
   override
   def internalXWithin(anchored: HasAnchor): Double = {
     widthRatio * anchored.width.inPixels
@@ -99,6 +147,7 @@ case class RatioAnchor private(
    *
    * @return
    */
+  @inline
   override
   def internalYWithin(anchored: HasAnchor): Double = {
     heightRatio * anchored.height.inPixels

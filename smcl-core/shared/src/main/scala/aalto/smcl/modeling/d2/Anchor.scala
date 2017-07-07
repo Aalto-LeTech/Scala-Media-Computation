@@ -18,30 +18,57 @@ package aalto.smcl.modeling.d2
 
 
 /**
- *
+ * Anchor presets and functionality for creating new anchors.
  *
  * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
 object Anchor {
 
-  val TopLeft = RatioAnchor(0.0, 0.0, Some("top left"))
+  /** Width and height factors for preset anchors. */
+  private val PresetData = Seq(
+    (0.0, 0.0, Some("top left")), (0.5, 0.0, Some("top center")), (1.0, 0.0, Some("top right")),
+    (0.0, 0.5, Some("center left")), (0.5, 0.5, Some("center")), (1.0, 0.5, Some("center right")),
+    (0.0, 1.0, Some("bottom left")), (0.5, 1.0, Some("bottom center")), (1.0, 1.0, Some("bottom righ")))
 
-  val TopCenter = RatioAnchor(0.5, 0.0, Some("top center"))
+  /**
+   * Creates a preset ratio anchor based on given data table index.
+   *
+   * @param index number of an entry in the <code>PresetData</code> table
+   *
+   * @return the new [[RatioAnchor]] instance
+   */
+  private def ratioPreset(index: Int): RatioAnchor = {
+    val data = PresetData(index)
+    RatioAnchor(data._1, data._2, data._3)
+  }
 
-  val TopRight = RatioAnchor(1.0, 0.0, Some("top right"))
+  /** An anchor representing the top left corner of an object. */
+  val TopLeft: RatioAnchor = ratioPreset(0)
 
-  val CenterLeft = RatioAnchor(0.0, 0.5, Some("center left"))
+  /** An anchor representing the center of the top edge of an object. */
+  val TopCenter: RatioAnchor = ratioPreset(1)
 
-  val Center = RatioAnchor(0.5, 0.5, Some("center"))
+  /** An anchor representing the top right corner of an object. */
+  val TopRight: RatioAnchor = ratioPreset(2)
 
-  val CenterRight = RatioAnchor(1.0, 0.5, Some("center right"))
+  /** An anchor representing the center of the left edge of an object. */
+  val CenterLeft: RatioAnchor = ratioPreset(3)
 
-  val BottomLeft = RatioAnchor(0.0, 1.0, Some("bottom left"))
+  /** An anchor representing the center of an object. */
+  val Center: RatioAnchor = ratioPreset(4)
 
-  val BottomCenter = RatioAnchor(0.5, 1.0, Some("bottom center"))
+  /** An anchor representing the center of the right edge of an object. */
+  val CenterRight: RatioAnchor = ratioPreset(5)
 
-  val BottomRight = RatioAnchor(1.0, 1.0, Some("bottom right"))
+  /** An anchor representing the bottom left corner of an object. */
+  val BottomLeft: RatioAnchor = ratioPreset(6)
+
+  /** An anchor representing the center of the bottom edge of an object. */
+  val BottomCenter: RatioAnchor = ratioPreset(7)
+
+  /** An anchor representing the bottom right corner of an object. */
+  val BottomRight: RatioAnchor = ratioPreset(8)
 
 }
 
@@ -54,14 +81,8 @@ object Anchor {
  * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-trait Anchor {
-
-  /**
-   * Name of this anchor.
-   *
-   * @return
-   */
-  def name: Option[String]
+trait Anchor[HasAnchorType]
+    extends CommonAnchorAPI[HasAnchorType] {
 
   /**
    *
@@ -70,7 +91,7 @@ trait Anchor {
    *
    * @return
    */
-  def toPointAnchor(anchored: HasAnchor): PointAnchor = {
+  def toPointAnchor(anchored: HasAnchorType): PointAnchor = {
     PointAnchor(
       internalXWithin(anchored),
       internalYWithin(anchored),
@@ -84,28 +105,10 @@ trait Anchor {
    *
    * @return
    */
-  def internalDimsWithin(anchored: HasAnchor): Dims = {
+  def internalDimsWithin(anchored: HasAnchorType): Dims = {
     Dims(
       internalXWithin(anchored),
       internalYWithin(anchored))
   }
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  def internalXWithin(anchored: HasAnchor): Double
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  def internalYWithin(anchored: HasAnchor): Double
 
 }

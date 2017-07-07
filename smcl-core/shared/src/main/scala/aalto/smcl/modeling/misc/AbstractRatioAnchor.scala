@@ -14,17 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling.d3
-
-
-/**
- * Anchor presets and functionality for creating new anchors.
- *
- * @author Aleksi Lukkarinen
- */
-object Anchor {
-
-}
+package aalto.smcl.modeling.misc
 
 
 
@@ -34,36 +24,8 @@ object Anchor {
  *
  * @author Aleksi Lukkarinen
  */
-trait Anchor[HasAnchorType]
-    extends CommonAnchorAPI[HasAnchorType] {
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  def toPointAnchor(anchored: HasAnchorType): PointAnchor = {
-    PointAnchor(
-      internalXWithin(anchored),
-      internalYWithin(anchored),
-      internalZWithin(anchored),
-      name)
-  }
-
-  /**
-   *
-   *
-   * @param anchored
-   *
-   * @return
-   */
-  def internalDimsWithin(anchored: HasAnchorType): Dims = {
-    Dims(
-      internalXWithin(anchored),
-      internalYWithin(anchored),
-      internalZWithin(anchored))
-  }
+abstract class AbstractRatioAnchor[DimensionType <: AbstractDimensions](
+    val ratiosOfWholeDimensions: Seq[Double],
+    val name: Option[String]) {
 
 }

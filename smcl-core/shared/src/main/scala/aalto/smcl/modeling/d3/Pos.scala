@@ -17,8 +17,9 @@
 package aalto.smcl.modeling.d3
 
 
-import aalto.smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, MathUtils, ToTuple, TupledMinMaxItemOps}
-import aalto.smcl.modeling.{AbstractCartesianPosition, Len}
+import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.Len
+import aalto.smcl.modeling.misc.AbstractCartesianPosition
 
 
 
@@ -61,8 +62,8 @@ object Pos {
   @inline
   def apply(coordinates: Double*): Pos = {
     require(
-      coordinates.length == 3,
-      s"Exactly three coordinates must be given (currently: ${coordinates.length})")
+      coordinates.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinates.length})")
 
     apply(coordinates: _*)
   }
@@ -168,18 +169,18 @@ case class Pos private(
   /**
    *
    *
-   * @param deltas
+   * @param offsets
    *
    * @return
    */
   @inline
   override
-  def moveBy(deltas: Double*): Pos = {
+  def moveBy(offsets: Double*): Pos = {
     require(
-      deltas.length == 3,
-      s"Pos represents exactly three coordinates (given: ${deltas.length})")
+      offsets.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions offsets must be given (found: ${offsets.length})")
 
-    moveBy(deltas(0), deltas(1), deltas(2))
+    moveBy(offsets(0), offsets(1), offsets(2))
   }
 
   /**

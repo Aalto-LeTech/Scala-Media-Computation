@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.modeling.AbstractCircle
+import aalto.smcl.modeling.misc.AbstractCircle
 
 
 

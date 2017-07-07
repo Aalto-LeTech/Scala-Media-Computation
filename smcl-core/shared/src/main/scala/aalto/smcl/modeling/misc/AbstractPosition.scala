@@ -14,17 +14,93 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling
+package aalto.smcl.modeling.misc
+
+import scala.annotation.tailrec
+
+
 
 
 /**
+ * Position in some coordinate system.
  *
+ * @param coordinates
  *
- * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPointAnchor[DimensionType <: AbstractDimensions](
-    val dimensions: Seq[Double],
-    val name: Option[String]) {
+abstract class AbstractPosition(
+    val coordinates: Seq[Double])
+    extends AbstractGeometryObject
+            with Equals
+            with Iterable[Double] {
+
+  //lazy val intCoordinates: Seq[Int] =
+  //  coordinates.map(_.c)
+
+  /**
+   * Provides an iterator for the dimension values.
+   *
+   * @return
+   */
+  @inline
+  override
+  def iterator: Iterator[Double] = {
+    coordinates.iterator
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  lazy val hashCode: Int = {
+    val prime = 31
+
+    @tailrec
+    def hashCodeRecursive(
+        coordinates: Seq[Double],
+        sum: Int): Int = {
+
+      if (coordinates.isEmpty)
+        return sum
+
+      hashCodeRecursive(
+        coordinates.tail,
+        prime * sum + coordinates.head.##)
+    }
+
+    hashCodeRecursive(coordinates, 1)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def equals(other: Any): Boolean = {
+    other match {
+      case that: AbstractPosition =>
+        that.canEqual(this) &&
+            that.coordinates == this.coordinates
+
+      case _ => false
+    }
+  }
 
 }
