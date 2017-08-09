@@ -17,6 +17,8 @@
 package aalto.smcl.modeling.d2
 
 
+import scala.util.Random
+
 import aalto.smcl.infrastructure.MathUtils
 import aalto.smcl.modeling._
 import aalto.smcl.modeling.misc.AbstractBoundary
@@ -146,6 +148,19 @@ case class Bounds private(
   override
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Bounds]
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def randomPosInside: Pos = {
+    val offsetX = Random.nextDouble() * widthInPixels
+    val offsetY = Random.nextDouble() * heightInPixels
+
+    upperLeftMarker + (offsetX, offsetY)
   }
 
 }
