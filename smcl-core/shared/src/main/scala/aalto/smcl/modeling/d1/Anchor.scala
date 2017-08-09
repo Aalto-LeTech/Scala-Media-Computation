@@ -24,6 +24,67 @@ package aalto.smcl.modeling.d1
  */
 object Anchor {
 
+  /** An anchor representing the start of a length. */
+  val Start: RatioAnchor = RatioAnchor(0.0)
+
+  /** An anchor representing the end of a length. */
+  val End: RatioAnchor = RatioAnchor(1.0)
+
+  /**
+   *
+   *
+   * @param xInPixels
+   *
+   * @return
+   */
+  @inline
+  def forPoint(xInPixels: Double): PointAnchor = {
+    PointAnchor(xInPixels, None)
+  }
+
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param name
+   *
+   * @return
+   */
+  @inline
+  def forPoint(
+      xInPixels: Double,
+      name: Option[String]): PointAnchor = {
+
+    PointAnchor(xInPixels, name)
+  }
+
+  /**
+   *
+   *
+   * @param ratio
+   *
+   * @return
+   */
+  @inline
+  def forRatio(ratio: Double): RatioAnchor = {
+    RatioAnchor(ratio, None)
+  }
+
+  /**
+   *
+   *
+   * @param ratio
+   * @param name
+   *
+   * @return
+   */
+  def forRatio(
+      ratio: Double,
+      name: Option[String]): RatioAnchor = {
+
+    RatioAnchor(ratio, name)
+  }
+
 }
 
 

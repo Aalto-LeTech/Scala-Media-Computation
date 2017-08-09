@@ -175,4 +175,15 @@ case class Dims private(lengthInPixels: Double)
     Dims(lengthInPixels - offset.lengthInPixels)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Dims($lengthInPixels px)"
+  }
+
 }

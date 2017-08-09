@@ -167,4 +167,15 @@ case class RatioAnchor private(
       heightRatio * anchored.height.inPixels)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"RatioAnchor(w: $widthRatio, h: $heightRatio)"
+  }
+
 }

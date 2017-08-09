@@ -244,14 +244,16 @@ case class Pos private(
    *
    * @return
    */
-  override def unary_+(): Pos = this
+  override
+  def unary_+(): Pos = this
 
   /**
    *
    *
    * @return
    */
-  override def inverse: Pos =
+  override
+  def inverse: Pos =
     Pos(-xInPixels, -yInPixels, -zInPixels)
 
   /**
@@ -317,6 +319,17 @@ case class Pos private(
     val (zMin, zMax) = MathUtils.sort(zInPixels, other.zInPixels)
 
     (Pos(xMin, yMin, zMin), Pos(xMax, yMax, zMax))
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Pos(x: $xInPixels px, y: $yInPixels px, z: $zInPixels px)"
   }
 
 }

@@ -185,4 +185,15 @@ case class RatioAnchor private(
       depthRatio * anchored.depth.inPixels)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"RatioAnchor(w: $widthRatio, h: $heightRatio, d: $depthRatio)"
+  }
+
 }

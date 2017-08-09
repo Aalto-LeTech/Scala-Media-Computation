@@ -372,4 +372,15 @@ case class Pos private(
   @inline
   def isOnFourthQuadrant: Boolean = quadrant.contains(4)
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Pos(x: $xInPixels px, y: $yInPixels px)"
+  }
+
 }

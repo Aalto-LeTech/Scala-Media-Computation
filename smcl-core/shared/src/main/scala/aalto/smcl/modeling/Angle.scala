@@ -81,7 +81,6 @@ object Angle {
   val FullTurn = FullAngle
 
 
-
   private
   def divideCircleInDegsInto(numberOfDivisions: Int): Seq[Double] =
     MathUtils.divideLength(FullAngleInDegrees, numberOfDivisions)
@@ -93,7 +92,6 @@ object Angle {
   private
   def divideCircleInGradsInto(numberOfDivisions: Int): Seq[Double] =
     MathUtils.divideLength(FullAngleInGradians, numberOfDivisions)
-
 
 
   /** Number of divisions to a full angle to get a straight angle. */
@@ -131,7 +129,6 @@ object Angle {
   /** Angles resulting from division of a full circle to half-turns, given as [[Angle]] instances. */
   lazy val HalfTurnAngles: Seq[Angle] =
     HalfTurnAnglesInDegrees.map(Angle(_))
-
 
 
   /** Number of divisions to a full angle to get a right angle. */
@@ -175,7 +172,6 @@ object Angle {
     QuarterTurnAnglesInDegrees.map(Angle(_))
 
 
-
   /** Number of divisions to a full angle to get a sextant. */
   val SextantDivisions: Int = 6
 
@@ -209,7 +205,6 @@ object Angle {
   /** Angles resulting from division of a full circle to sextants, given as [[Angle]] instances. */
   lazy val SextantAngles: Seq[Angle] =
     SextantAnglesInDegrees.map(Angle(_))
-
 
 
   /** Number of divisions to a full angle to get a clock position angle. */
@@ -247,7 +242,6 @@ object Angle {
     ClockPositionAnglesInDegrees.map(Angle(_))
 
 
-
   /** Number of divisions to a full angle to get an hour angle. */
   val HourAngleDivisions: Int = 24
 
@@ -281,7 +275,6 @@ object Angle {
   /** Angles resulting from division of a full circle to hour angles, given as [[Angle]] instances. */
   lazy val HourAngles: Seq[Angle] =
     HourAnglesInDegrees.map(Angle(_))
-
 
 
   /** Number of divisions to a full angle to get a compass point. */
@@ -319,7 +312,6 @@ object Angle {
     CompassPointAnglesInDegrees.map(Angle(_))
 
 
-
   /** Number of divisions to a full angle to get a binary degree. */
   val BinaryDegreeDivisions: Int = 256
 
@@ -353,7 +345,6 @@ object Angle {
   /** Angles resulting from division of a full circle to binary degrees, given as [[Angle]] instances. */
   lazy val BinaryDegreeAngles: Seq[Angle] =
     BinaryDegreeAnglesInDegrees.map(Angle(_))
-
 
 
   /** An angle that represents positive infinity. */
@@ -955,5 +946,16 @@ case class Angle private(
    */
   override
   def max(others: Angle*): Angle = (this +: others).max
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Angle($inDegrees deg)"
+  }
 
 }

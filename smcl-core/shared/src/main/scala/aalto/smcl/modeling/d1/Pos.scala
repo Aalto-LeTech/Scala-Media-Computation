@@ -292,4 +292,15 @@ case class Pos private(
     (Pos(min), Pos(max))
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Pos(x: $inPixels px)"
+  }
+
 }

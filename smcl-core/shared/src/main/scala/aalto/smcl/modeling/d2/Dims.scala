@@ -291,4 +291,15 @@ case class Dims private(
     Bounds(upperLeftCorner, lowerRightCorner)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Dims(w: ${width.inPixels} px, h: ${height.inPixels} px)"
+  }
+
 }

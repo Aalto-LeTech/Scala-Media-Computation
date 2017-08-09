@@ -265,4 +265,15 @@ case class Len private(inPixels: Double)
     d3.Dims(inPixels, height.inPixels, depth.inPixels)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Len($inPixels px)"
+  }
+
 }

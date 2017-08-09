@@ -302,4 +302,15 @@ case class Dims private(
     Dims(newWidth, newHeight, newDepth)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Dims(w: ${width.inPixels} px, h: ${height.inPixels} px, d: ${depth.inPixels} px)"
+  }
+
 }

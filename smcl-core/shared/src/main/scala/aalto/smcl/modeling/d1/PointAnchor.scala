@@ -142,4 +142,15 @@ case class PointAnchor private(
     PointAnchor(xInPixels - offset.lengthInPixels)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"PointAnchor($xInPixels px)"
+  }
+
 }

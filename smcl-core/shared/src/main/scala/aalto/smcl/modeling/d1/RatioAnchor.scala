@@ -111,4 +111,15 @@ case class RatioAnchor private(
     PointAnchor(ratio * anchored.lengthInPixels)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"RatioAnchor($ratio)"
+  }
+
 }

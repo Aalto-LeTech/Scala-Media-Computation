@@ -344,4 +344,15 @@ case class Area private(
   override
   def max(others: Area*): Area = (this +: others).max
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Area($inPixels px2)"
+  }
+
 }

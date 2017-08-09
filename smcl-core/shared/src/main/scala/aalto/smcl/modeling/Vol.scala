@@ -394,7 +394,8 @@ case class Vol private(
    *
    * @return
    */
-  override def compare(that: Vol): Int = {
+  override
+  def compare(that: Vol): Int = {
     inPixels.compare(that.inPixels)
   }
 
@@ -512,5 +513,16 @@ case class Vol private(
    */
   override
   def max(others: Vol*): Vol = (this +: others).max
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Vol($inPixels px3)"
+  }
 
 }
