@@ -70,7 +70,7 @@ object Bounds {
       widthInPixels,
       heightInPixels,
       Len(lengthInPixels),
-      Area(widthInPixels * heightInPixels))
+      Area.forRectangle(widthInPixels, heightInPixels))
   }
 
   /**

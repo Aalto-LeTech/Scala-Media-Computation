@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.infrastructure._
-import aalto.smcl.modeling.Len
+import aalto.smcl.modeling.{Area, Len}
 import aalto.smcl.modeling.misc.AbstractCartesianDimensions
 
 
@@ -120,6 +120,9 @@ case class Dims private(
             with FlatMap[Dims, DimensionTuple]
             with CommonTupledDoubleMathOps[Dims, DimensionTuple]
             with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
+
+  /**  */
+  lazy val area: Area = Area.forRectangle(width, height)
 
   /**
    *
@@ -270,6 +273,22 @@ case class Dims private(
     val newHeight = this.height - offset.height
 
     Dims(newWidth, newHeight)
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftCorner
+   *
+   * @return
+   */
+  @inline
+  def toBounds(upperLeftCorner: Pos): Bounds = {
+    val lowerRightCorner = Pos(
+      upperLeftCorner.xInPixels + width.inPixels,
+      upperLeftCorner.yInPixels + height.inPixels)
+
+    Bounds(upperLeftCorner, lowerRightCorner)
   }
 
 }

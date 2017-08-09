@@ -18,8 +18,8 @@ package aalto.smcl.modeling.d3
 
 
 import aalto.smcl.infrastructure._
-import aalto.smcl.modeling.Len
 import aalto.smcl.modeling.misc.AbstractCartesianDimensions
+import aalto.smcl.modeling.{Len, Vol}
 
 
 
@@ -32,10 +32,10 @@ import aalto.smcl.modeling.misc.AbstractCartesianDimensions
 object Dims {
 
   /** A [[Dims]] instance that presents infinitely large dimensions. */
-  val InfinitelyLarge =
-    Dims(Double.PositiveInfinity,
-      Double.PositiveInfinity,
-      Double.PositiveInfinity)
+  val InfinitelyLarge = Dims(
+    Double.PositiveInfinity,
+    Double.PositiveInfinity,
+    Double.PositiveInfinity)
 
   /** A [[Dims]] instance that presents zero-sized dimensions. */
   val NonExistent = Dims(0.0, 0.0, 0.0)
@@ -136,6 +136,9 @@ case class Dims private(
             with FlatMap[Dims, DimensionTuple]
             with CommonTupledDoubleMathOps[Dims, DimensionTuple]
             with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
+
+  /** */
+  lazy val volume: Vol = Vol.forCuboid(width, height, depth)
 
   /**
    * Converts the object to a tuple.
