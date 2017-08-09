@@ -131,4 +131,70 @@ case class PointAnchor private(
     extends AbstractPointAnchor[Dims](
       Seq(xInPixels, yInPixels, zInPixels), name)
             with Anchor[HasAnchor]
-            with PointAnchorMembers[HasAnchor]
+            with PointAnchorMembers[HasAnchor] {
+
+  /**
+   *
+   *
+   * @param offsetX
+   * @param offsetY
+   * @param offsetZ
+   *
+   * @return
+   */
+  @inline
+  def + (offsetX: Int, offsetY: Int, offsetZ: Int): PointAnchor = {
+    PointAnchor(
+      xInPixels + offsetX,
+      yInPixels + offsetY,
+      yInPixels + offsetZ)
+  }
+
+  /**
+   *
+   *
+   * @param offsetX
+   * @param offsetY
+   * @param offsetZ
+   *
+   * @return
+   */
+  @inline
+  def - (offsetX: Int, offsetY: Int, offsetZ: Int): PointAnchor = {
+    PointAnchor(
+      xInPixels - offsetX,
+      yInPixels - offsetY,
+      yInPixels - offsetZ)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def + (offset: Dims): PointAnchor = {
+    PointAnchor(
+      xInPixels + offset.width.inPixels,
+      yInPixels + offset.height.inPixels,
+      zInPixels + offset.depth.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def - (offset: Dims): PointAnchor = {
+    PointAnchor(
+      xInPixels - offset.width.inPixels,
+      yInPixels - offset.height.inPixels,
+      zInPixels - offset.depth.inPixels)
+  }
+
+}

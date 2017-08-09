@@ -38,7 +38,8 @@ object Anchor {
    *
    * @return the new [[RatioAnchor]] instance
    */
-  private def ratioPreset(index: Int): RatioAnchor = {
+  private
+  def ratioPreset(index: Int): RatioAnchor = {
     val data = PresetData(index)
     RatioAnchor(data._1, data._2, data._3)
   }
@@ -69,6 +70,130 @@ object Anchor {
 
   /** An anchor representing the bottom right corner of an object. */
   val BottomRight: RatioAnchor = ratioPreset(8)
+
+
+  /**
+   *
+   *
+   * @param coordinates
+   *
+   * @return
+   */
+  @inline
+  def forPoint(coordinates: Seq[Double]): PointAnchor = {
+    PointAnchor(coordinates, None)
+  }
+
+  /**
+   *
+   *
+   * @param coordinates
+   * @param name
+   *
+   * @return
+   */
+  @inline
+  def forPoint(
+      coordinates: Seq[Double],
+      name: Option[String]): PointAnchor = {
+
+    PointAnchor(coordinates.head, coordinates(1), name)
+  }
+
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param yInPixels
+   *
+   * @return
+   */
+  @inline
+  def forPoint(
+      xInPixels: Double,
+      yInPixels: Double): PointAnchor = {
+
+    PointAnchor(xInPixels, yInPixels, None)
+  }
+
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param yInPixels
+   * @param name
+   *
+   * @return
+   */
+  @inline
+  def forPoint(
+      xInPixels: Double,
+      yInPixels: Double,
+      name: Option[String]): PointAnchor = {
+
+    PointAnchor(xInPixels, yInPixels, name)
+  }
+
+  /**
+   *
+   *
+   * @param ratios
+   *
+   * @return
+   */
+  @inline
+  def forRatio(ratios: Seq[Double]): RatioAnchor = {
+    RatioAnchor(ratios, None)
+  }
+
+  /**
+   *
+   *
+   * @param ratios
+   * @param name
+   *
+   * @return
+   */
+  @inline
+  def forRatio(
+      ratios: Seq[Double],
+      name: Option[String]): RatioAnchor = {
+
+    RatioAnchor(ratios.head, ratios(1), name)
+  }
+
+  /**
+   *
+   *
+   * @param widthRatio
+   * @param heightRatio
+   *
+   * @return
+   */
+  @inline
+  def forRatio(
+      widthRatio: Double,
+      heightRatio: Double): RatioAnchor = {
+
+    RatioAnchor(widthRatio, heightRatio, None)
+  }
+
+  /**
+   *
+   *
+   * @param widthRatio
+   * @param heightRatio
+   * @param name
+   *
+   * @return
+   */
+  def forRatio(
+      widthRatio: Double,
+      heightRatio: Double,
+      name: Option[String]): RatioAnchor = {
+
+    RatioAnchor(widthRatio, heightRatio, name)
+  }
 
 }
 

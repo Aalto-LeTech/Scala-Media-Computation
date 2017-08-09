@@ -80,4 +80,54 @@ case class PointAnchor private(
     override val name: Option[String])
     extends AbstractPointAnchor[Dims](Seq(xInPixels), name)
             with Anchor[HasAnchor]
-            with PointAnchorMembers[HasAnchor]
+            with PointAnchorMembers[HasAnchor] {
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def + (offset: Int): PointAnchor = {
+    PointAnchor(xInPixels + offset)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def - (offset: Int): PointAnchor = {
+    PointAnchor(xInPixels - offset)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def + (offset: Dims): PointAnchor = {
+    PointAnchor(xInPixels + offset.lengthInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def - (offset: Dims): PointAnchor = {
+    PointAnchor(xInPixels - offset.lengthInPixels)
+  }
+
+}
