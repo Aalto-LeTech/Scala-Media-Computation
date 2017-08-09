@@ -99,4 +99,16 @@ case class RatioAnchor private(
     ratio * anchored.lengthInPixels
   }
 
+  /**
+   *
+   *
+   * @param anchored
+   *
+   * @return
+   */
+  @inline
+  def toPointAnchorFor(anchored: HasDims): PointAnchor = {
+    PointAnchor(ratio * anchored.lengthInPixels)
+  }
+
 }

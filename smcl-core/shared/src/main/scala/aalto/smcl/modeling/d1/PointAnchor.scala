@@ -85,6 +85,18 @@ case class PointAnchor private(
   /**
    *
    *
+   * @param anchored
+   *
+   * @return
+   */
+  @inline
+  def toRatioAnchorFor(anchored: HasDims): RatioAnchor = {
+    RatioAnchor(xInPixels / anchored.lengthInPixels)
+  }
+
+  /**
+   *
+   *
    * @param offset
    *
    * @return
