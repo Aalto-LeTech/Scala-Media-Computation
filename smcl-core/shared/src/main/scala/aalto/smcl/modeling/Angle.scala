@@ -116,19 +116,19 @@ object Angle {
   /** A half turn (i.e., a straight angle). */
   val HalfTurn = StraightAngle
 
-  /**  */
+  /** Angles resulting from division of a full circle to half-turns, measured in degrees. */
   lazy val HalfTurnAnglesInDegrees: Seq[Double] =
     divideCircleInDegsInto(StraightAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to half-turns, measured in radians. */
   lazy val HalfTurnAnglesInRadians: Seq[Double] =
     divideCircleInRadsInto(StraightAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to half-turns, measured in gradians. */
   lazy val HalfTurnAnglesInGradians: Seq[Double] =
     divideCircleInGradsInto(StraightAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to half-turns, given as [[Angle]] instances. */
   lazy val HalfTurnAngles: Seq[Angle] =
     HalfTurnAnglesInDegrees.map(Angle(_))
 
@@ -158,19 +158,19 @@ object Angle {
   /** A quarter turn (i.e., a right angle). */
   val QuarterTurn = RightAngle
 
-  /**  */
+  /** Angles resulting from division of a full circle to quarter-turns, measured in degrees. */
   lazy val QuarterTurnAnglesInDegrees: Seq[Double] =
     divideCircleInDegsInto(RightAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to quarter-turns, measured in radians. */
   lazy val QuarterTurnAnglesInRadians: Seq[Double] =
     divideCircleInRadsInto(RightAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to quarter-turns, measured in gradians. */
   lazy val QuarterTurnAnglesInGradians: Seq[Double] =
     divideCircleInGradsInto(RightAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to quarter-turns, given as [[Angle]] instances. */
   lazy val QuarterTurnAngles: Seq[Angle] =
     QuarterTurnAnglesInDegrees.map(Angle(_))
 
@@ -194,19 +194,19 @@ object Angle {
   /** A sextant. */
   val Sextant = Angle(SextantInDegrees)
 
-  /**  */
+  /** Angles resulting from division of a full circle to sextants, measured in degrees. */
   lazy val SextantAnglesInDegrees: Seq[Double] =
     divideCircleInDegsInto(SextantDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to sextants, measured in radians. */
   lazy val SextantAnglesInRadians: Seq[Double] =
     divideCircleInRadsInto(SextantDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to sextants, measured in gradians. */
   lazy val SextantAnglesInGradians: Seq[Double] =
     divideCircleInGradsInto(SextantDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to sextants, given as [[Angle]] instances. */
   lazy val SextantAngles: Seq[Angle] =
     SextantAnglesInDegrees.map(Angle(_))
 
@@ -230,19 +230,19 @@ object Angle {
   /** A clock position angle. */
   val ClockPositionAngle = Angle(ClockPositionAngleInDegrees)
 
-  /**  */
+  /** Angles resulting from division of a full circle to clock position angles, measured in degrees. */
   lazy val ClockPositionAnglesInDegrees: Seq[Double] =
     divideCircleInDegsInto(ClockPositionAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to clock position angles, measured in radians. */
   lazy val ClockPositionAnglesInRadians: Seq[Double] =
     divideCircleInRadsInto(ClockPositionAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to clock position angles, measured in gradians. */
   lazy val ClockPositionAnglesInGradians: Seq[Double] =
     divideCircleInGradsInto(ClockPositionAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to clock position angles, given as [[Angle]] instances. */
   lazy val ClockPositionAngles: Seq[Angle] =
     ClockPositionAnglesInDegrees.map(Angle(_))
 
@@ -266,19 +266,19 @@ object Angle {
   /** An hour angle. */
   val HourAngle = Angle(HourAngleInDegrees)
 
-  /**  */
+  /** Angles resulting from division of a full circle to hour angles, measured in degrees. */
   lazy val HourAnglesInDegrees: Seq[Double] =
     divideCircleInDegsInto(HourAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to hour angles, measured in radians. */
   lazy val HourAnglesInRadians: Seq[Double] =
     divideCircleInRadsInto(HourAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to hour angles, measured in gradians. */
   lazy val HourAnglesInGradians: Seq[Double] =
     divideCircleInGradsInto(HourAngleDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to hour angles, given as [[Angle]] instances. */
   lazy val HourAngles: Seq[Angle] =
     HourAnglesInDegrees.map(Angle(_))
 
@@ -302,19 +302,19 @@ object Angle {
   /** A compass point. */
   val CompassPoint = Angle(CompassPointInDegrees)
 
-  /**  */
+  /** Angles resulting from division of a full circle to compass points, measured in degrees. */
   lazy val CompassPointAnglesInDegrees: Seq[Double] =
     divideCircleInDegsInto(CompassPointDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to compass points, measured in radians. */
   lazy val CompassPointAnglesInRadians: Seq[Double] =
     divideCircleInRadsInto(CompassPointDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to compass points, measured in gradians. */
   lazy val CompassPointAnglesInGradians: Seq[Double] =
     divideCircleInGradsInto(CompassPointDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to compass points, given as [[Angle]] instances. */
   lazy val CompassPointAngles: Seq[Angle] =
     CompassPointAnglesInDegrees.map(Angle(_))
 
@@ -338,19 +338,19 @@ object Angle {
   /** A binary degree. */
   val BinaryDegree = Angle(BinaryDegreeInDegrees)
 
-  /**  */
+  /** Angles resulting from division of a full circle to binary degrees, measured in degrees. */
   lazy val BinaryDegreeAnglesInDegrees: Seq[Double] =
     divideCircleInDegsInto(BinaryDegreeDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to binary degrees, measured in radians. */
   lazy val BinaryDegreeAnglesInRadians: Seq[Double] =
     divideCircleInRadsInto(BinaryDegreeDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to binary degrees, measured in gradians. */
   lazy val BinaryDegreeAnglesInGradians: Seq[Double] =
     divideCircleInGradsInto(BinaryDegreeDivisions)
 
-  /**  */
+  /** Angles resulting from division of a full circle to binary degrees, given as [[Angle]] instances. */
   lazy val BinaryDegreeAngles: Seq[Angle] =
     BinaryDegreeAnglesInDegrees.map(Angle(_))
 
