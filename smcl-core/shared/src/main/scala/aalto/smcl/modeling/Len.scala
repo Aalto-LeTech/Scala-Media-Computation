@@ -237,4 +237,32 @@ case class Len private(inPixels: Double)
   override
   def max(others: Len*): Len = (this +: others).max
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toDims: d1.Dims = d1.Dims(inPixels)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toDimsWith(height: Len): d2.Dims = {
+    d2.Dims(inPixels, height.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toDimsWith(height: Len, depth: Len): d3.Dims = {
+    d3.Dims(inPixels, height.inPixels, depth.inPixels)
+  }
+
 }

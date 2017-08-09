@@ -178,4 +178,32 @@ package object modeling {
     first.toMinMaxWith(second)
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toDims(width: Len): d1.Dims = d1.Dims(width.inPixels)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toDims(width: Len, height: Len): d2.Dims = {
+    d2.Dims(width.inPixels, height.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toDims(width: Len, height: Len, depth: Len): d3.Dims = {
+    d3.Dims(width.inPixels, height.inPixels, depth.inPixels)
+  }
+
 }
