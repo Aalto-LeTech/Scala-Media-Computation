@@ -30,6 +30,38 @@ import aalto.smcl.modeling.Angle
 object MathUtils {
 
   /**
+   * Divides a length into a number of positions.
+   *
+   * @param lengthToDivide
+   * @param numberOfDivisions
+   * @return
+   */
+  def divideLength(
+      lengthToDivide: Double,
+      numberOfDivisions: Int): Seq[Double] = {
+
+    @scala.annotation.tailrec
+    def divideLengthRec(
+        currentDivision: Int,
+        numberOfDivisions: Int,
+        lengthToDivide: Double,
+        resultSeq: Seq[Double]): Seq[Double] = {
+
+      if (currentDivision >= numberOfDivisions)
+        return resultSeq
+
+      divideLengthRec(
+        currentDivision + 1,
+        numberOfDivisions,
+        lengthToDivide,
+        resultSeq :+ ((currentDivision * lengthToDivide) / numberOfDivisions)
+      )
+    }
+
+    divideLengthRec(0, numberOfDivisions, lengthToDivide, Seq[Double]())
+  }
+
+  /**
    *
    *
    * @param valueInDegrees

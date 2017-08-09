@@ -81,6 +81,21 @@ object Angle {
   val FullTurn = FullAngle
 
 
+
+  private
+  def divideCircleInDegsInto(numberOfDivisions: Int): Seq[Double] =
+    MathUtils.divideLength(FullAngleInDegrees, numberOfDivisions)
+
+  private
+  def divideCircleInRadsInto(numberOfDivisions: Int): Seq[Double] =
+    MathUtils.divideLength(FullAngleInRadians, numberOfDivisions)
+
+  private
+  def divideCircleInGradsInto(numberOfDivisions: Int): Seq[Double] =
+    MathUtils.divideLength(FullAngleInGradians, numberOfDivisions)
+
+
+
   /** Number of divisions to a full angle to get a straight angle. */
   val StraightAngleDivisions: Int = 2
 
@@ -100,6 +115,23 @@ object Angle {
 
   /** A half turn (i.e., a straight angle). */
   val HalfTurn = StraightAngle
+
+  /**  */
+  lazy val HalfTurnAnglesInDegrees: Seq[Double] =
+    divideCircleInDegsInto(StraightAngleDivisions)
+
+  /**  */
+  lazy val HalfTurnAnglesInRadians: Seq[Double] =
+    divideCircleInRadsInto(StraightAngleDivisions)
+
+  /**  */
+  lazy val HalfTurnAnglesInGradians: Seq[Double] =
+    divideCircleInGradsInto(StraightAngleDivisions)
+
+  /**  */
+  lazy val HalfTurnAngles: Seq[Angle] =
+    HalfTurnAnglesInDegrees.map(Angle(_))
+
 
 
   /** Number of divisions to a full angle to get a right angle. */
@@ -126,6 +158,23 @@ object Angle {
   /** A quarter turn (i.e., a right angle). */
   val QuarterTurn = RightAngle
 
+  /**  */
+  lazy val QuarterTurnAnglesInDegrees: Seq[Double] =
+    divideCircleInDegsInto(RightAngleDivisions)
+
+  /**  */
+  lazy val QuarterTurnAnglesInRadians: Seq[Double] =
+    divideCircleInRadsInto(RightAngleDivisions)
+
+  /**  */
+  lazy val QuarterTurnAnglesInGradians: Seq[Double] =
+    divideCircleInGradsInto(RightAngleDivisions)
+
+  /**  */
+  lazy val QuarterTurnAngles: Seq[Angle] =
+    QuarterTurnAnglesInDegrees.map(Angle(_))
+
+
 
   /** Number of divisions to a full angle to get a sextant. */
   val SextantDivisions: Int = 6
@@ -144,6 +193,23 @@ object Angle {
 
   /** A sextant. */
   val Sextant = Angle(SextantInDegrees)
+
+  /**  */
+  lazy val SextantAnglesInDegrees: Seq[Double] =
+    divideCircleInDegsInto(SextantDivisions)
+
+  /**  */
+  lazy val SextantAnglesInRadians: Seq[Double] =
+    divideCircleInRadsInto(SextantDivisions)
+
+  /**  */
+  lazy val SextantAnglesInGradians: Seq[Double] =
+    divideCircleInGradsInto(SextantDivisions)
+
+  /**  */
+  lazy val SextantAngles: Seq[Angle] =
+    SextantAnglesInDegrees.map(Angle(_))
+
 
 
   /** Number of divisions to a full angle to get a clock position angle. */
@@ -164,6 +230,23 @@ object Angle {
   /** A clock position angle. */
   val ClockPositionAngle = Angle(ClockPositionAngleInDegrees)
 
+  /**  */
+  lazy val ClockPositionAnglesInDegrees: Seq[Double] =
+    divideCircleInDegsInto(ClockPositionAngleDivisions)
+
+  /**  */
+  lazy val ClockPositionAnglesInRadians: Seq[Double] =
+    divideCircleInRadsInto(ClockPositionAngleDivisions)
+
+  /**  */
+  lazy val ClockPositionAnglesInGradians: Seq[Double] =
+    divideCircleInGradsInto(ClockPositionAngleDivisions)
+
+  /**  */
+  lazy val ClockPositionAngles: Seq[Angle] =
+    ClockPositionAnglesInDegrees.map(Angle(_))
+
+
 
   /** Number of divisions to a full angle to get an hour angle. */
   val HourAngleDivisions: Int = 24
@@ -182,6 +265,23 @@ object Angle {
 
   /** An hour angle. */
   val HourAngle = Angle(HourAngleInDegrees)
+
+  /**  */
+  lazy val HourAnglesInDegrees: Seq[Double] =
+    divideCircleInDegsInto(HourAngleDivisions)
+
+  /**  */
+  lazy val HourAnglesInRadians: Seq[Double] =
+    divideCircleInRadsInto(HourAngleDivisions)
+
+  /**  */
+  lazy val HourAnglesInGradians: Seq[Double] =
+    divideCircleInGradsInto(HourAngleDivisions)
+
+  /**  */
+  lazy val HourAngles: Seq[Angle] =
+    HourAnglesInDegrees.map(Angle(_))
+
 
 
   /** Number of divisions to a full angle to get a compass point. */
@@ -202,6 +302,23 @@ object Angle {
   /** A compass point. */
   val CompassPoint = Angle(CompassPointInDegrees)
 
+  /**  */
+  lazy val CompassPointAnglesInDegrees: Seq[Double] =
+    divideCircleInDegsInto(CompassPointDivisions)
+
+  /**  */
+  lazy val CompassPointAnglesInRadians: Seq[Double] =
+    divideCircleInRadsInto(CompassPointDivisions)
+
+  /**  */
+  lazy val CompassPointAnglesInGradians: Seq[Double] =
+    divideCircleInGradsInto(CompassPointDivisions)
+
+  /**  */
+  lazy val CompassPointAngles: Seq[Angle] =
+    CompassPointAnglesInDegrees.map(Angle(_))
+
+
 
   /** Number of divisions to a full angle to get a binary degree. */
   val BinaryDegreeDivisions: Int = 256
@@ -220,6 +337,23 @@ object Angle {
 
   /** A binary degree. */
   val BinaryDegree = Angle(BinaryDegreeInDegrees)
+
+  /**  */
+  lazy val BinaryDegreeAnglesInDegrees: Seq[Double] =
+    divideCircleInDegsInto(BinaryDegreeDivisions)
+
+  /**  */
+  lazy val BinaryDegreeAnglesInRadians: Seq[Double] =
+    divideCircleInRadsInto(BinaryDegreeDivisions)
+
+  /**  */
+  lazy val BinaryDegreeAnglesInGradians: Seq[Double] =
+    divideCircleInGradsInto(BinaryDegreeDivisions)
+
+  /**  */
+  lazy val BinaryDegreeAngles: Seq[Angle] =
+    BinaryDegreeAnglesInDegrees.map(Angle(_))
+
 
 
   /** An angle that represents positive infinity. */
