@@ -23,9 +23,9 @@ import scala.swing._
 import scala.util.Try
 
 import aalto.smcl.bitmaps.fullfeatured.Bitmap
+import aalto.smcl.infrastructure.jvmawt.AWTBitmapBufferAdapter
 import aalto.smcl.modeling.AffineTransformation
-import aalto.smcl.infrastructure.jvmawt.{AWTAffineTransformationAdapter, AWTBitmapBufferAdapter}
-
+import aalto.smcl.infrastructure.jvmawt.SMCLAffineTransformationWrapper
 
 
 
@@ -45,7 +45,8 @@ class ImageDisplayPanel
   private var _zoomFactor: ZoomFactor = ZoomFactor.Identity
 
   /** */
-  private var _zoomingTransformation: AffineTransformation = AffineTransformation()
+  private var _zoomingTransformation: AffineTransformation =
+    AffineTransformation.Identity
 
   /**
    *
@@ -68,8 +69,7 @@ class ImageDisplayPanel
 
       drawingSurface.drawImage(
         bufferRetrievalTry.get,
-        _zoomingTransformation.platformAffineTransform
-            .asInstanceOf[AWTAffineTransformationAdapter].awtAffineTransformation,
+        _zoomingTransformation.toAWTAffineTransform,
         null)
     }
     finally {

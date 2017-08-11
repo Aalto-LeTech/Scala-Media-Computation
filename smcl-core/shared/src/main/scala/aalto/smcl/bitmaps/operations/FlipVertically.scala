@@ -53,7 +53,7 @@ case class FlipVertically()
     require(sources.length == 1, s"Flip requires exactly one source image (provided: ${sources.length}).")
 
     sources(0).createTransformedVersionWith(
-      AffineTransformation.forVerticalFlipOf(sources(0).heightInPixels))
+      AffineTransformation.forXAxisRelativeVerticalFlipOf(sources(0).heightInPixels))
   }
 
 }

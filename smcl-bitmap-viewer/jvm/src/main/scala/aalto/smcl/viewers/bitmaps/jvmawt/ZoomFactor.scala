@@ -124,7 +124,7 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    * @return
    */
-  def enlargeByStandardAmountIfPossible() =
+  def enlargeByStandardAmountIfPossible(): ZoomFactor =
     this.adjustByIfPossible(ZoomFactor.StandardEnlargementFactor)
 
   /**
@@ -132,7 +132,7 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    * @return
    */
-  def reduceByStandardAmountIfPossible() =
+  def reduceByStandardAmountIfPossible(): ZoomFactor =
     this.adjustByIfPossible(ZoomFactor.StandardReductionFactor)
 
   /**
@@ -145,8 +145,9 @@ class ZoomFactor private(val valueInPercents: Int)
   /**
    *
    */
-  val asAffineTransformation: AffineTransformation =
-    AffineTransformation.forFreeScalingOf(asFactor, asFactor)
+  val asAffineTransformation: AffineTransformation = {
+    AffineTransformation.forOrigoRelativeScalingOf(asFactor, asFactor)
+  }
 
   /**
    *
@@ -155,7 +156,10 @@ class ZoomFactor private(val valueInPercents: Int)
    *
    * @return
    */
-  override def compare(that: ZoomFactor): Int = this.valueInPercents - that.valueInPercents
+  override
+  def compare(that: ZoomFactor): Int = {
+    this.valueInPercents - that.valueInPercents
+  }
 
   /**
    *

@@ -14,51 +14,40 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.infrastructure
+package aalto.smcl.infrastructure.jvmawt
 
 
-import java.awt.{Toolkit, Color => LowLevelColor}
+import java.awt.geom.{AffineTransform => AWTAffineTransform}
 
-import scala.language.implicitConversions
-
-import aalto.smcl.colors.rgb.Color
 import aalto.smcl.modeling.AffineTransformation
+
+
 
 
 /**
  *
  *
+ * @param self
+ *
  * @author Aleksi Lukkarinen
  */
-package object jvmawt {
+private[infrastructure]
+class RichAffineTransformation(val self: AffineTransformation) {
 
-  /** */
-  private[infrastructure]
-  lazy val UIProvider: AWTSwingUIProvider = new AWTSwingUIProvider()
+  /** This [[AffineTransformation]] as a AWT's 'AffineTransform'. */
+  final def toAWTAffineTransform: AWTAffineTransform = {
+    val awtTransform = new AWTAffineTransform()
 
-  /** */
-  private[infrastructure]
-  lazy val AWTToolkit: Toolkit = UIProvider.awtToolkit
+    awtTransform.setTransform(
+      self.alpha,
+      self.delta,
+      self.gamma,
+      self.beta,
+      self.tauX,
+      self.tauY
+    )
 
-  /**
-   *
-   */
-  private[smcl]
-  implicit def SMCLAffineTransformationWrapper(self: AffineTransformation): RichAffineTransformation =
-    new RichAffineTransformation(self)
-
-  /**
-   *
-   */
-  private[smcl]
-  implicit def AWTColorWrapper(self: LowLevelColor): RichAWTColor =
-    new RichAWTColor(self)
-
-  /**
-   *
-   */
-  private[smcl]
-  implicit def SMCLColorWrapper(self: Color): RicherColor =
-    new RicherColor(self)
+    awtTransform
+  }
 
 }

@@ -53,7 +53,7 @@ case class FlipHorizontally()
     require(sources.length == 1, s"Flip requires exactly one source image (provided: ${sources.length}).")
 
     sources(0).createTransformedVersionWith(
-      AffineTransformation.forHorizontalFlipOf(sources(0).widthInPixels))
+      AffineTransformation.forYAxisRelativeHorizontalFlipOf(sources(0).widthInPixels))
   }
 
 }

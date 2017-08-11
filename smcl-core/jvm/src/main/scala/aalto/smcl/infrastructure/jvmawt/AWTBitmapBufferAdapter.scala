@@ -473,8 +473,7 @@ class AWTBitmapBufferAdapter private(
     val globalInterpolationMethod = AffineTransformationInterpolationMethod.lowLevelValue
     var resultingImageWidth: Int = awtBufferedImage.getWidth
     var resultingImageHeight: Int = awtBufferedImage.getHeight
-    val lowLevelTransformation =
-      transformation.platformAffineTransform.asInstanceOf[AWTAffineTransformationAdapter].awtAffineTransformation
+    val lowLevelTransformation = transformation.toAWTAffineTransform
     val transformedContentBoundaries: Rectangle2D =
       new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
           .getBounds2D(awtBufferedImage)

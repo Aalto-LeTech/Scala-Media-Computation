@@ -17,7 +17,7 @@
 package aalto.smcl.modeling
 
 
-import aalto.smcl.infrastructure.{AffineTransformationAdapter, PRF}
+import aalto.smcl.infrastructure.MathUtils
 
 
 
@@ -29,56 +29,163 @@ import aalto.smcl.infrastructure.{AffineTransformationAdapter, PRF}
  */
 object AffineTransformation {
 
-  /**
-   *
-   *
-   * @return
-   */
-  def apply(): AffineTransformation = {
-    new AffineTransformation(PRF.createPlatformAffineTransformation)
-  }
+  private val Zero = 0.0
 
+  private val One = 1.0
 
-  /**
-   *
-   *
-   * @param bitmapWidth
-   *
-   * @return
-   */
-  def forHorizontalFlipOf(bitmapWidth: Int): AffineTransformation = {
-    AffineTransformation()
-        .scale(-1, 1)
-        .translate(-bitmapWidth, 0)
+  /** Identity transformation. */
+  lazy val Identity: AffineTransformation = {
+    AffineTransformation(
+      One, Zero, Zero,
+      Zero, One, Zero)
   }
 
   /**
    *
    *
-   * @param bitmapHeight
+   * @param horizontalSize
    *
    * @return
    */
-  def forVerticalFlipOf(bitmapHeight: Int): AffineTransformation = {
-    AffineTransformation()
-        .scale(1, -1)
-        .translate(0, -bitmapHeight)
+  @inline
+  def forYAxisRelativeHorizontalFlipOf(
+      horizontalSize: Len): AffineTransformation = {
+
+    forYAxisRelativeHorizontalFlipOf(horizontalSize.inPixels)
   }
 
   /**
    *
    *
-   * @param bitmapHeight
+   * @param horizontalSizeInPixels
    *
    * @return
    */
-  def forDiagonalFlipOf(
-      bitmapWidth: Int,
-      bitmapHeight: Int): AffineTransformation = {
+  @inline
+  def forYAxisRelativeHorizontalFlipOf(
+      horizontalSizeInPixels: Double): AffineTransformation = {
 
-    AffineTransformation()
-        .scale(-1, -1)
-        .translate(-bitmapWidth, -bitmapHeight)
+    AffineTransformation(
+      -One, Zero, -horizontalSizeInPixels,
+      Zero, One, Zero)
+  }
+
+  /**
+   *
+   *
+   * @param verticalSize
+   *
+   * @return
+   */
+  @inline
+  def forXAxisRelativeVerticalFlipOf(
+      verticalSize: Len): AffineTransformation = {
+
+    forXAxisRelativeVerticalFlipOf(verticalSize.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param verticalSizeInPixels
+   *
+   * @return
+   */
+  @inline
+  def forXAxisRelativeVerticalFlipOf(
+      verticalSizeInPixels: Double): AffineTransformation = {
+
+    AffineTransformation(
+      One, Zero, Zero,
+      Zero, -One, -verticalSizeInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param sizes
+   *
+   * @return
+   */
+  @inline
+  def forOrigoRelativeDiagonalFlipOf(
+      sizes: d2.Dims): AffineTransformation = {
+
+    forOrigoRelativeDiagonalFlipOf(
+      sizes.width.inPixels,
+      sizes.height.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param horizontalSize
+   * @param verticalSize
+   *
+   * @return
+   */
+  @inline
+  def forOrigoRelativeDiagonalFlipOf(
+      horizontalSize: Len,
+      verticalSize: Len): AffineTransformation = {
+
+    forOrigoRelativeDiagonalFlipOf(
+      horizontalSize.inPixels,
+      verticalSize.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param horizontalSizeInPixels
+   * @param verticalSizeInPixels
+   *
+   * @return
+   */
+  @inline
+  def forOrigoRelativeDiagonalFlipOf(
+      horizontalSizeInPixels: Double,
+      verticalSizeInPixels: Double): AffineTransformation = {
+
+    AffineTransformation(
+      -One, Zero, -horizontalSizeInPixels,
+      Zero, -One, -verticalSizeInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param lengthX
+   * @param lengthY
+   *
+   * @return
+   */
+  @inline
+  def forTranslationOf(
+      lengthX: Len,
+      lengthY: Len): AffineTransformation = {
+
+    forTranslationOf(
+      lengthX.inPixels,
+      lengthY.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param lengthXInPixels
+   * @param lengthYInPixels
+   *
+   * @return
+   */
+  @inline
+  def forTranslationOf(
+      lengthXInPixels: Double,
+      lengthYInPixels: Double): AffineTransformation = {
+
+    AffineTransformation(
+      One, Zero, lengthXInPixels,
+      Zero, One, lengthYInPixels)
   }
 
   /**
@@ -89,28 +196,48 @@ object AffineTransformation {
    *
    * @return
    */
-  def forFreeScalingOf(
+  @inline
+  def forOrigoRelativeScalingOf(
       factorX: Double,
       factorY: Double): AffineTransformation = {
 
-    AffineTransformation()
-        .scale(factorX, factorY)
+    AffineTransformation(
+      factorX, Zero, Zero,
+      Zero, factorY, Zero)
   }
 
   /**
    *
    *
-   * @param amountX
-   * @param amountY
+   * @param factorX
+   * @param factorY
    *
    * @return
    */
-  def forFreeShearingOf(
-      amountX: Double,
-      amountY: Double): AffineTransformation = {
+  @inline
+  def forOrigoRelativeShearingOf(
+      factorX: Double,
+      factorY: Double): AffineTransformation = {
 
-    AffineTransformation()
-        .shear(amountX, amountY)
+    AffineTransformation(
+      Zero, factorX, Zero,
+      factorY, Zero, Zero)
+  }
+
+  /**
+   *
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  def forOrigoCentredRotationOf(
+      angle: Angle): AffineTransformation = {
+
+    forOrigoCentredRotationOf(
+      angle.cos,
+      angle.sin)
   }
 
   /**
@@ -120,107 +247,261 @@ object AffineTransformation {
    *
    * @return
    */
-  def forFreeRotationOf(
+  @inline
+  def forOrigoCentredRotationOf(
       angleInDegrees: Double): AffineTransformation = {
 
-    AffineTransformation()
-        .rotateDegs(angleInDegrees)
+    forOrigoCentredRotationOf(
+      MathUtils.cos(angleInDegrees),
+      MathUtils.sin(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param sin
+   *
+   * @return
+   */
+  @inline
+  private
+  def forOrigoCentredRotationOf(
+      cos: Double,
+      sin: Double): AffineTransformation = {
+
+    AffineTransformation(
+      cos, -sin, Zero,
+      sin, cos, Zero)
   }
 
   /**
    *
    *
    * @param angleInDegrees
-   * @param anchorX
-   * @param anchorY
+   * @param pX
+   * @param pY
    *
    * @return
    */
-  def forFreeRotationOfAround(
+  @inline
+  def forPointCentredRotation(
       angleInDegrees: Double,
-      anchorX: Double,
-      anchorY: Double): AffineTransformation = {
+      pX: Double,
+      pY: Double): AffineTransformation = {
 
-    AffineTransformation()
-        .rotateDegsAround(angleInDegrees, anchorX, anchorY)
+    val cos = MathUtils.cos(angleInDegrees)
+    val sin = MathUtils.sin(angleInDegrees)
+
+    forPointCentredRotation(cos, sin, pX, pY)
   }
 
   /**
    *
    *
+   * @param angle
+   * @param pX
+   * @param pY
+   *
    * @return
    */
-  def forRotationOf90DegsCW: AffineTransformation = {
-    AffineTransformation()
-        .rotate90DegsCW
+  @inline
+  def forPointCentredRotation(
+      angle: Angle,
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    forPointCentredRotation(
+      angle.cos,
+      angle.sin,
+      pX,
+      pY)
   }
 
   /**
    *
    *
-   * @param anchorX
-   * @param anchorY
+   * @param angleInDegrees
+   * @param point
    *
    * @return
    */
-  def forRotationOf90DegsCWAround(
-      anchorX: Double,
-      anchorY: Double): AffineTransformation = {
+  @inline
+  def forPointCentredRotation(
+      angleInDegrees: Double,
+      point: Pos): AffineTransformation = {
 
-    AffineTransformation()
-        .rotate90DegsCWAround(anchorX, anchorY)
+    val cos = MathUtils.cos(angleInDegrees)
+    val sin = MathUtils.sin(angleInDegrees)
+
+    forPointCentredRotation(
+      cos,
+      sin,
+      point.xInPixels,
+      point.yInPixels)
   }
 
   /**
    *
    *
+   * @param angle
+   * @param point
+   *
    * @return
    */
-  def forRotationOf90DegsCCW: AffineTransformation = {
-    AffineTransformation()
-        .rotate90DegsCCW
+  @inline
+  def forPointCentredRotation(
+      angle: Angle,
+      point: Pos): AffineTransformation = {
+
+    forPointCentredRotation(
+      angle.cos,
+      angle.sin,
+      point.xInPixels,
+      point.yInPixels)
   }
 
   /**
    *
    *
-   * @param anchorX
-   * @param anchorY
+   * @param cos
+   * @param pX
+   * @param pY
    *
    * @return
    */
-  def forRotationOf90DegsCCWAround(
-      anchorX: Double,
-      anchorY: Double): AffineTransformation = {
+  @inline
+  def forPointCentredRotation(
+      cos: Double,
+      sin: Double,
+      pX: Double,
+      pY: Double): AffineTransformation = {
 
-    AffineTransformation()
-        .rotate90DegsCCWAround(anchorX, anchorY)
+    AffineTransformation(
+      cos, -sin, pX + sin * pY - cos * pX,
+      sin, cos, pY - sin * pX - cos * pY)
+  }
+
+  /** */
+  lazy val forOrigoCentredRotationOf90DegsCW: AffineTransformation = {
+    AffineTransformation(
+      Zero, One, Zero,
+      -One, Zero, Zero)
   }
 
   /**
    *
    *
+   * @param point
+   *
    * @return
    */
-  def forRotationOf180Degs: AffineTransformation = {
-    AffineTransformation()
-        .rotate180Degs
+  @inline
+  def forPointCentredRotationOf90DegsCW(
+      point: Pos): AffineTransformation = {
+
+    forPointCentredRotationOf90DegsCW(
+      point.xInPixels,
+      point.yInPixels)
   }
 
   /**
    *
    *
-   * @param anchorX
-   * @param anchorY
+   * @param pX
+   * @param pY
    *
    * @return
    */
-  def forRotationOf180DegsAround(
-      anchorX: Double,
-      anchorY: Double): AffineTransformation = {
+  @inline
+  def forPointCentredRotationOf90DegsCW(
+      pX: Double,
+      pY: Double): AffineTransformation = {
 
-    AffineTransformation()
-        .rotate180DegsAround(anchorX, anchorY)
+    AffineTransformation(
+      Zero, One, pX - pY,
+      -One, Zero, pX + pY)
+  }
+
+  /** */
+  lazy val forOrigoCentredRotationOf90DegsCCW: AffineTransformation = {
+    AffineTransformation(
+      Zero, -One, Zero,
+      One, Zero, Zero)
+  }
+
+  /**
+   *
+   *
+   * @param point
+   *
+   * @return
+   */
+  @inline
+  def forPointCentredRotationOf90DegsCCW(
+      point: Pos): AffineTransformation = {
+
+    forPointCentredRotationOf90DegsCCW(
+      point.xInPixels,
+      point.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param pX
+   * @param pY
+   *
+   * @return
+   */
+  @inline
+  def forPointCentredRotationOf90DegsCCW(
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    AffineTransformation(
+      Zero, -One, pX + pY,
+      One, Zero, pY - pX)
+  }
+
+  /** */
+  lazy val forOrigoCentredRotationOf180Degs: AffineTransformation = {
+    AffineTransformation(
+      One, Zero, Zero,
+      Zero, One, Zero)
+  }
+
+  /**
+   *
+   *
+   * @param point
+   *
+   * @return
+   */
+  @inline
+  def forPointCentredRotationOf180Degs(
+      point: Pos): AffineTransformation = {
+
+    forPointCentredRotationOf180Degs(
+      point.xInPixels,
+      point.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param pX
+   * @param pY
+   *
+   * @return
+   */
+  @inline
+  def forPointCentredRotationOf180Degs(
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    AffineTransformation(
+      One, Zero, 2 * pX,
+      Zero, One, 2 * pY)
   }
 
 }
@@ -231,14 +512,72 @@ object AffineTransformation {
 /**
  *
  *
+ * @param alpha
+ * @param beta
+ * @param gamma
+ * @param delta
+ * @param tauX
+ * @param tauY
+ *
  * @author Aleksi Lukkarinen
  */
-case class AffineTransformation private(
-    private[smcl] val platformAffineTransform: AffineTransformationAdapter) {
+case class AffineTransformation(
+    alpha: Double, gamma: Double, tauX: Double,
+    delta: Double, beta: Double, tauY: Double) {
 
-  require(platformAffineTransform != null,
-    "Platform transformation argument cannot be null.")
+  /**
+   *
+   *
+   * @param dimensions
+   *
+   * @return
+   */
+  @inline
+  def translate(
+      dimensions: d2.Dims): AffineTransformation = {
 
+    translate(
+      dimensions.width.inPixels,
+      dimensions.height.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param lengthX
+   * @param lengthY
+   *
+   * @return
+   */
+  @inline
+  def translate(
+      lengthX: Len,
+      lengthY: Len): AffineTransformation = {
+
+    translate(lengthX.inPixels, lengthY.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param lengthXInPixels
+   * @param lengthYInPixels
+   *
+   * @return
+   */
+  @inline
+  def translate(
+      lengthXInPixels: Double,
+      lengthYInPixels: Double): AffineTransformation = {
+
+    new AffineTransformation(
+      alpha = alpha,
+      beta = beta,
+      gamma = gamma,
+      delta = delta,
+      tauX = tauX + lengthXInPixels,
+      tauY = tauY + lengthYInPixels)
+  }
 
   /**
    *
@@ -248,30 +587,238 @@ case class AffineTransformation private(
    *
    * @return
    */
-  def scale(
+  @inline
+  def scaleRelativeToOrigo(
       factorX: Double,
       factorY: Double): AffineTransformation = {
 
-    AffineTransformation(
-      platformAffineTransform.copy.scale(
-        factorX, factorY))
+    new AffineTransformation(
+      alpha = factorX * alpha,
+      beta = factorY * beta,
+      gamma = factorX * gamma,
+      delta = factorY * delta,
+      tauX = factorX * tauX,
+      tauY = factorY * tauY)
   }
 
   /**
    *
    *
-   * @param amountXInPixels
-   * @param amountYInPixels
+   * @param factorX
+   * @param factorY
+   * @param point
    *
    * @return
    */
-  def translate(
-      amountXInPixels: Double,
-      amountYInPixels: Double): AffineTransformation = {
+  @inline
+  def scaleRelativeToPoint(
+      factorX: Double,
+      factorY: Double,
+      point: Pos): AffineTransformation = {
 
-    AffineTransformation(
-      platformAffineTransform.copy.translate(
-        amountXInPixels, amountYInPixels))
+    scaleRelativeToPoint(
+      factorX,
+      factorY,
+      point.xInPixels,
+      point.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param factorX
+   * @param factorY
+   * @param pX
+   * @param pY
+   *
+   * @return
+   */
+  @inline
+  def scaleRelativeToPoint(
+      factorX: Double,
+      factorY: Double,
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    new AffineTransformation(
+      alpha = factorX * alpha,
+      beta = factorY * beta,
+      gamma = factorX * gamma,
+      delta = factorY * delta,
+      tauX = pX + factorX * (tauX - pX),
+      tauY = pY + factorY * (tauY - pY))
+  }
+
+  /**
+   *
+   *
+   * @param factorX
+   * @param factorY
+   * @param objectsLowerLeftCorner
+   *
+   * @return
+   */
+  @inline
+  def shearRelativeToOrigo(
+      factorX: Double,
+      factorY: Double,
+      objectsLowerLeftCorner: Pos): AffineTransformation = {
+
+    shearRelativeToOrigo(
+      factorX,
+      factorY,
+      objectsLowerLeftCorner.xInPixels,
+      objectsLowerLeftCorner.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param factorX
+   * @param factorY
+   * @param objectsLowerLeftCornerX
+   * @param objectsLowerLeftCornerY
+   *
+   * @return
+   */
+  @inline
+  def shearRelativeToOrigo(
+      factorX: Double,
+      factorY: Double,
+      objectsLowerLeftCornerX: Double,
+      objectsLowerLeftCornerY: Double): AffineTransformation = {
+
+    new AffineTransformation(
+      alpha = alpha + factorX * delta,
+      beta = beta + factorY * gamma,
+      gamma = gamma + factorX * beta,
+      delta = delta + factorY * alpha,
+      tauX = tauX + factorX * (tauY - objectsLowerLeftCornerY),
+      tauY = tauY + factorY * (tauX - objectsLowerLeftCornerX))
+  }
+
+  /**
+   *
+   *
+   * @param factorX
+   * @param factorY
+   * @param objectsLowerLeftCorner
+   * @param point
+   *
+   * @return
+   */
+  @inline
+  def shearRelativeToPoint(
+      factorX: Double,
+      factorY: Double,
+      objectsLowerLeftCorner: Pos,
+      point: Pos): AffineTransformation = {
+
+    shearRelativeToPoint(
+      factorX,
+      factorY,
+      objectsLowerLeftCorner.xInPixels,
+      objectsLowerLeftCorner.yInPixels,
+      point.xInPixels,
+      point.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param factorX
+   * @param factorY
+   * @param objectsLowerLeftCornerX
+   * @param objectsLowerLeftCornerY
+   * @param point
+   *
+   * @return
+   */
+  @inline
+  def shearRelativeToPoint(
+      factorX: Double,
+      factorY: Double,
+      objectsLowerLeftCornerX: Double,
+      objectsLowerLeftCornerY: Double,
+      point: Pos): AffineTransformation = {
+
+    shearRelativeToPoint(
+      factorX,
+      factorY,
+      objectsLowerLeftCornerX,
+      objectsLowerLeftCornerY,
+      point.xInPixels,
+      point.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param factorX
+   * @param factorY
+   * @param objectsLowerLeftCorner
+   * @param pX
+   * @param pY
+   *
+   * @return
+   */
+  @inline
+  def shearRelativeToPoint(
+      factorX: Double,
+      factorY: Double,
+      objectsLowerLeftCorner: Pos,
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    shearRelativeToPoint(
+      factorX,
+      factorY,
+      objectsLowerLeftCorner.xInPixels,
+      objectsLowerLeftCorner.yInPixels,
+      pX,
+      pY)
+  }
+
+  /**
+   *
+   *
+   * @param factorX
+   * @param factorY
+   * @param objectsLowerLeftCornerX
+   * @param objectsLowerLeftCornerY
+   * @param pX
+   * @param pY
+   *
+   * @return
+   */
+  @inline
+  def shearRelativeToPoint(
+      factorX: Double,
+      factorY: Double,
+      objectsLowerLeftCornerX: Double,
+      objectsLowerLeftCornerY: Double,
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    new AffineTransformation(
+      alpha = alpha + factorX * delta,
+      beta = beta + factorY * gamma,
+      gamma = gamma + factorX * beta,
+      delta = delta + factorY * alpha,
+      tauX = tauX + factorX * (tauY - objectsLowerLeftCornerY - pY),
+      tauY = tauY + factorY * (tauX - objectsLowerLeftCornerX - pX))
+  }
+
+  /**
+   *
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  def rotateAroundOrigo(angle: Angle): AffineTransformation = {
+    rotateDegsAroundOrigo(angle.cos, angle.sin)
   }
 
   /**
@@ -281,28 +828,146 @@ case class AffineTransformation private(
    *
    * @return
    */
-  def rotateDegs(angleInDegrees: Double): AffineTransformation = {
-    AffineTransformation(
-      platformAffineTransform.copy.rotateDegs(angleInDegrees))
+  @inline
+  def rotateDegsAroundOrigo(angleInDegrees: Double): AffineTransformation = {
+    rotateDegsAroundOrigo(
+      MathUtils.cos(angleInDegrees),
+      MathUtils.sin(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param cos
+   * @param sin
+   *
+   * @return
+   */
+  @inline
+  private
+  def rotateDegsAroundOrigo(cos: Double, sin: Double): AffineTransformation = {
+    new AffineTransformation(
+      alpha = cos * alpha - sin * delta,
+      beta = cos * beta + sin * gamma,
+      gamma = cos * gamma - sin * beta,
+      delta = cos * delta + sin * alpha,
+      tauX = cos * tauX - sin * tauY,
+      tauY = cos * tauY + sin * tauX)
   }
 
   /**
    *
    *
    * @param angleInDegrees
-   * @param anchorXInPixels
-   * @param anchorYInPixels
+   * @param pX
+   * @param pY
    *
    * @return
    */
-  def rotateDegsAround(
+  @inline
+  def rotateDegsAroundPoint(
       angleInDegrees: Double,
-      anchorXInPixels: Double,
-      anchorYInPixels: Double): AffineTransformation = {
+      pX: Double,
+      pY: Double): AffineTransformation = {
 
-    AffineTransformation(
-      platformAffineTransform.copy.rotateDegsAround(
-        angleInDegrees, anchorXInPixels, anchorYInPixels))
+    val cos = MathUtils.cos(angleInDegrees)
+    val sin = MathUtils.sin(angleInDegrees)
+
+    rotateDegsAroundPoint(cos, sin, pX, pY)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   * @param point
+   *
+   * @return
+   */
+  @inline
+  def rotateDegsAroundPoint(
+      angleInDegrees: Double,
+      point: Pos): AffineTransformation = {
+
+    val cos = MathUtils.cos(angleInDegrees)
+    val sin = MathUtils.sin(angleInDegrees)
+
+    rotateDegsAroundPoint(
+      cos,
+      sin,
+      point.xInPixels,
+      point.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param angle
+   * @param pX
+   * @param pY
+   *
+   * @return
+   */
+  @inline
+  def rotateAroundPoint(
+      angle: Angle,
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    rotateDegsAroundPoint(
+      angle.cos,
+      angle.sin,
+      pX,
+      pY)
+  }
+
+  /**
+   *
+   *
+   * @param angle
+   * @param point
+   *
+   * @return
+   */
+  @inline
+  def rotateAroundPoint(
+      angle: Angle,
+      point: Pos): AffineTransformation = {
+
+    rotateDegsAroundPoint(
+      angle.cos,
+      angle.sin,
+      point.xInPixels,
+      point.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param cos
+   * @param sin
+   * @param pX
+   * @param pY
+   *
+   * @return
+   */
+  @inline
+  private
+  def rotateDegsAroundPoint(
+      cos: Double,
+      sin: Double,
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    val offsetX = tauX - pX
+
+    new AffineTransformation(
+      alpha = cos * alpha - sin * delta,
+      beta = cos * beta + sin * gamma,
+      gamma = cos * gamma - sin * beta,
+      delta = cos * delta + sin * alpha,
+      tauX = pX + cos * offsetX + sin * (pY - tauY),
+      tauY = pY + cos * (tauY - pY) + sin * offsetX)
   }
 
   /**
@@ -310,92 +975,52 @@ case class AffineTransformation private(
    *
    * @return
    */
-  def rotate90DegsCW: AffineTransformation = {
-    AffineTransformation(
-      platformAffineTransform.copy.rotate90DegsCW)
+  @inline
+  def rotate90DegsCWAroundOrigo: AffineTransformation = {
+    new AffineTransformation(
+      alpha = delta,
+      beta = -gamma,
+      gamma = beta,
+      delta = -alpha,
+      tauX = tauY,
+      tauY = tauX)
   }
 
   /**
    *
    *
-   * @param anchorXInPixels
-   * @param anchorYInPixels
+   * @param point
    *
    * @return
    */
-  def rotate90DegsCWAround(
-      anchorXInPixels: Double,
-      anchorYInPixels: Double): AffineTransformation = {
+  @inline
+  def rotate90DegsCWAroundPoint(
+      point: Pos): AffineTransformation = {
 
-    AffineTransformation(
-      platformAffineTransform.copy.rotate90DegsCWAround(
-        anchorXInPixels, anchorYInPixels))
+    rotate90DegsCWAroundPoint(
+      point.xInPixels, point.yInPixels)
   }
 
   /**
    *
+   *
+   * @param pX
+   * @param pY
    *
    * @return
    */
-  def rotate90DegsCCW: AffineTransformation = {
-    AffineTransformation(
-      platformAffineTransform.copy.rotate90DegsCCW)
-  }
+  @inline
+  def rotate90DegsCWAroundPoint(
+      pX: Double,
+      pY: Double): AffineTransformation = {
 
-  /**
-   *
-   *
-   * @param anchorXInPixels
-   * @param anchorYInPixels
-   *
-   * @return
-   */
-  def rotate90DegsCCWAround(
-      anchorXInPixels: Double,
-      anchorYInPixels: Double): AffineTransformation = {
-
-    AffineTransformation(
-      platformAffineTransform.copy.rotate90DegsCCWAround(
-        anchorXInPixels, anchorYInPixels))
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def rotate180Degs: AffineTransformation = {
-    AffineTransformation(
-      platformAffineTransform.copy.rotate180Degs)
-  }
-
-  /**
-   *
-   *
-   * @param anchorXInPixels
-   * @param anchorYInPixels
-   *
-   * @return
-   */
-  def rotate180DegsAround(
-      anchorXInPixels: Double,
-      anchorYInPixels: Double): AffineTransformation = {
-
-    AffineTransformation(
-      platformAffineTransform.copy.rotate180DegsAround(
-        anchorXInPixels, anchorYInPixels))
-  }
-
-  /**
-   *
-   *
-   * @param amountX
-   * @param amountY
-   */
-  def shear(amountX: Double, amountY: Double): AffineTransformation = {
-    AffineTransformation(
-      platformAffineTransform.copy.shear(
-        amountX, amountY))
+    new AffineTransformation(
+      alpha = delta,
+      beta = -gamma,
+      gamma = beta,
+      delta = -alpha,
+      tauX = pX - pY + tauY,
+      tauY = pY - tauX + pX)
   }
 
   /**
@@ -403,8 +1028,229 @@ case class AffineTransformation private(
    *
    * @return
    */
-  def copy: AffineTransformation = {
-    AffineTransformation(platformAffineTransform.copy)
+  @inline
+  def rotate90DegsCCWAroundOrigo: AffineTransformation = {
+    new AffineTransformation(
+      alpha = -delta,
+      beta = gamma,
+      gamma = -beta,
+      delta = alpha,
+      tauX = -tauY,
+      tauY = tauX)
+  }
+
+  /**
+   *
+   *
+   * @param point
+   *
+   * @return
+   */
+  @inline
+  def rotate90DegsCCWAroundPoint(
+      point: Pos): AffineTransformation = {
+
+    rotate90DegsCCWAroundPoint(
+      point.xInPixels, point.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param pX
+   * @param pY
+   *
+   * @return
+   */
+  @inline
+  def rotate90DegsCCWAroundPoint(
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    new AffineTransformation(
+      alpha = -delta,
+      beta = gamma,
+      gamma = -beta,
+      delta = alpha,
+      tauX = pX + pY - tauY,
+      tauY = pY + tauX - pX)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def rotate180DegsAroundOrigo: AffineTransformation = {
+    new AffineTransformation(
+      alpha = -alpha,
+      beta = -beta,
+      gamma = -gamma,
+      delta = -delta,
+      tauX = -tauX,
+      tauY = -tauY)
+  }
+
+  /**
+   *
+   *
+   * @param point
+   *
+   * @return
+   */
+  @inline
+  def rotate180DegsAroundPoint(
+      point: Pos): AffineTransformation = {
+
+    rotate180DegsAroundPoint(
+      point.xInPixels, point.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param pX
+   * @param pY
+   *
+   * @return
+   */
+  @inline
+  def rotate180DegsAroundPoint(
+      pX: Double,
+      pY: Double): AffineTransformation = {
+
+    new AffineTransformation(
+      alpha = -alpha,
+      beta = -beta,
+      gamma = -gamma,
+      delta = -delta,
+      tauX = 2 * pX - tauX,
+      tauY = 2 * pY - tauY)
+  }
+
+  /**
+   *
+   *
+   * @param horizontalSize
+   *
+   * @return
+   */
+  @inline
+  def flipHorizontallyAroundYAxis(
+      horizontalSize: Len): AffineTransformation = {
+
+    flipHorizontallyAroundYAxis(horizontalSize.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param horizontalSizeInPixels
+   *
+   * @return
+   */
+  @inline
+  def flipHorizontallyAroundYAxis(
+      horizontalSizeInPixels: Double): AffineTransformation = {
+
+    new AffineTransformation(
+      alpha = -alpha,
+      beta = beta,
+      gamma = -gamma,
+      delta = delta,
+      tauX = -tauX - horizontalSizeInPixels,
+      tauY = tauY)
+  }
+
+  /**
+   *
+   *
+   * @param verticalSize
+   *
+   * @return
+   */
+  @inline
+  def flipVerticallyAroundXAxis(
+      verticalSize: Len): AffineTransformation = {
+
+    flipVerticallyAroundXAxis(verticalSize.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param verticalSizeInPixels
+   *
+   * @return
+   */
+  @inline
+  def flipVerticallyAroundXAxis(
+      verticalSizeInPixels: Double): AffineTransformation = {
+
+    new AffineTransformation(
+      alpha = alpha,
+      beta = -beta,
+      gamma = gamma,
+      delta = -delta,
+      tauX = tauX,
+      tauY = -tauY - verticalSizeInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param sizes
+   *
+   * @return
+   */
+  @inline
+  def flipDiagonallyAroundOrigo(
+      sizes: d2.Dims): AffineTransformation = {
+
+    flipDiagonallyAroundOrigo(
+      sizes.width.inPixels,
+      sizes.height.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param horizontalSize
+   * @param verticalSize
+   *
+   * @return
+   */
+  @inline
+  def flipDiagonallyAroundOrigo(
+      horizontalSize: Len,
+      verticalSize: Len): AffineTransformation = {
+
+    flipDiagonallyAroundOrigo(
+      horizontalSize.inPixels,
+      verticalSize.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param horizontalSizeInPixels
+   * @param verticalSizeInPixels
+   *
+   * @return
+   */
+  @inline
+  def flipDiagonallyAroundOrigo(
+      horizontalSizeInPixels: Double,
+      verticalSizeInPixels: Double): AffineTransformation = {
+
+    new AffineTransformation(
+      alpha = -alpha,
+      beta = -beta,
+      gamma = -gamma,
+      delta = -delta,
+      tauX = -tauX - horizontalSizeInPixels,
+      tauY = -tauY - verticalSizeInPixels)
   }
 
 }

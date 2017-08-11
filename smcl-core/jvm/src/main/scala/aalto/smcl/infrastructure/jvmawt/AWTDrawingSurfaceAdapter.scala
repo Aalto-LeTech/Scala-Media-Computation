@@ -136,7 +136,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
 
       ds.drawImage(
         bitmap.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage,
-        transformation.platformAffineTransform.asInstanceOf[AWTAffineTransformationAdapter].awtAffineTransformation,
+        transformation.toAWTAffineTransform,
         null)
     }
   }

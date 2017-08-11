@@ -19,8 +19,8 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
-import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 
 
@@ -75,7 +75,9 @@ case class Shear(
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).createTransformedVersionWith(
-      AffineTransformation.forFreeShearingOf(shearingFactorHorizontal, shearingFactorVertical),
+      AffineTransformation.forOrigoRelativeShearingOf(
+        shearingFactorHorizontal,
+        shearingFactorVertical),
       resizeCanvasBasedOnTransformation,
       backgroundColor)
   }

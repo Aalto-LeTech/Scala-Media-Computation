@@ -18,8 +18,8 @@ package aalto.smcl.bitmaps.operations
 
 
 import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
-import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.settings.CanvasesAreResizedBasedOnTransformations
 
 
@@ -71,7 +71,9 @@ case class Scale(
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).createTransformedVersionWith(
-      AffineTransformation.forFreeScalingOf(scalingFactorVertical, scalingFactorHorizontal),
+      AffineTransformation.forOrigoRelativeScalingOf(
+        scalingFactorVertical,
+        scalingFactorHorizontal),
       resizeCanvasBasedOnTransformation)
   }
 

@@ -54,7 +54,7 @@ case class FlipDiagonally()
     require(sources.length == 1, s"Flip requires exactly one source image (provided: ${sources.length}).")
 
     val transformation =
-      AffineTransformation.forDiagonalFlipOf(
+      AffineTransformation.forOrigoRelativeDiagonalFlipOf(
         sources(0).widthInPixels,
         sources(0).heightInPixels)
 

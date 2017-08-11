@@ -19,8 +19,8 @@ package aalto.smcl.bitmaps.operations
 
 import aalto.smcl.bitmaps.fullfeatured.AbstractBitmap
 import aalto.smcl.colors.rgb._
-import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure._
+import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 
 
@@ -74,7 +74,7 @@ case class Rotate(
    */
   override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).createTransformedVersionWith(
-      AffineTransformation.forFreeRotationOfAround(
+      AffineTransformation.forPointCentredRotation(
         angleInDegrees,
         0.5 * sources(0).widthInPixels,
         0.5 * sources(0).heightInPixels),
