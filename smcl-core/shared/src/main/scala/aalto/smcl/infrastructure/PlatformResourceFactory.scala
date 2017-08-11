@@ -47,14 +47,6 @@ trait PlatformResourceFactory {
    */
   def screenInformationProvider: ScreenInformationProvider
 
-
-  /**
-   *
-   *
-   * @return
-   */
-  def createPlatformAffineTransformation: AffineTransformationAdapter
-
   /**
    *
    *

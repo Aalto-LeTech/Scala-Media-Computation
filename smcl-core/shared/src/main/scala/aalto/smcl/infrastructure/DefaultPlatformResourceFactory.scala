@@ -58,15 +58,6 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
   /**
    *
    *
-   * @return
-   */
-  override def createPlatformAffineTransformation: AffineTransformationAdapter = {
-    implementation.createPlatformAffineTransformation
-  }
-
-  /**
-   *
-   *
    * @param width
    * @param height
    *

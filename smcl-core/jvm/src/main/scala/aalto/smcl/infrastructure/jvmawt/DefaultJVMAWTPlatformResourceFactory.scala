@@ -73,15 +73,6 @@ class DefaultJVMAWTPlatformResourceFactory(
   /**
    *
    *
-   * @return
-   */
-  override def createPlatformAffineTransformation: AffineTransformationAdapter = {
-    AWTAffineTransformationAdapter()
-  }
-
-  /**
-   *
-   *
    * @param width
    * @param height
    *
