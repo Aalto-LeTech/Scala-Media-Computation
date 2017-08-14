@@ -25,11 +25,11 @@
           </set>
         </option>
         <option name="resolveSbtClassifiers" value="true" />
-        <option name="sbtVersion" value="0.13.15" />
+        <option name="sbtVersion" value="1.0.0" />
         <option name="useAutoImport" value="true" />
         <option name="useOurOwnAutoImport" value="true" />
       </SbtProjectSettings>
     </option>
-    <option name="vmParameters" value="-Dsbt.ivy.home=../../../../../../l/dev/local-ivy-repo -Divy.home=../../../../../../l/dev/local-ivy-repo -Dsbt.boot.directory=/l/dev/sbt-boot" />
+    <option name="vmParameters" value="-Dsbt.ivy.home=/l/dev/local-ivy-repo -Divy.home=/l/dev/local-ivy-repo -Dsbt.boot.directory=/l/dev/sbt-boot" />
   </component>
 </project>

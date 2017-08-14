@@ -37,7 +37,7 @@ enablePlugins(ScalaJSPlugin)
 //
 //-------------------------------------------------------------------------------------------------
 
-lazy val primaryScalaVersion = "2.12.2"
+lazy val primaryScalaVersion = "2.12.3"
 
 lazy val projectIdJvmPostfix = "-jvm"
 lazy val projectIdJsPostfix = "-js"

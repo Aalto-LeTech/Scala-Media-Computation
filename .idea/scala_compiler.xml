@@ -7,18 +7,18 @@
     <option name="uncheckedWarnings" value="true" />
     <option name="featureWarnings" value="true" />
     <option name="incrementalityType" value="SBT" />
-    <profile name="SBT 1" modules="smcl,smcl,smcl-bitmap-viewer-js,smcl-core-js">
-      <option name="deprecationWarnings" value="true" />
-      <option name="uncheckedWarnings" value="true" />
-      <option name="featureWarnings" value="true" />
-      <plugins>
-        <plugin path="/../../l/dev/local-ivy-repo/cache/org.scala-js/scalajs-compiler_2.12.2/jars/scalajs-compiler_2.12.2-0.6.15.jar" />
-      </plugins>
-    </profile>
     <profile name="SBT 2" modules="smcl-core-jvm,smcl-bitmap-viewer-jvm,smcl-core-jvm">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <option name="featureWarnings" value="true" />
+    </profile>
+    <profile name="SBT 3" modules="smcl,smcl-bitmap-viewer-js,smcl-core-js">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+      <plugins>
+        <plugin path="$PROJECT_DIR$/../../local-ivy-repo/cache/org.scala-js/scalajs-compiler_2.12.3/jars/scalajs-compiler_2.12.3-0.6.19.jar" />
+      </plugins>
     </profile>
   </component>
 </project>
