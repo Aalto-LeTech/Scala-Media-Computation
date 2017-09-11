@@ -79,7 +79,7 @@ object Pos {
  *
  * @author Aleksi Lukkarinen
  */
-case class Pos private(
+case class Pos private[smcl](
     xInPixels: Double,
     yInPixels: Double)
     extends AbstractCartesianPosition(Seq(xInPixels, yInPixels))
@@ -89,6 +89,9 @@ case class Pos private(
             with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
             with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
             with Movable[Pos] {
+
+  /** */
+  lazy val boundary: Option[Bounds] = Some(Bounds(this, this))
 
   /**
    *

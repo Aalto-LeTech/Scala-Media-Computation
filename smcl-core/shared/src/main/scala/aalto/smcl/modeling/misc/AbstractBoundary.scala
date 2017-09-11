@@ -16,6 +16,7 @@
 
 package aalto.smcl.modeling.misc
 
+
 import scala.annotation.tailrec
 
 import aalto.smcl.infrastructure.FlatMap
@@ -32,7 +33,7 @@ import aalto.smcl.infrastructure.FlatMap
  */
 abstract class AbstractBoundary[PositionType <: AbstractPosition](
     val markers: Seq[PositionType])
-    extends AbstractGeometryObject
+    extends AbstractMeasurement
             with Equals
             with Iterable[PositionType]
             with FlatMap[AbstractBoundary[PositionType], Seq[PositionType]] {

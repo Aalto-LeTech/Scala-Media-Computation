@@ -16,6 +16,7 @@
 
 package aalto.smcl.modeling.misc
 
+
 import scala.annotation.tailrec
 
 
@@ -30,7 +31,7 @@ import scala.annotation.tailrec
  */
 abstract class AbstractDimensions(
     val lengths: Seq[Double])
-    extends AbstractGeometryObject
+    extends AbstractMeasurement
             with Equals
             with Iterable[Double] {
 

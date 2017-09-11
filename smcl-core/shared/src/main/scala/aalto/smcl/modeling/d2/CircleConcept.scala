@@ -14,69 +14,54 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.fullfeatured
+package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
-import aalto.smcl.modeling.d2.Pos
+import aalto.smcl.modeling.misc.AbstractShapeConcept
 
 
 
 
 /**
+ * Circle in two-dimensional Cartesian coordinate system with [[Int]] coordinates.
  *
+ * @param position
+ * @param radiusInPixels
  *
  * @author Aleksi Lukkarinen
  */
-class Line private(
-    override val identity: Identity,
-    val position: Pos,
-    val start: Pos,
-    val end: Pos)
-    extends Polygon(
-      identity,
-      Seq(start, end),
-      position) {
+case class CircleConcept private(
+    position: Pos,
+    radiusInPixels: Double)
+    extends AbstractShapeConcept
+            with HasPos
+            with HasBounds
+            with Movable[CircleConcept] {
 
-
-  val boundary = None
-
-  /** Tells if this [[Line]] can be rendered on a bitmap. */
-  val isRenderable: Boolean = true
-
-
-  /**
-   * Renders this [[aalto.smcl.bitmaps.fullfeatured.Line]] on a drawing surface.
-   *
-   * @param drawingSurface
-   * @param position
-   */
-  override def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      position: Pos): Unit = {
-
-  }
+  /** */
+  val boundary: Option[Bounds] = Some(Bounds(
+    Pos(
+      position.xInPixels - radiusInPixels,
+      position.yInPixels - radiusInPixels),
+    Pos(
+      position.xInPixels + radiusInPixels,
+      position.yInPixels + radiusInPixels)
+  ))
 
   /**
-   * Rotates this object around a given point of the specified number of degrees.
    *
-   * @param angleInDegrees
+   *
+   * @param deltas
    *
    * @return
    */
-  def rotateBy(angleInDegrees: Double, centerOfRotation: Pos): ImageElement = {
-    this
-  }
+  @inline
+  override def moveBy(deltas: Double*): CircleConcept = {
+    require(
+      deltas.length == 2,
+      s"Circle uses exactly two coordinates (given: ${deltas.length})")
 
-  /**
-   *
-   *
-   * @param offsets
-   *
-   * @return
-   */
-  def moveBy(offsets: Double*): ImageElement = {
-    this
+    CircleConcept(position + deltas, radiusInPixels)
   }
 
 }

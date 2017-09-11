@@ -17,8 +17,8 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
-import aalto.smcl.modeling.d2.{Movable, Rotatable}
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
+import aalto.smcl.modeling.d2.{HasBounds, HasPos, Pos}
 
 
 
@@ -26,14 +26,14 @@ import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
 /**
  *
  *
- * @param identity
- *
  * @author Aleksi Lukkarinen
  */
-abstract class ImageElement(
-    val identity: Identity)
-    extends Movable[ImageElement]
-            with Rotatable[ImageElement] {
+trait ImageElement
+    extends HasPos
+            with HasBounds {
+
+  /** */
+  def identity: Identity
 
   /** Tells if this [[ImageElement]] can be rendered on a bitmap. */
   def isRenderable: Boolean
@@ -43,13 +43,15 @@ abstract class ImageElement(
    *
    * @param drawingSurface
    */
-  def renderOn(drawingSurface: DrawingSurfaceAdapter): Unit
+  def renderOn(
+      drawingSurface: DrawingSurfaceAdapter,
+      position: Pos): Unit
 
   /**
    *
    *
    * @return
    */
-  def toBitmap: Bmp
+  def toBitmap: Bmp = Bmp(this)
 
 }

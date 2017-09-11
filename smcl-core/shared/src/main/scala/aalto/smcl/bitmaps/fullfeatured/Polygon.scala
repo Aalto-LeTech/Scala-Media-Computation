@@ -19,7 +19,7 @@ abstract class Polygon(
     identity: Identity,
     points: Seq[Pos],
     position: Pos)
-    extends VectorGraphic(identity)
+    extends VectorGraphic
             with HasPos {
 
 }

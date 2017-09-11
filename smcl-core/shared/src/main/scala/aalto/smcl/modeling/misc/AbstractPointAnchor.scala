@@ -17,8 +17,6 @@
 package aalto.smcl.modeling.misc
 
 
-
-
 /**
  *
  *
@@ -27,6 +25,7 @@ package aalto.smcl.modeling.misc
  */
 abstract class AbstractPointAnchor[DimensionType <: AbstractDimensions](
     val dimensions: Seq[Double],
-    val name: Option[String]) {
+    val name: Option[String])
+    extends AbstractAnchor {
 
 }

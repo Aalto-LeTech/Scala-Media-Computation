@@ -47,6 +47,53 @@ object Bmp
   /**
    *
    *
+   * @param elements
+   *
+   * @return
+   */
+  def apply(elements: ImageElement*): Bmp = {
+    val boundsOption =
+      Image.calculateOuterBoundary(elements)
+
+    if (boundsOption.isEmpty) {
+      return Bmp(0, 0)
+    }
+
+    val bounds = boundsOption.get
+    val width = bounds.width
+    val height = bounds.height
+
+    if (width < 1 || height < 1) {
+      return Bmp(0, 0)
+    }
+
+    bitmapValidator.validateBitmapSize(width, height)
+
+    val buffer: BitmapBufferAdapter =
+      PRF.createPlatformBitmapBuffer(width, height)
+
+    val upperLeftPos = bounds.upperLeftMarker
+    val offset = Dims(
+      0 - upperLeftPos.xInPixels,
+      0 - upperLeftPos.yInPixels
+    )
+
+    elements.foreach { e =>
+      e.renderOn(
+        buffer.drawingSurface,
+        e.position + offset
+      )
+    }
+
+    Bmp(
+      Identity(),
+      Pos.Origo,
+      Some(buffer))
+  }
+
+  /**
+   *
+   *
    * @param widthInPixels
    * @param heightInPixels
    *
@@ -77,32 +124,44 @@ object Bmp
       width,
       height)
 
-    val identity: Identity = Identity()
-
-    val boundary: Bounds =
-      Bounds(
-        upperLeftXInPixels = 0,
-        upperLeftYInPixels = 0,
-        lowerRightXInPixels = 0 + width.inPixels,
-        lowerRightYInPixels = 0 + height.inPixels)
-
-    val isrenderable = width > 0 && height > 0
+    val newIdentity: Identity = Identity()
 
     val buffer =
-      if (isrenderable)
+      if (width > 0 && height > 0)
         Some(PRF.createPlatformBitmapBuffer(width, height))
       else
         None
 
-    val bitmap = new Bmp(
-      identity,
-      isrenderable,
-      Dims(width, height),
-      Pos.Origo,
-      Some(boundary),
-      buffer)
+    Bmp(newIdentity, Pos.Origo, buffer)
+  }
 
-    bitmap
+  /**
+   *
+   *
+   * @param identity
+   * @param buffer
+   *
+   * @return
+   */
+  private
+  def apply(
+      identity: Identity,
+      position: Pos,
+      buffer: Option[BitmapBufferAdapter]): Bmp = {
+
+    if (buffer.isEmpty) {
+      return new Bmp(identity, false, Dims(0, 0), position, None)
+    }
+
+    val isRenderable =
+      buffer.get.widthInPixels > 0 && buffer.get.heightInPixels > 0
+
+    new Bmp(
+      identity,
+      isRenderable,
+      Dims(buffer.get.widthInPixels, buffer.get.heightInPixels),
+      position,
+      buffer)
   }
 
 }
@@ -117,7 +176,6 @@ object Bmp
  * @param isRenderable
  * @param dimensions
  * @param position
- * @param boundary
  * @param buffer
  *
  * @author Aleksi Lukkarinen
@@ -127,12 +185,21 @@ class Bmp private(
     val isRenderable: Boolean,
     val dimensions: Dims,
     val position: Pos,
-    override val boundary: Option[Bounds],
     private[this] val buffer: Option[BitmapBufferAdapter])
-    extends ImageElement(identity)
+    extends ImageElement
             with HasPos
-            with HasDims
-            with HasBounds {
+            with HasDims {
+
+  /** */
+  override
+  val boundary: Option[Bounds] =
+    Some(Bounds(
+      position,
+      Pos(
+        position.xInPixels + width.inPixels,
+        position.yInPixels + height.inPixels
+      )
+    ))
 
   /** Length of the bitmap. As bitmap has no length, this equals <code>None</code>. */
   val length: Option[Len] = None
@@ -142,17 +209,11 @@ class Bmp private(
    *
    * @param drawingSurface
    */
-  def renderOn(drawingSurface: DrawingSurfaceAdapter): Unit = {
+  override
+  def renderOn(
+      drawingSurface: DrawingSurfaceAdapter,
+      position: Pos): Unit = {
 
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def toBitmap: Bmp = {
-    this
   }
 
   /**
@@ -162,7 +223,7 @@ class Bmp private(
    *
    * @return
    */
-  override def rotateBy(
+  def rotateBy(
       angleInDegrees: Double,
       centerOfRotation: Pos): ImageElement = {
 
@@ -176,7 +237,7 @@ class Bmp private(
    *
    * @return
    */
-  override def moveBy(offsets: Double*): ImageElement = {
+  def moveBy(offsets: Double*): ImageElement = {
     this
   }
 

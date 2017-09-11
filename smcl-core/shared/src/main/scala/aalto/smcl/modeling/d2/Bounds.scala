@@ -67,8 +67,8 @@ object Bounds {
     new Bounds(
       Pos(x0, y0),
       Pos(x1, y1),
-      widthInPixels,
-      heightInPixels,
+      Len(widthInPixels),
+      Len(heightInPixels),
       Len(lengthInPixels),
       Area.forRectangle(widthInPixels, heightInPixels))
   }
@@ -117,8 +117,8 @@ object Bounds {
  *
  * @param upperLeftMarker
  * @param lowerRightMarker
- * @param widthInPixels
- * @param heightInPixels
+ * @param width
+ * @param height
  * @param length
  * @param area
  *
@@ -127,15 +127,15 @@ object Bounds {
 case class Bounds private(
     upperLeftMarker: Pos,
     lowerRightMarker: Pos,
-    widthInPixels: Double,
-    heightInPixels: Double,
+    width: Len,
+    height: Len,
     length: Len,
     area: Area)
     extends AbstractBoundary[Pos](Seq(upperLeftMarker, lowerRightMarker))
             with HasArea {
 
   /** Position of this boundary. */
-  val position: Pos = upperLeftMarker
+  lazy val position: Pos = upperLeftMarker
 
   /**
    *
@@ -157,8 +157,8 @@ case class Bounds private(
    */
   @inline
   def randomPosInside: Pos = {
-    val offsetX = Random.nextDouble() * widthInPixels
-    val offsetY = Random.nextDouble() * heightInPixels
+    val offsetX = Random.nextDouble() * width.inPixels
+    val offsetY = Random.nextDouble() * height.inPixels
 
     upperLeftMarker + (offsetX, offsetY)
   }

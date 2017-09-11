@@ -37,6 +37,30 @@ package object bitmaps
   /** A companion object alias for default bitmap. */
   val Bitmap = simplified.Bitmap
 
+  /** A type alias for . */
+  type Bmp = fullfeatured.Bmp
+
+  /** A companion object alias for . */
+  val Bmp = fullfeatured.Bmp
+
+  /** A type alias for . */
+  type Image = fullfeatured.Image
+
+  /** A companion object alias for . */
+  val Image = fullfeatured.Image
+
+  /** A type alias for . */
+  type Point = fullfeatured.Point
+
+  /** A companion object alias for . */
+  val Point = fullfeatured.Point
+
+  /** A type alias for . */
+  type Line = fullfeatured.Line
+
+  /** A companion object alias for . */
+  // val Line = fullfeatured.Line
+
   /**
    * Creates a new empty [[Bitmap]] instance with a circle drawn on it.
    *

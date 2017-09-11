@@ -2,9 +2,8 @@ package aalto.smcl.bitmaps.fullfeatured
 
 
 import aalto.smcl.colors.rgb
-import aalto.smcl.modeling.Transformer
-import aalto.smcl.modeling.d2.Pos
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
+import aalto.smcl.modeling.d2.Pos
 
 
 
@@ -62,50 +61,30 @@ object Point {
  */
 class Point private(
     override val identity: Identity,
-    val xInPixels: Double,
-    val yInPixels: Double,
-    override val color: rgb.Color)
-    extends AbstractPoint(
-      identity,
-      Pos(xInPixels, yInPixels),
-      color) {
+    override val xInPixels: Double,
+    override val yInPixels: Double,
+    val color: rgb.Color)
+    extends Pos(xInPixels, yInPixels)
+            with VectorGraphic {
+
+  /** */
+  def position: Pos = this
+
+  /** Tells if this [[Point]] can be rendered on a bitmap. */
+  override
+  def isRenderable: Boolean = true
 
   /**
    *
    *
    * @param drawingSurface
    */
-  override def renderOn(drawingSurface: DrawingSurfaceAdapter): Unit = {
-    drawingSurface.drawPoint(xInPixels, yInPixels, color)
-  }
+  override def renderOn(
+      drawingSurface: DrawingSurfaceAdapter,
+      position: Pos): Unit = {
 
-  /**
-   *
-   *
-   * @return
-   */
-  override def toBitmap: Bmp = {
-    Bmp(1, 1)
-  }
-
-  /**
-   * Rotates this object around a given point of the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  override
-  def rotateBy(
-      angleInDegrees: Double,
-      centerOfRotation: Pos): Point = {
-
-    val pos = Transformer.rotate(position, angleInDegrees, centerOfRotation)
-
-    Point(
-      pos.xInPixels,
-      pos.yInPixels,
-      color)
+    drawingSurface.drawPoint(
+      position.xInPixels, position.yInPixels, color)
   }
 
   /**

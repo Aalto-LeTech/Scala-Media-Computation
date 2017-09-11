@@ -30,12 +30,9 @@ import scala.annotation.tailrec
  */
 abstract class AbstractPosition(
     val coordinates: Seq[Double])
-    extends AbstractGeometryObject
+    extends AbstractShapeConcept
             with Equals
             with Iterable[Double] {
-
-  //lazy val intCoordinates: Seq[Int] =
-  //  coordinates.map(_.c)
 
   /**
    * Provides an iterator for the dimension values.

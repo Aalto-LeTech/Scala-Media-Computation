@@ -16,11 +16,13 @@
 
 package aalto.smcl.modeling.misc
 
+
 /**
- * Base class for all geometrical objects.
+ * Base class for all modeling objects that represent conceptual shapes.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractGeometryObject {
+abstract class AbstractShapeConcept
+    extends AbstractModelingObject {
 
 }

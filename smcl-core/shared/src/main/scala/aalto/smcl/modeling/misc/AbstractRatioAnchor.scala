@@ -17,8 +17,6 @@
 package aalto.smcl.modeling.misc
 
 
-
-
 /**
  *
  *
@@ -26,6 +24,7 @@ package aalto.smcl.modeling.misc
  */
 abstract class AbstractRatioAnchor[DimensionType <: AbstractDimensions](
     val ratiosOfWholeDimensions: Seq[Double],
-    val name: Option[String]) {
+    val name: Option[String])
+    extends AbstractAnchor {
 
 }

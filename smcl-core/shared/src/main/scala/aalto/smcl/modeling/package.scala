@@ -34,10 +34,10 @@ package object modeling {
   val Bounds = d2.Bounds
 
   /** A type alias for 2D circle. */
-  type Circle = d2.Circle
+  type Circle = d2.CircleConcept
 
   /** A companion object alias for 2D circle. */
-  val Circle = d2.Circle
+  val Circle = d2.CircleConcept
 
   /** A type alias for 2D dimensions. */
   type Dims = d2.Dims
