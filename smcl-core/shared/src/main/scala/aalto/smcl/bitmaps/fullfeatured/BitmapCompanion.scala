@@ -67,6 +67,21 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
   /**
    *
    *
+   * @param bmpBfrAdapter
+   *
+   * @return
+   */
+  private[bitmaps]
+  def fromBitmapBufferAdapter(bmpBfrAdapter: BitmapBufferAdapter): BitmapType = {
+    val operationList = BitmapOperationList(
+      LoadedBitmap(bmpBfrAdapter, None, Option(0)))
+
+    instantiateBitmap(operationList, bitmapValidator, colorValidator, Identity())
+  }
+
+  /**
+   * HACK HACK HACK HACK --> REMOVE WHEN UNNECESSARY! See Bitmap as well.
+   *
    * @param sourceResourcePath
    *
    * @return

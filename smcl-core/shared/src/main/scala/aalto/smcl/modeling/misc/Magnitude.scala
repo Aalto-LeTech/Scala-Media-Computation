@@ -23,15 +23,12 @@ import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, Min
 
 
 /**
- * Base class for magnitudes, such as length, area, and volume.
- *
- * @param value
+ * A magnitude, such as length, area, and volume.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractMagnitude[ElementType](
-    private val value: Double)
-    extends AbstractMeasurement
+trait Magnitude[ElementType]
+    extends Measurement
             with Equals
             with Ordered[ElementType]
             with ToTuple[Tuple1[Double]]
@@ -39,6 +36,15 @@ abstract class AbstractMagnitude[ElementType](
             with ItemItemMap[ElementType, Double]
             with CommonDoubleMathOps[ElementType]
             with MinMaxOps[ElementType] {
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  protected
+  def value: Double
 
   /** */
   @inline
@@ -139,7 +145,7 @@ abstract class AbstractMagnitude[ElementType](
   override
   def equals(other: Any): Boolean = {
     other match {
-      case that: AbstractMagnitude[ElementType] =>
+      case that: Magnitude[ElementType] =>
         that.canEqual(this) &&
             that.value == this.value
 
@@ -156,7 +162,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def isBetweenExclExcl[E <: AbstractMagnitude[E]](
+  def isBetweenExclExcl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
 
@@ -173,7 +179,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def isAbsBetweenExclExcl[E <: AbstractMagnitude[E]](
+  def isAbsBetweenExclExcl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
 
@@ -226,7 +232,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def isBetweenExclIncl[E <: AbstractMagnitude[E]](
+  def isBetweenExclIncl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
 
@@ -243,7 +249,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def isAbsBetweenExclIncl[E <: AbstractMagnitude[E]](
+  def isAbsBetweenExclIncl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
 
@@ -296,7 +302,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def isBetweenInclExcl[E <: AbstractMagnitude[E]](
+  def isBetweenInclExcl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
 
@@ -313,7 +319,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def isAbsBetweenInclExcl[E <: AbstractMagnitude[E]](
+  def isAbsBetweenInclExcl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
 
@@ -366,7 +372,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def isBetweenInclIncl[E <: AbstractMagnitude[E]](
+  def isBetweenInclIncl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
 
@@ -383,7 +389,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def isAbsBetweenInclIncl[E <: AbstractMagnitude[E]](
+  def isAbsBetweenInclIncl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
 
@@ -435,7 +441,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def <[E <: AbstractMagnitude[E]] (other: Double): Boolean = {
+  def <[E <: Magnitude[E]] (other: Double): Boolean = {
     this.value < other
   }
 
@@ -447,7 +453,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def <=[E <: AbstractMagnitude[E]] (other: Double): Boolean = {
+  def <=[E <: Magnitude[E]] (other: Double): Boolean = {
     this.value <= other
   }
 
@@ -459,7 +465,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def >[E <: AbstractMagnitude[E]] (other: Double): Boolean = {
+  def >[E <: Magnitude[E]] (other: Double): Boolean = {
     this.value > other
   }
 
@@ -471,7 +477,7 @@ abstract class AbstractMagnitude[ElementType](
    * @return
    */
   @inline
-  def >=[E <: AbstractMagnitude[E]] (other: Double): Boolean = {
+  def >=[E <: Magnitude[E]] (other: Double): Boolean = {
     this.value >= other
   }
 

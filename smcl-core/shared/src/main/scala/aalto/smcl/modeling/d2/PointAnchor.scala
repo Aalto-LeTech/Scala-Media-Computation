@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.infrastructure.InjectablesRegistry
-import aalto.smcl.modeling.misc.AbstractPointAnchor
+import aalto.smcl.modeling.misc.PointBasedAnchor
 
 
 
@@ -119,10 +119,13 @@ case class PointAnchor private(
     xInPixels: Double,
     yInPixels: Double,
     override val name: Option[String])
-    extends AbstractPointAnchor[Dims](
-      Seq(xInPixels, yInPixels), name)
+    extends PointBasedAnchor[Dims]
             with Anchor[HasAnchor]
             with PointAnchorMembers[HasAnchor] {
+
+  /** */
+  lazy val dimensions: Seq[Double] =
+    Seq(xInPixels, yInPixels)
 
   /**
    *
@@ -194,6 +197,27 @@ case class PointAnchor private(
     PointAnchor(
       xInPixels - offset.width.inPixels,
       yInPixels - offset.height.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param newXInPixels
+   * @param newYInPixels
+   * @param newName
+   *
+   * @return
+   */
+  @inline
+  def copy(
+      newXInPixels: Double,
+      newYInPixels: Double,
+      newName: Option[String]): PointAnchor = {
+
+    PointAnchor(
+      newXInPixels,
+      newYInPixels,
+      newName)
   }
 
   /**

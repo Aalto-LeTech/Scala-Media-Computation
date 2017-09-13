@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d1
 
 
-import aalto.smcl.modeling.misc.AbstractHasPos
+import aalto.smcl.modeling.misc.HasCartesianPosition
 
 
 
@@ -28,4 +28,4 @@ import aalto.smcl.modeling.misc.AbstractHasPos
  * @author Aleksi Lukkarinen
  */
 trait HasPos
-    extends AbstractHasPos[Pos]
+    extends HasCartesianPosition[Pos]

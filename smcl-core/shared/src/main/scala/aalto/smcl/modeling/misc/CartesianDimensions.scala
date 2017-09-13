@@ -17,21 +17,12 @@
 package aalto.smcl.modeling.misc
 
 
-
-
 /**
- * An object that has dimensions.
- *
- * @tparam DimensionType
+ * Dimensions in a Cartesian coordinate system.
  *
  * @author Aleksi Lukkarinen
  */
-trait AbstractHasDims[DimensionType <: AbstractDimensions] {
-
-  /** Dimensions of this object. */
-  def dimensions: DimensionType
-
-  /** Dimensions to the internal center point of this object. */
-  def internalCenter: DimensionType
+trait CartesianDimensions
+    extends NonCoordSysDepDimensions {
 
 }

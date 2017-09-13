@@ -19,7 +19,7 @@ package aalto.smcl.modeling.d2
 
 import aalto.smcl.infrastructure._
 import aalto.smcl.modeling.{Area, Len}
-import aalto.smcl.modeling.misc.AbstractCartesianDimensions
+import aalto.smcl.modeling.misc.CartesianDimensions
 
 
 
@@ -113,13 +113,16 @@ object Dims {
 case class Dims private(
     width: Len,
     height: Len)
-    extends AbstractCartesianDimensions(
-      Seq(width.inPixels, height.inPixels))
+    extends CartesianDimensions
             with ToTuple[DimensionTuple]
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims, DimensionTuple]
             with CommonTupledDoubleMathOps[Dims, DimensionTuple]
             with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
+
+  /** */
+  lazy val lengths: Seq[Double] =
+    Seq(width.inPixels, height.inPixels)
 
   /**  */
   lazy val area: Area = Area.forRectangle(width, height)
@@ -289,6 +292,22 @@ case class Dims private(
       upperLeftCorner.yInPixels + height.inPixels)
 
     Bounds(upperLeftCorner, lowerRightCorner)
+  }
+
+  /**
+   *
+   *
+   * @param newWidth
+   * @param newHeight
+   *
+   * @return
+   */
+  @inline
+  def copy(
+      newWidth: Len = width,
+      newHeight: Len = height): Dims = {
+
+    Dims(newWidth, newHeight)
   }
 
   /**

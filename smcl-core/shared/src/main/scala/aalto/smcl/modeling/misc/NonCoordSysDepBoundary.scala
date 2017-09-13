@@ -19,31 +19,53 @@ package aalto.smcl.modeling.misc
 
 import scala.annotation.tailrec
 
+import aalto.smcl.infrastructure.FlatMap
+
 
 
 
 /**
- * A sequence of dimensions.
- *
- * @param lengths
+ * Boundary of an object.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractDimensions(
-    val lengths: Seq[Double])
-    extends AbstractMeasurement
+trait NonCoordSysDepBoundary[PositionType <: NonCoordSysDepPosition]
+    extends Measurement
             with Equals
-            with Iterable[Double] {
+            with Iterable[PositionType]
+            with FlatMap[NonCoordSysDepBoundary[PositionType], Seq[PositionType]] {
 
   /**
-   * Provides an iterator for the dimension values.
+   *
+   *
+   * @return
+   */
+  @inline
+  def markers: Seq[PositionType]
+
+  /**
+   * Provides an iterator for the boundary marker positions.
    *
    * @return
    */
   @inline
   override
-  def iterator: Iterator[Double] = {
-    lengths.iterator
+  def iterator: Iterator[PositionType] = {
+    markers.iterator
+  }
+
+  /**
+   *
+   * @param f
+   *
+   * @return
+   */
+  @inline
+  override
+  def flatMap(
+      f: (Seq[PositionType]) => NonCoordSysDepBoundary[PositionType]): NonCoordSysDepBoundary[PositionType] = {
+
+    f(markers)
   }
 
   /**
@@ -57,18 +79,18 @@ abstract class AbstractDimensions(
 
     @tailrec
     def hashCodeRecursive(
-        lengths: Seq[Double],
+        markers: Seq[PositionType],
         sum: Int): Int = {
 
-      if (lengths.isEmpty)
+      if (markers.isEmpty)
         return sum
 
       hashCodeRecursive(
-        lengths.tail,
-        prime * sum + lengths.head.##)
+        markers.tail,
+        prime * sum + markers.head.##)
     }
 
-    hashCodeRecursive(lengths, 1)
+    hashCodeRecursive(markers, 1)
   }
 
   /**
@@ -93,9 +115,9 @@ abstract class AbstractDimensions(
   override
   def equals(other: Any): Boolean = {
     other match {
-      case that: AbstractDimensions =>
+      case that: NonCoordSysDepBoundary[PositionType] =>
         that.canEqual(this) &&
-            that.lengths == this.lengths
+            that.markers == this.markers
 
       case _ => false
     }

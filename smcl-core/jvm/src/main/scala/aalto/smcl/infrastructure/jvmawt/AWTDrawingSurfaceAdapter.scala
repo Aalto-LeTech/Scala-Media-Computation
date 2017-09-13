@@ -168,6 +168,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val y = math.floor(yInPixels).toInt
 
     withDrawingSurface{ds =>
+      ds.setColor(color.toAWTColor)
       ds.drawLine(x, y, x, y)
     }
   }

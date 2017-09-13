@@ -16,88 +16,21 @@
 
 package aalto.smcl.modeling.misc
 
-import scala.annotation.tailrec
-
-
-
 
 /**
- * Position in some coordinate system.
- *
- * @param coordinates
+ * An anchor that has a name.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPosition(
-    val coordinates: Seq[Double])
-    extends AbstractShapeConcept
-            with Equals
-            with Iterable[Double] {
+trait NamedAnchor
+    extends ModelingObject {
 
   /**
-   * Provides an iterator for the dimension values.
+   * Name of this anchor, if given.
    *
    * @return
    */
   @inline
-  override
-  def iterator: Iterator[Double] = {
-    coordinates.iterator
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  override
-  lazy val hashCode: Int = {
-    val prime = 31
-
-    @tailrec
-    def hashCodeRecursive(
-        coordinates: Seq[Double],
-        sum: Int): Int = {
-
-      if (coordinates.isEmpty)
-        return sum
-
-      hashCodeRecursive(
-        coordinates.tail,
-        prime * sum + coordinates.head.##)
-    }
-
-    hashCodeRecursive(coordinates, 1)
-  }
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def canEqual(other: Any): Boolean
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: AbstractPosition =>
-        that.canEqual(this) &&
-            that.coordinates == this.coordinates
-
-      case _ => false
-    }
-  }
+  def name: Option[String]
 
 }

@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.modeling.misc.AbstractShapeConcept
+import aalto.smcl.modeling.misc.ShapeConcept
 
 
 
@@ -33,7 +33,7 @@ import aalto.smcl.modeling.misc.AbstractShapeConcept
 case class CircleConcept private(
     position: Pos,
     radiusInPixels: Double)
-    extends AbstractShapeConcept
+    extends ShapeConcept
             with HasPos
             with HasBounds
             with Movable[CircleConcept] {

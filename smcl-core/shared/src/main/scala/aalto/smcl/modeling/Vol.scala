@@ -18,7 +18,7 @@ package aalto.smcl.modeling
 
 
 import aalto.smcl.infrastructure.FlatMap
-import aalto.smcl.modeling.misc.AbstractMagnitude
+import aalto.smcl.modeling.misc.Magnitude
 
 
 
@@ -371,9 +371,18 @@ object Vol {
  */
 case class Vol private(
     inPixels: Double)
-    extends AbstractMagnitude[Vol](inPixels)
+    extends Magnitude[Vol]
             with FlatMap[Vol, Double]
             with Ordered[Vol] {
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  protected
+  def value: Double = inPixels
 
   /**
    *

@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d1
 
 
 import aalto.smcl.infrastructure._
-import aalto.smcl.modeling.misc.AbstractCartesianDimensions
+import aalto.smcl.modeling.misc.CartesianDimensions
 
 
 
@@ -81,12 +81,15 @@ object Dims {
  * @author Aleksi Lukkarinen
  */
 case class Dims private(lengthInPixels: Double)
-    extends AbstractCartesianDimensions(Seq(lengthInPixels))
+    extends CartesianDimensions
             with Ordered[Dims]
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims, Double]
             with CommonDoubleMathOps[Dims]
             with MinMaxOps[Dims] {
+
+  /** */
+  lazy val lengths: Seq[Double] = Seq(lengthInPixels)
 
   /**
    *
@@ -173,6 +176,18 @@ case class Dims private(lengthInPixels: Double)
   @inline
   def - (offset: Dims): Dims = {
     Dims(lengthInPixels - offset.lengthInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param newLengthInPixels
+   *
+   * @return
+   */
+  @inline
+  def copy(newLengthInPixels: Double = lengthInPixels): Dims = {
+    Dims(newLengthInPixels)
   }
 
   /**

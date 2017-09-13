@@ -18,7 +18,7 @@ package aalto.smcl.modeling
 
 
 import aalto.smcl.infrastructure.{FlatMap, MathUtils}
-import aalto.smcl.modeling.misc.AbstractMagnitude
+import aalto.smcl.modeling.misc.Magnitude
 
 
 
@@ -640,9 +640,18 @@ object Angle {
  */
 case class Angle private(
     inDegrees: Double)
-    extends AbstractMagnitude[Angle](inDegrees)
+    extends Magnitude[Angle]
             with FlatMap[Angle, Double]
             with Ordered[Angle] {
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  protected
+  def value: Double = inDegrees
 
   /** */
   lazy val isCounterClockwise: Boolean =

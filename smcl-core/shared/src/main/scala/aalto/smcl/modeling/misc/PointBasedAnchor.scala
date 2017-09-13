@@ -17,18 +17,23 @@
 package aalto.smcl.modeling.misc
 
 
-
-
 /**
- * Object that has a position.
+ * A point-based anchor.
  *
- * @tparam PositionType
+ * @tparam DimensionType
  *
+ * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-trait AbstractHasPos[PositionType <: AbstractPosition] {
+trait PointBasedAnchor[DimensionType <: NonCoordSysDepDimensions]
+    extends NamedAnchor {
 
-  /** Position of this object. */
-  def position: PositionType
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def dimensions: Seq[Double]
 
 }

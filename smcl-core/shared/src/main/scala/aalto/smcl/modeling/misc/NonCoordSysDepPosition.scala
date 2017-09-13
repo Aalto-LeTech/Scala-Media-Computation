@@ -16,13 +16,94 @@
 
 package aalto.smcl.modeling.misc
 
+import scala.annotation.tailrec
+
+
+
 
 /**
- * Base class for all modeling objects that represent conceptual shapes.
+ * A position in some coordinate system.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractShapeConcept
-    extends AbstractModelingObject {
+trait NonCoordSysDepPosition
+    extends ShapeConcept
+            with Equals
+            with Iterable[Double] {
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  protected
+  def coordinates: Seq[Double]
+
+  /**
+   * Provides an iterator for the dimension values.
+   *
+   * @return
+   */
+  @inline
+  override
+  def iterator: Iterator[Double] = {
+    coordinates.iterator
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  lazy val hashCode: Int = {
+    val prime = 31
+
+    @tailrec
+    def hashCodeRecursive(
+        coordinates: Seq[Double],
+        sum: Int): Int = {
+
+      if (coordinates.isEmpty)
+        return sum
+
+      hashCodeRecursive(
+        coordinates.tail,
+        prime * sum + coordinates.head.##)
+    }
+
+    hashCodeRecursive(coordinates, 1)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def equals(other: Any): Boolean = {
+    other match {
+      case that: NonCoordSysDepPosition =>
+        that.canEqual(this) &&
+            that.coordinates == this.coordinates
+
+      case _ => false
+    }
+  }
 
 }

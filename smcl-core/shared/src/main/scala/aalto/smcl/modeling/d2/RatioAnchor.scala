@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.infrastructure.{CommonValidators, InjectablesRegistry}
-import aalto.smcl.modeling.misc.AbstractRatioAnchor
+import aalto.smcl.modeling.misc.RatioBasedAnchor
 
 
 
@@ -123,9 +123,12 @@ case class RatioAnchor private(
     widthRatio: Double,
     heightRatio: Double,
     override val name: Option[String])
-    extends AbstractRatioAnchor[Dims](
-      Seq(widthRatio, heightRatio), name)
+    extends RatioBasedAnchor[Dims]
             with Anchor[HasAnchor] {
+
+  /** */
+  lazy val ratiosOfWholeDimensions: Seq[Double] =
+    Seq(widthRatio, heightRatio)
 
   /**
    *
@@ -165,6 +168,27 @@ case class RatioAnchor private(
     PointAnchor(
       widthRatio * anchored.width.inPixels,
       heightRatio * anchored.height.inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param newWidthRatio
+   * @param newHeightRatio
+   * @param newName
+   *
+   * @return
+   */
+  @inline
+  def copy(
+      newWidthRatio: Double = widthRatio,
+      newHeightRatio: Double = heightRatio,
+      newName: Option[String] = name): RatioAnchor = {
+
+    RatioAnchor(
+      newWidthRatio,
+      newHeightRatio,
+      newName)
   }
 
   /**

@@ -19,7 +19,7 @@ package aalto.smcl.modeling.d3
 
 import aalto.smcl.infrastructure._
 import aalto.smcl.modeling.Len
-import aalto.smcl.modeling.misc.AbstractCartesianPosition
+import aalto.smcl.modeling.misc.CartesianPosition
 
 
 
@@ -86,13 +86,17 @@ case class Pos private(
     xInPixels: Double,
     yInPixels: Double,
     zInPixels: Double)
-    extends AbstractCartesianPosition(Seq(xInPixels, yInPixels, zInPixels))
+    extends CartesianPosition
             with ToTuple[CoordinateTuple]
             with ItemItemMap[Pos, Double]
             with FlatMap[Pos, CoordinateTuple]
             with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
             with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
             with Movable[Pos] {
+
+  /** */
+  lazy val coordinates: Seq[Double] =
+    Seq(xInPixels, yInPixels, zInPixels)
 
   /**
    *
@@ -319,6 +323,24 @@ case class Pos private(
     val (zMin, zMax) = MathUtils.sort(zInPixels, other.zInPixels)
 
     (Pos(xMin, yMin, zMin), Pos(xMax, yMax, zMax))
+  }
+
+  /**
+   *
+   *
+   * @param newXInPixels
+   * @param newYInPixels
+   * @param newZInPixels
+   *
+   * @return
+   */
+  @inline
+  def copy(
+      newXInPixels: Double = xInPixels,
+      newYInPixels: Double = yInPixels,
+      newZInPixels: Double = zInPixels): Pos = {
+
+    Pos(newXInPixels, newYInPixels, newZInPixels)
   }
 
   /**

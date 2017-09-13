@@ -17,12 +17,21 @@
 package aalto.smcl.modeling.misc
 
 
+
+
 /**
- * Base class for all modeling objects representing measurements.
+ * An object that has Cartesian dimensions.
+ *
+ * @tparam DimensionType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractMeasurement
-    extends AbstractModelingObject {
+trait HasCartesianDimensions[DimensionType <: NonCoordSysDepDimensions] {
+
+  /** Dimensions of this object. */
+  def dimensions: DimensionType
+
+  /** Dimensions to the internal center point of this object. */
+  def internalCenter: DimensionType
 
 }

@@ -19,9 +19,10 @@ package aalto.smcl.bitmaps.fullfeatured
 
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.colors.ColorValidator
-import aalto.smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter, Identity, InjectablesRegistry, PRF}
+import aalto.smcl.infrastructure.{BitmapBufferAdapter, Displayable, DrawingSurfaceAdapter, Identity, InjectablesRegistry, PRF}
 import aalto.smcl.modeling.Len
 import aalto.smcl.modeling.d2._
+import aalto.smcl.viewers.{display => displayInViewer}
 
 
 
@@ -78,7 +79,7 @@ object Bmp
       0 - upperLeftPos.yInPixels
     )
 
-    elements.foreach { e =>
+    elements.foreach{e =>
       e.renderOn(
         buffer.drawingSurface,
         e.position + offset
@@ -185,8 +186,9 @@ class Bmp private(
     val isRenderable: Boolean,
     val dimensions: Dims,
     val position: Pos,
-    private[this] val buffer: Option[BitmapBufferAdapter])
+    private[smcl] val buffer: Option[BitmapBufferAdapter])
     extends ImageElement
+            with Displayable
             with HasPos
             with HasDims {
 
@@ -238,6 +240,29 @@ class Bmp private(
    * @return
    */
   def moveBy(offsets: Double*): ImageElement = {
+    this
+  }
+
+  /**
+   *
+   *
+   * @param filename
+   *
+   * @return
+   */
+  def saveAsPngTo(filename: String): String = {
+    if (buffer.isDefined)
+      buffer.get.saveAsPngTo(filename)
+    else
+      "Error: No BitmapBufferAdapter to save."
+  }
+
+  /**
+   *
+   */
+  def display(): Bmp = {
+    displayInViewer(this)
+
     this
   }
 

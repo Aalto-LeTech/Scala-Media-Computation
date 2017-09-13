@@ -19,7 +19,7 @@ package aalto.smcl.modeling.d2
 
 import aalto.smcl.infrastructure._
 import aalto.smcl.modeling.Len
-import aalto.smcl.modeling.misc.AbstractCartesianPosition
+import aalto.smcl.modeling.misc.CartesianPosition
 
 
 
@@ -82,13 +82,16 @@ object Pos {
 case class Pos private[smcl](
     xInPixels: Double,
     yInPixels: Double)
-    extends AbstractCartesianPosition(Seq(xInPixels, yInPixels))
+    extends CartesianPosition
             with ToTuple[CoordinateTuple]
             with ItemItemMap[Pos, Double]
             with FlatMap[Pos, CoordinateTuple]
             with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
             with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
             with Movable[Pos] {
+
+  /** */
+  lazy val coordinates: Seq[Double] = Seq(xInPixels, yInPixels)
 
   /** */
   lazy val boundary: Option[Bounds] = Some(Bounds(this, this))
@@ -374,6 +377,22 @@ case class Pos private[smcl](
    */
   @inline
   def isOnFourthQuadrant: Boolean = quadrant.contains(4)
+
+  /**
+   *
+   *
+   * @param newXInPixels
+   * @param newYInPixels
+   *
+   * @return
+   */
+  @inline
+  def copy(
+      newXInPixels: Double = xInPixels,
+      newYInPixels: Double = yInPixels): Pos = {
+
+    Pos(newXInPixels, newYInPixels)
+  }
 
   /**
    *

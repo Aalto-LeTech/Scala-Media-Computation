@@ -17,17 +17,94 @@
 package aalto.smcl.modeling.misc
 
 
+import scala.annotation.tailrec
+
+
 
 
 /**
- * Position in a Cartesian coordinate system.
- *
- * @param coordinates
+ * Some dimensions in some coordinate system.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractCartesianPosition(
-    override val coordinates: Seq[Double])
-    extends AbstractPosition(coordinates) {
+trait NonCoordSysDepDimensions
+    extends Measurement
+            with Equals
+            with Iterable[Double] {
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  protected
+  def lengths: Seq[Double]
+
+  /**
+   * Provides an iterator for the dimension values.
+   *
+   * @return
+   */
+  @inline
+  override
+  def iterator: Iterator[Double] = {
+    lengths.iterator
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  lazy val hashCode: Int = {
+    val prime = 31
+
+    @tailrec
+    def hashCodeRecursive(
+        lengths: Seq[Double],
+        sum: Int): Int = {
+
+      if (lengths.isEmpty)
+        return sum
+
+      hashCodeRecursive(
+        lengths.tail,
+        prime * sum + lengths.head.##)
+    }
+
+    hashCodeRecursive(lengths, 1)
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def canEqual(other: Any): Boolean
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def equals(other: Any): Boolean = {
+    other match {
+      case that: NonCoordSysDepDimensions =>
+        that.canEqual(this) &&
+            that.lengths == this.lengths
+
+      case _ => false
+    }
+  }
 
 }

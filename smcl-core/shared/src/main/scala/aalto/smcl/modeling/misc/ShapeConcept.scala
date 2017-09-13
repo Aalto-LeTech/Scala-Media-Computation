@@ -18,14 +18,11 @@ package aalto.smcl.modeling.misc
 
 
 /**
+ * A conceptual shape.
  *
- *
- * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPointAnchor[DimensionType <: AbstractDimensions](
-    val dimensions: Seq[Double],
-    val name: Option[String])
-    extends AbstractAnchor {
+trait ShapeConcept
+    extends ModelingObject {
 
 }

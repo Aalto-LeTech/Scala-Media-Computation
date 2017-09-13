@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d3
 
 
 import aalto.smcl.infrastructure._
-import aalto.smcl.modeling.misc.AbstractCartesianDimensions
+import aalto.smcl.modeling.misc.CartesianDimensions
 import aalto.smcl.modeling.{Len, Vol}
 
 
@@ -129,13 +129,16 @@ case class Dims private(
     width: Len,
     height: Len,
     depth: Len)
-    extends AbstractCartesianDimensions(
-      Seq(width.inPixels, height.inPixels, depth.inPixels))
+    extends CartesianDimensions
             with ToTuple[DimensionTuple]
             with ItemItemMap[Dims, Double]
             with FlatMap[Dims, DimensionTuple]
             with CommonTupledDoubleMathOps[Dims, DimensionTuple]
             with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
+
+  /** */
+  lazy val lengths: Seq[Double] =
+    Seq(width.inPixels, height.inPixels, depth.inPixels)
 
   /** */
   lazy val volume: Vol = Vol.forCuboid(width, height, depth)
@@ -150,7 +153,6 @@ case class Dims private(
   def toTuple: DimensionTuple = {
     (width, height, depth)
   }
-
 
   /**
    *
@@ -298,6 +300,24 @@ case class Dims private(
     val newWidth = this.width - offset.width
     val newHeight = this.height - offset.height
     val newDepth = this.depth - offset.depth
+
+    Dims(newWidth, newHeight, newDepth)
+  }
+
+  /**
+   *
+   *
+   * @param newWidth
+   * @param newHeight
+   * @param newDepth
+   *
+   * @return
+   */
+  @inline
+  def copy(
+      newWidth: Len = width,
+      newHeight: Len = height,
+      newDepth: Len = depth): Dims = {
 
     Dims(newWidth, newHeight, newDepth)
   }

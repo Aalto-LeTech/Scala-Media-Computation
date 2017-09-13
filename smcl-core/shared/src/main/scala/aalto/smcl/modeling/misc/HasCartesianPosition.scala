@@ -17,11 +17,18 @@
 package aalto.smcl.modeling.misc
 
 
+
+
 /**
- * Base class for all modeling objects.
+ * An object that has a Cartesian position.
+ *
+ * @tparam PositionType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractModelingObject {
+trait HasCartesianPosition[PositionType <: NonCoordSysDepPosition] {
+
+  /** Position of this object. */
+  def position: PositionType
 
 }

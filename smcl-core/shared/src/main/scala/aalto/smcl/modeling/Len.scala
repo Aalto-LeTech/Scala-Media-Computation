@@ -17,7 +17,7 @@
 package aalto.smcl.modeling
 
 
-import aalto.smcl.modeling.misc.AbstractMagnitude
+import aalto.smcl.modeling.misc.Magnitude
 
 
 
@@ -72,7 +72,16 @@ object Len {
  * @author Aleksi Lukkarinen
  */
 case class Len private(inPixels: Double)
-    extends AbstractMagnitude[Len](inPixels) {
+    extends Magnitude[Len] {
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  protected
+  def value: Double = inPixels
 
   /**
    *

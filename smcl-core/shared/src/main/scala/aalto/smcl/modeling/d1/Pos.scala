@@ -19,7 +19,7 @@ package aalto.smcl.modeling.d1
 
 import aalto.smcl.infrastructure.{CommonDoubleMathOps, FlatMap, ItemItemMap, MathUtils, MinMaxOps}
 import aalto.smcl.modeling.Len
-import aalto.smcl.modeling.misc.AbstractCartesianPosition
+import aalto.smcl.modeling.misc.CartesianPosition
 
 
 
@@ -72,13 +72,16 @@ object Pos {
  */
 case class Pos private(
     inPixels: Double)
-    extends AbstractCartesianPosition(Seq(inPixels))
+    extends CartesianPosition
             with Ordered[Pos]
             with ItemItemMap[Pos, Double]
             with FlatMap[Pos, Double]
             with CommonDoubleMathOps[Pos]
             with MinMaxOps[Pos]
             with Movable[Pos] {
+
+  /** */
+  lazy val coordinates: Seq[Double] = Seq(inPixels)
 
   /**
    * Returns <code>true</code> if this instance represents
@@ -290,6 +293,18 @@ case class Pos private(
     val (min, max) = MathUtils.sort(inPixels, other.inPixels)
 
     (Pos(min), Pos(max))
+  }
+
+  /**
+   *
+   *
+   * @param newValueInPixels
+   *
+   * @return
+   */
+  @inline
+  def copy(newValueInPixels: Double = inPixels): Pos = {
+    Pos(newValueInPixels)
   }
 
   /**

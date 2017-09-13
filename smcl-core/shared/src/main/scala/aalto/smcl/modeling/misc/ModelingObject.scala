@@ -18,11 +18,10 @@ package aalto.smcl.modeling.misc
 
 
 /**
- * Base class for all anchors.
+ * A modeling object.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractAnchor
-    extends AbstractModelingObject {
+trait ModelingObject {
 
 }

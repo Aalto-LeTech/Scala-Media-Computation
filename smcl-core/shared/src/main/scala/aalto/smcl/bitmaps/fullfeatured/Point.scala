@@ -3,7 +3,7 @@ package aalto.smcl.bitmaps.fullfeatured
 
 import aalto.smcl.colors.rgb
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
-import aalto.smcl.modeling.d2.Pos
+import aalto.smcl.modeling.d2.{Bounds, Pos}
 
 
 
@@ -59,19 +59,21 @@ object Point {
  *
  * @author Aleksi Lukkarinen
  */
-class Point private(
+case class Point private(
     override val identity: Identity,
-    override val xInPixels: Double,
-    override val yInPixels: Double,
-    val color: rgb.Color)
-    extends Pos(xInPixels, yInPixels)
-            with VectorGraphic {
+    xInPixels: Double,
+    yInPixels: Double,
+    color: rgb.Color)
+    extends VectorGraphic {
+
+  /** Position of this object. */
+  lazy val position: Pos = Pos(xInPixels, yInPixels)
 
   /** */
-  def position: Pos = this
+  lazy val boundary: Option[Bounds] =
+    Some(Bounds(position, position))
 
   /** Tells if this [[Point]] can be rendered on a bitmap. */
-  override
   def isRenderable: Boolean = true
 
   /**
@@ -79,7 +81,7 @@ class Point private(
    *
    * @param drawingSurface
    */
-  override def renderOn(
+  def renderOn(
       drawingSurface: DrawingSurfaceAdapter,
       position: Pos): Unit = {
 
@@ -90,20 +92,28 @@ class Point private(
   /**
    *
    *
-   * @param offsets
+   * @param newXInPixels
+   * @param newYInPixels
    *
    * @return
    */
-  override
-  def moveBy(offsets: Double*): Point = {
-    require(
-      offsets.length == 2,
-      s"Exactly two offsets has to be given (given: ${offsets.length})")
+  def copy(
+      newXInPixels: Double = xInPixels,
+      newYInPixels: Double = yInPixels,
+      newColor: rgb.Color = color): Point = {
 
-    Point(
-      xInPixels + offsets(0),
-      yInPixels + offsets(1),
-      color)
+    Point(newXInPixels, newYInPixels, newColor)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String = {
+    s"Point(x: $xInPixels px, y: $yInPixels px)"
   }
 
 }

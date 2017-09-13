@@ -21,7 +21,7 @@ import scala.util.Random
 
 import aalto.smcl.infrastructure.MathUtils
 import aalto.smcl.modeling._
-import aalto.smcl.modeling.misc.AbstractBoundary
+import aalto.smcl.modeling.misc.NonCoordSysDepBoundary
 
 
 
@@ -56,21 +56,7 @@ object Bounds {
     val (x0, x1) = MathUtils.sort(upperLeftXInPixels, lowerRightXInPixels)
     val (y0, y1) = MathUtils.sort(upperLeftYInPixels, lowerRightYInPixels)
 
-    val widthInPixels: Double = x1 - x0 + 1
-    val heightInPixels: Double = y1 - y0 + 1
-
-    val lengthInPixels: Double =
-      2 * widthInPixels +
-          2 * heightInPixels -
-          NumberOfCorners
-
-    new Bounds(
-      Pos(x0, y0),
-      Pos(x1, y1),
-      Len(widthInPixels),
-      Len(heightInPixels),
-      Len(lengthInPixels),
-      Area.forRectangle(widthInPixels, heightInPixels))
+    new Bounds(Pos(x0, y0), Pos(x1, y1))
   }
 
   /**
@@ -99,13 +85,104 @@ object Bounds {
    * @return
    */
   @inline
-  def apply(markers: Pos*): Dims = {
+  def apply(markers: Pos*): Bounds = {
     require(
       markers.length == 2,
       s"Exactly two marker positions must be given (currently: ${markers.length})")
 
     apply(markers: _*)
   }
+
+
+
+
+  /**
+   *
+   */
+  object getWidth {
+
+    /**
+     *
+     *
+     * @param bounds
+     *
+     * @return
+     */
+    @inline
+    def unapply(bounds: Bounds): Option[Len] = {
+      Some(bounds.width)
+    }
+
+  }
+
+
+
+
+  /**
+   *
+   */
+  object getHeight {
+
+    /**
+     *
+     *
+     * @param bounds
+     *
+     * @return
+     */
+    @inline
+    def unapply(bounds: Bounds): Option[Len] = {
+      Some(bounds.height)
+    }
+
+  }
+
+
+
+
+  /**
+   *
+   */
+  object getLength {
+
+    /**
+     *
+     *
+     * @param bounds
+     *
+     * @return
+     */
+    @inline
+    def unapply(bounds: Bounds): Option[Len] = {
+      Some(bounds.length)
+    }
+
+  }
+
+
+
+
+  /**
+   *
+   */
+  object extractArea {
+
+    /**
+     *
+     *
+     * @param bounds
+     *
+     * @return
+     */
+    @inline
+    def unapply(bounds: Bounds): Option[Area] = {
+      Some(bounds.area)
+    }
+
+  }
+
+
+
 
 }
 
@@ -117,25 +194,38 @@ object Bounds {
  *
  * @param upperLeftMarker
  * @param lowerRightMarker
- * @param width
- * @param height
- * @param length
- * @param area
  *
  * @author Aleksi Lukkarinen
  */
-case class Bounds private(
+case class Bounds(
     upperLeftMarker: Pos,
-    lowerRightMarker: Pos,
-    width: Len,
-    height: Len,
-    length: Len,
-    area: Area)
-    extends AbstractBoundary[Pos](Seq(upperLeftMarker, lowerRightMarker))
+    lowerRightMarker: Pos)
+    extends NonCoordSysDepBoundary[Pos]
             with HasArea {
 
+  val markers: Seq[Pos] = Seq(upperLeftMarker, lowerRightMarker)
+
   /** Position of this boundary. */
-  lazy val position: Pos = upperLeftMarker
+  @inline
+  def position: Pos = upperLeftMarker
+
+  /** */
+  val width: Len =
+    Len(lowerRightMarker.xInPixels - upperLeftMarker.xInPixels + 1)
+
+  /** */
+  val height: Len =
+    Len(lowerRightMarker.yInPixels - upperLeftMarker.yInPixels + 1)
+
+  /** */
+  val length: Len =
+    Len(2 * width.inPixels +
+        2 * height.inPixels -
+        Bounds.NumberOfCorners)
+
+  /** */
+  val area: Area =
+    Area.forRectangle(width.inPixels, height.inPixels)
 
   /**
    *
@@ -161,6 +251,22 @@ case class Bounds private(
     val offsetY = Random.nextDouble() * height.inPixels
 
     upperLeftMarker + (offsetX, offsetY)
+  }
+
+  /**
+   *
+   *
+   * @param newUpperLeftMarker
+   * @param newLowerRightMarker
+   *
+   * @return
+   */
+  @inline
+  def copy(
+      newUpperLeftMarker: Pos = upperLeftMarker,
+      newLowerRightMarker: Pos = lowerRightMarker): Bounds = {
+
+    Bounds(newUpperLeftMarker, newLowerRightMarker)
   }
 
 }

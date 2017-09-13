@@ -18,13 +18,11 @@ package aalto.smcl.modeling.misc
 
 
 /**
- *
+ * A measurement.
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractRatioAnchor[DimensionType <: AbstractDimensions](
-    val ratiosOfWholeDimensions: Seq[Double],
-    val name: Option[String])
-    extends AbstractAnchor {
+trait Measurement
+    extends ModelingObject {
 
 }

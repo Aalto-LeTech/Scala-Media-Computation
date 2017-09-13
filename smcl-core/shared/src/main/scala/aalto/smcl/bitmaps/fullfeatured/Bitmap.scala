@@ -96,6 +96,18 @@ object Bitmap extends BitmapCompanion[Bitmap] {
   }
 
   /**
+   * HACK HACK HACK HACK --> REMOVE WHEN UNNECESSARY! See BitmapCompanion as well.
+   *
+   * @param bmpBfrAdapter
+   *
+   * @return
+   */
+  private[smcl]
+  def apply(bmpBfrAdapter: BitmapBufferAdapter): Bitmap = {
+    super.fromBitmapBufferAdapter(bmpBfrAdapter)
+  }
+
+  /**
    *
    *
    * @param sourceResourcePath

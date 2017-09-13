@@ -17,17 +17,22 @@
 package aalto.smcl.modeling.misc
 
 
-
-
 /**
- * Dimensions in a Cartesian coordinate system.
+ * A ratio-based anchor.
  *
- * @param lengths
+ * @tparam DimensionType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractCartesianDimensions(
-    override val lengths: Seq[Double])
-    extends AbstractDimensions(lengths) {
+trait RatioBasedAnchor[DimensionType <: NonCoordSysDepDimensions]
+    extends NamedAnchor {
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def ratiosOfWholeDimensions: Seq[Double]
 
 }
