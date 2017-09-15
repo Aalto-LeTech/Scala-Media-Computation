@@ -19,6 +19,7 @@ package aalto.smcl.bitmaps.fullfeatured
 
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
 import aalto.smcl.modeling.d2.{HasBounds, HasPos, Pos}
+import aalto.smcl.viewers.{display => displayInViewer}
 
 
 
@@ -53,5 +54,14 @@ trait ImageElement
    * @return
    */
   def toBitmap: Bmp = Bmp(this)
+
+  /**
+   *
+   */
+  def display(): ImageElement = {
+    displayInViewer(toBitmap)
+
+    this
+  }
 
 }

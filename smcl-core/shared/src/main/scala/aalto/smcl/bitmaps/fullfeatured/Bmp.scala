@@ -260,8 +260,9 @@ class Bmp private(
   /**
    *
    */
+  override
   def display(): Bmp = {
-    displayInViewer(this)
+    super.display()
 
     this
   }
