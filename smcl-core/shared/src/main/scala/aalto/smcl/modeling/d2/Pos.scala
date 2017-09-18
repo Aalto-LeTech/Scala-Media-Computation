@@ -18,8 +18,8 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.infrastructure._
-import aalto.smcl.modeling.Len
 import aalto.smcl.modeling.misc.CartesianPosition
+import aalto.smcl.modeling.{Len, Transformer}
 
 
 
@@ -88,7 +88,8 @@ case class Pos private[smcl](
             with FlatMap[Pos, CoordinateTuple]
             with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
             with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
-            with Movable[Pos] {
+            with Movable[Pos]
+            with Rotatable[Pos] {
 
   /** */
   lazy val coordinates: Seq[Double] = Seq(xInPixels, yInPixels)
@@ -131,6 +132,17 @@ case class Pos private[smcl](
   override
   def toTuple: (Double, Double) = {
     (xInPixels, yInPixels)
+  }
+
+  /**
+   * Converts the object to a floored tuple of Ints.
+   *
+   * @return
+   */
+  @inline
+  def toFlooredIntTuple: (Int, Int) = {
+    (toFlooredTuple._1.toInt,
+        toFlooredTuple._2.toInt)
   }
 
   /**
@@ -403,6 +415,23 @@ case class Pos private[smcl](
   override
   def toString: String = {
     s"Pos(x: $xInPixels px, y: $yInPixels px)"
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): Pos = {
+
+    Transformer.rotate(this, angleInDegrees, centerOfRotation)
   }
 
 }

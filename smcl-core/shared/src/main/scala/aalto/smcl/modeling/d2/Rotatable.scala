@@ -42,6 +42,7 @@ trait Rotatable[ReturnType] {
    * Rotates this object around a given point of the specified number of degrees.
    *
    * @param angleInDegrees
+   * @param centerOfRotation
    *
    * @return
    */

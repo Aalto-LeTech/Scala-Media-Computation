@@ -20,9 +20,8 @@ package aalto.smcl.bitmaps.fullfeatured
 import aalto.smcl.bitmaps.BitmapValidator
 import aalto.smcl.colors.ColorValidator
 import aalto.smcl.infrastructure.{BitmapBufferAdapter, Displayable, DrawingSurfaceAdapter, Identity, InjectablesRegistry, PRF}
-import aalto.smcl.modeling.Len
 import aalto.smcl.modeling.d2._
-import aalto.smcl.viewers.{display => displayInViewer}
+import aalto.smcl.modeling.{AffineTransformation, Len}
 
 
 
@@ -74,15 +73,12 @@ object Bmp
       PRF.createPlatformBitmapBuffer(width, height)
 
     val upperLeftPos = bounds.upperLeftMarker
-    val offset = Dims(
-      0 - upperLeftPos.xInPixels,
-      0 - upperLeftPos.yInPixels
-    )
+    val offsets = (-upperLeftPos.xInPixels, -upperLeftPos.yInPixels)
 
     elements.foreach{e =>
       e.renderOn(
         buffer.drawingSurface,
-        e.position + offset
+        e.position + offsets
       )
     }
 
@@ -195,13 +191,16 @@ class Bmp private(
   /** */
   override
   val boundary: Option[Bounds] =
-    Some(Bounds(
-      position,
-      Pos(
-        position.xInPixels + width.inPixels,
-        position.yInPixels + height.inPixels
-      )
-    ))
+    if (isRenderable)
+      Some(Bounds(
+        position,
+        Pos(
+          position.xInPixels + width.inPixels - 1,
+          position.yInPixels + height.inPixels - 1
+        )
+      ))
+    else
+      None
 
   /** Length of the bitmap. As bitmap has no length, this equals <code>None</code>. */
   val length: Option[Len] = None
@@ -211,11 +210,18 @@ class Bmp private(
    *
    * @param drawingSurface
    */
+  @inline
   override
   def renderOn(
       drawingSurface: DrawingSurfaceAdapter,
       position: Pos): Unit = {
 
+    if (buffer.isEmpty)
+      return
+
+    val p = position.toFlooredIntTuple
+
+    drawingSurface.drawBitmap(buffer.get, p._1, p._2)
   }
 
   /**
@@ -225,11 +231,25 @@ class Bmp private(
    *
    * @return
    */
+  @inline
   def rotateBy(
       angleInDegrees: Double,
       centerOfRotation: Pos): ImageElement = {
 
-    this
+    if (buffer.isEmpty)
+      return this
+
+    val newBuffer =
+      buffer.get.createTransformedVersionWith(
+        AffineTransformation.forPointCentredRotation(
+          angleInDegrees,
+          centerOfRotation))
+
+    val newDims = Dims(
+      newBuffer.widthInPixels,
+      newBuffer.heightInPixels)
+
+    new Bmp(identity, isRenderable, newDims, position, Some(newBuffer))
   }
 
   /**
@@ -239,8 +259,9 @@ class Bmp private(
    *
    * @return
    */
+  @inline
   def moveBy(offsets: Double*): ImageElement = {
-    this
+    copy(newPosition = position.moveBy(offsets: _*))
   }
 
   /**
@@ -250,6 +271,7 @@ class Bmp private(
    *
    * @return
    */
+  @inline
   def saveAsPngTo(filename: String): String = {
     if (buffer.isDefined)
       buffer.get.saveAsPngTo(filename)
@@ -259,7 +281,17 @@ class Bmp private(
 
   /**
    *
+   * @return
    */
+  @inline
+  def copy(newPosition: Pos = position): Bmp = {
+    new Bmp(identity, isRenderable, dimensions, newPosition, buffer)
+  }
+
+  /**
+   *
+   */
+  @inline
   override
   def display(): Bmp = {
     super.display()

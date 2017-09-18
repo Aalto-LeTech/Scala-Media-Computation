@@ -66,7 +66,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    *
    * @param color
    */
-  override def clearUsing(
+  override
+  def clearUsing(
       color: Color = DefaultBackgroundColor,
       useSourceColorLiterally: Boolean = false): Unit = {
 
@@ -86,7 +87,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    *
    * @return
    */
-  override def drawBitmap(bitmap: BitmapBufferAdapter): Boolean = {
+  override
+  def drawBitmap(bitmap: BitmapBufferAdapter): Boolean = {
     drawBitmap(bitmap, 0, 0)
   }
 
@@ -100,7 +102,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    *
    * @return
    */
-  override def drawBitmap(
+  override
+  def drawBitmap(
       bitmap: BitmapBufferAdapter,
       x: Int,
       y: Int,
@@ -124,7 +127,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    *
    * @return
    */
-  override def drawBitmap(
+  override
+  def drawBitmap(
       bitmap: BitmapBufferAdapter,
       transformation: AffineTransformation,
       opacity: Int): Boolean = {
@@ -149,7 +153,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    *
    * @return
    */
-  override def drawBitmap(
+  override
+  def drawBitmap(
       bitmap: BitmapBufferAdapter,
       transformation: AffineTransformation): Boolean = {
 
@@ -163,7 +168,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param yInPixels
    * @param color
    */
-  override def drawPoint(xInPixels: Double, yInPixels: Double, color: Color): Unit = {
+  override
+  def drawPoint(xInPixels: Double, yInPixels: Double, color: Color): Unit = {
     val x = math.floor(xInPixels).toInt
     val y = math.floor(yInPixels).toInt
 
@@ -185,7 +191,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
-  override def drawEllipse(
+  override
+  def drawEllipse(
       boundingBoxUpperLeftX: Int,
       boundingBoxUpperLeftY: Int,
       widthInPixels: Int = DefaultBitmapWidthInPixels,
@@ -226,7 +233,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
-  override def drawArc(
+  override
+  def drawArc(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = DefaultBitmapWidthInPixels,
@@ -269,7 +277,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
-  override def drawRectangle(
+  override def
+  drawRectangle(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = DefaultBitmapWidthInPixels,
@@ -310,7 +319,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
-  override def drawRoundedRectangle(
+  override def
+  drawRoundedRectangle(
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = DefaultBitmapWidthInPixels,
@@ -349,7 +359,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param numberOfCoordinatesToDraw
    * @param color
    */
-  override def drawPolyline(
+  override
+  def drawPolyline(
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
@@ -372,7 +383,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
-  override def drawPolygon(
+  override
+  def drawPolygon(
       xCoordinates: Seq[Int],
       yCoordinates: Seq[Int],
       numberOfCoordinatesToDraw: Int,
@@ -403,7 +415,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param toYInPixels
    * @param color
    */
-  override def drawLine(
+  override
+  def drawLine(
       fromXInPixels: Int,
       fromYInPixels: Int,
       toXInPixels: Int,
@@ -438,7 +451,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    *
    * @return
    */
-  protected def withDrawingSurface[ResultType](workUnit: Graphics2D => ResultType): ResultType = {
+  protected
+  def withDrawingSurface[ResultType](workUnit: Graphics2D => ResultType): ResultType = {
     var drawingSurface: Graphics2D = null
     var memorizedThrowable: Throwable = null
 

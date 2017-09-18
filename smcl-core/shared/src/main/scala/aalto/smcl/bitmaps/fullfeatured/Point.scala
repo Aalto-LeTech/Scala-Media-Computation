@@ -20,7 +20,7 @@ package aalto.smcl.bitmaps.fullfeatured
 import aalto.smcl.colors.rgb
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
 import aalto.smcl.modeling.Len
-import aalto.smcl.modeling.d2.{Bounds, CoordinateTuple, Movable, Pos}
+import aalto.smcl.modeling.d2.{Bounds, CoordinateTuple, Pos}
 
 
 
@@ -77,8 +77,7 @@ case class Point private(
     position: Pos,
     color: rgb.Color)
     extends VectorGraphic
-            with FlatMap[Point, (Pos, rgb.Color)]
-            with Movable[Point] {
+            with FlatMap[Point, (Pos, rgb.Color)] {
 
   /**
    *
@@ -95,12 +94,15 @@ case class Point private(
    *
    * @param drawingSurface
    */
+  @inline
   def renderOn(
       drawingSurface: DrawingSurfaceAdapter,
       position: Pos): Unit = {
 
     drawingSurface.drawPoint(
-      position.xInPixels, position.yInPixels, color)
+      position.xInPixels,
+      position.yInPixels,
+      color)
   }
 
   /**
@@ -110,11 +112,12 @@ case class Point private(
    *
    * @return
    */
+  @inline
   def copy(
       newPosition: Pos = position,
       newColor: rgb.Color = color): Point = {
 
-    Point(newPosition, newColor)
+    new Point(identity, newPosition, newColor)
   }
 
   /**
@@ -133,6 +136,7 @@ case class Point private(
    *
    * @return
    */
+  @inline
   def toCoordinateTuple: CoordinateTuple = {
     (position.xInPixels, position.yInPixels)
   }
@@ -144,6 +148,7 @@ case class Point private(
    *
    * @return
    */
+  @inline
   def flatMap(f: ((Pos, rgb.Color)) => Point): Point = {
     f(position, color)
   }
@@ -155,9 +160,29 @@ case class Point private(
    *
    * @return
    */
-  override
+  @inline
   def moveBy(offsets: Double*): Point = {
-    copy(newPosition = position.moveBy(offsets: _*))
+    copy(newPosition =
+        position.moveBy(offsets: _*))
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): Point = {
+
+    copy(newPosition =
+        position.rotateBy(
+          angleInDegrees,
+          centerOfRotation))
   }
 
   /**
@@ -173,6 +198,7 @@ case class Point private(
    *
    * @return
    */
+  @inline
   override
   lazy val hashCode: Int = {
     val prime = 31
@@ -315,6 +341,7 @@ case class Point private(
   /**
    *
    */
+  @inline
   override
   def display(): Point = {
     super.display()

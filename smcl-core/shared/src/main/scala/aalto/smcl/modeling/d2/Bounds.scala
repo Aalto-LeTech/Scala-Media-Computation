@@ -197,7 +197,7 @@ object Bounds {
  *
  * @author Aleksi Lukkarinen
  */
-case class Bounds(
+case class Bounds private(
     upperLeftMarker: Pos,
     lowerRightMarker: Pos)
     extends NonCoordSysDepBoundary[Pos]

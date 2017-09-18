@@ -19,7 +19,7 @@ package aalto.smcl.bitmaps.fullfeatured
 
 import scala.annotation.tailrec
 
-import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
+import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
 import aalto.smcl.modeling.Len
 import aalto.smcl.modeling.d2.{Bounds, HasBounds, HasPos, Pos}
 
@@ -112,12 +112,13 @@ object Image {
  *
  * @author Aleksi Lukkarinen
  */
-class Image(
+class Image private(
     override val identity: Identity,
     val elements: Seq[ImageElement])
     extends ImageElement
             with HasPos
-            with HasBounds {
+            with HasBounds
+            with FlatMap[Image, Seq[ImageElement]] {
 
   // TODO: Tarkistukset
 
@@ -142,10 +143,24 @@ class Image(
    *
    * @param drawingSurface
    */
-  override def renderOn(
+  @inline
+  override
+  def renderOn(
       drawingSurface: DrawingSurfaceAdapter,
       position: Pos): Unit = {
 
+    if (boundary.isEmpty)
+      return
+
+    val upperLeftPos = boundary.get.upperLeftMarker
+    val offsets = (
+        position.xInPixels - upperLeftPos.xInPixels,
+        position.yInPixels - upperLeftPos.yInPixels
+    )
+
+    elements.foreach{e =>
+      e.renderOn(drawingSurface, e.position + offsets)
+    }
   }
 
   /**
@@ -153,22 +168,44 @@ class Image(
    *
    * @return
    */
-  override def toBitmap: Bmp = {
-    val bounds = boundary.get
-    val bitmap = Bmp(bounds.width, bounds.height)
-
-    bitmap
-  }
+  @inline
+  override
+  def toBitmap: Bmp = Bmp(elements: _*)
 
   /**
-   * Rotates this object around a given point of the specified number of degrees.
    *
-   * @param angleInDegrees
+   *
+   * @param f
    *
    * @return
    */
-  def rotateBy(angleInDegrees: Double, centerOfRotation: Pos): ImageElement = {
-    this
+  @inline
+  def map(f: (ImageElement) => ImageElement): Image = {
+    Image(elements.map(f): _*)
+  }
+
+  /**
+   *
+   * @param f
+   *
+   * @return
+   */
+  @inline
+  override
+  def flatMap(f: (Seq[ImageElement]) => Image): Image = {
+    f(elements)
+  }
+
+  /**
+   *
+   *
+   * @param newElements
+   *
+   * @return
+   */
+  @inline
+  def copy(newElements: Seq[ImageElement] = elements): Image = {
+    new Image(identity, newElements)
   }
 
   /**
@@ -178,7 +215,37 @@ class Image(
    *
    * @return
    */
-  def moveBy(offsets: Double*): ImageElement = {
+  @inline
+  override
+  def moveBy(offsets: Double*): Image = {
+    map{_.moveBy(offsets: _*)}
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): Image = {
+
+    map{_.rotateBy(angleInDegrees, centerOfRotation)}
+  }
+
+  /**
+   *
+   */
+  @inline
+  override
+  def display(): Image = {
+    super.display()
+
     this
   }
 

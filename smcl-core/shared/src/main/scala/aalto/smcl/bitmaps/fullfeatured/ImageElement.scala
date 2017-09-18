@@ -18,7 +18,8 @@ package aalto.smcl.bitmaps.fullfeatured
 
 
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
-import aalto.smcl.modeling.d2.{HasBounds, HasPos, Pos}
+import aalto.smcl.modeling.Rotatable
+import aalto.smcl.modeling.d2.{HasBounds, HasPos, Movable, Pos}
 import aalto.smcl.viewers.{display => displayInViewer}
 
 
@@ -31,7 +32,9 @@ import aalto.smcl.viewers.{display => displayInViewer}
  */
 trait ImageElement
     extends HasPos
-            with HasBounds {
+            with HasBounds
+            with Movable[ImageElement]
+            with Rotatable[ImageElement] {
 
   /** */
   def identity: Identity

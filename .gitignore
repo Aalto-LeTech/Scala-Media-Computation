@@ -98,3 +98,4 @@
 **/*.pyc
 **/*.pyo
 **/*~
+!/smcl-core/shared/src/main/scala/aalto/smcl/modeling/d2/Pos.scala
