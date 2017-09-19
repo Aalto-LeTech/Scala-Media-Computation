@@ -48,8 +48,8 @@ object Transformer {
     val x = position.xInPixels
     val y = position.yInPixels
 
-    val xNew = rotateX2D(sin, cos, x, y)
-    val yNew = rotateY2D(sin, cos, x, y)
+    val xNew = rotateX2D(x, y, sin, cos)
+    val yNew = rotateY2D(x, y, sin, cos)
 
     Pos(xNew, yNew)
   }
@@ -75,8 +75,8 @@ object Transformer {
     val x = position.xInPixels - centerOfRotation.xInPixels
     val y = position.yInPixels - centerOfRotation.yInPixels
 
-    val xNew = rotateX2D(sin, cos, x, y) + centerOfRotation.xInPixels
-    val yNew = rotateY2D(sin, cos, x, y) + centerOfRotation.yInPixels
+    val xNew = rotateX2D(x, y, sin, cos) + centerOfRotation.xInPixels
+    val yNew = rotateY2D(x, y, sin, cos) + centerOfRotation.yInPixels
 
     Pos(xNew, yNew)
   }
@@ -103,8 +103,8 @@ object Transformer {
       x = p.xInPixels
       y = p.yInPixels
 
-      xNew = rotateX2D(sin, cos, x, y)
-      yNew = rotateY2D(sin, cos, x, y)
+      xNew = rotateX2D(x, y, sin, cos)
+      yNew = rotateY2D(x, y, sin, cos)
     } yield Pos(xNew, yNew)
   }
 
@@ -132,8 +132,8 @@ object Transformer {
       xNorm = p.xInPixels - centerOfRotation.xInPixels
       yNorm = p.yInPixels - centerOfRotation.yInPixels
 
-      xNew = rotateX2D(sin, cos, xNorm, yNorm) + centerOfRotation.xInPixels
-      yNew = rotateY2D(sin, cos, xNorm, yNorm) + centerOfRotation.yInPixels
+      xNew = rotateX2D(xNorm, yNorm, sin, cos) + centerOfRotation.xInPixels
+      yNew = rotateY2D(xNorm, yNorm, sin, cos) + centerOfRotation.yInPixels
     } yield Pos(xNew, yNew)
   }
 
@@ -154,7 +154,12 @@ object Transformer {
       sinOfRotationAngle: Double,
       cosOfRotationAngle: Double): Double = {
 
-    x * cosOfRotationAngle - y * sinOfRotationAngle
+    println("X-koordinaatti:")
+    println(s"  x: $x, y: $y, sin: $sinOfRotationAngle, cos: $cosOfRotationAngle")
+    val result = cosOfRotationAngle * x + sinOfRotationAngle * y
+    println(s"tulos: $result")
+
+    result
   }
 
   /**
@@ -174,7 +179,12 @@ object Transformer {
       sinOfRotationAngle: Double,
       cosOfRotationAngle: Double): Double = {
 
-    x * sinOfRotationAngle + y * cosOfRotationAngle
+    println("Y-koordinaatti:")
+    println(s"  x: $x, y: $y, sin: $sinOfRotationAngle, cos: $cosOfRotationAngle")
+    val result = -sinOfRotationAngle * x + cosOfRotationAngle * y
+    println(s"tulos: $result")
+
+    result
   }
 
 }
