@@ -52,10 +52,6 @@ object Len {
    * @return
    */
   def apply(valueInPixels: Double): Len = {
-    require(
-      valueInPixels >= 0,
-      s"Length cannot be negative (was $valueInPixels)")
-
     new Len(valueInPixels)
   }
 

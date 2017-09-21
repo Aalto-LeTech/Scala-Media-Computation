@@ -19,8 +19,8 @@ package aalto.smcl.bitmaps.fullfeatured
 
 import aalto.smcl.colors.rgb
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
-import aalto.smcl.modeling.Len
-import aalto.smcl.modeling.d2.{Bounds, CoordinateTuple, Pos}
+import aalto.smcl.modeling.d2.{Bounds, CoordinateTuple, Dims, Pos}
+import aalto.smcl.modeling.{AffineTransformation, Len}
 
 
 
@@ -72,10 +72,10 @@ object Point {
  *
  * @author Aleksi Lukkarinen
  */
-case class Point private(
+class Point private(
     override val identity: Identity,
-    position: Pos,
-    color: rgb.Color)
+    val position: Pos,
+    val color: rgb.Color)
     extends VectorGraphic
             with FlatMap[Point, (Pos, rgb.Color)] {
 
@@ -93,15 +93,16 @@ case class Point private(
    *
    *
    * @param drawingSurface
+   * @param offsetsToOrigo
    */
   @inline
   def renderOn(
       drawingSurface: DrawingSurfaceAdapter,
-      position: Pos): Unit = {
+      offsetsToOrigo: Dims): Unit = {
 
     drawingSurface.drawPoint(
-      position.xInPixels,
-      position.yInPixels,
+      offsetsToOrigo.width.inPixels + position.xInPixels,
+      offsetsToOrigo.height.inPixels + position.yInPixels,
       color)
   }
 
@@ -219,7 +220,6 @@ case class Point private(
    * @return
    */
   @inline
-  override
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Point]
   }
@@ -329,16 +329,6 @@ case class Point private(
   }
 
   /**
-   * Provides an iterator for the coordinate values.
-   *
-   * @return
-   */
-  @inline
-  def coordinateIterator: Iterator[Double] = {
-    position.iterator
-  }
-
-  /**
    *
    */
   @inline
@@ -347,6 +337,19 @@ case class Point private(
     super.display()
 
     this
+  }
+
+  /**
+   * Transforms this [[Point]] using the specified affine transformation.
+   *
+   * @param t
+   *
+   * @return
+   */
+  @inline
+  override
+  def transformBy(t: AffineTransformation): Point = {
+    copy(newPosition = t.process(position))
   }
 
 }

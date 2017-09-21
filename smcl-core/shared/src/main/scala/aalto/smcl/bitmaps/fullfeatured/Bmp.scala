@@ -60,8 +60,8 @@ object Bmp
     }
 
     val bounds = boundsOption.get
-    val width = bounds.width
-    val height = bounds.height
+    val width = bounds.width.floor
+    val height = bounds.height.floor
 
     if (width < 1 || height < 1) {
       return Bmp(0, 0)
@@ -72,13 +72,14 @@ object Bmp
     val buffer: BitmapBufferAdapter =
       PRF.createPlatformBitmapBuffer(width, height)
 
-    val upperLeftPos = bounds.upperLeftMarker
-    val offsets = (-upperLeftPos.xInPixels, -upperLeftPos.yInPixels)
+    val upperLeftPos = bounds.upperLeftMarker.inverse
+    val offsetsToOrigo = Dims(
+      upperLeftPos.xInPixels, upperLeftPos.yInPixels)
 
     elements.foreach{e =>
       e.renderOn(
         buffer.drawingSurface,
-        e.position + offsets
+        offsetsToOrigo
       )
     }
 
@@ -214,14 +215,15 @@ class Bmp private(
   override
   def renderOn(
       drawingSurface: DrawingSurfaceAdapter,
-      position: Pos): Unit = {
+      offsetsToOrigo: Dims): Unit = {
 
     if (buffer.isEmpty)
       return
 
-    val p = position.toFlooredIntTuple
-
-    drawingSurface.drawBitmap(buffer.get, p._1, p._2)
+    drawingSurface.drawBitmap(
+      buffer.get,
+      (offsetsToOrigo.width.inPixels + position.xInPixels).toInt,
+      (offsetsToOrigo.height.inPixels + position.yInPixels).toInt)
   }
 
   /**
@@ -273,10 +275,10 @@ class Bmp private(
    */
   @inline
   def saveAsPngTo(filename: String): String = {
-    if (buffer.isDefined)
-      buffer.get.saveAsPngTo(filename)
-    else
-      "Error: No BitmapBufferAdapter to save."
+    if (buffer.isEmpty)
+      return "Error: No BitmapBufferAdapter to save."
+
+    buffer.get.saveAsPngTo(filename)
   }
 
   /**
@@ -297,6 +299,49 @@ class Bmp private(
     super.display()
 
     this
+  }
+
+  /**
+   * Transforms the content of this [[Bmp]] using the specified affine
+   * transformation. The position of this [[Bmp]] remains unchanged.
+   *
+   * @param t
+   *
+   * @return
+   */
+  override
+  def transformBy(t: AffineTransformation): Bmp = {
+    if (buffer.isEmpty)
+      return this
+
+    val newBuffer = buffer.get.createTransformedVersionWith(t)
+
+    new Bmp(
+      identity = identity,
+      isRenderable = isRenderable,
+      dimensions = Dims(newBuffer.widthInPixels, newBuffer.heightInPixels),
+      position = position,
+      buffer = Some(newBuffer))
+  }
+
+  /**
+   * Transforms the position of this [[Bmp]] using the specified affine
+   * transformation. The content of this [[Bmp]] remains unchanged.
+   *
+   * @param t
+   *
+   * @return
+   */
+  def transformPositionBy(t: AffineTransformation): Bmp = {
+    if (buffer.isEmpty)
+      return this
+
+    new Bmp(
+      identity = identity,
+      isRenderable = isRenderable,
+      dimensions = dimensions,
+      position = t.process(position),
+      buffer = buffer)
   }
 
 }

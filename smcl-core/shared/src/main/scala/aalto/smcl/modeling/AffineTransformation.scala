@@ -1253,4 +1253,31 @@ case class AffineTransformation(
       tauY = -tauY - verticalSizeInPixels)
   }
 
+  /**
+   *
+   *
+   * @param p
+   *
+   * @return
+   */
+  @inline
+  def process(p: Pos): Pos = {
+    val newX = alpha * p.xInPixels + gamma * p.yInPixels + tauX
+    val newY = delta * p.xInPixels + beta * p.yInPixels + tauY
+
+    Pos(newX, newY)
+  }
+
+  /**
+   *
+   *
+   * @param ps
+   *
+   * @return
+   */
+  @inline
+  def process(ps: Seq[Pos]): Seq[Pos] = {
+    ps map process
+  }
+
 }

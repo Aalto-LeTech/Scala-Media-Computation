@@ -52,14 +52,6 @@ object Dims {
       widthInPixels: Double,
       heightInPixels: Double): Dims = {
 
-    require(
-      widthInPixels >= 0,
-      s"Width cannot be negative (was $widthInPixels)")
-
-    require(
-      heightInPixels >= 0,
-      s"Height cannot be negative (was $heightInPixels)")
-
     new Dims(Len(widthInPixels), Len(heightInPixels))
   }
 

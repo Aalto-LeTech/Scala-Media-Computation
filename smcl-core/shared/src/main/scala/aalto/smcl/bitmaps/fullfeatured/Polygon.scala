@@ -36,6 +36,4 @@ abstract class Polygon(
     points: Seq[Pos],
     position: Pos)
     extends VectorGraphic
-            with HasPos {
-
-}
+            with HasPos

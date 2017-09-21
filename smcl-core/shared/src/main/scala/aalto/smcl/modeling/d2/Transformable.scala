@@ -14,12 +14,10 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.bitmaps.fullfeatured
+package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
-import aalto.smcl.modeling.d2._
-import aalto.smcl.viewers.{display => displayInViewer}
+import aalto.smcl.modeling.AffineTransformation
 
 
 
@@ -27,44 +25,20 @@ import aalto.smcl.viewers.{display => displayInViewer}
 /**
  *
  *
+ * @tparam ReturnType
+ *
  * @author Aleksi Lukkarinen
  */
-trait ImageElement
-    extends HasPos
-            with HasBounds
-            with Movable[ImageElement]
-            with Rotatable[ImageElement]
-            with Transformable[ImageElement] {
-
-  /** */
-  def identity: Identity
-
-  /** Tells if this [[ImageElement]] can be rendered on a bitmap. */
-  def isRenderable: Boolean
+trait Transformable[ReturnType] {
 
   /**
-   * Renders this [[ImageElement]] on a drawing surface.
+   * Transforms this object using the specified affine transformation.
    *
-   * @param drawingSurface
-   */
-  def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      offsetsToOrigo: Dims): Unit
-
-  /**
-   *
+   * @param t
    *
    * @return
    */
-  def toBitmap: Bmp = Bmp(this)
-
-  /**
-   *
-   */
-  def display(): ImageElement = {
-    displayInViewer(toBitmap)
-
-    this
-  }
+  @inline
+  def transformBy(t: AffineTransformation): ReturnType
 
 }

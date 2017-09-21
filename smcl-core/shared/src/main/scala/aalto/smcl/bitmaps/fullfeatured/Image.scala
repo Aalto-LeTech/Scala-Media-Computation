@@ -20,8 +20,8 @@ package aalto.smcl.bitmaps.fullfeatured
 import scala.annotation.tailrec
 
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
-import aalto.smcl.modeling.Len
-import aalto.smcl.modeling.d2.{Bounds, HasBounds, HasPos, Pos}
+import aalto.smcl.modeling.d2.{Bounds, Dims, HasBounds, HasPos, Pos}
+import aalto.smcl.modeling.{AffineTransformation, Len}
 
 
 
@@ -142,24 +142,19 @@ class Image private(
    *
    *
    * @param drawingSurface
+   * @param offsetsToOrigo
    */
   @inline
   override
   def renderOn(
       drawingSurface: DrawingSurfaceAdapter,
-      position: Pos): Unit = {
+      offsetsToOrigo: Dims): Unit = {
 
     if (boundary.isEmpty)
       return
 
-    val upperLeftPos = boundary.get.upperLeftMarker
-    val offsets = (
-        position.xInPixels - upperLeftPos.xInPixels,
-        position.yInPixels - upperLeftPos.yInPixels
-    )
-
     elements.foreach{e =>
-      e.renderOn(drawingSurface, e.position + offsets)
+      e.renderOn(drawingSurface, offsetsToOrigo)
     }
   }
 
@@ -247,6 +242,19 @@ class Image private(
     super.display()
 
     this
+  }
+
+  /**
+   * Transforms this [[Image]] using the specified affine transformation.
+   *
+   * @param t
+   *
+   * @return
+   */
+  @inline
+  override
+  def transformBy(t: AffineTransformation): Image = {
+    map{_.transformBy(t)}
   }
 
 }

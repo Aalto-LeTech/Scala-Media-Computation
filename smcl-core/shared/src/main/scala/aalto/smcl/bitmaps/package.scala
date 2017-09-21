@@ -59,7 +59,7 @@ package object bitmaps
   type Line = fullfeatured.Line
 
   /** A companion object alias for . */
-  // val Line = fullfeatured.Line
+  val Line = fullfeatured.Line
 
   /**
    * Creates a new empty [[Bitmap]] instance with a circle drawn on it.

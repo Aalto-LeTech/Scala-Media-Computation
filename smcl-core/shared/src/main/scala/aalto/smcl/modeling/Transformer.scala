@@ -154,12 +154,7 @@ object Transformer {
       sinOfRotationAngle: Double,
       cosOfRotationAngle: Double): Double = {
 
-    println("X-koordinaatti:")
-    println(s"  x: $x, y: $y, sin: $sinOfRotationAngle, cos: $cosOfRotationAngle")
-    val result = cosOfRotationAngle * x + sinOfRotationAngle * y
-    println(s"tulos: $result")
-
-    result
+    cosOfRotationAngle * x + sinOfRotationAngle * y
   }
 
   /**
@@ -179,12 +174,7 @@ object Transformer {
       sinOfRotationAngle: Double,
       cosOfRotationAngle: Double): Double = {
 
-    println("Y-koordinaatti:")
-    println(s"  x: $x, y: $y, sin: $sinOfRotationAngle, cos: $cosOfRotationAngle")
-    val result = -sinOfRotationAngle * x + cosOfRotationAngle * y
-    println(s"tulos: $result")
-
-    result
+    -sinOfRotationAngle * x + cosOfRotationAngle * y
   }
 
 }
