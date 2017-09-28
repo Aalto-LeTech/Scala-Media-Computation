@@ -25,6 +25,7 @@ import aalto.smcl.modeling.d2.{HasPos, Pos}
 
 /**
  *
+ *
  * @param identity
  * @param points
  * @param position
@@ -32,8 +33,8 @@ import aalto.smcl.modeling.d2.{HasPos, Pos}
  * @author Aleksi Lukkarinen
  */
 abstract class Polygon(
-    identity: Identity,
-    points: Seq[Pos],
-    position: Pos)
+    val identity: Identity,
+    val points: Seq[Pos],
+    val position: Pos)
     extends VectorGraphic
-            with HasPos
+        with HasPos

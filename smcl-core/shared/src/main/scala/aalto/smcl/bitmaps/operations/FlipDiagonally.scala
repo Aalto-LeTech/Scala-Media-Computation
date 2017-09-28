@@ -17,8 +17,8 @@
 package aalto.smcl.bitmaps.operations
 
 
-import aalto.smcl.modeling.AffineTransformation
 import aalto.smcl.infrastructure.BitmapBufferAdapter
+import aalto.smcl.modeling.AffineTransformation
 
 
 
@@ -31,8 +31,8 @@ import aalto.smcl.infrastructure.BitmapBufferAdapter
 private[bitmaps]
 case class FlipDiagonally()
     extends AbstractOperation
-            with OneSourceFilter
-            with Immutable {
+        with OneSourceFilter
+        with Immutable {
 
   /** First text paragraph of the description of this class. */
   val descriptionTitle: String = "FlipDiagonally"
@@ -50,7 +50,9 @@ case class FlipDiagonally()
    *
    * @return
    */
-  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
+  override
+  protected
+  def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     require(sources.length == 1, s"Flip requires exactly one source image (provided: ${sources.length}).")
 
     val transformation =
@@ -58,7 +60,7 @@ case class FlipDiagonally()
         sources(0).widthInPixels,
         sources(0).heightInPixels)
 
-    sources(0).createTransformedVersionWith(transformation)
+    sources(0).createTransformedVersionWith(transformation)._1
   }
 
 }

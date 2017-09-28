@@ -20,7 +20,7 @@ package aalto.smcl.bitmaps.fullfeatured
 import aalto.smcl.colors.rgb
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
 import aalto.smcl.modeling.d2.{Dims, Pos}
-import aalto.smcl.modeling.{AffineTransformation, Bounds}
+import aalto.smcl.modeling.{AffineTransformation, Bounds, Transformer}
 
 
 
@@ -57,6 +57,24 @@ object Line {
 /**
  *
  *
+ * def moire(w: Double)={
+ *   def lines(x: Double, c: Double) = Seq(
+ *           Line(Pos.Origo, Pos(x, -c), Red),
+ *           Line(Pos.Origo, Pos(x, c), Blue),
+ *           Line(Pos.Origo, Pos(-c, x), Green),
+ *           Line(Pos.Origo, Pos(c, x), Brown))
+ *
+ *   val wPerTwo = (w/2).toInt
+ *   val r = Range.inclusive(-wPerTwo, wPerTwo, 2)
+ *
+ *   Image((for{x <- r} yield lines(x, wPerTwo)).flatten: _*)
+ * }
+ *
+ * @param identity
+ * @param start
+ * @param end
+ * @param color
+ *
  * @author Aleksi Lukkarinen
  */
 class Line private(
@@ -74,9 +92,6 @@ class Line private(
       Seq(start, end),
       boundary.get.upperLeftMarker) {
 
-  /** The upper-left corner of the bounding box of this line. */
-  val position: Pos = boundary.get.upperLeftMarker
-
   /** Tells if this [[Line]] can be rendered on a bitmap. */
   val isRenderable: Boolean = true
 
@@ -91,11 +106,6 @@ class Line private(
   def renderOn(
       drawingSurface: DrawingSurfaceAdapter,
       offsetsToOrigo: Dims): Unit = {
-
-    println("Line:")
-    println("offsets: " + offsetsToOrigo)
-    println("x0, y0: " + (offsetsToOrigo.width.inPixels + start.xInPixels).toInt + " ," + (offsetsToOrigo.height.inPixels + start.yInPixels).toInt)
-    println("x1, y1: " + (offsetsToOrigo.width.inPixels + end.xInPixels).toInt + " ," + (offsetsToOrigo.height.inPixels + end.yInPixels).toInt)
 
     drawingSurface.drawLine(
       fromXInPixels = (offsetsToOrigo.width.inPixels + start.xInPixels).toInt,
@@ -117,23 +127,6 @@ class Line private(
       newColor: rgb.Color = color): Line = {
 
     new Line(identity, newStart, newEnd, newColor)
-  }
-
-  /**
-   * Rotates this object around a given point of the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  @inline
-  def rotateBy(
-      angleInDegrees: Double,
-      centerOfRotation: Pos): Line = {
-
-    copy(
-      newStart = start.rotateBy(angleInDegrees, centerOfRotation),
-      newEnd = end.rotateBy(angleInDegrees, centerOfRotation))
   }
 
   /**
@@ -226,6 +219,126 @@ class Line private(
     super.display()
 
     this
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW: Line = {
+    copy(
+      newStart = start.rotateBy90DegsCW,
+      newEnd = end.rotateBy90DegsCW)
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees clockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW(centerOfRotation: Pos): Line = {
+    copy(
+      newStart = start.rotateBy90DegsCW(centerOfRotation),
+      newEnd = end.rotateBy90DegsCW(centerOfRotation))
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: Line = {
+    copy(
+      newStart = start.rotateBy90DegsCCW,
+      newEnd = end.rotateBy90DegsCCW)
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees counterclockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Line = {
+    copy(
+      newStart = start.rotateBy90DegsCCW(centerOfRotation),
+      newEnd = end.rotateBy90DegsCCW(centerOfRotation))
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: Line = {
+    copy(
+      newStart = start.rotateBy180Degs,
+      newEnd = end.rotateBy180Degs)
+  }
+
+  /**
+   * Rotates this object around a given point by 180 degrees.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs(centerOfRotation: Pos): Line = {
+    copy(
+      newStart = start.rotateBy180Degs(centerOfRotation),
+      newEnd = end.rotateBy180Degs(centerOfRotation))
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angleInDegrees: Double): Line = {
+    val newPoints = Transformer.rotate(points, angleInDegrees)
+
+    copy(
+      newStart = newPoints.head,
+      newEnd = newPoints(1))
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): Line = {
+
+    val newPoints = Transformer.rotate(points, angleInDegrees, centerOfRotation)
+
+    copy(
+      newStart = newPoints.head,
+      newEnd = newPoints(1))
   }
 
 }

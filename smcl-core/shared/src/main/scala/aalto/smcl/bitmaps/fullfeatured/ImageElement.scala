@@ -31,10 +31,9 @@ import aalto.smcl.viewers.{display => displayInViewer}
  */
 trait ImageElement
     extends HasPos
-            with HasBounds
-            with Movable[ImageElement]
-            with Rotatable[ImageElement]
-            with Transformable[ImageElement] {
+        with HasBounds
+        with Movable[ImageElement]
+        with Rotatable[ImageElement] {
 
   /** */
   def identity: Identity

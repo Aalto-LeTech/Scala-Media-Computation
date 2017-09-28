@@ -17,12 +17,18 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
+import aalto.smcl.modeling.d2.Transformable
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
 trait VectorGraphic
-    extends ImageElement {
+    extends ImageElement
+        with Transformable[ImageElement] {
 
 }

@@ -155,9 +155,7 @@ case class Pos private[smcl](
   @inline
   override
   def map(f: (Double) => Double): Pos = {
-    Pos(
-      f(xInPixels),
-      f(yInPixels))
+    Pos(f(xInPixels), f(yInPixels))
   }
 
   /**
@@ -308,9 +306,9 @@ case class Pos private[smcl](
    */
   @inline
   def distanceFrom(other: Pos): Len = {
-    val diffX = math.abs(other.xInPixels - xInPixels)
-    val diffY = math.abs(other.yInPixels - yInPixels)
-    val distance = math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2))
+    val diffX = other.xInPixels - xInPixels
+    val diffY = other.yInPixels - yInPixels
+    val distance = math.sqrt(diffX * diffX + diffY * diffY)
 
     Len(distance)
   }
@@ -415,6 +413,91 @@ case class Pos private[smcl](
   override
   def toString: String = {
     s"Pos(x: $xInPixels px, y: $yInPixels px)"
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW: Pos = {
+    Transformer.rotateBy90DegsCW(this)
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees clockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW(centerOfRotation: Pos): Pos = {
+    Transformer.rotateBy90DegsCW(this, centerOfRotation)
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: Pos = {
+    Transformer.rotateBy90DegsCCW(this)
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees counterclockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Pos = {
+    Transformer.rotateBy90DegsCCW(this, centerOfRotation)
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: Pos = {
+    Transformer.rotateBy180Degs(this)
+  }
+
+  /**
+   * Rotates this object around a given point by 180 degrees.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs(centerOfRotation: Pos): Pos = {
+    Transformer.rotateBy180Degs(this, centerOfRotation)
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angleInDegrees: Double): Pos = {
+    Transformer.rotate(this, angleInDegrees)
   }
 
   /**

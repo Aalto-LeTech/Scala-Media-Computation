@@ -73,13 +73,15 @@ case class Shear(
    *
    * @return
    */
-  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
+  override
+  protected
+  def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).createTransformedVersionWith(
       AffineTransformation.forOrigoRelativeShearingOf(
         shearingFactorHorizontal,
         shearingFactorVertical),
       resizeCanvasBasedOnTransformation,
-      backgroundColor)
+      backgroundColor)._1
   }
 
   /** Width of the provided buffer in pixels. */
@@ -98,7 +100,9 @@ case class Shear(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
+  override
+  protected
+  def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
   }
 

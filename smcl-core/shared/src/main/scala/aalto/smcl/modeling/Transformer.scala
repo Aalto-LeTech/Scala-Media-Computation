@@ -30,12 +30,203 @@ import aalto.smcl.infrastructure.MathUtils
 object Transformer {
 
   /**
+   * Rotates a [[Pos]] instance around the origo (0,0) by 90 degrees clockwise.
    *
+   * @param position position to be rotated
    *
-   * @param position
-   * @param angleInDegrees
+   * @return a rotated [[Pos]] instance
+   */
+  @inline
+  def rotateBy90DegsCW(position: Pos): Pos = {
+    Pos(position.yInPixels, -position.xInPixels)
+  }
+
+  /**
+   * Rotates a sequence of [[Pos]] instances around the origo (0,0) by 90 degrees clockwise.
    *
-   * @return
+   * @param positions positions to be rotated
+   *
+   * @return a sequence of rotated [[Pos]] instances
+   */
+  @inline
+  def rotateBy90DegsCW(positions: Seq[Pos]): Seq[Pos] = {
+    positions map rotateBy90DegsCW
+  }
+
+  /**
+   * Rotates a [[Pos]] instance around a given point by 90 degrees clockwise.
+   *
+   * @param position         position to be rotated
+   * @param centerOfRotation center point of the rotation
+   *
+   * @return a rotated [[Pos]] instance
+   */
+  @inline
+  def rotateBy90DegsCW(
+      position: Pos,
+      centerOfRotation: Pos): Pos = {
+
+    val newX =
+      centerOfRotation.xInPixels -
+          centerOfRotation.yInPixels +
+          position.yInPixels
+
+    val newY =
+      centerOfRotation.yInPixels -
+          position.xInPixels +
+          centerOfRotation.xInPixels
+
+    Pos(newX, newY)
+  }
+
+  /**
+   * Rotates a sequence of [[Pos]] instances around a given point by 90 degrees clockwise.
+   *
+   * @param positions        positions to be rotated
+   * @param centerOfRotation center point of the rotation
+   *
+   * @return a sequence of rotated [[Pos]] instances
+   */
+  @inline
+  def rotateBy90DegsCW(
+      positions: Seq[Pos],
+      centerOfRotation: Pos): Seq[Pos] = {
+
+    positions map {rotateBy90DegsCW(_, centerOfRotation)}
+  }
+
+  /**
+   * Rotates a [[Pos]] instance around the origo (0,0) by 90 degrees counterclockwise.
+   *
+   * @param position position to be rotated
+   *
+   * @return a rotated [[Pos]] instance
+   */
+  @inline
+  def rotateBy90DegsCCW(position: Pos): Pos = {
+    Pos(-position.yInPixels, position.xInPixels)
+  }
+
+  /**
+   * Rotates a sequence of [[Pos]] instances around the origo (0,0) by 90 degrees counterclockwise.
+   *
+   * @param positions positions to be rotated
+   *
+   * @return a sequence of rotated [[Pos]] instances
+   */
+  @inline
+  def rotateBy90DegsCCW(positions: Seq[Pos]): Seq[Pos] = {
+    positions map rotateBy90DegsCCW
+  }
+
+  /**
+   * Rotates a [[Pos]] instance around a given point by 90 degrees counterclockwise.
+   *
+   * @param position         position to be rotated
+   * @param centerOfRotation center point of the rotation
+   *
+   * @return a rotated [[Pos]] instance
+   */
+  @inline
+  def rotateBy90DegsCCW(
+      position: Pos,
+      centerOfRotation: Pos): Pos = {
+
+    val newX =
+      centerOfRotation.xInPixels +
+          centerOfRotation.yInPixels -
+          position.yInPixels
+
+    val newY =
+      centerOfRotation.yInPixels +
+          position.xInPixels -
+          centerOfRotation.xInPixels
+
+    Pos(newX, newY)
+  }
+
+  /**
+   * Rotates a sequence of [[Pos]] instances around a given point by 90 degrees counterclockwise.
+   *
+   * @param positions        positions to be rotated
+   * @param centerOfRotation center point of the rotation
+   *
+   * @return a sequence of rotated [[Pos]] instances
+   */
+  @inline
+  def rotateBy90DegsCCW(
+      positions: Seq[Pos],
+      centerOfRotation: Pos): Seq[Pos] = {
+
+    positions map {rotateBy90DegsCCW(_, centerOfRotation)}
+  }
+
+  /**
+   * Rotates a [[Pos]] instance around the origo (0,0) by 180 degrees.
+   *
+   * @param position position to be rotated
+   *
+   * @return a rotated [[Pos]] instance
+   */
+  @inline
+  def rotateBy180Degs(position: Pos): Pos = {
+    Pos(-position.xInPixels, -position.yInPixels)
+  }
+
+  /**
+   * Rotates a sequence of [[Pos]] instances around the origo (0,0) by 180 degrees.
+   *
+   * @param positions positions to be rotated
+   *
+   * @return a sequence of rotated [[Pos]] instances
+   */
+  @inline
+  def rotateBy180Degs(positions: Seq[Pos]): Seq[Pos] = {
+    positions map rotateBy180Degs
+  }
+
+  /**
+   * Rotates a [[Pos]] instance around a given point by 180 degrees.
+   *
+   * @param position         position to be rotated
+   * @param centerOfRotation center point of the rotation
+   *
+   * @return a rotated [[Pos]] instance
+   */
+  @inline
+  def rotateBy180Degs(
+      position: Pos,
+      centerOfRotation: Pos): Pos = {
+
+    val newX = 2 * centerOfRotation.xInPixels - position.xInPixels
+    val newY = 2 * centerOfRotation.yInPixels - position.yInPixels
+
+    Pos(newX, newY)
+  }
+
+  /**
+   * Rotates a sequence of [[Pos]] instances around a given point by 180 degrees.
+   *
+   * @param positions        positions to be rotated
+   * @param centerOfRotation center point of the rotation
+   *
+   * @return a sequence of rotated [[Pos]] instances
+   */
+  @inline
+  def rotateBy180Degs(
+      positions: Seq[Pos],
+      centerOfRotation: Pos): Seq[Pos] = {
+
+    positions map {rotateBy180Degs(_, centerOfRotation)}
+  }
+
+  /**
+   * Rotates a [[Pos]] instance around the origo by a given angle.
+   *
+   * @param position       position to be rotated
+   * @param angleInDegrees the angle (in degrees), the amount of which to rotate
+   *
+   * @return a rotated [[Pos]] instance
    */
   @inline
   def rotate(
@@ -45,23 +236,58 @@ object Transformer {
     val (sin, cos) =
       MathUtils.sinCosRads(math.toRadians(angleInDegrees))
 
-    val x = position.xInPixels
-    val y = position.yInPixels
+    rotate(position, sin, cos)
+  }
 
-    val xNew = rotateX2D(x, y, sin, cos)
-    val yNew = rotateY2D(x, y, sin, cos)
+  /**
+   * Rotates a sequence of [[Pos]] instances around the origo by a given angle.
+   *
+   * @param positions      positions to be rotated
+   * @param angleInDegrees the angle (in degrees), the amount of which to rotate
+   *
+   * @return a sequence of rotated [[Pos]] instances
+   */
+  @inline
+  def rotate(
+      positions: Seq[Pos],
+      angleInDegrees: Double): Seq[Pos] = {
+
+    val (sin, cos) =
+      MathUtils.sinCosRads(math.toRadians(angleInDegrees))
+
+    positions map {rotate(_, sin, cos)}
+  }
+
+  /**
+   * Rotates a [[Pos]] instance around the origo by an angle, whose sin and cos are given.
+   *
+   * @param position position to be rotated
+   * @param sin      sin of the angle, the amount of which to rotate
+   * @param cos      cos of the angle, the amount of which to rotate
+   *
+   * @return a rotated [[Pos]] instance
+   */
+  @inline
+  private
+  def rotate(
+      position: Pos,
+      sin: Double,
+      cos: Double): Pos = {
+
+    val xNew = cos * position.xInPixels + sin * position.yInPixels
+    val yNew = cos * position.yInPixels - sin * position.xInPixels
 
     Pos(xNew, yNew)
   }
 
   /**
+   * Rotates a [[Pos]] instance around a given point by a given angle.
    *
+   * @param position         position to be rotated
+   * @param angleInDegrees   the angle (in degrees), the amount of which to rotate
+   * @param centerOfRotation center point of the rotation
    *
-   * @param position
-   * @param angleInDegrees
-   * @param centerOfRotation
-   *
-   * @return
+   * @return a rotated [[Pos]] instance
    */
   @inline
   def rotate(
@@ -72,50 +298,17 @@ object Transformer {
     val (sin, cos) =
       MathUtils.sinCosRads(math.toRadians(angleInDegrees))
 
-    val x = position.xInPixels - centerOfRotation.xInPixels
-    val y = position.yInPixels - centerOfRotation.yInPixels
-
-    val xNew = rotateX2D(x, y, sin, cos) + centerOfRotation.xInPixels
-    val yNew = rotateY2D(x, y, sin, cos) + centerOfRotation.yInPixels
-
-    Pos(xNew, yNew)
+    rotate(position, centerOfRotation, sin, cos)
   }
 
   /**
+   * Rotates a sequence of [[Pos]] instances around a given point by a given angle.
    *
+   * @param positions        positions to be rotated
+   * @param angleInDegrees   the angle (in degrees), the amount of which to rotate
+   * @param centerOfRotation center point of the rotation
    *
-   * @param positions
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  @inline
-  def rotate(
-      positions: Seq[Pos],
-      angleInDegrees: Double): Seq[Pos] = {
-
-    val (sin, cos) =
-      MathUtils.sinCosRads(math.toRadians(angleInDegrees))
-
-    for {
-      p <- positions
-
-      x = p.xInPixels
-      y = p.yInPixels
-
-      xNew = rotateX2D(x, y, sin, cos)
-      yNew = rotateY2D(x, y, sin, cos)
-    } yield Pos(xNew, yNew)
-  }
-
-  /**
-   *
-   *
-   * @param positions
-   * @param angleInDegrees
-   * @param centerOfRotation
-   *
-   * @return
+   * @return a sequence of rotated [[Pos]] instances
    */
   @inline
   def rotate(
@@ -126,55 +319,34 @@ object Transformer {
     val (sin, cos) =
       MathUtils.sinCosRads(math.toRadians(angleInDegrees))
 
-    for {
-      p <- positions
-
-      xNorm = p.xInPixels - centerOfRotation.xInPixels
-      yNorm = p.yInPixels - centerOfRotation.yInPixels
-
-      xNew = rotateX2D(xNorm, yNorm, sin, cos) + centerOfRotation.xInPixels
-      yNew = rotateY2D(xNorm, yNorm, sin, cos) + centerOfRotation.yInPixels
-    } yield Pos(xNew, yNew)
+    positions map {rotate(_, centerOfRotation, sin, cos)}
   }
 
   /**
+   * Rotates a [[Pos]] instance around a given point by an angle, whose sin and cos are given.
    *
+   * @param position         position to be rotated
+   * @param centerOfRotation center point of the rotation
+   * @param sin              sin of the angle, the amount of which to rotate
+   * @param cos              cos of the angle, the amount of which to rotate
    *
-   * @param x
-   * @param y
-   * @param sinOfRotationAngle
-   * @param cosOfRotationAngle
-   *
-   * @return
+   * @return a rotated [[Pos]] instance
    */
   @inline
-  def rotateX2D(
-      x: Double,
-      y: Double,
-      sinOfRotationAngle: Double,
-      cosOfRotationAngle: Double): Double = {
+  private
+  def rotate(
+      position: Pos,
+      centerOfRotation: Pos,
+      sin: Double,
+      cos: Double): Pos = {
 
-    cosOfRotationAngle * x + sinOfRotationAngle * y
-  }
+    val xNorm = position.xInPixels - centerOfRotation.xInPixels
+    val yNorm = position.yInPixels - centerOfRotation.yInPixels
 
-  /**
-   *
-   *
-   * @param x
-   * @param y
-   * @param sinOfRotationAngle
-   * @param cosOfRotationAngle
-   *
-   * @return
-   */
-  @inline
-  def rotateY2D(
-      x: Double,
-      y: Double,
-      sinOfRotationAngle: Double,
-      cosOfRotationAngle: Double): Double = {
+    val xNew = cos * xNorm - sin * yNorm + centerOfRotation.xInPixels
+    val yNew = cos * yNorm + sin * xNorm + centerOfRotation.yInPixels
 
-    -sinOfRotationAngle * x + cosOfRotationAngle * y
+    Pos(xNew, yNew)
   }
 
 }

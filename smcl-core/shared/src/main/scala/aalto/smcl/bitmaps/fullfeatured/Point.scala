@@ -70,6 +70,10 @@ object Point {
 /**
  *
  *
+ * @param identity
+ * @param position
+ * @param color
+ *
  * @author Aleksi Lukkarinen
  */
 class Point private(
@@ -77,7 +81,7 @@ class Point private(
     val position: Pos,
     val color: rgb.Color)
     extends VectorGraphic
-            with FlatMap[Point, (Pos, rgb.Color)] {
+        with FlatMap[Point, (Pos, rgb.Color)] {
 
   /**
    *
@@ -165,25 +169,6 @@ class Point private(
   def moveBy(offsets: Double*): Point = {
     copy(newPosition =
         position.moveBy(offsets: _*))
-  }
-
-  /**
-   * Rotates this object around a given point of the specified number of degrees.
-   *
-   * @param angleInDegrees
-   * @param centerOfRotation
-   *
-   * @return
-   */
-  @inline
-  def rotateBy(
-      angleInDegrees: Double,
-      centerOfRotation: Pos): Point = {
-
-    copy(newPosition =
-        position.rotateBy(
-          angleInDegrees,
-          centerOfRotation))
   }
 
   /**
@@ -350,6 +335,107 @@ class Point private(
   override
   def transformBy(t: AffineTransformation): Point = {
     copy(newPosition = t.process(position))
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW: Point = {
+    copy(newPosition = position.rotateBy90DegsCW)
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees clockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW(centerOfRotation: Pos): Point = {
+    copy(newPosition = position.rotateBy90DegsCW(centerOfRotation))
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: Point = {
+    copy(newPosition = position.rotateBy90DegsCCW)
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees counterclockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Point = {
+    copy(newPosition = position.rotateBy90DegsCCW(centerOfRotation))
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: Point = {
+    copy(newPosition = position.rotateBy180Degs)
+  }
+
+  /**
+   * Rotates this object around a given point by 180 degrees.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs(centerOfRotation: Pos): Point = {
+    copy(newPosition = position.rotateBy180Degs(centerOfRotation))
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angleInDegrees: Double): Point = {
+    copy(newPosition = position.rotateBy(angleInDegrees))
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): Point = {
+
+    copy(newPosition = position.rotateBy(angleInDegrees, centerOfRotation))
   }
 
 }

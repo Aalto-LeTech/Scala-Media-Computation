@@ -20,6 +20,7 @@ package aalto.smcl.infrastructure
 import aalto.smcl.bitmaps.ConvolutionKernel
 import aalto.smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import aalto.smcl.modeling.AffineTransformation
+import aalto.smcl.modeling.d2.Dims
 import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 
 
@@ -109,7 +110,7 @@ trait BitmapBufferAdapter {
   def createTransformedVersionWith(
       transformation: AffineTransformation,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: Color = DefaultBackgroundColor): BitmapBufferAdapter
+      backgroundColor: Color = DefaultBackgroundColor): (BitmapBufferAdapter, Dims)
 
   /**
    *

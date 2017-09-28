@@ -52,9 +52,7 @@ object Bmp
    * @return
    */
   def apply(elements: ImageElement*): Bmp = {
-    val boundsOption =
-      Image.calculateOuterBoundary(elements)
-
+    val boundsOption = BoundaryCalculator.fromBoundaries(elements)
     if (boundsOption.isEmpty) {
       return Bmp(0, 0)
     }
@@ -185,9 +183,9 @@ class Bmp private(
     val position: Pos,
     private[smcl] val buffer: Option[BitmapBufferAdapter])
     extends ImageElement
-            with Displayable
-            with HasPos
-            with HasDims {
+        with Displayable
+        with HasPos
+        with HasDims {
 
   /** */
   override
@@ -224,34 +222,6 @@ class Bmp private(
       buffer.get,
       (offsetsToOrigo.width.inPixels + position.xInPixels).toInt,
       (offsetsToOrigo.height.inPixels + position.yInPixels).toInt)
-  }
-
-  /**
-   * Rotates this object around a given point of the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  @inline
-  def rotateBy(
-      angleInDegrees: Double,
-      centerOfRotation: Pos): ImageElement = {
-
-    if (buffer.isEmpty)
-      return this
-
-    val newBuffer =
-      buffer.get.createTransformedVersionWith(
-        AffineTransformation.forPointCentredRotation(
-          angleInDegrees,
-          centerOfRotation))
-
-    val newDims = Dims(
-      newBuffer.widthInPixels,
-      newBuffer.heightInPixels)
-
-    new Bmp(identity, isRenderable, newDims, position, Some(newBuffer))
   }
 
   /**
@@ -309,12 +279,13 @@ class Bmp private(
    *
    * @return
    */
-  override
-  def transformBy(t: AffineTransformation): Bmp = {
+  def transformContentWith(t: AffineTransformation): Bmp = {
     if (buffer.isEmpty)
       return this
 
-    val newBuffer = buffer.get.createTransformedVersionWith(t)
+    val newBuffer = buffer.get.createTransformedVersionWith(
+      transformation = t,
+      resizeCanvasBasedOnTransformation = false)._1
 
     new Bmp(
       identity = identity,
@@ -325,23 +296,147 @@ class Bmp private(
   }
 
   /**
-   * Transforms the position of this [[Bmp]] using the specified affine
-   * transformation. The content of this [[Bmp]] remains unchanged.
-   *
-   * @param t
+   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
    *
    * @return
    */
-  def transformPositionBy(t: AffineTransformation): Bmp = {
+  @inline
+  override
+  def rotateBy90DegsCW: Bmp = {
     if (buffer.isEmpty)
       return this
 
-    new Bmp(
-      identity = identity,
-      isRenderable = isRenderable,
-      dimensions = dimensions,
-      position = t.process(position),
-      buffer = buffer)
+    // TODO
+
+    val (newBuffer, upperLeftOffsets) =
+      buffer.get.createTransformedVersionWith(
+        transformation = AffineTransformation.forOrigoCentredRotationOf90DegsCW,
+        resizeCanvasBasedOnTransformation = true)
+
+    //BoundaryCalculator.fromBoundaries()
+
+    this
+
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees clockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW(centerOfRotation: Pos): Bmp = {
+    if (buffer.isEmpty)
+      return this
+
+    this  // TODO
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: Bmp = {
+    if (buffer.isEmpty)
+      return this
+
+    this  // TODO
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees counterclockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Bmp = {
+    if (buffer.isEmpty)
+      return this
+
+    this  // TODO
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: Bmp = {
+    if (buffer.isEmpty)
+      return this
+
+    this  // TODO
+  }
+
+  /**
+   * Rotates this object around a given point by 180 degrees.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs(centerOfRotation: Pos): Bmp = {
+    if (buffer.isEmpty)
+      return this
+
+    this  // TODO
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angleInDegrees: Double): Bmp = {
+    if (buffer.isEmpty)
+      return this
+
+    this  // TODO
+  }
+
+  /**
+   * Rotates this object around a given point of the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): ImageElement = {
+
+    if (buffer.isEmpty)
+      return this
+
+    val (newBuffer, _) =
+      buffer.get.createTransformedVersionWith(
+        AffineTransformation.forPointCentredRotation(
+          angleInDegrees,
+          centerOfRotation))
+
+    val newDims = Dims(
+      newBuffer.widthInPixels,
+      newBuffer.heightInPixels)
+
+    new Bmp(identity, isRenderable, newDims, position, Some(newBuffer))
   }
 
 }

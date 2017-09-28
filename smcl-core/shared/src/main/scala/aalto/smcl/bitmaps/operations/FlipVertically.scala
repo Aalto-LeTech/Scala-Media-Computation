@@ -49,11 +49,13 @@ case class FlipVertically()
    *
    * @return
    */
-  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
+  override
+  protected
+  def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     require(sources.length == 1, s"Flip requires exactly one source image (provided: ${sources.length}).")
 
     sources(0).createTransformedVersionWith(
-      AffineTransformation.forXAxisRelativeVerticalFlipOf(sources(0).heightInPixels))
+      AffineTransformation.forXAxisRelativeVerticalFlipOf(sources(0).heightInPixels))._1
   }
 
 }

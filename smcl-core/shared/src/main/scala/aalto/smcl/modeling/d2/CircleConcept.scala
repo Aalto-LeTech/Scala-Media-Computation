@@ -17,6 +17,7 @@
 package aalto.smcl.modeling.d2
 
 
+import aalto.smcl.modeling.Area
 import aalto.smcl.modeling.misc.ShapeConcept
 
 
@@ -48,6 +49,9 @@ case class CircleConcept private(
       position.yInPixels + radiusInPixels)
   ))
 
+  /** */
+  val area: Area = Area.forCircle(radiusInPixels)
+
   /**
    *
    *
@@ -56,7 +60,8 @@ case class CircleConcept private(
    * @return
    */
   @inline
-  override def moveBy(deltas: Double*): CircleConcept = {
+  override
+  def moveBy(deltas: Double*): CircleConcept = {
     require(
       deltas.length == 2,
       s"Circle uses exactly two coordinates (given: ${deltas.length})")

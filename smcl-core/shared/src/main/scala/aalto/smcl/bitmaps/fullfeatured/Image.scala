@@ -17,11 +17,9 @@
 package aalto.smcl.bitmaps.fullfeatured
 
 
-import scala.annotation.tailrec
-
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
+import aalto.smcl.modeling.Len
 import aalto.smcl.modeling.d2.{Bounds, Dims, HasBounds, HasPos, Pos}
-import aalto.smcl.modeling.{AffineTransformation, Len}
 
 
 
@@ -42,64 +40,6 @@ object Image {
     val identity: Identity = Identity()
 
     new Image(identity, elements)
-  }
-
-  /**
-   *
-   *
-   * @param elements
-   *
-   * @return
-   */
-  def calculateOuterBoundary(elements: Seq[HasBounds]): Option[Bounds] = {
-    type RecursRetVal = Option[(Double, Double, Double, Double)]
-
-    @tailrec
-    def calculateOuterBoundaryRecursion(
-        it: Iterator[HasBounds], foundOneBoundary: Boolean,
-        x0: Double, y0: Double, x1: Double, y1: Double): RecursRetVal = {
-
-      if (!it.hasNext) {
-        if (foundOneBoundary)
-          return Some((x0, y0, x1, y1))
-
-        return None
-      }
-
-      val elementWithBoundary = it.next()
-
-      if (elementWithBoundary.boundary.isEmpty) {
-        calculateOuterBoundaryRecursion(
-          it, foundOneBoundary, x0, y0, x1, y1)
-      }
-      else {
-        val boundary = elementWithBoundary.boundary.get
-
-        val ul = boundary.upperLeftMarker
-        val x0New = math.min(ul.xInPixels, x0)
-        val y0New = math.min(ul.yInPixels, y0)
-
-        val lr = boundary.lowerRightMarker
-        val x1New = math.max(lr.xInPixels, x1)
-        val y1New = math.max(lr.yInPixels, y1)
-
-        calculateOuterBoundaryRecursion(
-          it, foundOneBoundary = true, x0New, y0New, x1New, y1New)
-      }
-    }
-
-    val resolvedBoundaryValues =
-      if (elements.isEmpty)
-        None
-      else
-        calculateOuterBoundaryRecursion(
-          elements.iterator, foundOneBoundary = false,
-          Double.MaxValue, Double.MaxValue,
-          Double.MinValue, Double.MinValue)
-
-    resolvedBoundaryValues map[Bounds] {newBounds =>
-      Bounds(newBounds._1, newBounds._2, newBounds._3, newBounds._4)
-    }
   }
 
 }
@@ -124,7 +64,7 @@ class Image private(
 
   /** */
   val boundary: Option[Bounds] =
-    Image.calculateOuterBoundary(elements)
+    BoundaryCalculator.fromBoundaries(elements)
 
   /** */
   val position: Pos = boundary.get.upperLeftMarker
@@ -217,7 +157,103 @@ class Image private(
   }
 
   /**
-   * Rotates this object around a given point of the specified number of degrees.
+   *
+   */
+  @inline
+  override
+  def display(): Image = {
+    super.display()
+
+    this
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW: Image = {
+    map{_.rotateBy90DegsCW}
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees clockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW(centerOfRotation: Pos): Image = {
+    map{_.rotateBy90DegsCW(centerOfRotation)}
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: Image = {
+    map{_.rotateBy90DegsCCW}
+  }
+
+  /**
+   * Rotates this object around a given point by 90 degrees counterclockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Image = {
+    map{_.rotateBy90DegsCCW(centerOfRotation)}
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: Image = {
+    map{_.rotateBy180Degs}
+  }
+
+  /**
+   * Rotates this object around a given point by 180 degrees.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs(centerOfRotation: Pos): Image = {
+    map{_.rotateBy180Degs(centerOfRotation)}
+  }
+
+  /**
+   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angleInDegrees: Double): Image = {
+    map{_.rotateBy(angleInDegrees)}
+  }
+
+  /**
+   * Rotates this object around a given point by the specified number of degrees.
    *
    * @param angleInDegrees
    * @param centerOfRotation
@@ -231,30 +267,6 @@ class Image private(
       centerOfRotation: Pos): Image = {
 
     map{_.rotateBy(angleInDegrees, centerOfRotation)}
-  }
-
-  /**
-   *
-   */
-  @inline
-  override
-  def display(): Image = {
-    super.display()
-
-    this
-  }
-
-  /**
-   * Transforms this [[Image]] using the specified affine transformation.
-   *
-   * @param t
-   *
-   * @return
-   */
-  @inline
-  override
-  def transformBy(t: AffineTransformation): Image = {
-    map{_.transformBy(t)}
   }
 
 }

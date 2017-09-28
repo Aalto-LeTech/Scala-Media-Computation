@@ -69,12 +69,14 @@ case class Scale(
    *
    * @return
    */
-  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
+  override
+  protected
+  def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).createTransformedVersionWith(
       AffineTransformation.forOrigoRelativeScalingOf(
         scalingFactorVertical,
         scalingFactorHorizontal),
-      resizeCanvasBasedOnTransformation)
+      resizeCanvasBasedOnTransformation)._1
   }
 
   /** Width of the provided buffer in pixels. */
@@ -93,7 +95,9 @@ case class Scale(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
+  override
+  protected
+  def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
   }
 

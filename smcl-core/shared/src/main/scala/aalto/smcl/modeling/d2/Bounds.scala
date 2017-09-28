@@ -210,21 +210,21 @@ case class Bounds private(
   def position: Pos = upperLeftMarker
 
   /** */
-  val width: Len =
+  lazy val width: Len =
     Len(lowerRightMarker.xInPixels - upperLeftMarker.xInPixels + 1)
 
   /** */
-  val height: Len =
+  lazy val height: Len =
     Len(lowerRightMarker.yInPixels - upperLeftMarker.yInPixels + 1)
 
   /** */
-  val length: Len =
+  lazy val length: Len =
     Len(2 * width.inPixels +
         2 * height.inPixels -
         Bounds.NumberOfCorners)
 
   /** */
-  val area: Area =
+  lazy val area: Area =
     Area.forRectangle(width.inPixels, height.inPixels)
 
   /**

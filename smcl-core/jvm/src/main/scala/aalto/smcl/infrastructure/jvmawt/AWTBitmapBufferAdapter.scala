@@ -30,6 +30,7 @@ import aalto.smcl.colors._
 import aalto.smcl.colors.rgb._
 import aalto.smcl.infrastructure._
 import aalto.smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
+import aalto.smcl.modeling.d2.Dims
 import aalto.smcl.modeling.{AffineTransformation, Len}
 import aalto.smcl.settings.jvmawt.AffineTransformationInterpolationMethod
 import aalto.smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
@@ -46,7 +47,7 @@ private[smcl]
 object AWTBitmapBufferAdapter extends InjectablesRegistry {
 
   /** A constant for buffer of a 'normalized' type. */
-  val NormalizedBufferType = BufferedImage.TYPE_INT_ARGB
+  val NormalizedBufferType: Int = BufferedImage.TYPE_INT_ARGB
 
   /** The ColorValidator instance to be used by this object. */
   private lazy val colorValidator: ColorValidator = {
@@ -196,28 +197,32 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def widthInPixels: Int = awtBufferedImage.getWidth
+  override
+  def widthInPixels: Int = awtBufferedImage.getWidth
 
   /**
    *
    *
    * @return
    */
-  override def heightInPixels: Int = awtBufferedImage.getHeight
+  override
+  def heightInPixels: Int = awtBufferedImage.getHeight
 
   /**
    *
    *
    * @return
    */
-  override def areaInPixels: Int = heightInPixels * widthInPixels
+  override
+  def areaInPixels: Int = heightInPixels * widthInPixels
 
   /**
    *
    *
    * @return
    */
-  override def drawingSurface: AWTDrawingSurfaceAdapter = AWTDrawingSurfaceAdapter(this)
+  override
+  def drawingSurface: AWTDrawingSurfaceAdapter = AWTDrawingSurfaceAdapter(this)
 
 
   /**
@@ -227,7 +232,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def trim(colorToTrim: Color = DefaultBackgroundColor): AWTBitmapBufferAdapter = {
+  override
+  def trim(colorToTrim: Color = DefaultBackgroundColor): AWTBitmapBufferAdapter = {
     val (reds, greens, blues, opacities) = colorComponentArrays
 
     val redToTrim = colorToTrim.red
@@ -356,7 +362,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): AWTBitmapBufferAdapter = {
+  override
+  def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): AWTBitmapBufferAdapter = {
     val newBuffer = copyPortionXYWH(0, 0, widthInPixels, heightInPixels)
 
     val (reds, greens, blues, opacities) = newBuffer.colorComponentArrays
@@ -397,7 +404,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def colorComponentArrays: (Array[Int], Array[Int], Array[Int], Array[Int]) = {
+  override
+  def colorComponentArrays: (Array[Int], Array[Int], Array[Int], Array[Int]) = {
     import aalto.smcl.colors.rgb.SampleBands._
 
     val getSamples =
@@ -416,7 +424,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def setColorComponentArrays(
+  override
+  def setColorComponentArrays(
       reds: Array[Int],
       greens: Array[Int],
       blues: Array[Int],
@@ -465,34 +474,42 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def createTransformedVersionWith(
+  override
+  def createTransformedVersionWith(
       transformation: AffineTransformation,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      backgroundColor: Color = DefaultBackgroundColor): AWTBitmapBufferAdapter = {
+      backgroundColor: Color = DefaultBackgroundColor): (AWTBitmapBufferAdapter, Dims) = {
 
     val globalInterpolationMethod = AffineTransformationInterpolationMethod.lowLevelValue
-    var resultingImageWidth: Int = awtBufferedImage.getWidth
-    var resultingImageHeight: Int = awtBufferedImage.getHeight
+
     val lowLevelTransformation = transformation.toAWTAffineTransform
     val transformedContentBoundaries: Rectangle2D =
       new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
           .getBounds2D(awtBufferedImage)
 
+    val (offsetLeft, offsetTop, offsetRight, offsetBottom) =
+      if (!resizeCanvasBasedOnTransformation)
+        (0.0, 0.0, 0.0, 0.0)
+      else
+        (-transformedContentBoundaries.getMinX,
+            -transformedContentBoundaries.getMinY,
+            transformedContentBoundaries.getMaxX - awtBufferedImage.getWidth,
+            transformedContentBoundaries.getMaxY - awtBufferedImage.getHeight)
+
+    val (resultingImageWidth, resultingImageHeight) =
+      if (!resizeCanvasBasedOnTransformation)
+        (awtBufferedImage.getWidth, awtBufferedImage.getHeight)
+      else
+        (Math.floor(awtBufferedImage.getWidth.toDouble + offsetLeft + offsetRight).toInt,
+            Math.floor(awtBufferedImage.getHeight.toDouble + offsetTop + offsetBottom).toInt)
+
     if (resizeCanvasBasedOnTransformation) {
-      val offsetLeft = -transformedContentBoundaries.getMinX
-      val offsetTop = -transformedContentBoundaries.getMinY
-      val offsetRight = transformedContentBoundaries.getMaxX - awtBufferedImage.getWidth
-      val offsetBottom = transformedContentBoundaries.getMaxY - awtBufferedImage.getHeight
+        if (offsetTop > 0 || offsetLeft > 0) {
+          val translationToBringTheRotatedBitmapFullyVisible =
+            AffineTransform.getTranslateInstance(offsetLeft, offsetTop)
 
-      if (offsetTop > 0 || offsetLeft > 0) {
-        val translationToBringTheRotatedBitmapFullyVisible =
-          AffineTransform.getTranslateInstance(offsetLeft, offsetTop)
-
-        lowLevelTransformation preConcatenate translationToBringTheRotatedBitmapFullyVisible
-      }
-
-      resultingImageWidth = Math.round(awtBufferedImage.getWidth + offsetLeft + offsetRight).toInt
-      resultingImageHeight = Math.round(awtBufferedImage.getHeight + offsetTop + offsetBottom).toInt
+          lowLevelTransformation preConcatenate translationToBringTheRotatedBitmapFullyVisible
+        }
     }
 
     val finalTransformOperation = new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
@@ -502,7 +519,7 @@ class AWTBitmapBufferAdapter private(
 
     finalTransformOperation.filter(awtBufferedImage, resultingBuffer.awtBufferedImage)
 
-    resultingBuffer
+    (resultingBuffer, Dims(offsetLeft, offsetTop))
   }
 
   /**
@@ -515,7 +532,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def boundaryOverflowsForLTRB(
+  override
+  def boundaryOverflowsForLTRB(
       minX: Double,
       minY: Double,
       maxX: Double,
@@ -536,7 +554,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def createFilteredVersionWith(kernel: ConvolutionKernel): AWTBitmapBufferAdapter = {
+  override
+  def createFilteredVersionWith(kernel: ConvolutionKernel): AWTBitmapBufferAdapter = {
     val lowLevelKernel = new Kernel(kernel.width, kernel.height, kernel.toRowMajorArray)
     val operation = new ConvolveOp(lowLevelKernel)
 
@@ -554,7 +573,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def createFilteredVersionWith(translator: ColorComponentTranslationTable): AWTBitmapBufferAdapter = {
+  override
+  def createFilteredVersionWith(translator: ColorComponentTranslationTable): AWTBitmapBufferAdapter = {
     val lowLevelLookupTable = new ShortLookupTable(0, translator.toArray)
     val operation = new LookupOp(lowLevelLookupTable, null)
 
@@ -570,7 +590,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def copy: AWTBitmapBufferAdapter = {
+  override
+  def copy: AWTBitmapBufferAdapter = {
     AWTBitmapBufferAdapter(BitmapUtils.deepCopy(awtBufferedImage))
   }
 
@@ -584,7 +605,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def copyPortionXYXY(
+  override
+  def copyPortionXYXY(
       topLeftX: Int,
       topLeftY: Int,
       bottomRightX: Int,
@@ -618,7 +640,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def copyPortionXYWH(
+  override
+  def copyPortionXYWH(
       topLeftX: Int,
       topLeftY: Int,
       width: Int,
@@ -646,7 +669,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def emptyAlike: AWTBitmapBufferAdapter = {
+  override
+  def emptyAlike: AWTBitmapBufferAdapter = {
     AWTBitmapBufferAdapter(widthInPixels, heightInPixels)
   }
 
@@ -657,7 +681,8 @@ class AWTBitmapBufferAdapter private(
    *
    * @return
    */
-  override def saveAsPngTo(filename: String): String = {
+  override
+  def saveAsPngTo(filename: String): String = {
     val destFile = new File(filename)
 
     if (destFile.exists())

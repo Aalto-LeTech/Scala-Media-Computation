@@ -43,8 +43,8 @@ case class Rotate(
     resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
     backgroundColor: Color = DefaultBackgroundColor)
     extends AbstractOperation
-            with BufferProvider
-            with Immutable {
+        with BufferProvider
+        with Immutable {
 
   require(sourceBitmap != null, s"Rotation requires exactly one source image (was null).")
   require(backgroundColor != null, "The background color argument has to be a Color instance (was null).")
@@ -72,14 +72,16 @@ case class Rotate(
    *
    * @return
    */
-  override protected def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
+  override
+  protected
+  def createStaticBuffer(sources: BitmapBufferAdapter*): BitmapBufferAdapter = {
     sources(0).createTransformedVersionWith(
       AffineTransformation.forPointCentredRotation(
         angleInDegrees,
         0.5 * sources(0).widthInPixels,
         0.5 * sources(0).heightInPixels),
       resizeCanvasBasedOnTransformation,
-      backgroundColor)
+      backgroundColor)._1
   }
 
   /** Width of the provided buffer in pixels. */
@@ -98,7 +100,9 @@ case class Rotate(
    *
    * @return bitmap buffer to be made copies of for providees
    */
-  override protected def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
+  override
+  protected
+  def provideNewBufferToBeCopiedForProvidees(): BitmapBufferAdapter = {
     getOrCreateStaticBuffer(sourceBitmap.toRenderedRepresentation)
   }
 
