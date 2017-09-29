@@ -43,7 +43,7 @@ object ShapeCreator
    * Creates a new empty [[Bitmap]] instance with a circle drawn on it.
    *
    * @param diameterInPixels diameter of the circle in pixels
-   * @param color            color ot the circle
+   * @param color            color of the circle
    * @param backgroundColor  color of the background
    * @param viewerHandling   whether the bitmap should be displayed per settings or not displayed at all
    *
@@ -66,7 +66,7 @@ object ShapeCreator
    *
    * @param collectionSize   number of elements to create into the collection
    * @param diameterInPixels diameter of the circle in pixels
-   * @param color            color ot the circle
+   * @param color            color of the circle
    * @param backgroundColor  color of the background
    *
    * @return an array of bitmaps, each of which contains the circle
@@ -89,7 +89,7 @@ object ShapeCreator
    *
    * @param collectionSize   number of elements to create into the collection
    * @param diameterInPixels diameter of the circle in pixels
-   * @param color            color ot the circle
+   * @param color            color of the circle
    * @param backgroundColor  color of the background
    *
    * @return a sequence of bitmaps, each of which contains the circle
@@ -112,7 +112,7 @@ object ShapeCreator
    *
    * @param collectionSize   number of elements to create into the collection
    * @param diameterInPixels diameter of the circle in pixels
-   * @param color            color ot the circle
+   * @param color            color of the circle
    * @param backgroundColor  color of the background
    *
    * @return a list of bitmaps, each of which contains the circle
@@ -134,7 +134,7 @@ object ShapeCreator
    * Validates parameters for a circle.
    *
    * @param diameterInPixels diameter of the circle
-   * @param color            color ot the circle
+   * @param color            color of the circle
    * @param backgroundColor  color of the background
    */
   private
@@ -154,7 +154,7 @@ object ShapeCreator
    * Instantiates a circle.
    *
    * @param diameterInPixels diameter of the circle
-   * @param color            color ot the circle
+   * @param color            color of the circle
    * @param backgroundColor  color of the background
    *
    * @return a bitmap containing the circle
@@ -198,7 +198,7 @@ object ShapeCreator
    *
    * @param widthInPixels   width of the ellipse in pixels
    * @param heightInPixels  height of the ellipse in pixels
-   * @param color           color ot the ellipse
+   * @param color           color of the ellipse
    * @param backgroundColor color of the background
    * @param viewerHandling  whether the bitmap should be displayed per settings or not displayed at all
    *
@@ -225,7 +225,7 @@ object ShapeCreator
    * @param collectionSize  number of elements to create into the collection
    * @param widthInPixels   width of the ellipse in pixels
    * @param heightInPixels  height of the ellipse in pixels
-   * @param color           color ot the ellipse
+   * @param color           color of the ellipse
    * @param backgroundColor color of the background
    *
    * @return an array of bitmaps, each of which contains the ellipse
@@ -252,7 +252,7 @@ object ShapeCreator
    * @param collectionSize  number of elements to create into the collection
    * @param widthInPixels   width of the ellipse in pixels
    * @param heightInPixels  height of the ellipse in pixels
-   * @param color           color ot the ellipse
+   * @param color           color of the ellipse
    * @param backgroundColor color of the background
    *
    * @return a sequence of bitmaps, each of which contains the ellipse
@@ -279,7 +279,7 @@ object ShapeCreator
    * @param collectionSize  number of elements to create into the collection
    * @param widthInPixels   width of the ellipse in pixels
    * @param heightInPixels  height of the ellipse in pixels
-   * @param color           color ot the ellipse
+   * @param color           color of the ellipse
    * @param backgroundColor color of the background
    *
    * @return a list of bitmaps, each of which contains the ellipse
@@ -305,7 +305,7 @@ object ShapeCreator
    *
    * @param widthInPixels   width of the ellipse in pixels
    * @param heightInPixels  height of the ellipse in pixels
-   * @param color           color ot the ellipse
+   * @param color           color of the ellipse
    * @param backgroundColor color of the background
    */
   private
@@ -331,7 +331,7 @@ object ShapeCreator
    *
    * @param widthInPixels   width of the ellipse in pixels
    * @param heightInPixels  height of the ellipse in pixels
-   * @param color           color ot the ellipse
+   * @param color           color of the ellipse
    * @param backgroundColor color of the background
    *
    * @return a bitmap containing the ellipse
@@ -376,7 +376,7 @@ object ShapeCreator
    * Creates a new empty [[Bitmap]] instance with a horizontal line drawn on it.
    *
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the square
+   * @param color          color of the square
    * @param viewerHandling whether the bitmap should be displayed per settings or not displayed at all
    *
    * @return a bitmap containing the line
@@ -398,7 +398,7 @@ object ShapeCreator
    *
    * @param collectionSize number of elements to create into the collection
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    *
    * @return an array of bitmaps, each of which contains the line
    */
@@ -420,7 +420,7 @@ object ShapeCreator
    *
    * @param collectionSize number of elements to create into the collection
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    *
    * @return a sequence of bitmaps, each of which contains the line
    */
@@ -442,7 +442,7 @@ object ShapeCreator
    *
    * @param collectionSize number of elements to create into the collection
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    *
    * @return a list of bitmaps, each of which contains the line
    */
@@ -463,7 +463,7 @@ object ShapeCreator
    * Validates parameters for a horizontal line.
    *
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    */
   private
   def validateHorizontalLineParameters(lengthInPixels: Int, color: Color): Unit = {
@@ -478,7 +478,7 @@ object ShapeCreator
    * Instantiates a horizontal line.
    *
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    *
    * @return a bitmap containing the line
    */
@@ -499,7 +499,7 @@ object ShapeCreator
    * @param fromYInPixels   the Y coordinate of the starting point of the line
    * @param toXInPixels     the X coordinate of the ending point of the line
    * @param toYInPixels     the Y coordinate of the ending point of the line
-   * @param color           color ot the line
+   * @param color           color of the line
    * @param backgroundColor color of the background
    * @param viewerHandling  whether the bitmap should be displayed per settings or not displayed at all
    *
@@ -537,7 +537,7 @@ object ShapeCreator
    * @param fromYInPixels   the Y coordinate of the starting point of the line
    * @param toXInPixels     the X coordinate of the ending point of the line
    * @param toYInPixels     the Y coordinate of the ending point of the line
-   * @param color           color ot the line
+   * @param color           color of the line
    * @param backgroundColor color of the background
    *
    * @return an array of bitmaps, each of which contains the line
@@ -575,7 +575,7 @@ object ShapeCreator
    * @param fromYInPixels   the Y coordinate of the starting point of the line
    * @param toXInPixels     the X coordinate of the ending point of the line
    * @param toYInPixels     the Y coordinate of the ending point of the line
-   * @param color           color ot the line
+   * @param color           color of the line
    * @param backgroundColor color of the background
    *
    * @return a sequence of bitmaps, each of which contains the line
@@ -613,7 +613,7 @@ object ShapeCreator
    * @param fromYInPixels   the Y coordinate of the starting point of the line
    * @param toXInPixels     the X coordinate of the ending point of the line
    * @param toYInPixels     the Y coordinate of the ending point of the line
-   * @param color           color ot the line
+   * @param color           color of the line
    * @param backgroundColor color of the background
    *
    * @return a list of bitmaps, each of which contains the line
@@ -647,7 +647,7 @@ object ShapeCreator
    * @param fromYInPixels   the Y coordinate of the starting point of the line
    * @param toXInPixels     the X coordinate of the ending point of the line
    * @param toYInPixels     the Y coordinate of the ending point of the line
-   * @param color           color ot the line
+   * @param color           color of the line
    * @param backgroundColor color of the background
    */
   private
@@ -676,7 +676,7 @@ object ShapeCreator
    *
    * @param bitmapWidth     width of the bitmap containing the line
    * @param bitmapHeight    height of the bitmap containing the line
-   * @param color           color ot the line
+   * @param color           color of the line
    * @param backgroundColor color of the background
    */
   private
@@ -703,7 +703,7 @@ object ShapeCreator
    * @param bitmapWidth     width of the bitmap containing the line
    * @param bitmapHeight    height of the bitmap containing the line
    * @param isAscending     <code>true</code> if the line is ascending; otherwise <code>false</code>
-   * @param color           color ot the line
+   * @param color           color of the line
    * @param backgroundColor color of the background
    *
    * @return a bitmap containing the line
@@ -738,7 +738,7 @@ object ShapeCreator
    *
    * @param widthInPixels  width of the rectangle in pixels
    * @param heightInPixels height of the rectangle in pixels
-   * @param color          color ot the rectangle
+   * @param color          color of the rectangle
    * @param viewerHandling whether the bitmap should be displayed per settings or not displayed at all
    *
    * @return a bitmap containing the rectangle
@@ -763,7 +763,7 @@ object ShapeCreator
    * @param collectionSize number of elements to create into the collection
    * @param widthInPixels  width of the rectangle in pixels
    * @param heightInPixels height of the rectangle in pixels
-   * @param color          color ot the rectangle
+   * @param color          color of the rectangle
    *
    * @return an array of bitmaps, each of which contains the rectangle
    */
@@ -788,7 +788,7 @@ object ShapeCreator
    * @param collectionSize number of elements to create into the collection
    * @param widthInPixels  width of the rectangle in pixels
    * @param heightInPixels height of the rectangle in pixels
-   * @param color          color ot the rectangle
+   * @param color          color of the rectangle
    *
    * @return a sequence of bitmaps, each of which contains the rectangle
    */
@@ -813,7 +813,7 @@ object ShapeCreator
    * @param collectionSize number of elements to create into the collection
    * @param widthInPixels  width of the rectangle in pixels
    * @param heightInPixels height of the rectangle in pixels
-   * @param color          color ot the rectangle
+   * @param color          color of the rectangle
    *
    * @return a list of bitmaps, each of which contains the rectangle
    */
@@ -837,7 +837,7 @@ object ShapeCreator
    *
    * @param widthInPixels  width of the rectangle in pixels
    * @param heightInPixels height of the rectangle in pixels
-   * @param color          color ot the rectangle
+   * @param color          color of the rectangle
    */
   private
   def validateRectangleParameters(
@@ -861,7 +861,7 @@ object ShapeCreator
    *
    * @param widthInPixels  width of the rectangle in pixels
    * @param heightInPixels height of the rectangle in pixels
-   * @param color          color ot the rectangle
+   * @param color          color of the rectangle
    *
    * @return a bitmap containing the rectangle
    */
@@ -881,7 +881,7 @@ object ShapeCreator
    * @param heightInPixels         height of the rectangle in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the rectangle in pixels
    * @param roundingHeightInPixels height of the corner rounding of the rectangle in pixels
-   * @param color                  color ot the rectangle
+   * @param color                  color of the rectangle
    * @param backgroundColor        color of the background
    * @param viewerHandling         whether the bitmap should be displayed per settings or not displayed at all
    *
@@ -916,7 +916,7 @@ object ShapeCreator
    * @param heightInPixels         height of the rectangle in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the rectangle in pixels
    * @param roundingHeightInPixels height of the corner rounding of the rectangle in pixels
-   * @param color                  color ot the rectangle
+   * @param color                  color of the rectangle
    * @param backgroundColor        color of the background
    *
    * @return an array of bitmaps, each of which contains the rectangle
@@ -951,7 +951,7 @@ object ShapeCreator
    * @param heightInPixels         height of the rectangle in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the rectangle in pixels
    * @param roundingHeightInPixels height of the corner rounding of the rectangle in pixels
-   * @param color                  color ot the rectangle
+   * @param color                  color of the rectangle
    * @param backgroundColor        color of the background
    *
    * @return a sequence of bitmaps, each of which contains the rectangle
@@ -986,7 +986,7 @@ object ShapeCreator
    * @param heightInPixels         height of the rectangle in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the rectangle in pixels
    * @param roundingHeightInPixels height of the corner rounding of the rectangle in pixels
-   * @param color                  color ot the rectangle
+   * @param color                  color of the rectangle
    * @param backgroundColor        color of the background
    *
    * @return a list of bitmaps, each of which contains the rectangle
@@ -1020,7 +1020,7 @@ object ShapeCreator
    * @param heightInPixels         height of the rectangle in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the rectangle in pixels
    * @param roundingHeightInPixels height of the corner rounding of the rectangle in pixels
-   * @param color                  color ot the rectangle
+   * @param color                  color of the rectangle
    * @param backgroundColor        color of the background
    */
   private
@@ -1058,7 +1058,7 @@ object ShapeCreator
    * @param heightInPixels         height of the rectangle in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the rectangle in pixels
    * @param roundingHeightInPixels height of the corner rounding of the rectangle in pixels
-   * @param color                  color ot the rectangle
+   * @param color                  color of the rectangle
    * @param backgroundColor        color of the background
    *
    * @return a bitmap containing the rectangle
@@ -1098,7 +1098,7 @@ object ShapeCreator
    * @param sideLengthInPixels     side length of the square in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the square in pixels
    * @param roundingHeightInPixels height of the corner rounding of the square in pixels
-   * @param color                  color ot the rectangle
+   * @param color                  color of the rectangle
    * @param backgroundColor        color of the background
    * @param viewerHandling         whether the bitmap should be displayed per settings or not displayed at all
    *
@@ -1131,7 +1131,7 @@ object ShapeCreator
    * @param sideLengthInPixels     side length of the square in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the square in pixels
    * @param roundingHeightInPixels height of the corner rounding of the square in pixels
-   * @param color                  color ot the square
+   * @param color                  color of the square
    * @param backgroundColor        color of the background
    *
    * @return an array of bitmaps, each of which contains the square
@@ -1164,7 +1164,7 @@ object ShapeCreator
    * @param sideLengthInPixels     side length of the square in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the square in pixels
    * @param roundingHeightInPixels height of the corner rounding of the square in pixels
-   * @param color                  color ot the square
+   * @param color                  color of the square
    * @param backgroundColor        color of the background
    *
    * @return a sequence of bitmaps, each of which contains the square
@@ -1197,7 +1197,7 @@ object ShapeCreator
    * @param sideLengthInPixels     side length of the square in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the square in pixels
    * @param roundingHeightInPixels height of the corner rounding of the square in pixels
-   * @param color                  color ot the square
+   * @param color                  color of the square
    * @param backgroundColor        color of the background
    *
    * @return a list of bitmaps, each of which contains the square
@@ -1229,7 +1229,7 @@ object ShapeCreator
    * @param sideLengthInPixels     side length of the square in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the square in pixels
    * @param roundingHeightInPixels height of the corner rounding of the square in pixels
-   * @param color                  color ot the square
+   * @param color                  color of the square
    * @param backgroundColor        color of the background
    */
   private
@@ -1261,7 +1261,7 @@ object ShapeCreator
    * @param sideLengthInPixels     side length of the square in pixels
    * @param roundingWidthInPixels  width of the corner rounding of the square in pixels
    * @param roundingHeightInPixels height of the corner rounding of the square in pixels
-   * @param color                  color ot the square
+   * @param color                  color of the square
    * @param backgroundColor        color of the background
    *
    * @return a bitmap containing the square
@@ -1298,7 +1298,7 @@ object ShapeCreator
    * Creates a new empty [[Bitmap]] instance with a square drawn on it.
    *
    * @param sideLengthInPixels side length of the square in pixels
-   * @param color              color ot the square
+   * @param color              color of the square
    * @param viewerHandling     whether the bitmap should be displayed per settings or not displayed at all
    *
    * @return a bitmap containing the square
@@ -1319,7 +1319,7 @@ object ShapeCreator
    *
    * @param collectionSize     number of elements to create into the collection
    * @param sideLengthInPixels side length of the square in pixels
-   * @param color              color ot the square
+   * @param color              color of the square
    *
    * @return an array of bitmaps, each of which contains the square
    */
@@ -1340,7 +1340,7 @@ object ShapeCreator
    *
    * @param collectionSize     number of elements to create into the collection
    * @param sideLengthInPixels side length of the square in pixels
-   * @param color              color ot the square
+   * @param color              color of the square
    *
    * @return a sequence of bitmaps, each of which contains the square
    */
@@ -1361,7 +1361,7 @@ object ShapeCreator
    *
    * @param collectionSize     number of elements to create into the collection
    * @param sideLengthInPixels side length of the square in pixels
-   * @param color              color ot the square
+   * @param color              color of the square
    *
    * @return a list of bitmaps, each of which contains the square
    */
@@ -1381,7 +1381,7 @@ object ShapeCreator
    * Validates parameters for a square.
    *
    * @param sideLengthInPixels side length of the square in pixels
-   * @param color              color ot the square
+   * @param color              color of the square
    */
   private
   def validateSquareParameters(
@@ -1399,7 +1399,7 @@ object ShapeCreator
    * Instantiates a square.
    *
    * @param sideLengthInPixels side length of the square in pixels
-   * @param color              color ot the square
+   * @param color              color of the square
    *
    * @return a bitmap containing the square
    */
@@ -1415,7 +1415,7 @@ object ShapeCreator
    * Creates a new empty [[Bitmap]] instance with a vertical line drawn on it.
    *
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    * @param viewerHandling whether the bitmap should be displayed per settings or not displayed at all
    *
    * @return a bitmap containing the line
@@ -1436,7 +1436,7 @@ object ShapeCreator
    *
    * @param collectionSize number of elements to create into the collection
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    *
    * @return an array of bitmaps, each of which contains the line
    */
@@ -1457,7 +1457,7 @@ object ShapeCreator
    *
    * @param collectionSize number of elements to create into the collection
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    *
    * @return a sequence of bitmaps, each of which contains the line
    */
@@ -1478,7 +1478,7 @@ object ShapeCreator
    *
    * @param collectionSize number of elements to create into the collection
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    *
    * @return a list of bitmaps, each of which contains the line
    */
@@ -1498,7 +1498,7 @@ object ShapeCreator
    * Validates parameters for a vertical line.
    *
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    */
   private
   def validateVerticalLineParameters(lengthInPixels: Int, color: Color): Unit = {
@@ -1513,7 +1513,7 @@ object ShapeCreator
    * Instantiates a vertical line.
    *
    * @param lengthInPixels length of the line in pixels
-   * @param color          color ot the line
+   * @param color          color of the line
    *
    * @return a bitmap containing the line
    */
@@ -1528,7 +1528,7 @@ object ShapeCreator
   /**
    * Validates foreground and background colors.
    *
-   * @param color           color ot the shape
+   * @param color           color of the shape
    * @param backgroundColor color of the background
    */
   private
@@ -1540,7 +1540,7 @@ object ShapeCreator
   /**
    * Validates a foreground color.
    *
-   * @param color color ot the shape
+   * @param color color of the shape
    */
   private
   def validateShapeColor(color: Color): Unit = {

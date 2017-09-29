@@ -57,7 +57,8 @@ object Line {
 /**
  *
  *
- * def moire(w: Double)={
+ * {{{
+ * def moire(w: Double) = {
  *   def lines(x: Double, c: Double) = Seq(
  *           Line(Pos.Origo, Pos(x, -c), Red),
  *           Line(Pos.Origo, Pos(x, c), Blue),
@@ -69,6 +70,7 @@ object Line {
  *
  *   Image((for{x <- r} yield lines(x, wPerTwo)).flatten: _*)
  * }
+ * }}}
  *
  * @param identity
  * @param start
