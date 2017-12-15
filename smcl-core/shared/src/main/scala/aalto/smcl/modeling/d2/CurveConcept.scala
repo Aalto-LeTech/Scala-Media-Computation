@@ -14,18 +14,19 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling.d3
-
-
-import aalto.smcl.modeling.misc.HasPosition
-
-
+package aalto.smcl.modeling.d2
 
 
 /**
- * Object that has a three-dimensional position.
+ * A conceptual two-dimensional curve that has Cartesian coordinates.
+ *
+ * @param shapeDataResolver
+ * @tparam ObjectType
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPos
-    extends HasPosition[Pos]
+abstract class CurveConcept[ObjectType](
+    shapeDataResolver: ShapeDataResolver)
+    extends ShapeConcept[ObjectType](shapeDataResolver) {
+
+}

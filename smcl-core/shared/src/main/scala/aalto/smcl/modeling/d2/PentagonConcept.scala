@@ -14,97 +14,73 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling.misc
+package aalto.smcl.modeling.d2
 
 
-import scala.annotation.tailrec
+import aalto.smcl.modeling.Area
 
 
 
 
 /**
- * Some dimensions in some coordinate system.
+ * A companion object for [[PentagonConcept]].
  *
  * @author Aleksi Lukkarinen
  */
-trait NonCoordSysDepDimensions
-    extends Measurement
-            with Equals
-            with Iterable[Double] {
+object PentagonConcept {
+
+}
+
+
+
+
+/**
+ * A conceptual two-dimensional pentagon that has Cartesian coordinates.
+ *
+ * @param center
+ * @param circumRadiusInPixels
+ *
+ * @author Aleksi Lukkarinen
+ */
+class PentagonConcept(
+    center: Pos,
+    circumRadiusInPixels: Double,
+    shapeDataResolver: ShapeDataResolver)
+    extends PolygonConcept[PentagonConcept](shapeDataResolver) {
+
+  /** The corner points of this pentagon. */
+  val points: Seq[Pos] = Seq() // TODO
+
+  /** Area of this pentagon. */
+  lazy val area: Area =
+    Area.forPentagon(circumRadiusInPixels)
 
   /**
    *
    *
-   * @return
-   */
-  @inline
-  protected
-  def lengths: Seq[Double]
-
-  /**
-   * Provides an iterator for the dimension values.
+   * @param offsets
    *
    * @return
    */
-  @inline
   override
-  def iterator: Iterator[Double] = {
-    lengths.iterator
+  def moveBy(offsets: Double*): PentagonConcept = {
+    copy(newCenter = center.moveBy(offsets: _*))
   }
 
   /**
    *
    *
-   * @return
-   */
-  override
-  lazy val hashCode: Int = {
-    val prime = 31
-
-    @tailrec
-    def hashCodeRecursive(
-        lengths: Seq[Double],
-        sum: Int): Int = {
-
-      if (lengths.isEmpty)
-        return sum
-
-      hashCodeRecursive(
-        lengths.tail,
-        prime * sum + lengths.head.##)
-    }
-
-    hashCodeRecursive(lengths, 1)
-  }
-
-  /**
-   *
-   *
-   * @param other
+   * @param newCenter
+   * @param newCircumRadiusInPixels
    *
    * @return
    */
   @inline
-  override
-  def canEqual(other: Any): Boolean
+  def copy(
+      newCenter: Pos = center,
+      newCircumRadiusInPixels: Double = circumRadiusInPixels): PentagonConcept = {
 
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: NonCoordSysDepDimensions =>
-        that.canEqual(this) &&
-            that.lengths == this.lengths
-
-      case _ => false
-    }
+    new PentagonConcept(newCenter, newCircumRadiusInPixels)
   }
 
 }

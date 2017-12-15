@@ -30,11 +30,17 @@ import aalto.smcl.modeling.misc.CartesianDimensions
  */
 object Dims {
 
-  /** A [[Dims]] instance that presents an infinitely large dimension. */
-  val InfinitelyLarge = Dims(Double.PositiveInfinity)
+  /** A [[Dims]] instance that presents an infinitely large positive dimension. */
+  lazy val PositiveInfinity: Dims = Dims(Double.PositiveInfinity)
 
-  /** A [[Dims]] instance that presents a zero-sized dimension. */
-  val NonExistent = Dims(0.0)
+  /** A [[Dims]] instance that presents an infinitely large positive dimension. */
+  lazy val NegativeInfinity: Dims = Dims(Double.NegativeInfinity)
+
+  /** A [[Dims]] instance that presents one-sized dimensions. */
+  lazy val One: Dims = Dims(1.0)
+
+  /** A [[Dims]] instance that presents zero-sized dimensions. */
+  lazy val Zero: Dims = Dims(0.0)
 
   /**
    * Creates a new [[Dims]] instance.

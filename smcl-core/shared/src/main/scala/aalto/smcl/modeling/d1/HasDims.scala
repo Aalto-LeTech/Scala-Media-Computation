@@ -17,7 +17,7 @@
 package aalto.smcl.modeling.d1
 
 
-import aalto.smcl.modeling.misc.HasCartesianDimensions
+import aalto.smcl.modeling.misc.HasDimensions
 
 
 
@@ -28,7 +28,7 @@ import aalto.smcl.modeling.misc.HasCartesianDimensions
  * @author Aleksi Lukkarinen
  */
 trait HasDims
-    extends HasCartesianDimensions[Dims] {
+    extends HasDimensions[Dims] {
 
   /** */
   lazy val lengthInPixels: Double = dimensions.lengthInPixels

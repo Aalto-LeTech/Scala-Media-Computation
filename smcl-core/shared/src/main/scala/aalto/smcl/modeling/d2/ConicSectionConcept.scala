@@ -17,24 +17,16 @@
 package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.modeling.misc.ShapeConcept
-
-
-
-
 /**
- * A conceptual circle.
+ * A conceptual two-dimensional conic section that has Cartesian coordinates.
  *
- * @param position
- * @param radiusInPixels
+ * @param shapeDataResolver
+ * @tparam ObjectType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractCircleConcept(
-    val position: Pos,
-    val radiusInPixels: Double)
-    extends ShapeConcept
-            with HasPos
-            with HasBounds {
+abstract class ConicSectionConcept[ObjectType](
+    shapeDataResolver: ShapeDataResolver)
+    extends ShapeConcept[ObjectType](shapeDataResolver) {
 
 }

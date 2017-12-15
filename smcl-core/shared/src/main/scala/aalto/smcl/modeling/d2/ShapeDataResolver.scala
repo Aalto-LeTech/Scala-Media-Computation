@@ -14,18 +14,47 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling.d3
+package aalto.smcl.modeling.d2
 
 
-import aalto.smcl.modeling.misc.HasPosition
+import aalto.smcl.modeling.Area
 
 
 
 
 /**
- * Object that has a three-dimensional position.
+ *
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPos
-    extends HasPosition[Pos]
+trait ShapeDataResolver {
+
+  /**
+   * Returns the boundary of the represented shape.
+   *
+   * @return
+   */
+  def boundary: Bounds
+
+  /**
+   * Returns the position of the represented shape.
+   *
+   * @return
+   */
+  def position: Pos
+
+  /**
+   * Returns the dimensions of the represented shape.
+   *
+   * @return
+   */
+  def dimensions: Dims
+
+  /**
+   * Returns the area of the represented shape.
+   *
+   * @return
+   */
+  def area: Area
+
+}

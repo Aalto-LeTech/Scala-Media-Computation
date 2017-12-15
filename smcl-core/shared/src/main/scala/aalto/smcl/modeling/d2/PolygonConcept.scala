@@ -14,26 +14,20 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling.misc
-
-
-import scala.annotation.tailrec
-
-import aalto.smcl.infrastructure.FlatMap
-
-
+package aalto.smcl.modeling.d2
 
 
 /**
- * Boundary of an object.
+ * A conceptual two-dimensional polygon that has Cartesian coordinates.
+ *
+ * @param shapeDataResolver
+ * @tparam ObjectType
  *
  * @author Aleksi Lukkarinen
  */
-trait NonCoordSysDepBoundary[PositionType <: NonCoordSysDepPosition]
-    extends Measurement
-            with Equals
-            with Iterable[PositionType]
-            with FlatMap[NonCoordSysDepBoundary[PositionType], Seq[PositionType]] {
+abstract class PolygonConcept[ObjectType](
+    shapeDataResolver: ShapeDataResolver)
+    extends ShapeConcept[ObjectType](shapeDataResolver) {
 
   /**
    *
@@ -41,86 +35,7 @@ trait NonCoordSysDepBoundary[PositionType <: NonCoordSysDepPosition]
    * @return
    */
   @inline
-  def markers: Seq[PositionType]
-
-  /**
-   * Provides an iterator for the boundary marker positions.
-   *
-   * @return
-   */
-  @inline
-  override
-  def iterator: Iterator[PositionType] = {
-    markers.iterator
-  }
-
-  /**
-   *
-   * @param f
-   *
-   * @return
-   */
-  @inline
-  override
-  def flatMap(
-      f: (Seq[PositionType]) => NonCoordSysDepBoundary[PositionType]): NonCoordSysDepBoundary[PositionType] = {
-
-    f(markers)
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  override
-  lazy val hashCode: Int = {
-    val prime = 31
-
-    @tailrec
-    def hashCodeRecursive(
-        markers: Seq[PositionType],
-        sum: Int): Int = {
-
-      if (markers.isEmpty)
-        return sum
-
-      hashCodeRecursive(
-        markers.tail,
-        prime * sum + markers.head.##)
-    }
-
-    hashCodeRecursive(markers, 1)
-  }
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def canEqual(other: Any): Boolean
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: NonCoordSysDepBoundary[PositionType] =>
-        that.canEqual(this) &&
-            that.markers == this.markers
-
-      case _ => false
-    }
-  }
+  protected
+  def points: Seq[Pos]
 
 }

@@ -14,24 +14,17 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package aalto.smcl.modeling.misc
-
-
+package aalto.smcl.modeling.d2
 
 
 /**
- * An object that has Cartesian dimensions.
+ * A conceptual two-dimensional Piecewise curve that has Cartesian coordinates.
  *
- * @tparam DimensionType
+ * @tparam ObjectType
  *
  * @author Aleksi Lukkarinen
  */
-trait HasCartesianDimensions[DimensionType <: NonCoordSysDepDimensions] {
-
-  /** Dimensions of this object. */
-  def dimensions: DimensionType
-
-  /** Dimensions to the internal center point of this object. */
-  def internalCenter: DimensionType
+abstract class PiecewiseCurveConcept[ObjectType]
+    extends CurveConcept[ObjectType] {
 
 }

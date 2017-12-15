@@ -75,10 +75,10 @@ object Angle {
   val FullAngleInGradians: Double = GradianDivisions
 
   /** A full angle. */
-  val FullAngle = Angle(FullAngleInDegrees)
+  val FullAngle: Angle = Angle(FullAngleInDegrees)
 
   /** A full turn (i.e., a full angle). */
-  val FullTurn = FullAngle
+  val FullTurn: Angle = FullAngle
 
 
   private
@@ -109,10 +109,10 @@ object Angle {
     FullAngleInGradians / StraightAngleDivisions
 
   /** A straight angle. */
-  val StraightAngle = Angle(StraightAngleInDegrees)
+  val StraightAngle: Angle = Angle(StraightAngleInDegrees)
 
   /** A half turn (i.e., a straight angle). */
-  val HalfTurn = StraightAngle
+  val HalfTurn: Angle = StraightAngle
 
   /** Angles resulting from division of a full circle to half-turns, measured in degrees. */
   lazy val HalfTurnAnglesInDegrees: Seq[Double] =
@@ -150,10 +150,10 @@ object Angle {
   val RightAngle = Angle(RightAngleInDegrees)
 
   /** A quadrant (i.e., a right angle). */
-  val Quadrant = RightAngle
+  val Quadrant: Angle = RightAngle
 
   /** A quarter turn (i.e., a right angle). */
-  val QuarterTurn = RightAngle
+  val QuarterTurn: Angle = RightAngle
 
   /** Angles resulting from division of a full circle to quarter-turns, measured in degrees. */
   lazy val QuarterTurnAnglesInDegrees: Seq[Double] =
@@ -188,7 +188,7 @@ object Angle {
     FullAngleInGradians / SextantDivisions
 
   /** A sextant. */
-  val Sextant = Angle(SextantInDegrees)
+  val Sextant: Angle = Angle(SextantInDegrees)
 
   /** Angles resulting from division of a full circle to sextants, measured in degrees. */
   lazy val SextantAnglesInDegrees: Seq[Double] =
@@ -223,7 +223,7 @@ object Angle {
     FullAngleInGradians / ClockPositionAngleDivisions
 
   /** A clock position angle. */
-  val ClockPositionAngle = Angle(ClockPositionAngleInDegrees)
+  val ClockPositionAngle: Angle = Angle(ClockPositionAngleInDegrees)
 
   /** Angles resulting from division of a full circle to clock position angles, measured in degrees. */
   lazy val ClockPositionAnglesInDegrees: Seq[Double] =
@@ -258,7 +258,7 @@ object Angle {
     FullAngleInGradians / HourAngleDivisions
 
   /** An hour angle. */
-  val HourAngle = Angle(HourAngleInDegrees)
+  val HourAngle: Angle = Angle(HourAngleInDegrees)
 
   /** Angles resulting from division of a full circle to hour angles, measured in degrees. */
   lazy val HourAnglesInDegrees: Seq[Double] =
@@ -293,7 +293,7 @@ object Angle {
     FullAngleInGradians / CompassPointDivisions
 
   /** A compass point. */
-  val CompassPoint = Angle(CompassPointInDegrees)
+  val CompassPoint: Angle = Angle(CompassPointInDegrees)
 
   /** Angles resulting from division of a full circle to compass points, measured in degrees. */
   lazy val CompassPointAnglesInDegrees: Seq[Double] =
@@ -328,7 +328,7 @@ object Angle {
     FullAngleInGradians / BinaryDegreeDivisions
 
   /** A binary degree. */
-  val BinaryDegree = Angle(BinaryDegreeInDegrees)
+  val BinaryDegree: Angle = Angle(BinaryDegreeInDegrees)
 
   /** Angles resulting from division of a full circle to binary degrees, measured in degrees. */
   lazy val BinaryDegreeAnglesInDegrees: Seq[Double] =
@@ -348,187 +348,187 @@ object Angle {
 
 
   /** An angle that represents positive infinity. */
-  lazy val PositiveInfinity = Angle(Double.PositiveInfinity)
+  lazy val PositiveInfinity: Angle = Angle(Double.PositiveInfinity)
 
   /** An angle that represents negative infinity. */
-  lazy val NegativeInfinity = Angle(Double.NegativeInfinity)
+  lazy val NegativeInfinity: Angle = Angle(Double.NegativeInfinity)
 
   /** An angle that represents a not-a-number. */
-  lazy val NaN = Angle(Double.NaN)
+  lazy val NaN: Angle = Angle(Double.NaN)
 
   /** A zero angle. */
-  lazy val Zero = Angle(0.0)
+  lazy val Zero: Angle = Angle(0.0)
 
   /** An angle of one degree. */
-  lazy val Deg1 = Angle(1.0)
+  lazy val Deg1: Angle = Angle(1.0)
 
   /** An angle of 10 degrees. */
-  lazy val Deg10 = Angle(10.0)
+  lazy val Deg10: Angle = Angle(10.0)
 
   /** An angle of 20 degrees. */
-  lazy val Deg20 = Angle(20.0)
+  lazy val Deg20: Angle = Angle(20.0)
 
   /** An angle of 30 degrees. */
-  lazy val Deg30 = Angle(30.0)
+  lazy val Deg30: Angle = Angle(30.0)
 
   /** An angle of 1/6 * Pi radians, i.e., 30 degrees. */
-  lazy val RadOneSixthPi = Deg30
+  lazy val RadOneSixthPi: Angle = Deg30
 
   /** An angle of 40 degrees. */
-  lazy val Deg40 = Angle(40.0)
+  lazy val Deg40: Angle = Angle(40.0)
 
   /** An angle of 45 degrees. */
-  lazy val Deg45 = Angle(45.0)
+  lazy val Deg45: Angle = Angle(45.0)
 
   /** An angle of 1/4 * Pi radians, i.e., 45 degrees. */
-  lazy val RadOneFourthPi = Deg45
+  lazy val RadOneFourthPi: Angle = Deg45
 
   /** An angle of 50 degrees. */
-  lazy val Deg50 = Angle(50.0)
+  lazy val Deg50: Angle = Angle(50.0)
 
   /** An angle of 60 degrees. */
-  lazy val Deg60 = Angle(60.0)
+  lazy val Deg60: Angle = Angle(60.0)
 
   /** An angle of 1/3 * Pi radians, i.e., 60 degrees. */
-  lazy val RadOneThirdPi = Deg60
+  lazy val RadOneThirdPi: Angle = Deg60
 
   /** An angle of 70 degrees. */
-  lazy val Deg70 = Angle(70.0)
+  lazy val Deg70: Angle = Angle(70.0)
 
   /** An angle of 80 degrees. */
-  lazy val Deg80 = Angle(80.0)
+  lazy val Deg80: Angle = Angle(80.0)
 
   /** An angle of 90 degrees, i.e., a right angle. */
-  lazy val Deg90 = RightAngle
+  lazy val Deg90: Angle = RightAngle
 
   /** An angle of 1/2 * Pi radians, i.e., a right angle (90 degrees). */
-  lazy val RadHalfPi = RightAngle
+  lazy val RadHalfPi: Angle = RightAngle
 
   /** An angle of 100 degrees. */
-  lazy val Deg100 = Angle(100.0)
+  lazy val Deg100: Angle = Angle(100.0)
 
   /** An angle of 110 degrees. */
-  lazy val Deg110 = Angle(110.0)
+  lazy val Deg110: Angle = Angle(110.0)
 
   /** An angle of 120 degrees. */
-  lazy val Deg120 = Angle(120.0)
+  lazy val Deg120: Angle = Angle(120.0)
 
   /** An angle of 2/3 * Pi radians, i.e., 120 degrees. */
-  lazy val RadTwoThirdsPi = Deg120
+  lazy val RadTwoThirdsPi: Angle = Deg120
 
   /** An angle of 130 degrees. */
-  lazy val Deg130 = Angle(130.0)
+  lazy val Deg130: Angle = Angle(130.0)
 
   /** An angle of 45 degrees. */
-  lazy val Deg135 = Angle(135.0)
+  lazy val Deg135: Angle = Angle(135.0)
 
   /** An angle of 3/4 * Pi radians, i.e., 135 degrees. */
-  lazy val RadThreeFourthsPi = Deg135
+  lazy val RadThreeFourthsPi: Angle = Deg135
 
   /** An angle of 140 degrees. */
-  lazy val Deg140 = Angle(140.0)
+  lazy val Deg140: Angle = Angle(140.0)
 
   /** An angle of 150 degrees. */
-  lazy val Deg150 = Angle(150.0)
+  lazy val Deg150: Angle = Angle(150.0)
 
   /** An angle of 5/6 * Pi radians, i.e., 150 degrees. */
-  lazy val RadFiveSixthsPi = Deg150
+  lazy val RadFiveSixthsPi: Angle = Deg150
 
   /** An angle of 160 degrees. */
-  lazy val Deg160 = Angle(160.0)
+  lazy val Deg160: Angle = Angle(160.0)
 
   /** An angle of 170 degrees. */
-  lazy val Deg170 = Angle(170.0)
+  lazy val Deg170: Angle = Angle(170.0)
 
   /** An angle of 180 degrees, i.e., a straight angle. */
-  lazy val Deg180 = StraightAngle
+  lazy val Deg180: Angle = StraightAngle
 
   /** An angle of Pi radians, i.e., a straight angle (180 degrees). */
-  lazy val RadPi = StraightAngle
+  lazy val RadPi: Angle = StraightAngle
 
   /** An angle of 190 degrees. */
-  lazy val Deg190 = Angle(190.0)
+  lazy val Deg190: Angle = Angle(190.0)
 
   /** An angle of 200 degrees. */
-  lazy val Deg200 = Angle(200.0)
+  lazy val Deg200: Angle = Angle(200.0)
 
   /** An angle of 210 degrees. */
-  lazy val Deg210 = Angle(210.0)
+  lazy val Deg210: Angle = Angle(210.0)
 
   /** An angle of 7/6 * Pi radians, i.e., 210 degrees. */
-  lazy val RadSevenSixthsPi = Deg210
+  lazy val RadSevenSixthsPi: Angle = Deg210
 
   /** An angle of 220 degrees. */
-  lazy val Deg220 = Angle(220.0)
+  lazy val Deg220: Angle = Angle(220.0)
 
   /** An angle of 255 degrees. */
-  lazy val Deg225 = Angle(225.0)
+  lazy val Deg225: Angle = Angle(225.0)
 
   /** An angle of 5/4 * Pi radians, i.e., 225 degrees. */
-  lazy val RadFiveFourthsPi = Deg225
+  lazy val RadFiveFourthsPi: Angle = Deg225
 
   /** An angle of 230 degrees. */
-  lazy val Deg230 = Angle(230.0)
+  lazy val Deg230: Angle = Angle(230.0)
 
   /** An angle of 240 degrees. */
-  lazy val Deg240 = Angle(240.0)
+  lazy val Deg240: Angle = Angle(240.0)
 
   /** An angle of 4/3 * Pi radians, i.e., 240 degrees. */
-  lazy val RadFourThirdsPi = Deg240
+  lazy val RadFourThirdsPi: Angle = Deg240
 
   /** An angle of 250 degrees. */
-  lazy val Deg250 = Angle(250.0)
+  lazy val Deg250: Angle = Angle(250.0)
 
   /** An angle of 260 degrees. */
-  lazy val Deg260 = Angle(260.0)
+  lazy val Deg260: Angle = Angle(260.0)
 
   /** An angle of 270 degrees. */
-  lazy val Deg270 = Angle(270.0)
+  lazy val Deg270: Angle = Angle(270.0)
 
   /** An angle of 3/2 * Pi radians. */
-  lazy val RadThreeHalfsPi = Deg270
+  lazy val RadThreeHalfsPi: Angle = Deg270
 
   /** An angle of 280 degrees. */
-  lazy val Deg280 = Angle(280.0)
+  lazy val Deg280: Angle = Angle(280.0)
 
   /** An angle of 290 degrees. */
-  lazy val Deg290 = Angle(290.0)
+  lazy val Deg290: Angle = Angle(290.0)
 
   /** An angle of 300 degrees. */
-  lazy val Deg300 = Angle(300.0)
+  lazy val Deg300: Angle = Angle(300.0)
 
   /** An angle of 5/3 * Pi radians, i.e., 300 degrees. */
-  lazy val RadFiveThirdsPi = Deg300
+  lazy val RadFiveThirdsPi: Angle = Deg300
 
   /** An angle of 310 degrees. */
-  lazy val Deg310 = Angle(310.0)
+  lazy val Deg310: Angle = Angle(310.0)
 
   /** An angle of 315 degrees. */
-  lazy val Deg315 = Angle(315.0)
+  lazy val Deg315: Angle = Angle(315.0)
 
   /** An angle of 7/4 * Pi radians, i.e., 315 degrees. */
-  lazy val RadSevenFourthsPi = Deg315
+  lazy val RadSevenFourthsPi: Angle = Deg315
 
   /** An angle of 320 xdegrees. */
-  lazy val Deg320 = Angle(320.0)
+  lazy val Deg320: Angle = Angle(320.0)
 
   /** An angle of 330 degrees. */
-  lazy val Deg330 = Angle(330.0)
+  lazy val Deg330: Angle = Angle(330.0)
 
   /** An angle of 11/6 * Pi radians, i.e., 330 degrees. */
-  lazy val RadElevenSixthsPi = Deg330
+  lazy val RadElevenSixthsPi: Angle = Deg330
 
   /** An angle of 340 degrees. */
-  lazy val Deg340 = Angle(340.0)
+  lazy val Deg340: Angle = Angle(340.0)
 
   /** An angle of 350 degrees. */
-  lazy val Deg350 = Angle(350.0)
+  lazy val Deg350: Angle = Angle(350.0)
 
   /** An angle of 360 degrees, i.e., a full angle. */
-  lazy val Deg360 = FullAngle
+  lazy val Deg360: Angle = FullAngle
 
   /** An angle of 2 * Pi radians, i.e., a full angle (360 degrees). */
-  lazy val RadTwoPi = FullAngle
+  lazy val RadTwoPi: Angle = FullAngle
 
 
   /**
@@ -536,6 +536,7 @@ object Angle {
    *
    * @param valueInDegrees
    */
+  @inline
   def apply(valueInDegrees: Double): Angle = {
     new Angle(valueInDegrees)
   }
@@ -545,6 +546,7 @@ object Angle {
    *
    * @param valueInDegrees
    */
+  @inline
   def normalized(valueInDegrees: Double): Angle = {
     apply(MathUtils.normalizeDegs(valueInDegrees))
   }
@@ -554,6 +556,7 @@ object Angle {
    *
    * @param valueInDegrees
    */
+  @inline
   def normalizedPos(valueInDegrees: Double): Angle = {
     apply(MathUtils.normalizeToPosDegs(valueInDegrees))
   }
@@ -563,6 +566,7 @@ object Angle {
    *
    * @param valueInDegrees
    */
+  @inline
   def normalizedNeg(valueInDegrees: Double): Angle = {
     apply(MathUtils.normalizeToNegDegs(valueInDegrees))
   }
@@ -574,6 +578,7 @@ object Angle {
    *
    * @return
    */
+  @inline
   def fromRads(valueInRadians: Double): Angle = {
     val angleValue = math.toDegrees(valueInRadians)
 
@@ -587,6 +592,7 @@ object Angle {
    *
    * @return
    */
+  @inline
   def fromGrads(valueInGradians: Double): Angle = {
     val angleValue = valueInGradians * GradianInDegrees
 
@@ -600,6 +606,7 @@ object Angle {
    *
    * @return
    */
+  @inline
   def fromSin(sin: Double): Angle = {
     apply(MathUtils.asin(sin))
   }
@@ -611,6 +618,7 @@ object Angle {
    *
    * @return
    */
+  @inline
   def fromCos(cos: Double): Angle = {
     apply(MathUtils.acos(cos))
   }
@@ -622,6 +630,7 @@ object Angle {
    *
    * @return
    */
+  @inline
   def fromTan(tan: Double): Angle = {
     apply(MathUtils.atan(tan))
   }
@@ -766,7 +775,9 @@ case class Angle private(
    *
    * @return
    */
-  override def inverse: Angle = Angle(-inDegrees)
+  @inline
+  override
+  def inverse: Angle = Angle(-inDegrees)
 
   /**
    *
@@ -776,6 +787,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def isCoterminallyBetweenExclExcl(
       rangeStart: Angle,
       rangeEnd: Angle): Boolean = {
@@ -792,6 +804,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def isCoterminallyBetweenExclIncl(
       rangeStart: Angle,
       rangeEnd: Angle): Boolean = {
@@ -808,6 +821,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def isCoterminallyBetweenInclExcl(
       rangeStart: Angle,
       rangeEnd: Angle): Boolean = {
@@ -824,6 +838,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def isCoterminallyBetweenInclIncl(
       rangeStart: Angle,
       rangeEnd: Angle): Boolean = {
@@ -852,7 +867,9 @@ case class Angle private(
    *
    * @return
    */
-  override def compare(that: Angle): Int = {
+  @inline
+  override
+  def compare(that: Angle): Int = {
     inDegrees.compare(that.inDegrees)
   }
 
@@ -863,6 +880,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def + (other: Angle): Angle = {
     Angle(inDegrees + other.inDegrees)
   }
@@ -874,6 +892,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def - (other: Angle): Angle = {
     Angle(inDegrees - other.inDegrees)
   }
@@ -885,6 +904,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def / (other: Angle): Double = {
     inDegrees / other.inDegrees
   }
@@ -896,6 +916,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def + (angleInDegrees: Double): Angle = {
     Angle(inDegrees + angleInDegrees)
   }
@@ -907,6 +928,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def - (angleInDegrees: Double): Angle = {
     Angle(inDegrees - angleInDegrees)
   }
@@ -918,6 +940,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def * (factor: Double): Angle = {
     Angle(inDegrees * factor)
   }
@@ -929,6 +952,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   def / (divider: Double): Angle = {
     Angle(inDegrees / divider)
   }
@@ -938,13 +962,16 @@ case class Angle private(
    *
    * @return
    */
-  override def unary_+(): Angle = this
+  @inline
+  override
+  def unary_+(): Angle = this
 
   /**
    * Returns the minimum of the given objects.
    *
    * @return
    */
+  @inline
   override
   def min(others: Angle*): Angle = (this +: others).min
 
@@ -953,6 +980,7 @@ case class Angle private(
    *
    * @return
    */
+  @inline
   override
   def max(others: Angle*): Angle = (this +: others).max
 

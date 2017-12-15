@@ -50,6 +50,7 @@ object Vol {
    *
    * @param valueInPixels
    */
+  @inline
   def apply(valueInPixels: Double): Vol = {
     require(
       valueInPixels >= 0,
@@ -65,12 +66,13 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forCube(sideLengthInPixels: Double): Vol = {
     require(
       sideLengthInPixels >= 0,
       s"Cube's side length cannot be negative (was $sideLengthInPixels)")
 
-    apply(math.pow(sideLengthInPixels, 3))
+    apply(sideLengthInPixels * sideLengthInPixels * sideLengthInPixels)
   }
 
   /**
@@ -80,7 +82,10 @@ object Vol {
    *
    * @return
    */
-  def forCube(sideLength: Len): Vol = sideLength.cube
+  @inline
+  def forCube(sideLength: Len): Vol = {
+    forCube(sideLength.inPixels)
+  }
 
   /**
    * Creates a new [[Vol]] instance on the basis of
@@ -92,6 +97,7 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forCuboid(
       lengthInPixels: Double,
       widthInPixels: Double,
@@ -116,18 +122,22 @@ object Vol {
    * Creates a new [[Vol]] instance on the basis of
    * cuboid's length, width, and height.
    *
-   * @param lengthInPixels
-   * @param widthInPixels
-   * @param heightInPixels
+   * @param length
+   * @param width
+   * @param height
    *
    * @return
    */
+  @inline
   def forCuboid(
-      lengthInPixels: Len,
-      widthInPixels: Len,
-      heightInPixels: Len): Vol = {
+      length: Len,
+      width: Len,
+      height: Len): Vol = {
 
-    lengthInPixels * widthInPixels * heightInPixels
+    forCuboid(
+      length.inPixels,
+      width.inPixels,
+      height.inPixels)
   }
 
   /**
@@ -139,6 +149,7 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forCuboid(
       baseArea: Area,
       heightInPixels: Double): Vol = {
@@ -159,15 +170,16 @@ object Vol {
    * cuboid's base area and height.
    *
    * @param baseArea
-   * @param heightInPixels
+   * @param height
    *
    * @return
    */
+  @inline
   def forCuboid(
       baseArea: Area,
-      heightInPixels: Len): Vol = {
+      height: Len): Vol = {
 
-    baseArea * heightInPixels
+    forCuboid(baseArea, height.inPixels)
   }
 
   /**
@@ -179,6 +191,7 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forCylinder(radiusInPixels: Double, heightInPixels: Double): Vol = {
     require(
       radiusInPixels >= 0,
@@ -188,7 +201,7 @@ object Vol {
       heightInPixels >= 0,
       s"Cylinder's height cannot be negative (was $heightInPixels)")
 
-    apply(math.Pi * math.pow(radiusInPixels, 2) * heightInPixels)
+    apply(math.Pi * radiusInPixels * radiusInPixels * heightInPixels)
   }
 
   /**
@@ -200,8 +213,9 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forCylinder(radius: Len, height: Len): Vol = {
-    math.Pi * radius.square * height
+    forCylinder(radius.inPixels, height.inPixels)
   }
 
   /**
@@ -213,6 +227,7 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forCone(radiusInPixels: Double, heightInPixels: Double): Vol = {
     require(
       radiusInPixels >= 0,
@@ -222,7 +237,7 @@ object Vol {
       heightInPixels >= 0,
       s"Cone's height cannot be negative (was $heightInPixels)")
 
-    apply(math.Pi * math.pow(radiusInPixels, 2) * heightInPixels / 3.0)
+    apply(math.Pi * radiusInPixels * radiusInPixels * heightInPixels / 3.0)
   }
 
   /**
@@ -234,8 +249,9 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forCone(radius: Len, height: Len): Vol = {
-    math.Pi * radius.square * height / 3.0
+    forCone(radius.inPixels, height.inPixels)
   }
 
   /**
@@ -245,12 +261,13 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forSphere(radiusInPixels: Double): Vol = {
     require(
       radiusInPixels >= 0,
       s"Sphere's radius cannot be negative (was $radiusInPixels)")
 
-    apply((4.0 * math.Pi * math.pow(radiusInPixels, 3)) / 3.0)
+    apply((4.0 * math.Pi * radiusInPixels * radiusInPixels * radiusInPixels) / 3.0)
   }
 
   /**
@@ -260,8 +277,9 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forSphere(radius: Len): Vol = {
-    4.0 * math.Pi * radius.cube / 3.0
+    forSphere(radius.inPixels)
   }
 
   /**
@@ -273,6 +291,7 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forCylinder(
       baseArea: Area,
       heightInPixels: Double): Vol = {
@@ -293,8 +312,9 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forCylinder(baseArea: Area, height: Len): Vol = {
-    baseArea * height
+    forCylinder(baseArea, height.inPixels)
   }
 
   /**
@@ -306,6 +326,7 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forPyramid(baseArea: Area, heightInPixels: Double): Vol = {
     require(
       heightInPixels >= 0,
@@ -323,8 +344,9 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forPyramid(baseArea: Area, height: Len): Vol = {
-    baseArea * height / 3.0
+    forPyramid(baseArea, height.inPixels)
   }
 
   /**
@@ -336,6 +358,7 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forPrism(baseArea: Area, heightInPixels: Double): Vol = {
     require(
       heightInPixels >= 0,
@@ -353,8 +376,9 @@ object Vol {
    *
    * @return
    */
+  @inline
   def forPrism(baseArea: Area, height: Len): Vol = {
-    baseArea * height
+    forPrism(baseArea, height.inPixels)
   }
 
 }
@@ -403,6 +427,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   override
   def compare(that: Vol): Int = {
     inPixels.compare(that.inPixels)
@@ -415,6 +440,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   def + (offset: Vol): Vol = {
     Vol(inPixels + offset.inPixels)
   }
@@ -426,6 +452,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   def - (offset: Vol): Vol = {
     Vol(inPixels - offset.inPixels)
   }
@@ -437,6 +464,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   def / (divider: Vol): Double = {
     inPixels / divider.inPixels
   }
@@ -448,6 +476,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   def / (divider: Area): Len = {
     Len(inPixels / divider.inPixels)
   }
@@ -459,6 +488,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   def / (divider: Len): Area = {
     Area(inPixels / divider.inPixels)
   }
@@ -470,6 +500,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   def + (offset: Double): Vol = {
     Vol(inPixels + offset)
   }
@@ -481,6 +512,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   def - (offset: Double): Vol = {
     Vol(inPixels - offset)
   }
@@ -492,6 +524,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   def * (factor: Double): Vol = {
     Vol(inPixels * factor)
   }
@@ -503,6 +536,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   def / (divider: Double): Vol = {
     Vol(inPixels / divider)
   }
@@ -512,6 +546,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   override
   def min(others: Vol*): Vol = (this +: others).min
 
@@ -520,6 +555,7 @@ case class Vol private(
    *
    * @return
    */
+  @inline
   override
   def max(others: Vol*): Vol = (this +: others).max
 

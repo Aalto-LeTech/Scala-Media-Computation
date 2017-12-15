@@ -17,6 +17,8 @@
 package aalto.smcl.infrastructure
 
 
+import scala.annotation.tailrec
+
 import aalto.smcl.modeling.Angle
 
 
@@ -34,13 +36,14 @@ object MathUtils {
    *
    * @param lengthToDivide
    * @param numberOfDivisions
+   *
    * @return
    */
   def divideLength(
       lengthToDivide: Double,
       numberOfDivisions: Int): Seq[Double] = {
 
-    @scala.annotation.tailrec
+    @tailrec
     def divideLengthRec(
         currentDivision: Int,
         numberOfDivisions: Int,

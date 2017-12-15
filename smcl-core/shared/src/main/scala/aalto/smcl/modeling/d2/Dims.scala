@@ -18,8 +18,8 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.infrastructure._
-import aalto.smcl.modeling.{Area, Len}
 import aalto.smcl.modeling.misc.CartesianDimensions
+import aalto.smcl.modeling.{Area, Len}
 
 
 
@@ -31,28 +31,31 @@ import aalto.smcl.modeling.misc.CartesianDimensions
  */
 object Dims {
 
-  /** A [[Dims]] instance that presents infinitely large dimensions. */
-  val InfinitelyLarge =
-    Dims(Double.PositiveInfinity,
-      Double.PositiveInfinity)
+  /** A [[Dims]] instance that presents infinitely large positive dimensions. */
+  lazy val PositiveInfinity: Dims = createConstantInstance(Len.PositiveInfinity)
+
+  /** A [[Dims]] instance that presents infinitely large negative dimensions. */
+  lazy val NegativeInfinity: Dims = createConstantInstance(Len.NegativeInfinity)
+
+  /** A [[Dims]] instance that presents one-sized dimensions. */
+  lazy val Zeros: Dims = createConstantInstance(Len.Zero)
 
   /** A [[Dims]] instance that presents zero-sized dimensions. */
-  val NonExistent = Dims(0.0, 0.0)
+  lazy val Ones: Dims = createConstantInstance(Len.One)
 
   /**
    * Creates a new [[Dims]] instance.
    *
-   * @param widthInPixels
-   * @param heightInPixels
+   * @param constant
    *
    * @return
    */
   @inline
-  def apply(
-      widthInPixels: Double,
-      heightInPixels: Double): Dims = {
+  private
+  def createConstantInstance(
+      constant: Len): Dims = {
 
-    new Dims(Len(widthInPixels), Len(heightInPixels))
+    apply(constant, constant)
   }
 
   /**
@@ -69,6 +72,24 @@ object Dims {
       height: Len): Dims = {
 
     new Dims(width, height)
+  }
+
+  /**
+   * Creates a new [[Dims]] instance.
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      widthInPixels: Double,
+      heightInPixels: Double): Dims = {
+
+    apply(
+      Len(widthInPixels),
+      Len(heightInPixels))
   }
 
   /**
@@ -106,17 +127,17 @@ case class Dims private(
     width: Len,
     height: Len)
     extends CartesianDimensions
-            with ToTuple[DimensionTuple]
-            with ItemItemMap[Dims, Double]
-            with FlatMap[Dims, DimensionTuple]
-            with CommonTupledDoubleMathOps[Dims, DimensionTuple]
-            with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
+        with ToTuple[DimensionTuple]
+        with ItemItemMap[Dims, Double]
+        with FlatMap[Dims, DimensionTuple]
+        with CommonTupledDoubleMathOps[Dims, DimensionTuple]
+        with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
 
   /** */
   lazy val lengths: Seq[Double] =
     Seq(width.inPixels, height.inPixels)
 
-  /**  */
+  /** */
   lazy val area: Area = Area.forRectangle(width, height)
 
   /**

@@ -31,47 +31,31 @@ import aalto.smcl.modeling.{Len, Vol}
  */
 object Dims {
 
-  /** A [[Dims]] instance that presents infinitely large dimensions. */
-  val InfinitelyLarge = Dims(
-    Double.PositiveInfinity,
-    Double.PositiveInfinity,
-    Double.PositiveInfinity)
+  /** A [[Dims]] instance that presents infinitely large positive dimensions. */
+  lazy val PositiveInfinity: Dims = createConstantInstance(Len.PositiveInfinity)
+
+  /** A [[Dims]] instance that presents infinitely large negative dimensions. */
+  lazy val NegativeInfinity: Dims = createConstantInstance(Len.NegativeInfinity)
+
+  /** A [[Dims]] instance that presents one-sized dimensions. */
+  lazy val Ones: Dims = createConstantInstance(Len.One)
 
   /** A [[Dims]] instance that presents zero-sized dimensions. */
-  val NonExistent = Dims(0.0, 0.0, 0.0)
+  lazy val Zeros: Dims = createConstantInstance(Len.Zero)
 
   /**
    * Creates a new [[Dims]] instance.
    *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param depthInPixels
+   * @param constant
    *
    * @return
    */
   @inline
-  def apply(
-      widthInPixels: Double,
-      heightInPixels: Double,
-      depthInPixels: Double): Dims = {
+  private
+  def createConstantInstance(
+      constant: Len): Dims = {
 
-    require(
-      widthInPixels >= 0,
-      s"Width cannot be negative (was $widthInPixels)")
-
-    require(
-      heightInPixels >= 0,
-      s"Height cannot be negative (was $heightInPixels)")
-
-    require(
-      depthInPixels >= 0,
-      s"Depth cannot be negative (was $depthInPixels)")
-
-    val w = Len(widthInPixels)
-    val h = Len(heightInPixels)
-    val d = Len(depthInPixels)
-
-    apply(w, h, d)
+    apply(constant, constant, constant)
   }
 
   /**
@@ -95,6 +79,27 @@ object Dims {
   /**
    * Creates a new [[Dims]] instance.
    *
+   * @param widthInPixels
+   * @param heightInPixels
+   * @param depthInPixels
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      widthInPixels: Double,
+      heightInPixels: Double,
+      depthInPixels: Double): Dims = {
+
+    apply(
+      Len(widthInPixels),
+      Len(heightInPixels),
+      Len(depthInPixels))
+  }
+
+  /**
+   * Creates a new [[Dims]] instance.
+   *
    * @param dimensions
    *
    * @return
@@ -106,9 +111,9 @@ object Dims {
       s"Exactly $NumberOfDimensions dimensions must be given (currently: ${dimensions.length})")
 
     apply(
-      dimensions.head,
-      dimensions(1),
-      dimensions(2))
+      Len(dimensions.head),
+      Len(dimensions(1)),
+      Len(dimensions(2)))
   }
 
 }
@@ -130,11 +135,11 @@ case class Dims private(
     height: Len,
     depth: Len)
     extends CartesianDimensions
-            with ToTuple[DimensionTuple]
-            with ItemItemMap[Dims, Double]
-            with FlatMap[Dims, DimensionTuple]
-            with CommonTupledDoubleMathOps[Dims, DimensionTuple]
-            with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
+        with ToTuple[DimensionTuple]
+        with ItemItemMap[Dims, Double]
+        with FlatMap[Dims, DimensionTuple]
+        with CommonTupledDoubleMathOps[Dims, DimensionTuple]
+        with TupledMinMaxItemOps[Dims, Double, DimensionTuple] {
 
   /** */
   lazy val lengths: Seq[Double] =

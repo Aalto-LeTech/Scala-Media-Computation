@@ -88,7 +88,7 @@ class Point private(
    *
    * @return
    */
-  def boundary: Option[Bounds] = position.boundary
+  def boundary: Bounds = position.boundary
 
   /** Tells if this [[Point]] can be rendered on a bitmap. */
   def isRenderable: Boolean = true

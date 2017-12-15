@@ -31,8 +31,30 @@ import aalto.smcl.modeling.{Len, Transformer}
  */
 object Pos {
 
-  /** The origo of a two-dimensional Cartesian coordinate system. */
-  val Origo = new Pos(0.0, 0.0)
+  /** A [[Pos]] instance that represents the origo of a two-dimensional Cartesian coordinate system. */
+  val Origo: Pos = createInstance(0.0, 0.0, isDefined = true)
+
+  /** A [[Pos]] instance that represents a non-existent position. */
+  val NotDefined: Pos = createInstance(0.0, 0.0, isDefined = false)
+
+  /**
+   * Creates a new [[Pos]] instance.
+   *
+   * @param xInPixels
+   * @param yInPixels
+   * @param isDefined
+   *
+   * @return
+   */
+  @inline
+  private
+  def createInstance(
+      xInPixels: Double,
+      yInPixels: Double,
+      isDefined: Boolean): Pos = {
+
+    new Pos(xInPixels, yInPixels, isDefined)
+  }
 
   /**
    * Creates a new [[Pos]] instance.
@@ -47,7 +69,10 @@ object Pos {
       xInPixels: Double,
       yInPixels: Double): Pos = {
 
-    new Pos(xInPixels, yInPixels)
+    createInstance(
+      xInPixels,
+      yInPixels,
+      isDefined = true)
   }
 
   /**
@@ -63,7 +88,10 @@ object Pos {
       coordinates.length == NumberOfDimensions,
       s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinates.length})")
 
-    apply(coordinates: _*)
+    createInstance(
+      coordinates(0),
+      coordinates(1),
+      isDefined = true)
   }
 
 }
@@ -76,26 +104,28 @@ object Pos {
  *
  * @param xInPixels
  * @param yInPixels
+ * @param isDefined
  *
  * @author Aleksi Lukkarinen
  */
 case class Pos private[smcl](
     xInPixels: Double,
-    yInPixels: Double)
+    yInPixels: Double,
+    isDefined: Boolean)
     extends CartesianPosition
-            with ToTuple[CoordinateTuple]
-            with ItemItemMap[Pos, Double]
-            with FlatMap[Pos, CoordinateTuple]
-            with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
-            with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
-            with Movable[Pos]
-            with Rotatable[Pos] {
+        with ToTuple[CoordinateTuple]
+        with ItemItemMap[Pos, Double]
+        with FlatMap[Pos, CoordinateTuple]
+        with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
+        with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
+        with Movable[Pos]
+        with Rotatable[Pos] {
 
   /** */
   lazy val coordinates: Seq[Double] = Seq(xInPixels, yInPixels)
 
   /** */
-  lazy val boundary: Option[Bounds] = Some(Bounds(this, this))
+  lazy val boundary: Bounds = Bounds(this, this)
 
   /**
    *

@@ -19,7 +19,7 @@ package aalto.smcl.bitmaps.fullfeatured
 
 import aalto.smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
 import aalto.smcl.modeling.Len
-import aalto.smcl.modeling.d2.{Bounds, Dims, HasBounds, HasPos, Pos}
+import aalto.smcl.modeling.d2._
 
 
 
@@ -56,24 +56,24 @@ class Image private(
     override val identity: Identity,
     val elements: Seq[ImageElement])
     extends ImageElement
-            with HasPos
-            with HasBounds
-            with FlatMap[Image, Seq[ImageElement]] {
+        with HasPos
+        with HasBounds
+        with FlatMap[Image, Seq[ImageElement]] {
 
   // TODO: Tarkistukset
 
   /** */
-  val boundary: Option[Bounds] =
+  val boundary: Bounds =
     BoundaryCalculator.fromBoundaries(elements)
 
   /** */
-  val position: Pos = boundary.get.upperLeftMarker
+  val position: Pos = boundary.upperLeftMarker
 
   /** */
-  val width: Len = boundary.get.width
+  val width: Len = boundary.width
 
   /** */
-  val height: Len = boundary.get.height
+  val height: Len = boundary.height
 
   /** */
   val isRenderable: Boolean = width > 0 && height > 0

@@ -23,11 +23,11 @@ import aalto.smcl.modeling.Area
 
 
 /**
- * A companion object for [[CircleConcept]].
+ * A companion object for [[EllipseConcept]].
  *
  * @author Aleksi Lukkarinen
  */
-object CircleConcept {
+object EllipseConcept {
 
 }
 
@@ -35,39 +35,42 @@ object CircleConcept {
 
 
 /**
- * A conceptual two-dimensional circle that has Cartesian coordinates.
+ * A conceptual two-dimensional ellipse that has Cartesian coordinates.
  *
  * @param center
- * @param radiusInPixels
- * @param shapeDataResolver
+ * @param semiMajorAxisInPixels
+ * @param semiMinorAxisInPixels
  *
  * @author Aleksi Lukkarinen
  */
-class CircleConcept private(
+class EllipseConcept private(
     center: Pos,
-    radiusInPixels: Double,
+    semiMajorAxisInPixels: Double,
+    semiMinorAxisInPixels: Double,
     shapeDataResolver: ShapeDataResolver)
-    extends ConicSectionConcept[CircleConcept](shapeDataResolver) {
+    extends ConicSectionConcept[EllipseConcept](shapeDataResolver) {
 
-  /** */
+  /** Enclosing rectangle of this ellipse. */
   lazy val boundary: Bounds = Bounds(
     Pos(
-      position.xInPixels - radiusInPixels,
-      position.yInPixels - radiusInPixels),
+      position.xInPixels - semiMajorAxisInPixels,
+      position.yInPixels - semiMinorAxisInPixels),
     Pos(
-      position.xInPixels + radiusInPixels,
-      position.yInPixels + radiusInPixels))
+      position.xInPixels + semiMajorAxisInPixels,
+      position.yInPixels + semiMinorAxisInPixels))
 
-  /** Position of this circle. */
+  /** Position of this ellipse. */
   lazy val position: Pos = boundary.upperLeftMarker
 
-  /** Dimensions of this circle. */
+  /** Dimensions of this ellipse. */
   lazy val dimensions: Dims = Dims(
     boundary.width,
     boundary.height)
 
-  /** Area of this circle. */
-  lazy val area: Area = Area.forCircle(radiusInPixels)
+  /** Area of this ellipse. */
+  val area: Area = Area.forEllipse(
+    semiMajorAxisInPixels,
+    semiMinorAxisInPixels)
 
   /**
    *
@@ -77,7 +80,7 @@ class CircleConcept private(
    * @return
    */
   override
-  def moveBy(offsets: Double*): CircleConcept = {
+  def moveBy(offsets: Double*): EllipseConcept = {
     copy(newCenter = center.moveBy(offsets: _*))
   }
 
@@ -85,16 +88,18 @@ class CircleConcept private(
    *
    *
    * @param newCenter
-   * @param newRadiusInPixels
+   * @param newSemiMajorAxisInPixels
+   * @param newSemiMinorAxisInPixels
    *
    * @return
    */
   @inline
   def copy(
       newCenter: Pos = center,
-      newRadiusInPixels: Double = radiusInPixels): CircleConcept = {
+      newSemiMajorAxisInPixels: Double = semiMajorAxisInPixels,
+      newSemiMinorAxisInPixels: Double = semiMinorAxisInPixels): EllipseConcept = {
 
-    new CircleConcept(newCenter, newRadiusInPixels)
+    new EllipseConcept(newCenter, newSemiMajorAxisInPixels, newSemiMinorAxisInPixels)
   }
 
 }

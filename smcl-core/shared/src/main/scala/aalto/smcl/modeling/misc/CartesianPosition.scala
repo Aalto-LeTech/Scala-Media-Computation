@@ -23,6 +23,6 @@ package aalto.smcl.modeling.misc
  * @author Aleksi Lukkarinen
  */
 trait CartesianPosition
-    extends NonCoordSysDepPosition {
+    extends CoordSysIndepPosition {
 
 }

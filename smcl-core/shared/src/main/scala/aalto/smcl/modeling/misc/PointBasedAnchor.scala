@@ -25,7 +25,7 @@ package aalto.smcl.modeling.misc
  * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-trait PointBasedAnchor[DimensionType <: NonCoordSysDepDimensions]
+trait PointBasedAnchor[DimensionType <: CoordSysIndepDimensions]
     extends NamedAnchor {
 
   /**

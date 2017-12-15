@@ -25,6 +25,6 @@ package aalto.smcl.modeling.d2
 trait HasBounds {
 
   /** */
-  def boundary: Option[Bounds]
+  def boundary: Bounds
 
 }

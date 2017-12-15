@@ -21,7 +21,7 @@ import scala.util.Random
 
 import aalto.smcl.infrastructure.MathUtils
 import aalto.smcl.modeling._
-import aalto.smcl.modeling.misc.NonCoordSysDepBoundary
+import aalto.smcl.modeling.misc.CoordSysIndepBoundary
 
 
 
@@ -36,6 +36,32 @@ object Bounds {
   /** */
   val NumberOfCorners: Int = 4
 
+  /** */
+  val ZeroAreaAtOrigo: Bounds =
+    createInstance(Pos.Origo, Pos.Origo, isDefined = false)
+
+  /** */
+  val NotDefined: Bounds =
+    createInstance(Pos.Origo, Pos.Origo, isDefined = false)
+
+  /**
+   * Creates a new [[Bounds]] instance.
+   *
+   * @param upperLeftMarker
+   * @param lowerRightMarker
+   * @param isDefined
+   *
+   * @return
+   */
+  @inline
+  private
+  def createInstance(
+      upperLeftMarker: Pos,
+      lowerRightMarker: Pos,
+      isDefined: Boolean): Bounds = {
+
+    new Bounds(upperLeftMarker, lowerRightMarker, isDefined)
+  }
 
   /**
    * Creates a new [[Bounds]] instance.
@@ -47,6 +73,7 @@ object Bounds {
    *
    * @return
    */
+  @inline
   def apply(
       upperLeftXInPixels: Double,
       upperLeftYInPixels: Double,
@@ -56,7 +83,19 @@ object Bounds {
     val (x0, x1) = MathUtils.sort(upperLeftXInPixels, lowerRightXInPixels)
     val (y0, y1) = MathUtils.sort(upperLeftYInPixels, lowerRightYInPixels)
 
-    new Bounds(Pos(x0, y0), Pos(x1, y1))
+    createInstance(Pos(x0, y0), Pos(x1, y1), isDefined = true)
+  }
+
+  /**
+   * Creates a new [[Bounds]] instance.
+   *
+   * @param position
+   *
+   * @return
+   */
+  @inline
+  def apply(position: Pos): Bounds = {
+    createInstance(position, position, isDefined = true)
   }
 
   /**
@@ -194,14 +233,16 @@ object Bounds {
  *
  * @param upperLeftMarker
  * @param lowerRightMarker
+ * @param isDefined
  *
  * @author Aleksi Lukkarinen
  */
 case class Bounds private(
     upperLeftMarker: Pos,
-    lowerRightMarker: Pos)
-    extends NonCoordSysDepBoundary[Pos]
-            with HasArea {
+    lowerRightMarker: Pos,
+    isDefined: Boolean)
+    extends CoordSysIndepBoundary[Pos]
+        with HasArea {
 
   val markers: Seq[Pos] = Seq(upperLeftMarker, lowerRightMarker)
 

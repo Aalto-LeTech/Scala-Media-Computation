@@ -87,12 +87,12 @@ class Line private(
     extends {
 
       /** */
-      val boundary: Option[Bounds] = Some(Bounds(start, end))
+      val boundary: Bounds = Bounds(start, end)
 
     } with Polygon(
       identity,
       Seq(start, end),
-      boundary.get.upperLeftMarker) {
+      boundary.upperLeftMarker) {
 
   /** Tells if this [[Line]] can be rendered on a bitmap. */
   val isRenderable: Boolean = true

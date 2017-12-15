@@ -13,7 +13,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="smcl-build" />
     <orderEntry type="module-library">
-      <library name="SBT: sbt-and-plugins">
+      <library name="sbt: sbt-and-plugins">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../../local-ivy-repo/cache/args4j/args4j/bundles/args4j-2.0.26.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../../local-ivy-repo/cache/com.google.code.findbugs/jsr305/jars/jsr305-1.3.9.jar!/" />

@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.modeling.Len
-import aalto.smcl.modeling.misc.HasCartesianDimensions
+import aalto.smcl.modeling.misc.HasDimensions
 
 
 
@@ -29,7 +29,7 @@ import aalto.smcl.modeling.misc.HasCartesianDimensions
  * @author Aleksi Lukkarinen
  */
 trait HasDims
-    extends HasCartesianDimensions[Dims] {
+    extends HasDimensions[Dims] {
 
   /** */
   lazy val width: Len = dimensions.width

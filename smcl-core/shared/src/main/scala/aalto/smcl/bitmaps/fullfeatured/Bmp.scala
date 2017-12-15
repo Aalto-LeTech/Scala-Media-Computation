@@ -52,12 +52,11 @@ object Bmp
    * @return
    */
   def apply(elements: ImageElement*): Bmp = {
-    val boundsOption = BoundaryCalculator.fromBoundaries(elements)
-    if (boundsOption.isEmpty) {
+    val bounds = BoundaryCalculator.fromBoundaries(elements)
+    if (bounds.isEmpty) {
       return Bmp(0, 0)
     }
 
-    val bounds = boundsOption.get
     val width = bounds.width.floor
     val height = bounds.height.floor
 
@@ -189,20 +188,17 @@ class Bmp private(
 
   /** */
   override
-  val boundary: Option[Bounds] =
+  val boundary: Bounds =
     if (isRenderable)
-      Some(Bounds(
+      Bounds(
         position,
         Pos(
           position.xInPixels + width.inPixels - 1,
           position.yInPixels + height.inPixels - 1
         )
-      ))
+      )
     else
-      None
-
-  /** Length of the bitmap. As bitmap has no length, this equals <code>None</code>. */
-  val length: Option[Len] = None
+      Bounds.NotDefined
 
   /**
    *

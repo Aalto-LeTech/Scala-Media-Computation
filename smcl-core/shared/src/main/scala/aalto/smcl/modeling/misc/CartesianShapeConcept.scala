@@ -16,94 +16,16 @@
 
 package aalto.smcl.modeling.misc
 
-import scala.annotation.tailrec
-
-
-
 
 /**
- * A position in some coordinate system.
+ * A conceptual shape that has Cartesian coordinates.
+ *
+ * @tparam PositionType
+ * @tparam DimensionType
  *
  * @author Aleksi Lukkarinen
  */
-trait NonCoordSysDepPosition
-    extends ShapeConcept
-            with Equals
-            with Iterable[Double] {
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  protected
-  def coordinates: Seq[Double]
-
-  /**
-   * Provides an iterator for the dimension values.
-   *
-   * @return
-   */
-  @inline
-  override
-  def iterator: Iterator[Double] = {
-    coordinates.iterator
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  override
-  lazy val hashCode: Int = {
-    val prime = 31
-
-    @tailrec
-    def hashCodeRecursive(
-        coordinates: Seq[Double],
-        sum: Int): Int = {
-
-      if (coordinates.isEmpty)
-        return sum
-
-      hashCodeRecursive(
-        coordinates.tail,
-        prime * sum + coordinates.head.##)
-    }
-
-    hashCodeRecursive(coordinates, 1)
-  }
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def canEqual(other: Any): Boolean
-
-  /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
-  @inline
-  override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: NonCoordSysDepPosition =>
-        that.canEqual(this) &&
-            that.coordinates == this.coordinates
-
-      case _ => false
-    }
-  }
+trait CartesianShapeConcept[PositionType <: CartesianPosition, DimensionType <: CartesianDimensions]
+    extends ShapeConcept[PositionType, DimensionType] {
 
 }

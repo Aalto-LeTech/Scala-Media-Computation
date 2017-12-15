@@ -51,6 +51,7 @@ object Len {
    *
    * @return
    */
+  @inline
   def apply(valueInPixels: Double): Len = {
     new Len(valueInPixels)
   }

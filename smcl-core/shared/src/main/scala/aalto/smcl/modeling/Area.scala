@@ -31,26 +31,36 @@ import aalto.smcl.modeling.misc.Magnitude
 object Area {
 
   /** */
-  lazy val Zero = Area(0.0)
+  lazy val Zero: Area = Area(0.0)
 
   /** */
-  lazy val One = Area(1.0)
+  lazy val One: Area = Area(1.0)
 
   /** */
-  lazy val PositiveInfinity = Area(Double.PositiveInfinity)
+  lazy val PositiveInfinity: Area = Area(Double.PositiveInfinity)
 
   /** */
-  lazy val NegativeInfinity = Area(Double.NegativeInfinity)
+  lazy val NegativeInfinity: Area = Area(Double.NegativeInfinity)
 
   /** */
-  lazy val NaN = Area(Double.NaN)
+  lazy val NaN: Area = Area(Double.NaN)
 
+  /** A constant for calculating areas of pentagons. */
+  private
+  lazy val PentagonAreaConstant: Double =
+    1.25 * math.sqrt(2.5 + (math.sqrt(5.0) / 2.0))
+
+  /** A constant for calculating areas of hexagons. */
+  private
+  lazy val HexagonAreaConstant: Double =
+    1.5 * math.sqrt(3.0)
 
   /**
    * Creates a new [[Area]] instance on the basis of given area value.
    *
    * @param valueInPixels
    */
+  @inline
   def apply(valueInPixels: Double): Area = {
     require(
       valueInPixels >= 0,
@@ -67,6 +77,7 @@ object Area {
    *
    * @return
    */
+  @inline
   def forTriangle(baseLengthInPixels: Double, heightInPixels: Double): Area = {
     require(
       baseLengthInPixels >= 0,
@@ -87,8 +98,9 @@ object Area {
    *
    * @return
    */
+  @inline
   def forTriangle(baseLength: Len, height: Len): Area = {
-    baseLength * height / 2.0
+    forTriangle(baseLength.inPixels, height.inPixels)
   }
 
   /**
@@ -96,6 +108,7 @@ object Area {
    *
    * @param radiusInPixels
    */
+  @inline
   def forCircle(radiusInPixels: Double): Area = {
     require(
       radiusInPixels >= 0,
@@ -109,8 +122,9 @@ object Area {
    *
    * @param radius
    */
+  @inline
   def forCircle(radius: Len): Area = {
-    apply(math.Pi * radius.double.inPixels)
+    forCircle(radius.inPixels)
   }
 
   /**
@@ -118,6 +132,7 @@ object Area {
    *
    * @param diameterInPixels
    */
+  @inline
   def forCircleByDiam(diameterInPixels: Double): Area = {
     require(
       diameterInPixels >= 0,
@@ -131,8 +146,103 @@ object Area {
    *
    * @param diameter
    */
+  @inline
   def forCircleByDiam(diameter: Len): Area = {
-    apply(math.Pi * diameter.double.inPixels / 4.0)
+    forCircleByDiam(diameter.inPixels)
+  }
+
+  /**
+   * Creates a new [[Area]] instance on the basis of pentagon's circumradius.
+   *
+   * @param circumRadiusInPixels
+   */
+  @inline
+  def forPentagon(circumRadiusInPixels: Double): Area = {
+    require(
+      circumRadiusInPixels >= 0,
+      s"Pentagon's circumradius cannot be negative (was $circumRadiusInPixels)")
+
+    val areaValue =
+      PentagonAreaConstant *
+          circumRadiusInPixels *
+          circumRadiusInPixels
+
+    apply(areaValue)
+  }
+
+  /**
+   * Creates a new [[Area]] instance on the basis of pentagon's circumradius.
+   *
+   * @param circumRadius
+   */
+  @inline
+  def forPentagon(circumRadius: Len): Area = {
+    forPentagon(circumRadius.inPixels)
+  }
+
+  /**
+   * Creates a new [[Area]] instance on the basis of hexagon's circumradius.
+   *
+   * @param circumRadiusInPixels
+   */
+  @inline
+  def forHexagon(circumRadiusInPixels: Double): Area = {
+    require(
+      circumRadiusInPixels >= 0,
+      s"Hexagon's circumradius cannot be negative (was $circumRadiusInPixels)")
+
+    val areaValue =
+      HexagonAreaConstant *
+          circumRadiusInPixels *
+          circumRadiusInPixels
+
+    apply(areaValue)
+  }
+
+  /**
+   * Creates a new [[Area]] instance on the basis of hexagon's circumradius.
+   *
+   * @param circumRadius
+   */
+  @inline
+  def forHexagon(circumRadius: Len): Area = {
+    forHexagon(circumRadius.inPixels)
+  }
+
+  /**
+   * Creates a new [[Area]] instance on the basis of ellipse's radius.
+   *
+   * @param semiMajorAxisInPixels
+   * @param semiMinorAxisInPixels
+   */
+  @inline
+  def forEllipse(
+      semiMajorAxisInPixels: Double,
+      semiMinorAxisInPixels: Double): Area = {
+
+    require(
+      semiMajorAxisInPixels >= 0,
+      s"Ellipse's semi-major axis cannot be negative (was $semiMajorAxisInPixels)")
+
+    require(
+      semiMinorAxisInPixels >= 0,
+      s"Ellipse's semi-minor axis cannot be negative (was $semiMinorAxisInPixels)")
+
+    apply(math.Pi * semiMajorAxisInPixels * semiMinorAxisInPixels)
+  }
+
+  /**
+   * Creates a new [[Area]] instance on the basis of ellipse's radius.
+   *
+   * @param semiMajorAxis
+   * @param semiMinorAxis
+   */
+  @inline
+  def forEllipse(
+      semiMajorAxis: Len,
+      semiMinorAxis: Len): Area = {
+
+    forEllipse(semiMajorAxis.inPixels, semiMinorAxis.inPixels)
   }
 
   /**
@@ -140,12 +250,13 @@ object Area {
    *
    * @param sideLengthInPixels
    */
+  @inline
   def forSquare(sideLengthInPixels: Double): Area = {
     require(
       sideLengthInPixels >= 0,
       s"Square's side length cannot be negative (was $sideLengthInPixels)")
 
-    apply(math.pow(sideLengthInPixels, 2))
+    apply(sideLengthInPixels * sideLengthInPixels)
   }
 
   /**
@@ -153,7 +264,10 @@ object Area {
    *
    * @param sideLength
    */
-  def forSquare(sideLength: Len): Area = sideLength * sideLength
+  @inline
+  def forSquare(sideLength: Len): Area = {
+    forSquare(sideLength.inPixels)
+  }
 
   /**
    * Creates a new [[Area]] instance on the basis of rectangle's width and height.
@@ -161,6 +275,7 @@ object Area {
    * @param widthInPixels
    * @param heightInPixels
    */
+  @inline
   def forRectangle(widthInPixels: Double, heightInPixels: Double): Area = {
     require(
       widthInPixels >= 0,
@@ -179,7 +294,10 @@ object Area {
    * @param width
    * @param height
    */
-  def forRectangle(width: Len, height: Len): Area = width * height
+  @inline
+  def forRectangle(width: Len, height: Len): Area = {
+    forRectangle(width.inPixels, height.inPixels)
+  }
 
 }
 
@@ -196,8 +314,8 @@ object Area {
 case class Area private(
     inPixels: Double)
     extends Magnitude[Area]
-            with FlatMap[Area, Double]
-            with Ordered[Area] {
+        with FlatMap[Area, Double]
+        with Ordered[Area] {
 
   /**
    *
@@ -215,6 +333,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   override
   def map(f: (Double) => Double): Area = {
     Area(f(inPixels))
@@ -227,7 +346,9 @@ case class Area private(
    *
    * @return
    */
-  override def compare(that: Area): Int = {
+  @inline
+  override
+  def compare(that: Area): Int = {
     inPixels.compare(that.inPixels)
   }
 
@@ -238,6 +359,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def + (offset: Area): Area = {
     Area(inPixels + offset.inPixels)
   }
@@ -249,6 +371,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def - (offset: Area): Area = {
     Area(inPixels - offset.inPixels)
   }
@@ -260,6 +383,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def + (offset: Double): Area = {
     Area(inPixels + offset)
   }
@@ -271,6 +395,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def - (offset: Double): Area = {
     Area(inPixels - offset)
   }
@@ -282,6 +407,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def * (factor: Len): Vol = {
     Vol(inPixels * factor.inPixels)
   }
@@ -293,6 +419,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def / (divider: Area): Double = {
     inPixels / divider.inPixels
   }
@@ -304,6 +431,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def / (divider: Len): Len = {
     Len(inPixels / divider.inPixels)
   }
@@ -315,6 +443,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def * (factor: Double): Area = {
     Area(inPixels * factor)
   }
@@ -326,6 +455,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def / (divider: Double): Area = {
     Area(inPixels / divider)
   }
@@ -335,6 +465,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   def squareRoot: Len = Len(math.sqrt(this.inPixels))
 
   /**
@@ -342,6 +473,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   override
   def min(others: Area*): Area = (this +: others).min
 
@@ -350,6 +482,7 @@ case class Area private(
    *
    * @return
    */
+  @inline
   override
   def max(others: Area*): Area = (this +: others).max
 

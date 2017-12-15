@@ -20,9 +20,15 @@ package aalto.smcl.modeling.misc
 /**
  * A conceptual shape.
  *
+ * @tparam PositionType
+ * @tparam DimensionType
+ *
  * @author Aleksi Lukkarinen
+ *
  */
-trait ShapeConcept
-    extends ModelingObject {
+trait ShapeConcept[PositionType <: CoordSysIndepPosition, DimensionType <: CoordSysIndepDimensions]
+    extends ModelingObject
+        with HasPosition[PositionType]
+        with HasDimensions[DimensionType] {
 
 }

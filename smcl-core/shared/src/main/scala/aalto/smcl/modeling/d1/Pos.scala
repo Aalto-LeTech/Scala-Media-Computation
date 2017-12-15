@@ -43,8 +43,8 @@ object Pos {
   /** A [[Pos]] instance that represents negative infinity. */
   lazy val NegativeInfinity = Pos(Double.NegativeInfinity)
 
-  /** A [[Pos]] instance that represents a not-a-number. */
-  lazy val NaN = Pos(Double.NaN)
+  /** A [[Pos]] instance that represents a non-existing position. */
+  lazy val NotDefined = apply(0.0, isDefined = false)
 
   /**
    * Creates a new [[Pos]] instance.
@@ -55,7 +55,7 @@ object Pos {
    */
   @inline
   def apply(valuePixels: Double): Pos = {
-    new Pos(valuePixels)
+    new Pos(valuePixels, isDefined = true)
   }
 
 }
@@ -67,18 +67,20 @@ object Pos {
  * Position in a one-dimensional coordinate system.
  *
  * @param inPixels
+ * @param isDefined
  *
  * @author Aleksi Lukkarinen
  */
 case class Pos private(
-    inPixels: Double)
+    inPixels: Double,
+    isDefined: Boolean)
     extends CartesianPosition
-            with Ordered[Pos]
-            with ItemItemMap[Pos, Double]
-            with FlatMap[Pos, Double]
-            with CommonDoubleMathOps[Pos]
-            with MinMaxOps[Pos]
-            with Movable[Pos] {
+        with Ordered[Pos]
+        with ItemItemMap[Pos, Double]
+        with FlatMap[Pos, Double]
+        with CommonDoubleMathOps[Pos]
+        with MinMaxOps[Pos]
+        with Movable[Pos] {
 
   /** */
   lazy val coordinates: Seq[Double] = Seq(inPixels)
