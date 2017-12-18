@@ -24,7 +24,8 @@ package aalto.smcl.modeling.d2
  *
  * @author Aleksi Lukkarinen
  */
-abstract class PiecewiseCurveConcept[ObjectType]
-    extends CurveConcept[ObjectType] {
+abstract class PiecewiseCurveConcept[ObjectType](
+    shapeDataResolver: ShapeDataResolver)
+    extends CurveConcept[ObjectType](shapeDataResolver) {
 
 }

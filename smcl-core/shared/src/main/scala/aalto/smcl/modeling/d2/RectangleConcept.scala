@@ -18,7 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.modeling.Area
-import aalto.smcl.modeling.d2.RectangleConcept.instantiateRectangle
+import aalto.smcl.modeling.d2.RectangleConcept.RectangleDataResolver
 
 
 
@@ -88,53 +88,36 @@ object RectangleConcept {
     val halfBase = baseLength / 2.0
     val halfHeight = height / 2.0
 
-    val firstCorner = Pos(-halfBase, halfHeight)
-    val secondCorner = Pos(halfBase, halfHeight)
-    val thirdCorner = Pos(halfBase, -halfHeight)
-    val fourthCorner = Pos(-halfBase, -halfHeight)
+    val cornerPoints = Seq(
+      Pos(-halfBase, halfHeight),
+      Pos(halfBase, halfHeight),
+      Pos(halfBase, -halfHeight),
+      Pos(-halfBase, -halfHeight))
 
-    instantiateRectangle(
-      firstCorner,
-      secondCorner,
-      thirdCorner,
-      fourthCorner)
+    instantiateRectangle(cornerPoints)
   }
 
   /**
    * Returns a new [[RectangleConcept]] instance with a new data resolver instance.
    *
-   * @param firstCorner
-   * @param secondCorner
-   * @param thirdCorner
-   * @param fourthCorner
+   * @param points
    *
    * @return
    */
   @inline
   private
   def instantiateRectangle(
-      firstCorner: Pos,
-      secondCorner: Pos,
-      thirdCorner: Pos,
-      fourthCorner: Pos): RectangleConcept = {
+      points: Seq[Pos]): RectangleConcept = {
 
     val dataResolver =
-      new RectangleDataResolver(
-        firstCorner, secondCorner, thirdCorner, fourthCorner)
+      new RectangleDataResolver(points)
 
-    instantiateRectangle(
-      firstCorner, secondCorner,
-      thirdCorner, fourthCorner,
-      dataResolver)
+    instantiateRectangle(dataResolver)
   }
 
   /**
    * Returns a new [[RectangleConcept]] instance with a given data resolver instance.
    *
-   * @param firstCorner
-   * @param secondCorner
-   * @param thirdCorner
-   * @param fourthCorner
    * @param dataResolver
    *
    * @return
@@ -142,16 +125,9 @@ object RectangleConcept {
   @inline
   private
   def instantiateRectangle(
-      firstCorner: Pos,
-      secondCorner: Pos,
-      thirdCorner: Pos,
-      fourthCorner: Pos,
-      dataResolver: ShapeDataResolver): RectangleConcept = {
+      dataResolver: RectangleDataResolver): RectangleConcept = {
 
-    new RectangleConcept(
-      firstCorner, secondCorner,
-      thirdCorner, fourthCorner,
-      dataResolver)
+    new RectangleConcept(dataResolver)
   }
 
 
@@ -159,14 +135,11 @@ object RectangleConcept {
 
   private[d2]
   class RectangleDataResolver(
-      val firstCorner: Pos,
-      val secondCorner: Pos,
-      val thirdCorner: Pos,
-      val fourthCorner: Pos)
-      extends ShapeDataResolver {
+      val points: Seq[Pos])
+      extends PolygonDataResolver {
 
     lazy val boundary: Bounds =
-      Bounds(firstCorner, secondCorner, thirdCorner, fourthCorner)
+      Bounds(points.head, points(1), points(2), points(3))
 
     lazy val position: Pos =
       boundary.upperLeftMarker
@@ -189,27 +162,24 @@ object RectangleConcept {
 /**
  * A conceptual two-dimensional rectangle that has Cartesian coordinates.
  *
- * @param firstCorner
- * @param secondCorner
- * @param thirdCorner
- * @param fourthCorner
+ * @param dataResolver
  *
  * @author Aleksi Lukkarinen
  */
-class RectangleConcept(
-    val firstCorner: Pos,
-    val secondCorner: Pos,
-    val thirdCorner: Pos,
-    val fourthCorner: Pos,
-    shapeDataResolver: ShapeDataResolver)
-    extends PolygonConcept[RectangleConcept](shapeDataResolver) {
+class RectangleConcept private(dataResolver: RectangleDataResolver)
+    extends PolygonConcept[RectangleConcept](dataResolver) {
 
-  /** The corner points of this rectangle. */
-  val points: Seq[Pos] = Seq(
-    firstCorner,
-    secondCorner,
-    thirdCorner,
-    fourthCorner)
+  /** The first corner of this rectangle. */
+  val firstCorner: Pos = points.head
+
+  /** The second corner of this rectangle. */
+  val secondCorner: Pos = points(1)
+
+  /** The third corner of this rectangle. */
+  val thirdCorner: Pos = points(2)
+
+  /** The fourth corner of this rectangle. */
+  val fourthCorner: Pos = points(3)
 
   /**
    *
@@ -218,18 +188,22 @@ class RectangleConcept(
    *
    * @return
    */
-  override
+  @inline
   def moveBy(offsets: Double*): RectangleConcept = {
-    val newFirstCorner = firstCorner.moveBy(offsets: _*)
-    val newSecondCorner = secondCorner.moveBy(offsets: _*)
-    val newThirdCorner = thirdCorner.moveBy(offsets: _*)
-    val newFourthCorner = fourthCorner.moveBy(offsets: _*)
+    val movedPoints = points map {_.moveBy(offsets: _*)}
 
-    instantiateRectangle(
-      newFirstCorner,
-      newSecondCorner,
-      newThirdCorner,
-      newFourthCorner)
+    RectangleConcept.instantiateRectangle(movedPoints)
   }
+
+
+  /**
+   * Returns a "copy" of this rectangle. As it makes no sense to allow arbitrary individual modifications of
+   * rectangles' corner points and because these objects are immutable, this method returns a reference to
+   * this same object and exists only for completeness' sake.
+   *
+   * @return
+   */
+  @inline
+  def copy(): RectangleConcept = this
 
 }

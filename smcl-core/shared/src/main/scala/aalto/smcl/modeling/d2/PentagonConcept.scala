@@ -18,6 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.modeling.Area
+import aalto.smcl.modeling.d2.PentagonConcept.PentagonDataResolver
 
 
 
@@ -29,6 +30,88 @@ import aalto.smcl.modeling.Area
  */
 object PentagonConcept {
 
+  /**
+   * Returns a new [[PentagonConcept]] instance.
+   *
+   * @param center
+   * @param circumRadiusInPixels
+   *
+   * @return
+   */
+  @inline
+  private
+  def apply(
+      center: Pos,
+      circumRadiusInPixels: Double): PentagonConcept = {
+
+    val points: Seq[Pos] = ???
+
+    instantiatePentagon(center, circumRadiusInPixels, points)
+  }
+
+  /**
+   * Returns a new [[PentagonConcept]] instance with a new data resolver instance.
+   *
+   * @param points
+   *
+   * @return
+   */
+  @inline
+  private
+  def instantiatePentagon(
+      center: Pos,
+      circumRadiusInPixels: Double,
+      points: Seq[Pos]): PentagonConcept = {
+
+    val dataResolver =
+      new PentagonDataResolver(
+        center, circumRadiusInPixels, points)
+
+    instantiatePentagon(dataResolver)
+  }
+
+  /**
+   * Returns a new [[PentagonConcept]] instance with a given data resolver instance.
+   *
+   * @param dataResolver
+   *
+   * @return
+   */
+  @inline
+  private
+  def instantiatePentagon(
+      dataResolver: PentagonDataResolver): PentagonConcept = {
+
+    new PentagonConcept(dataResolver)
+  }
+
+
+
+
+  private[d2]
+  class PentagonDataResolver(
+      val center: Pos,
+      val circumRadiusInPixels: Double,
+      val points: Seq[Pos])
+      extends PolygonDataResolver {
+
+    lazy val boundary: Bounds =
+      BoundaryCalculator.fromPositions(points)
+
+    lazy val position: Pos =
+      boundary.upperLeftMarker
+
+    lazy val dimensions: Dims =
+      Dims(boundary.width, boundary.height)
+
+    lazy val area: Area =
+      Area.forPentagon(circumRadiusInPixels)
+
+  }
+
+
+
+
 }
 
 
@@ -37,23 +120,12 @@ object PentagonConcept {
 /**
  * A conceptual two-dimensional pentagon that has Cartesian coordinates.
  *
- * @param center
- * @param circumRadiusInPixels
+ * @param dataResolver
  *
  * @author Aleksi Lukkarinen
  */
-class PentagonConcept(
-    center: Pos,
-    circumRadiusInPixels: Double,
-    shapeDataResolver: ShapeDataResolver)
-    extends PolygonConcept[PentagonConcept](shapeDataResolver) {
-
-  /** The corner points of this pentagon. */
-  val points: Seq[Pos] = Seq() // TODO
-
-  /** Area of this pentagon. */
-  lazy val area: Area =
-    Area.forPentagon(circumRadiusInPixels)
+class PentagonConcept(dataResolver: PentagonDataResolver)
+    extends PolygonConcept[PentagonConcept](dataResolver) {
 
   /**
    *
@@ -64,23 +136,25 @@ class PentagonConcept(
    */
   override
   def moveBy(offsets: Double*): PentagonConcept = {
-    copy(newCenter = center.moveBy(offsets: _*))
+    val movedPoints = points map {_.moveBy(offsets: _*)}
+
+    val updatedDataResolver =
+      new PentagonDataResolver(
+        dataResolver.center,
+        dataResolver.circumRadiusInPixels,
+        movedPoints)
+
+    PentagonConcept.instantiatePentagon(updatedDataResolver)
   }
 
   /**
-   *
-   *
-   * @param newCenter
-   * @param newCircumRadiusInPixels
+   * Returns a "copy" of this pentagon. As it makes no sense to allow arbitrary individual modifications of
+   * pentagon' corner points and because these objects are immutable, this method returns a reference to
+   * this same object and exists only for completeness' sake.
    *
    * @return
    */
   @inline
-  def copy(
-      newCenter: Pos = center,
-      newCircumRadiusInPixels: Double = circumRadiusInPixels): PentagonConcept = {
-
-    new PentagonConcept(newCenter, newCircumRadiusInPixels)
-  }
+  def copy(): PentagonConcept = this
 
 }

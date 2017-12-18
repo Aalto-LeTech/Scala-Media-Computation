@@ -18,15 +18,18 @@ package aalto.smcl.modeling.d2
 
 
 /**
- * A conceptual two-dimensional spiral curve that has Cartesian coordinates.
  *
- * @param shapeDataResolver
- * @tparam ObjectType
  *
  * @author Aleksi Lukkarinen
  */
-abstract class SpiralConcept[ObjectType](
-    shapeDataResolver: ShapeDataResolver)
-    extends CurveConcept[ObjectType](shapeDataResolver) {
+trait PolygonDataResolver
+    extends ShapeDataResolver {
+
+  /**
+   * Returns the defining points of the represented polygon.
+   *
+   * @return
+   */
+  def points: Seq[Pos]
 
 }

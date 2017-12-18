@@ -18,6 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.modeling.Area
+import aalto.smcl.modeling.d2.HexagonConcept.HexagonDataResolver
 
 
 
@@ -29,6 +30,88 @@ import aalto.smcl.modeling.Area
  */
 object HexagonConcept {
 
+  /**
+   * Returns a new [[aalto.smcl.modeling.d2.HexagonConcept]] instance.
+   *
+   * @param center
+   * @param circumRadiusInPixels
+   *
+   * @return
+   */
+  @inline
+  private
+  def apply(
+      center: Pos,
+      circumRadiusInPixels: Double): HexagonConcept = {
+
+    val points: Seq[Pos] = ???
+
+    instantiateHexagon(center, circumRadiusInPixels, points)
+  }
+
+  /**
+   * Returns a new [[HexagonConcept]] instance with a new data resolver instance.
+   *
+   * @param points
+   *
+   * @return
+   */
+  @inline
+  private
+  def instantiateHexagon(
+      center: Pos,
+      circumRadiusInPixels: Double,
+      points: Seq[Pos]): HexagonConcept = {
+
+    val dataResolver =
+      new HexagonDataResolver(
+        center, circumRadiusInPixels, points)
+
+    instantiateHexagon(dataResolver)
+  }
+
+  /**
+   * Returns a new [[HexagonConcept]] instance with a given data resolver instance.
+   *
+   * @param dataResolver
+   *
+   * @return
+   */
+  @inline
+  private
+  def instantiateHexagon(
+      dataResolver: HexagonDataResolver): HexagonConcept = {
+
+    new HexagonConcept(dataResolver)
+  }
+
+
+
+
+  private[d2]
+  class HexagonDataResolver(
+      val center: Pos,
+      val circumRadiusInPixels: Double,
+      val points: Seq[Pos])
+      extends PolygonDataResolver {
+
+    lazy val boundary: Bounds =
+      BoundaryCalculator.fromPositions(points)
+
+    lazy val position: Pos =
+      boundary.upperLeftMarker
+
+    lazy val dimensions: Dims =
+      Dims(boundary.width, boundary.height)
+
+    lazy val area: Area =
+      Area.forHexagon(circumRadiusInPixels)
+
+  }
+
+
+
+
 }
 
 
@@ -37,23 +120,12 @@ object HexagonConcept {
 /**
  * A conceptual two-dimensional hexagon that has Cartesian coordinates.
  *
- * @param center
- * @param circumRadiusInPixels
+ * @param dataResolver
  *
  * @author Aleksi Lukkarinen
  */
-class HexagonConcept(
-    center: Pos,
-    circumRadiusInPixels: Double,
-    shapeDataResolver: ShapeDataResolver)
-    extends PolygonConcept[HexagonConcept](shapeDataResolver) {
-
-  /** The corner points of this hexagon. */
-  val points: Seq[Pos] = Seq() // TODO
-
-  /** Area of this hexagon. */
-  lazy val area: Area =
-    Area.forHexagon(circumRadiusInPixels)
+class HexagonConcept(dataResolver: HexagonDataResolver)
+    extends PolygonConcept[HexagonConcept](dataResolver) {
 
   /**
    *
@@ -64,23 +136,25 @@ class HexagonConcept(
    */
   override
   def moveBy(offsets: Double*): HexagonConcept = {
-    copy(newCenter = center.moveBy(offsets: _*))
+    val movedPoints = points map {_.moveBy(offsets: _*)}
+
+    val updatedDataResolver =
+      new HexagonDataResolver(
+        dataResolver.center,
+        dataResolver.circumRadiusInPixels,
+        movedPoints)
+
+    HexagonConcept.instantiateHexagon(updatedDataResolver)
   }
 
   /**
-   *
-   *
-   * @param newCenter
-   * @param newCircumRadiusInPixels
+   * Returns a "copy" of this hexagon. As it makes no sense to allow arbitrary individual modifications of
+   * hexagons' corner points and because these objects are immutable, this method returns a reference to
+   * this same object and exists only for completeness' sake.
    *
    * @return
    */
   @inline
-  def copy(
-      newCenter: Pos = center,
-      newCircumRadiusInPixels: Double = circumRadiusInPixels): HexagonConcept = {
-
-    new HexagonConcept(newCenter, newCircumRadiusInPixels)
-  }
+  def copy(): HexagonConcept = this
 
 }

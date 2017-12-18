@@ -18,6 +18,7 @@ package aalto.smcl.modeling.d2
 
 
 import aalto.smcl.modeling.Area
+import aalto.smcl.modeling.d2.CircleConcept.CircleDataResolver
 
 
 
@@ -29,6 +30,88 @@ import aalto.smcl.modeling.Area
  */
 object CircleConcept {
 
+  /**
+   * Returns a new [[CircleConcept]] instance.
+   *
+   * @param center
+   * @param radiusInPixels
+   *
+   * @return
+   */
+  @inline
+  private
+  def apply(
+      center: Pos,
+      radiusInPixels: Double): CircleConcept = {
+
+    instantiateCircle(center, radiusInPixels)
+  }
+
+  /**
+   * Returns a new [[CircleConcept]] instance with a new data resolver instance.
+   *
+   * @param center
+   * @param radiusInPixels
+   *
+   * @return
+   */
+  @inline
+  private
+  def instantiateCircle(
+      center: Pos,
+      radiusInPixels: Double): CircleConcept = {
+
+    val dataResolver =
+      new CircleDataResolver(center, radiusInPixels)
+
+    instantiateCircle(dataResolver)
+  }
+
+  /**
+   * Returns a new [[CircleConcept]] instance with a given data resolver instance.
+   *
+   * @param dataResolver
+   *
+   * @return
+   */
+  @inline
+  private
+  def instantiateCircle(
+      dataResolver: CircleDataResolver): CircleConcept = {
+
+    new CircleConcept(dataResolver)
+  }
+
+
+
+
+  private[d2]
+  class CircleDataResolver(
+      val center: Pos,
+      val radiusInPixels: Double)
+      extends ShapeDataResolver {
+
+    lazy val boundary: Bounds = Bounds(
+      Pos(
+        center.xInPixels - radiusInPixels,
+        center.yInPixels - radiusInPixels),
+      Pos(
+        center.xInPixels + radiusInPixels,
+        center.yInPixels + radiusInPixels))
+
+    lazy val position: Pos =
+      boundary.upperLeftMarker
+
+    lazy val dimensions: Dims =
+      Dims(boundary.width, boundary.height)
+
+    lazy val area: Area =
+      Area.forCircle(radiusInPixels)
+  }
+
+
+
+
 }
 
 
@@ -37,37 +120,26 @@ object CircleConcept {
 /**
  * A conceptual two-dimensional circle that has Cartesian coordinates.
  *
- * @param center
- * @param radiusInPixels
- * @param shapeDataResolver
+ * @param dataResolver
  *
  * @author Aleksi Lukkarinen
  */
-class CircleConcept private(
-    center: Pos,
-    radiusInPixels: Double,
-    shapeDataResolver: ShapeDataResolver)
-    extends ConicSectionConcept[CircleConcept](shapeDataResolver) {
+class CircleConcept private(dataResolver: CircleDataResolver)
+    extends ConicSectionConcept[CircleConcept](dataResolver) {
 
-  /** */
-  lazy val boundary: Bounds = Bounds(
-    Pos(
-      position.xInPixels - radiusInPixels,
-      position.yInPixels - radiusInPixels),
-    Pos(
-      position.xInPixels + radiusInPixels,
-      position.yInPixels + radiusInPixels))
+  /**
+   * Returns the center point of this circle.
+   *
+   * @return
+   */
+  def center: Pos = dataResolver.center
 
-  /** Position of this circle. */
-  lazy val position: Pos = boundary.upperLeftMarker
-
-  /** Dimensions of this circle. */
-  lazy val dimensions: Dims = Dims(
-    boundary.width,
-    boundary.height)
-
-  /** Area of this circle. */
-  lazy val area: Area = Area.forCircle(radiusInPixels)
+  /**
+   * Returns the radius of this circle in pixels.
+   *
+   * @return
+   */
+  def radiusInPixels: Double = dataResolver.radiusInPixels
 
   /**
    *
@@ -76,7 +148,7 @@ class CircleConcept private(
    *
    * @return
    */
-  override
+  @inline
   def moveBy(offsets: Double*): CircleConcept = {
     copy(newCenter = center.moveBy(offsets: _*))
   }
@@ -94,7 +166,11 @@ class CircleConcept private(
       newCenter: Pos = center,
       newRadiusInPixels: Double = radiusInPixels): CircleConcept = {
 
-    new CircleConcept(newCenter, newRadiusInPixels)
+    if (newCenter != center || newRadiusInPixels != radiusInPixels) {
+      return CircleConcept(newCenter, newRadiusInPixels)
+    }
+
+    this
   }
 
 }

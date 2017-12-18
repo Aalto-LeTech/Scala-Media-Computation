@@ -20,22 +20,20 @@ package aalto.smcl.modeling.d2
 /**
  * A conceptual two-dimensional polygon that has Cartesian coordinates.
  *
- * @param shapeDataResolver
+ * @param polygonDataResolver
  * @tparam ObjectType
  *
  * @author Aleksi Lukkarinen
  */
 abstract class PolygonConcept[ObjectType](
-    shapeDataResolver: ShapeDataResolver)
-    extends ShapeConcept[ObjectType](shapeDataResolver) {
+    polygonDataResolver: PolygonDataResolver)
+    extends ShapeConcept[ObjectType](polygonDataResolver) {
 
   /**
-   *
+   * The defining corner points of this polygon.
    *
    * @return
    */
-  @inline
-  protected
-  def points: Seq[Pos]
+  def points: Seq[Pos] = polygonDataResolver.points
 
 }

@@ -19,6 +19,7 @@ package aalto.smcl.modeling.d2
 
 import aalto.smcl.infrastructure.MathUtils
 import aalto.smcl.modeling.Area
+import aalto.smcl.modeling.d2.TriangleConcept.TriangleDataResolver
 
 
 
@@ -290,10 +291,7 @@ object TriangleConcept {
     val points: Seq[Pos] =
       Seq(firstCorner, secondCorner, thirdCorner)
 
-    val dataResolver =
-      new TriangleDataResolver(points)
-
-    instantiateTriangle(points, dataResolver)
+    apply(points)
   }
 
   /**
@@ -305,17 +303,16 @@ object TriangleConcept {
    */
   def apply(points: Seq[Pos]): TriangleConcept = {
     require(points.lengthCompare(NumberOfCornersInTriangle) == 0,
-      s"A triangle has to have exactly three corner points (given: ${points.length})")
+      s"A triangle has to have exactly $NumberOfCornersInTriangle corner points (given: ${points.length})")
 
     val dataResolver = new TriangleDataResolver(points)
 
-    instantiateTriangle(points, dataResolver)
+    instantiateTriangle(dataResolver)
   }
 
   /**
    * Returns a new [[TriangleConcept]] instance with a given data resolver instance.
    *
-   * @param points
    * @param dataResolver
    *
    * @return
@@ -323,18 +320,18 @@ object TriangleConcept {
   @inline
   private
   def instantiateTriangle(
-      points: Seq[Pos],
-      dataResolver: ShapeDataResolver): TriangleConcept = {
+      dataResolver: TriangleDataResolver): TriangleConcept = {
 
-    new TriangleConcept(points, dataResolver)
+    new TriangleConcept(dataResolver)
   }
 
 
 
 
   private[d2]
-  class TriangleDataResolver(points: Seq[Pos])
-      extends ShapeDataResolver {
+  class TriangleDataResolver(
+      val points: Seq[Pos])
+      extends PolygonDataResolver {
 
     lazy val boundary: Bounds =
       BoundaryCalculator.fromPositions(points)
@@ -362,14 +359,11 @@ object TriangleConcept {
 /**
  * A conceptual two-dimensional triangle that has Cartesian coordinates.
  *
- * @param points the corner points of this triangle
  * @param dataResolver
  *
  * @author Aleksi Lukkarinen
  */
-class TriangleConcept private(
-    val points: Seq[Pos],
-    dataResolver: ShapeDataResolver)
+class TriangleConcept private(dataResolver: TriangleDataResolver)
     extends PolygonConcept[TriangleConcept](dataResolver) {
 
   /** The first corner point of this triangle. */
@@ -392,9 +386,9 @@ class TriangleConcept private(
   @inline
   override
   def moveBy(offsets: Double*): TriangleConcept = {
-    val newPoints = points map {_.moveBy(offsets: _*)}
+    val movedPoints = points map {_.moveBy(offsets: _*)}
 
-    TriangleConcept(newPoints)
+    TriangleConcept(movedPoints)
   }
 
   /**

@@ -29,6 +29,115 @@ import aalto.smcl.modeling.Area
  */
 object EllipseConcept {
 
+  /**
+   * Returns a new [[EllipseConcept]] instance.
+   *
+   * @param center
+   * @param semiMajorAxisInPixels
+   * @param semiMinorAxisInPixels
+   *
+   * @return
+   */
+  @inline
+  private
+  def apply(
+      center: Pos,
+      semiMajorAxisInPixels: Double,
+      semiMinorAxisInPixels: Double): EllipseConcept = {
+
+    instantiateEllipse(
+      center,
+      semiMajorAxisInPixels,
+      semiMinorAxisInPixels)
+  }
+
+  /**
+   * Returns a new [[EllipseConcept]] instance with a new data resolver instance.
+   *
+   * @param center
+   * @param semiMajorAxisInPixels
+   * @param semiMinorAxisInPixels
+   *
+   * @return
+   */
+  @inline
+  private
+  def instantiateEllipse(
+      center: Pos,
+      semiMajorAxisInPixels: Double,
+      semiMinorAxisInPixels: Double): EllipseConcept = {
+
+    val dataResolver =
+      new EllipseDataResolver(
+        center,
+        semiMajorAxisInPixels,
+        semiMinorAxisInPixels)
+
+    instantiateEllipse(
+      center,
+      semiMajorAxisInPixels,
+      semiMinorAxisInPixels,
+      dataResolver)
+  }
+
+  /**
+   * Returns a new [[EllipseConcept]] instance with a given data resolver instance.
+   *
+   * @param center
+   * @param semiMajorAxisInPixels
+   * @param semiMinorAxisInPixels
+   * @param dataResolver
+   *
+   * @return
+   */
+  @inline
+  private
+  def instantiateEllipse(
+      center: Pos,
+      semiMajorAxisInPixels: Double,
+      semiMinorAxisInPixels: Double,
+      dataResolver: ShapeDataResolver): EllipseConcept = {
+
+    new EllipseConcept(
+      center,
+      semiMajorAxisInPixels,
+      semiMinorAxisInPixels,
+      dataResolver)
+  }
+
+
+
+
+  private[d2]
+  class EllipseDataResolver(
+      val center: Pos,
+      val semiMajorAxisInPixels: Double,
+      val semiMinorAxisInPixels: Double)
+      extends ShapeDataResolver {
+
+    lazy val boundary: Bounds = Bounds(
+      Pos(
+        center.xInPixels - semiMajorAxisInPixels,
+        center.yInPixels - semiMinorAxisInPixels),
+      Pos(
+        center.xInPixels + semiMajorAxisInPixels,
+        center.yInPixels + semiMinorAxisInPixels))
+
+    lazy val position: Pos =
+      boundary.upperLeftMarker
+
+    lazy val dimensions: Dims =
+      Dims(boundary.width, boundary.height)
+
+    lazy val area: Area =
+      Area.forEllipse(
+        semiMajorAxisInPixels,
+        semiMinorAxisInPixels)
+  }
+
+
+
+
 }
 
 
@@ -50,28 +159,6 @@ class EllipseConcept private(
     shapeDataResolver: ShapeDataResolver)
     extends ConicSectionConcept[EllipseConcept](shapeDataResolver) {
 
-  /** Enclosing rectangle of this ellipse. */
-  lazy val boundary: Bounds = Bounds(
-    Pos(
-      position.xInPixels - semiMajorAxisInPixels,
-      position.yInPixels - semiMinorAxisInPixels),
-    Pos(
-      position.xInPixels + semiMajorAxisInPixels,
-      position.yInPixels + semiMinorAxisInPixels))
-
-  /** Position of this ellipse. */
-  lazy val position: Pos = boundary.upperLeftMarker
-
-  /** Dimensions of this ellipse. */
-  lazy val dimensions: Dims = Dims(
-    boundary.width,
-    boundary.height)
-
-  /** Area of this ellipse. */
-  val area: Area = Area.forEllipse(
-    semiMajorAxisInPixels,
-    semiMinorAxisInPixels)
-
   /**
    *
    *
@@ -79,7 +166,7 @@ class EllipseConcept private(
    *
    * @return
    */
-  override
+  @inline
   def moveBy(offsets: Double*): EllipseConcept = {
     copy(newCenter = center.moveBy(offsets: _*))
   }
@@ -99,7 +186,17 @@ class EllipseConcept private(
       newSemiMajorAxisInPixels: Double = semiMajorAxisInPixels,
       newSemiMinorAxisInPixels: Double = semiMinorAxisInPixels): EllipseConcept = {
 
-    new EllipseConcept(newCenter, newSemiMajorAxisInPixels, newSemiMinorAxisInPixels)
+    if (newCenter != center
+        || newSemiMajorAxisInPixels != semiMajorAxisInPixels
+        || newSemiMinorAxisInPixels != semiMinorAxisInPixels) {
+
+      return EllipseConcept(
+        newCenter,
+        newSemiMajorAxisInPixels,
+        newSemiMinorAxisInPixels)
+    }
+
+    this
   }
 
 }
