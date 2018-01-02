@@ -29,7 +29,7 @@ object Anchor {
   private val PresetData = Seq(
     (0.0, 0.0, Some("top left")), (0.5, 0.0, Some("top center")), (1.0, 0.0, Some("top right")),
     (0.0, 0.5, Some("center left")), (0.5, 0.5, Some("center")), (1.0, 0.5, Some("center right")),
-    (0.0, 1.0, Some("bottom left")), (0.5, 1.0, Some("bottom center")), (1.0, 1.0, Some("bottom righ")))
+    (0.0, 1.0, Some("bottom left")), (0.5, 1.0, Some("bottom center")), (1.0, 1.0, Some("bottom right")))
 
   /**
    * Creates a preset ratio anchor based on given data table index.
