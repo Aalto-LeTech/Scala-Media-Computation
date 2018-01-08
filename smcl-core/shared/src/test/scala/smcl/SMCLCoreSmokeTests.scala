@@ -18,11 +18,11 @@ package smcl
 
 
 import org.scalatest.DoNotDiscover
-import smcl.bitmaps.circle
-import smcl.bitmaps.fullfeatured.Bitmap
 import smcl.colors.LightBlue
 import smcl.colors.rgb.Color
 import smcl.infrastructure.tests.SharedIntegrationSpecBase
+import smcl.pictures.circle
+import smcl.pictures.fullfeatured.Bitmap
 
 
 

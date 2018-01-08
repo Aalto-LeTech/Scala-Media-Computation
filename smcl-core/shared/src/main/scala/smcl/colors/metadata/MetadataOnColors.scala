@@ -17,12 +17,12 @@
 package smcl.colors.metadata
 
 
-import smcl.bitmaps.fullfeatured.AbstractBitmap
 import smcl.colors
 import smcl.colors.rgb
 import smcl.colors.rgb.{Black, Gray, White}
 import smcl.infrastructure.StrSpace
 import smcl.interfaces.{BitmapToMetaImageConverter, MetadataOnResources, ResourceIndex, StaticGeneralBitmapMetadata}
+import smcl.pictures.fullfeatured.AbstractBitmap
 
 
 

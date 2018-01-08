@@ -20,7 +20,7 @@ package smcl
 import scala.collection.GenTraversable
 import scala.language.{higherKinds, implicitConversions}
 
-import smcl.bitmaps.BitmapValidatorFunctionFactory
+import smcl.pictures.BitmapValidatorFunctionFactory
 import smcl.settings.SettingValidatorFactory
 
 

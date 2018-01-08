@@ -17,8 +17,8 @@
 package smcl.settings.jvmawt
 
 
-import smcl.bitmaps.BitmapValidatorFunctionFactory
 import smcl.infrastructure.SettingInitializer
+import smcl.pictures.BitmapValidatorFunctionFactory
 import smcl.settings.{ObjectSetting, SettingValidatorFactory}
 
 

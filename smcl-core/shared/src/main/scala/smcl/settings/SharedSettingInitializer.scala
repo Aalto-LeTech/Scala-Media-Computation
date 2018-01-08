@@ -17,9 +17,9 @@
 package smcl.settings
 
 
-import smcl.bitmaps.BitmapValidatorFunctionFactory
 import smcl.colors.rgb._
 import smcl.infrastructure.SettingInitializer
+import smcl.pictures.BitmapValidatorFunctionFactory
 
 
 

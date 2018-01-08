@@ -17,8 +17,8 @@
 package smcl.infrastructure.js
 
 
-import smcl.bitmaps.{BitmapValidator, BitmapValidatorFunctionFactory}
 import smcl.infrastructure.SMCLInitializer
+import smcl.pictures.{BitmapValidator, BitmapValidatorFunctionFactory}
 import smcl.settings.{SettingValidatorFactory, SharedSettingInitializer}
 
 

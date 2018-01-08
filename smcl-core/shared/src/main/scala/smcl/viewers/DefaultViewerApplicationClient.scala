@@ -17,9 +17,9 @@
 package smcl.viewers
 
 
-import smcl.bitmaps.fullfeatured.{Bitmap, Bmp}
 import smcl.infrastructure.Displayable
 import smcl.infrastructure.exceptions.{ImplementationNotSetError, UnknownMediaTypeError}
+import smcl.pictures.fullfeatured.{Bitmap, Bmp}
 
 
 

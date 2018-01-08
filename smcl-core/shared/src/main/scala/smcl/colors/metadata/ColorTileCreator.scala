@@ -17,8 +17,8 @@
 package smcl.colors.metadata
 
 
-import smcl.bitmaps.fullfeatured
 import smcl.colors.rgb.Color
+import smcl.pictures.fullfeatured
 import smcl.settings.{ColorVisualizationTileSideLengthInPixels, PreventViewerUpdates}
 
 

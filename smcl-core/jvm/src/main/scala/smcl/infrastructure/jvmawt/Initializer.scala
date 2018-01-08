@@ -17,13 +17,13 @@
 package smcl.infrastructure.jvmawt
 
 
-import smcl.bitmaps.fullfeatured.{AbstractBitmaps, ShapeCreator}
-import smcl.bitmaps.{BitmapValidator, BitmapValidatorFunctionFactory, fullfeatured, simplified}
 import smcl.colors.ColorValidator
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, RichColor}
-import smcl.infrastructure.{CollectionCreator, CommonValidators, DefaultJVMCalendarProvider, DefaultJVMUniqueIDProvider, DefaultPlatformResourceFactory, InjectablesRegistry, RicherString, SMCLInitializer, SettingInitializer, StringUtils}
+import smcl.infrastructure._
 import smcl.modeling
 import smcl.modeling.d1
+import smcl.pictures.fullfeatured.{AbstractBitmaps, ShapeCreator}
+import smcl.pictures.{BitmapValidator, BitmapValidatorFunctionFactory, fullfeatured, simplified}
 import smcl.settings.jvmawt.JVMAWTSettingInitializer
 import smcl.settings.{SettingValidatorFactory, _}
 

@@ -17,7 +17,7 @@
 package smcl.viewers.bitmaps
 
 
-import smcl.bitmaps.fullfeatured.Bitmap
+import smcl.pictures.fullfeatured.Bitmap
 import smcl.viewers.ExternalViewerEvent
 
 

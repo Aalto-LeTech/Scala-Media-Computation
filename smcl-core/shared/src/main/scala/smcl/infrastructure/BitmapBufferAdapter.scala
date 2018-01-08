@@ -17,10 +17,10 @@
 package smcl.infrastructure
 
 
-import smcl.bitmaps.ConvolutionKernel
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import smcl.modeling.AffineTransformation
 import smcl.modeling.d2.Dims
+import smcl.pictures.ConvolutionKernel
 import smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 
 

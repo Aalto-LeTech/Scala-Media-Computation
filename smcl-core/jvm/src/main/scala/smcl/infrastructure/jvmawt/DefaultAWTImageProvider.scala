@@ -26,11 +26,11 @@ import javax.imageio.{ImageIO, ImageReader}
 
 import scala.util.{Try, _}
 
-import smcl.bitmaps.BitmapValidator
-import smcl.bitmaps.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
 import smcl.infrastructure.exceptions._
 import smcl.infrastructure.{BitmapBufferAdapter, CommonFileUtils, EnsureClosingOfAfter}
 import smcl.modeling.Len
+import smcl.pictures.BitmapValidator
+import smcl.pictures.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
 
 
 

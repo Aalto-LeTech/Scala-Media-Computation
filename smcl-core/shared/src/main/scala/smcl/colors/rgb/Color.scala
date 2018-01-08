@@ -626,7 +626,7 @@ class Color protected(
   @inline
   val descriptionTitle: String = "RGBA Color"
 
-  /** Information about this [[smcl.bitmaps.operations.Renderable]] instance. */
+  /** Information about this [[smcl.pictures.operations.Renderable]] instance. */
   lazy val describedProperties = Map(
     "Canonical Name" -> canonicalName.orUnnamed,
     "CSS Name" -> cssName.orUnnamed,

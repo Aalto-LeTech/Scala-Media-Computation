@@ -23,7 +23,7 @@ import scala.swing.Swing
 
 import rx.lang.scala.{Observable, Observer}
 import smcl.SMCLLibrary
-import smcl.bitmaps.fullfeatured.Bitmap
+import smcl.pictures.fullfeatured.Bitmap
 import smcl.infrastructure.Identity
 import smcl.viewers.bitmaps.DisplayBitmapEvent
 import smcl.viewers.{ExternalViewerEvent, ForceAllViewersToCloseEvent}

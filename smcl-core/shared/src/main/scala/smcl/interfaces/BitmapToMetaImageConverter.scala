@@ -17,7 +17,7 @@
 package smcl.interfaces
 
 
-import smcl.bitmaps.fullfeatured.AbstractBitmap
+import smcl.pictures.fullfeatured.AbstractBitmap
 
 
 
