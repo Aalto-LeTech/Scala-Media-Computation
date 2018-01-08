@@ -227,17 +227,17 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   initialCommands in console :=
-      """import aalto.smcl._
-        |import aalto.smcl.infrastructure._
-        |import aalto.smcl.settings._
-        |import aalto.smcl.modeling._
-        |import aalto.smcl.fonts._
-        |import aalto.smcl.colors._
-        |import aalto.smcl.bitmaps._
-        |import aalto.smcl.viewers._
+      """import smcl._
+        |import smcl.infrastructure._
+        |import smcl.settings._
+        |import smcl.modeling._
+        |import smcl.fonts._
+        |import smcl.colors._
+        |import smcl.bitmaps._
+        |import smcl.viewers._
         |
-        |aalto.smcl.infrastructure.jvmawt.Initializer()
-        |aalto.smcl.viewers.bitmaps.jvmawt.Initializer()
+        |smcl.infrastructure.jvmawt.Initializer()
+        |smcl.viewers.bitmaps.jvmawt.Initializer()
         |""".stripMargin
 )
 
