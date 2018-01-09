@@ -23,7 +23,7 @@ import smcl.infrastructure._
 import smcl.modeling
 import smcl.modeling.d1
 import smcl.pictures.fullfeatured.{AbstractBitmaps, ShapeCreator}
-import smcl.pictures.{BitmapValidator, BitmapValidatorFunctionFactory, fullfeatured, simplified}
+import smcl.pictures.{BitmapValidator, BitmapValidatorFunctionFactory, fullfeatured}
 import smcl.settings.jvmawt.JVMAWTSettingInitializer
 import smcl.settings.{SettingValidatorFactory, _}
 
@@ -115,8 +115,7 @@ object Initializer extends SMCLInitializer {
       fullfeatured.Bitmap,
       fullfeatured.Bmp,
       ShapeCreator,
-      simplified.Bitmap,
-      simplified.ShapeCreator,
+      //simplified.Pic,
       AbstractBitmaps
     )
 

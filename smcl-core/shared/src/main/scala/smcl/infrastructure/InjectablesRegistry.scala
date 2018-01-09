@@ -35,16 +35,16 @@ object InjectablesRegistry {
   /** Injectable ID for the [[CommonValidators]] class. */
   val IIdCommonValidators = "CommonValidators"
 
-  /** Injectable ID for the [[aalto.smcl.colors.ColorValidator]] class. */
+  /** Injectable ID for the [[smcl.colors.ColorValidator]] class. */
   val IIdColorValidator = "ColorValidator"
 
-  /** Injectable ID for the [[aalto.smcl.colors.rgb.ColorTranslationTableValidator]] class. */
+  /** Injectable ID for the [[smcl.colors.rgb.ColorTranslationTableValidator]] class. */
   val IIdColorTranslationTableValidator = "ColorTranslationTableValidator"
 
-  /** Injectable ID for the [[aalto.smcl.bitmaps.BitmapValidator]] class. */
+  /** Injectable ID for the [[smcl.pictures.BitmapValidator]] class. */
   val IIdBitmapValidator = "BitmapValidator"
 
-  /** Injectable ID for the [[aalto.smcl.settings.SettingRegistry.SettingRegisterer]] class. */
+  /** Injectable ID for the [[smcl.settings.SettingRegistry.SettingRegisterer]] class. */
   val IIdSettingRegisterer = "SettingRegisterer"
 
   /** Injectable ID for the [[CollectionCreator]] class. */

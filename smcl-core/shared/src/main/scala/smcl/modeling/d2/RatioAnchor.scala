@@ -61,7 +61,7 @@ object RatioAnchor
       ratios: Seq[Double],
       name: Option[String]): RatioAnchor = {
 
-    require(ratios.length == NumberOfDimensions,
+    require(ratios.lengthCompare(NumberOfDimensions) == 0,
       s"Exactly $NumberOfDimensions ratios must be given (found: ${ratios.length})")
 
     apply(ratios.head, ratios(1), name)

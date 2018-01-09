@@ -39,7 +39,7 @@ class RichLong(val value: Long) {
    * @return
    */
   def atLeast(minimum: Long): Long =
-    this.value.max(minimum)
+    value.max(minimum)
 
   /**
    *
@@ -49,7 +49,7 @@ class RichLong(val value: Long) {
    * @return
    */
   def atMost(maximum: Long): Long =
-    this.value.min(maximum)
+    value.min(maximum)
 
   /**
    *
@@ -60,7 +60,32 @@ class RichLong(val value: Long) {
    * @return
    */
   def isBetween(low: Long, high: Long): Boolean =
-    this.value >= low && this.value < high
+    value >= low && value < high
+
+  /**
+   *
+   *
+   * @param low
+   * @param high
+   *
+   * @return
+   */
+  def clamp(low: Long, high: Long): Long =
+    value atLeast low atMost high
+
+  /**
+   *
+   *
+   * @return
+   */
+  def isOdd: Boolean = value % 2 == 1
+
+  /**
+   *
+   *
+   * @return
+   */
+  def isEven: Boolean = value % 2 == 0
 
   /**
    *

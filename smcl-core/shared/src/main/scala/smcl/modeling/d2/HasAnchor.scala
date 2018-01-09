@@ -38,11 +38,13 @@ trait HasAnchor {
 
   /** */
   @inline
-  def width: Len = self.width
+  override
+  def width: Len = dimensions.width
 
   /** */
   @inline
-  def height: Len = self.height
+  override
+  def height: Len = dimensions.height
 
   /**
    *
@@ -52,6 +54,16 @@ trait HasAnchor {
   @inline
   def internalAnchorDims: Dims = {
     anchor.internalDimsWithin(self)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def internalAnchorPos: Pos = {
+    anchor.internalPosWithin(self)
   }
 
   /**

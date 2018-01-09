@@ -39,7 +39,7 @@ class RichShort(val value: Short) {
    * @return
    */
   def atLeast(minimum: Short): Short =
-    this.value.max(minimum)
+    value.max(minimum)
 
   /**
    *
@@ -49,7 +49,7 @@ class RichShort(val value: Short) {
    * @return
    */
   def atMost(maximum: Short): Short =
-    this.value.min(maximum)
+    value.min(maximum)
 
   /**
    *
@@ -60,7 +60,32 @@ class RichShort(val value: Short) {
    * @return
    */
   def isBetween(low: Short, high: Short): Boolean =
-    this.value >= low && this.value < high
+    value >= low && value < high
+
+  /**
+   *
+   *
+   * @param low
+   * @param high
+   *
+   * @return
+   */
+  def clamp(low: Short, high: Short): Short =
+    (value atLeast low atMost high).toShort
+
+  /**
+   *
+   *
+   * @return
+   */
+  def isOdd: Boolean = value % 2 == 1
+
+  /**
+   *
+   *
+   * @return
+   */
+  def isEven: Boolean = value % 2 == 0
 
   /**
    *

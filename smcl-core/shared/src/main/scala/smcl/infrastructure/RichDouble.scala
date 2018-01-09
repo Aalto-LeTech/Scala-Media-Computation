@@ -39,7 +39,7 @@ class RichDouble(val value: Double) {
    * @return
    */
   def atLeast(minimum: Double): Double =
-    this.value.max(minimum)
+    value.max(minimum)
 
   /**
    *
@@ -49,7 +49,7 @@ class RichDouble(val value: Double) {
    * @return
    */
   def atMost(maximum: Double): Double =
-    this.value.min(maximum)
+    value.min(maximum)
 
   /**
    *
@@ -60,7 +60,18 @@ class RichDouble(val value: Double) {
    * @return
    */
   def isBetween(low: Double, high: Double): Boolean =
-    this.value >= low && this.value < high
+    value >= low && value < high
+
+  /**
+   *
+   *
+   * @param low
+   * @param high
+   *
+   * @return
+   */
+  def clamp(low: Double, high: Double): Double =
+    value atLeast low atMost high
 
   /**
    *

@@ -39,7 +39,7 @@ class RichFloat(val value: Float) {
    * @return
    */
   def atLeast(minimum: Float): Float =
-    this.value.max(minimum)
+    value.max(minimum)
 
   /**
    *
@@ -49,7 +49,7 @@ class RichFloat(val value: Float) {
    * @return
    */
   def atMost(maximum: Float): Float =
-    this.value.min(maximum)
+    value.min(maximum)
 
   /**
    *
@@ -60,7 +60,18 @@ class RichFloat(val value: Float) {
    * @return
    */
   def isBetween(low: Float, high: Float): Boolean =
-    this.value >= low && this.value < high
+    value >= low && value < high
+
+  /**
+   *
+   *
+   * @param low
+   * @param high
+   *
+   * @return
+   */
+  def clamp(low: Float, high: Float): Float =
+    value atLeast low atMost high
 
   /**
    *

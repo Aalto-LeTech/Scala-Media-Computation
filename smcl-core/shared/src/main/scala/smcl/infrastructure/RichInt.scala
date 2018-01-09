@@ -39,7 +39,7 @@ class RichInt(val value: Int) {
    * @return
    */
   def atLeast(minimum: Int): Int =
-    this.value.max(minimum)
+    value.max(minimum)
 
   /**
    *
@@ -49,7 +49,7 @@ class RichInt(val value: Int) {
    * @return
    */
   def atMost(maximum: Int): Int =
-    this.value.min(maximum)
+    value.min(maximum)
 
   /**
    *
@@ -60,7 +60,32 @@ class RichInt(val value: Int) {
    * @return
    */
   def isBetween(low: Int, high: Int): Boolean =
-    this.value >= low && this.value < high
+    value >= low && value < high
+
+  /**
+   *
+   *
+   * @param low
+   * @param high
+   *
+   * @return
+   */
+  def clamp(low: Int, high: Int): Int =
+    value atLeast low atMost high
+
+  /**
+   *
+   *
+   * @return
+   */
+  def isOdd: Boolean = value % 2 == 1
+
+  /**
+   *
+   *
+   * @return
+   */
+  def isEven: Boolean = value % 2 == 0
 
   /**
    *

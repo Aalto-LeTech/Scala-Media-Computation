@@ -18,7 +18,6 @@ package smcl.pictures.fullfeatured
 
 
 import smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
-import smcl.modeling.Len
 import smcl.modeling.d2._
 
 
@@ -39,7 +38,23 @@ object Image {
   def apply(elements: ImageElement*): Image = {
     val identity: Identity = Identity()
 
-    new Image(identity, elements)
+    new Image(identity, elements, Anchor.Center)
+  }
+
+  /**
+   *
+   *
+   * @param elements
+   *
+   * @return
+   */
+  def apply(
+      elements: Seq[ImageElement],
+      anchor: Anchor[HasAnchor]): Image = {
+
+    val identity: Identity = Identity()
+
+    new Image(identity, elements, anchor)
   }
 
 }
@@ -54,10 +69,13 @@ object Image {
  */
 class Image private(
     override val identity: Identity,
-    val elements: Seq[ImageElement])
+    val elements: Seq[ImageElement],
+    val anchor: Anchor[HasAnchor])
     extends ImageElement
         with HasPos
         with HasBounds
+        with HasDims
+        with HasAnchor
         with FlatMap[Image, Seq[ImageElement]] {
 
   // TODO: Tarkistukset
@@ -66,14 +84,13 @@ class Image private(
   val boundary: Bounds =
     BoundaryCalculator.fromBoundaries(elements)
 
-  /** */
-  val position: Pos = boundary.upperLeftMarker
+  /** Dimensions of this object. */
+  override
+  def dimensions: Dims = Dims(boundary.width, boundary.height)
 
-  /** */
-  val width: Len = boundary.width
-
-  /** */
-  val height: Len = boundary.height
+  /** Position of this object. */
+  override
+  def position: Pos = boundary.upperLeftMarker
 
   /** */
   val isRenderable: Boolean = width > 0 && height > 0
@@ -139,8 +156,11 @@ class Image private(
    * @return
    */
   @inline
-  def copy(newElements: Seq[ImageElement] = elements): Image = {
-    new Image(identity, newElements)
+  def copy(
+      newElements: Seq[ImageElement] = elements,
+      newAnchor: Anchor[HasAnchor]): Image = {
+
+    new Image(identity, newElements, anchor)
   }
 
   /**

@@ -236,4 +236,17 @@ trait Anchor[HasAnchorType]
       internalYWithin(anchored))
   }
 
+  /**
+   *
+   *
+   * @param anchored
+   *
+   * @return
+   */
+  def internalPosWithin(anchored: HasAnchorType): Pos = {
+    Pos(
+      internalXWithin(anchored),
+      internalYWithin(anchored))
+  }
+
 }

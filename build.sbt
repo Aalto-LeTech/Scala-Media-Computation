@@ -37,7 +37,7 @@ enablePlugins(ScalaJSPlugin)
 //
 //-------------------------------------------------------------------------------------------------
 
-lazy val primaryScalaVersion = "2.12.3"
+lazy val primaryScalaVersion = "2.12.4"
 
 lazy val projectIdJvmPostfix = "-jvm"
 lazy val projectIdJsPostfix = "-js"
@@ -46,7 +46,7 @@ lazy val projectIdTestPostfix = "-tests"
 lazy val smclName = "Scala Media Computation Library"
 lazy val smclHomepageUrl = "http://github.com/Aalto-LeTech/Scala-Media-Computation"
 
-lazy val projectOrganizationId = "aalto.cs"
+lazy val projectOrganizationId = "fi.aalto.cs"
 lazy val projectOrganizationName = "Aalto University, Department of Computer Science"
 lazy val projectOrganizationUrl = "http://cs.aalto.fi/"
 lazy val projectStartYear = 2015
@@ -233,7 +233,7 @@ lazy val smclGeneralSettings = Seq(
         |import smcl.modeling._
         |import smcl.fonts._
         |import smcl.colors._
-        |import smcl.bitmaps._
+        |import smcl.pictures._
         |import smcl.viewers._
         |
         |smcl.infrastructure.jvmawt.Initializer()

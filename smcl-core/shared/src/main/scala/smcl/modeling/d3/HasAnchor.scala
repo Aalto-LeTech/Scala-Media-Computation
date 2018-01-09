@@ -54,6 +54,16 @@ trait HasAnchor {
    * @return
    */
   @inline
+  def internalAnchorPos: Pos = {
+    anchor.internalPosWithin(self)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   def internalAnchorDims: Dims = {
     anchor.internalDimsWithin(self)
   }

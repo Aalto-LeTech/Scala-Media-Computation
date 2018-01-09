@@ -21,7 +21,7 @@ import org.scalatest.DoNotDiscover
 import smcl.colors.LightBlue
 import smcl.colors.rgb.Color
 import smcl.infrastructure.tests.SharedIntegrationSpecBase
-import smcl.pictures.circle
+//import smcl.pictures.circle
 import smcl.pictures.fullfeatured.Bitmap
 
 
@@ -38,7 +38,7 @@ class SMCLCoreSmokeTests extends SharedIntegrationSpecBase {
   "SMCL must be able to" - {
     "list all settings" in {smcl.settings.Settings.list()}
     "create a bitmap" in {Bitmap(widthInPixels = 15)}
-    "create a circle" in {circle(50)}
+//    "create a circle" in {circle(50)}
     "create a new RGBA color" in {Color(1, 2, 3, 4)}
     "recall a preset RGBA color" in LightBlue
   }

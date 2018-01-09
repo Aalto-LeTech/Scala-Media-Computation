@@ -32,10 +32,12 @@ trait HasDims
     extends HasDimensions[Dims] {
 
   /** */
-  lazy val width: Len = dimensions.width
+  @inline
+  def width: Len = dimensions.width
 
   /** */
-  lazy val height: Len = dimensions.height
+  @inline
+  def height: Len = dimensions.height
 
   /**
    *

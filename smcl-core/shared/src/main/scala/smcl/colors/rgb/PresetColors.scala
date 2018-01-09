@@ -634,6 +634,10 @@ trait PresetColors {
   val White90 = PresetColor(White.shadeByPercentage(10), "white90")
 
 
+  /** Color constant for transparent <em>"white"</em>. */
+  val Transparent = PresetColor(White.withFullTransparency, "transparent")
+
+
   /**
    * All preset color definitions as a mapping from
    * color names to the corresponding [[PresetColor]] objects.
