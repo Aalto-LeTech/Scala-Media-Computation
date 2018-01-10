@@ -2,22 +2,11 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
-      <module name="root" target="1.8" />
-      <module name="scala-media-computation" target="1.8" />
       <module name="smcl" target="1.8" />
       <module name="smcl-bitmap-viewer-js" target="1.8" />
       <module name="smcl-bitmap-viewer-jvm" target="1.8" />
-      <module name="smcl-bitmap-viewer-smcl-bitmap-viewer-js" target="1.8" />
-      <module name="smcl-bitmap-viewer-smcl-bitmap-viewer-jvm" target="1.8" />
       <module name="smcl-core-js" target="1.8" />
       <module name="smcl-core-jvm" target="1.8" />
-      <module name="smcl-core-smcl-core-js" target="1.8" />
-      <module name="smcl-core-smcl-core-jvm" target="1.8" />
-      <module name="smcl-public-interfaces-js" target="1.8" />
-      <module name="smcl-public-interfaces-jvm" target="1.8" />
-      <module name="smcl-public-interfaces-smcl-public-interfaces-js" target="1.8" />
-      <module name="smcl-public-interfaces-smcl-public-interfaces-jvm" target="1.8" />
-      <module name="work-repos-smcl" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
