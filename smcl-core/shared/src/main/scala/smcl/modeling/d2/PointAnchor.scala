@@ -57,7 +57,7 @@ object PointAnchor
       coordinates: Seq[Double],
       name: Option[String]): PointAnchor = {
 
-    require(coordinates.length == NumberOfDimensions,
+    require(coordinates.lengthCompare(NumberOfDimensions) == 0,
       s"Exactly $NumberOfDimensions coordinates must " +
           s"be given (found: ${coordinates.length})")
 

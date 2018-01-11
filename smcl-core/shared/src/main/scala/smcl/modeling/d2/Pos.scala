@@ -122,7 +122,8 @@ case class Pos private[smcl](
         with Rotatable[Pos] {
 
   /** */
-  lazy val coordinates: Seq[Double] = Seq(xInPixels, yInPixels)
+  lazy val coordinates: Seq[Double] =
+    Seq(xInPixels, yInPixels)
 
   /** */
   lazy val boundary: Bounds = Bounds(this, this)
@@ -417,6 +418,16 @@ case class Pos private[smcl](
    */
   @inline
   def isOnFourthQuadrant: Boolean = quadrant.contains(4)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toSimplifiedPos: simplified.Pos = {
+    new simplified.Pos(xInPixels, yInPixels)
+  }
 
   /**
    *

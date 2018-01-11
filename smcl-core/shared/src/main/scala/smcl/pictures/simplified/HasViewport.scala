@@ -14,13 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.pictures
-
-
-import scala.language.implicitConversions
-
-import smcl.modeling.d2
-import smcl.modeling.d2.RatioAnchor
+package smcl.pictures.simplified
 
 
 /**
@@ -28,10 +22,13 @@ import smcl.modeling.d2.RatioAnchor
  *
  * @author Aleksi Lukkarinen
  */
-package object simplified {
+trait HasViewport {
 
-  type Anchor = RatioAnchor
-
-  val Anchor: d2.Anchor.type = d2.Anchor
+  /**
+   *
+   *
+   * @return
+   */
+  def viewport: Viewport
 
 }

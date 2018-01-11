@@ -244,7 +244,9 @@ case class Bounds private(
     extends CoordSysIndepBoundary[Pos]
         with HasArea {
 
-  val markers: Seq[Pos] = Seq(upperLeftMarker, lowerRightMarker)
+  /** */
+  lazy val markers: Seq[Pos] =
+    Seq(upperLeftMarker, lowerRightMarker)
 
   /** Position of this boundary. */
   @inline
@@ -259,6 +261,10 @@ case class Bounds private(
     Len(lowerRightMarker.yInPixels - upperLeftMarker.yInPixels + 1)
 
   /** */
+  lazy val dimensions: Dims =
+    Dims(width, height)
+
+  /** */
   lazy val length: Len =
     Len(2 * width.inPixels +
         2 * height.inPixels -
@@ -267,6 +273,15 @@ case class Bounds private(
   /** */
   lazy val area: Area =
     Area.forRectangle(width.inPixels, height.inPixels)
+
+  /** */
+  lazy val toSimplifiedBounds: simplified.Bounds = {
+    new simplified.Bounds(
+      upperLeftMarker.xInPixels.floor.toInt,
+      upperLeftMarker.yInPixels.floor.toInt,
+      width.inPixels.floor.toInt,
+      height.inPixels.floor.toInt)
+  }
 
   /**
    *

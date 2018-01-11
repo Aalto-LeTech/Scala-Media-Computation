@@ -14,7 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl
+package smcl.pictures
 
 
 import scala.language.implicitConversions
@@ -25,6 +25,6 @@ import scala.language.implicitConversions
  *
  * @author Aleksi Lukkarinen
  */
-package object pictures {
+package object simplified {
 
 }
