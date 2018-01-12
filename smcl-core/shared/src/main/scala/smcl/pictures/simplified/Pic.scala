@@ -42,7 +42,7 @@ object Pic {
    */
   @inline
   def apply(): Pic = {
-    createAndInitialize(
+    apply(
       image = None,
       anchor = Anchor.Center,
       viewport = null)
@@ -57,7 +57,7 @@ object Pic {
    */
   @inline
   def apply(anchor: Anchor): Pic = {
-    createAndInitialize(
+    apply(
       image = None,
       anchor = anchor,
       viewport = null)
@@ -76,7 +76,7 @@ object Pic {
       anchor: Anchor,
       viewport: Viewport): Pic = {
 
-    createAndInitialize(
+    apply(
       image = None,
       anchor = anchor,
       viewport = viewport)
@@ -103,14 +103,14 @@ object Pic {
       else
         null
 
-    createAndInitialize(
+    apply(
       image = loadedImage,
       anchor = anchor,
       viewport = viewport)
   }
 
   /**
-   * Creates a new empty [[Pic]] instance.
+   * Returns a new [[Pic]] instance.
    *
    * @param image
    * @param anchor
@@ -120,7 +120,7 @@ object Pic {
    */
   @inline
   private[pictures]
-  def createAndInitialize(
+  def apply(
       image: Option[Image],
       anchor: Anchor,
       viewport: Viewport): Pic = {
@@ -146,6 +146,8 @@ object Pic {
       backgroundColor: Color, borderWidth: Int): Unit = {
 
     println("show... to be implemented")
+
+    pic.content.display()
   }
 
   /**
@@ -769,7 +771,7 @@ class Pic private[pictures](
       background: Color = White,
       border: Int = 1): Unit = {
 
-    //Pic.show(self, background, border)
+    Pic.show(this, background, border)
   }
 
   /**
@@ -1354,6 +1356,15 @@ class Pic private[pictures](
 
     this
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  def toString: String =
+    s"Pic($width px x $height px, ${content.elements.length} item(s))"
 
 
 

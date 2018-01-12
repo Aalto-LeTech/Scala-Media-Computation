@@ -202,4 +202,24 @@ case class RatioAnchor private(
     s"RatioAnchor(w: $widthRatio, h: $heightRatio)"
   }
 
+  /**
+   *
+   *
+   * @return
+   */
+  def toSimplifiedAnchor: Option[simplified.Anchor] = {
+    (widthRatio, heightRatio) match {
+      case (0.0, 0.0) => Some(simplified.Anchor.TopLeft)
+      case (0.0, 0.5) => Some(simplified.Anchor.CenterLeft)
+      case (0.0, 1.0) => Some(simplified.Anchor.BottomLeft)
+      case (0.5, 0.0) => Some(simplified.Anchor.TopCenter)
+      case (0.5, 0.5) => Some(simplified.Anchor.Center)
+      case (0.5, 1.0) => Some(simplified.Anchor.BottomCenter)
+      case (1.0, 0.0) => Some(simplified.Anchor.TopRight)
+      case (1.0, 0.5) => Some(simplified.Anchor.CenterRight)
+      case (1.0, 1.0) => Some(simplified.Anchor.BottomRight)
+      case _          => None
+    }
+  }
+
 }

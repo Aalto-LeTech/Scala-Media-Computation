@@ -35,6 +35,30 @@ object Line {
   /**
    *
    *
+   * @param startX
+   * @param startY
+   * @param endX
+   * @param endY
+   * @param color
+   *
+   * @return
+   */
+  def apply(
+      startX: Double,
+      startY: Double,
+      endX: Double,
+      endY: Double,
+      color: rgb.Color): Line = {
+
+    apply(
+      Pos(startX, startY),
+      Pos(endX, endY),
+      color)
+  }
+
+  /**
+   *
+   *
    * @param start
    * @param end
    * @param color
@@ -50,6 +74,7 @@ object Line {
   }
 
 }
+
 
 
 

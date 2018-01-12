@@ -20,8 +20,11 @@ package smcl.pictures
 import scala.language.implicitConversions
 
 import smcl.colors.rgb._
-import smcl.modeling.d2.simplified.Anchor.{BottomLeft, BottomRight, Center, TopLeft, TopRight}
+import smcl.modeling.d2
+import smcl.modeling.d2.RatioAnchor
+import smcl.modeling.d2.simplified.Anchor.{Center, TopLeft}
 import smcl.modeling.d2.simplified.{Anchor, Bounds, Pos}
+import smcl.pictures.fullfeatured.{Image, Line}
 
 
 /**
@@ -241,15 +244,22 @@ package object simplified {
       color: Color,
       backgroundColor: Color = Transparent): Pic = {
 
-    val anchor = (from.x < to.x, from.y < to.y) match {
-      case (true, true)   => TopLeft
-      case (true, false)  => BottomLeft
-      case (false, true)  => TopRight
-      case (false, false) => BottomRight
-    }
+    val anchor: RatioAnchor =
+      (from.x < to.x, from.y < to.y) match {
+        case (true, true)   => d2.Anchor.TopLeft
+        case (true, false)  => d2.Anchor.BottomLeft
+        case (false, true)  => d2.Anchor.TopRight
+        case (false, false) => d2.Anchor.BottomRight
+      }
+
+    // A simplified anchor will always exist for the anchor presets above
+    val simplifiedAnchor = anchor.toSimplifiedAnchor.get
 
     //Pic(fullfeatured.line(from.xInt, from.yInt, to.xInt, to.yInt, color, backgroundColor).flipVertically(), anchor) // XXX pwa
-    Pic()
+    Pic(
+      Some(Image(Seq(Line(from.x, from.y, to.x, to.y, color)), anchor)),
+      simplifiedAnchor,
+      viewport = null)
   }
 
 }
