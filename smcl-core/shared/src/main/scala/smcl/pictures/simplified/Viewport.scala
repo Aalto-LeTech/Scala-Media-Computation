@@ -59,7 +59,7 @@ class Viewport(val boundary: Bounds) {
    * @return
    */
   @inline
-  def width: Int = boundary.width
+  def width: Double = boundary.width
 
   /**
    *
@@ -67,7 +67,7 @@ class Viewport(val boundary: Bounds) {
    * @return
    */
   @inline
-  def height: Int = boundary.height
+  def height: Double = boundary.height
 
   /**
    *
@@ -75,7 +75,7 @@ class Viewport(val boundary: Bounds) {
    * @return
    */
   @inline
-  def left: Int = boundary.height
+  def left: Double = boundary.height
 
   /**
    *
@@ -83,7 +83,7 @@ class Viewport(val boundary: Bounds) {
    * @return
    */
   @inline
-  def top: Int = boundary.top
+  def top: Double = boundary.top
 
   /**
    *
@@ -91,7 +91,7 @@ class Viewport(val boundary: Bounds) {
    * @return
    */
   @inline
-  def right: Int = boundary.right
+  def right: Double = boundary.right
 
   /**
    *
@@ -99,7 +99,7 @@ class Viewport(val boundary: Bounds) {
    * @return
    */
   @inline
-  def bottom: Int = boundary.bottom
+  def bottom: Double = boundary.bottom
 
   /**
    *

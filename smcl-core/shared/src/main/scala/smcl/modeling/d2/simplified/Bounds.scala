@@ -42,10 +42,10 @@ object Bounds {
    */
   def apply(
       pos: Pos,
-      width: Int,
-      height: Int): Bounds = {
+      width: Double,
+      height: Double): Bounds = {
 
-    new Bounds(pos.xInt, pos.yInt, width, height) // XXX floor or round or what?
+    new Bounds(pos.x, pos.y, width, height)
   }
 
 }
@@ -64,28 +64,20 @@ object Bounds {
  * @author Juha Sorva
  * @author Aleksi Lukkarinen
  */
-case class Bounds(left: Int, top: Int, width: Int, height: Int) { // XXX hasposition
+case class Bounds(
+    left: Double,
+    top: Double,
+    width: Double,
+    height: Double) { // XXX hasposition
 
   /** */
-  lazy val right: Int = left + width
+  lazy val right: Double = left + width
 
   /** */
-  lazy val bottom: Int = top + height
+  lazy val bottom: Double = top + height
 
   /** */
   lazy val pos = Pos(left, top)
-
-  /**
-   *
-   *
-   * @param x
-   * @param y
-   *
-   * @return
-   */
-  def contains(x: Int, y: Int): Boolean =
-    x.isBetween(this.left, this.right) &&
-        y.isBetween(this.top, this.bottom)
 
   /**
    *
@@ -95,7 +87,18 @@ case class Bounds(left: Int, top: Int, width: Int, height: Int) { // XXX hasposi
    * @return
    */
   def contains(pos: Pos): Boolean =
-    this.contains(pos.xInt, pos.yInt) // XXX floor or round or what?
+    contains(pos.x, pos.y)
+
+  /**
+   *
+   *
+   * @param x
+   * @param y
+   *
+   * @return
+   */
+  def contains(x: Double, y: Double): Boolean =
+    x.isBetween(left, right) && y.isBetween(top, bottom)
 
   /**
    *
