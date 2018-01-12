@@ -18,8 +18,6 @@
 package smcl.modeling.d2.simplified
 
 
-import java.awt.Point
-
 import scala.math.hypot
 
 import smcl.infrastructure._
@@ -34,7 +32,7 @@ import smcl.infrastructure._
  * @author Aleksi Lukkarinen
  */
 object Pos {
-
+/*
   /**
    *
    *
@@ -44,7 +42,7 @@ object Pos {
    */
   def apply(point: Point) =
     new Pos(point.getX, point.getY)
-
+*/
 }
 
 
@@ -68,6 +66,7 @@ case class Pos(
    *
    * @return
    */
+  @inline
   def xInt: Int = x.floor.toInt
 
   /**
@@ -75,7 +74,8 @@ case class Pos(
    *
    * @return
    */
-  def yInt: Int = this.y.floor.toInt
+  @inline
+  def yInt: Int = y.floor.toInt
 
   /**
    *
@@ -84,6 +84,7 @@ case class Pos(
    *
    * @return
    */
+  @inline
   def noLowerThan(yMax: Double): Pos =
     Pos(
       x,
@@ -96,6 +97,7 @@ case class Pos(
    *
    * @return
    */
+  @inline
   def noHigherThan(yMin: Double): Pos =
     Pos(
       x,
@@ -108,6 +110,7 @@ case class Pos(
    *
    * @return
    */
+  @inline
   def noFurtherLeftThan(xMin: Double): Pos =
     Pos(
       x atLeast xMin,
@@ -120,6 +123,7 @@ case class Pos(
    *
    * @return
    */
+  @inline
   def noFurtherRightThan(xMax: Double): Pos =
     Pos(
       x atMost xMax,
@@ -133,6 +137,7 @@ case class Pos(
    *
    * @return
    */
+  @inline
   def clampX(min: Double, max: Double): Pos =
     Pos(
       x atLeast min atMost max,
@@ -146,6 +151,7 @@ case class Pos(
    *
    * @return
    */
+  @inline
   def clampY(min: Double, max: Double): Pos =
     Pos(
       x,
@@ -161,65 +167,296 @@ case class Pos(
    *
    * @return
    */
+  @inline
   def clamp(xMin: Double, xMax: Double, yMin: Double, yMax: Double): Pos =
     Pos(
       x atLeast xMin atMost xMax,
       y atLeast yMin atMost yMax)
 
-  def offset(dx: Double, dy: Double): Pos = this.add(dx, dy)
+  /**
+   *
+   *
+   * @param dx
+   * @param dy
+   *
+   * @return
+   */
+  @inline
+  def offset(dx: Double, dy: Double): Pos = add(dx, dy)
 
-  def offset(another: Pos): Pos = this.add(another)
+  /**
+   *
+   *
+   * @param another
+   *
+   * @return
+   */
+  @inline
+  def offset(another: Pos): Pos = add(another)
 
-  def add(dx: Double, dy: Double): Pos = Pos(this.x + dx, this.y + dy)
+  /**
+   *
+   *
+   * @param dx
+   * @param dy
+   *
+   * @return
+   */
+  @inline
+  def add(dx: Double, dy: Double): Pos = Pos(x + dx, y + dy)
 
-  def add(pos: Pos): Pos = this.add(pos.x, pos.y)
+  /**
+   *
+   *
+   * @param pos
+   *
+   * @return
+   */
+  @inline
+  def add(pos: Pos): Pos = add(pos.x, pos.y)
 
-  def unary_- : Pos = Pos(-this.x, -this.y)
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def unary_- : Pos = Pos(-x, -y)
 
-  def xDiff(another: Pos): Double = another.x - this.x
+  /**
+   *
+   *
+   * @param another
+   *
+   * @return
+   */
+  @inline
+  def xDiff(another: Pos): Double = another.x - x
 
-  def yDiff(another: Pos): Double = another.y - this.y
+  /**
+   *
+   *
+   * @param another
+   *
+   * @return
+   */
+  @inline
+  def yDiff(another: Pos): Double = another.y - y
 
-  def + (another: Pos): Pos = this.add(another)
+  /**
+   *
+   *
+   * @param another
+   *
+   * @return
+   */
+  @inline
+  def + (another: Pos): Pos = add(another)
 
+  /**
+   *
+   *
+   * @param another
+   *
+   * @return
+   */
+  @inline
   def - (another: Pos): Pos = this + -another
 
-  def * (factor: Double): Pos = this.multiply(factor)
+  /**
+   *
+   *
+   * @param factor
+   *
+   * @return
+   */
+  @inline
+  def * (factor: Double): Pos = multiply(factor)
 
-  def / (divisor: Double): Pos = this.divide(divisor)
+  /**
+   *
+   *
+   * @param divisor
+   *
+   * @return
+   */
+  @inline
+  def / (divisor: Double): Pos = divide(divisor)
 
-  def multiply(factor: Double): Pos = Pos(this.x * factor, this.y * factor)
+  /**
+   *
+   *
+   * @param factor
+   *
+   * @return
+   */
+  @inline
+  def multiply(factor: Double): Pos =
+    Pos(x * factor, y * factor)
 
-  def divide(divisor: Double): Pos = Pos(this.x / divisor, this.y / divisor)
+  /**
+   *
+   *
+   * @param divisor
+   *
+   * @return
+   */
+  @inline
+  def divide(divisor: Double): Pos =
+    Pos(x / divisor, y / divisor)
 
-  def setX(newX: Double): Pos = this.copy(x = newX)
+  /**
+   *
+   *
+   * @param newX
+   *
+   * @return
+   */
+  @inline
+  def setX(newX: Double): Pos = copy(x = newX)
 
-  def setY(newY: Double): Pos = this.copy(y = newY)
+  /**
+   *
+   *
+   * @param newY
+   *
+   * @return
+   */
+  @inline
+  def setY(newY: Double): Pos = copy(y = newY)
 
-  def addX(dx: Double): Pos = this.setX(this.x + dx)
+  /**
+   *
+   *
+   * @param dx
+   *
+   * @return
+   */
+  @inline
+  def addX(dx: Double): Pos = setX(x + dx)
 
-  def addY(dy: Double): Pos = this.setY(this.y + dy)
+  /**
+   *
+   *
+   * @param dy
+   *
+   * @return
+   */
+  @inline
+  def addY(dy: Double): Pos = setY(y + dy)
 
+  /**
+   *
+   *
+   * @param another
+   *
+   * @return
+   */
+  @inline
   def subtract(another: Pos): Pos = this + -another
 
-  def subtractX(dx: Double): Pos = this.setX(this.x - dx)
+  /**
+   *
+   *
+   * @param dx
+   *
+   * @return
+   */
+  @inline
+  def subtractX(dx: Double): Pos = setX(x - dx)
 
-  def subtractY(dy: Double): Pos = this.setY(this.y - dy)
+  /**
+   *
+   *
+   * @param dy
+   *
+   * @return
+   */
+  @inline
+  def subtractY(dy: Double): Pos = setY(y - dy)
 
-  def withXY(computeNew: (Double, Double) => (Double, Double)): Pos = computeNew(this.x, this.y) match {case (newX, newY) => Pos(newX, newY)}
+  /**
+   *
+   *
+   * @param computeNew
+   *
+   * @return
+   */
+  @inline
+  def withXY(computeNew: (Double, Double) => (Double, Double)): Pos =
+    computeNew(x, y) match {
+      case (newX, newY) => Pos(newX, newY)
+    }
 
-  def withX(computeNew: Double => Double): Pos = this.setX(computeNew(this.x))
+  /**
+   *
+   *
+   * @param computeNew
+   *
+   * @return
+   */
+  @inline
+  def withX(computeNew: Double => Double): Pos =
+    setX(computeNew(x))
 
-  def withY(computeNew: Double => Double): Pos = this.setY(computeNew(this.y))
+  /**
+   *
+   *
+   * @param computeNew
+   *
+   * @return
+   */
+  @inline
+  def withY(computeNew: Double => Double): Pos =
+    setY(computeNew(y))
 
-  //def directionOf(destination: Pos) = Direction.fromDeltas(this.xDiff(destination), this.yDiff(destination))
+  /*
+  /**
+   *
+   *
+   * @param destination
+   *
+   * @return
+   */
+  def directionOf(destination: Pos) =
+   Direction.fromDeltas(this.xDiff(destination), this.yDiff(destination))
+  */
 
+  /**
+   *
+   *
+   * @param destination
+   *
+   * @return
+   */
+  @inline
   def vectorTo(destination: Pos): Pos = destination - this
 
-  def distance(another: Pos): Double = hypot(this.xDiff(another), this.yDiff(another))
+  /**
+   *
+   *
+   * @param another
+   *
+   * @return
+   */
+  @inline
+  def distance(another: Pos): Double =
+    hypot(xDiff(another), yDiff(another))
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   def roughly: String = f"$x%1.2f,$y%1.2f"
 
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   override
   def toString: String = s"($x,$y)"
 

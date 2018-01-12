@@ -42,25 +42,6 @@ object Pos {
    *
    * @param xInPixels
    * @param yInPixels
-   * @param isDefined
-   *
-   * @return
-   */
-  @inline
-  private
-  def createInstance(
-      xInPixels: Double,
-      yInPixels: Double,
-      isDefined: Boolean): Pos = {
-
-    new Pos(xInPixels, yInPixels, isDefined)
-  }
-
-  /**
-   * Creates a new [[Pos]] instance.
-   *
-   * @param xInPixels
-   * @param yInPixels
    *
    * @return
    */
@@ -94,6 +75,25 @@ object Pos {
       isDefined = true)
   }
 
+  /**
+   * Creates a new [[Pos]] instance.
+   *
+   * @param xInPixels
+   * @param yInPixels
+   * @param isDefined
+   *
+   * @return
+   */
+  @inline
+  private
+  def createInstance(
+      xInPixels: Double,
+      yInPixels: Double,
+      isDefined: Boolean): Pos = {
+
+    new Pos(xInPixels, yInPixels, isDefined)
+  }
+
 }
 
 
@@ -107,6 +107,7 @@ object Pos {
  * @param isDefined
  *
  * @author Aleksi Lukkarinen
+ * @author Juha Sorva
  */
 case class Pos private[smcl](
     xInPixels: Double,
@@ -155,6 +156,22 @@ case class Pos private[smcl](
   def isOrigo: Boolean = this == Pos.Origo
 
   /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def xInPixelsFloored: Int = xInPixels.floor.toInt
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def yInPixelsFloored: Int = yInPixels.floor.toInt
+
+  /**
    * Converts the object to a tuple.
    *
    * @return
@@ -171,9 +188,211 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  def toFlooredIntTuple: (Int, Int) = {
-    (toFlooredTuple._1.toInt,
-        toFlooredTuple._2.toInt)
+  def toFlooredIntTuple: (Int, Int) =
+    (xInPixelsFloored, yInPixelsFloored)
+
+  /**
+   *
+   *
+   * @param yMax
+   *
+   * @return
+   */
+  @inline
+  def noLowerThan(yMax: Double): Pos =
+    Pos(
+      xInPixels,
+      yInPixels atMost yMax)
+
+  /**
+   *
+   *
+   * @param yLimit
+   *
+   * @return
+   */
+  @inline
+  def noLowerThan(yLimit: Pos): Pos =
+    Pos(
+      xInPixels,
+      yInPixels atMost yLimit.yInPixels)
+
+  /**
+   *
+   *
+   * @param yMin
+   *
+   * @return
+   */
+  @inline
+  def noHigherThan(yMin: Double): Pos =
+    Pos(
+      xInPixels,
+      yInPixels atLeast yMin)
+
+  /**
+   *
+   *
+   * @param yLimit
+   *
+   * @return
+   */
+  @inline
+  def noHigherThan(yLimit: Pos): Pos =
+    Pos(
+      xInPixels,
+      yInPixels atLeast yLimit.yInPixels)
+
+  /**
+   *
+   *
+   * @param xMin
+   *
+   * @return
+   */
+  @inline
+  def noFurtherLeftThan(xMin: Double): Pos =
+    Pos(
+      xInPixels atLeast xMin,
+      yInPixels)
+
+  /**
+   *
+   *
+   * @param xLimit
+   *
+   * @return
+   */
+  @inline
+  def noFurtherLeftThan(xLimit: Pos): Pos =
+    Pos(
+      xInPixels atLeast xLimit.xInPixels,
+      yInPixels)
+
+  /**
+   *
+   *
+   * @param xMax
+   *
+   * @return
+   */
+  @inline
+  def noFurtherRightThan(xMax: Double): Pos =
+    Pos(
+      xInPixels atMost xMax,
+      yInPixels)
+
+  /**
+   *
+   *
+   * @param xLimit
+   *
+   * @return
+   */
+  @inline
+  def noFurtherRightThan(xLimit: Pos): Pos =
+    Pos(
+      xInPixels atMost xLimit.xInPixels,
+      yInPixels)
+
+  /**
+   *
+   *
+   * @param min
+   * @param max
+   *
+   * @return
+   */
+  @inline
+  def clampX(min: Double, max: Double): Pos =
+    Pos(
+      xInPixels atLeast min atMost max,
+      yInPixels)
+
+  /**
+   *
+   *
+   * @param xLimitMin
+   * @param xLimitMax
+   *
+   * @return
+   */
+  @inline
+  def clampX(xLimitMin: Pos, xLimitMax: Pos): Pos =
+    Pos(
+      xInPixels atLeast xLimitMin.xInPixels atMost xLimitMax.xInPixels,
+      yInPixels)
+
+  /**
+   *
+   *
+   * @param min
+   * @param max
+   *
+   * @return
+   */
+  @inline
+  def clampY(min: Double, max: Double): Pos =
+    Pos(
+      xInPixels,
+      yInPixels atLeast min atMost max)
+
+  /**
+   *
+   *
+   * @param yLimitMin
+   * @param yLimitMax
+   *
+   * @return
+   */
+  @inline
+  def clampY(yLimitMin: Pos, yLimitMax: Pos): Pos =
+    Pos(
+      xInPixels,
+      yInPixels atLeast yLimitMin.yInPixels atMost yLimitMax.yInPixels)
+
+  /**
+   *
+   *
+   * @param xMin
+   * @param xMax
+   * @param yMin
+   * @param yMax
+   *
+   * @return
+   */
+  @inline
+  def clamp(
+      xMin: Double,
+      xMax: Double,
+      yMin: Double,
+      yMax: Double): Pos = {
+
+    Pos(
+      xInPixels atLeast xMin atMost xMax,
+      yInPixels atLeast yMin atMost yMax)
+  }
+
+  /**
+   *
+   *
+   * @param xLimitMin
+   * @param xLimitMax
+   * @param yLimitMin
+   * @param yLimitMax
+   *
+   * @return
+   */
+  @inline
+  def clamp(
+      xLimitMin: Pos,
+      xLimitMax: Pos,
+      yLimitMin: Pos,
+      yLimitMax: Pos): Pos = {
+
+    Pos(
+      xInPixels atLeast xLimitMin.xInPixels atMost xLimitMax.xInPixels,
+      yInPixels atLeast yLimitMin.yInPixels atMost yLimitMax.yInPixels)
   }
 
   /**
@@ -301,14 +520,14 @@ case class Pos private[smcl](
   /**
    *
    *
-   * @param offset
+   * @param offsets
    *
    * @return
    */
   @inline
-  def + (offset: Dims): Pos = {
-    val x = xInPixels + offset.width.inPixels
-    val y = yInPixels + offset.height.inPixels
+  def + (offsets: Dims): Pos = {
+    val x = xInPixels + offsets.width.inPixels
+    val y = yInPixels + offsets.height.inPixels
 
     Pos(x, y)
   }
@@ -316,17 +535,81 @@ case class Pos private[smcl](
   /**
    *
    *
-   * @param offset
+   * @param offsets
    *
    * @return
    */
   @inline
-  def - (offset: Dims): Pos = {
-    val x = xInPixels - offset.width.inPixels
-    val y = yInPixels - offset.height.inPixels
+  def add(offsets: Dims): Pos = this + offsets
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  @inline
+  def - (offsets: Dims): Pos = {
+    val x = xInPixels - offsets.width.inPixels
+    val y = yInPixels - offsets.height.inPixels
 
     Pos(x, y)
   }
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  @inline
+  def subtract(offsets: Dims): Pos = this - offsets
+
+  /**
+   *
+   *
+   * @param another
+   *
+   * @return
+   */
+  @inline
+  def xDiff(another: Pos): Double =
+    another.xInPixels - xInPixels
+
+  /**
+   *
+   *
+   * @param another
+   *
+   * @return
+   */
+  @inline
+  def yDiff(another: Pos): Double =
+    another.yInPixels - yInPixels
+
+  /**
+   *
+   *
+   * @param computeNew
+   *
+   * @return
+   */
+  @inline
+  def withX(computeNew: Double => Double): Pos =
+    setX(computeNew(xInPixels))
+
+  /**
+   *
+   *
+   * @param computeNew
+   *
+   * @return
+   */
+  @inline
+  def withY(computeNew: Double => Double): Pos =
+    setY(computeNew(yInPixels))
 
   /**
    *
@@ -347,13 +630,93 @@ case class Pos private[smcl](
   /**
    *
    *
-   * @param other
+   * @param newXInPixels
    *
    * @return
    */
   @inline
-  def toBoundsWith(other: Pos): Bounds = {
-    Bounds(this, other)
+  def setX(newXInPixels: Double): Pos =
+    copy(newXInPixels = newXInPixels)
+
+  /**
+   *
+   *
+   * @param newYInPixels
+   *
+   * @return
+   */
+  @inline
+  def setY(newYInPixels: Double): Pos =
+    copy(newYInPixels = newYInPixels)
+
+  /**
+   *
+   *
+   * @param dxInPixels
+   *
+   * @return
+   */
+  @inline
+  def addX(dxInPixels: Double): Pos =
+    setX(xInPixels + dxInPixels)
+
+  /**
+   *
+   *
+   * @param dx
+   *
+   * @return
+   */
+  @inline
+  def addX(dx: Len): Pos =
+    setX(xInPixels + dx.inPixels)
+
+  /**
+   *
+   *
+   * @param dyInPixels
+   *
+   * @return
+   */
+  @inline
+  def addY(dyInPixels: Double): Pos =
+    setY(yInPixels + dyInPixels)
+
+  /**
+   *
+   *
+   * @param dy
+   *
+   * @return
+   */
+  @inline
+  def addY(dy: Len): Pos =
+    setY(yInPixels + dy.inPixels)
+
+  /**
+   *
+   *
+   * @param destination
+   *
+   * @return
+   */
+  @inline
+  def dimsTo(destination: Pos): Dims = {
+    Dims(
+      destination.xInPixels - xInPixels,
+      destination.yInPixels - yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param lowerRightCorner
+   *
+   * @return
+   */
+  @inline
+  def toBoundsWith(lowerRightCorner: Pos): Bounds = {
+    Bounds(this, lowerRightCorner)
   }
 
   /**
@@ -451,10 +814,17 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  def roughly: String =
+    f"$xInPixels%1.2f,$yInPixels%1.2f"
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   override
-  def toString: String = {
-    s"Pos(x: $xInPixels px, y: $yInPixels px)"
-  }
+  def toString: String = s"($xInPixels, $yInPixels)"
 
   /**
    * Rotates this object around the origo (0,0) by 90 degrees clockwise.
