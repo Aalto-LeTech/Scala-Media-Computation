@@ -163,12 +163,78 @@ case class Dims private(
   /**
    *
    *
+   * @param newWidth
+   *
+   * @return
+   */
+  @inline
+  def setWidth(newWidth: Double): Dims =
+    setWidth(Len(newWidth))
+
+  /**
+   *
+   *
+   * @param newWidth
+   *
+   * @return
+   */
+  @inline
+  def setWidth(newWidth: Len): Dims =
+    copy(newWidth = newWidth)
+
+  /**
+   *
+   *
+   * @param newHeight
+   *
+   * @return
+   */
+  @inline
+  def setHeight(newHeight: Double): Dims =
+    setHeight(Len(newHeight))
+
+  /**
+   *
+   *
+   * @param newHeight
+   *
+   * @return
+   */
+  @inline
+  def setHeight(newHeight: Len): Dims =
+    copy(newHeight = newHeight)
+
+  /**
+   *
+   *
+   * @param amount
+   *
+   * @return
+   */
+  @inline
+  def wider(amount: Double): Dims =
+    setWidth(width + amount)
+
+  /**
+   *
+   *
+   * @param amount
+   *
+   * @return
+   */
+  @inline
+  def higher(amount: Double): Dims =
+    setHeight(height + amount)
+
+  /**
+   *
+   *
    * @return
    */
   @inline
   def toIntTuple: (Int, Int) = {
-    val w = width.inPixels.closestInt
-    val h = height.inPixels.closestInt
+    val w = width.inPixels.floor.toInt
+    val h = height.inPixels.floor.toInt
 
     (w, h)
   }
@@ -299,13 +365,22 @@ case class Dims private(
    * @return
    */
   @inline
-  def toBounds(upperLeftCorner: Pos): Bounds = {
-    val lowerRightCorner = Pos(
-      upperLeftCorner.xInPixels + width.inPixels,
-      upperLeftCorner.yInPixels + height.inPixels)
+  def toBoundsFrom(upperLeftCorner: Pos): Bounds = {
+    val lowerRightCorner =
+      upperLeftCorner + (width.inPixels, height.inPixels)
 
     Bounds(upperLeftCorner, lowerRightCorner)
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def diagonalDistance: Len =
+    Len(math.sqrt(
+      width.square.inPixels + height.square.inPixels))
 
   /**
    *
