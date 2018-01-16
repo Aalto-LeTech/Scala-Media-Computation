@@ -70,7 +70,9 @@ object Line {
       end: Pos,
       color: rgb.Color): Line = {
 
-    new Line(Identity(), start, end, color)
+    val bounds = Bounds(start, end)
+
+    new Line(Identity(), start, end, bounds, color)
   }
 
 }
@@ -101,6 +103,7 @@ object Line {
  * @param identity
  * @param start
  * @param end
+ * @param boundary
  * @param color
  *
  * @author Aleksi Lukkarinen
@@ -109,13 +112,9 @@ class Line private(
     override val identity: Identity,
     val start: Pos,
     val end: Pos,
+    val boundary: Bounds,   // This is here because
     val color: rgb.Color)
-    extends {
-
-      /** */
-      val boundary: Bounds = Bounds(start, end)
-
-    } with Polygon(
+    extends Polygon(
       identity,
       Seq(start, end),
       boundary.upperLeftMarker) {
@@ -154,7 +153,9 @@ class Line private(
       newEnd: Pos = end,
       newColor: rgb.Color = color): Line = {
 
-    new Line(identity, newStart, newEnd, newColor)
+    val bounds = Bounds(newStart, newEnd)
+
+    new Line(identity, newStart, newEnd, bounds, newColor)
   }
 
   /**
