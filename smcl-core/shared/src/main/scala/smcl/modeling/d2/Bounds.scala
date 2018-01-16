@@ -274,15 +274,6 @@ case class Bounds private(
   lazy val area: Area =
     Area.forRectangle(width.inPixels, height.inPixels)
 
-  /** */
-  lazy val toSimplifiedBounds: simplified.Bounds = {
-    new simplified.Bounds(
-      upperLeftMarker.xInPixels.floor.toInt,
-      upperLeftMarker.yInPixels.floor.toInt,
-      width.inPixels.floor.toInt,
-      height.inPixels.floor.toInt)
-  }
-
   /**
    *
    *

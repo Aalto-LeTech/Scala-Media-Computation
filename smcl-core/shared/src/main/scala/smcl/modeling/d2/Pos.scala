@@ -785,16 +785,6 @@ case class Pos private[smcl](
   /**
    *
    *
-   * @return
-   */
-  @inline
-  def toSimplifiedPos: simplified.Pos = {
-    new simplified.Pos(xInPixels, yInPixels)
-  }
-
-  /**
-   *
-   *
    * @param newXInPixels
    * @param newYInPixels
    *

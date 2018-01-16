@@ -79,14 +79,6 @@ class Viewport(
    *
    * @return
    */
-  lazy val toSimplifiedViewport: simplified.Viewport =
-    new simplified.Viewport(boundary.toSimplifiedBounds)
-
-  /**
-   *
-   *
-   * @return
-   */
   @inline
   def dimensions: Dims = boundary.dimensions
 
