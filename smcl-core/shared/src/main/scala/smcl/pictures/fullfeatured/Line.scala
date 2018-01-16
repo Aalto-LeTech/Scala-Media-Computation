@@ -83,6 +83,8 @@ object Line {
  *
  * {{{
  * def moire(w: Double) = {
+ *   import smcl.pictures.fullfeatured.{Image, Line}
+ *
  *   def lines(x: Double, c: Double) = Seq(
  *           Line(Pos.Origo, Pos(x, -c), Red),
  *           Line(Pos.Origo, Pos(x, c), Blue),
