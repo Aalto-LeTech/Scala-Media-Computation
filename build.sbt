@@ -20,6 +20,7 @@
  *
  */
 
+
 import org.scalajs.sbtplugin.ScalaJSPluginInternal
 import org.scalajs.sbtplugin.cross.CrossProject
 import sbt.Keys.{scalacOptions, testOptions, _}
@@ -39,11 +40,8 @@ enablePlugins(ScalaJSPlugin)
 
 lazy val primaryScalaVersion = "2.12.4"
 
-lazy val projectIdJvmPostfix = "-jvm"
-lazy val projectIdJsPostfix = "-js"
-lazy val projectIdTestPostfix = "-tests"
-
 lazy val smclName = "Scala Media Computation Library"
+lazy val smclVersion = "0.0.2-SNAPSHOT"
 lazy val smclHomepageUrl = "http://github.com/Aalto-LeTech/Scala-Media-Computation"
 
 lazy val projectOrganizationId = "fi.aalto.cs"
@@ -51,27 +49,33 @@ lazy val projectOrganizationName = "Aalto University, Department of Computer Sci
 lazy val projectOrganizationUrl = "http://cs.aalto.fi/"
 lazy val projectStartYear = 2015
 lazy val projectDevelopers = List(
-  Developer(id="lukkark1", name="Aleksi Lukkarinen", email="aleksi.lukkarinen@aalto.fi", url=null)
+  Developer(
+    id = "lukkark1",
+    name = "Aleksi Lukkarinen",
+    email = "aleksi.lukkarinen@aalto.fi",
+    url = null)
 )
 
 lazy val projectJavaVersionSource = "1.8"
 lazy val projectJavaVersionTarget = "1.8"
 
+lazy val projectIdJvmPostfix = "-jvm"
+lazy val projectIdJsPostfix = "-js"
+lazy val projectIdTestPostfix = "-tests"
+
 lazy val prjSmclBitmapViewerId = "smcl-bitmap-viewer"
 lazy val prjSmclBitmapViewerJvmId = prjSmclBitmapViewerId + projectIdJvmPostfix
 lazy val prjSmclBitmapViewerJsId = prjSmclBitmapViewerId + projectIdJsPostfix
 lazy val prjSmclBitmapViewerName = smclName + " Bitmap Viewer"
-lazy val prjSmclBitmapViewerVersion = "1.0.0-SNAPSHOT"
+lazy val prjSmclBitmapViewerVersion = smclVersion
 lazy val prjSmclBitmapViewerDescription = "Bitmap viewers for " + smclName + "."
 
 lazy val prjSmclCoreId = "smcl-core"
 lazy val prjSmclCoreJvmId = prjSmclCoreId + projectIdJvmPostfix
 lazy val prjSmclCoreJsId = prjSmclCoreId + projectIdJsPostfix
 lazy val prjSmclCoreName = smclName + " Core Library"
-lazy val prjSmclCoreVersion = "1.0.0-SNAPSHOT"
+lazy val prjSmclCoreVersion = smclVersion
 lazy val prjSmclCoreDescription = "A class library for bitmap processing using Scala."
-
-
 
 
 //-------------------------------------------------------------------------------------------------
@@ -99,6 +103,7 @@ lazy val testConfIDCommaString = testConfIDs.mkString(",")
 def createConfToConfSemicolonString(ids: Seq[String]): String = {
   val idToIdSeparator = "->"
   val listSeparator = ";"
+
   def idToId(id: String): String = Seq(id, id).mkString(idToIdSeparator)
 
   ids.map(idToId).mkString(listSeparator)
@@ -199,7 +204,7 @@ lazy val smclGeneralSettings = Seq(
      * @see http://www.scalatest.org
      * @see http://search.maven.org/#search|ga|1|scalatest
      */
-    "org.scalatest" %%% "scalatest" % "3.0.1" % testConfIDCommaString withSources() withJavadoc(),
+    "org.scalatest" %%% "scalatest" % "3.0.1" % testConfIDCommaString withSources () withJavadoc (),
 
     /**
      * ScalaCheck
@@ -207,7 +212,7 @@ lazy val smclGeneralSettings = Seq(
      * @see https://www.scalacheck.org/
      * @see http://search.maven.org/#search|ga|1|scalacheck
      */
-    "org.scalacheck" %%% "scalacheck" % "1.13.4" % testConfIDCommaString withSources() withJavadoc()
+    "org.scalacheck" %%% "scalacheck" % "1.13.4" % testConfIDCommaString withSources () withJavadoc ()
 
     /**
      * Scalactic
@@ -249,7 +254,7 @@ lazy val smclGeneralJsSettings = Seq(
      * @see https://www.scala-js.org/
      * @see http://search.maven.org/#search|ga|1|scalajs-dom
      */
-    "org.scala-js" %%% "scalajs-dom" % "0.9.1" withSources() withJavadoc()
+    "org.scala-js" %%% "scalajs-dom" % "0.9.1" withSources () withJavadoc ()
   ),
 
   jsDependencies += RuntimeDOM,
@@ -270,7 +275,7 @@ lazy val smclGeneralJvmSettings = Seq(
      * @see https://www.scala-js.org/
      * @see http://search.maven.org/#search|ga|1|scalajs-stubs
      */
-    "org.scala-js" %% "scalajs-stubs" % "0.6.14" % "provided" withSources() withJavadoc()
+    "org.scala-js" %% "scalajs-stubs" % "0.6.14" % "provided" withSources () withJavadoc ()
   ),
 
   testOptions in Test := Seq(Tests.Filter(unitTestFilterForJVM)),
@@ -280,8 +285,6 @@ lazy val smclGeneralJvmSettings = Seq(
   testOptions in LearningTest := Seq(Tests.Filter(learningTestFilterForJVM))
   // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
 )
-
-
 
 
 //-------------------------------------------------------------------------------------------------
@@ -340,8 +343,6 @@ lazy val smclBitmapViewerJVM = smclBitmapViewer.jvm
 lazy val smclBitmapViewerJS = smclBitmapViewer.js
 
 
-
-
 //-------------------------------------------------------------------------------------------------
 //
 // PROJECT: SMCL CORE LIBRARY
@@ -380,8 +381,6 @@ lazy val smclCoreJVM = smclCore.jvm
 lazy val smclCoreJS = smclCore.js
 
 
-
-
 //-------------------------------------------------------------------------------------------------
 //
 // PROJECT: SMCL ROOT AGGREGATE
@@ -402,8 +401,6 @@ lazy val smcl = project.in(file("."))
       smclCoreJS, smclCoreJVM)
 
 
-
-
 //-------------------------------------------------------------------------------------------------
 //
 // COMMAND ALIASES
@@ -419,7 +416,6 @@ addCommandAlias("cpt", "; clean ; package ; test")
 addCommandAlias("rcpt", "; reload ; clean ; package ; test")
 
 addCommandAlias("testAll", "; learning:test ; test ; integration:test ; gui:test ; smoke:test")
-
 
 
 //-------------------------------------------------------------------------------------------------

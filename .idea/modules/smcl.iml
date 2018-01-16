@@ -22,19 +22,19 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="smcl-core-jvm" exported="" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest_sjs0.6_2.12:3.0.1:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.scalactic:scalactic_sjs0.6_2.12:3.0.1:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.scalacheck:scalacheck_sjs0.6_2.12:1.13.4:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-swing_2.12:2.0.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.scala-js:scalajs-test-interface_2.12:0.6.19:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.scala-js:scalajs-library_2.12:0.6.19:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.scala-js:scalajs-dom_sjs0.6_2.12:0.9.1:jar" level="project" />
-    <orderEntry type="library" name="sbt: io.reactivex:rxscala_2.12:0.26.5:jar" level="project" />
-    <orderEntry type="library" name="sbt: io.reactivex:rxjava:1.2.4:jar" level="project" />
-    <orderEntry type="module" module-name="smcl-bitmap-viewer-js" exported="" />
-    <orderEntry type="module" module-name="smcl-bitmap-viewer-jvm" exported="" />
-    <orderEntry type="module" module-name="smcl-core-js" exported="" />
-    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.12.4:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: org.scala-lang:scala-reflect:2.12.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.12.4:jar" level="project" />
+    <orderEntry type="module" module-name="smcl-core-js" exported="" />
+    <orderEntry type="module" module-name="smcl-bitmap-viewer-jvm" exported="" />
+    <orderEntry type="module" module-name="smcl-bitmap-viewer-js" exported="" />
+    <orderEntry type="library" name="sbt: io.reactivex:rxjava:1.2.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.reactivex:rxscala_2.12:0.26.5:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-js:scalajs-dom_sjs0.6_2.12:0.9.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-js:scalajs-library_2.12:0.6.19:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scala-js:scalajs-test-interface_2.12:0.6.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-swing_2.12:2.0.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalacheck:scalacheck_sjs0.6_2.12:1.13.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalactic:scalactic_sjs0.6_2.12:3.0.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest_sjs0.6_2.12:3.0.1:jar" level="project" />
   </component>
 </module>
