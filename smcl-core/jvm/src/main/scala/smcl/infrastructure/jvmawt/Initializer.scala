@@ -76,9 +76,20 @@ object Initializer extends SMCLInitializer {
 
     injectMiscellaneousDependencies()
 
+    initLibraryInformationProvider()
     initSettings()
     initPlatformResourceFactory()
     initSwingLookAndFeel()
+  }
+
+  /**
+   * Initialize library information provider.
+   *
+   * @return
+   */
+  def initLibraryInformationProvider(): Unit = {
+    DefaultLibraryInformationProvider.
+        setImplementation(JVMAWTLibraryInformationProvider)
   }
 
   /**

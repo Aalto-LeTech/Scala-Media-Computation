@@ -24,11 +24,10 @@ import scala.swing._
 import scala.swing.event.Key.Modifier.{Control, Shift}
 import scala.swing.event._
 
-import smcl.SMCLLibrary._
-import smcl.pictures.fullfeatured.Bitmap
 import smcl.infrastructure.PRF
 import smcl.infrastructure.exceptions.UnexpectedInternalError
 import smcl.infrastructure.jvmawt.SwingUtils
+import smcl.pictures.fullfeatured.Bitmap
 import smcl.viewers.bitmaps.jvmawt.ScrollingDirection.{Downwards, Leftwards, Upwards}
 
 
@@ -43,14 +42,16 @@ private[jvmawt]
 object ViewerMainFrame {
 
   /** */
-  val MsgAbout: String =
-    s"""Image viewing application of the $FullName.
+  val MsgAbout: String = {
+    import smcl.SMCLLibrary._
+
+    s"""Image viewing application of the $fullName.
        |
-       |Version $VersionString.
+       |Version $projectVersionString.
        |
-       |$AbbreviatedName was originally created by $OriginalDeveloperFullName in $InceptionYear as
-       |a part of his Master's Thesis for Aalto University.""".stripMargin
-  // @formatter:on
+       |$abbreviatedName was originally created by $originalDeveloperName
+       |in $inceptionYear as a part of his Master's Thesis for Aalto University.""".stripMargin
+  }
 
   /** */
   val MinimumFrameSize: Dimension = new Dimension(300, 200)
@@ -117,7 +118,7 @@ class ViewerMainFrame private(
   val imagePanel = new ImageDisplayPanel
 
   /** */
-  val scrollerViewportBackground = new GridBagPanel {
+  val scrollerViewportBackground: GridBagPanel = new GridBagPanel {
 
     layout(imagePanel) = new Constraints
     background = new Color(40, 40, 40)
@@ -125,7 +126,7 @@ class ViewerMainFrame private(
   }
 
   /** */
-  val scroller = new ScrollPane {
+  val scroller: ScrollPane = new ScrollPane {
 
     contents = scrollerViewportBackground
     peer.getViewport.setPreferredSize(_initialPreferredViewAreaSize)
@@ -143,7 +144,7 @@ class ViewerMainFrame private(
   val horizontalSwingScrollbar: JScrollBar = scroller.horizontalScrollBar.peer
 
   /** */
-  val toolbar = new ToolBar() {
+  val toolbar: ToolBar = new ToolBar() {
 
     name = "Main"
     contents += new Button(_actionMap.get('copyToClipboard).get) {}
@@ -155,7 +156,7 @@ class ViewerMainFrame private(
   }
 
   /** */
-  val layoutBase = new BorderPanel {
+  val layoutBase: BorderPanel = new BorderPanel {
 
     layout(toolbar) = BorderPanel.Position.North
     layout(scroller) = BorderPanel.Position.Center

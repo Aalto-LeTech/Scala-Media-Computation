@@ -38,7 +38,7 @@ trait MetadataOnMetadataProvider extends Immutable {
    * @return
    */
   def providerName: Option[String] = {
-    Some(SMCLLibrary.FullName)
+    Some(SMCLLibrary.fullName)
   }
 
   /**
@@ -47,7 +47,7 @@ trait MetadataOnMetadataProvider extends Immutable {
    * @return
    */
   def providerDescription: Option[String] = {
-    Some(SMCLLibrary.Description)
+    Some(SMCLLibrary.description)
   }
 
   /**
@@ -56,7 +56,7 @@ trait MetadataOnMetadataProvider extends Immutable {
    * @return
    */
   def providerMajorVersion: Option[Int] = {
-    Some(SMCLLibrary.VersionMajor)
+    Some(SMCLLibrary.majorVersion)
   }
 
   /**
@@ -65,7 +65,7 @@ trait MetadataOnMetadataProvider extends Immutable {
    * @return
    */
   def providerMinorVersion: Option[Int] = {
-    Some(SMCLLibrary.VersionMinor)
+    Some(SMCLLibrary.minorVersion)
   }
 
   /**
@@ -74,8 +74,8 @@ trait MetadataOnMetadataProvider extends Immutable {
    * @return
    */
   def providerAuthorOrganizationName: Option[String] = {
-    val name = SMCLLibrary.OriginalDeveloperOrganizationName
-    val country = SMCLLibrary.OriginalDeveloperOrganizationCountry
+    val name = SMCLLibrary.originalOrganizationName
+    val country = SMCLLibrary.countryOfOrigin
 
     Some(s"$name, $country")
   }
@@ -85,17 +85,8 @@ trait MetadataOnMetadataProvider extends Immutable {
    *
    * @return
    */
-  def providerAuthorPersonFirstName: Option[String] = {
-    Some(SMCLLibrary.OriginalDeveloperFirstName)
-  }
-
-  /**
-   * Returns the last name of the authoring person.
-   *
-   * @return
-   */
-  def providerAuthorPersonLastName: Option[String] = {
-    Some(SMCLLibrary.OriginalDeveloperLastName)
+  def providerAuthorPersonName: Option[String] = {
+    Some(SMCLLibrary.originalDeveloperName)
   }
 
 }

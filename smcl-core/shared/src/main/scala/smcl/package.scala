@@ -1,3 +1,4 @@
+import smcl.infrastructure.{DefaultLibraryInformationProvider, LibraryInformationProvider}
 /* .            .           .                   .                 +             .          +      */
 /*         +-----------+  +---+    +  +---+  +-----------+  +---+    Media Programming in Scala   */
 /*   *     |           |  |    \     /    |  |           | +|   |            Since 2015           */
@@ -20,5 +21,9 @@
  * @author Aleksi Lukkarinen
  */
 package object smcl {
+
+  /** Provides general information about this library. */
+  val SMCLLibrary: LibraryInformationProvider =
+    DefaultLibraryInformationProvider
 
 }

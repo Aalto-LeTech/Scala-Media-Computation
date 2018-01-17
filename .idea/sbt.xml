@@ -27,6 +27,7 @@
         <option name="sbtVersion" value="1.1.0" />
         <option name="useAutoImport" value="true" />
         <option name="useOurOwnAutoImport" value="true" />
+        <option name="useSbtShell" value="true" />
       </SbtProjectSettings>
     </option>
     <option name="vmParameters" value="-Dsbt.ivy.home=/l/dev/local-ivy-repo -Divy.home=/l/dev/local-ivy-repo -Dsbt.boot.directory=/l/dev/sbt-boot" />

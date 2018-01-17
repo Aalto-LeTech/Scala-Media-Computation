@@ -25,4 +25,8 @@
 //
 //-------------------------------------------------------------------------------------------------
 
+// https://dl.bintray.com/sbt/sbt-plugin-releases/org.scala-js/sbt-scalajs/
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.19")
+
+// https://dl.bintray.com/sbt/sbt-plugin-releases/com.eed3si9n/sbt-buildinfo/
+addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.7.0")

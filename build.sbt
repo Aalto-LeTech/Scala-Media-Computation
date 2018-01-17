@@ -25,6 +25,7 @@ import org.scalajs.sbtplugin.ScalaJSPluginInternal
 import org.scalajs.sbtplugin.cross.CrossProject
 import sbt.Keys.{scalacOptions, testOptions, _}
 import sbt.inConfig
+import sbtbuildinfo.BuildInfoPlugin.autoImport.buildInfoPackage
 
 
 
@@ -38,23 +39,42 @@ enablePlugins(ScalaJSPlugin)
 //
 //-------------------------------------------------------------------------------------------------
 
-lazy val primaryScalaVersion = "2.12.4"
+lazy val projectFullName = "Scala Media Computation Library"
+lazy val projectAbbreviatedName = "SMCL"
 
-lazy val smclName = "Scala Media Computation Library"
-lazy val smclVersion = "0.0.2-SNAPSHOT"
-lazy val smclHomepageUrl = "http://github.com/Aalto-LeTech/Scala-Media-Computation"
+lazy val projectMajorVersion = 0
+lazy val projectMinorVersion = 0
+lazy val projectMicroVersion = 2
+lazy val projectIsRelease = false
 
-lazy val projectOrganizationId = "fi.aalto.cs"
-lazy val projectOrganizationName = "Aalto University, Department of Computer Science"
-lazy val projectOrganizationUrl = "http://cs.aalto.fi/"
+lazy val projectHomepageUrl = "http://github.com/Aalto-LeTech/Scala-Media-Computation"
+
 lazy val projectStartYear = 2015
+lazy val projectOriginalOrganizationName = "Aalto University, Department of Computer Science"
+lazy val projectCountryOfOrigin = "Finland"
+lazy val projectOriginalDeveloper = Developer(
+  id = "lukkark1",
+  name = "Aleksi Lukkarinen",
+  email = "aleksi.lukkarinen@aalto.fi",
+  url = null)
+
+lazy val projectOrganizationName = projectOriginalOrganizationName
+lazy val projectOrganizationId = "fi.aalto.cs"
+lazy val projectOrganizationUrl = "http://cs.aalto.fi/"
 lazy val projectDevelopers = List(
-  Developer(
-    id = "lukkark1",
-    name = "Aleksi Lukkarinen",
-    email = "aleksi.lukkarinen@aalto.fi",
-    url = null)
+  projectOriginalDeveloper
 )
+
+// @formatter:off
+lazy val projectDescription: String =
+    s"""$projectAbbreviatedName is a class library created to support Scala-based
+       |media-oriented introductory programming teaching. It was originally
+       |created by ${projectOriginalDeveloper.name} in $projectStartYear as a part
+       |of his Master's Thesis for $projectOriginalOrganizationName,
+       |$projectCountryOfOrigin.""".stripMargin.replaceAll("\n", " ")
+  // @formatter:on
+
+lazy val primaryScalaVersion = "2.12.4"
 
 lazy val projectJavaVersionSource = "1.8"
 lazy val projectJavaVersionTarget = "1.8"
@@ -66,16 +86,16 @@ lazy val projectIdTestPostfix = "-tests"
 lazy val prjSmclBitmapViewerId = "smcl-bitmap-viewer"
 lazy val prjSmclBitmapViewerJvmId = prjSmclBitmapViewerId + projectIdJvmPostfix
 lazy val prjSmclBitmapViewerJsId = prjSmclBitmapViewerId + projectIdJsPostfix
-lazy val prjSmclBitmapViewerName = smclName + " Bitmap Viewer"
-lazy val prjSmclBitmapViewerVersion = smclVersion
-lazy val prjSmclBitmapViewerDescription = "Bitmap viewers for " + smclName + "."
+lazy val prjSmclBitmapViewerName = projectFullName + " Bitmap Viewer"
+lazy val prjSmclBitmapViewerDescription = "Bitmap viewers for " + projectFullName + "."
 
 lazy val prjSmclCoreId = "smcl-core"
 lazy val prjSmclCoreJvmId = prjSmclCoreId + projectIdJvmPostfix
 lazy val prjSmclCoreJsId = prjSmclCoreId + projectIdJsPostfix
-lazy val prjSmclCoreName = smclName + " Core Library"
-lazy val prjSmclCoreVersion = smclVersion
+lazy val prjSmclCoreName = projectFullName + " Core Library"
 lazy val prjSmclCoreDescription = "A class library for bitmap processing using Scala."
+
+lazy val snapshotIdPostfix = "-SNAPSHOT"
 
 
 //-------------------------------------------------------------------------------------------------
@@ -83,6 +103,24 @@ lazy val prjSmclCoreDescription = "A class library for bitmap processing using S
 // GENERAL SETTINGS
 //
 //-------------------------------------------------------------------------------------------------
+
+lazy val projectVersionString =
+  Seq(projectMajorVersion, projectMinorVersion, projectMicroVersion).mkString(".")
+
+lazy val moduleVersionString = {
+  if (projectIsRelease)
+    projectVersionString
+  else
+    projectVersionString + snapshotIdPostfix
+}
+
+lazy val buildInfoObjectNameJvm = "JVMAWTLibraryInformationProvider"
+lazy val buildInfoPackageNameJvm = "smcl.infrastructure.jvmawt"
+lazy val buildInfoPlatformIdJvm = "jvm-awt"
+
+lazy val buildInfoObjectNameJs = "JSLibraryInformationProvider"
+lazy val buildInfoPackageNameJs = "smcl.infrastructure.js"
+lazy val buildInfoPlatformIdJs = "js-html5"
 
 lazy val confUnitTestId = "test"
 lazy val confSmokeTestId = "smoke"
@@ -167,16 +205,13 @@ def unitTestFilterForJS(name: String): Boolean =
           learningTestFilterForJS(name))
 
 
-def isSnapshotVersion(version: String): Boolean = version endsWith "-SNAPSHOT"
-
-
 lazy val smclGeneralSettings = Seq(
   organization := projectOrganizationId,
   organizationName := projectOrganizationName,
   organizationHomepage := Some(url(projectOrganizationUrl)),
 
   startYear := Some(projectStartYear),
-  homepage := Some(url(smclHomepageUrl)),
+  homepage := Some(url(projectHomepageUrl)),
   developers ++= projectDevelopers,
 
   logLevel := Level.Info,
@@ -246,45 +281,95 @@ lazy val smclGeneralSettings = Seq(
         |""".stripMargin
 )
 
-lazy val smclGeneralJsSettings = Seq(
-  libraryDependencies ++= Seq(
-    /**
-     * Scala.js DOM
-     *
-     * @see https://www.scala-js.org/
-     * @see http://search.maven.org/#search|ga|1|scalajs-dom
-     */
-    "org.scala-js" %%% "scalajs-dom" % "0.9.1" withSources () withJavadoc ()
-  ),
+lazy val smclGeneralBuildInfoSettings = Seq(
+  buildInfoKeys := Seq[BuildInfoKey](
+    "fullName" -> projectFullName,
+    "abbreviatedName" -> projectAbbreviatedName,
+    "majorVersion" -> projectMajorVersion,
+    "minorVersion" -> projectMinorVersion,
+    "microVersion" -> projectMicroVersion,
+    "isRelease" -> projectIsRelease,
+    "projectVersionString" -> projectVersionString,
+    "moduleVersionString" -> moduleVersionString,
+    "description" -> projectDescription,
+    "homePageURL" -> projectHomepageUrl,
+    "inceptionYear" -> projectStartYear,
+    "organizationName" -> projectOrganizationName,
+    "organizationId" -> projectOrganizationId,
+    "organizationHomePageURL" -> projectOrganizationUrl,
+    "developers" -> projectDevelopers,                                // TODO: return objects instead of strings
+    "originalOrganizationName" -> projectOriginalOrganizationName,
+    "originalDeveloperName" -> projectOriginalDeveloper.name,
+    "countryOfOrigin" -> projectCountryOfOrigin,
+    scalaVersion,
+    sbtVersion),
 
-  jsDependencies += RuntimeDOM,
+  buildInfoOptions += BuildInfoOption.BuildTime,
 
-  testOptions in Test := Seq(Tests.Filter(unitTestFilterForJS)),
-  testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilterForJS)),
-  testOptions in GUITest := Seq(Tests.Filter(guiTestFilterForJS)),
-  testOptions in SmokeTest := Seq(Tests.Filter(smokeTestFilterForJS)),
-  testOptions in LearningTest := Seq(Tests.Filter(learningTestFilterForJS))
-  // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
+  buildInfoUsePackageAsPath := true,
+
+  buildInfoOptions +=
+      BuildInfoOption.Traits(
+        "smcl.infrastructure.LibraryInformationProvider")
 )
 
-lazy val smclGeneralJvmSettings = Seq(
-  libraryDependencies ++= Seq(
-    /**
-     * Scala.js Stubs for Scala
-     *
-     * @see https://www.scala-js.org/
-     * @see http://search.maven.org/#search|ga|1|scalajs-stubs
-     */
-    "org.scala-js" %% "scalajs-stubs" % "0.6.14" % "provided" withSources () withJavadoc ()
-  ),
+lazy val smclGeneralJsSettings =
+  smclGeneralBuildInfoSettings ++ Seq(
+    libraryDependencies ++= Seq(
+      /**
+       * Scala.js DOM
+       *
+       * @see https://www.scala-js.org/
+       * @see http://search.maven.org/#search|ga|1|scalajs-dom
+       */
+      "org.scala-js" %%% "scalajs-dom" % "0.9.1" withSources () withJavadoc ()
+    ),
 
-  testOptions in Test := Seq(Tests.Filter(unitTestFilterForJVM)),
-  testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilterForJVM)),
-  testOptions in GUITest := Seq(Tests.Filter(guiTestFilterForJVM)),
-  testOptions in SmokeTest := Seq(Tests.Filter(smokeTestFilterForJVM)),
-  testOptions in LearningTest := Seq(Tests.Filter(learningTestFilterForJVM))
-  // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
-)
+    jsDependencies += RuntimeDOM,
+
+    buildInfoObject := buildInfoObjectNameJs,
+    buildInfoPackage := buildInfoPackageNameJs,
+    buildInfoKeys ++= Seq[BuildInfoKey](
+      "platform" -> buildInfoPlatformIdJs,
+      "isJavaPlatform" -> false,
+      "isJavaScriptPlatform" -> true
+    ),
+
+    testOptions in Test := Seq(Tests.Filter(unitTestFilterForJS)),
+    testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilterForJS)),
+    testOptions in GUITest := Seq(Tests.Filter(guiTestFilterForJS)),
+    testOptions in SmokeTest := Seq(Tests.Filter(smokeTestFilterForJS)),
+    testOptions in LearningTest := Seq(Tests.Filter(learningTestFilterForJS))
+    // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
+  )
+
+lazy val smclGeneralJvmSettings =
+  smclGeneralBuildInfoSettings ++ Seq(
+    libraryDependencies ++= Seq(
+      /**
+       * Scala.js Stubs for Scala
+       *
+       * @see https://www.scala-js.org/
+       * @see http://search.maven.org/#search|ga|1|scalajs-stubs
+       */
+      "org.scala-js" %% "scalajs-stubs" % "0.6.14" % "provided" withSources () withJavadoc ()
+    ),
+
+    buildInfoObject := buildInfoObjectNameJvm,
+    buildInfoPackage := buildInfoPackageNameJvm,
+    buildInfoKeys ++= Seq[BuildInfoKey](
+      "platform" -> buildInfoPlatformIdJvm,
+      "isJavaPlatform" -> true,
+      "isJavaScriptPlatform" -> false
+    ),
+
+    testOptions in Test := Seq(Tests.Filter(unitTestFilterForJVM)),
+    testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilterForJVM)),
+    testOptions in GUITest := Seq(Tests.Filter(guiTestFilterForJVM)),
+    testOptions in SmokeTest := Seq(Tests.Filter(smokeTestFilterForJVM)),
+    testOptions in LearningTest := Seq(Tests.Filter(learningTestFilterForJVM))
+    // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
+  )
 
 
 //-------------------------------------------------------------------------------------------------
@@ -298,8 +383,8 @@ lazy val smclBitmapViewer =
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .settings(
         name := prjSmclBitmapViewerId,
-        version := prjSmclBitmapViewerVersion,
-        isSnapshot := isSnapshotVersion(prjSmclBitmapViewerVersion),
+        version := moduleVersionString,
+        isSnapshot := !projectIsRelease,
         description := prjSmclBitmapViewerDescription,
         smclGeneralSettings,
         scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerName),
@@ -308,6 +393,9 @@ lazy val smclBitmapViewer =
         inConfig(SmokeTest)(Defaults.testTasks),
         inConfig(LearningTest)(Defaults.testTasks)
       )
+      .jvmConfigure{project =>
+        project.enablePlugins(BuildInfoPlugin)
+      }
       .jvmSettings(
         smclGeneralJvmSettings,
         onLoadMessage := prjSmclBitmapViewerName + " JVM Project Loaded",
@@ -327,15 +415,18 @@ lazy val smclBitmapViewer =
            * @see http://search.maven.org/#search|ga|1|scala-swing
            */
           "org.scala-lang.modules" %% "scala-swing" % "2.0.0" withSources () withJavadoc ()
-        )
+        ),
       )
+      .jsConfigure{project =>
+        project.enablePlugins(BuildInfoPlugin)
+      }
       .jsSettings(
         smclGeneralJsSettings,
         onLoadMessage := prjSmclBitmapViewerName + " JS Project Loaded",
         inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
         inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
         inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-        inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+        inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings),
       )
       .dependsOn(smclCore % confToConfSemiColonString)
 
@@ -354,8 +445,8 @@ lazy val smclCore =
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .settings(
         name := prjSmclCoreId,
-        version := prjSmclCoreVersion,
-        isSnapshot := isSnapshotVersion(prjSmclCoreVersion),
+        version := moduleVersionString,
+        isSnapshot := !projectIsRelease,
         description := prjSmclCoreDescription,
         smclGeneralSettings,
         scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreName),
@@ -364,17 +455,23 @@ lazy val smclCore =
         inConfig(SmokeTest)(Defaults.testTasks),
         inConfig(LearningTest)(Defaults.testTasks)
       )
+      .jvmConfigure{project =>
+        project.enablePlugins(BuildInfoPlugin)
+      }
       .jvmSettings(
         smclGeneralJvmSettings,
-        onLoadMessage := prjSmclCoreName + " JVM Project Loaded"
+        onLoadMessage := prjSmclCoreName + " JVM Project Loaded",
       )
+      .jsConfigure{project =>
+        project.enablePlugins(BuildInfoPlugin)
+      }
       .jsSettings(
         smclGeneralJsSettings,
         onLoadMessage := prjSmclCoreName + " JS Project Loaded",
         inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
         inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
         inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-        inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+        inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings),
       )
 
 lazy val smclCoreJVM = smclCore.jvm
@@ -391,7 +488,7 @@ lazy val smcl = project.in(file("."))
     .configs(ItgTest, GUITest, SmokeTest, LearningTest)
     .settings(
       smclGeneralSettings,
-      onLoadMessage := smclName + " Root Project Loaded"
+      onLoadMessage := projectFullName + " Root Project Loaded"
     )
     .aggregate(
       smclBitmapViewerJVM, smclBitmapViewerJS,
