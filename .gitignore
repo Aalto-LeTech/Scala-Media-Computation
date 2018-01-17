@@ -28,22 +28,22 @@
 !/project
 !/smcl-bitmap-viewer
 !/smcl-core
-!/smcl-public-interfaces
 !/.gitattributes
 !/.gitignore
 !/build.sbt
 !/CHANGELOG
+!/CODE_OF_CONDUCT.md
 !/CONTRIBUTING.md
 !/LICENSE
 !/package.json
 !/README.md
 
 /.idea/libraries
+/.idea/modules
 /.idea/workspace.xml
 /.idea/tasks.xml
 
 /project/*
-!/project/ApplicationDependencies.scala
 !/project/build.properties
 !/project/plugins.sbt
 
@@ -72,19 +72,6 @@
 !/smcl-core/js/src
 !/smcl-core/jvm/src
 !/smcl-core/shared/src
-
-/smcl-public-interfaces/*
-!/smcl-public-interfaces/js
-!/smcl-public-interfaces/jvm
-!/smcl-public-interfaces/shared
-!/smcl-public-interfaces/root-doc.txt
-
-/smcl-public-interfaces/js/*
-/smcl-public-interfaces/jvm/*
-/smcl-public-interfaces/shared/*
-!/smcl-public-interfaces/js/src
-!/smcl-public-interfaces/jvm/src
-!/smcl-public-interfaces/shared/src
 
 **/.git/*
 **/.history/*
