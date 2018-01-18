@@ -45,7 +45,7 @@ lazy val projectAbbreviatedName = "SMCL"
 lazy val projectMajorVersion = 0
 lazy val projectMinorVersion = 0
 lazy val projectMicroVersion = 2
-lazy val projectIsRelease = false
+lazy val projectIsRelease = true
 
 lazy val projectHomepageUrl = "http://github.com/Aalto-LeTech/Scala-Media-Computation"
 
