@@ -17,11 +17,6 @@
 package smcl.interfaces
 
 
-import smcl.SMCLLibrary
-
-
-
-
 /**
  * Interface for querying objects for provider-related metadata.
  *
@@ -37,56 +32,41 @@ trait MetadataOnMetadataProvider extends Immutable {
    *
    * @return
    */
-  def providerName: Option[String] = {
-    Some(SMCLLibrary.fullName)
-  }
+  def providerName: Option[String]
 
   /**
    * Returns a description describing the provider.
    *
    * @return
    */
-  def providerDescription: Option[String] = {
-    Some(SMCLLibrary.description)
-  }
+  def providerDescription: Option[String]
 
   /**
    * Returns the major version number of the provider.
    *
    * @return
    */
-  def providerMajorVersion: Option[Int] = {
-    Some(SMCLLibrary.majorVersion)
-  }
+  def providerMajorVersion: Option[Int]
 
   /**
    * Returns the minor version number of the provider.
    *
    * @return
    */
-  def providerMinorVersion: Option[Int] = {
-    Some(SMCLLibrary.minorVersion)
-  }
+  def providerMinorVersion: Option[Int]
 
   /**
    * Returns the name of the authoring organization.
    *
    * @return
    */
-  def providerAuthorOrganizationName: Option[String] = {
-    val name = SMCLLibrary.originalOrganizationName
-    val country = SMCLLibrary.countryOfOrigin
-
-    Some(s"$name, $country")
-  }
+  def providerAuthorOrganizationName: Option[String]
 
   /**
    * Returns the first name of the authoring person.
    *
    * @return
    */
-  def providerAuthorPersonName: Option[String] = {
-    Some(SMCLLibrary.originalDeveloperName)
-  }
+  def providerAuthorPersonName: Option[String]
 
 }

@@ -43,7 +43,7 @@ object ViewerMainFrame {
 
   /** */
   val MsgAbout: String = {
-    import smcl.SMCLLibrary._
+    import smcl.Library._
 
     s"""Image viewing application of the $fullName.
        |

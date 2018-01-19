@@ -50,6 +50,7 @@ lazy val projectIsRelease = false
 lazy val projectHomepageUrl = "http://github.com/Aalto-LeTech/Scala-Media-Computation"
 
 lazy val projectStartYear = 2015
+// TODO: Separate the department
 lazy val projectOriginalOrganizationName = "Aalto University, Department of Computer Science"
 lazy val projectCountryOfOrigin = "Finland"
 lazy val projectOriginalDeveloper = Developer(
@@ -114,12 +115,12 @@ lazy val moduleVersionString = {
     projectVersionString + snapshotIdPostfix
 }
 
-lazy val buildInfoObjectNameJvm = "JVMAWTLibraryInformationProvider"
-lazy val buildInfoPackageNameJvm = "smcl.infrastructure.jvmawt"
+lazy val buildInfoObjectNameJvm = "Library"
+lazy val buildInfoPackageNameJvm = "smcl"
 lazy val buildInfoPlatformIdJvm = "jvm-awt"
 
-lazy val buildInfoObjectNameJs = "JSLibraryInformationProvider"
-lazy val buildInfoPackageNameJs = "smcl.infrastructure.js"
+lazy val buildInfoObjectNameJs = buildInfoObjectNameJvm
+lazy val buildInfoPackageNameJs = buildInfoPackageNameJvm
 lazy val buildInfoPlatformIdJs = "js-html5"
 
 lazy val confUnitTestId = "test"
@@ -297,7 +298,9 @@ lazy val smclGeneralBuildInfoSettings = Seq(
     "organizationName" -> projectOrganizationName,
     "organizationId" -> projectOrganizationId,
     "organizationHomePageURL" -> projectOrganizationUrl,
-    "developers" -> projectDevelopers,                                // TODO: return objects instead of strings
+    // TODO: Create info for contact person
+    // TODO: return objects instead of strings
+    "developers" -> projectDevelopers,
     "originalOrganizationName" -> projectOriginalOrganizationName,
     "originalDeveloperName" -> projectOriginalDeveloper.name,
     "countryOfOrigin" -> projectCountryOfOrigin,

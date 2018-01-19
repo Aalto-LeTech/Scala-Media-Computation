@@ -17,12 +17,35 @@
 package smcl.infrastructure
 
 
+import java.text.SimpleDateFormat
+import java.util.TimeZone
+
+
+
+
 /**
  * An interface for delivering information about this library.
  *
  * @author Aleksi Lukkarinen
  */
 trait LibraryInformationProvider {
+
+  /** */
+  val DefaultDateTimeFormat: String =
+    "dd.MM.yyyy HH:mm:ss.SSSXXX"
+
+  /** */
+  val DefaultTimeZoneName: String = "UTC"
+
+  /** */
+  private
+  val DefaultDateTimeFormatter =
+    new SimpleDateFormat(DefaultDateTimeFormat)
+
+  /** */
+  private
+  val DefaultTimeZone: TimeZone =
+    TimeZone.getTimeZone(DefaultTimeZoneName)
 
   /**
    * Returns the full name of this library.
@@ -88,6 +111,13 @@ trait LibraryInformationProvider {
   def isRelease: Boolean
 
   /**
+   * Tells whether or not the version of this library is a snapshot one.
+   *
+   * @return <code>true</code> in case of a snapshot version, <code>false</code> for a release one
+   */
+  def isSnapshot: Boolean = !isRelease
+
+  /**
    * Returns the version of this library as a string.
    *
    * @return
@@ -148,7 +178,7 @@ trait LibraryInformationProvider {
    *
    * @return
    */
-  def developers :Seq[String]
+  def developers: Seq[String]
 
   /**
    * Returns the name of the organization in which the development of this library started.
@@ -184,6 +214,23 @@ trait LibraryInformationProvider {
    * @return
    */
   def sbtVersion: String
+
+  /**
+   * Returns the build time of this library distribution as a string.
+   *
+   * @param f  formatter to format the date with; if <code>None</code>, the [[DefaultDateTimeFormat]] will be used
+   * @param tz time zone to format the date with; if <code>None</code>, the [[DefaultTimeZoneName]] will be used
+   *
+   * @return
+   */
+  def builtAtString(
+      f: Option[SimpleDateFormat],
+      tz: Option[TimeZone]): String = {
+
+    val formatter = f.getOrElse(DefaultDateTimeFormatter)
+    formatter.setTimeZone(tz.getOrElse(DefaultTimeZone))
+    formatter.format(builtAtMillis)
+  }
 
   /**
    * Returns the built time of this library distribution as a long integer

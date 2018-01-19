@@ -23,7 +23,7 @@ import scala.swing.Swing
 
 import rx.lang.scala.{Observable, Observer}
 
-import smcl.SMCLLibrary
+import smcl.Library
 import smcl.infrastructure.Identity
 import smcl.pictures.fullfeatured.Bitmap
 import smcl.viewers.bitmaps.DisplayBitmapEvent
@@ -41,7 +41,7 @@ object ViewerManager {
   // @formatter:off
 
   /** Full name of this application. */
-  val FullName = s"${SMCLLibrary.abbreviatedName} Bitmap Viewer"
+  val FullName = s"${Library.abbreviatedName} Bitmap Viewer"
 
   /** Default mouse cursor used by this application. */
   val DefaultCursor: Cursor = Cursor.getDefaultCursor

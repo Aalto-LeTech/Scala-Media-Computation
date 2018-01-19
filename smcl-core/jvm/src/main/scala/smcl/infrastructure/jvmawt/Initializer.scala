@@ -76,20 +76,9 @@ object Initializer extends SMCLInitializer {
 
     injectMiscellaneousDependencies()
 
-    initLibraryInformationProvider()
     initSettings()
     initPlatformResourceFactory()
     initSwingLookAndFeel()
-  }
-
-  /**
-   * Initialize library information provider.
-   *
-   * @return
-   */
-  def initLibraryInformationProvider(): Unit = {
-    DefaultLibraryInformationProvider.
-        setImplementation(JVMAWTLibraryInformationProvider)
   }
 
   /**
@@ -126,7 +115,6 @@ object Initializer extends SMCLInitializer {
       fullfeatured.Bitmap,
       fullfeatured.Bmp,
       ShapeCreator,
-      //simplified.Pic,
       AbstractBitmaps
     )
 
