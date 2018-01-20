@@ -486,19 +486,76 @@ lazy val smclCoreJS = smclCore.js
 // PROJECT: SMCL ROOT AGGREGATE
 //
 //-------------------------------------------------------------------------------------------------
-
 lazy val smcl = project.in(file("."))
-    .configs(ItgTest, GUITest, SmokeTest, LearningTest)
     .settings(
-      smclGeneralSettings,
-      onLoadMessage := projectFullName + " Root Project Loaded"
+      onLoadMessage := projectFullName + " Root Project Loaded",
+      publishArtifact := false  // To keep SBT from publishing unnecessary empty artifacts
     )
     .aggregate(
       smclBitmapViewerJVM, smclBitmapViewerJS,
       smclCoreJVM, smclCoreJS)
-    .dependsOn(
-      smclBitmapViewerJVM, smclBitmapViewerJS,
-      smclCoreJS, smclCoreJVM)
+
+
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// The following definitions exist to keep SBT from publishing
+// unnecessary empty artifacts from the aggregate project.
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+Keys.compile := {
+  (Keys.compile in (smclBitmapViewerJVM, Compile)).value
+  (Keys.compile in (smclCoreJVM, Compile)).value
+  (Keys.compile in (smclBitmapViewerJS, Compile)).value
+  (Keys.compile in (smclCoreJS, Compile)).value
+}
+
+Keys.`package` := {
+  (Keys.`package` in (smclBitmapViewerJVM, Compile)).value
+  (Keys.`package` in (smclCoreJVM, Compile)).value
+  (Keys.`package` in (smclBitmapViewerJS, Compile)).value
+  (Keys.`package` in (smclCoreJS, Compile)).value
+}
+
+Keys.test := {
+  (Keys.test in (smclBitmapViewerJVM, Test)).value
+  (Keys.test in (smclCoreJVM, Test)).value
+  (Keys.test in (smclBitmapViewerJS, Test)).value
+  (Keys.test in (smclCoreJS, Test)).value
+}
+
+Keys.test in LearningTest := {
+  (Keys.test in (smclCoreJVM, LearningTest)).value
+  (Keys.test in (smclCoreJS, LearningTest)).value
+  (Keys.test in (smclBitmapViewerJVM, LearningTest)).value
+  (Keys.test in (smclBitmapViewerJS, LearningTest)).value
+}
+
+Keys.test in ItgTest := {
+  (Keys.test in (smclCoreJVM, ItgTest)).value
+  (Keys.test in (smclCoreJS, ItgTest)).value
+  (Keys.test in (smclBitmapViewerJVM, ItgTest)).value
+  (Keys.test in (smclBitmapViewerJS, ItgTest)).value
+}
+
+Keys.test in GUITest := {
+  (Keys.test in (smclCoreJVM, GUITest)).value
+  (Keys.test in (smclCoreJS, GUITest)).value
+  (Keys.test in (smclBitmapViewerJVM, GUITest)).value
+  (Keys.test in (smclBitmapViewerJS, GUITest)).value
+}
+
+Keys.test in SmokeTest := {
+  (Keys.test in (smclCoreJVM, SmokeTest)).value
+  (Keys.test in (smclCoreJS, SmokeTest)).value
+  (Keys.test in (smclBitmapViewerJVM, SmokeTest)).value
+  (Keys.test in (smclBitmapViewerJS, SmokeTest)).value
+}
+
+Keys.doc := {
+  (Keys.doc in (smclCoreJVM, Compile)).value
+  (Keys.doc in (smclCoreJS, Compile)).value
+  (Keys.doc in (smclBitmapViewerJVM, Compile)).value
+  (Keys.doc in (smclBitmapViewerJS, Compile)).value
+}
 
 
 //-------------------------------------------------------------------------------------------------
