@@ -52,9 +52,13 @@ This will create a `Scala-Media-Computation` folder into the folder in which it 
 
 ### Installing Java Development Kit
 
-### Installing SBT
+### Configuring Maven and Ivy
 
-### Installing Maven (optional)
+While Apache Maven is not needed to build this project, local artifact repositories for Maven and Ivy are needed when publishing build products of this project. What's more, SBT uses Apache Ivy for all dependency management, which means that a local Ivy-style artifact repository is definitely needed.
+
+...
+
+### Installing SBT
 
 ### Installing Node.js
 
