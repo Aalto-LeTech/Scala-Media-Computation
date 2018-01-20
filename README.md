@@ -24,7 +24,7 @@ This repository contains only the platform-independent files needed to create a 
 | Path                                                               | Description |
 | ------------------------------------------------------------------ | ----------- |
 | .idea          | Platform-independent settings files for IntelliJ IDEA. |
-| node_modules   | modules needed by Node.js to be able to execute JavaScript-based tests during build process. |
+| node_modules   | Modules needed by Node.js to be able to execute JavaScript-based tests during build process. |
 | project        | SBT's project folder. |
 | smcl-bitmap-viewer<br />&nbsp;&nbsp;/js<br />&nbsp;&nbsp;/jvm<br />&nbsp;&nbsp;/shared | Source files for SMCL's bitmap viewer separated into three folders:<br />(1) those that depend on JS/HTML5 platform,<br />(2) those that depend on JVM/AWT platform, and<br />(3) platform-independent files. |
 | smcl-core<br />&nbsp;&nbsp;/js<br />&nbsp;&nbsp;/jvm<br />&nbsp;&nbsp;/shared | Source files for SMCL's core separated into three folders as above for the bitmap viewer. |
