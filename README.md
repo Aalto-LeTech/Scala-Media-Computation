@@ -30,9 +30,19 @@ This repository contains only the platform-independent files needed to create a 
 | smcl-core<br />&nbsp;&nbsp;/js<br />&nbsp;&nbsp;/jvm<br />&nbsp;&nbsp;/shared | Source files for SMCL's core separated into three folders as above for the bitmap viewer. |
 | build.sbt      | The project and build description file for SBT. |
 
+...
+
+Build products---including the packaged Java archives (.jar files)---are located under the generated `<project>/js/target` and `<project>/jvm/target` folders.
+
+...
 
 
-## Making a Local Copy
+
+## Setting Up a Development Environment
+
+### Installing Git
+
+### Cloning This Repository onto a Local Mass Storage
 
 One possibility to clone this repository onto your local mass storage is to use [Git](https://git-scm.com/) itself. From command line this can be done like below:
 ```
@@ -40,16 +50,23 @@ git clone https://github.com/Aalto-LeTech/Scala-Media-Computation.git
 ```
 This will create a `Scala-Media-Computation` folder into the folder in which it is executed. Other possibilities to clone the repository include e.g. IDE plugins and other graphical user interfaces developed to make using of Git easier.
 
+### Installing Java Development Kit
+
+### Installing SBT
+
+### Installing Maven (optional)
+
+### Installing Node.js
+
+### Installing IntelliJ IDEA and Related Plugins
 
 
-## Building the Library
-
-As mentioned earlier, this library uses [sbt](http://www.scala-sbt.org/) as its build tool. 
-
-Build products---including the packaged Java archives (.jar files)---are located under the generated `<project>/js/target` and `<project>/jvm/target` folders.
 
 
 
-## Developing with IntelliJ IDEA
+
+## Developing with IntelliJ IDEA and SBT
+
+### Building the Library
 
 ...
