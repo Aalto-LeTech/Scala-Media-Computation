@@ -7,19 +7,29 @@ This project is targeted mainly for instructors and students of introductory pro
 <br />
 
 
-## Project Structure
-
-...
-
 
 ## Tools & Dependencies
 
+This library uses [sbt](http://www.scala-sbt.org/) as its build tool. 
 ...
 
 
-## Repository Content
 
-The repository contains only the files needed to create a fresh development setup of the project: source code and other resources as well as the initial settings for the build tool.
+## Repository Content and Project Structure
+
+The project consists of two parts: SMCL Core and SMCL Bitmap Viewer. Both of these are to be cross-compiled for two platforms: One consisting of the Java Virtual Machine and the Abstract Window Toolkit from Java's class library, while the other one being JavaScript and HTML5 for browser-based usage. At the moment, the JS/HTML5 version has not been developed, and the development efforts have been focused on the JVM/AWT version.
+
+This repository contains only the platform-independent files needed to create a fresh development setup of the project: source code and other resources as well as the some settings for IntelliJ IDEA. The essential structure of this repository is given in the table below:
+
+| Path                                                               | Description |
+| ------------------------------------------------------------------ | ----------- |
+| .idea          | Platform-independent settings files for IntelliJ IDEA. |
+| node_modules   | modules needed by Node.js to be able to execute JavaScript-based tests during build process. |
+| project        | SBT's project folder. |
+| smcl-bitmap-viewer<br />&nbsp;&nbsp;/js<br />&nbsp;&nbsp;/jvm<br />&nbsp;&nbsp;/shared | Source files for SMCL's bitmap viewer separated into three folders:<br />(1) those that depend on JS/HTML5 platform,<br />(2) those that depend on JVM/AWT platform, and<br />(3) platform-independent files. |
+| smcl-core<br />&nbsp;&nbsp;/js<br />&nbsp;&nbsp;/jvm<br />&nbsp;&nbsp;/shared | Source files for SMCL's core separated into three folders as above for the bitmap viewer. |
+| build.sbt      | The project and build description file for SBT. |
+
 
 
 ## Making a Local Copy
@@ -31,11 +41,13 @@ git clone https://github.com/Aalto-LeTech/Scala-Media-Computation.git
 This will create a `Scala-Media-Computation` folder into the folder in which it is executed. Other possibilities to clone the repository include e.g. IDE plugins and other graphical user interfaces developed to make using of Git easier.
 
 
+
 ## Building the Library
 
-This library uses [sbt](http://www.scala-sbt.org/) as its build tool. 
+As mentioned earlier, this library uses [sbt](http://www.scala-sbt.org/) as its build tool. 
 
 Build products---including the packaged Java archives (.jar files)---are located under the generated `<project>/js/target` and `<project>/jvm/target` folders.
+
 
 
 ## Developing with IntelliJ IDEA
