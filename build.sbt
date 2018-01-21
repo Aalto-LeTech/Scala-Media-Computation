@@ -196,14 +196,24 @@ Keys.doc := {
 //-------------------------------------------------------------------------------------------------
 
 addCommandAlias("cp", "; clean ; package")
-
 addCommandAlias("rcp", "; reload ; clean ; package")
-
 addCommandAlias("cpt", "; clean ; package ; test")
-
 addCommandAlias("rcpt", "; reload ; clean ; package ; test")
-
 addCommandAlias("testAll", "; learning:test ; test ; integration:test ; gui:test ; smoke:test")
+
+addCommandAlias("jvmC", "; smcl-core-jvm/clean ; smcl-bitmap-viewer-jvm/clean")
+addCommandAlias("jvmP", "; smcl-core-jvm/package ; smcl-bitmap-viewer-jvm/package")
+addCommandAlias("jvmCP", "; jvmC ; jvmP")
+addCommandAlias("jvmCPT", "; jvmC ; jvmP ; jvmUT")
+addCommandAlias("jvmUT", "; smcl-core-jvm/test ; smcl-bitmap-viewer-jvm/test")
+addCommandAlias("jvmIT", "; smcl-core-jvm/integration:test ; smcl-bitmap-viewer-jvm/integration:test")
+addCommandAlias("jvmLT", "; smcl-core-jvm/learning:test ; smcl-bitmap-viewer-jvm/learning:test")
+addCommandAlias("jvmGT", "; smcl-core-jvm/gui:test ; smcl-bitmap-viewer-jvm/gui:test")
+addCommandAlias("jvmST", "; smcl-core-jvm/smoke:test ; smcl-bitmap-viewer-jvm/smoke:test")
+addCommandAlias("jvmTestAll", "; jvmST ; jvmUT ; jvmIT ; jvmLT ; jvmGT")
+addCommandAlias("jvmD", "; smcl-core-jvm/doc ; smcl-bitmap-viewer-jvm/doc")
+addCommandAlias("jvmPublishLocal", "; smcl-core-jvm/publishLocal ; smcl-bitmap-viewer-jvm/publishLocal")
+addCommandAlias("jvmPublishM2", "; smcl-core-jvm/publishM2 ; smcl-bitmap-viewer-jvm/publishM2")
 
 
 //-------------------------------------------------------------------------------------------------
@@ -594,8 +604,5 @@ lazy val smcl = project.in(file("."))
       publishLocal := {}
     )
     .aggregate(
-      smclBitmapViewerJVM, smclBitmapViewerJS,
-      smclCoreJVM, smclCoreJS)
-    .dependsOn(
       smclBitmapViewerJVM, smclBitmapViewerJS,
       smclCoreJVM, smclCoreJS)
