@@ -98,13 +98,6 @@ lazy val prjSmclCoreDescription = "A class library for bitmap processing using S
 
 lazy val snapshotIdPostfix = "-SNAPSHOT"
 
-
-//-------------------------------------------------------------------------------------------------
-//
-// GENERAL SETTINGS
-//
-//-------------------------------------------------------------------------------------------------
-
 lazy val projectVersionString =
   Seq(projectMajorVersion, projectMinorVersion, projectMicroVersion).mkString(".")
 
@@ -122,6 +115,102 @@ lazy val buildInfoPlatformIdJvm = "jvm-awt"
 lazy val buildInfoObjectNameJs = buildInfoObjectNameJvm
 lazy val buildInfoPackageNameJs = buildInfoPackageNameJvm
 lazy val buildInfoPlatformIdJs = "js-html5"
+
+lazy val buildInfoKeyPlatform = "platform"
+lazy val buildInfoKeyIsJavaPlatform = "isJavaPlatform"
+lazy val buildInfoKeyIsJavaScriptPlatform = "isJavaScriptPlatform"
+
+
+//-------------------------------------------------------------------------------------------------
+//
+// GENERAL TASK DEFINITIONS
+//
+//-------------------------------------------------------------------------------------------------
+
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// The following definitions exist to keep SBT from publishing
+// unnecessary empty artifacts from the aggregate project.
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+Keys.compile := {
+  (Keys.compile in (smclBitmapViewerJVM, Compile)).value
+  (Keys.compile in (smclCoreJVM, Compile)).value
+  (Keys.compile in (smclBitmapViewerJS, Compile)).value
+  (Keys.compile in (smclCoreJS, Compile)).value
+}
+
+Keys.`package` := {
+  (Keys.`package` in (smclBitmapViewerJVM, Compile)).value
+  (Keys.`package` in (smclCoreJVM, Compile)).value
+  (Keys.`package` in (smclBitmapViewerJS, Compile)).value
+  (Keys.`package` in (smclCoreJS, Compile)).value
+}
+
+Keys.test := {
+  (Keys.test in (smclBitmapViewerJVM, Test)).value
+  (Keys.test in (smclCoreJVM, Test)).value
+  (Keys.test in (smclBitmapViewerJS, Test)).value
+  (Keys.test in (smclCoreJS, Test)).value
+}
+
+Keys.test in LearningTest := {
+  (Keys.test in (smclCoreJVM, LearningTest)).value
+  (Keys.test in (smclCoreJS, LearningTest)).value
+  (Keys.test in (smclBitmapViewerJVM, LearningTest)).value
+  (Keys.test in (smclBitmapViewerJS, LearningTest)).value
+}
+
+Keys.test in ItgTest := {
+  (Keys.test in (smclCoreJVM, ItgTest)).value
+  (Keys.test in (smclCoreJS, ItgTest)).value
+  (Keys.test in (smclBitmapViewerJVM, ItgTest)).value
+  (Keys.test in (smclBitmapViewerJS, ItgTest)).value
+}
+
+Keys.test in GUITest := {
+  (Keys.test in (smclCoreJVM, GUITest)).value
+  (Keys.test in (smclCoreJS, GUITest)).value
+  (Keys.test in (smclBitmapViewerJVM, GUITest)).value
+  (Keys.test in (smclBitmapViewerJS, GUITest)).value
+}
+
+Keys.test in SmokeTest := {
+  (Keys.test in (smclCoreJVM, SmokeTest)).value
+  (Keys.test in (smclCoreJS, SmokeTest)).value
+  (Keys.test in (smclBitmapViewerJVM, SmokeTest)).value
+  (Keys.test in (smclBitmapViewerJS, SmokeTest)).value
+}
+
+Keys.doc := {
+  (Keys.doc in (smclCoreJVM, Compile)).value
+  (Keys.doc in (smclCoreJS, Compile)).value
+  (Keys.doc in (smclBitmapViewerJVM, Compile)).value
+  (Keys.doc in (smclBitmapViewerJS, Compile)).value
+}
+
+
+//-------------------------------------------------------------------------------------------------
+//
+// COMMAND ALIASES
+//
+//-------------------------------------------------------------------------------------------------
+
+addCommandAlias("cp", "; clean ; package")
+
+addCommandAlias("rcp", "; reload ; clean ; package")
+
+addCommandAlias("cpt", "; clean ; package ; test")
+
+addCommandAlias("rcpt", "; reload ; clean ; package ; test")
+
+addCommandAlias("testAll", "; learning:test ; test ; integration:test ; gui:test ; smoke:test")
+
+
+//-------------------------------------------------------------------------------------------------
+//
+// TEST SETTINGS
+//
+//-------------------------------------------------------------------------------------------------
 
 lazy val confUnitTestId = "test"
 lazy val confSmokeTestId = "smoke"
@@ -206,7 +295,16 @@ def unitTestFilterForJS(name: String): Boolean =
           learningTestFilterForJS(name))
 
 
-lazy val smclGeneralSettings = Seq(
+//-------------------------------------------------------------------------------------------------
+//
+// GENERAL SETTINGS
+//
+//-------------------------------------------------------------------------------------------------
+
+inThisBuild(Seq(
+  version := moduleVersionString,
+  isSnapshot := !projectIsRelease,
+
   organization := projectOrganizationId,
   organizationName := projectOrganizationName,
   organizationHomepage := Some(url(projectOrganizationUrl)),
@@ -215,22 +313,24 @@ lazy val smclGeneralSettings = Seq(
   homepage := Some(url(projectHomepageUrl)),
   developers ++= projectDevelopers,
 
-  logLevel := Level.Info,
-
-  scalaVersion in ThisBuild := primaryScalaVersion,
-
-  javacOptions ++= Seq(
-    "-source", projectJavaVersionSource,
-    "-target", projectJavaVersionTarget
-  ),
+  scalaVersion := primaryScalaVersion,
 
   parallelExecution := true,
 
+  logLevel := Level.Info
+))
+
+lazy val smclGeneralSettings = Seq(
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
 
   scalacOptions in (Compile, doc) := Seq(
     "-implicits",
     "-doc-root-content", baseDirectory.value + "/root-doc.txt"
+  ),
+
+  javacOptions ++= Seq(
+    "-source", projectJavaVersionSource,
+    "-target", projectJavaVersionTarget
   ),
 
   libraryDependencies ++= Seq(
@@ -333,9 +433,9 @@ lazy val smclGeneralJsSettings =
     buildInfoObject := buildInfoObjectNameJs,
     buildInfoPackage := buildInfoPackageNameJs,
     buildInfoKeys ++= Seq[BuildInfoKey](
-      "platform" -> buildInfoPlatformIdJs,
-      "isJavaPlatform" -> false,
-      "isJavaScriptPlatform" -> true
+      buildInfoKeyPlatform -> buildInfoPlatformIdJs,
+      buildInfoKeyIsJavaPlatform -> false,
+      buildInfoKeyIsJavaScriptPlatform -> true
     ),
 
     testOptions in Test := Seq(Tests.Filter(unitTestFilterForJS)),
@@ -361,9 +461,9 @@ lazy val smclGeneralJvmSettings =
     buildInfoObject := buildInfoObjectNameJvm,
     buildInfoPackage := buildInfoPackageNameJvm,
     buildInfoKeys ++= Seq[BuildInfoKey](
-      "platform" -> buildInfoPlatformIdJvm,
-      "isJavaPlatform" -> true,
-      "isJavaScriptPlatform" -> false
+      buildInfoKeyPlatform -> buildInfoPlatformIdJvm,
+      buildInfoKeyIsJavaPlatform -> true,
+      buildInfoKeyIsJavaScriptPlatform -> false
     ),
 
     testOptions in Test := Seq(Tests.Filter(unitTestFilterForJVM)),
@@ -386,8 +486,6 @@ lazy val smclBitmapViewer =
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .settings(
         name := prjSmclBitmapViewerId,
-        version := moduleVersionString,
-        isSnapshot := !projectIsRelease,
         description := prjSmclBitmapViewerDescription,
         smclGeneralSettings,
         scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerName),
@@ -401,7 +499,7 @@ lazy val smclBitmapViewer =
       }
       .jvmSettings(
         smclGeneralJvmSettings,
-        onLoadMessage := prjSmclBitmapViewerName + " JVM Project Loaded",
+        onLoadMessage := prjSmclBitmapViewerName + " JVM/AWT Project Loaded",
         libraryDependencies ++= Seq(
           /**
            * RxScala
@@ -425,7 +523,7 @@ lazy val smclBitmapViewer =
       }
       .jsSettings(
         smclGeneralJsSettings,
-        onLoadMessage := prjSmclBitmapViewerName + " JS Project Loaded",
+        onLoadMessage := prjSmclBitmapViewerName + " JS/HTML5 Project Loaded",
         inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
         inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
         inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
@@ -448,8 +546,6 @@ lazy val smclCore =
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .settings(
         name := prjSmclCoreId,
-        version := moduleVersionString,
-        isSnapshot := !projectIsRelease,
         description := prjSmclCoreDescription,
         smclGeneralSettings,
         scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreName),
@@ -463,14 +559,14 @@ lazy val smclCore =
       }
       .jvmSettings(
         smclGeneralJvmSettings,
-        onLoadMessage := prjSmclCoreName + " JVM Project Loaded",
+        onLoadMessage := prjSmclCoreName + " JVM/AWT Project Loaded",
       )
       .jsConfigure{project =>
         project.enablePlugins(BuildInfoPlugin)
       }
       .jsSettings(
         smclGeneralJsSettings,
-        onLoadMessage := prjSmclCoreName + " JS Project Loaded",
+        onLoadMessage := prjSmclCoreName + " JS/HTML5 Project Loaded",
         inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
         inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
         inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
@@ -489,95 +585,15 @@ lazy val smclCoreJS = smclCore.js
 lazy val smcl = project.in(file("."))
     .settings(
       onLoadMessage := projectFullName + " Root Project Loaded",
-      publishArtifact := false  // To keep SBT from publishing unnecessary empty artifacts
+
+      // To keep SBT from publishing unnecessary empty artifacts
+      publishArtifact in Compile := false,
+      publish := {},
+      publishLocal := {}
     )
     .aggregate(
       smclBitmapViewerJVM, smclBitmapViewerJS,
       smclCoreJVM, smclCoreJS)
-
-
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// The following definitions exist to keep SBT from publishing
-// unnecessary empty artifacts from the aggregate project.
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-Keys.compile := {
-  (Keys.compile in (smclBitmapViewerJVM, Compile)).value
-  (Keys.compile in (smclCoreJVM, Compile)).value
-  (Keys.compile in (smclBitmapViewerJS, Compile)).value
-  (Keys.compile in (smclCoreJS, Compile)).value
-}
-
-Keys.`package` := {
-  (Keys.`package` in (smclBitmapViewerJVM, Compile)).value
-  (Keys.`package` in (smclCoreJVM, Compile)).value
-  (Keys.`package` in (smclBitmapViewerJS, Compile)).value
-  (Keys.`package` in (smclCoreJS, Compile)).value
-}
-
-Keys.test := {
-  (Keys.test in (smclBitmapViewerJVM, Test)).value
-  (Keys.test in (smclCoreJVM, Test)).value
-  (Keys.test in (smclBitmapViewerJS, Test)).value
-  (Keys.test in (smclCoreJS, Test)).value
-}
-
-Keys.test in LearningTest := {
-  (Keys.test in (smclCoreJVM, LearningTest)).value
-  (Keys.test in (smclCoreJS, LearningTest)).value
-  (Keys.test in (smclBitmapViewerJVM, LearningTest)).value
-  (Keys.test in (smclBitmapViewerJS, LearningTest)).value
-}
-
-Keys.test in ItgTest := {
-  (Keys.test in (smclCoreJVM, ItgTest)).value
-  (Keys.test in (smclCoreJS, ItgTest)).value
-  (Keys.test in (smclBitmapViewerJVM, ItgTest)).value
-  (Keys.test in (smclBitmapViewerJS, ItgTest)).value
-}
-
-Keys.test in GUITest := {
-  (Keys.test in (smclCoreJVM, GUITest)).value
-  (Keys.test in (smclCoreJS, GUITest)).value
-  (Keys.test in (smclBitmapViewerJVM, GUITest)).value
-  (Keys.test in (smclBitmapViewerJS, GUITest)).value
-}
-
-Keys.test in SmokeTest := {
-  (Keys.test in (smclCoreJVM, SmokeTest)).value
-  (Keys.test in (smclCoreJS, SmokeTest)).value
-  (Keys.test in (smclBitmapViewerJVM, SmokeTest)).value
-  (Keys.test in (smclBitmapViewerJS, SmokeTest)).value
-}
-
-Keys.doc := {
-  (Keys.doc in (smclCoreJVM, Compile)).value
-  (Keys.doc in (smclCoreJS, Compile)).value
-  (Keys.doc in (smclBitmapViewerJVM, Compile)).value
-  (Keys.doc in (smclBitmapViewerJS, Compile)).value
-}
-
-
-//-------------------------------------------------------------------------------------------------
-//
-// COMMAND ALIASES
-//
-//-------------------------------------------------------------------------------------------------
-
-addCommandAlias("cp", "; clean ; package")
-
-addCommandAlias("rcp", "; reload ; clean ; package")
-
-addCommandAlias("cpt", "; clean ; package ; test")
-
-addCommandAlias("rcpt", "; reload ; clean ; package ; test")
-
-addCommandAlias("testAll", "; learning:test ; test ; integration:test ; gui:test ; smoke:test")
-
-
-//-------------------------------------------------------------------------------------------------
-//
-// MISCELLANEOUS TASK DEFINITIONS
-//
-//-------------------------------------------------------------------------------------------------
-
+    .dependsOn(
+      smclBitmapViewerJVM, smclBitmapViewerJS,
+      smclCoreJVM, smclCoreJS)
