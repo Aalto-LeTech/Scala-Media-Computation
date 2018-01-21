@@ -208,7 +208,7 @@ addCommandAlias("testAll", "; learning:test ; test ; integration:test ; gui:test
 
 //-------------------------------------------------------------------------------------------------
 //
-// TEST SETTINGS
+// TEST DEFINITIONS
 //
 //-------------------------------------------------------------------------------------------------
 
@@ -366,6 +366,8 @@ lazy val smclGeneralSettings = Seq(
      */
     // "org.scalaz" %% "scalaz-core" % "7.2.12"
   ),
+
+  publishArtifact in Test := true,
 
   initialCommands in console :=
       """import smcl._
