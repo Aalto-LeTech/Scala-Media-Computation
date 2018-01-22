@@ -20,7 +20,7 @@ package smcl.infrastructure.jvmawt
 import smcl.colors.ColorValidator
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, RichColor}
 import smcl.infrastructure._
-import smcl.modeling
+import smcl.{Library, modeling}
 import smcl.modeling.d1
 import smcl.pictures.fullfeatured.{AbstractBitmaps, ShapeCreator}
 import smcl.pictures.{BitmapValidator, BitmapValidatorFunctionFactory, fullfeatured}
@@ -72,7 +72,9 @@ object Initializer extends SMCLInitializer {
    * Initialize SMCL.
    */
   def apply(): Unit = {
-    println("JVM-based SMCL Core initialization is in progress...")
+    if (Library.isSnapshot) {
+      println("JVM/AWT-based SMCL Core initialization is in progress...")
+    }
 
     injectMiscellaneousDependencies()
 
