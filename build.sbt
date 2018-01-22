@@ -23,7 +23,7 @@
 
 import org.scalajs.sbtplugin.ScalaJSPluginInternal
 import org.scalajs.sbtplugin.cross.CrossProject
-import sbt.Keys.{scalacOptions, testOptions, _}
+import sbt.Keys.{mappings, scalacOptions, testOptions, _}
 import sbt.inConfig
 import sbtbuildinfo.BuildInfoPlugin.autoImport.buildInfoPackage
 
@@ -330,6 +330,10 @@ inThisBuild(Seq(
   logLevel := Level.Info
 ))
 
+lazy val generalJARAdditions = Seq(
+  new java.io.File("LICENSE") -> "LICENSE"
+)
+
 lazy val smclGeneralSettings = Seq(
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
 
@@ -378,6 +382,24 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   publishArtifact in Test := true,
+
+  mappings in (Compile, packageBin) ++=
+      generalJARAdditions,
+
+  mappings in (Compile, packageDoc) ++=
+      generalJARAdditions,
+
+  mappings in (Compile, packageSrc) ++=
+      generalJARAdditions,
+
+  mappings in (Test, packageBin) ++=
+      generalJARAdditions,
+
+  mappings in (Test, packageDoc) ++=
+      generalJARAdditions,
+
+  mappings in (Test, packageSrc) ++=
+      generalJARAdditions,
 
   initialCommands in console :=
       """import smcl._
