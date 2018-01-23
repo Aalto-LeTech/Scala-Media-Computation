@@ -28,6 +28,7 @@
 !/project
 !/smcl-bitmap-viewer
 !/smcl-core
+!/smcl-library-info
 !/.gitattributes
 !/.gitignore
 !/build.sbt
@@ -40,6 +41,7 @@
 
 /.idea/libraries
 /.idea/modules
+/.idea/misc.xml
 /.idea/modules.xml
 /.idea/sbt.xml
 /.idea/scala_compiler.xml
@@ -47,13 +49,11 @@
 /.idea/workspace.xml
 
 /project/*
-!/project/sharedBuildCode
 !/project/build.properties
-!/project/build.sbt
 !/project/plugins.sbt
 
-/project/sharedBuildCode/*
-!/project/sharedBuildCode/src
+/smcl-library-info/*
+!/smcl-library-info/src
 
 /smcl-bitmap-viewer/*
 !/smcl-bitmap-viewer/js

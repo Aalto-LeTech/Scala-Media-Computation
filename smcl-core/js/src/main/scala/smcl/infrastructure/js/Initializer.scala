@@ -17,7 +17,7 @@
 package smcl.infrastructure.js
 
 
-import smcl.Library
+import smcl.SMCL
 import smcl.infrastructure.SMCLInitializer
 import smcl.pictures.{BitmapValidator, BitmapValidatorFunctionFactory}
 import smcl.settings.{SettingValidatorFactory, SharedSettingInitializer}
@@ -37,7 +37,7 @@ object Initializer
    *
    */
   def apply(): Unit = {
-    if (Library.isSnapshot) {
+    if (SMCL.build.isSnapshot) {
       println("JS/HTML5-based SMCL Core initialization in progress...")
     }
 
