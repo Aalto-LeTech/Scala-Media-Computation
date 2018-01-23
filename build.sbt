@@ -14,18 +14,18 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
+
 /**
- *
  * SBT build script for Scala Media Computation Library (SMCL).
  *
+ * @author Aleksi Lukkarinen
  */
 
 
 import org.scalajs.sbtplugin.ScalaJSPluginInternal
 import org.scalajs.sbtplugin.cross.CrossProject
-import sbt.Keys.{mappings, scalacOptions, testOptions, _}
+import sbt.Keys._
 import sbt.inConfig
-import sbtbuildinfo.BuildInfoPlugin.autoImport.buildInfoPackage
 
 
 
@@ -35,50 +35,44 @@ enablePlugins(ScalaJSPlugin)
 
 //-------------------------------------------------------------------------------------------------
 //
-// GENERAL CONSTANTS
+// KEYS FOR SETTINGS AND TASKS
+//
+//-------------------------------------------------------------------------------------------------
+
+lazy val abbreviatedName = settingKey[String](
+  "The abbreviated name of the project.")
+
+lazy val countryOfOrigin = settingKey[String](
+  "Tbe name of the country this project has originated in.")
+
+lazy val originalOrganizationName = settingKey[String](
+  "Tbe name of the original organization in which the development of this project started.")
+
+lazy val targetPlatform = settingKey[String](
+  "ID string of the target platform of a subproject.")
+
+lazy val isJVMAWTPlatform = settingKey[Boolean](
+  "Whether or not a subproject targets JVM/AWT platform.")
+
+lazy val isJSHTML5Platform = settingKey[Boolean](
+  "Whether or not a subproject targets JS/HTML5 platform.")
+
+lazy val generalJARAdditions = settingKey[Seq[(java.io.File, String)]](
+  "Mappings of additional files common to all JARs produced from a subproject.")
+
+
+//-------------------------------------------------------------------------------------------------
+//
+// GENERAL CONSTANTS AND CONFIGURATION
 //
 //-------------------------------------------------------------------------------------------------
 
 lazy val projectFullName = "Scala Media Computation Library"
-lazy val projectAbbreviatedName = "SMCL"
 
 lazy val projectMajorVersion = 0
 lazy val projectMinorVersion = 0
 lazy val projectMicroVersion = 3
 lazy val projectIsRelease = false
-
-lazy val projectHomepageUrl = "http://github.com/Aalto-LeTech/Scala-Media-Computation"
-
-lazy val projectStartYear = 2015
-// TODO: Separate the department
-lazy val projectOriginalOrganizationName = "Aalto University, Department of Computer Science"
-lazy val projectCountryOfOrigin = "Finland"
-lazy val projectOriginalDeveloper = Developer(
-  id = "lukkark1",
-  name = "Aleksi Lukkarinen",
-  email = "aleksi.lukkarinen@aalto.fi",
-  url = null)
-
-lazy val projectOrganizationName = projectOriginalOrganizationName
-lazy val projectOrganizationId = "fi.aalto.cs"
-lazy val projectOrganizationUrl = "http://cs.aalto.fi/"
-lazy val projectDevelopers = List(
-  projectOriginalDeveloper
-)
-
-// @formatter:off
-lazy val projectDescription: String =
-    s"""$projectAbbreviatedName is a class library created to support Scala-based
-       |media-oriented introductory programming teaching. It was originally
-       |created by ${projectOriginalDeveloper.name} in $projectStartYear as a part
-       |of his Master's Thesis for $projectOriginalOrganizationName,
-       |$projectCountryOfOrigin.""".stripMargin.replaceAll("\n", " ")
-  // @formatter:on
-
-lazy val primaryScalaVersion = "2.12.4"
-
-lazy val projectJavaVersionSource = "1.8"
-lazy val projectJavaVersionTarget = "1.8"
 
 lazy val projectIdJvmPostfix = "-jvm"
 lazy val projectIdJsPostfix = "-js"
@@ -98,6 +92,9 @@ lazy val prjSmclCoreDescription = "A class library for bitmap processing using S
 
 lazy val snapshotIdPostfix = "-SNAPSHOT"
 
+lazy val buildInfoPlatformIdJVMAWT = "jvm-awt"
+lazy val buildInfoPlatformIdJSHTML5 = "js-html5"
+
 lazy val projectVersionString =
   Seq(projectMajorVersion, projectMinorVersion, projectMicroVersion).mkString(".")
 
@@ -108,17 +105,56 @@ lazy val moduleVersionString = {
     projectVersionString + snapshotIdPostfix
 }
 
-lazy val buildInfoObjectNameJvm = "Library"
-lazy val buildInfoPackageNameJvm = "smcl"
-lazy val buildInfoPlatformIdJvm = "jvm-awt"
+lazy val projectJavaVersionSource = "1.8"
+lazy val projectJavaVersionTarget = "1.8"
 
-lazy val buildInfoObjectNameJs = buildInfoObjectNameJvm
-lazy val buildInfoPackageNameJs = buildInfoPackageNameJvm
-lazy val buildInfoPlatformIdJs = "js-html5"
+lazy val projectOriginalDeveloper = Developer(
+  id = "lukkark1",
+  name = "Aleksi Lukkarinen",
+  email = "aleksi.lukkarinen@aalto.fi",
+  url = null)
 
-lazy val buildInfoKeyPlatform = "platform"
-lazy val buildInfoKeyIsJavaPlatform = "isJavaPlatform"
-lazy val buildInfoKeyIsJavaScriptPlatform = "isJavaScriptPlatform"
+lazy val projectDevelopers = List(
+  projectOriginalDeveloper
+)
+
+inThisBuild(Seq(
+  name := projectFullName,
+  abbreviatedName := "SMCL",
+
+  // TODO: Separate the department
+  originalOrganizationName := "Aalto University, Department of Computer Science",
+
+  organization := "fi.aalto.cs",
+  organizationName := originalOrganizationName.value,
+  organizationHomepage := Some(url("http://cs.aalto.fi/")),
+
+  startYear := Some(2015),
+  countryOfOrigin := "Finland",
+  homepage := Some(url("http://github.com/Aalto-LeTech/Scala-Media-Computation")),
+  developers ++= projectDevelopers,
+
+  // @formatter:off
+  description := {
+    s"""${abbreviatedName.value} is a class library created to support Scala-based
+       |media-oriented introductory programming teaching. It was originally
+       |created by ${projectOriginalDeveloper.name} in ${startYear.value} as a part
+       |of his Master's Thesis for $originalOrganizationName,
+       |${countryOfOrigin.value}.""".stripMargin.replaceAll("\n", " ")
+  },
+  // @formatter:on
+
+  version := moduleVersionString,
+  isSnapshot := !projectIsRelease,
+
+  scalaVersion := "2.12.4",
+
+  parallelExecution := true,
+
+  logLevel := Level.Info,
+))
+
+val sharedBuildCode = ProjectRef(file("project"), "sharedBuildCode")
 
 
 //-------------------------------------------------------------------------------------------------
@@ -311,29 +347,6 @@ def unitTestFilterForJS(name: String): Boolean =
 //
 //-------------------------------------------------------------------------------------------------
 
-inThisBuild(Seq(
-  version := moduleVersionString,
-  isSnapshot := !projectIsRelease,
-
-  organization := projectOrganizationId,
-  organizationName := projectOrganizationName,
-  organizationHomepage := Some(url(projectOrganizationUrl)),
-
-  startYear := Some(projectStartYear),
-  homepage := Some(url(projectHomepageUrl)),
-  developers ++= projectDevelopers,
-
-  scalaVersion := primaryScalaVersion,
-
-  parallelExecution := true,
-
-  logLevel := Level.Info
-))
-
-lazy val generalJARAdditions = Seq(
-  new java.io.File("LICENSE") -> "LICENSE"
-)
-
 lazy val smclGeneralSettings = Seq(
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
 
@@ -348,6 +361,16 @@ lazy val smclGeneralSettings = Seq(
   ),
 
   libraryDependencies ++= Seq(
+    /**
+     * circe
+     *
+     * @see https://github.com/circe/circe
+     * @see http://search.maven.org/#search%7Cga%7C1%7Ccirce
+     */
+    "io.circe" %%% "circe-core" % "0.9.1" withSources () withJavadoc (),
+    "io.circe" %%% "circe-generic" % "0.9.1" withSources () withJavadoc (),
+    "io.circe" %%% "circe-parser" % "0.9.1" withSources () withJavadoc (),
+
     /**
      * scalatest
      *
@@ -383,23 +406,30 @@ lazy val smclGeneralSettings = Seq(
 
   publishArtifact in Test := true,
 
+  generalJARAdditions := {
+    Seq[(java.io.File, String)](
+      new java.io.File("LICENSE") -> "LICENSE"
+      // , resourceManaged.value / "main" / "smcl-config.json" -> "conf/smcl-config.json"
+    )
+  },
+
   mappings in (Compile, packageBin) ++=
-      generalJARAdditions,
+      generalJARAdditions.value,
 
   mappings in (Compile, packageDoc) ++=
-      generalJARAdditions,
+      generalJARAdditions.value,
 
   mappings in (Compile, packageSrc) ++=
-      generalJARAdditions,
+      generalJARAdditions.value,
 
   mappings in (Test, packageBin) ++=
-      generalJARAdditions,
+      generalJARAdditions.value,
 
   mappings in (Test, packageDoc) ++=
-      generalJARAdditions,
+      generalJARAdditions.value,
 
   mappings in (Test, packageSrc) ++=
-      generalJARAdditions,
+      generalJARAdditions.value,
 
   initialCommands in console :=
       """import smcl._
@@ -417,37 +447,52 @@ lazy val smclGeneralSettings = Seq(
 )
 
 lazy val smclGeneralBuildInfoSettings = Seq(
-  buildInfoKeys := Seq[BuildInfoKey](
-    "fullName" -> projectFullName,
-    "abbreviatedName" -> projectAbbreviatedName,
-    "majorVersion" -> projectMajorVersion,
-    "minorVersion" -> projectMinorVersion,
-    "microVersion" -> projectMicroVersion,
-    "isRelease" -> projectIsRelease,
-    "projectVersionString" -> projectVersionString,
-    "moduleVersionString" -> moduleVersionString,
-    "description" -> projectDescription,
-    "homePageURL" -> projectHomepageUrl,
-    "inceptionYear" -> projectStartYear,
-    "organizationName" -> projectOrganizationName,
-    "organizationId" -> projectOrganizationId,
-    "organizationHomePageURL" -> projectOrganizationUrl,
-    // TODO: Create info for contact person
-    // TODO: return objects instead of strings
-    "developers" -> projectDevelopers,
-    "originalOrganizationName" -> projectOriginalOrganizationName,
-    "originalDeveloperName" -> projectOriginalDeveloper.name,
-    "countryOfOrigin" -> projectCountryOfOrigin,
-    scalaVersion,
-    sbtVersion),
+  resourceGenerators in Compile += Def.task{
+    import buildinfo._
 
-  buildInfoOptions += BuildInfoOption.BuildTime,
+    val buildTime = System.currentTimeMillis()
 
-  buildInfoUsePackageAsPath := true,
+    val data = SMCLConfigurationData(
+      SMCLConfigurationProjectData(
+        fullName = name.value,
+        abbreviatedName = abbreviatedName.value,
+        description = description.value,
+        homePageURL = homepage.value.get.toString,
+        inceptionYear = startYear.value.get
+      ),
+      SMCLConfigurationOrganizationData(
+        organizationName = organizationName.value,
+        organizationId = organization.value,
+        organizationHomePageURL = organizationHomepage.value.get.toString,
+        originalOrganizationName = originalOrganizationName.value,
+        originalDeveloperName = projectOriginalDeveloper.name,
+        countryOfOrigin = countryOfOrigin.value
+      ),
+      SMCLConfigurationBuildData(
+        majorVersion = projectMajorVersion,
+        minorVersion = projectMinorVersion,
+        microVersion = projectMicroVersion,
+        isRelease = projectIsRelease,
+        projectVersionString = projectVersionString,
+        moduleVersionString = moduleVersionString,
+        scalaVersion = scalaVersion.value,
+        sbtVersion = sbtVersion.value,
+        sourceJavaVersion = projectJavaVersionSource,
+        targetJavaVersion = projectJavaVersionTarget,
+        targetPlatform = targetPlatform.value,
+        isJVMAWTPlatform = isJVMAWTPlatform.value,
+        isJSHTML5Platform = isJSHTML5Platform.value,
+        buildTime = buildTime
+      ))
 
-  buildInfoOptions +=
-      BuildInfoOption.Traits(
-        "smcl.infrastructure.LibraryInformationProvider")
+    import _root_.io.circe.generic.auto._
+    import _root_.io.circe.syntax._
+
+    val file = (resourceManaged in Compile).value / "smcl-config.json"
+    val contents = data.asJson.spaces2
+    IO.write(file, contents)
+    Seq(file)
+  }.taskValue
 )
 
 lazy val smclGeneralJsSettings =
@@ -464,13 +509,9 @@ lazy val smclGeneralJsSettings =
 
     jsDependencies += RuntimeDOM,
 
-    buildInfoObject := buildInfoObjectNameJs,
-    buildInfoPackage := buildInfoPackageNameJs,
-    buildInfoKeys ++= Seq[BuildInfoKey](
-      buildInfoKeyPlatform -> buildInfoPlatformIdJs,
-      buildInfoKeyIsJavaPlatform -> false,
-      buildInfoKeyIsJavaScriptPlatform -> true
-    ),
+    isJVMAWTPlatform := false,
+    isJSHTML5Platform := !isJVMAWTPlatform.value,
+    targetPlatform := buildInfoPlatformIdJSHTML5,
 
     testOptions in Test := Seq(Tests.Filter(unitTestFilterForJS)),
     testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilterForJS)),
@@ -492,13 +533,9 @@ lazy val smclGeneralJvmSettings =
       "org.scala-js" %% "scalajs-stubs" % "0.6.14" % "provided" withSources () withJavadoc ()
     ),
 
-    buildInfoObject := buildInfoObjectNameJvm,
-    buildInfoPackage := buildInfoPackageNameJvm,
-    buildInfoKeys ++= Seq[BuildInfoKey](
-      buildInfoKeyPlatform -> buildInfoPlatformIdJvm,
-      buildInfoKeyIsJavaPlatform -> true,
-      buildInfoKeyIsJavaScriptPlatform -> false
-    ),
+    isJVMAWTPlatform := true,
+    isJSHTML5Platform := !isJVMAWTPlatform.value,
+    targetPlatform := buildInfoPlatformIdJVMAWT,
 
     testOptions in Test := Seq(Tests.Filter(unitTestFilterForJVM)),
     testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilterForJVM)),
@@ -528,9 +565,6 @@ lazy val smclBitmapViewer =
         inConfig(SmokeTest)(Defaults.testTasks),
         inConfig(LearningTest)(Defaults.testTasks)
       )
-      .jvmConfigure{project =>
-        project.enablePlugins(BuildInfoPlugin)
-      }
       .jvmSettings(
         smclGeneralJvmSettings,
         onLoadMessage := prjSmclBitmapViewerName + " JVM/AWT Project Loaded",
@@ -552,9 +586,6 @@ lazy val smclBitmapViewer =
           "org.scala-lang.modules" %% "scala-swing" % "2.0.0" withSources () withJavadoc ()
         ),
       )
-      .jsConfigure{project =>
-        project.enablePlugins(BuildInfoPlugin)
-      }
       .jsSettings(
         smclGeneralJsSettings,
         onLoadMessage := prjSmclBitmapViewerName + " JS/HTML5 Project Loaded",
@@ -588,16 +619,10 @@ lazy val smclCore =
         inConfig(SmokeTest)(Defaults.testTasks),
         inConfig(LearningTest)(Defaults.testTasks)
       )
-      .jvmConfigure{project =>
-        project.enablePlugins(BuildInfoPlugin)
-      }
       .jvmSettings(
         smclGeneralJvmSettings,
         onLoadMessage := prjSmclCoreName + " JVM/AWT Project Loaded",
       )
-      .jsConfigure{project =>
-        project.enablePlugins(BuildInfoPlugin)
-      }
       .jsSettings(
         smclGeneralJsSettings,
         onLoadMessage := prjSmclCoreName + " JS/HTML5 Project Loaded",
@@ -618,7 +643,7 @@ lazy val smclCoreJS = smclCore.js
 //-------------------------------------------------------------------------------------------------
 lazy val smcl = project.in(file("."))
     .settings(
-      onLoadMessage := projectFullName + " Root Project Loaded",
+      onLoadMessage := name.value + " Root Project Loaded",
 
       // To keep SBT from publishing unnecessary empty artifacts
       publishArtifact in Compile := false,
@@ -628,3 +653,4 @@ lazy val smcl = project.in(file("."))
     .aggregate(
       smclBitmapViewerJVM, smclBitmapViewerJS,
       smclCoreJVM, smclCoreJS)
+    .dependsOn(sharedBuildCode)

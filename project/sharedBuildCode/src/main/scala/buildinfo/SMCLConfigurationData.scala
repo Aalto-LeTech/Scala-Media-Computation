@@ -14,16 +14,19 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
+package buildinfo
+
+
 /**
- * Plugin definitions for the Scala Media Computation Library.
+ *
+ *
+ * @param project
+ * @param organization
+ * @param build
+ *
+ * @author Aleksi Lukkarinen
  */
-
-
-//-------------------------------------------------------------------------------------------------
-//
-// PLUGINS
-//
-//-------------------------------------------------------------------------------------------------
-
-// https://dl.bintray.com/sbt/sbt-plugin-releases/org.scala-js/sbt-scalajs/
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.19")
+case class SMCLConfigurationData(
+    project: SMCLConfigurationProjectData,
+    organization: SMCLConfigurationOrganizationData,
+    build: SMCLConfigurationBuildData)
