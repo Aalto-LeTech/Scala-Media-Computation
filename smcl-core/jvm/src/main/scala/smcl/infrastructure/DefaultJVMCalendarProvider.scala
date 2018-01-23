@@ -24,15 +24,20 @@ import java.util.Calendar
 
 /**
  *
+ *
+ * @author Aleksi Lukkarinen
  */
 private[smcl]
-class DefaultJVMCalendarProvider extends JVMCalendarProvider {
+class DefaultJVMCalendarProvider
+    extends JVMCalendarProvider {
 
   /**
    *
    *
    * @return
    */
-  override def currentMoment: Calendar = Calendar.getInstance()
+  override
+  def currentMoment: Calendar =
+    Calendar.getInstance()
 
 }

@@ -24,6 +24,8 @@ import java.util.Calendar
 
 /**
  *
+ *
+ * @author Aleksi Lukkarinen
  */
 private[smcl]
 trait JVMCalendarProvider {

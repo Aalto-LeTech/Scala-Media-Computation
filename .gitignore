@@ -47,8 +47,13 @@
 /.idea/workspace.xml
 
 /project/*
+!/project/sharedBuildCode
 !/project/build.properties
+!/project/build.sbt
 !/project/plugins.sbt
+
+/project/sharedBuildCode/*
+!/project/sharedBuildCode/src
 
 /smcl-bitmap-viewer/*
 !/smcl-bitmap-viewer/js
