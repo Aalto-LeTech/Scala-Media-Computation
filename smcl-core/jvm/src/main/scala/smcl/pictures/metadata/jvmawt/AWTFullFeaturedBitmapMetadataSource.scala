@@ -21,7 +21,7 @@ import java.awt.image.BufferedImage
 
 import smcl.pictures.fullfeatured
 import smcl.pictures.metadata.MetadataOnBitmaps
-import smcl.{Library, pictures}
+import smcl.{SMCL, pictures}
 
 
 
@@ -42,7 +42,7 @@ class AWTFullFeaturedBitmapMetadataSource(sourceBitmaps: fullfeatured.Bitmap*)
    */
   override
   def providerName: Option[String] =
-    Some(Library.fullName)
+    Some(SMCL.project.fullName)
 
   /**
    * Returns a description describing the provider.
@@ -51,7 +51,7 @@ class AWTFullFeaturedBitmapMetadataSource(sourceBitmaps: fullfeatured.Bitmap*)
    */
   override
   def providerDescription: Option[String] =
-    Some(Library.description)
+    Some(SMCL.project.description)
 
   /**
    * Returns the major version number of the provider.
@@ -60,7 +60,7 @@ class AWTFullFeaturedBitmapMetadataSource(sourceBitmaps: fullfeatured.Bitmap*)
    */
   override
   def providerMajorVersion: Option[MetaBitmapIndex] =
-    Some(Library.majorVersion)
+    Some(SMCL.build.majorVersion)
 
   /**
    * Returns the minor version number of the provider.
@@ -69,7 +69,7 @@ class AWTFullFeaturedBitmapMetadataSource(sourceBitmaps: fullfeatured.Bitmap*)
    */
   override
   def providerMinorVersion: Option[MetaBitmapIndex] =
-    Some(Library.minorVersion)
+    Some(SMCL.build.minorVersion)
 
   /**
    * Returns the name of the authoring organization.
@@ -78,7 +78,7 @@ class AWTFullFeaturedBitmapMetadataSource(sourceBitmaps: fullfeatured.Bitmap*)
    */
   override
   def providerAuthorOrganizationName: Option[String] =
-    Some(Library.organizationName)
+    Some(SMCL.organization.organizationName)
 
   /**
    * Returns the first name of the authoring person.
@@ -87,6 +87,6 @@ class AWTFullFeaturedBitmapMetadataSource(sourceBitmaps: fullfeatured.Bitmap*)
    */
   override
   def providerAuthorPersonName: Option[String] = // TODO: Create info for contact person instead of this
-    Some(Library.originalDeveloperName)
+    Some(SMCL.organization.originalDeveloperName)
 
 }

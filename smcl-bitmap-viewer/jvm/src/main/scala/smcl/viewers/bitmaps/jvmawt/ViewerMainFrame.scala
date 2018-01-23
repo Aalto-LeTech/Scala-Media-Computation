@@ -43,14 +43,14 @@ object ViewerMainFrame {
 
   /** */
   val MsgAbout: String = {
-    import smcl.Library._
+    import smcl.SMCL._
 
-    s"""Image viewing application of the $fullName.
+    s"""Image viewing application of the ${project.fullName}.
        |
-       |Version $projectVersionString.
+       |Version ${build.projectVersionString}.
        |
-       |$abbreviatedName was originally created by $originalDeveloperName
-       |in $inceptionYear as a part of his Master's Thesis for Aalto University.""".stripMargin
+       |${project.abbreviatedName} was originally created by ${organization.originalDeveloperName}
+       |in ${project.inceptionYear} as a part of his Master's Thesis for ${organization.organizationName}.""".stripMargin
   }
 
   /** */

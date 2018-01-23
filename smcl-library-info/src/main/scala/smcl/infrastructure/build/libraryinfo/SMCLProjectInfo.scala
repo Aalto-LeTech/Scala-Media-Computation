@@ -15,11 +15,23 @@
 /*                                                                                    *           */
 
 
+package smcl.infrastructure.build.libraryinfo
+
+
 /**
  *
  *
+ * @param fullName
+ * @param abbreviatedName
+ * @param description
+ * @param homePageURL
+ * @param inceptionYear
+ *
  * @author Aleksi Lukkarinen
  */
-package object buildinfo {
-
-}
+case class SMCLProjectInfo(
+    fullName: String,
+    abbreviatedName: String,
+    description: String,
+    homePageURL: String,
+    inceptionYear: Int)

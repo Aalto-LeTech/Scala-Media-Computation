@@ -27,3 +27,5 @@
 
 // https://dl.bintray.com/sbt/sbt-plugin-releases/org.scala-js/sbt-scalajs/
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.19")
+
+addSbtPlugin("fi.aalto.cs" % "sbtlibraryinfo" % "0.0.0-SNAPSHOT")
