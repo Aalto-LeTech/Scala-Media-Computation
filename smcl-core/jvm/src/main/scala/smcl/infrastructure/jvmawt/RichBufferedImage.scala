@@ -35,8 +35,12 @@ import smcl.pictures.fullfeatured.Bmp
 class RichBufferedImage(val self: BufferedImage) {
 
   /**
-   * Returns a [[Bmp]] instance that contains the given `java.awt.image.BufferedImage`
-   * instance.
+   * Returns a [[Bmp]] instance that contains the content of a given
+   * `java.awt.image.BufferedImage` instance.
+   * <br />
+   * Note: A deep copy is made of the original `BufferedImage`, so the
+   * [[Bmp]] cannot be modified via manipulating the original. Also,
+   * the memory consumption will be a doubled (original + copy).
    *
    * @return
    */
