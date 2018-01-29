@@ -80,7 +80,7 @@ object Bmp
       )
     }
 
-    Bmp(
+    apply(
       Identity(),
       Pos.Origo,
       Some(buffer))
@@ -127,13 +127,27 @@ object Bmp
       else
         None
 
-    Bmp(newIdentity, Pos.Origo, buffer)
+    apply(newIdentity, Pos.Origo, buffer)
+  }
+
+  /**
+   *
+   *
+   * @param buffer
+   *
+   * @return
+   */
+  def apply(buffer: BitmapBufferAdapter): Bmp = {
+    val newIdentity: Identity = Identity()
+
+    apply(newIdentity, Pos.Origo, Some(buffer))
   }
 
   /**
    *
    *
    * @param identity
+   * @param position
    * @param buffer
    *
    * @return
