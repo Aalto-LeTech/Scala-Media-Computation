@@ -28,11 +28,6 @@ import sbt.Keys._
 import sbt.inConfig
 
 
-
-
-enablePlugins(ScalaJSPlugin)
-
-
 //-------------------------------------------------------------------------------------------------
 //
 // KEYS FOR SETTINGS AND TASKS
@@ -201,8 +196,6 @@ scalaVersion in Global := "2.12.4"
 parallelExecution in Global := false
 
 logLevel in Global := Level.Info
-
-
 
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -514,10 +507,10 @@ lazy val smclGeneralJsSettings: Seq[Def.Setting[_]] = Seq(
      * @see https://www.scala-js.org/
      * @see http://search.maven.org/#search|ga|1|scalajs-dom
      */
-    "org.scala-js" %%% "scalajs-dom" % "0.9.1" withSources () withJavadoc ()
+    "org.scala-js" %%% "scalajs-dom" % "0.9.4" withSources () withJavadoc ()
   ),
 
-  jsDependencies += RuntimeDOM,
+  jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv,
 
   isJVMAWTPlatform := false,
   isJSHTML5Platform := !isJVMAWTPlatform.value,
@@ -540,7 +533,7 @@ lazy val smclGeneralJvmSettings: Seq[Def.Setting[_]] = Seq(
      * @see https://www.scala-js.org/
      * @see http://search.maven.org/#search|ga|1|scalajs-stubs
      */
-    "org.scala-js" %% "scalajs-stubs" % "0.6.14" % "provided" withSources () withJavadoc ()
+    "org.scala-js" %% "scalajs-stubs" % "0.6.22" % "provided" withSources () withJavadoc ()
   ),
 
   isJVMAWTPlatform := true,
@@ -590,6 +583,7 @@ lazy val `smcl-library-info`: Project = project.in(file("smcl-library-info"))
 
 lazy val smclBitmapViewer: CrossProject =
   CrossProject(prjSmclBitmapViewerJvmId, prjSmclBitmapViewerJsId, file(prjSmclBitmapViewerId), CrossType.Full)
+      .enablePlugins(LibraryInfoPlugin, ScalaJSPlugin)
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .enablePlugins(LibraryInfoPlugin)
       .settings(
@@ -650,6 +644,7 @@ lazy val smclBitmapViewerJS: Project = smclBitmapViewer.js
 
 lazy val smclCore: CrossProject =
   CrossProject(prjSmclCoreJvmId, prjSmclCoreJsId, file(prjSmclCoreId), CrossType.Full)
+      .enablePlugins(LibraryInfoPlugin, ScalaJSPlugin)
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .enablePlugins(LibraryInfoPlugin)
       .settings(
@@ -682,8 +677,6 @@ lazy val smclCore: CrossProject =
 
 lazy val smclCoreJVM: Project = smclCore.jvm
 lazy val smclCoreJS: Project = smclCore.js
-
-
 
 
 //-------------------------------------------------------------------------------------------------
