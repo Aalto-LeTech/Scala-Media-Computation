@@ -28,5 +28,10 @@
 // https://dl.bintray.com/sbt/sbt-plugin-releases/org.scala-js/sbt-scalajs/
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.22")
 
+// https://dl.bintray.com/sbt/sbt-plugin-releases/com.typesafe.sbt/sbt-native-packager/
+//addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.2")
+
+// https://dl.bintray.com/sbt/sbt-plugin-releases/com.typesafe.sbt/sbt-git/
+
 // Our own sbt-libraryinfo
 addSbtPlugin("fi.aalto.cs" % "sbtlibraryinfo" % "0.1.0")
