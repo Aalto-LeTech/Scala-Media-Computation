@@ -409,7 +409,7 @@ lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
      * @see http://www.scalatest.org
      * @see http://search.maven.org/#search|ga|1|scalatest
      */
-    "org.scalatest" %%% "scalatest" % "3.0.1" % testConfIDCommaString withSources () withJavadoc (),
+    "org.scalatest" %%% "scalatest" % "3.0.4" % testConfIDCommaString withSources () withJavadoc (),
 
     /**
      * ScalaCheck
