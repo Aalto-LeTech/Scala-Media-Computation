@@ -37,5 +37,9 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.22")
 // https://dl.bintray.com/sbt/sbt-plugin-releases/com.github.gseitz/sbt-release/
 //addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.7")
 
+// https://github.com/jamiely/sbt-slack-notify
+// NOTE: Binaries are not in a plublic repository yet --> compile yourself.
+// addSbtPlugin("ly.jamie" % "sbt-slack-notify" % "0.3.1")
+
 // Our own sbt-libraryinfo
 addSbtPlugin("fi.aalto.cs" % "sbt-library-info" % "0.2.0")

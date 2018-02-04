@@ -28,6 +28,11 @@ import sbt.Keys._
 import sbt.inConfig
 
 
+
+
+enablePlugins(ScalaJSPlugin)
+
+
 //-------------------------------------------------------------------------------------------------
 //
 // KEYS FOR SETTINGS AND TASKS
@@ -160,7 +165,7 @@ lazy val smclInitializerCommandsJSHTML5: Seq[String] = Seq(
   smclBitmapViewerInitializerCommandJSHTML5)
 
 lazy val smclConsoleDefaultCommandsJVMAWT: String =
-  (smclDefaultImports :+ "" ++ smclInitializerCommandsJVMAWT)
+  ((smclDefaultImports :+ "") ++ smclInitializerCommandsJVMAWT)
       .mkString(System.lineSeparator())
 
 abbreviatedName in Global := "SMCL"
@@ -504,10 +509,7 @@ lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
       generalJARAdditions.value,
 
   mappings in (Test, packageSrc) ++=
-      generalJARAdditions.value,
-
-  initialCommands in console :=
-      smclConsoleDefaultCommandsJVMAWT
+      generalJARAdditions.value
 )
 
 lazy val smclGeneralJsSettings: Seq[Def.Setting[_]] = Seq(
@@ -556,8 +558,11 @@ lazy val smclGeneralJvmSettings: Seq[Def.Setting[_]] = Seq(
   testOptions in ItgTest := Seq(Tests.Filter(integrationTestFilterForJVM)),
   testOptions in GUITest := Seq(Tests.Filter(guiTestFilterForJVM)),
   testOptions in SmokeTest := Seq(Tests.Filter(smokeTestFilterForJVM)),
-  testOptions in LearningTest := Seq(Tests.Filter(learningTestFilterForJVM))
+  testOptions in LearningTest := Seq(Tests.Filter(learningTestFilterForJVM)),
   // testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "???")
+
+  initialCommands in console :=
+      smclConsoleDefaultCommandsJVMAWT
 )
 
 
@@ -594,7 +599,6 @@ lazy val `smcl-library-info`: Project = project.in(file("smcl-library-info"))
 
 lazy val smclBitmapViewer: CrossProject =
   CrossProject(prjSmclBitmapViewerJvmId, prjSmclBitmapViewerJsId, file(prjSmclBitmapViewerId), CrossType.Full)
-      .enablePlugins(LibraryInfoPlugin, ScalaJSPlugin)
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .enablePlugins(LibraryInfoPlugin)
       .settings(
@@ -657,7 +661,6 @@ lazy val smclBitmapViewerJS: Project = smclBitmapViewer.js
 
 lazy val smclCore: CrossProject =
   CrossProject(prjSmclCoreJvmId, prjSmclCoreJsId, file(prjSmclCoreId), CrossType.Full)
-      .enablePlugins(LibraryInfoPlugin, ScalaJSPlugin)
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .enablePlugins(LibraryInfoPlugin)
       .settings(
@@ -707,11 +710,18 @@ lazy val smcl: Project = project.in(file("."))
         clean in `smcl-library-info`
       ).value,
 
+      initialCommands in console :=
+          smclConsoleDefaultCommandsJVMAWT,
+
       publishArtifact in Compile := false,
       publish := {},
       publishLocal := {},
       publishM2 := {}
     )
     .aggregate(
-      smclBitmapViewerJVM, smclBitmapViewerJS,
-      smclCoreJVM, smclCoreJS)
+      smclBitmapViewerJVM, smclCoreJVM,
+      smclBitmapViewerJS, smclCoreJS)
+
+    // These dependencies are required to have their
+    // contents inserted to the classpath of SBT's console
+    .dependsOn(smclCoreJVM, smclBitmapViewerJVM)
