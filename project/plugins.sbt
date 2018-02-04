@@ -41,5 +41,8 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.22")
 // NOTE: Binaries are not in a plublic repository yet --> compile yourself.
 // addSbtPlugin("ly.jamie" % "sbt-slack-notify" % "0.3.1")
 
+// Our own sbt-env-vars
+addSbtPlugin("fi.aalto.cs" % "sbt-env-vars" % "0.1.0")
+
 // Our own sbt-libraryinfo
 addSbtPlugin("fi.aalto.cs" % "sbt-library-info" % "0.2.0")
