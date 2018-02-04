@@ -438,6 +438,17 @@ lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
 
   libraryinfoSourceProject in Compile := Some(`smcl-library-info`),
 
+  libraryinfoIncludeFileFilter in Compile := new FileFilter {
+
+    val pathSeparator = "\\" + Path.sep
+
+    val path = Seq(".*", "smcl", "infrastructure", "build", ".*").mkString(pathSeparator)
+
+    def accept(f: File): Boolean =
+      path.r.pattern.matcher(f.getAbsolutePath).matches
+
+  },
+
   libraryinfoFilteredKeysValues in Compile := Seq[(String, Any)](
     "SMCLProjectFullName" -> projectFullName,
     "SMCLProjectAbbreviatedName" -> abbreviatedName.value,
@@ -590,6 +601,8 @@ lazy val smclBitmapViewer: CrossProject =
         name := prjSmclBitmapViewerId,
         description := prjSmclBitmapViewerDescription,
         smclGeneralSettings,
+        libraryinfoIncludeFileFilter in Compile :=
+            (libraryinfoIncludeFileFilter in Compile).value || "SMCLBitmapViewer.scala",
         scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerName),
         inConfig(ItgTest)(Defaults.testTasks),
         inConfig(GUITest)(Defaults.testTasks),
@@ -651,6 +664,8 @@ lazy val smclCore: CrossProject =
         name := prjSmclCoreId,
         description := prjSmclCoreDescription,
         smclGeneralSettings,
+        libraryinfoIncludeFileFilter in Compile :=
+            (libraryinfoIncludeFileFilter in Compile).value || "SMCL.scala" || "SMCLCore.scala",
         scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreName),
         inConfig(ItgTest)(Defaults.testTasks),
         inConfig(GUITest)(Defaults.testTasks),
