@@ -436,9 +436,9 @@ lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
     // "org.scalaz" %% "scalaz-core" % "7.2.12"
   ),
 
-  libraryInfoSourceProject in Compile := Some(`smcl-library-info`),
+  libraryinfoSourceProject in Compile := Some(`smcl-library-info`),
 
-  libraryInfoFilteredKeysValues in Compile := Seq[(String, Any)](
+  libraryinfoFilteredKeysValues in Compile := Seq[(String, Any)](
     "SMCLProjectFullName" -> projectFullName,
     "SMCLProjectAbbreviatedName" -> abbreviatedName.value,
     "SMCLProjectDescription" -> description.value,
