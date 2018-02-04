@@ -688,6 +688,10 @@ lazy val smcl: Project = project.in(file("."))
     .settings(
       onLoadMessage := projectFullName + " Root Project Loaded",
 
+      clean := clean.dependsOn(
+        clean in `smcl-library-info`
+      ).value,
+
       publishArtifact in Compile := false,
       publish := {},
       publishLocal := {},
