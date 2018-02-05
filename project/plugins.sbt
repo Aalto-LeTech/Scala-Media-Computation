@@ -15,7 +15,7 @@
 /*                                                                                    *           */
 
 /**
- * Plugin definitions for the Scala Media Computation Library.
+ * Plugin dependencies for the Scala Media Computation Library.
  */
 
 
@@ -25,24 +25,63 @@
 //
 //-------------------------------------------------------------------------------------------------
 
+//
+// sbt-scalajs
+//
 // https://dl.bintray.com/sbt/sbt-plugin-releases/org.scala-js/sbt-scalajs/
+//
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.22")
 
+//
+// sbt-native-packager
+//
 // https://dl.bintray.com/sbt/sbt-plugin-releases/com.typesafe.sbt/sbt-native-packager/
+//
 //addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.2")
 
+//
+// sbt-git
+//
 // https://dl.bintray.com/sbt/sbt-plugin-releases/com.typesafe.sbt/sbt-git/
+//
 //addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
 
+//
+// sbt-release
+//
 // https://dl.bintray.com/sbt/sbt-plugin-releases/com.github.gseitz/sbt-release/
+//
 //addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.7")
 
+//
+// sbt-github-release
+//
+// https://github.com/ohnosequences/sbt-github-release
+//
+//addSbtPlugin("ohnosequences" % "sbt-github-release" % "0.6.0")
+
+// Needed for JDK9, as the module is not included in classpath by default
+//libraryDependencies += "javax.activation" % "activation" % "1.1.1"
+
+//
+// sbt-slack-notify
+//
 // https://github.com/jamiely/sbt-slack-notify
+//
 // NOTE: Binaries are not in a plublic repository yet --> compile yourself.
+//
 // addSbtPlugin("ly.jamie" % "sbt-slack-notify" % "0.3.1")
 
-// Our own sbt-env-vars
+//
+// sbt-env-vars
+//
+//
+//
 addSbtPlugin("fi.aalto.cs" % "sbt-env-vars" % "0.1.0")
 
-// Our own sbt-libraryinfo
+//
+// sbt-libraryinfo
+//
+//
+//
 addSbtPlugin("fi.aalto.cs" % "sbt-library-info" % "0.2.0")
