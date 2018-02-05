@@ -197,8 +197,7 @@ class Bmp private(
     private[smcl] val buffer: Option[BitmapBufferAdapter])
     extends ImageElement
         with Displayable
-        with HasPos
-        with HasDims {
+        with Cropable[Bmp] {
 
   /** */
   override
@@ -447,6 +446,39 @@ class Bmp private(
       newBuffer.heightInPixels)
 
     new Bmp(identity, isRenderable, newDims, position, Some(newBuffer))
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftX
+   * @param upperLeftY
+   * @param lowerRightX
+   * @param lowerRightY
+   *
+   * @return
+   */
+  override
+  def crop(
+      upperLeftX: Double,
+      upperLeftY: Double,
+      lowerRightX: Double,
+      lowerRightY: Double): Bmp = {
+
+    println("crop... to be implemented")
+    //Pic(self.crop(topLeft.xInt, topLeft.yInt, (topLeft.x + width - 1).round.toInt, (topLeft.y + height - 1).round.toInt), Center) // XXX pwa // XXX anchor
+
+    /*
+    if (self.dimensions == background.dimensions)
+      self
+    else {
+      val (cropX, cropY) = (from.x.floor.toInt, from.y.floor.toInt) // XXX pyöristys vai floor?
+      val bgWithCroppedPicOnTop = self.crop(cropX, cropY, cropX + background.width - 1, cropY + background.height - 1)  // XXX -1 ei kiva
+      PicWithAnchor(bgWithCroppedPicOnTop, background.anchor)    // XXX pwa
+    }
+    */
+
+    this
   }
 
 }

@@ -72,11 +72,9 @@ class Image private(
     val elements: Seq[ImageElement],
     val anchor: Anchor[HasAnchor])
     extends ImageElement
-        with HasPos
-        with HasBounds
-        with HasDims
         with HasAnchor
-        with FlatMap[Image, Seq[ImageElement]] {
+        with FlatMap[Image, Seq[ImageElement]]
+        with Cropable[Bmp] {
 
   // TODO: Tarkistukset
 
@@ -287,6 +285,30 @@ class Image private(
       centerOfRotation: Pos): Image = {
 
     map{_.rotateBy(angleInDegrees, centerOfRotation)}
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftCornerX
+   * @param upperLeftCornerY
+   * @param lowerRightCornerX
+   * @param lowerRightCornerY
+   *
+   * @return
+   */
+  override
+  def crop(
+      upperLeftCornerX: Double,
+      upperLeftCornerY: Double,
+      lowerRightCornerX: Double,
+      lowerRightCornerY: Double): Bmp = {
+
+    toBitmap.crop(
+      upperLeftCornerX,
+      upperLeftCornerY,
+      lowerRightCornerX,
+      lowerRightCornerY)
   }
 
 }

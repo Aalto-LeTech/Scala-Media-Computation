@@ -18,7 +18,7 @@ package smcl.pictures.fullfeatured
 
 
 import smcl.infrastructure.Identity
-import smcl.modeling.d2.{HasPos, Pos}
+import smcl.modeling.d2.{BoundaryCalculator, Bounds, Dims, Pos}
 
 
 
@@ -36,5 +36,16 @@ abstract class Polygon(
     val identity: Identity,
     val points: Seq[Pos],
     val position: Pos)
-    extends VectorGraphic
-        with HasPos
+    extends VectorGraphic {
+
+  /** */
+  override
+  def boundary: Bounds =
+    BoundaryCalculator.fromPositions(points)
+
+  /** Dimensions of this object. */
+  override
+  def dimensions: Dims =
+    Dims(boundary.width, boundary.height)
+
+}

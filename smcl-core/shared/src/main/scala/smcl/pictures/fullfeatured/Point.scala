@@ -83,6 +83,10 @@ class Point private(
     extends VectorGraphic
         with FlatMap[Point, (Pos, rgb.Color)] {
 
+  /** */
+  lazy val dimensions: Dims =
+    position.dimensions
+
   /**
    *
    *

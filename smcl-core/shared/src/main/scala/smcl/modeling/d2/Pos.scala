@@ -129,6 +129,10 @@ case class Pos private[smcl](
   /** */
   lazy val boundary: Bounds = Bounds(this, this)
 
+  /** */
+  lazy val dimensions: Dims =
+    Dims(boundary.width, boundary.height)
+
   /**
    *
    *

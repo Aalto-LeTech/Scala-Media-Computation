@@ -17,9 +17,8 @@
 package smcl.pictures.fullfeatured
 
 
-import smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
-import smcl.modeling.d2._
-import smcl.viewers.{display => displayInViewer}
+import smcl.modeling.d2
+import smcl.modeling.d2.{Bounds, Pos}
 
 
 
@@ -27,44 +26,103 @@ import smcl.viewers.{display => displayInViewer}
 /**
  *
  *
+ * @tparam ReturnType
+ *
  * @author Aleksi Lukkarinen
  */
-trait ImageElement
-    extends HasPos
-        with HasBounds
-        with HasDims
-        with Movable[ImageElement]
-        with Rotatable[ImageElement] {
-
-  /** */
-  def identity: Identity
-
-  /** Tells if this [[ImageElement]] can be rendered on a bitmap. */
-  def isRenderable: Boolean
-
-  /**
-   * Renders this [[ImageElement]] on a drawing surface.
-   *
-   * @param drawingSurface
-   */
-  def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      offsetsToOrigo: Dims): Unit
+trait Cropable[ReturnType <: ImageElement] {
 
   /**
    *
+   *
+   * @param background
+   * @param upperLeftCornerOfCropped
    *
    * @return
    */
-  def toBitmap: Bmp = Bmp(this)
+  @inline
+  def cropToSizeOf(
+      background: d2.HasBounds,
+      upperLeftCornerOfCropped: Pos): ReturnType = {
+
+    crop(
+      upperLeftCornerOfCropped,
+      background.boundary.width.inPixels,
+      background.boundary.height.inPixels)
+  }
+
 
   /**
    *
+   *
+   * @param boundary
+   *
+   * @return
    */
-  def display(): ImageElement = {
-    displayInViewer(toBitmap)
-
-    this
+  @inline
+  def crop(boundary: Bounds): ReturnType = {
+    crop(
+      boundary.upperLeftMarker,
+      boundary.lowerRightMarker)
   }
+
+  /**
+   *
+   *
+   * @param upperLeftCorner
+   * @param lowerRightCorner
+   *
+   * @return
+   */
+  @inline
+  def crop(
+      upperLeftCorner: Pos,
+      lowerRightCorner: Pos): ReturnType = {
+
+    crop(
+      upperLeftCorner.xInPixels,
+      upperLeftCorner.yInPixels,
+      lowerRightCorner.xInPixels,
+      lowerRightCorner.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftCorner
+   * @param width
+   * @param height
+   *
+   * @return
+   */
+  @inline
+  def crop(
+      upperLeftCorner: Pos,
+      width: Double,
+      height: Double): ReturnType = {
+
+    crop(
+      upperLeftCorner.xInPixels,
+      upperLeftCorner.yInPixels,
+      upperLeftCorner.xInPixels + width - 1,
+      upperLeftCorner.yInPixels + height - 1)
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftX
+   * @param upperLeftY
+   * @param lowerRightX
+   * @param lowerRightY
+   *
+   * @return
+   */
+  @inline
+  def crop(
+      upperLeftX: Double,
+      upperLeftY: Double,
+      lowerRightX: Double,
+      lowerRightY: Double): ReturnType
 
 }

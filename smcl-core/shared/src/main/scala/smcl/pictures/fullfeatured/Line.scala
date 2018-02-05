@@ -112,7 +112,7 @@ class Line private(
     override val identity: Identity,
     val start: Pos,
     val end: Pos,
-    val boundary: Bounds,   // This is here because
+    override val boundary: Bounds,   // This is here because
     val color: rgb.Color)
     extends Polygon(
       identity,
