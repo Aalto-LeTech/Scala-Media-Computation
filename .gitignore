@@ -50,7 +50,7 @@
 
 /project/*
 !/project/build.properties
-!/project/plugins.sbt
+!/project/build.sbt
 
 /smcl-library-info/*
 !/smcl-library-info/src
