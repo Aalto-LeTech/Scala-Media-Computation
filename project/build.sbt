@@ -57,6 +57,7 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.22")
 // sbt-github-release
 //
 // https://github.com/ohnosequences/sbt-github-release
+// https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.activation%22%20AND%20a%3A%22activation%22
 //
 //addSbtPlugin("ohnosequences" % "sbt-github-release" % "0.6.0")
 
