@@ -168,6 +168,8 @@ lazy val smclConsoleDefaultCommandsJVMAWT: String =
   ((smclDefaultImports :+ "") ++ smclInitializerCommandsJVMAWT)
       .mkString(System.lineSeparator())
 
+lazy val slackHookUrlEnvVar = EnvVar("SLACK_HOOK_SMCL_RELEASES")
+
 abbreviatedName in Global := "SMCL"
 
 // TODO: Separate the department
@@ -395,6 +397,8 @@ def unitTestFilterForJS(name: String): Boolean =
 //-------------------------------------------------------------------------------------------------
 
 lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
+  slackNotify := None, // To limit slackNotify to the aggregate project only
+
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
 
   scalacOptions in (Compile, doc) := Seq(
@@ -709,6 +713,13 @@ lazy val smcl: Project = project.in(file("."))
       clean := clean.dependsOn(
         clean in `smcl-library-info`
       ).value,
+
+      slackRoom := "#smcl-releases",
+
+      slackHookUrl := slackHookUrlEnvVar.fold[String]{
+        sLog.value.warn(s"::\n:: Environment variable ${slackHookUrlEnvVar.name} is undefined!!\n::")
+        ""
+      }{value => value},
 
       initialCommands in console :=
           smclConsoleDefaultCommandsJVMAWT,
