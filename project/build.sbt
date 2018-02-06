@@ -19,11 +19,11 @@
  */
 
 
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 //
 // PLUGINS
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 //
 // sbt-scalajs
@@ -59,10 +59,10 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.22")
 // https://github.com/ohnosequences/sbt-github-release
 // https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.activation%22%20AND%20a%3A%22activation%22
 //
-//addSbtPlugin("ohnosequences" % "sbt-github-release" % "0.6.0")
+addSbtPlugin("ohnosequences" % "sbt-github-release" % "0.7.0")
 
 // Needed for JDK9, as the module is not included in classpath by default
-//libraryDependencies += "javax.activation" % "activation" % "1.1.1"
+libraryDependencies += "javax.activation" % "activation" % "1.1.1"
 
 //
 // sbt-slack-notify

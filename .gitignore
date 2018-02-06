@@ -24,6 +24,7 @@
 /*
 
 !/.idea
+!/doc
 !/node_modules
 !/project
 !/smcl-bitmap-viewer
@@ -48,9 +49,13 @@
 /.idea/tasks.xml
 /.idea/workspace.xml
 
+/doc/*
+/doc/release-notes
+
 /project/*
 !/project/build.properties
 !/project/build.sbt
+!/project/*.scala
 
 /smcl-library-info/*
 !/smcl-library-info/src

@@ -33,11 +33,11 @@ import sbt.inConfig
 enablePlugins(ScalaJSPlugin)
 
 
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 //
 // KEYS FOR SETTINGS AND TASKS
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 lazy val abbreviatedName: SettingKey[String] = settingKey[String](
   "The abbreviated name of the project.")
@@ -67,12 +67,15 @@ lazy val moduleInitializerCommand: SettingKey[String] = settingKey[String](
 lazy val smclInitializerCommands: SettingKey[Seq[String]] = settingKey[Seq[String]](
   "Initialization commands that have to be executed before using any other SMCL facilities.")
 
+lazy val releaseNotesTemplate: InputKey[File] = inputKey[File](
+  "Generates a new template file for release notes")
 
-//-------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------
 //
 // GENERAL CONSTANTS AND CONFIGURATION
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 lazy val projectFullName: String = "Scala Media Computation Library"
 
@@ -267,11 +270,11 @@ Keys.doc := {
 }
 
 
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 //
 // COMMAND ALIASES
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 addCommandAlias("cp", "; clean ; package")
 addCommandAlias("rcp", "; reload ; clean ; package")
@@ -294,11 +297,11 @@ addCommandAlias("jvmPublishLocal", "; smcl-core-jvm/publishLocal ; smcl-bitmap-v
 addCommandAlias("jvmPublishM2", "; smcl-core-jvm/publishM2 ; smcl-bitmap-viewer-jvm/publishM2")
 
 
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 //
 // TEST DEFINITIONS
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 lazy val confUnitTestId: String = "test"
 lazy val confSmokeTestId: String = "smoke"
@@ -390,11 +393,11 @@ def unitTestFilterForJS(name: String): Boolean =
           learningTestFilterForJS(name))
 
 
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 //
 // GENERAL SETTINGS
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
   slackNotify := None, // To limit slackNotify to the aggregate project only
@@ -570,7 +573,7 @@ lazy val smclGeneralJvmSettings: Seq[Def.Setting[_]] = Seq(
 )
 
 
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 //
 // PROJECT: SMCL LIBRARY INFORMATION CLASS RESOURCES
 //
@@ -579,10 +582,11 @@ lazy val smclGeneralJvmSettings: Seq[Def.Setting[_]] = Seq(
 // to the actual projects as managed code. Consequently, the code of this project exists in
 // the actual projects as it was written directly in each of them.
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 // Do NOT add smclGeneralSettings to this project!!
 lazy val `smcl-library-info`: Project = project.in(file("smcl-library-info"))
+    .disablePlugins(SbtGithubReleasePlugin)
     .settings(
       name := prjSmclLibraryInfoId,
       description := prjSmclLibraryInfoDescription,
@@ -595,16 +599,17 @@ lazy val `smcl-library-info`: Project = project.in(file("smcl-library-info"))
     )
 
 
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 //
 // PROJECT: SMCL BITMAP VIEWER
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 lazy val smclBitmapViewer: CrossProject =
   CrossProject(prjSmclBitmapViewerJvmId, prjSmclBitmapViewerJsId, file(prjSmclBitmapViewerId), CrossType.Full)
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .enablePlugins(LibraryInfoPlugin)
+      .disablePlugins(SbtGithubReleasePlugin)
       .settings(
         name := prjSmclBitmapViewerId,
         description := prjSmclBitmapViewerDescription,
@@ -657,16 +662,17 @@ lazy val smclBitmapViewerJVM: Project = smclBitmapViewer.jvm
 lazy val smclBitmapViewerJS: Project = smclBitmapViewer.js
 
 
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 //
 // PROJECT: SMCL CORE LIBRARY
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 lazy val smclCore: CrossProject =
   CrossProject(prjSmclCoreJvmId, prjSmclCoreJsId, file(prjSmclCoreId), CrossType.Full)
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .enablePlugins(LibraryInfoPlugin)
+      .disablePlugins(SbtGithubReleasePlugin)
       .settings(
         name := prjSmclCoreId,
         description := prjSmclCoreDescription,
@@ -701,11 +707,11 @@ lazy val smclCoreJVM: Project = smclCore.jvm
 lazy val smclCoreJS: Project = smclCore.js
 
 
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 //
 // PROJECT: SMCL ROOT AGGREGATE
 //
-//-------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 lazy val smcl: Project = project.in(file("."))
     .settings(
       onLoadMessage := projectFullName + " Root Project Loaded",
@@ -717,9 +723,38 @@ lazy val smcl: Project = project.in(file("."))
       slackRoom := "#smcl-releases",
 
       slackHookUrl := slackHookUrlEnvVar.fold[String]{
-        sLog.value.warn(s"::\n:: Environment variable ${slackHookUrlEnvVar.name} is undefined!!\n::")
+        sLog.value.warn(
+          s"::\n:: Environment variable ${slackHookUrlEnvVar.name} is undefined!!\n::")
+
         ""
       }{value => value},
+
+      ghreleaseNotes := {tagName =>
+        val notes = SMCLReleaseNotes.getFor(tagName, baseDirectory.value)
+        if (notes.content.isEmpty) {
+          throw new IllegalStateException(
+            s"""Release notes file "${notes.file.getAbsolutePath}" is empty!""")
+        }
+
+        notes.content
+      },
+s
+      releaseNotesTemplate := {
+        val tagName = SbtGithubReleasePlugin.tagNameArg.parsed
+        val smclVersion = SMCLVersion.from(tagName).forRelease
+        val notesFile = SMCLReleaseNotes.fileFor(smclVersion, baseDirectory.value)
+        if (notesFile.exists()) {
+          throw new IllegalStateException(
+            s"""Release notes file "${notesFile.getAbsolutePath}" exists already!""")
+        }
+
+        val templateContent: String =
+          s"""# Release Notes for $projectFullName ${smclVersion.toString}
+            |""".stripMargin
+        IO.writeLines(notesFile, templateContent.split("\n"))
+
+        notesFile
+      },
 
       initialCommands in console :=
           smclConsoleDefaultCommandsJVMAWT,

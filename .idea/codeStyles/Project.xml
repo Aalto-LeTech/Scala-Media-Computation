@@ -8,6 +8,7 @@
     <option name="LINE_SEPARATOR" value="&#10;" />
     <option name="FORMATTER_TAGS_ENABLED" value="true" />
     <option name="FORMATTER_TAGS_ACCEPT_REGEXP" value="true" />
+    <option name="SOFT_MARGINS" value="100" />
     <ScalaCodeStyleSettings>
       <option name="classCountToUseImportOnDemand" value="6" />
       <option name="importLayout">
