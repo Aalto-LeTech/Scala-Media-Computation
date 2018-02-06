@@ -738,7 +738,7 @@ lazy val smcl: Project = project.in(file("."))
 
         notes.content
       },
-s
+
       releaseNotesTemplate := {
         val tagName = SbtGithubReleasePlugin.tagNameArg.parsed
         val smclVersion = SMCLVersion.from(tagName).forRelease
