@@ -50,7 +50,7 @@
 /.idea/workspace.xml
 
 /doc/*
-/doc/release-notes
+!/doc/release-notes
 
 /project/*
 !/project/build.properties
