@@ -42,13 +42,13 @@ trait Cropable[ReturnType <: ImageElement] {
    */
   @inline
   def cropToSizeOf(
-      background: d2.HasBounds,
+      background: d2.HasDims,
       upperLeftCornerOfCropped: Pos): ReturnType = {
 
     crop(
       upperLeftCornerOfCropped,
-      background.boundary.width.inPixels,
-      background.boundary.height.inPixels)
+      background.dimensions.width.inPixels,
+      background.dimensions.height.inPixels)
   }
 
 
