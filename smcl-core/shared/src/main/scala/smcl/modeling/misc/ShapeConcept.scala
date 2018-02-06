@@ -26,9 +26,9 @@ package smcl.modeling.misc
  * @author Aleksi Lukkarinen
  *
  */
-trait ShapeConcept[PositionType <: CoordSysIndepPosition, DimensionType <: CoordSysIndepDimensions]
+trait ShapeConcept[PositionType <: CoordSysIndepPosition[DimensionType], DimensionType <: CoordSysIndepDimensions]
     extends ModelingObject
-        with HasPosition[PositionType]
+        with HasPosition[PositionType, DimensionType]
         with HasDimensions[DimensionType] {
 
 }

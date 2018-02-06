@@ -35,7 +35,7 @@ object Pos {
   val Origo: Pos = createInstance(0.0, 0.0, 0.0, isDefined = true)
 
   /** A [[Pos]] instance that represents a non-existent position. */
-  val NotDefined: Pos = createInstance(0.0, 0.0, 0.0, isDefined = false)
+  val NotDefined: Pos = createInstance(0.0, 0.0, 0.0, isDefined = false) // TODO: Mutation methods shouldn't do anything
 
 
   /**
@@ -125,17 +125,21 @@ case class Pos private(
     yInPixels: Double,
     zInPixels: Double,
     isDefined: Boolean)
-    extends CartesianPosition
+    extends CartesianPosition[Dims]
         with ToTuple[CoordinateTuple]
         with ItemItemMap[Pos, Double]
         with FlatMap[Pos, CoordinateTuple]
         with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
         with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
+        with HasDims
         with Movable[Pos] {
 
   /** */
   lazy val coordinates: Seq[Double] =
     Seq(xInPixels, yInPixels, zInPixels)
+
+  /** */
+  lazy val dimensions: Dims = Dims.Zeros
 
   /**
    *

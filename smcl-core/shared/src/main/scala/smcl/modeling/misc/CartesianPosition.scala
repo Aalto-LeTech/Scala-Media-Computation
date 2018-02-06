@@ -20,9 +20,11 @@ package smcl.modeling.misc
 /**
  * A position in a Cartesian coordinate system.
  *
+ * @tparam DimensionType
+ *
  * @author Aleksi Lukkarinen
  */
-trait CartesianPosition
-    extends CoordSysIndepPosition {
+trait CartesianPosition[DimensionType <: CartesianDimensions]
+    extends CoordSysIndepPosition[DimensionType] {
 
 }

@@ -27,13 +27,16 @@ import smcl.infrastructure.FlatMap
 /**
  * Boundary of an object.
  *
+ * @tparam PositionType
+ * @tparam DimensionType
+ *
  * @author Aleksi Lukkarinen
  */
-trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition]
+trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType], DimensionType <: CoordSysIndepDimensions]
     extends Measurement
         with Equals
         with Iterable[PositionType]
-        with FlatMap[CoordSysIndepBoundary[PositionType], Seq[PositionType]] {
+        with FlatMap[CoordSysIndepBoundary[PositionType, DimensionType], Seq[PositionType]] {
 
   /**
    *
@@ -63,7 +66,7 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition]
   @inline
   override
   def flatMap(
-      f: (Seq[PositionType]) => CoordSysIndepBoundary[PositionType]): CoordSysIndepBoundary[PositionType] = {
+      f: (Seq[PositionType]) => CoordSysIndepBoundary[PositionType, DimensionType]): CoordSysIndepBoundary[PositionType, DimensionType] = {
 
     f(markers)
   }
@@ -115,7 +118,7 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition]
   override
   def equals(other: Any): Boolean = {
     other match {
-      case that: CoordSysIndepBoundary[PositionType] =>
+      case that: CoordSysIndepBoundary[PositionType, DimensionType] =>
         that.canEqual(this) &&
             that.markers == this.markers
 

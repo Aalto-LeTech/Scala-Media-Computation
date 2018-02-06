@@ -44,7 +44,7 @@ object Pos {
   lazy val NegativeInfinity = Pos(Double.NegativeInfinity)
 
   /** A [[Pos]] instance that represents a non-existing position. */
-  lazy val NotDefined = apply(0.0, isDefined = false)
+  lazy val NotDefined = apply(0.0, isDefined = false) // TODO: Mutation methods shouldn't do anything
 
   /**
    * Creates a new [[Pos]] instance.
@@ -74,16 +74,20 @@ object Pos {
 case class Pos private(
     inPixels: Double,
     isDefined: Boolean)
-    extends CartesianPosition
+    extends CartesianPosition[Dims]
         with Ordered[Pos]
         with ItemItemMap[Pos, Double]
         with FlatMap[Pos, Double]
         with CommonDoubleMathOps[Pos]
         with MinMaxOps[Pos]
+        with HasDims
         with Movable[Pos] {
 
   /** */
   lazy val coordinates: Seq[Double] = Seq(inPixels)
+
+  /** */
+  lazy val dimensions: Dims = Dims.Zero
 
   /**
    * Returns <code>true</code> if this instance represents

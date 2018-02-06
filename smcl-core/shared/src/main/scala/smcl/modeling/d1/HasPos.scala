@@ -28,4 +28,4 @@ import smcl.modeling.misc.HasPosition
  * @author Aleksi Lukkarinen
  */
 trait HasPos
-    extends HasPosition[Pos]
+    extends HasPosition[Pos, Dims]

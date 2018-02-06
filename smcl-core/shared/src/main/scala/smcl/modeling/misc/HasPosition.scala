@@ -21,10 +21,11 @@ package smcl.modeling.misc
  * An object that has a position.
  *
  * @tparam PositionType
+ * @tparam DimensionType
  *
  * @author Aleksi Lukkarinen
  */
-trait HasPosition[PositionType <: CoordSysIndepPosition] {
+trait HasPosition[PositionType <: CoordSysIndepPosition[DimensionType], DimensionType <: CoordSysIndepDimensions] {
 
   /** Position of this object. */
   def position: PositionType

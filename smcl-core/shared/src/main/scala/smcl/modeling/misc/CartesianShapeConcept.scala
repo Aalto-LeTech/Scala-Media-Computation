@@ -25,7 +25,7 @@ package smcl.modeling.misc
  *
  * @author Aleksi Lukkarinen
  */
-trait CartesianShapeConcept[PositionType <: CartesianPosition, DimensionType <: CartesianDimensions]
+trait CartesianShapeConcept[PositionType <: CartesianPosition[DimensionType], DimensionType <: CartesianDimensions]
     extends ShapeConcept[PositionType, DimensionType] {
 
 }

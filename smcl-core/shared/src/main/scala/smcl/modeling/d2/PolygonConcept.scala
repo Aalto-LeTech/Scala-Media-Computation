@@ -36,4 +36,6 @@ abstract class PolygonConcept[ObjectType](
    */
   def points: Seq[Pos] = polygonDataResolver.points
 
+
+
 }

@@ -241,7 +241,7 @@ case class Bounds private(
     upperLeftMarker: Pos,
     lowerRightMarker: Pos,
     isDefined: Boolean)
-    extends CoordSysIndepBoundary[Pos]
+    extends CoordSysIndepBoundary[Pos, Dims]
         with HasArea {
 
   /** */

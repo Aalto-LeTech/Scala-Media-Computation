@@ -35,7 +35,7 @@ object Pos {
   val Origo: Pos = createInstance(0.0, 0.0, isDefined = true)
 
   /** A [[Pos]] instance that represents a non-existent position. */
-  val NotDefined: Pos = createInstance(0.0, 0.0, isDefined = false)
+  val NotDefined: Pos = new Pos(0.0, 0.0, isDefined = false) // TODO: Mutation methods shouldn't do anything
 
   /**
    * Creates a new [[Pos]] instance.
@@ -113,13 +113,16 @@ case class Pos private[smcl](
     xInPixels: Double,
     yInPixels: Double,
     isDefined: Boolean)
-    extends CartesianPosition
+    extends CartesianPosition[Dims]
         with ToTuple[CoordinateTuple]
         with ItemItemMap[Pos, Double]
         with FlatMap[Pos, CoordinateTuple]
         with CommonTupledDoubleMathOps[Pos, CoordinateTuple]
         with TupledMinMaxItemOps[Pos, Double, CoordinateTuple]
+        with HasDims
+        with HasBounds
         with Movable[Pos]
+        with Scalable[Pos]
         with Rotatable[Pos] {
 
   /** */
@@ -130,8 +133,7 @@ case class Pos private[smcl](
   lazy val boundary: Bounds = Bounds(this, this)
 
   /** */
-  lazy val dimensions: Dims =
-    Dims(boundary.width, boundary.height)
+  lazy val dimensions: Dims = Dims.Zeros
 
   /**
    *
@@ -920,6 +922,21 @@ case class Pos private[smcl](
       centerOfRotation: Pos): Pos = {
 
     Transformer.rotate(this, angleInDegrees, centerOfRotation)
+  }
+
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): Pos = {
+    copy(
+      newXInPixels = widthFactor * width.inPixels,
+      newYInPixels = heightFactor * height.inPixels)
   }
 
 }

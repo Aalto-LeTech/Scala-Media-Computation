@@ -25,12 +25,15 @@ import scala.annotation.tailrec
 /**
  * A position in some coordinate system.
  *
+ * @tparam DimensionType
+ *
  * @author Aleksi Lukkarinen
  */
-trait CoordSysIndepPosition
+trait CoordSysIndepPosition[DimensionType <: CoordSysIndepDimensions]
     extends ModelingObject
         with Equals
-        with Iterable[Double] {
+        with Iterable[Double]
+        with HasDimensions[DimensionType] {
 
   /**
    *
@@ -99,7 +102,7 @@ trait CoordSysIndepPosition
   override
   def equals(other: Any): Boolean = {
     other match {
-      case that: CoordSysIndepPosition =>
+      case that: CoordSysIndepPosition[DimensionType] =>
         that.canEqual(this) &&
             that.coordinates == this.coordinates
 
