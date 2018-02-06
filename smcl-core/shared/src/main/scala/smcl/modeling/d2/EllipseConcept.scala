@@ -199,4 +199,20 @@ class EllipseConcept private(
     this
   }
 
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): EllipseConcept = {
+    copy(
+      newCenter = center.scaleBy(widthFactor, heightFactor),
+      newSemiMajorAxisInPixels = semiMajorAxisInPixels * widthFactor,
+      newSemiMinorAxisInPixels = semiMinorAxisInPixels * heightFactor)
+  }
+
 }

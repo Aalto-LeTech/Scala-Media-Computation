@@ -39,7 +39,6 @@ object HexagonConcept {
    * @return
    */
   @inline
-  private
   def apply(
       center: Pos,
       circumRadiusInPixels: Double): HexagonConcept = {
@@ -156,5 +155,18 @@ class HexagonConcept(dataResolver: HexagonDataResolver)
    */
   @inline
   def copy(): HexagonConcept = this
+
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): HexagonConcept = {
+    this
+  }
 
 }

@@ -37,7 +37,8 @@ abstract class ShapeConcept[ObjectType](
         with HasPos
         with HasDims
         with HasBounds
-        with Movable[ObjectType] {
+        with Movable[ObjectType]
+        with Scalable[ObjectType] {
 
   /**
    * Returns the boundary of this shape.

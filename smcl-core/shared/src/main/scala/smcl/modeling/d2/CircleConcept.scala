@@ -173,4 +173,17 @@ class CircleConcept private(dataResolver: CircleDataResolver)
     this
   }
 
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): CircleConcept = {
+    this  // if (width != height) ==> produces an ellipse
+  }
+
 }

@@ -157,4 +157,17 @@ class LineConcept private(dataResolver: LineDataResolver)
     this
   }
 
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): LineConcept = {
+    this
+  }
+
 }

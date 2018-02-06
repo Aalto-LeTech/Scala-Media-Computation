@@ -416,4 +416,17 @@ class TriangleConcept private(dataResolver: TriangleDataResolver)
     this
   }
 
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): TriangleConcept = {
+    this
+  }
+
 }

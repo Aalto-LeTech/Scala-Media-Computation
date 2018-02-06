@@ -17,7 +17,7 @@
 package smcl.pictures.fullfeatured
 
 
-import smcl.modeling.d2.{Dims, Transformable}
+import smcl.modeling.d2.Transformable
 
 
 
@@ -29,32 +29,6 @@ import smcl.modeling.d2.{Dims, Transformable}
  */
 trait VectorGraphic
     extends ImageElement
-        with Transformable[ImageElement]
-        with Cropable[Bmp] {
-
-
-  /**
-   *
-   *
-   * @param upperLeftCornerX
-   * @param upperLeftCornerY
-   * @param lowerRightCornerX
-   * @param lowerRightCornerY
-   *
-   * @return
-   */
-  override
-  def crop(
-      upperLeftCornerX: Double,
-      upperLeftCornerY: Double,
-      lowerRightCornerX: Double,
-      lowerRightCornerY: Double): Bmp = {
-
-    toBitmap.crop(
-      upperLeftCornerX,
-      upperLeftCornerY,
-      lowerRightCornerX,
-      lowerRightCornerY)
-  }
+        with Transformable[ImageElement] {
 
 }

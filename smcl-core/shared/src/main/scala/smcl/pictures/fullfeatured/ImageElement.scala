@@ -34,7 +34,9 @@ trait ImageElement
         with HasBounds
         with HasDims
         with Movable[ImageElement]
-        with Rotatable[ImageElement] {
+        with Rotatable[ImageElement]
+        with Scalable[ImageElement]
+        with Cropable[Bmp] {
 
   /** */
   def identity: Identity
@@ -65,6 +67,30 @@ trait ImageElement
     displayInViewer(toBitmap)
 
     this
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftCornerX
+   * @param upperLeftCornerY
+   * @param lowerRightCornerX
+   * @param lowerRightCornerY
+   *
+   * @return
+   */
+  override
+  def crop(
+      upperLeftCornerX: Double,
+      upperLeftCornerY: Double,
+      lowerRightCornerX: Double,
+      lowerRightCornerY: Double): Bmp = {
+
+    toBitmap.crop(
+      upperLeftCornerX,
+      upperLeftCornerY,
+      lowerRightCornerX,
+      lowerRightCornerY)
   }
 
 }

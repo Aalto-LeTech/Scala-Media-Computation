@@ -442,4 +442,17 @@ class Point private(
     copy(newPosition = position.rotateBy(angleInDegrees, centerOfRotation))
   }
 
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): Point = {
+    this
+  }
+
 }

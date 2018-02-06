@@ -206,4 +206,17 @@ class RectangleConcept private(dataResolver: RectangleDataResolver)
   @inline
   def copy(): RectangleConcept = this
 
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): RectangleConcept = {
+    this
+  }
+
 }

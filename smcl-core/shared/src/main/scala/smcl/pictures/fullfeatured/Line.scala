@@ -370,4 +370,17 @@ class Line private(
       newEnd = newPoints(1))
   }
 
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): Line = {
+    this
+  }
+
 }

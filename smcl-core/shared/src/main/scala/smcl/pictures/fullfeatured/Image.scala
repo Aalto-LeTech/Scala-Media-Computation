@@ -73,8 +73,7 @@ class Image private(
     val anchor: Anchor[HasAnchor])
     extends ImageElement
         with HasAnchor
-        with FlatMap[Image, Seq[ImageElement]]
-        with Cropable[Bmp] {
+        with FlatMap[Image, Seq[ImageElement]] {
 
   // TODO: Tarkistukset
 
@@ -290,25 +289,14 @@ class Image private(
   /**
    *
    *
-   * @param upperLeftCornerX
-   * @param upperLeftCornerY
-   * @param lowerRightCornerX
-   * @param lowerRightCornerY
+   * @param widthFactor
+   * @param heightFactor
    *
    * @return
    */
   override
-  def crop(
-      upperLeftCornerX: Double,
-      upperLeftCornerY: Double,
-      lowerRightCornerX: Double,
-      lowerRightCornerY: Double): Bmp = {
-
-    toBitmap.crop(
-      upperLeftCornerX,
-      upperLeftCornerY,
-      lowerRightCornerX,
-      lowerRightCornerY)
+  def scaleBy(widthFactor: Double, heightFactor: Double): Image = {
+    this
   }
 
 }

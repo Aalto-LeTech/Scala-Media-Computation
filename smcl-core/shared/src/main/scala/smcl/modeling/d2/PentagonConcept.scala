@@ -157,4 +157,17 @@ class PentagonConcept(dataResolver: PentagonDataResolver)
   @inline
   def copy(): PentagonConcept = this
 
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): PentagonConcept = {
+    this
+  }
+
 }

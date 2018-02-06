@@ -196,8 +196,7 @@ class Bmp private(
     val position: Pos,
     private[smcl] val buffer: Option[BitmapBufferAdapter])
     extends ImageElement
-        with Displayable
-        with Cropable[Bmp] {
+        with Displayable {
 
   /** */
   override
@@ -478,6 +477,19 @@ class Bmp private(
     }
     */
 
+    this
+  }
+
+  /**
+   *
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(widthFactor: Double, heightFactor: Double): Bmp = {
     this
   }
 
