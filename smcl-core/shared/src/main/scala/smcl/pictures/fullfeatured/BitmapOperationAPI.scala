@@ -593,8 +593,8 @@ trait BitmapOperationAPI {
    */
   def drawPolyline(
       bmp: Bitmap,
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
+      xCoordinates: Seq[Double],
+      yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
@@ -626,8 +626,8 @@ trait BitmapOperationAPI {
    */
   def drawPolygon(
       bmp: Bitmap,
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
+      xCoordinates: Seq[Double],
+      yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,

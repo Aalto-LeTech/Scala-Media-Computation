@@ -55,16 +55,16 @@ trait DrawingSurfaceAdapter {
    *
    *
    * @param bitmap
-   * @param x
-   * @param y
+   * @param xInPixels
+   * @param yInPixels
    * @param opacity
    *
    * @return
    */
   def drawBitmap(
       bitmap: BitmapBufferAdapter,
-      x: Int,
-      y: Int,
+      xInPixels: Double,
+      yInPixels: Double,
       opacity: Int = ColorValidator.MaximumOpacity): Boolean
 
   /**
@@ -118,10 +118,10 @@ trait DrawingSurfaceAdapter {
    * @param fillColor
    */
   def drawEllipse(
-      boundingBoxUpperLeftX: Int,
-      boundingBoxUpperLeftY: Int,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      boundingBoxUpperLeftX: Double,
+      boundingBoxUpperLeftY: Double,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -142,12 +142,12 @@ trait DrawingSurfaceAdapter {
    * @param fillColor
    */
   def drawArc(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      startAngleInDegrees: Int = DefaultArcStartAngleInDegrees,
-      arcAngleInDegrees: Int = DefaultArcAngleInDegrees,
+      upperLeftCornerXInPixels: Double,
+      upperLeftCornerYInPixels: Double,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      startAngleInDegrees: Double = DefaultArcStartAngleInDegrees,
+      arcAngleInDegrees: Double = DefaultArcAngleInDegrees,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -166,10 +166,10 @@ trait DrawingSurfaceAdapter {
    * @param fillColor
    */
   def drawRectangle(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      upperLeftCornerXInPixels: Double,
+      upperLeftCornerYInPixels: Double,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -190,12 +190,12 @@ trait DrawingSurfaceAdapter {
    * @param fillColor
    */
   def drawRoundedRectangle(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      upperLeftCornerXInPixels: Double,
+      upperLeftCornerYInPixels: Double,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -210,8 +210,8 @@ trait DrawingSurfaceAdapter {
    * @param color
    */
   def drawPolyline(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
+      xCoordinates: Seq[Double],
+      yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
       color: Color = DefaultPrimaryColor): Unit
 
@@ -227,8 +227,8 @@ trait DrawingSurfaceAdapter {
    * @param fillColor
    */
   def drawPolygon(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
+      xCoordinates: Seq[Double],
+      yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
@@ -245,10 +245,10 @@ trait DrawingSurfaceAdapter {
    * @param color
    */
   def drawLine(
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor): Unit
 
 }

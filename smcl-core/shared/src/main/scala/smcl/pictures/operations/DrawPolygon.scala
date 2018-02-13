@@ -40,8 +40,8 @@ import smcl.settings._
  */
 private[pictures]
 case class DrawPolygon(
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
+    xCoordinates: Seq[Double],
+    yCoordinates: Seq[Double],
     numberOfCoordinatesToDraw: Int,
     hasBorder: Boolean = ShapesHaveBordersByDefault,
     hasFilling: Boolean = ShapesHaveFillingsByDefault,
@@ -87,7 +87,8 @@ case class DrawPolygon(
    *
    * @param destination
    */
-  override def render(destination: BitmapBufferAdapter): Unit = {
+  override
+  def render(destination: BitmapBufferAdapter): Unit = {
     destination.drawingSurface.drawPolygon(
       xCoordinates, yCoordinates,
       numberOfCoordinatesToDraw,

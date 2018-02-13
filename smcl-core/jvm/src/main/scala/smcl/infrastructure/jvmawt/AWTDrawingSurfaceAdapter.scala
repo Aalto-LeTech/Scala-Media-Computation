@@ -89,15 +89,15 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    */
   override
   def drawBitmap(bitmap: BitmapBufferAdapter): Boolean = {
-    drawBitmap(bitmap, 0, 0)
+    drawBitmap(bitmap, 0.0, 0.0)
   }
 
   /**
    *
    *
    * @param bitmap
-   * @param x
-   * @param y
+   * @param xInPixels
+   * @param yInPixels
    * @param opacity
    *
    * @return
@@ -105,9 +105,12 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
   override
   def drawBitmap(
       bitmap: BitmapBufferAdapter,
-      x: Int,
-      y: Int,
+      xInPixels: Double,
+      yInPixels: Double,
       opacity: Int = ColorValidator.MaximumOpacity): Boolean = {
+
+    val x = xInPixels.floor.toInt
+    val y = yInPixels.floor.toInt
 
     val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumOpacity
 
@@ -169,9 +172,13 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    */
   override
-  def drawPoint(xInPixels: Double, yInPixels: Double, color: Color): Unit = {
-    val x = math.floor(xInPixels).toInt
-    val y = math.floor(yInPixels).toInt
+  def drawPoint(
+      xInPixels: Double,
+      yInPixels: Double,
+      color: Color): Unit = {
+
+    val x = xInPixels.floor.toInt
+    val y = yInPixels.floor.toInt
 
     withDrawingSurface{ds =>
       ds.setColor(color.toAWTColor)
@@ -193,28 +200,29 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    */
   override
   def drawEllipse(
-      boundingBoxUpperLeftX: Int,
-      boundingBoxUpperLeftY: Int,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      boundingBoxUpperLeftX: Double,
+      boundingBoxUpperLeftY: Double,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor): Unit = {
 
+    val upperLeftX: Int = boundingBoxUpperLeftX.floor.toInt
+    val upperLeftY: Int = boundingBoxUpperLeftY.floor.toInt
+    val width: Int = widthInPixels.floor.toInt
+    val height: Int = heightInPixels.floor.toInt
+
     withDrawingSurface{ds =>
       if (hasFilling) {
         ds.setColor(fillColor.toAWTColor)
-        ds.fillOval(
-          boundingBoxUpperLeftX, boundingBoxUpperLeftY,
-          widthInPixels, heightInPixels)
+        ds.fillOval(upperLeftX, upperLeftY, width, height)
       }
 
       if (hasBorder) {
         ds.setColor(color.toAWTColor)
-        ds.drawOval(
-          boundingBoxUpperLeftX, boundingBoxUpperLeftY,
-          widthInPixels, heightInPixels)
+        ds.drawOval(upperLeftX, upperLeftY, width, height)
       }
     }
   }
@@ -235,32 +243,33 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    */
   override
   def drawArc(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      startAngleInDegrees: Int = DefaultArcStartAngleInDegrees,
-      arcAngleInDegrees: Int = DefaultArcAngleInDegrees,
+      upperLeftCornerXInPixels: Double,
+      upperLeftCornerYInPixels: Double,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      startAngleInDegrees: Double = DefaultArcStartAngleInDegrees,
+      arcAngleInDegrees: Double = DefaultArcAngleInDegrees,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor): Unit = {
 
+    val upperLeftX: Int = upperLeftCornerXInPixels.floor.toInt
+    val upperLeftY: Int = upperLeftCornerYInPixels.floor.toInt
+    val width: Int = widthInPixels.floor.toInt
+    val height: Int = heightInPixels.floor.toInt
+    val startAngle: Int = startAngleInDegrees.floor.toInt
+    val arcAngle: Int = arcAngleInDegrees.floor.toInt
+
     withDrawingSurface{ds =>
       if (hasFilling) {
         ds.setColor(fillColor.toAWTColor)
-        ds.fillArc(
-          upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-          widthInPixels, heightInPixels,
-          startAngleInDegrees, arcAngleInDegrees)
+        ds.fillArc(upperLeftX, upperLeftY, width, height, startAngle, arcAngle)
       }
 
       if (hasBorder) {
         ds.setColor(color.toAWTColor)
-        ds.drawArc(
-          upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-          widthInPixels, heightInPixels,
-          startAngleInDegrees, arcAngleInDegrees)
+        ds.drawArc(upperLeftX, upperLeftY, width, height, startAngle, arcAngle)
       }
     }
   }
@@ -277,30 +286,31 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
-  override def
-  drawRectangle(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+  override
+  def drawRectangle(
+      upperLeftCornerXInPixels: Double,
+      upperLeftCornerYInPixels: Double,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor): Unit = {
 
+    val upperLeftX: Int = upperLeftCornerXInPixels.floor.toInt
+    val upperLeftY: Int = upperLeftCornerYInPixels.floor.toInt
+    val width: Int = widthInPixels.floor.toInt
+    val height: Int = heightInPixels.floor.toInt
+
     withDrawingSurface{ds =>
       if (hasFilling) {
         ds.setColor(fillColor.toAWTColor)
-        ds.fillRect(
-          upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-          widthInPixels, heightInPixels)
+        ds.fillRect(upperLeftX, upperLeftY, width, height)
       }
 
       if (hasBorder) {
         ds.setColor(color.toAWTColor)
-        ds.drawRect(
-          upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-          widthInPixels, heightInPixels)
+        ds.drawRect(upperLeftX, upperLeftY, width, height)
       }
     }
   }
@@ -319,34 +329,35 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
-  override def
-  drawRoundedRectangle(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+  override
+  def drawRoundedRectangle(
+      upperLeftCornerXInPixels: Double,
+      upperLeftCornerYInPixels: Double,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor): Unit = {
 
+    val upperLeftX: Int = upperLeftCornerXInPixels.floor.toInt
+    val upperLeftY: Int = upperLeftCornerYInPixels.floor.toInt
+    val width: Int = widthInPixels.floor.toInt
+    val height: Int = heightInPixels.floor.toInt
+    val roundingWidth: Int = roundingWidthInPixels.floor.toInt
+    val roundingHeight: Int = roundingHeightInPixels.floor.toInt
+
     withDrawingSurface{ds =>
       if (hasFilling) {
         ds.setColor(fillColor.toAWTColor)
-        ds.fillRoundRect(
-          upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-          widthInPixels, heightInPixels,
-          roundingWidthInPixels, roundingHeightInPixels)
+        ds.fillRoundRect(upperLeftX, upperLeftY, width, height, roundingWidth, roundingHeight)
       }
 
       if (hasBorder) {
         ds.setColor(color.toAWTColor)
-        ds.drawRoundRect(
-          upperLeftCornerXInPixels, upperLeftCornerYInPixels,
-          widthInPixels, heightInPixels,
-          roundingWidthInPixels, roundingHeightInPixels)
+        ds.drawRoundRect(upperLeftX, upperLeftY, width, height, roundingWidth, roundingHeight)
       }
     }
   }
@@ -361,14 +372,17 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    */
   override
   def drawPolyline(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
+      xCoordinates: Seq[Double],
+      yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
       color: Color = DefaultPrimaryColor): Unit = {
 
+    val xs = xCoordinates.map(_.floor.toInt).toArray
+    val ys = yCoordinates.map(_.floor.toInt).toArray
+
     withDrawingSurface{ds =>
       ds.setColor(color.toAWTColor)
-      ds.drawPolyline(xCoordinates.toArray, yCoordinates.toArray, numberOfCoordinatesToDraw)
+      ds.drawPolyline(xs, ys, numberOfCoordinatesToDraw)
     }
   }
 
@@ -385,23 +399,26 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    */
   override
   def drawPolygon(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
+      xCoordinates: Seq[Double],
+      yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor): Unit = {
 
+    val xs = xCoordinates.map(_.floor.toInt).toArray
+    val ys = yCoordinates.map(_.floor.toInt).toArray
+
     withDrawingSurface{ds =>
       if (hasFilling) {
         ds.setColor(fillColor.toAWTColor)
-        ds.fillPolygon(xCoordinates.toArray, yCoordinates.toArray, numberOfCoordinatesToDraw)
+        ds.fillPolygon(xs, ys, numberOfCoordinatesToDraw)
       }
 
       if (hasBorder) {
         ds.setColor(color.toAWTColor)
-        ds.drawPolygon(xCoordinates.toArray, yCoordinates.toArray, numberOfCoordinatesToDraw)
+        ds.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
       }
     }
   }
@@ -417,17 +434,20 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    */
   override
   def drawLine(
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor): Unit = {
+
+    val startX = fromXInPixels.floor.toInt
+    val startY = fromYInPixels.floor.toInt
+    val endX = toXInPixels.floor.toInt
+    val endY = toYInPixels.floor.toInt
 
     withDrawingSurface{ds =>
       ds.setColor(color.toAWTColor)
-      ds.drawLine(
-        fromXInPixels, fromYInPixels,
-        toXInPixels, toYInPixels)
+      ds.drawLine(startX, startY, endX, endY)
     }
   }
 

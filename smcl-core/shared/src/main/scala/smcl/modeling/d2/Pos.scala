@@ -17,6 +17,8 @@
 package smcl.modeling.d2
 
 
+import scala.language.implicitConversions
+
 import smcl.infrastructure._
 import smcl.modeling.misc.CartesianPosition
 import smcl.modeling.{Len, Transformer}
@@ -93,6 +95,28 @@ object Pos {
 
     new Pos(xInPixels, yInPixels, isDefined)
   }
+
+  /**
+   *
+   *
+   * @param p
+   *
+   * @return
+   */
+  @inline
+  implicit def asPair(p: Pos): (Double, Double) =
+    (p.xInPixels, p.yInPixels)
+
+  /**
+   *
+   *
+   * @param p
+   *
+   * @return
+   */
+  @inline
+  implicit def asFlooredIntPair(p: Pos): (Int, Int) =
+    (p.xInPixels.floor.toInt, p.yInPixels.floor.toInt)
 
 }
 

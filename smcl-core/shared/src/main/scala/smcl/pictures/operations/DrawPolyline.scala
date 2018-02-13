@@ -38,8 +38,8 @@ import smcl.settings.DefaultPrimaryColor
  */
 private[pictures]
 case class DrawPolyline(
-    xCoordinates: Seq[Int],
-    yCoordinates: Seq[Int],
+    xCoordinates: Seq[Double],
+    yCoordinates: Seq[Double],
     numberOfCoordinatesToDraw: Int,
     color: Color = DefaultPrimaryColor)
     extends AbstractOperation

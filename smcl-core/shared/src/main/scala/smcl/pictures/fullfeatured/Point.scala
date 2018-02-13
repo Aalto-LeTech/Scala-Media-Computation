@@ -17,6 +17,8 @@
 package smcl.pictures.fullfeatured
 
 
+import scala.language.implicitConversions
+
 import smcl.colors.rgb
 import smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
 import smcl.modeling.d2.{Bounds, CoordinateTuple, Dims, Pos}
@@ -60,6 +62,32 @@ object Point {
       Identity(),
       Pos(xInPixels, yInPixels),
       color)
+  }
+
+  /**
+   *
+   *
+   * @param p
+   *
+   * @return
+   */
+  implicit def asPair(p: Point): (Double, Double) = {
+    val pos = p.position
+
+    (pos.xInPixels, pos.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param p
+   *
+   * @return
+   */
+  implicit def asFlooredIntPair(p: Point): (Int, Int) = {
+    val pos = p.position
+
+    (pos.xInPixels.floor.toInt, pos.yInPixels.floor.toInt)
   }
 
 }

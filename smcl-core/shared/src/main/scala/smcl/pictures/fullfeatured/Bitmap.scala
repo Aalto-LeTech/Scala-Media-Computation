@@ -638,8 +638,8 @@ class Bitmap private[pictures](
    * @return
    */
   def drawPolyline(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
+      xCoordinates: Seq[Double],
+      yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
@@ -668,8 +668,8 @@ class Bitmap private[pictures](
    * @return
    */
   def drawPolygon(
-      xCoordinates: Seq[Int],
-      yCoordinates: Seq[Int],
+      xCoordinates: Seq[Double],
+      yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
       hasBorder: Boolean = true,
       hasFilling: Boolean = false,

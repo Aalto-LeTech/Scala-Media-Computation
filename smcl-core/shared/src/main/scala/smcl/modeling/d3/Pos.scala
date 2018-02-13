@@ -17,6 +17,8 @@
 package smcl.modeling.d3
 
 
+import scala.language.implicitConversions
+
 import smcl.infrastructure.{CommonTupledDoubleMathOps, FlatMap, ItemItemMap, MathUtils, ToTuple, TupledMinMaxItemOps}
 import smcl.modeling.Len
 import smcl.modeling.misc.CartesianPosition
@@ -104,6 +106,30 @@ object Pos {
       coordinates(2),
       isDefined = true)
   }
+
+  /**
+   *
+   *
+   * @param p
+   *
+   * @return
+   */
+  @inline
+  implicit def asTriple(p: Pos): (Double, Double, Double) =
+    (p.xInPixels, p.yInPixels, p.zInPixels)
+
+  /**
+   *
+   *
+   * @param p
+   *
+   * @return
+   */
+  @inline
+  implicit def asFlooredIntTriple(p: Pos): (Int, Int, Int) =
+    (p.xInPixels.floor.toInt,
+        p.yInPixels.floor.toInt,
+        p.zInPixels.floor.toInt)
 
 }
 
