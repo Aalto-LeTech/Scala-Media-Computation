@@ -17,11 +17,6 @@
 package smcl.pictures.fullfeatured
 
 
-import smcl.modeling.d2.Transformable
-
-
-
-
 /**
  *
  *
@@ -29,6 +24,3 @@ import smcl.modeling.d2.Transformable
  */
 trait VectorGraphic
     extends ImageElement
-        with Transformable[ImageElement] {
-
-}

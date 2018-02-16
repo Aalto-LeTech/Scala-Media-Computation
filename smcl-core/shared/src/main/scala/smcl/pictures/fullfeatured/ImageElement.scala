@@ -36,12 +36,28 @@ trait ImageElement
         with Movable[ImageElement]
         with Rotatable[ImageElement]
         with Scalable[ImageElement]
+        with Transformable[ImageElement]
         with Cropable[Bmp] {
 
-  /** */
+  /**
+   *
+   *
+   * @return
+   */
+  def points: Seq[Pos] = Seq()
+
+  /**
+   *
+   *
+   * @return
+   */
   def identity: Identity
 
-  /** Tells if this [[ImageElement]] can be rendered on a bitmap. */
+  /**
+   * Tells if this [[ImageElement]] can be rendered on a bitmap.
+   *
+   * @return
+   */
   def isRenderable: Boolean
 
   /**

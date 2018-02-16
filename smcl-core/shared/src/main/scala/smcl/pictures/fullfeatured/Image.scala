@@ -18,6 +18,7 @@ package smcl.pictures.fullfeatured
 
 
 import smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
+import smcl.modeling.AffineTransformation
 import smcl.modeling.d2._
 
 
@@ -296,6 +297,18 @@ class Image private(
    */
   override
   def scaleBy(widthFactor: Double, heightFactor: Double): Image = {
+    this
+  }
+
+  /**
+   * Transforms this object using the specified affine transformation.
+   *
+   * @param t
+   *
+   * @return
+   */
+  override
+  def transformBy(t: AffineTransformation): ImageElement = {
     this
   }
 

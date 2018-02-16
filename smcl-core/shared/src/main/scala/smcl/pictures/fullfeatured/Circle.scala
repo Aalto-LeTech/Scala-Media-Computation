@@ -19,102 +19,105 @@ package smcl.pictures.fullfeatured
 
 import smcl.colors.rgb
 import smcl.modeling.d2.Pos
+import smcl.modeling.{Angle, Len}
 import smcl.settings._
 
 
 
 
 /**
- * An object-based API for creating lines.
- *
- * {{{
- * def moire(w: Double) = {
- *   import smcl.pictures.fullfeatured.{Image, Line}
- *
- *   def lines(x: Double, c: Double) = Seq(
- *           Line(Pos.Origo, Pos(x, -c), Red),
- *           Line(Pos.Origo, Pos(x, c), Blue),
- *           Line(Pos.Origo, Pos(-c, x), Green),
- *           Line(Pos.Origo, Pos(c, x), Brown))
- *
- *   val wPerTwo = (w/2).toInt
- *   val r = Range.inclusive(-wPerTwo, wPerTwo, 2)
- *
- *   Image((for{x <- r} yield lines(x, wPerTwo)).flatten: _*)
- * }
- * }}}
+ * An object-based API for creating circles.
  *
  * @author Aleksi Lukkarinen
  */
-object Line {
+object Circle {
 
   /**
    *
    *
-   * @param startX
-   * @param startY
-   * @param endX
-   * @param endY
+   * @param center
+   * @param radius
    *
    * @return
    */
+  @inline
   def apply(
-      startX: Double,
-      startY: Double,
-      endX: Double,
-      endY: Double): VectorGraphic = {
+      center: Pos,
+      radius: Double): VectorGraphic = {
+
+    val upperLeftCorner = center - (radius, radius)
+    val width = 2 * radius
 
     apply(
-      Pos(startX, startY),
-      Pos(endX, endY))
+      upperLeftCorner,
+      width,
+      hasBorder = ShapesHaveBordersByDefault,
+      hasFilling = ShapesHaveFillingsByDefault,
+      color = DefaultPrimaryColor,
+      fillColor = DefaultSecondaryColor)
   }
 
   /**
    *
    *
-   * @param startX
-   * @param startY
-   * @param endX
-   * @param endY
+   * @param center
+   * @param radius
+   * @param hasBorder
+   * @param hasFilling
    * @param color
+   * @param fillColor
    *
    * @return
    */
+  @inline
   def apply(
-      startX: Double,
-      startY: Double,
-      endX: Double,
-      endY: Double,
-      color: rgb.Color): VectorGraphic = {
+      center: Pos,
+      radius: Double,
+      hasBorder: Boolean,
+      hasFilling: Boolean,
+      color: rgb.Color,
+      fillColor: rgb.Color): VectorGraphic = {
+
+    val upperLeftCorner = center - (radius, radius)
+    val width = Len(radius).double
 
     apply(
-      Pos(startX, startY),
-      Pos(endX, endY),
-      color)
+      upperLeftCorner,
+      width,
+      hasBorder, hasFilling,
+      color, fillColor)
   }
 
   /**
    *
    *
-   * @param start
-   * @param end
+   * @param upperLeftCorner
+   * @param width
+   * @param hasBorder
+   * @param hasFilling
    * @param color
+   * @param fillColor
    *
    * @return
    */
+  @inline
   def apply(
-      start: Pos,
-      end: Pos,
-      color: rgb.Color = DefaultPrimaryColor): VectorGraphic = {
+      upperLeftCorner: Pos,
+      width: Len,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: rgb.Color = DefaultPrimaryColor,
+      fillColor: rgb.Color = DefaultSecondaryColor): VectorGraphic = {
 
-    val points = Seq(start, end)
+    val lowerRightCorner = upperLeftCorner + width.toDimsWith(width)
 
-    // TODO: Change to Polyline after it is implemented
-    Polygon(
-      points,
-      hasBorder = true,
-      hasFilling = false,
-      color = color)
+    Arc(
+      upperLeftCorner,
+      lowerRightCorner,
+      startAngle = Angle.Zero.inDegrees,
+      arcAngle = Angle.FullAngleInDegrees,
+      hasBorder, hasFilling,
+      color, fillColor)
   }
 
 }

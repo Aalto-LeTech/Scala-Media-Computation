@@ -14,107 +14,119 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
+
 package smcl.pictures.fullfeatured
 
 
 import smcl.colors.rgb
 import smcl.modeling.d2.Pos
+import smcl.modeling.{Angle, Len}
 import smcl.settings._
 
 
 
 
 /**
- * An object-based API for creating lines.
- *
- * {{{
- * def moire(w: Double) = {
- *   import smcl.pictures.fullfeatured.{Image, Line}
- *
- *   def lines(x: Double, c: Double) = Seq(
- *           Line(Pos.Origo, Pos(x, -c), Red),
- *           Line(Pos.Origo, Pos(x, c), Blue),
- *           Line(Pos.Origo, Pos(-c, x), Green),
- *           Line(Pos.Origo, Pos(c, x), Brown))
- *
- *   val wPerTwo = (w/2).toInt
- *   val r = Range.inclusive(-wPerTwo, wPerTwo, 2)
- *
- *   Image((for{x <- r} yield lines(x, wPerTwo)).flatten: _*)
- * }
- * }}}
+ * An object-based API for creating ellipses.
  *
  * @author Aleksi Lukkarinen
  */
-object Line {
+object Ellipse {
 
   /**
    *
    *
-   * @param startX
-   * @param startY
-   * @param endX
-   * @param endY
+   * @param upperLeftCorner
+   * @param width
+   * @param height
+   * @param hasBorder
+   * @param hasFilling
+   * @param color
+   * @param fillColor
    *
    * @return
    */
+  @inline
   def apply(
-      startX: Double,
-      startY: Double,
-      endX: Double,
-      endY: Double): VectorGraphic = {
+      upperLeftCorner: Pos,
+      width: Len,
+      height: Len,
+      hasBorder: Boolean,
+      hasFilling: Boolean,
+      color: rgb.Color,
+      fillColor: rgb.Color): VectorGraphic = {
+
+    val lowerRightCorner = upperLeftCorner + (width.inPixels, height.inPixels)
 
     apply(
-      Pos(startX, startY),
-      Pos(endX, endY))
+      upperLeftCorner,
+      lowerRightCorner,
+      hasBorder, hasFilling,
+      color, fillColor)
   }
 
   /**
    *
    *
-   * @param startX
-   * @param startY
-   * @param endX
-   * @param endY
+   * @param center
+   * @param semiMajorAxisInPixels
+   * @param semiMinorAxisInPixels
+   * @param hasBorder
+   * @param hasFilling
    * @param color
+   * @param fillColor
    *
    * @return
    */
+  @inline
   def apply(
-      startX: Double,
-      startY: Double,
-      endX: Double,
-      endY: Double,
-      color: rgb.Color): VectorGraphic = {
+      center: Pos,
+      semiMajorAxisInPixels: Double,
+      semiMinorAxisInPixels: Double,
+      hasBorder: Boolean,
+      hasFilling: Boolean,
+      color: rgb.Color,
+      fillColor: rgb.Color): VectorGraphic = {
+
+    val axes = (semiMajorAxisInPixels, semiMinorAxisInPixels)
+    val upperLeftCorner = center - axes
+    val lowerRightCorner = center + axes
 
     apply(
-      Pos(startX, startY),
-      Pos(endX, endY),
-      color)
+      upperLeftCorner,
+      lowerRightCorner,
+      hasBorder, hasFilling,
+      color, fillColor)
   }
 
   /**
    *
    *
-   * @param start
-   * @param end
+   * @param upperLeftCorner
+   * @param lowerRightCorner
+   * @param hasBorder
+   * @param hasFilling
    * @param color
+   * @param fillColor
    *
    * @return
    */
+  @inline
   def apply(
-      start: Pos,
-      end: Pos,
-      color: rgb.Color = DefaultPrimaryColor): VectorGraphic = {
+      upperLeftCorner: Pos,
+      lowerRightCorner: Pos,
+      hasBorder: Boolean = ShapesHaveBordersByDefault,
+      hasFilling: Boolean = ShapesHaveFillingsByDefault,
+      color: rgb.Color = DefaultPrimaryColor,
+      fillColor: rgb.Color = DefaultSecondaryColor): VectorGraphic = {
 
-    val points = Seq(start, end)
-
-    // TODO: Change to Polyline after it is implemented
-    Polygon(
-      points,
-      hasBorder = true,
-      hasFilling = false,
-      color = color)
+    Arc(
+      upperLeftCorner,
+      lowerRightCorner,
+      startAngle = Angle.Zero.inDegrees,
+      arcAngle = Angle.FullAngleInDegrees,
+      hasBorder, hasFilling,
+      color, fillColor)
   }
 
 }

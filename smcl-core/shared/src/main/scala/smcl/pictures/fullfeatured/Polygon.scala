@@ -27,7 +27,7 @@ import smcl.settings._
 
 
 /**
- *
+ * An object-based API for creating general polygons.
  *
  * @author Aleksi Lukkarinen
  */
@@ -72,9 +72,9 @@ object Polygon {
  *
  * @author Aleksi Lukkarinen
  */
-class Polygon private[pictures](
+class Polygon private(
     val identity: Identity,
-    val points: Seq[Pos],
+    override val points: Seq[Pos],
     val hasBorder: Boolean,
     val hasFilling: Boolean,
     val color: rgb.Color,
@@ -83,23 +83,23 @@ class Polygon private[pictures](
 
   /** Bounding box of this [[Polygon]]. */
   override
-  def boundary: Bounds =
+  val boundary: Bounds =
     BoundaryCalculator.fromPositions(points)
 
   /** Dimensions of this [[Polygon]]. */
   override
-  def dimensions: Dims =
+  val dimensions: Dims =
     Dims(boundary.width, boundary.height)
 
   /** Position of this [[Polygon]]. */
   override
-  def position: Pos = Pos(
+  val position: Pos = Pos(
     internalCenter.width.inPixels,
     internalCenter.height.inPixels)
 
   /** Tells if this [[Polygon]] can be rendered on a bitmap. */
   override
-  def isRenderable: Boolean = true
+  val isRenderable: Boolean = true
 
   /**
    * Renders this [[Polygon]] on a drawing surface.
@@ -237,10 +237,8 @@ class Polygon private[pictures](
     new Polygon(
       identity,
       newPoints,
-      newHasBorder,
-      newHasFilling,
-      newColor,
-      newFillColor)
+      newHasBorder, newHasFilling,
+      newColor, newFillColor)
   }
 
   /**

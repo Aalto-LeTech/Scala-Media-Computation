@@ -14,47 +14,37 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.modeling.d2
+package smcl.pictures.fullfeatured
 
 
-import smcl.modeling.Area
+import smcl.modeling.d2.Pos
 
 
 
 
 /**
- *
+ * An object-based API for creating hexagons.
  *
  * @author Aleksi Lukkarinen
  */
-trait ShapeDataResolver {
+object Hexagon {
 
   /**
-   * Returns the boundary of the represented shape.
+   *
+   *
+   * @param center
+   * @param circumRadiusInPixels
    *
    * @return
    */
-  def boundary: Bounds
+  @inline
+  def apply(
+      center: Pos,
+      circumRadiusInPixels: Double): VectorGraphic = {
 
-  /**
-   * Returns the position of the represented shape.
-   *
-   * @return
-   */
-  def position: Pos
+    val points: Seq[Pos] = ???
 
-  /**
-   * Returns the dimensions of the represented shape.
-   *
-   * @return
-   */
-  def dimensions: Dims
-
-  /**
-   * Returns the area of the represented shape.
-   *
-   * @return
-   */
-  def area: Area
+    ???
+  }
 
 }

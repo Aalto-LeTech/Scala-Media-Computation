@@ -33,12 +33,6 @@ package object modeling {
   /** A companion object alias for 2D boundary. */
   val Bounds: d2.Bounds.type = d2.Bounds
 
-  /** A type alias for 2D circle. */
-  type Circle = d2.CircleConcept
-
-  /** A companion object alias for 2D circle. */
-  val Circle: d2.CircleConcept.type = d2.CircleConcept
-
   /** A type alias for 2D dimensions. */
   type Dims = d2.Dims
 
@@ -65,6 +59,9 @@ package object modeling {
 
   /** A type alias for 2D [[d2.Rotatable]] trait. */
   type Rotatable[ReturnType] = d2.Rotatable[ReturnType]
+
+  /** A type alias for 2D [[d2.Scalable]] trait. */
+  type Scalable[ReturnType] = d2.Scalable[ReturnType]
 
 
   /**
