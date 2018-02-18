@@ -16,6 +16,7 @@
 
 package smcl.pictures
 
+
 import smcl.colors.rgb
 import smcl.modeling.Angle
 import smcl.modeling.d2.Pos
@@ -155,9 +156,7 @@ object Pentagon {
         s"Pentagon's width cannot be negative (was: $heightInPixels).")
     }
 
-    val heightBasedDiagonal = diagonalFromHeight(heightInPixels)
-    val effectiveDiagonal = heightBasedDiagonal.min(widthInPixels)
-    val circumRadius = circumRadiusFromDiagonal(effectiveDiagonal)
+    val circumRadius = limitCircumRadiusTo(widthInPixels, heightInPixels)
 
     apply(
       circumRadius,
@@ -188,15 +187,51 @@ object Pentagon {
         s"Length of pentagon's circumradius cannot be negative (was: $circumRadiusInPixels).")
     }
 
-    val symmetryAngle = RotationalSymmetryAngle.inDegrees
-    val rotationAngles = Seq.tabulate(5)(n => n * symmetryAngle).tail
-    val firstPoint = center.addY(-circumRadiusInPixels)
-    val points = firstPoint +: rotationAngles.map(firstPoint.rotateBy)
+    val points = pointsFor(circumRadiusInPixels, center)
 
     Polygon(
       points,
       hasBorder, hasFilling,
       color, fillColor)
+  }
+
+  /**
+   *
+   *
+   * @param circumRadiusInPixels
+   * @param center
+   *
+   * @return
+   */
+  @inline
+  def pointsFor(
+      circumRadiusInPixels: Double,
+      center: Pos): Seq[Pos] = {
+
+    val symmetryAngle = RotationalSymmetryAngle.inDegrees
+    val rotationAngles = Seq.tabulate(5)(n => n * symmetryAngle).tail
+    val firstPoint = center.addY(-circumRadiusInPixels)
+
+    firstPoint +: rotationAngles.map(firstPoint.rotateBy)
+  }
+
+  /**
+   *
+   *
+   * @param widthInPixels
+   * @param heightInPixels
+   *
+   * @return
+   */
+  @inline
+  def limitCircumRadiusTo(
+      widthInPixels: Double,
+      heightInPixels: Double): Double = {
+
+    val heightBasedDiagonal = diagonalFromHeight(heightInPixels)
+    val effectiveDiagonal = heightBasedDiagonal.min(widthInPixels)
+
+    circumRadiusFromDiagonal(effectiveDiagonal)
   }
 
   /**
