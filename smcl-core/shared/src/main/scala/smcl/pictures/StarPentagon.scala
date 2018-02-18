@@ -176,8 +176,8 @@ object StarPentagon {
    */
   @inline
   def apply(
-      circumRadiusInPixels: Double,
-      cuspRadiusInPixels: Double,
+      circumRadiusInPixels: Double = DefaultCircleRadiusInPixels,
+      cuspRadiusInPixels: Double = DefaultStarCuspRadiusInPixels,
       center: Pos = Pos.Origo,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,

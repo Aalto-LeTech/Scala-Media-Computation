@@ -247,6 +247,24 @@ trait SharedSettingDefinitions {
   }
 
 
+  /** An internal setting ID for the "DefaultStarCuspRadiusInPixels" setting. */
+  private[smcl]
+  val SIdDefaultStarCuspRadiusInPixels = "DefaultStarCuspRadiusInPixels"
+
+  private lazy val DefaultStarCuspRadiusInPixels0 = {
+    Settings(SIdDefaultStarCuspRadiusInPixels)
+        .asInstanceOf[DoubleSetting]
+  }
+
+  def DefaultStarCuspRadiusInPixels: Double = {
+    DefaultStarCuspRadiusInPixels0.value
+  }
+
+  def DefaultStarCuspRadiusInPixels_=(newValue: Double): Unit = {
+    DefaultStarCuspRadiusInPixels0.value = newValue
+  }
+
+
   /** An internal setting ID for the "DefaultRoundingWidthInPixels" setting. */
   private[smcl]
   val SIdDefaultRoundingWidthInPixels = "DefaultRoundingWidthInPixels"

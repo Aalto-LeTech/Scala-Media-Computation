@@ -91,6 +91,12 @@ class SharedSettingInitializer() extends SettingInitializer {
           .isNegativeDoubleValidator("Circle radius cannot be negative"))
 
     DoubleSetting(
+      key = SIdDefaultStarCuspRadiusInPixels,
+      initialValue = 6,
+      validator = settingValidatorFactory
+          .isNegativeDoubleValidator("Star cusp radius cannot be negative"))
+
+    DoubleSetting(
       key = SIdDefaultRoundingWidthInPixels,
       initialValue = 20,
       validator = settingValidatorFactory
