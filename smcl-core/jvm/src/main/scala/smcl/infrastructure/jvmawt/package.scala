@@ -24,7 +24,7 @@ import scala.language.implicitConversions
 
 import smcl.colors.rgb.Color
 import smcl.modeling.AffineTransformation
-import smcl.pictures.fullfeatured.Bmp
+import smcl.pictures.Bmp
 
 
 /**

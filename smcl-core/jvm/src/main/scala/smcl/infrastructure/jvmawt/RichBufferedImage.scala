@@ -19,7 +19,7 @@ package smcl.infrastructure.jvmawt
 
 import java.awt.image.BufferedImage
 
-import smcl.pictures.fullfeatured.Bmp
+import smcl.pictures.Bmp
 
 
 

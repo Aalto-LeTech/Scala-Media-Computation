@@ -21,7 +21,7 @@ import java.awt.image.{BufferedImage, ImageObserver}
 import java.awt.{Component, Graphics}
 import javax.swing.Icon
 
-import smcl.pictures.fullfeatured.Bmp
+import smcl.pictures.Bmp
 
 
 

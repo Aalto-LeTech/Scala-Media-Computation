@@ -14,12 +14,10 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.pictures.fullfeatured
+package smcl.pictures
 
-
-import smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
-import smcl.modeling.d2._
-import smcl.viewers.{display => displayInViewer}
+import smcl.modeling.d2
+import smcl.modeling.d2.{Bounds, Pos}
 
 
 
@@ -27,86 +25,103 @@ import smcl.viewers.{display => displayInViewer}
 /**
  *
  *
+ * @tparam ReturnType
+ *
  * @author Aleksi Lukkarinen
  */
-trait ImageElement
-    extends HasPos
-        with HasBounds
-        with HasDims
-        with Movable[ImageElement]
-        with Rotatable[ImageElement]
-        with Scalable[ImageElement]
-        with Transformable[ImageElement]
-        with Cropable[Bmp] {
+trait Cropable[ReturnType <: ImageElement] {
 
   /**
    *
+   *
+   * @param background
+   * @param upperLeftCornerOfCropped
    *
    * @return
    */
-  def points: Seq[Pos] = Seq()
+  @inline
+  def cropToSizeOf(
+      background: d2.HasDims,
+      upperLeftCornerOfCropped: Pos): ReturnType = {
+
+    crop(
+      upperLeftCornerOfCropped,
+      background.dimensions.width.inPixels,
+      background.dimensions.height.inPixels)
+  }
+
 
   /**
    *
+   *
+   * @param boundary
    *
    * @return
    */
-  def identity: Identity
-
-  /**
-   * Tells if this [[ImageElement]] can be rendered on a bitmap.
-   *
-   * @return
-   */
-  def isRenderable: Boolean
-
-  /**
-   * Renders this [[ImageElement]] on a drawing surface.
-   *
-   * @param drawingSurface
-   */
-  def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      offsetsToOrigo: Dims): Unit
-
-  /**
-   *
-   *
-   * @return
-   */
-  def toBitmap: Bmp = Bmp(this)
-
-  /**
-   *
-   */
-  def display(): ImageElement = {
-    displayInViewer(toBitmap)
-
-    this
+  @inline
+  def crop(boundary: Bounds): ReturnType = {
+    crop(
+      boundary.upperLeftMarker,
+      boundary.lowerRightMarker)
   }
 
   /**
    *
    *
-   * @param upperLeftCornerX
-   * @param upperLeftCornerY
-   * @param lowerRightCornerX
-   * @param lowerRightCornerY
+   * @param upperLeftCorner
+   * @param lowerRightCorner
    *
    * @return
    */
-  override
+  @inline
   def crop(
-      upperLeftCornerX: Double,
-      upperLeftCornerY: Double,
-      lowerRightCornerX: Double,
-      lowerRightCornerY: Double): Bmp = {
+      upperLeftCorner: Pos,
+      lowerRightCorner: Pos): ReturnType = {
 
-    toBitmap.crop(
-      upperLeftCornerX,
-      upperLeftCornerY,
-      lowerRightCornerX,
-      lowerRightCornerY)
+    crop(
+      upperLeftCorner.xInPixels,
+      upperLeftCorner.yInPixels,
+      lowerRightCorner.xInPixels,
+      lowerRightCorner.yInPixels)
   }
+
+  /**
+   *
+   *
+   * @param upperLeftCorner
+   * @param width
+   * @param height
+   *
+   * @return
+   */
+  @inline
+  def crop(
+      upperLeftCorner: Pos,
+      width: Double,
+      height: Double): ReturnType = {
+
+    crop(
+      upperLeftCorner.xInPixels,
+      upperLeftCorner.yInPixels,
+      upperLeftCorner.xInPixels + width - 1,
+      upperLeftCorner.yInPixels + height - 1)
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftX
+   * @param upperLeftY
+   * @param lowerRightX
+   * @param lowerRightY
+   *
+   * @return
+   */
+  @inline
+  def crop(
+      upperLeftX: Double,
+      upperLeftY: Double,
+      lowerRightX: Double,
+      lowerRightY: Double): ReturnType
 
 }

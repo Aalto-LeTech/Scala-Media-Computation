@@ -15,8 +15,7 @@
 /*                                                                                    *           */
 
 
-package smcl.pictures.fullfeatured
-
+package smcl.pictures
 
 import smcl.colors.rgb
 import smcl.modeling.d2.Pos
