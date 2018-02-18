@@ -84,33 +84,29 @@ class SharedSettingInitializer() extends SettingInitializer {
       initialValue = 800,
       validator = bitmapValidatorFunctionFactory.BitmapHeightValidator())
 
-    IntSetting(
+    DoubleSetting(
       key = SIdDefaultCircleRadiusInPixels,
       initialValue = 10,
-      validator = settingValidatorFactory.conditionFalseValidator[Int]({
-        _ < 1
-      }, "Circle radius must be at least 1 pixel"))
+      validator = settingValidatorFactory
+          .isNegativeDoubleValidator("Circle radius cannot be negative"))
 
-    IntSetting(
+    DoubleSetting(
       key = SIdDefaultRoundingWidthInPixels,
       initialValue = 20,
-      validator = settingValidatorFactory.conditionFalseValidator[Int]({
-        _ < 1
-      }, "Rounding width must be at least 1 pixel"))
+      validator = settingValidatorFactory
+          .isNegativeDoubleValidator("Rounding width cannot be negative"))
 
-    IntSetting(
+    DoubleSetting(
       key = SIdDefaultRoundingHeightInPixels,
       initialValue = 20,
-      validator = settingValidatorFactory.conditionFalseValidator[Int]({
-        _ < 1
-      }, "Rounding height must be at least 1 pixel"))
+      validator = settingValidatorFactory
+          .isNegativeDoubleValidator("Rounding height cannot be negative"))
 
-    IntSetting(
+    DoubleSetting(
       key = SIdDefaultPaddingInPixels,
       initialValue = 5,
-      validator = settingValidatorFactory.conditionFalseValidator[Int]({
-        _ < 0
-      }, "Padding cannot be negative"))
+      validator = settingValidatorFactory
+          .isNegativeDoubleValidator("Padding cannot be negative"))
 
     IntSetting(
       key = SIdDefaultArcStartAngleInDegrees,
@@ -132,17 +128,17 @@ class SharedSettingInitializer() extends SettingInitializer {
     ColorSetting(
       key = SIdDefaultBackgroundColor,
       initialValue = White.withAbsoluteOpacity(0),
-      validator = settingValidatorFactory.IsNullValidator("Color cannot be null"))
+      validator = settingValidatorFactory.isNullValidator("Color cannot be null"))
 
     ColorSetting(
       key = SIdDefaultPrimaryColor,
       initialValue = Black,
-      validator = settingValidatorFactory.IsNullValidator("Color cannot be null"))
+      validator = settingValidatorFactory.isNullValidator("Color cannot be null"))
 
     ColorSetting(
       key = SIdDefaultSecondaryColor,
       initialValue = Black,
-      validator = settingValidatorFactory.IsNullValidator("Color cannot be null"))
+      validator = settingValidatorFactory.isNullValidator("Color cannot be null"))
 
     ObjectSetting[HorizontalAlignment](
       key = SIdDefaultHorizontalAlignment,

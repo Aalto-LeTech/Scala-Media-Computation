@@ -51,7 +51,7 @@ object ShapeCreator
    * @return a bitmap containing the circle
    */
   def circle(
-      diameterInPixels: Int = DefaultBitmapWidthInPixels,
+      diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
@@ -74,7 +74,7 @@ object ShapeCreator
    */
   def circleArray(
       collectionSize: Int = 5,
-      diameterInPixels: Int = DefaultBitmapWidthInPixels,
+      diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
@@ -97,7 +97,7 @@ object ShapeCreator
    */
   def circleSeq(
       collectionSize: Int = 5,
-      diameterInPixels: Int = DefaultBitmapWidthInPixels,
+      diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
@@ -120,7 +120,7 @@ object ShapeCreator
    */
   def circleList(
       collectionSize: Int = 5,
-      diameterInPixels: Int = DefaultBitmapWidthInPixels,
+      diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
@@ -140,7 +140,7 @@ object ShapeCreator
    */
   private
   def validateCircleParameters(
-      diameterInPixels: Int,
+      diameterInPixels: Double,
       color: Color,
       backgroundColor: Color): Unit = {
 
@@ -162,7 +162,7 @@ object ShapeCreator
    */
   private
   def instantiateCircle(
-      diameterInPixels: Int,
+      diameterInPixels: Double,
       color: Color,
       backgroundColor: Color): Bitmap = {
 
@@ -188,8 +188,8 @@ object ShapeCreator
     }
 
     Bitmap(
-      imageSide,
-      imageSide,
+      imageSide.floor.toInt,
+      imageSide.floor.toInt,
       backgroundColor,
       Some(postCreationProcessor _))
   }
@@ -206,8 +206,8 @@ object ShapeCreator
    * @return a bitmap containing the ellipse
    */
   def ellipse(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
@@ -233,8 +233,8 @@ object ShapeCreator
    */
   def ellipseArray(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
@@ -260,8 +260,8 @@ object ShapeCreator
    */
   def ellipseSeq(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
@@ -287,8 +287,8 @@ object ShapeCreator
    */
   def ellipseList(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
@@ -311,8 +311,8 @@ object ShapeCreator
    */
   private
   def validateEllipseParameters(
-      widthInPixels: Int,
-      heightInPixels: Int,
+      widthInPixels: Double,
+      heightInPixels: Double,
       color: Color,
       backgroundColor: Color): Unit = {
 
@@ -339,8 +339,8 @@ object ShapeCreator
    */
   private
   def instantiateEllipse(
-      widthInPixels: Int,
-      heightInPixels: Int,
+      widthInPixels: Double,
+      heightInPixels: Double,
       color: Color,
       backgroundColor: Color): Bitmap = {
 
@@ -367,8 +367,8 @@ object ShapeCreator
     }
 
     Bitmap(
-      bitmapWidth,
-      bitmapHeight,
+      bitmapWidth.floor.toInt,
+      bitmapHeight.floor.toInt,
       backgroundColor,
       Some(postCreationProcessor _))
   }
@@ -383,7 +383,7 @@ object ShapeCreator
    * @return a bitmap containing the line
    */
   def hLine(
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -405,7 +405,7 @@ object ShapeCreator
    */
   def hLineArray(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Array[Bitmap] = {
 
     validateHorizontalLineParameters(lengthInPixels, color)
@@ -427,7 +427,7 @@ object ShapeCreator
    */
   def hLineSeq(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
 
     validateHorizontalLineParameters(lengthInPixels, color)
@@ -449,7 +449,7 @@ object ShapeCreator
    */
   def hLineList(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): List[Bitmap] = {
 
     validateHorizontalLineParameters(lengthInPixels, color)
@@ -467,7 +467,7 @@ object ShapeCreator
    * @param color          color of the line
    */
   private
-  def validateHorizontalLineParameters(lengthInPixels: Int, color: Color): Unit = {
+  def validateHorizontalLineParameters(lengthInPixels: Double, color: Color): Unit = {
     require(
       lengthInPixels > 0,
       s"Length of the line must be at least 1 pixel (was $lengthInPixels)")
@@ -485,10 +485,10 @@ object ShapeCreator
    */
   private
   def instantiateHorizontalLine(
-      lengthInPixels: Int,
+      lengthInPixels: Double,
       color: Color): Bitmap = {
 
-    Bitmap(lengthInPixels, 1, color)
+    Bitmap(lengthInPixels.floor.toInt, 1, color)
   }
 
   /**
@@ -507,10 +507,10 @@ object ShapeCreator
    * @return a bitmap containing the line
    */
   def line(
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
@@ -545,10 +545,10 @@ object ShapeCreator
    */
   def lineArray(
       collectionSize: Int = 5,
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
@@ -583,10 +583,10 @@ object ShapeCreator
    */
   def lineSeq(
       collectionSize: Int = 5,
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
@@ -621,10 +621,10 @@ object ShapeCreator
    */
   def lineList(
       collectionSize: Int = 5,
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
@@ -653,12 +653,12 @@ object ShapeCreator
    */
   private
   def calculateAndValidateLineParameters(
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color,
-      backgroundColor: Color): (Int, Int, Boolean) = {
+      backgroundColor: Color): (Double, Double, Boolean) = {
 
     val differenceX = toXInPixels - fromXInPixels
     val differenceY = toYInPixels - fromYInPixels
@@ -682,8 +682,8 @@ object ShapeCreator
    */
   private
   def validateLineParameters(
-      bitmapWidth: Int,
-      bitmapHeight: Int,
+      bitmapWidth: Double,
+      bitmapHeight: Double,
       color: Color,
       backgroundColor: Color): Unit = {
 
@@ -711,8 +711,8 @@ object ShapeCreator
    */
   private
   def instantiateLine(
-      bitmapWidth: Int,
-      bitmapHeight: Int,
+      bitmapWidth: Double,
+      bitmapHeight: Double,
       isAscending: Boolean,
       color: Color,
       backgroundColor: Color): Bitmap = {
@@ -720,16 +720,16 @@ object ShapeCreator
     def postCreationProcessor(bmp: Bitmap): Bitmap = {
       val (x0, y0, x1, y1) =
         if (isAscending)
-          (0, 0, bitmapWidth - 1, bitmapHeight - 1)
+          (0.0, 0.0, bitmapWidth - 1.0, bitmapHeight - 1.0)
         else
-          (0, bitmapHeight - 1, bitmapWidth - 1, 0)
+          (0.0, bitmapHeight - 1.0, bitmapWidth - 1, 0.0)
 
       bmp.applyInitialization(DrawLine(x0, y0, x1, y1, color))
     }
 
     Bitmap(
-      bitmapWidth,
-      bitmapHeight,
+      bitmapWidth.floor.toInt,
+      bitmapHeight.floor.toInt,
       backgroundColor,
       Some(postCreationProcessor _))
   }
@@ -745,8 +745,8 @@ object ShapeCreator
    * @return a bitmap containing the rectangle
    */
   def rectangle(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -770,8 +770,8 @@ object ShapeCreator
    */
   def rectangleArray(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): Array[Bitmap] = {
 
     validateRectangleParameters(widthInPixels, heightInPixels, color)
@@ -795,8 +795,8 @@ object ShapeCreator
    */
   def rectangleSeq(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
 
     validateRectangleParameters(widthInPixels, heightInPixels, color)
@@ -820,8 +820,8 @@ object ShapeCreator
    */
   def rectangleList(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): List[Bitmap] = {
 
     validateRectangleParameters(widthInPixels, heightInPixels, color)
@@ -842,8 +842,8 @@ object ShapeCreator
    */
   private
   def validateRectangleParameters(
-      widthInPixels: Int,
-      heightInPixels: Int,
+      widthInPixels: Double,
+      heightInPixels: Double,
       color: Color): Unit = {
 
     require(
@@ -868,11 +868,11 @@ object ShapeCreator
    */
   private
   def instantiateRectangle(
-      widthInPixels: Int,
-      heightInPixels: Int,
+      widthInPixels: Double,
+      heightInPixels: Double,
       color: Color): Bitmap = {
 
-    Bitmap(widthInPixels, heightInPixels, color)
+    Bitmap(widthInPixels.floor.toInt, heightInPixels.floor.toInt, color)
   }
 
   /**
@@ -889,10 +889,10 @@ object ShapeCreator
    * @return a bitmap containing the rectangle
    */
   def rRectangle(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
@@ -924,10 +924,10 @@ object ShapeCreator
    */
   def rRectangleArray(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
@@ -959,10 +959,10 @@ object ShapeCreator
    */
   def rRectangleSeq(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
@@ -994,10 +994,10 @@ object ShapeCreator
    */
   def rRectangleList(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
@@ -1026,10 +1026,10 @@ object ShapeCreator
    */
   private
   def validateRoundedRectangleParameters(
-      widthInPixels: Int,
-      heightInPixels: Int,
-      roundingWidthInPixels: Int,
-      roundingHeightInPixels: Int,
+      widthInPixels: Double,
+      heightInPixels: Double,
+      roundingWidthInPixels: Double,
+      roundingHeightInPixels: Double,
       color: Color,
       backgroundColor: Color): Unit = {
 
@@ -1066,10 +1066,10 @@ object ShapeCreator
    */
   private
   def instantiateRoundedRectangle(
-      widthInPixels: Int,
-      heightInPixels: Int,
-      roundingWidthInPixels: Int,
-      roundingHeightInPixels: Int,
+      widthInPixels: Double,
+      heightInPixels: Double,
+      roundingWidthInPixels: Double,
+      roundingHeightInPixels: Double,
       color: Color,
       backgroundColor: Color): Bitmap = {
 
@@ -1087,8 +1087,8 @@ object ShapeCreator
     }
 
     Bitmap(
-      widthInPixels,
-      heightInPixels,
+      widthInPixels.floor.toInt,
+      heightInPixels.floor.toInt,
       backgroundColor,
       Some(postCreationProcessor _))
   }
@@ -1106,9 +1106,9 @@ object ShapeCreator
    * @return a bitmap containing the square
    */
   def rSquare(
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
@@ -1139,9 +1139,9 @@ object ShapeCreator
    */
   def rSquareArray(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[Bitmap] = {
 
@@ -1172,9 +1172,9 @@ object ShapeCreator
    */
   def rSquareSeq(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[Bitmap] = {
 
@@ -1205,9 +1205,9 @@ object ShapeCreator
    */
   def rSquareList(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[Bitmap] = {
 
@@ -1235,9 +1235,9 @@ object ShapeCreator
    */
   private
   def validateRoundedSquareParameters(
-      sideLengthInPixels: Int,
-      roundingWidthInPixels: Int,
-      roundingHeightInPixels: Int,
+      sideLengthInPixels: Double,
+      roundingWidthInPixels: Double,
+      roundingHeightInPixels: Double,
       color: Color,
       backgroundColor: Color): Unit = {
 
@@ -1269,9 +1269,9 @@ object ShapeCreator
    */
   private
   def instantiateRoundedSquare(
-      sideLengthInPixels: Int,
-      roundingWidthInPixels: Int,
-      roundingHeightInPixels: Int,
+      sideLengthInPixels: Double,
+      roundingWidthInPixels: Double,
+      roundingHeightInPixels: Double,
       color: Color,
       backgroundColor: Color): Bitmap = {
 
@@ -1289,8 +1289,8 @@ object ShapeCreator
     }
 
     Bitmap(
-      sideLengthInPixels,
-      sideLengthInPixels,
+      sideLengthInPixels.floor.toInt,
+      sideLengthInPixels.floor.toInt,
       backgroundColor,
       Some(postCreationProcessor _))
   }
@@ -1305,7 +1305,7 @@ object ShapeCreator
    * @return a bitmap containing the square
    */
   def square(
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1326,7 +1326,7 @@ object ShapeCreator
    */
   def squareArray(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Array[Bitmap] = {
 
     validateSquareParameters(sideLengthInPixels, color)
@@ -1347,7 +1347,7 @@ object ShapeCreator
    */
   def squareSeq(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
 
     validateSquareParameters(sideLengthInPixels, color)
@@ -1368,7 +1368,7 @@ object ShapeCreator
    */
   def squareList(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): List[Bitmap] = {
 
     validateSquareParameters(sideLengthInPixels, color)
@@ -1386,7 +1386,7 @@ object ShapeCreator
    */
   private
   def validateSquareParameters(
-      sideLengthInPixels: Int,
+      sideLengthInPixels: Double,
       color: Color): Unit = {
 
     require(
@@ -1406,10 +1406,10 @@ object ShapeCreator
    */
   private
   def instantiateSquare(
-      sideLengthInPixels: Int,
+      sideLengthInPixels: Double,
       color: Color): Bitmap = {
 
-    Bitmap(sideLengthInPixels, sideLengthInPixels, color)
+    Bitmap(sideLengthInPixels.floor.toInt, sideLengthInPixels.floor.toInt, color)
   }
 
   /**
@@ -1422,7 +1422,7 @@ object ShapeCreator
    * @return a bitmap containing the line
    */
   def vLine(
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1443,7 +1443,7 @@ object ShapeCreator
    */
   def vLineArray(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Array[Bitmap] = {
 
     validateVerticalLineParameters(lengthInPixels, color)
@@ -1464,7 +1464,7 @@ object ShapeCreator
    */
   def vLineSeq(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Seq[Bitmap] = {
 
     validateVerticalLineParameters(lengthInPixels, color)
@@ -1485,7 +1485,7 @@ object ShapeCreator
    */
   def vLineList(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): List[Bitmap] = {
 
     validateVerticalLineParameters(lengthInPixels, color)
@@ -1502,7 +1502,7 @@ object ShapeCreator
    * @param color          color of the line
    */
   private
-  def validateVerticalLineParameters(lengthInPixels: Int, color: Color): Unit = {
+  def validateVerticalLineParameters(lengthInPixels: Double, color: Color): Unit = {
     require(
       lengthInPixels > 0,
       s"Length of the line must be at least 1 pixel (was $lengthInPixels)")
@@ -1520,10 +1520,10 @@ object ShapeCreator
    */
   private
   def instantiateVerticalLine(
-      lengthInPixels: Int,
+      lengthInPixels: Double,
       color: Color): Bitmap = {
 
-    Bitmap(1, lengthInPixels, color)
+    Bitmap(1, lengthInPixels.floor.toInt, color)
   }
 
   /**

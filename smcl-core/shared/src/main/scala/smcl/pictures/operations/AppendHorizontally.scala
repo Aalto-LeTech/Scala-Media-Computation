@@ -43,7 +43,7 @@ private[pictures]
 case class AppendHorizontally(
     bitmapsToCombine: Seq[AbstractBitmap])(
     verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
-    paddingInPixels: Int = DefaultPaddingInPixels,
+    paddingInPixels: Double = DefaultPaddingInPixels,
     backgroundColor: Color = DefaultBackgroundColor,
     private val bitmapValidator: BitmapValidator)
     extends AbstractOperation
@@ -71,26 +71,27 @@ case class AppendHorizontally(
   )
 
   /** Height of the provided buffer in pixels. */
-  val heightInPixels: Int = childOperationListsOption.get.maxBy({_.heightInPixels}).heightInPixels
+  val heightInPixels: Int =
+    childOperationListsOption.get.maxBy({_.heightInPixels}).heightInPixels
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =
-    childOperationListsOption.get.foldLeft[Int](0)({_ + _.widthInPixels}) +
-        (childOperationListsOption.get.length - 1) * paddingInPixels
+    (childOperationListsOption.get.foldLeft[Double](0)({_ + _.widthInPixels}) +
+        (childOperationListsOption.get.length - 1) * paddingInPixels).floor.toInt
 
   bitmapValidator.validateBitmapSize(Len(heightInPixels), Len(widthInPixels))
 
   /** Vertical offsets of the bitmaps to be combined. */
-  val verticalOffsets: Seq[Int] = verticalAlignment match {
+  val verticalOffsets: Seq[Double] = verticalAlignment match {
     case VATop =>
-      ArrayBuffer.fill[Int](bitmapsToCombine.length)(0).toSeq
+      ArrayBuffer.fill[Double](bitmapsToCombine.length)(0).toSeq
 
     case VABottom =>
       bitmapsToCombine map {heightInPixels - _.heightInPixels}
 
     case VAMiddle =>
       bitmapsToCombine map {bmp =>
-        (heightInPixels.toDouble / 2 - bmp.heightInPixels.toDouble / 2).floor.toInt
+        heightInPixels / 2.0 - bmp.heightInPixels / 2.0
       }
   }
 
@@ -107,7 +108,7 @@ case class AppendHorizontally(
 
     drawingSurface clearUsing backgroundColor
 
-    var xPosition = 0
+    var xPosition = 0.0
     var itemNumber = 0
     childOperationListsOption.get foreach {opList =>
       val sourceBuffer = opList.render()

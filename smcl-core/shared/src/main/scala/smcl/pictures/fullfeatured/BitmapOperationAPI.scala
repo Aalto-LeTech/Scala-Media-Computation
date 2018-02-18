@@ -751,8 +751,8 @@ trait BitmapOperationAPI {
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -798,8 +798,8 @@ trait BitmapOperationAPI {
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -840,7 +840,7 @@ trait BitmapOperationAPI {
       bmp: Bitmap,
       centerXInPixels: Int,
       centerYInPixels: Int,
-      radiusInPixels: Int = DefaultCircleRadiusInPixels,
+      radiusInPixels: Double = DefaultCircleRadiusInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -962,7 +962,7 @@ trait BitmapOperationAPI {
   def appendHorizontally(
       bitmapsToCombine: Bitmap*)(
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1000,7 +1000,7 @@ trait BitmapOperationAPI {
   def appendVertically(
       bitmapsToCombine: Bitmap*)(
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1422,7 +1422,7 @@ trait BitmapOperationAPI {
   def replicateHorizontally(
       bmp: Bitmap,
       numberOfReplicas: Int,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1449,7 +1449,7 @@ trait BitmapOperationAPI {
   def replicateVertically(
       bmp: Bitmap,
       numberOfReplicas: Int,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 

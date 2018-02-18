@@ -35,8 +35,7 @@ class PixelSnapshot[BitmapType <: AbstractBitmap] private[pictures](
     val relatedBitmap: BitmapType,
     private[this] val buffer: BitmapBufferAdapter,
     private[this] val receiver: PixelSnapshotReceiver[BitmapType])
-    extends Iterable[Pixel[BitmapType]]
-        with PixelRectangle {
+    extends Iterable[Pixel[BitmapType]] {
 
   private[this]
   var (_reds, _greens, _blues, _opacities) =
@@ -134,6 +133,8 @@ class PixelSnapshot[BitmapType <: AbstractBitmap] private[pictures](
       greens: Array[Int],
       blues: Array[Int],
       opacities: Array[Int]): Unit = {
+
+    val areaInPixels = heightInPixels * widthInPixels
 
     if (reds.length != areaInPixels)
       throw InvalidColorComponentArrayLengthError(

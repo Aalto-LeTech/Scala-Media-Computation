@@ -40,9 +40,9 @@ import smcl.settings._
  */
 private[pictures]
 case class DrawCircle(
-    centerXInPixels: Int,
-    centerYInPixels: Int,
-    radiusInPixels: Int = DefaultCircleRadiusInPixels,
+    centerXInPixels: Double,
+    centerYInPixels: Double,
+    radiusInPixels: Double = DefaultCircleRadiusInPixels,
     hasBorder: Boolean = ShapesHaveBordersByDefault,
     hasFilling: Boolean = ShapesHaveFillingsByDefault,
     color: Color = DefaultPrimaryColor,
@@ -56,13 +56,13 @@ case class DrawCircle(
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** X coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  val boundingBoxUpperLeftX: Int = centerXInPixels - radiusInPixels
+  val boundingBoxUpperLeftX: Double = centerXInPixels - radiusInPixels
 
   /** Y coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  val boundingBoxUpperLeftY: Int = centerYInPixels - radiusInPixels
+  val boundingBoxUpperLeftY: Double = centerYInPixels - radiusInPixels
 
   /** Length of a side of the bounding box of the circle to be drawn. */
-  val boundingBoxSideLength: Int = 2 * radiusInPixels
+  val boundingBoxSideLength: Double = 2 * radiusInPixels
 
   /** First text paragraph of the description of this class. */
   val descriptionTitle: String = "DrawCircle"

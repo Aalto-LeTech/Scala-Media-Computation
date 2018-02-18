@@ -41,10 +41,10 @@ import smcl.settings._
  */
 private[pictures]
 case class DrawEllipse(
-    centerXInPixels: Int,
-    centerYInPixels: Int,
-    widthInPixels: Int = DefaultBitmapWidthInPixels,
-    heightInPixels: Int = DefaultBitmapHeightInPixels,
+    centerXInPixels: Double,
+    centerYInPixels: Double,
+    widthInPixels: Double = DefaultBitmapWidthInPixels,
+    heightInPixels: Double = DefaultBitmapHeightInPixels,
     hasBorder: Boolean = ShapesHaveBordersByDefault,
     hasFilling: Boolean = ShapesHaveFillingsByDefault,
     color: Color = DefaultPrimaryColor,
@@ -59,10 +59,10 @@ case class DrawEllipse(
   require(fillColor != null, "The fill color argument has to be a Color instance (was null).")
 
   /** X coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  val boundingBoxUpperLeftX: Int = centerXInPixels - (widthInPixels / 2)
+  val boundingBoxUpperLeftX: Double = centerXInPixels - (widthInPixels / 2)
 
   /** Y coordinate of the upper-left corner of the bounding box of the circle to be drawn. */
-  val boundingBoxUpperLeftY: Int = centerYInPixels - (heightInPixels / 2)
+  val boundingBoxUpperLeftY: Double = centerYInPixels - (heightInPixels / 2)
 
   /** First text paragraph of the description of this class. */
   val descriptionTitle: String = "DrawEllipse"

@@ -43,12 +43,12 @@ import smcl.settings._
  */
 private[pictures]
 case class DrawRoundedRectangle(
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = DefaultBitmapWidthInPixels,
-    heightInPixels: Int = DefaultBitmapHeightInPixels,
-    roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-    roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+    upperLeftCornerXInPixels: Double,
+    upperLeftCornerYInPixels: Double,
+    widthInPixels: Double = DefaultBitmapWidthInPixels,
+    heightInPixels: Double = DefaultBitmapHeightInPixels,
+    roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+    roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
     hasBorder: Boolean = ShapesHaveBordersByDefault,
     hasFilling: Boolean = ShapesHaveFillingsByDefault,
     color: Color = DefaultPrimaryColor,

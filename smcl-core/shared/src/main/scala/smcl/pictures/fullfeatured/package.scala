@@ -42,7 +42,7 @@ package object fullfeatured
    * @return a bitmap containing the circle
    */
   def circle(
-      diameterInPixels: Int = DefaultBitmapWidthInPixels,
+      diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
@@ -62,7 +62,7 @@ package object fullfeatured
    */
   def circleArray(
       collectionSize: Int = 5,
-      diameterInPixels: Int = DefaultBitmapWidthInPixels,
+      diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[fullfeatured.Bitmap] = {
 
@@ -81,7 +81,7 @@ package object fullfeatured
    */
   def circleSeq(
       collectionSize: Int = 5,
-      diameterInPixels: Int = DefaultBitmapWidthInPixels,
+      diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[fullfeatured.Bitmap] = {
 
@@ -100,7 +100,7 @@ package object fullfeatured
    */
   def circleList(
       collectionSize: Int = 5,
-      diameterInPixels: Int = DefaultBitmapWidthInPixels,
+      diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[fullfeatured.Bitmap] = {
 
@@ -119,8 +119,8 @@ package object fullfeatured
    * @return a bitmap containing the ellipse
    */
   def ellipse(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
@@ -141,8 +141,8 @@ package object fullfeatured
    */
   def ellipseArray(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[fullfeatured.Bitmap] = {
 
@@ -165,8 +165,8 @@ package object fullfeatured
    */
   def ellipseSeq(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[fullfeatured.Bitmap] = {
 
@@ -189,8 +189,8 @@ package object fullfeatured
    */
   def ellipseList(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[fullfeatured.Bitmap] = {
 
@@ -210,7 +210,7 @@ package object fullfeatured
    * @return a bitmap containing the line
    */
   def hLine(
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
@@ -228,7 +228,7 @@ package object fullfeatured
    */
   def hLineArray(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Array[fullfeatured.Bitmap] = {
 
     ShapeCreator.hLineArray(collectionSize, lengthInPixels, color)
@@ -245,7 +245,7 @@ package object fullfeatured
    */
   def hLineSeq(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Seq[fullfeatured.Bitmap] = {
 
     ShapeCreator.hLineSeq(collectionSize, lengthInPixels, color)
@@ -262,7 +262,7 @@ package object fullfeatured
    */
   def hLineList(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): List[fullfeatured.Bitmap] = {
 
     ShapeCreator.hLineList(collectionSize, lengthInPixels, color)
@@ -284,10 +284,10 @@ package object fullfeatured
    * @return a bitmap containing the line
    */
   def line(
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
@@ -316,10 +316,10 @@ package object fullfeatured
    */
   def lineArray(
       collectionSize: Int = 5,
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[fullfeatured.Bitmap] = {
 
@@ -348,10 +348,10 @@ package object fullfeatured
    */
   def lineSeq(
       collectionSize: Int = 5,
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[fullfeatured.Bitmap] = {
 
@@ -380,10 +380,10 @@ package object fullfeatured
    */
   def lineList(
       collectionSize: Int = 5,
-      fromXInPixels: Int,
-      fromYInPixels: Int,
-      toXInPixels: Int,
-      toYInPixels: Int,
+      fromXInPixels: Double,
+      fromYInPixels: Double,
+      toXInPixels: Double,
+      toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[fullfeatured.Bitmap] = {
 
@@ -405,8 +405,8 @@ package object fullfeatured
    * @return a bitmap containing the rectangle
    */
   def rectangle(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
@@ -426,8 +426,8 @@ package object fullfeatured
    */
   def rectangleArray(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): Array[fullfeatured.Bitmap] = {
 
     ShapeCreator.rectangleArray(
@@ -447,8 +447,8 @@ package object fullfeatured
    */
   def rectangleSeq(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): Seq[fullfeatured.Bitmap] = {
 
     ShapeCreator.rectangleSeq(
@@ -468,8 +468,8 @@ package object fullfeatured
    */
   def rectangleList(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor): List[fullfeatured.Bitmap] = {
 
     ShapeCreator.rectangleList(
@@ -491,10 +491,10 @@ package object fullfeatured
    * @return a bitmap containing the rectangle
    */
   def rRectangle(
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
@@ -520,10 +520,10 @@ package object fullfeatured
    */
   def rRectangleArray(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[fullfeatured.Bitmap] = {
 
@@ -549,10 +549,10 @@ package object fullfeatured
    */
   def rRectangleSeq(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[fullfeatured.Bitmap] = {
 
@@ -578,10 +578,10 @@ package object fullfeatured
    */
   def rRectangleList(
       collectionSize: Int = 5,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[fullfeatured.Bitmap] = {
 
@@ -605,9 +605,9 @@ package object fullfeatured
    * @return a bitmap containing the square
    */
   def rSquare(
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
@@ -632,9 +632,9 @@ package object fullfeatured
    */
   def rSquareArray(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Array[fullfeatured.Bitmap] = {
 
@@ -659,9 +659,9 @@ package object fullfeatured
    */
   def rSquareSeq(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): Seq[fullfeatured.Bitmap] = {
 
@@ -686,9 +686,9 @@ package object fullfeatured
    */
   def rSquareList(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor): List[fullfeatured.Bitmap] = {
 
@@ -709,7 +709,7 @@ package object fullfeatured
    * @return a bitmap containing the square
    */
   def square(
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
@@ -727,7 +727,7 @@ package object fullfeatured
    */
   def squareArray(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Array[fullfeatured.Bitmap] = {
 
     ShapeCreator.squareArray(collectionSize, sideLengthInPixels, color)
@@ -744,7 +744,7 @@ package object fullfeatured
    */
   def squareSeq(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Seq[fullfeatured.Bitmap] = {
 
     ShapeCreator.squareSeq(collectionSize, sideLengthInPixels, color)
@@ -761,7 +761,7 @@ package object fullfeatured
    */
   def squareList(
       collectionSize: Int = 5,
-      sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
+      sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): List[fullfeatured.Bitmap] = {
 
     ShapeCreator.squareList(collectionSize, sideLengthInPixels, color)
@@ -777,7 +777,7 @@ package object fullfeatured
    * @return a bitmap containing the line
    */
   def vLine(
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
@@ -795,7 +795,7 @@ package object fullfeatured
    */
   def vLineArray(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Array[fullfeatured.Bitmap] = {
 
     ShapeCreator.vLineArray(collectionSize, lengthInPixels, color)
@@ -812,7 +812,7 @@ package object fullfeatured
    */
   def vLineSeq(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): Seq[fullfeatured.Bitmap] = {
 
     ShapeCreator.vLineSeq(collectionSize, lengthInPixels, color)
@@ -829,7 +829,7 @@ package object fullfeatured
    */
   def vLineList(
       collectionSize: Int = 5,
-      lengthInPixels: Int = DefaultBitmapWidthInPixels,
+      lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor): List[fullfeatured.Bitmap] = {
 
     ShapeCreator.vLineList(collectionSize, lengthInPixels, color)

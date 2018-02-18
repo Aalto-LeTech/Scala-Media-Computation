@@ -235,14 +235,14 @@ trait SharedSettingDefinitions {
 
   private lazy val DefaultCircleRadiusInPixels0 = {
     Settings(SIdDefaultCircleRadiusInPixels)
-        .asInstanceOf[IntSetting]
+        .asInstanceOf[DoubleSetting]
   }
 
-  def DefaultCircleRadiusInPixels: Int = {
+  def DefaultCircleRadiusInPixels: Double = {
     DefaultCircleRadiusInPixels0.value
   }
 
-  def DefaultCircleRadiusInPixels_=(newValue: Int): Unit = {
+  def DefaultCircleRadiusInPixels_=(newValue: Double): Unit = {
     DefaultCircleRadiusInPixels0.value = newValue
   }
 
@@ -253,14 +253,14 @@ trait SharedSettingDefinitions {
 
   private lazy val DefaultRoundingWidthInPixels0 = {
     Settings(SIdDefaultRoundingWidthInPixels)
-        .asInstanceOf[IntSetting]
+        .asInstanceOf[DoubleSetting]
   }
 
-  def DefaultRoundingWidthInPixels: Int = {
+  def DefaultRoundingWidthInPixels: Double = {
     DefaultRoundingWidthInPixels0.value
   }
 
-  def DefaultRoundingWidthInPixels_=(newValue: Int): Unit = {
+  def DefaultRoundingWidthInPixels_=(newValue: Double): Unit = {
     DefaultRoundingWidthInPixels0.value = newValue
   }
 
@@ -271,14 +271,14 @@ trait SharedSettingDefinitions {
 
   private lazy val DefaultRoundingHeightInPixels0 = {
     Settings(SIdDefaultRoundingHeightInPixels)
-        .asInstanceOf[IntSetting]
+        .asInstanceOf[DoubleSetting]
   }
 
-  def DefaultRoundingHeightInPixels: Int = {
+  def DefaultRoundingHeightInPixels: Double = {
     DefaultRoundingHeightInPixels0.value
   }
 
-  def DefaultRoundingHeightInPixels_=(newValue: Int): Unit = {
+  def DefaultRoundingHeightInPixels_=(newValue: Double): Unit = {
     DefaultRoundingHeightInPixels0.value = newValue
   }
 
@@ -289,14 +289,14 @@ trait SharedSettingDefinitions {
 
   private lazy val DefaultPaddingInPixels0 = {
     Settings(SIdDefaultPaddingInPixels)
-        .asInstanceOf[IntSetting]
+        .asInstanceOf[DoubleSetting]
   }
 
-  def DefaultPaddingInPixels: Int = {
+  def DefaultPaddingInPixels: Double = {
     DefaultPaddingInPixels0.value
   }
 
-  def DefaultPaddingInPixels_=(newValue: Int): Unit = {
+  def DefaultPaddingInPixels_=(newValue: Double): Unit = {
     DefaultPaddingInPixels0.value = newValue
   }
 

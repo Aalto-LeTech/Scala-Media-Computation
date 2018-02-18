@@ -76,16 +76,16 @@ case class OverlayFreely(
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =
     if (topBitmapUpperLeftX < 0)
-      (bottomBitmap.widthInPixels - topBitmapUpperLeftX).max(topBitmap.widthInPixels)
+      (bottomBitmap.widthInPixels - topBitmapUpperLeftX).max(topBitmap.widthInPixels).floor.toInt
     else
-      bottomBitmap.widthInPixels.max(topBitmapUpperLeftX + topBitmap.widthInPixels)
+      bottomBitmap.widthInPixels.max(topBitmapUpperLeftX + topBitmap.widthInPixels).floor.toInt
 
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int =
     if (topBitmapUpperLeftY < 0)
-      (bottomBitmap.heightInPixels - topBitmapUpperLeftY).max(topBitmap.heightInPixels)
+      (bottomBitmap.heightInPixels - topBitmapUpperLeftY).max(topBitmap.heightInPixels).floor.toInt
     else
-      bottomBitmap.heightInPixels.max(topBitmapUpperLeftY + topBitmap.heightInPixels)
+      bottomBitmap.heightInPixels.max(topBitmapUpperLeftY + topBitmap.heightInPixels).floor.toInt
 
   /**
    * Creates the buffer which contains the results of applying this operation

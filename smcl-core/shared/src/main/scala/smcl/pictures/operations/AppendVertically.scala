@@ -43,7 +43,7 @@ private[pictures]
 case class AppendVertically(
     bitmapsToCombine: Seq[AbstractBitmap])(
     horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
-    paddingInPixels: Int = DefaultPaddingInPixels,
+    paddingInPixels: Double = DefaultPaddingInPixels,
     backgroundColor: Color = DefaultBackgroundColor,
     private val bitmapValidator: BitmapValidator)
     extends AbstractOperation
@@ -75,22 +75,22 @@ case class AppendVertically(
 
   /** Height of the provided buffer in pixels. */
   val heightInPixels: Int =
-    childOperationListsOption.get.foldLeft[Int](0)({_ + _.heightInPixels}) +
-        (childOperationListsOption.get.length - 1) * paddingInPixels
+    (childOperationListsOption.get.foldLeft[Double](0)({_ + _.heightInPixels}) +
+        (childOperationListsOption.get.length - 1) * paddingInPixels).floor.toInt
 
   bitmapValidator.validateBitmapSize(Len(widthInPixels), Len(heightInPixels))
 
   /** Future vertical offsets of the bitmaps to be combined. */
-  val horizontalOffsets: Seq[Int] = horizontalAlignment match {
+  val horizontalOffsets: Seq[Double] = horizontalAlignment match {
     case HALeft =>
-      ArrayBuffer.fill[Int](bitmapsToCombine.length)(0)
+      ArrayBuffer.fill[Double](bitmapsToCombine.length)(0)
 
     case HARight =>
       bitmapsToCombine map {widthInPixels - _.widthInPixels}
 
     case HACenter =>
       bitmapsToCombine map {bmp =>
-        (widthInPixels.toDouble / 2 - bmp.widthInPixels.toDouble / 2).floor.toInt
+        widthInPixels / 2.0 - bmp.widthInPixels / 2.0
       }
   }
 
@@ -107,7 +107,7 @@ case class AppendVertically(
 
     drawingSurface.clearUsing(backgroundColor)
 
-    var yPosition = 0
+    var yPosition = 0.0
     var itemNumber = 0
     childOperationListsOption.get foreach {opList =>
       val sourceBuffer = opList.render()

@@ -38,10 +38,10 @@ import smcl.settings.DefaultPrimaryColor
  */
 private[pictures]
 case class DrawLine(
-    fromXInPixels: Int,
-    fromYInPixels: Int,
-    toXInPixels: Int,
-    toYInPixels: Int,
+    fromXInPixels: Double,
+    fromYInPixels: Double,
+    toXInPixels: Double,
+    toYInPixels: Double,
     color: Color = DefaultPrimaryColor)
     extends AbstractOperation
         with Renderable

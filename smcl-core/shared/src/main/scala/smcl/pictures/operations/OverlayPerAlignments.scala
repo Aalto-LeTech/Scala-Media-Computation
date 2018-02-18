@@ -87,7 +87,7 @@ case class OverlayPerAlignments(
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0)
 
     case HARight =>
-      bitmapsToOverlayFromBottomToTop map {widthInPixels - _.widthInPixels}
+      bitmapsToOverlayFromBottomToTop map {x => (widthInPixels - x.widthInPixels).floor.toInt}
 
     case HACenter =>
       val canvasWidth = widthInPixels.toDouble / 2
@@ -103,7 +103,7 @@ case class OverlayPerAlignments(
       ArrayBuffer.fill[Int](bitmapsToOverlayFromBottomToTop.length)(0).toSeq
 
     case VABottom =>
-      bitmapsToOverlayFromBottomToTop map {heightInPixels - _.heightInPixels}
+      bitmapsToOverlayFromBottomToTop map {x => (heightInPixels - x.heightInPixels).floor.toInt}
 
     case VAMiddle =>
       val canvasMiddle = heightInPixels.toDouble / 2

@@ -56,12 +56,36 @@ class SettingValidatorFactory() {
    *
    * @return
    */
-  def IsNullValidator[SettingDataType](
+  def isNullValidator[SettingDataType](
       errorMessage: String): SettingValidator[SettingDataType] = {
 
-    conditionFalseValidator({
-      _ == null
-    }, errorMessage)
+    conditionFalseValidator(_ == null, errorMessage)
+  }
+
+  /**
+   *
+   *
+   * @param errorMessage
+   *
+   * @return
+   */
+  def isNegativeIntValidator(
+      errorMessage: String): SettingValidator[Int] = {
+
+    conditionFalseValidator(_ < 0, errorMessage)
+  }
+
+  /**
+   *
+   *
+   * @param errorMessage
+   *
+   * @return
+   */
+  def isNegativeDoubleValidator(
+      errorMessage: String): SettingValidator[Double] = {
+
+    conditionFalseValidator(_ < 0.0, errorMessage)
   }
 
 }

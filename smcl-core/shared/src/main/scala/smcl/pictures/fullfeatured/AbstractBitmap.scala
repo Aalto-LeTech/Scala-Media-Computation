@@ -43,10 +43,10 @@ abstract class AbstractBitmap private[pictures](
     val uniqueIdentifier: Identity) extends {
 
   /** Width of this [[BitmapCompanion]]. */
-  val widthInPixels: Int = operations.widthInPixels
+  val widthInPixels: Double = operations.widthInPixels
 
   /** Height of this [[BitmapCompanion]]. */
-  val heightInPixels: Int = operations.heightInPixels
+  val heightInPixels: Double = operations.heightInPixels
 
   /** Rendering buffer for this image. */
   private[this] var _renderingBuffer: WeakReference[BitmapBufferAdapter] =

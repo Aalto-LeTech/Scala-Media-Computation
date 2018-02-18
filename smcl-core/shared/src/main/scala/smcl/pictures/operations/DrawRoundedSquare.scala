@@ -42,11 +42,11 @@ import smcl.settings._
  */
 private[pictures]
 case class DrawRoundedSquare(
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-    roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-    roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+    upperLeftCornerXInPixels: Double,
+    upperLeftCornerYInPixels: Double,
+    sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
+    roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+    roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
     hasBorder: Boolean = ShapesHaveBordersByDefault,
     hasFilling: Boolean = ShapesHaveFillingsByDefault,
     color: Color = DefaultPrimaryColor,

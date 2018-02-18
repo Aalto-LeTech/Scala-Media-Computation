@@ -82,10 +82,10 @@ case class AugmentCanvas(
     Option(Seq(sourceBitmap.operations))
 
   /** Width of the provided buffer in pixels. */
-  val widthInPixels: Int = extraPixelsOntoLeftEdge + sourceBitmap.widthInPixels + extraPixelsOntoRightEdge
+  val widthInPixels: Int = (extraPixelsOntoLeftEdge + sourceBitmap.widthInPixels + extraPixelsOntoRightEdge).floor.toInt
 
   /** Height of the provided buffer in pixels. */
-  val heightInPixels: Int = extraPixelsOntoTopEdge + sourceBitmap.heightInPixels + extraPixelsOntoBottomEdge
+  val heightInPixels: Int = (extraPixelsOntoTopEdge + sourceBitmap.heightInPixels + extraPixelsOntoBottomEdge).floor.toInt
 
   bitmapValidator.validateBitmapSize(Len(widthInPixels), Len(heightInPixels))
 

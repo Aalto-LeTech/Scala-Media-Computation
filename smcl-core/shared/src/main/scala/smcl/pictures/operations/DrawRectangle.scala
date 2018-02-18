@@ -41,10 +41,10 @@ import smcl.settings._
  */
 private[pictures]
 case class DrawRectangle(
-    upperLeftCornerXInPixels: Int,
-    upperLeftCornerYInPixels: Int,
-    widthInPixels: Int = DefaultBitmapWidthInPixels,
-    heightInPixels: Int = DefaultBitmapHeightInPixels,
+    upperLeftCornerXInPixels: Double,
+    upperLeftCornerYInPixels: Double,
+    widthInPixels: Double = DefaultBitmapWidthInPixels,
+    heightInPixels: Double = DefaultBitmapHeightInPixels,
     hasBorder: Boolean = ShapesHaveBordersByDefault,
     hasFilling: Boolean = ShapesHaveFillingsByDefault,
     color: Color = DefaultPrimaryColor,

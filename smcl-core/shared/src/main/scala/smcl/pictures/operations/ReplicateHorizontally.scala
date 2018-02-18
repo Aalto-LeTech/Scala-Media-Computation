@@ -41,7 +41,7 @@ private[pictures]
 case class ReplicateHorizontally(
     bitmapToReplicate: AbstractBitmap,
     numberOfReplicas: Int,
-    paddingInPixels: Int = DefaultPaddingInPixels,
+    paddingInPixels: Double = DefaultPaddingInPixels,
     backgroundColor: Color = DefaultBackgroundColor,
     private val bitmapValidator: BitmapValidator)
     extends AbstractOperation
@@ -70,12 +70,12 @@ case class ReplicateHorizontally(
   )
 
   /** Height of the provided buffer in pixels. */
-  val heightInPixels: Int = bitmapToReplicate.heightInPixels
+  val heightInPixels: Int = bitmapToReplicate.heightInPixels.floor.toInt
 
   /** Width of the provided buffer in pixels. */
   val widthInPixels: Int =
-    (numberOfReplicas + 1) * bitmapToReplicate.widthInPixels +
-        numberOfReplicas * paddingInPixels
+    ((numberOfReplicas + 1) * bitmapToReplicate.widthInPixels +
+        numberOfReplicas * paddingInPixels).floor.toInt
 
   bitmapValidator.validateBitmapSize(Len(widthInPixels), Len(heightInPixels))
 
@@ -94,7 +94,7 @@ case class ReplicateHorizontally(
 
     drawingSurface.clearUsing(backgroundColor)
 
-    var xPosition = 0
+    var xPosition = 0.0
     for (itemNumber <- 0 to numberOfReplicas) {
       drawingSurface.drawBitmap(bufferToReplicate, xPosition, 0)
 

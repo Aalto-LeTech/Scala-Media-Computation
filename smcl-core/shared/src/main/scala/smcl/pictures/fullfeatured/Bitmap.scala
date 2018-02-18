@@ -344,13 +344,16 @@ class Bitmap private[pictures](
    * @return
    */
   def createPixelSnapshot: PixelSnapshot[Bitmap] = {
+    val flooredWidth = widthInPixels.floor.toInt
+    val flooredHeight = heightInPixels.floor.toInt
+
     val buffer =
       toRenderedRepresentation.copyPortionXYWH(
-        0, 0, widthInPixels, heightInPixels)
+        0, 0, flooredWidth, flooredHeight)
 
     new PixelSnapshot[Bitmap](
-      widthInPixels,
-      heightInPixels,
+      flooredWidth,
+      flooredHeight,
       this,
       buffer,
       this)
@@ -741,10 +744,10 @@ class Bitmap private[pictures](
    * @return
    */
   def drawRectangle(
-      upperLeftCornerXInPixels: Int,
-      upperLeftCornerYInPixels: Int,
-      widthInPixels: Int = DefaultBitmapWidthInPixels,
-      heightInPixels: Int = DefaultBitmapHeightInPixels,
+      upperLeftCornerXInPixels: Double,
+      upperLeftCornerYInPixels: Double,
+      widthInPixels: Double = DefaultBitmapWidthInPixels,
+      heightInPixels: Double = DefaultBitmapHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -784,8 +787,8 @@ class Bitmap private[pictures](
       upperLeftCornerXInPixels: Int,
       upperLeftCornerYInPixels: Int,
       sideLengthInPixels: Int = DefaultBitmapWidthInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -828,8 +831,8 @@ class Bitmap private[pictures](
       upperLeftCornerYInPixels: Int,
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Int = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Int = DefaultRoundingHeightInPixels,
+      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
+      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -868,7 +871,7 @@ class Bitmap private[pictures](
   def drawCircle(
       centerXInPixels: Int,
       centerYInPixels: Int,
-      radiusInPixels: Int = DefaultCircleRadiusInPixels,
+      radiusInPixels: Double = DefaultCircleRadiusInPixels,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -1251,7 +1254,7 @@ class Bitmap private[pictures](
   def appendOnLeft(
       bitmapsToCombineWith: Bitmap*)(
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1277,7 +1280,7 @@ class Bitmap private[pictures](
   def appendOnRight(
       bitmapsToCombineWith: Bitmap*)(
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1314,7 +1317,7 @@ class Bitmap private[pictures](
   def appendOnTop(
       bitmapsToCombineWith: Bitmap*)(
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1351,7 +1354,7 @@ class Bitmap private[pictures](
   def appendOnBottom(
       bitmapsToCombineWith: Bitmap*)(
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1704,7 +1707,7 @@ class Bitmap private[pictures](
    */
   def replicateHorizontally(
       numberOfReplicas: Int,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
@@ -1730,7 +1733,7 @@ class Bitmap private[pictures](
    */
   def replicateVertically(
       numberOfReplicas: Int,
-      paddingInPixels: Int = DefaultPaddingInPixels,
+      paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
