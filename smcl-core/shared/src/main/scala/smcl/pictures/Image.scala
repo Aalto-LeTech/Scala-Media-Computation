@@ -299,16 +299,4 @@ class Image private(
     this
   }
 
-  /**
-   * Transforms this object using the specified affine transformation.
-   *
-   * @param t
-   *
-   * @return
-   */
-  override
-  def transformBy(t: AffineTransformation): ImageElement = {
-    this
-  }
-
 }

@@ -35,7 +35,6 @@ trait ImageElement
         with Movable[ImageElement]
         with Rotatable[ImageElement]
         with Scalable[ImageElement]
-        with Transformable[ImageElement]
         with Cropable[Bmp] {
 
   /**

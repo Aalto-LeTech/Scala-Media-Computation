@@ -356,19 +356,6 @@ class Point private(
   }
 
   /**
-   * Transforms this [[Point]] using the specified affine transformation.
-   *
-   * @param t
-   *
-   * @return
-   */
-  @inline
-  override
-  def transformBy(t: AffineTransformation): Point = {
-    copy(newPosition = t.process(position))
-  }
-
-  /**
    * Rotates this object around the origo (0,0) by 90 degrees clockwise.
    *
    * @return

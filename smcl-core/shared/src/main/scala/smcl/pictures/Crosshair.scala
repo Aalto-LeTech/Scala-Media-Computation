@@ -24,6 +24,7 @@ import smcl.settings._
 
 
 
+
 /**
  * An object-based API for creating crosshairs, i.e., a cross with a circle.
  *
@@ -71,9 +72,15 @@ object Crosshair {
 
     val vLine = Line(bottom, top, color)
     val hLine = Line(left, right, color)
-    //val circle = Circle(center, 0.6 * radiusInPixels)
+    val circle = Circle(
+      center,
+      radiusInPixels = 0.6 * radiusInPixels,
+      hasBorder = true,
+      hasFilling = false,
+      color = color,
+      fillColor = DefaultSecondaryColor)
 
-    Image(hLine, vLine)
+    Image(hLine, vLine, circle)
   }
 
 }

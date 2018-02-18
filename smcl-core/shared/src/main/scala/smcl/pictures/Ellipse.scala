@@ -122,8 +122,8 @@ object Ellipse {
     Arc(
       upperLeftCorner,
       lowerRightCorner,
-      startAngle = Angle.Zero.inDegrees,
-      arcAngle = Angle.FullAngleInDegrees,
+      startAngleInDegrees = Angle.Zero.inDegrees,
+      arcAngleInDegrees = Angle.FullAngleInDegrees,
       hasBorder, hasFilling,
       color, fillColor)
   }

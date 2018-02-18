@@ -364,16 +364,4 @@ class Polygon private(
     copy(newPoints = points.map(_.rotateBy(angleInDegrees, centerOfRotation)))
   }
 
-  /**
-   * Transforms this object using the specified affine transformation.
-   *
-   * @param t
-   *
-   * @return
-   */
-  @inline
-  override
-  def transformBy(t: AffineTransformation): ImageElement =
-    copy(newPoints = points.map(t.process))
-
 }

@@ -16,6 +16,7 @@
 
 package smcl.pictures
 
+
 import smcl.colors.rgb
 import smcl.modeling.d2.Pos
 import smcl.modeling.{Angle, Len}
@@ -35,21 +36,18 @@ object Circle {
    *
    *
    * @param center
-   * @param radius
+   * @param radiusInPixels
    *
    * @return
    */
   @inline
   def apply(
       center: Pos,
-      radius: Double): VectorGraphic = {
-
-    val upperLeftCorner = center - (radius, radius)
-    val width = 2 * radius
+      radiusInPixels: Double): VectorGraphic = {
 
     apply(
-      upperLeftCorner,
-      width,
+      center,
+      radiusInPixels,
       hasBorder = ShapesHaveBordersByDefault,
       hasFilling = ShapesHaveFillingsByDefault,
       color = DefaultPrimaryColor,
@@ -60,7 +58,7 @@ object Circle {
    *
    *
    * @param center
-   * @param radius
+   * @param radiusInPixels
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -71,14 +69,14 @@ object Circle {
   @inline
   def apply(
       center: Pos,
-      radius: Double,
+      radiusInPixels: Double,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: rgb.Color,
       fillColor: rgb.Color): VectorGraphic = {
 
-    val upperLeftCorner = center - (radius, radius)
-    val width = Len(radius).double
+    val upperLeftCorner = center - (radiusInPixels, radiusInPixels)
+    val width = Len(radiusInPixels).double
 
     apply(
       upperLeftCorner,
@@ -113,8 +111,8 @@ object Circle {
     Arc(
       upperLeftCorner,
       lowerRightCorner,
-      startAngle = Angle.Zero.inDegrees,
-      arcAngle = Angle.FullAngleInDegrees,
+      startAngleInDegrees = Angle.Zero.inDegrees,
+      arcAngleInDegrees = Angle.FullAngleInDegrees,
       hasBorder, hasFilling,
       color, fillColor)
   }
