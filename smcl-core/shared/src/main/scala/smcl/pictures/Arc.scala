@@ -142,9 +142,11 @@ class Arc private(
       drawingSurface: DrawingSurfaceAdapter,
       offsetsToOrigo: Dims): Unit = {
 
+    val topLeftX = offsetsToOrigo.width.inPixels + upperLeftCorner.xInPixels
+    val topLeftY = offsetsToOrigo.height.inPixels + upperLeftCorner.yInPixels
+
     drawingSurface.drawArc(
-      offsetsToOrigo.width.inPixels + upperLeftCorner.xInPixels,
-      offsetsToOrigo.height.inPixels + upperLeftCorner.yInPixels,
+      topLeftX, topLeftY,
       dimensions.width.inPixels,
       dimensions.height.inPixels,
       startAngleInDegrees,

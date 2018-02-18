@@ -17,6 +17,7 @@
 package smcl.infrastructure.jvmawt
 
 
+import java.awt.geom.Arc2D
 import java.awt.{AlphaComposite, Graphics2D}
 
 import smcl.colors.ColorValidator
@@ -254,22 +255,24 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor): Unit = {
 
-    val upperLeftX: Int = upperLeftCornerXInPixels.floor.toInt
-    val upperLeftY: Int = upperLeftCornerYInPixels.floor.toInt
-    val width: Int = widthInPixels.floor.toInt
-    val height: Int = heightInPixels.floor.toInt
-    val startAngle: Int = startAngleInDegrees.floor.toInt
-    val arcAngle: Int = arcAngleInDegrees.floor.toInt
+    val shape = new Arc2D.Double(
+      upperLeftCornerXInPixels,
+      upperLeftCornerYInPixels,
+      0D.max(widthInPixels - 1.0),
+      0D.max(heightInPixels - 1.0),
+      startAngleInDegrees,
+      arcAngleInDegrees,
+      Arc2D.OPEN)
 
     withDrawingSurface{ds =>
       if (hasFilling) {
         ds.setColor(fillColor.toAWTColor)
-        ds.fillArc(upperLeftX, upperLeftY, width, height, startAngle, arcAngle)
+        ds.fill(shape)
       }
 
       if (hasBorder) {
         ds.setColor(color.toAWTColor)
-        ds.drawArc(upperLeftX, upperLeftY, width, height, startAngle, arcAngle)
+        ds.draw(shape)
       }
     }
   }
