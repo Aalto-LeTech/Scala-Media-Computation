@@ -106,6 +106,7 @@ object Initializer extends SMCLInitializer {
       ColorSetting,
       ObjectSetting,
       IntSetting,
+      DoubleSetting,
       StringSetting,
       AWTBitmapBufferAdapter,
       d1.PointAnchor,
