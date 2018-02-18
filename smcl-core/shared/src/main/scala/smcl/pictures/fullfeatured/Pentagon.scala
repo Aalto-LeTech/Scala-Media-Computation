@@ -18,8 +18,9 @@ package smcl.pictures.fullfeatured
 
 
 import smcl.colors.rgb
+import smcl.modeling.Angle
 import smcl.modeling.d2.Pos
-import smcl.settings.{DefaultPrimaryColor, DefaultSecondaryColor, ShapesHaveBordersByDefault, ShapesHaveFillingsByDefault}
+import smcl.settings._
 
 
 
@@ -32,7 +33,10 @@ import smcl.settings.{DefaultPrimaryColor, DefaultSecondaryColor, ShapesHaveBord
 object Pentagon {
 
   /** Magnitude of regular convex pentagon's internal angles. */
-  val InternalAngleInDegrees: Int = 108
+  lazy val InternalAngle: Angle = Angle(108)
+
+  /** Magnitude of regular convex pentagon's rotational symmetry angle. */
+  lazy val RotationalSymmetryAngle = Angle(72)
 
   /** The ratio of regular convex pentagon's height and side length. */
   lazy val HeightPerSideRatio: Double = Math.sqrt(5.0 + 2.0 * Math.sqrt(5.0))
@@ -49,18 +53,18 @@ object Pentagon {
   /**
    *
    *
-   * @param width
-   * @param height
+   * @param widthInPixels
+   * @param heightInPixels
    *
    * @return
    */
   @inline
   def apply(
-      width: Double,
-      height: Double): VectorGraphic = {
+      widthInPixels: Double,
+      heightInPixels: Double): VectorGraphic = {
 
     apply(
-      width, height,
+      widthInPixels, heightInPixels,
       hasBorder = ShapesHaveBordersByDefault,
       hasFilling = ShapesHaveFillingsByDefault,
       color = DefaultPrimaryColor,
@@ -70,8 +74,8 @@ object Pentagon {
   /**
    *
    *
-   * @param width
-   * @param height
+   * @param widthInPixels
+   * @param heightInPixels
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -81,15 +85,15 @@ object Pentagon {
    */
   @inline
   def apply(
-      width: Double,
-      height: Double,
+      widthInPixels: Double,
+      heightInPixels: Double,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: rgb.Color,
       fillColor: rgb.Color): VectorGraphic = {
 
     apply(
-      width, height,
+      widthInPixels, heightInPixels,
       Pos.Origo,
       hasBorder, hasFilling,
       color, fillColor)
@@ -98,20 +102,20 @@ object Pentagon {
   /**
    *
    *
-   * @param width
-   * @param height
+   * @param widthInPixels
+   * @param heightInPixels
    * @param center
    *
    * @return
    */
   @inline
   def apply(
-      width: Double,
-      height: Double,
+      widthInPixels: Double,
+      heightInPixels: Double,
       center: Pos): VectorGraphic = {
 
     apply(
-      width, height,
+      widthInPixels, heightInPixels,
       center,
       hasBorder = ShapesHaveBordersByDefault,
       hasFilling = ShapesHaveFillingsByDefault,
@@ -122,8 +126,8 @@ object Pentagon {
   /**
    *
    *
-   * @param width
-   * @param height
+   * @param widthInPixels
+   * @param heightInPixels
    * @param center
    * @param hasBorder
    * @param hasFilling
@@ -134,16 +138,26 @@ object Pentagon {
    */
   @inline
   def apply(
-      width: Double,
-      height: Double,
+      widthInPixels: Double,
+      heightInPixels: Double,
       center: Pos,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: rgb.Color,
       fillColor: rgb.Color): VectorGraphic = {
 
-    val heightBasedDiagonal = diagonalFromHeight(height)
-    val effectiveDiagonal = heightBasedDiagonal.min(width)
+    if (widthInPixels < 0) {
+      throw new IllegalArgumentException(
+        s"Pentagon's width cannot be negative (was: $widthInPixels).")
+    }
+
+    if (heightInPixels < 0) {
+      throw new IllegalArgumentException(
+        s"Pentagon's width cannot be negative (was: $heightInPixels).")
+    }
+
+    val heightBasedDiagonal = diagonalFromHeight(heightInPixels)
+    val effectiveDiagonal = heightBasedDiagonal.min(widthInPixels)
     val circumRadius = circumRadiusFromDiagonal(effectiveDiagonal)
 
     apply(
@@ -170,13 +184,15 @@ object Pentagon {
       color: rgb.Color = DefaultPrimaryColor,
       fillColor: rgb.Color = DefaultSecondaryColor): VectorGraphic = {
 
-    val p1 = center - (0, circumRadiusInPixels)
-    val p2 = p1.rotateBy(72)
-    val p3 = p2.rotateBy(72)
-    val p4 = p3.rotateBy(72)
-    val p5 = p4.rotateBy(72)
+    if (circumRadiusInPixels < 0) {
+      throw new IllegalArgumentException(
+        s"Length of pentagon's circumradius cannot be negative (was: $circumRadiusInPixels).")
+    }
 
-    val points: Seq[Pos] = Seq(p1, p2, p3, p4, p5)
+    val symmetryAngle = RotationalSymmetryAngle.inDegrees
+    val rotationAngles = Seq.tabulate(5)(n => n * symmetryAngle).tail
+    val firstPoint = center.addY(-circumRadiusInPixels)
+    val points = firstPoint +: rotationAngles.map(firstPoint.rotateBy)
 
     Polygon(
       points,
