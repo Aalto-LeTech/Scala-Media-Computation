@@ -19,6 +19,7 @@ package smcl.pictures
 
 import smcl.colors.rgb
 import smcl.infrastructure.ListUtils
+import smcl.modeling.Angle
 import smcl.modeling.d2.Pos
 import smcl.settings._
 
@@ -149,9 +150,7 @@ object StarPentagon {
         s"Star pentagon's width cannot be negative (was: $heightInPixels).")
     }
 
-    val heightBasedDiagonal = Pentagon.diagonalFromHeight(heightInPixels)
-    val effectiveDiagonal = heightBasedDiagonal.min(widthInPixels)
-    val circumRadius = Pentagon.circumRadiusFromDiagonal(effectiveDiagonal)
+    val circumRadius = Pentagon.limitCircumRadiusTo(widthInPixels, heightInPixels)
 
     apply(
       circumRadius,
@@ -194,23 +193,30 @@ object StarPentagon {
         s"Length of star pentagon's cuspradius cannot be negative (was: $cuspRadiusInPixels).")
     }
 
-    val symmetryAngle = Pentagon.RotationalSymmetryAngle.inDegrees
-    val outerRotationAngles = List.tabulate(5)(n => n * symmetryAngle).tail
-    val firstOuterPoint = center.addY(-circumRadiusInPixels)
-    val outerPoints = firstOuterPoint +: outerRotationAngles.map(firstOuterPoint.rotateBy)
-
-    val innerStartAngle = symmetryAngle / 2.0
-    val innerRotationAngles =
-      List.tabulate(5)(n => innerStartAngle + n * symmetryAngle)
-    val zeroInnerPoint = center.addY(-cuspRadiusInPixels)
-    val innerPoints = innerRotationAngles.map(zeroInnerPoint.rotateBy)
-
+    val outerPoints = Pentagon.pointsFor(circumRadiusInPixels, center, Angle.Zero).toList
+    val innerPoints = cuspRadiusPointsFor(cuspRadiusInPixels, center).toList
     val points = ListUtils.intersperse(outerPoints, innerPoints)
 
     Polygon(
       points,
       hasBorder, hasFilling,
       color, fillColor)
+  }
+
+  /**
+   *
+   *
+   * @param cuspRadiusInPixels
+   * @param center
+   *
+   * @return
+   */
+  @inline
+  def cuspRadiusPointsFor(
+      cuspRadiusInPixels: Double,
+      center: Pos): Seq[Pos] = {
+
+    Pentagon.pointsFor(cuspRadiusInPixels, center, Pentagon.RotationalSymmetryAngle.half)
   }
 
 }

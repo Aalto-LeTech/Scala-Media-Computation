@@ -187,7 +187,7 @@ object Pentagon {
         s"Length of pentagon's circumradius cannot be negative (was: $circumRadiusInPixels).")
     }
 
-    val points = pointsFor(circumRadiusInPixels, center)
+    val points = pointsFor(circumRadiusInPixels, center, Angle.Zero)
 
     Polygon(
       points,
@@ -206,13 +206,20 @@ object Pentagon {
   @inline
   def pointsFor(
       circumRadiusInPixels: Double,
-      center: Pos): Seq[Pos] = {
+      center: Pos,
+      startAngle: Angle): Seq[Pos] = {
+
+    val firstPointCandidate = center.addY(-circumRadiusInPixels)
+    val firstPoint =
+      if (startAngle.inDegrees == 0.0)
+        firstPointCandidate
+      else
+        firstPointCandidate.rotateBy(startAngle.inDegrees, center)
 
     val symmetryAngle = RotationalSymmetryAngle.inDegrees
     val rotationAngles = Seq.tabulate(5)(n => n * symmetryAngle).tail
-    val firstPoint = center.addY(-circumRadiusInPixels)
 
-    firstPoint +: rotationAngles.map(firstPoint.rotateBy)
+    firstPoint +: rotationAngles.map(firstPoint.rotateBy(_, center))
   }
 
   /**
