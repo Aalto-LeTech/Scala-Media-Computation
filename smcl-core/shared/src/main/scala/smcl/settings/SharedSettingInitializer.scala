@@ -56,7 +56,7 @@ class SharedSettingInitializer() extends SettingInitializer {
 
     BooleanSetting(
       key = SIdShapesHaveFillingsByDefault,
-      initialValue = false,
+      initialValue = true,
       validator = settingValidatorFactory.EmptyValidator)
 
     BooleanSetting(
@@ -143,7 +143,7 @@ class SharedSettingInitializer() extends SettingInitializer {
 
     ColorSetting(
       key = SIdDefaultSecondaryColor,
-      initialValue = Black,
+      initialValue = LightBlue,
       validator = settingValidatorFactory.isNullValidator("Color cannot be null"))
 
     ObjectSetting[HorizontalAlignment](
