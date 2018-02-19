@@ -99,8 +99,8 @@ object Circle {
    */
   @inline
   def apply(
-      upperLeftCorner: Pos,
-      width: Len,
+      upperLeftCorner: Pos = Pos.Origo - (DefaultCircleRadiusInPixels, DefaultCircleRadiusInPixels),
+      width: Len = Len(DefaultCircleRadiusInPixels).double,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: rgb.Color = DefaultPrimaryColor,
