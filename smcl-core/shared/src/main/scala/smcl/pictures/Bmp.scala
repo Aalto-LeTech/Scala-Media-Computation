@@ -45,6 +45,9 @@ object Bmp
     injectable(InjectablesRegistry.IIdBitmapValidator).asInstanceOf[BitmapValidator]
   }
 
+  /** A bitmap, the width and height of which are zeros. */
+  lazy val ZeroSized: Bmp = Bmp(0, 0)
+
   /**
    *
    *
@@ -70,14 +73,14 @@ object Bmp
 
     val bounds = BoundaryCalculator.fromBoundaries(elements)
     if (bounds.isEmpty) {
-      return Bmp(0, 0)
+      return Bmp.ZeroSized
     }
 
     val width = bounds.width.floor
     val height = bounds.height.floor
 
     if (width < 1 || height < 1) {
-      return Bmp(0, 0)
+      return Bmp.ZeroSized
     }
 
     bitmapValidator.validateBitmapSize(width, height)
