@@ -71,8 +71,8 @@ object Viewport {
  * @author Aleksi Lukkarinen
  */
 class Viewport private(
-    boundary: Bounds,
-    name: Option[String]) {
+    val boundary: Bounds,
+    val name: Option[String]) {
 
   /**
    *

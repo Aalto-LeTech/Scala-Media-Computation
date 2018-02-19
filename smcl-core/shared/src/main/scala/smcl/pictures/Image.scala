@@ -165,7 +165,7 @@ class Image private(
    */
   @inline
   def map(f: (ImageElement) => ImageElement): Image =
-    Image(elements.map(f): _*)
+    copy(newElements = elements.map(f))
 
   /**
    *

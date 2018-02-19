@@ -56,25 +56,19 @@ object Bmp
    * @return
    */
   def apply(elements: ImageElement*): Bmp = {
-/*
-    val (viewport, width, height) =
+    if (elements.isEmpty)
+      return Bmp.ZeroSized
+
+    val bounds =
       if (elements.length == 1 &&
           elements.head.isImage &&
           elements.head.toImage.viewport.isDefined) {
 
-        val viewport = elements.head.toImage.viewport.get
-
-        (viewport, viewport.width, viewport.height)
+        elements.head.toImage.viewport.get.boundary
       }
       else {
-
+        BoundaryCalculator.fromBoundaries(elements)
       }
-*/
-
-    val bounds = BoundaryCalculator.fromBoundaries(elements)
-    if (bounds.isEmpty) {
-      return Bmp.ZeroSized
-    }
 
     val width = bounds.width.floor
     val height = bounds.height.floor
