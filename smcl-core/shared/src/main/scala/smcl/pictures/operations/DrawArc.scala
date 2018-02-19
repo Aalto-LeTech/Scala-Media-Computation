@@ -19,6 +19,7 @@ package smcl.pictures.operations
 
 import smcl.colors.rgb._
 import smcl.infrastructure._
+import smcl.modeling.AffineTransformation
 import smcl.settings._
 
 
@@ -88,6 +89,7 @@ case class DrawArc(
     destination.drawingSurface.drawArc(
       upperLeftCornerXInPixels, upperLeftCornerYInPixels,
       widthInPixels, heightInPixels, startAngleInDegrees, arcAngleInDegrees,
+      AffineTransformation.Identity,
       hasBorder, hasFilling, color, fillColor)
   }
 

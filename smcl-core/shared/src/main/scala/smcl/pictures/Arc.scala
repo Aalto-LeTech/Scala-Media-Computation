@@ -33,6 +33,14 @@ import smcl.settings._
  */
 object Arc {
 
+  /**  */
+  private
+  val InitialScalingFactor = 1.0
+
+  /**  */
+  private
+  val InitialShearingFactor = 0.0
+
   /**
    *
    *
@@ -60,8 +68,10 @@ object Arc {
 
     val identity = Identity()
     val currentRotationAngleInDegrees = Angle.Zero.inDegrees
-    val currentHorizontalShearingFactor = 0.0
-    val currentVerticalShearingFactor = 0.0
+    val currentHorizontalScalingFactor = InitialScalingFactor
+    val currentVerticalScalingFactor = InitialScalingFactor
+    val currentHorizontalShearingFactor = InitialShearingFactor
+    val currentVerticalShearingFactor = InitialShearingFactor
     val currentTransformation = AffineTransformation.Identity
 
     new Arc(
@@ -69,6 +79,8 @@ object Arc {
       upperLeftCorner, lowerRightCorner,
       startAngleInDegrees, arcAngleInDegrees,
       currentRotationAngleInDegrees,
+      currentHorizontalScalingFactor,
+      currentVerticalScalingFactor,
       currentHorizontalShearingFactor,
       currentVerticalShearingFactor,
       currentTransformation,
@@ -89,6 +101,11 @@ object Arc {
  * @param lowerRightCorner
  * @param startAngleInDegrees
  * @param arcAngleInDegrees
+ * @param currentRotationAngleInDegrees
+ * @param currentHorizontalScalingFactor
+ * @param currentVerticalScalingFactor
+ * @param currentHorizontalShearingFactor
+ * @param currentVerticalShearingFactor
  * @param currentTransformation
  * @param hasBorder
  * @param hasFilling
@@ -104,6 +121,8 @@ class Arc private(
     val startAngleInDegrees: Double,
     val arcAngleInDegrees: Double,
     val currentRotationAngleInDegrees: Double,
+    val currentHorizontalScalingFactor: Double,
+    val currentVerticalScalingFactor: Double,
     val currentHorizontalShearingFactor: Double,
     val currentVerticalShearingFactor: Double,
     val currentTransformation: AffineTransformation,
@@ -114,6 +133,7 @@ class Arc private(
     extends VectorGraphic {
 
   /** Boundary of this [[Arc]]. */
+  // TODO: Calculate boundary so that it reflects the current transformation!!!!
   override
   val boundary: Bounds = Bounds(upperLeftCorner, lowerRightCorner)
 
@@ -151,6 +171,7 @@ class Arc private(
       dimensions.height.inPixels,
       startAngleInDegrees,
       arcAngleInDegrees,
+      currentTransformation,
       hasBorder, hasFilling,
       color, fillColor)
   }
@@ -214,6 +235,8 @@ class Arc private(
    * @param newStartAngleInDegrees
    * @param newArcAngleInDegrees
    * @param newRotationAngleInDegrees
+   * @param newHorizontalScalingFactor
+   * @param newVerticalScalingFactor
    * @param newHorizontalShearingFactor
    * @param newVerticalShearingFactor
    * @param newTransformation
@@ -232,6 +255,8 @@ class Arc private(
       newStartAngleInDegrees: Double = startAngleInDegrees,
       newArcAngleInDegrees: Double = arcAngleInDegrees,
       newRotationAngleInDegrees: Double = currentRotationAngleInDegrees,
+      newHorizontalScalingFactor: Double = currentHorizontalScalingFactor,
+      newVerticalScalingFactor: Double = currentVerticalScalingFactor,
       newHorizontalShearingFactor: Double = currentHorizontalShearingFactor,
       newVerticalShearingFactor: Double = currentVerticalShearingFactor,
       newTransformation: AffineTransformation = currentTransformation,
@@ -245,6 +270,7 @@ class Arc private(
       newUpperLeftCorner, newLowerRightCorner,
       newStartAngleInDegrees, newArcAngleInDegrees,
       newRotationAngleInDegrees,
+      newHorizontalScalingFactor, newVerticalScalingFactor,
       newHorizontalShearingFactor, newVerticalShearingFactor,
       newTransformation,
       newHasBorder, newHasFilling,
@@ -264,7 +290,16 @@ class Arc private(
       widthFactor: Double,
       heightFactor: Double): Arc = {
 
-    this
+    val newWidthFactor = widthFactor * currentHorizontalScalingFactor
+    val newHeightFactor = heightFactor * currentVerticalScalingFactor
+    val newTransformation =
+      currentTransformation.scaleRelativeToPoint(
+        newWidthFactor, newHeightFactor, position)
+
+    internalCopy(
+      newHorizontalScalingFactor = newWidthFactor,
+      newVerticalScalingFactor = newHeightFactor,
+      newTransformation = newTransformation)
   }
 
   /**
@@ -274,7 +309,12 @@ class Arc private(
    */
   override
   def rotateBy90DegsCW: ImageElement = {
-    this
+    val newRotationAngle = currentRotationAngleInDegrees - Angle.RightAngleInDegrees
+    val newTransformation = currentTransformation.rotate90DegsCWAroundPoint(position)
+
+    internalCopy(
+      newRotationAngleInDegrees = newRotationAngle,
+      newTransformation = newTransformation)
   }
 
   /**
@@ -296,7 +336,12 @@ class Arc private(
    */
   override
   def rotateBy90DegsCCW: ImageElement = {
-    this
+    val newRotationAngle = currentRotationAngleInDegrees + Angle.RightAngleInDegrees
+    val newTransformation = currentTransformation.rotate90DegsCCWAroundPoint(position)
+
+    internalCopy(
+      newRotationAngleInDegrees = newRotationAngle,
+      newTransformation = newTransformation)
   }
 
   /**
@@ -318,7 +363,12 @@ class Arc private(
    */
   override
   def rotateBy180Degs: ImageElement = {
-    this
+    val newRotationAngle = currentRotationAngleInDegrees + Angle.StraightAngleInDegrees
+    val newTransformation = currentTransformation.rotate180DegsAroundPoint(position)
+
+    internalCopy(
+      newRotationAngleInDegrees = newRotationAngle,
+      newTransformation = newTransformation)
   }
 
   /**
@@ -342,7 +392,13 @@ class Arc private(
    */
   override
   def rotateBy(angleInDegrees: Double): ImageElement = {
-    this
+    val newRotationAngle = currentRotationAngleInDegrees + angleInDegrees
+    val newTransformation =
+      currentTransformation.rotateAroundPoint(Angle(angleInDegrees), position)
+
+    internalCopy(
+      newRotationAngleInDegrees = newRotationAngle,
+      newTransformation = newTransformation)
   }
 
   /**

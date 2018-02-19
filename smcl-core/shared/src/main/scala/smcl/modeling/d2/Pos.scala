@@ -21,7 +21,7 @@ import scala.language.implicitConversions
 
 import smcl.infrastructure._
 import smcl.modeling.misc.CartesianPosition
-import smcl.modeling.{Len, Transformer}
+import smcl.modeling.{AffineTransformation, Len, Transformer}
 
 
 
@@ -147,7 +147,8 @@ case class Pos private[smcl](
         with HasBounds
         with Movable[Pos]
         with Scalable[Pos]
-        with Rotatable[Pos] {
+        with Rotatable[Pos]
+        with Transformable[Pos] {
 
   /** */
   lazy val coordinates: Seq[Double] =
@@ -962,5 +963,16 @@ case class Pos private[smcl](
       newXInPixels = widthFactor * width.inPixels,
       newYInPixels = heightFactor * height.inPixels)
   }
+
+  /**
+   * Transforms this object using the specified affine transformation.
+   *
+   * @param t
+   *
+   * @return
+   */
+  override
+  def transformBy(t: AffineTransformation): Pos =
+    t.process(this)
 
 }

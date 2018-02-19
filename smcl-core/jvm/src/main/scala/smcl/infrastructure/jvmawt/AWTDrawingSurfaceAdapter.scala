@@ -199,6 +199,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
+  @deprecated(message="Use drawArc() instead.", since="0.0.4")
   override
   def drawEllipse(
       boundingBoxUpperLeftX: Double,
@@ -237,6 +238,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param heightInPixels
    * @param startAngleInDegrees
    * @param arcAngleInDegrees
+   * @param transformation
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -250,6 +252,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       heightInPixels: Double = DefaultBitmapHeightInPixels,
       startAngleInDegrees: Double = DefaultArcStartAngleInDegrees,
       arcAngleInDegrees: Double = DefaultArcAngleInDegrees,
+      transformation: AffineTransformation = AffineTransformation.Identity,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
@@ -265,6 +268,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       Arc2D.OPEN)
 
     withDrawingSurface{ds =>
+      ds.transform(transformation.toAWTAffineTransform)
+
       if (hasFilling) {
         ds.setColor(fillColor.toAWTColor)
         ds.fill(shape)
@@ -289,6 +294,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
+  @deprecated(message="Use polygons/polylines instead.", since="0.0.4")
   override
   def drawRectangle(
       upperLeftCornerXInPixels: Double,
