@@ -16,6 +16,7 @@
 
 package smcl.pictures
 
+
 import smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
 import smcl.modeling.d2._
 import smcl.viewers.{display => displayInViewer}
@@ -72,7 +73,35 @@ trait ImageElement
    *
    * @return
    */
-  def toBitmap: Bmp = Bmp(this)
+  def isBitmap: Boolean = isInstanceOf[Bmp]
+
+  /**
+   *
+   *
+   * @return
+   */
+  def toBitmap: Bmp = this match {
+    case b: Bmp => b
+    case _      => Bmp(this)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def isImage: Boolean = isInstanceOf[Image]
+
+  /**
+   *
+   *
+   * @return
+   */
+  def toImage: Image = this match {
+    case i: Image => i
+    case _        => Image(this)
+  }
+
 
   /**
    *

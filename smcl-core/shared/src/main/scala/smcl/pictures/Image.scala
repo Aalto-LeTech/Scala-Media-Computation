@@ -16,8 +16,8 @@
 
 package smcl.pictures
 
+
 import smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
-import smcl.modeling.AffineTransformation
 import smcl.modeling.d2._
 
 
@@ -35,26 +35,44 @@ object Image {
    *
    * @return
    */
-  def apply(elements: ImageElement*): Image = {
-    val identity: Identity = Identity()
+  @inline
+  def apply(elements: ImageElement*): Image =
+    apply(elements, Anchor.Center)
 
-    new Image(identity, elements, Anchor.Center)
+  /**
+   *
+   *
+   * @param elements
+   * @param anchor
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      elements: Seq[ImageElement],
+      anchor: Anchor[HasAnchor]): Image = {
+
+    apply(elements, viewport = None, anchor)
   }
 
   /**
    *
    *
    * @param elements
+   * @param viewport
+   * @param anchor
    *
    * @return
    */
+  @inline
   def apply(
-      elements: Seq[ImageElement],
-      anchor: Anchor[HasAnchor]): Image = {
+      elements: Seq[ImageElement] = Seq(),
+      viewport: Option[Viewport] = None,
+      anchor: Anchor[HasAnchor] = Anchor.Center): Image = {
 
     val identity: Identity = Identity()
 
-    new Image(identity, elements, anchor)
+    new Image(identity, elements, viewport, anchor)
   }
 
 }
@@ -65,14 +83,21 @@ object Image {
 /**
  *
  *
+ * @param identity
+ * @param elements
+ * @param viewport
+ * @param anchor
+ *
  * @author Aleksi Lukkarinen
  */
 class Image private(
     override val identity: Identity,
     val elements: Seq[ImageElement],
+    val viewport: Option[Viewport],
     val anchor: Anchor[HasAnchor])
     extends ImageElement
         with HasAnchor
+        with HasViewport[Image]
         with FlatMap[Image, Seq[ImageElement]] {
 
   // TODO: Tarkistukset
@@ -91,6 +116,25 @@ class Image private(
 
   /** */
   val isRenderable: Boolean = width > 0 && height > 0
+
+  /**
+   *
+   *
+   * @param viewport
+   *
+   * @return
+   */
+  override
+  def setViewport(viewport: Viewport): Image =
+    copy(newViewport = Option(viewport))
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  def removeViewport: Image = copy(newViewport = None)
 
   /**
    *
@@ -115,23 +159,13 @@ class Image private(
   /**
    *
    *
-   * @return
-   */
-  @inline
-  override
-  def toBitmap: Bmp = Bmp(elements: _*)
-
-  /**
-   *
-   *
    * @param f
    *
    * @return
    */
   @inline
-  def map(f: (ImageElement) => ImageElement): Image = {
+  def map(f: (ImageElement) => ImageElement): Image =
     Image(elements.map(f): _*)
-  }
 
   /**
    *
@@ -141,23 +175,24 @@ class Image private(
    */
   @inline
   override
-  def flatMap(f: (Seq[ImageElement]) => Image): Image = {
-    f(elements)
-  }
+  def flatMap(f: (Seq[ImageElement]) => Image): Image = f(elements)
 
   /**
    *
    *
    * @param newElements
+   * @param newViewport
+   * @param newAnchor
    *
    * @return
    */
   @inline
   def copy(
       newElements: Seq[ImageElement] = elements,
-      newAnchor: Anchor[HasAnchor]): Image = {
+      newViewport: Option[Viewport] = viewport,
+      newAnchor: Anchor[HasAnchor] = anchor): Image = {
 
-    new Image(identity, newElements, anchor)
+    new Image(identity, newElements, newViewport, newAnchor)
   }
 
   /**

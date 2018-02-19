@@ -16,6 +16,7 @@
 
 package smcl.pictures
 
+
 import smcl.colors.ColorValidator
 import smcl.infrastructure.{BitmapBufferAdapter, Displayable, DrawingSurfaceAdapter, Identity, InjectablesRegistry, PRF}
 import smcl.modeling.d2._
@@ -33,12 +34,14 @@ object Bmp
     extends InjectablesRegistry {
 
   /** The ColorValidator instance to be used by this object. */
-  protected lazy val colorValidator: ColorValidator = {
+  protected
+  lazy val colorValidator: ColorValidator = {
     injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
   }
 
   /** The BitmapValidator instance to be used by this object. */
-  protected lazy val bitmapValidator: BitmapValidator = {
+  protected
+  lazy val bitmapValidator: BitmapValidator = {
     injectable(InjectablesRegistry.IIdBitmapValidator).asInstanceOf[BitmapValidator]
   }
 
@@ -50,6 +53,21 @@ object Bmp
    * @return
    */
   def apply(elements: ImageElement*): Bmp = {
+/*
+    val (viewport, width, height) =
+      if (elements.length == 1 &&
+          elements.head.isImage &&
+          elements.head.toImage.viewport.isDefined) {
+
+        val viewport = elements.head.toImage.viewport.get
+
+        (viewport, viewport.width, viewport.height)
+      }
+      else {
+
+      }
+*/
+
     val bounds = BoundaryCalculator.fromBoundaries(elements)
     if (bounds.isEmpty) {
       return Bmp(0, 0)

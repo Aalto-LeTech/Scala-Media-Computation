@@ -31,15 +31,14 @@ import smcl.modeling.d2.{Bounds, Dims, Pos}
 object Viewport {
 
   /**
-   *
+   * Creates a new [[Viewport]] instance.
    *
    * @param boundary
    *
    * @return
    */
-  def apply(boundary: Bounds): Viewport = {
-    apply(boundary, null)
-  }
+  def apply(boundary: Bounds): Viewport =
+    apply(boundary, None)
 
   /**
    * Creates a new [[Viewport]] instance.
@@ -49,12 +48,13 @@ object Viewport {
    *
    * @return
    */
-  private[pictures]
   def apply(
       boundary: Bounds,
-      name: String): Viewport = {
+      name: Option[String]): Viewport = {
 
-    new Viewport(boundary, name)
+    // TODO: Check boundary for validness
+
+    new Viewport(boundary, name.map(_.trim))
   }
 
 }
@@ -70,9 +70,9 @@ object Viewport {
  *
  * @author Aleksi Lukkarinen
  */
-class Viewport(
-    val boundary: Bounds,
-    val name: String) {
+class Viewport private(
+    boundary: Bounds,
+    name: Option[String]) {
 
   /**
    *
@@ -104,8 +104,7 @@ class Viewport(
    * @return
    */
   @inline
-  def left: Double =
-    upperLeftCorner.xInPixels
+  def left: Double = upperLeftCorner.xInPixels
 
   /**
    *
@@ -113,8 +112,7 @@ class Viewport(
    * @return
    */
   @inline
-  def top: Double =
-    upperLeftCorner.yInPixels
+  def top: Double = upperLeftCorner.yInPixels
 
   /**
    *
@@ -122,8 +120,7 @@ class Viewport(
    * @return
    */
   @inline
-  def right: Double =
-    lowerRightCorner.xInPixels
+  def right: Double = lowerRightCorner.xInPixels
 
   /**
    *
@@ -131,8 +128,7 @@ class Viewport(
    * @return
    */
   @inline
-  def bottom: Double =
-    lowerRightCorner.yInPixels
+  def bottom: Double = lowerRightCorner.yInPixels
 
   /**
    *
@@ -140,8 +136,7 @@ class Viewport(
    * @return
    */
   @inline
-  def upperLeftCorner: Pos =
-    boundary.upperLeftMarker
+  def upperLeftCorner: Pos = boundary.upperLeftMarker
 
   /**
    *
@@ -149,7 +144,21 @@ class Viewport(
    * @return
    */
   @inline
-  def lowerRightCorner: Pos =
-    boundary.lowerRightMarker
+  def lowerRightCorner: Pos = boundary.lowerRightMarker
+
+  /**
+   *
+   *
+   * @param newBounds
+   * @param newName
+   *
+   * @return
+   */
+  def copy(
+      newBounds: Bounds = boundary,
+      newName: Option[String] = name): Viewport = {
+
+    Viewport.apply(newBounds, newName)
+  }
 
 }
