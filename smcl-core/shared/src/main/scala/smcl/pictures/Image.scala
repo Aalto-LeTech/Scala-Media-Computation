@@ -107,10 +107,12 @@ class Image private(
     BoundaryCalculator.fromBoundaries(elements)
 
   /** Dimensions of this object. */
+  @inline
   override
   def dimensions: Dims = Dims(boundary.width, boundary.height)
 
   /** Position of this object. */
+  @inline
   override
   def position: Pos = boundary.upperLeftMarker
 
@@ -120,10 +122,29 @@ class Image private(
   /**
    *
    *
+   * @return
+   */
+  @inline
+  override
+  def isImage: Boolean = true
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toImage: Image = this
+
+  /**
+   *
+   *
    * @param viewport
    *
    * @return
    */
+  @inline
   override
   def setViewport(viewport: Viewport): Image =
     copy(newViewport = Option(viewport))
@@ -133,28 +154,9 @@ class Image private(
    *
    * @return
    */
-  override
-  def removeViewport: Image = copy(newViewport = None)
-
-  /**
-   *
-   *
-   * @param drawingSurface
-   * @param offsetsToOrigo
-   */
   @inline
   override
-  def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      offsetsToOrigo: Dims): Unit = {
-
-    if (boundary.isEmpty)
-      return
-
-    elements.foreach{e =>
-      e.renderOn(drawingSurface, offsetsToOrigo)
-    }
-  }
+  def removeViewport: Image = copy(newViewport = None)
 
   /**
    *
@@ -330,7 +332,10 @@ class Image private(
    * @return
    */
   override
-  def scaleBy(widthFactor: Double, heightFactor: Double): Image = {
+  def scaleBy(
+      widthFactor: Double,
+      heightFactor: Double): Image = {
+
     this
   }
 

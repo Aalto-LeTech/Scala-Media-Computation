@@ -17,7 +17,7 @@
 package smcl.pictures
 
 
-import smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
+import smcl.infrastructure.Identity
 import smcl.modeling.d2._
 import smcl.viewers.{display => displayInViewer}
 
@@ -33,6 +33,7 @@ trait ImageElement
     extends HasPos
         with HasBounds
         with HasDims
+        with TypeQueryable
         with Movable[ImageElement]
         with Rotatable[ImageElement]
         with Scalable[ImageElement]
@@ -60,52 +61,25 @@ trait ImageElement
   def isRenderable: Boolean
 
   /**
-   * Renders this [[ImageElement]] on a drawing surface.
    *
-   * @param drawingSurface
+   *
+   * @return
    */
-  def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      offsetsToOrigo: Dims): Unit
+  @inline
+  def toBitmap: Bmp = Bmp(this)
 
   /**
    *
    *
    * @return
    */
-  def isBitmap: Boolean = isInstanceOf[Bmp]
-
-  /**
-   *
-   *
-   * @return
-   */
-  def toBitmap: Bmp = this match {
-    case b: Bmp => b
-    case _      => Bmp(this)
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def isImage: Boolean = isInstanceOf[Image]
-
-  /**
-   *
-   *
-   * @return
-   */
-  def toImage: Image = this match {
-    case i: Image => i
-    case _        => Image(this)
-  }
-
+  @inline
+  def toImage: Image = Image(this)
 
   /**
    *
    */
+  @inline
   def display(): ImageElement = {
     displayInViewer(toBitmap)
 
@@ -122,6 +96,7 @@ trait ImageElement
    *
    * @return
    */
+  @inline
   override
   def crop(
       upperLeftCornerX: Double,
@@ -135,5 +110,85 @@ trait ImageElement
       lowerRightCornerX,
       lowerRightCornerY)
   }
+
+  /**
+   *
+   *
+   * @param content
+   *
+   * @return
+   */
+  @inline
+  def addToBack(content: ImageElement): ImageElement = {
+    if (isImage) {
+      val thisImage = toImage
+      val wholeContent =
+        if (content.isImage)
+          thisImage.elements ++ content.toImage.elements
+        else
+          thisImage.elements :+ content
+
+      thisImage.copy(newElements = wholeContent)
+    }
+    else {
+      val wholeContent =
+        if (content.isImage)
+          this +: content.toImage.elements
+        else
+          Seq(this, content)
+
+      Image(wholeContent: _*)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param content
+   *
+   * @return
+   */
+  @inline
+  def addToFront(content: ImageElement): ImageElement = {
+    if (isImage) {
+      val thisImage = toImage
+      val wholeContent =
+        if (content.isImage)
+          content.toImage.elements ++ thisImage.elements
+        else
+          content +: thisImage.elements
+
+      thisImage.copy(newElements = wholeContent)
+    }
+    else {
+      val wholeContent =
+        if (content.isImage)
+          content.toImage.elements :+ this
+        else
+          Seq(content, this)
+
+      Image(wholeContent: _*)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param content
+   *
+   * @return
+   */
+  @inline
+  def +: (content: ImageElement): ImageElement = addToFront(content)
+
+  /**
+   *
+   *
+   * @param content
+   *
+   * @return
+   */
+  @inline
+  def :+ (content: ImageElement): ImageElement = addToBack(content)
 
 }

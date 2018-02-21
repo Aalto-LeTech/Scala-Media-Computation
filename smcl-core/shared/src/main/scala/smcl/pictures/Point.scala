@@ -127,19 +127,11 @@ class Point private(
   /**
    *
    *
-   * @param drawingSurface
-   * @param offsetsToOrigo
+   * @return
    */
   @inline
-  def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      offsetsToOrigo: Dims): Unit = {
-
-    drawingSurface.drawPoint(
-      offsetsToOrigo.width.inPixels + position.xInPixels,
-      offsetsToOrigo.height.inPixels + position.yInPixels,
-      color)
-  }
+  override
+  def isPoint: Boolean = true
 
   /**
    *

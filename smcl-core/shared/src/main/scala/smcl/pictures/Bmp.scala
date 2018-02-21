@@ -45,9 +45,6 @@ object Bmp
     injectable(InjectablesRegistry.IIdBitmapValidator).asInstanceOf[BitmapValidator]
   }
 
-  /** A bitmap, the width and height of which are zeros. */
-  lazy val ZeroSized: Bmp = Bmp(0, 0)
-
   /**
    *
    *
@@ -55,49 +52,8 @@ object Bmp
    *
    * @return
    */
-  def apply(elements: ImageElement*): Bmp = {
-    if (elements.isEmpty)
-      return Bmp.ZeroSized
-
-    val bounds =
-      if (elements.length == 1 &&
-          elements.head.isImage &&
-          elements.head.toImage.viewport.isDefined) {
-
-        elements.head.toImage.viewport.get.boundary
-      }
-      else {
-        BoundaryCalculator.fromBoundaries(elements)
-      }
-
-    val width = bounds.width.floor
-    val height = bounds.height.floor
-
-    if (width < 1 || height < 1) {
-      return Bmp.ZeroSized
-    }
-
-    bitmapValidator.validateBitmapSize(width, height)
-
-    val buffer: BitmapBufferAdapter =
-      PRF.createPlatformBitmapBuffer(width, height)
-
-    val upperLeftPos = bounds.upperLeftMarker.inverse
-    val offsetsToOrigo = Dims(
-      upperLeftPos.xInPixels, upperLeftPos.yInPixels)
-
-    elements.foreach{e =>
-      e.renderOn(
-        buffer.drawingSurface,
-        offsetsToOrigo
-      )
-    }
-
-    apply(
-      Identity(),
-      Pos.Origo,
-      Some(buffer))
-  }
+  def apply(elements: ImageElement*): Bmp =
+    Renderer.createBitmapFrom(elements: _*)
 
   /**
    *
@@ -172,7 +128,7 @@ object Bmp
       buffer: Option[BitmapBufferAdapter]): Bmp = {
 
     if (buffer.isEmpty) {
-      return new Bmp(identity, false, Dims(0, 0), position, None)
+      return new Bmp(identity, false, Dims.Zeros, position, None)
     }
 
     val isRenderable =
@@ -228,22 +184,20 @@ class Bmp private(
   /**
    *
    *
-   * @param drawingSurface
+   * @return
    */
   @inline
   override
-  def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      offsetsToOrigo: Dims): Unit = {
+  def isBitmap: Boolean = true
 
-    if (buffer.isEmpty)
-      return
-
-    drawingSurface.drawBitmap(
-      buffer.get,
-      (offsetsToOrigo.width.inPixels + position.xInPixels).toInt,
-      (offsetsToOrigo.height.inPixels + position.yInPixels).toInt)
-  }
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toBitmap: Bmp = this
 
   /**
    *

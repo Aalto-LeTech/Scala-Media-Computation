@@ -21,8 +21,8 @@ import smcl.colors.ColorValidator
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, RichColor}
 import smcl.infrastructure._
 import smcl.modeling.d1
+import smcl.pictures._
 import smcl.pictures.fullfeatured.{AbstractBitmaps, ShapeCreator}
-import smcl.pictures.{BitmapValidator, BitmapValidatorFunctionFactory, Bmp, fullfeatured}
 import smcl.settings.jvmawt.JVMAWTSettingInitializer
 import smcl.settings.{SettingValidatorFactory, _}
 import smcl.{SMCL, modeling}
@@ -116,6 +116,7 @@ object Initializer extends SMCLInitializer {
       modeling.d3.PointAnchor,
       modeling.d3.RatioAnchor,
       fullfeatured.Bitmap,
+      Renderer,
       Bmp,
       ShapeCreator,
       AbstractBitmaps

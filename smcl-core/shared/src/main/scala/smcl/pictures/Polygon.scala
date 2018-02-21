@@ -101,54 +101,13 @@ class Polygon private(
   val isRenderable: Boolean = true
 
   /**
-   * Renders this [[Polygon]] on a drawing surface.
    *
-   * @param drawingSurface
-   * @param offsetsToOrigo
+   *
+   * @return
    */
+  @inline
   override
-  def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      offsetsToOrigo: Dims): Unit = {
-
-    if (points.isEmpty)
-      return
-
-    val xOffset = offsetsToOrigo.width.inPixels
-    val yOffset = offsetsToOrigo.height.inPixels
-
-    if (points.lengthCompare(1) == 0) {
-      val p = points.head
-
-      drawingSurface.drawPoint(
-        xOffset + p.xInPixels,
-        yOffset + p.yInPixels,
-        color)
-    }
-    else if (points.lengthCompare(2) == 0) {
-      val start = points.head
-      val end = points.tail.head
-
-      drawingSurface.drawLine(
-        fromXInPixels = xOffset + start.xInPixels,
-        fromYInPixels = yOffset + start.yInPixels,
-        toXInPixels = xOffset + end.xInPixels,
-        toYInPixels = yOffset + end.yInPixels,
-        color = color)
-    }
-    else {
-      val (rawXs, rawYs) = points.unzip[Double, Double]
-
-      drawingSurface.drawPolygon(
-        rawXs.map(xOffset + _),
-        rawYs.map(yOffset + _),
-        points.length,
-        hasBorder,
-        hasFilling,
-        color,
-        fillColor)
-    }
-  }
+  def isPolygon: Boolean = true
 
   /**
    *

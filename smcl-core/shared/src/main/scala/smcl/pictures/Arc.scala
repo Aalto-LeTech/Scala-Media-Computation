@@ -152,29 +152,13 @@ class Arc private(
   val isRenderable: Boolean = true
 
   /**
-   * Renders this [[Arc]] on a drawing surface.
    *
-   * @param drawingSurface
-   * @param offsetsToOrigo
+   *
+   * @return
    */
+  @inline
   override
-  def renderOn(
-      drawingSurface: DrawingSurfaceAdapter,
-      offsetsToOrigo: Dims): Unit = {
-
-    val topLeftX = offsetsToOrigo.width.inPixels + upperLeftCorner.xInPixels
-    val topLeftY = offsetsToOrigo.height.inPixels + upperLeftCorner.yInPixels
-
-    drawingSurface.drawArc(
-      topLeftX, topLeftY,
-      dimensions.width.inPixels,
-      dimensions.height.inPixels,
-      startAngleInDegrees,
-      arcAngleInDegrees,
-      currentTransformation,
-      hasBorder, hasFilling,
-      color, fillColor)
-  }
+  def isArc: Boolean = true
 
   /**
    *
