@@ -129,25 +129,13 @@ trait ImageElement
    */
   @inline
   def addToBack(newContent: ImageElement): ImageElement = {
-    if (isImage) {
-      val thisImage = toImage
-      val wholeContent =
-        if (newContent.isImage)
-          thisImage.elements ++ newContent.toImage.elements
-        else
-          thisImage.elements :+ newContent
+    val wholeContent =
+      if (newContent.isImage)
+        this +: newContent.toImage.elements
+      else
+        Seq(this, newContent)
 
-      thisImage.copy(newElements = wholeContent)
-    }
-    else {
-      val wholeContent =
-        if (newContent.isImage)
-          this +: newContent.toImage.elements
-        else
-          Seq(this, newContent)
-
-      Image(wholeContent: _*)
-    }
+    Image(wholeContent: _*)
   }
 
   /**
@@ -158,27 +146,8 @@ trait ImageElement
    * @return
    */
   @inline
-  def addToFront(newContent: ImageElement): ImageElement = {
-    if (isImage) {
-      val thisImage = toImage
-      val wholeContent =
-        if (newContent.isImage)
-          newContent.toImage.elements ++ thisImage.elements
-        else
-          newContent +: thisImage.elements
-
-      thisImage.copy(newElements = wholeContent)
-    }
-    else {
-      val wholeContent =
-        if (newContent.isImage)
-          newContent.toImage.elements :+ this
-        else
-          Seq(newContent, this)
-
-      Image(wholeContent: _*)
-    }
-  }
+  def addToFront(newContent: ImageElement): ImageElement =
+    newContent.addToBack(this)
 
   /**
    *

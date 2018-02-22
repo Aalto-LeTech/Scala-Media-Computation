@@ -17,7 +17,7 @@
 package smcl.pictures
 
 
-import smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
+import smcl.infrastructure.{FlatMap, Identity}
 import smcl.modeling.d2._
 
 
@@ -195,6 +195,46 @@ class Image private(
       newAnchor: Anchor[HasAnchor] = anchor): Image = {
 
     new Image(identity, newElements, newViewport, newAnchor)
+  }
+
+  /**
+   *
+   *
+   * @param newContent
+   *
+   * @return
+   */
+  @inline
+  override
+  def addToBack(newContent: ImageElement): ImageElement = {
+    val wholeContent =
+      if (newContent.isImage)
+        elements ++ newContent.toImage.elements
+      else
+        elements :+ newContent
+
+    // Has to be copy of *this* Image because of viewports/anchors etc.
+    copy(newElements = wholeContent)
+  }
+
+  /**
+   *
+   *
+   * @param newContent
+   *
+   * @return
+   */
+  @inline
+  override
+  def addToFront(newContent: ImageElement): ImageElement = {
+    val wholeContent =
+      if (newContent.isImage)
+        newContent.toImage.elements ++ elements
+      else
+        newContent +: elements
+
+    // Has to be copy of *this* Image because of viewports/anchors etc.
+    copy(newElements = wholeContent)
   }
 
   /**
