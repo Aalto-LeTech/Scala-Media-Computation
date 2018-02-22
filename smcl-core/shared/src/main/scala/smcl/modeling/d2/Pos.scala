@@ -473,7 +473,13 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  def moveBy(dX: Double, dY: Double): Pos = {
+  def moveBy(
+      dX: Double,
+      dY: Double): Pos = {
+
+    // -- DEBUG --
+    //println(s"Move: ($xInPixels, $yInPixels) --> (${xInPixels + dX}, ${xInPixels + dY})")
+
     Pos(xInPixels + dX, yInPixels + dY)
   }
 

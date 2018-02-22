@@ -17,8 +17,11 @@
 package smcl.pictures
 
 
+import scala.annotation.tailrec
+
 import smcl.infrastructure.Identity
 import smcl.modeling.d2._
+import smcl.settings._
 import smcl.viewers.{display => displayInViewer}
 
 
@@ -38,6 +41,12 @@ trait ImageElement
         with Rotatable[ImageElement]
         with Scalable[ImageElement]
         with Cropable[Bmp] {
+
+  /** */
+  type SimpleTransformer = ImageElement => ImageElement
+
+  /** */
+  val IdentitySimpleTransformer: SimpleTransformer = (i: ImageElement) => i
 
   /**
    *
@@ -114,28 +123,28 @@ trait ImageElement
   /**
    *
    *
-   * @param content
+   * @param newContent
    *
    * @return
    */
   @inline
-  def addToBack(content: ImageElement): ImageElement = {
+  def addToBack(newContent: ImageElement): ImageElement = {
     if (isImage) {
       val thisImage = toImage
       val wholeContent =
-        if (content.isImage)
-          thisImage.elements ++ content.toImage.elements
+        if (newContent.isImage)
+          thisImage.elements ++ newContent.toImage.elements
         else
-          thisImage.elements :+ content
+          thisImage.elements :+ newContent
 
       thisImage.copy(newElements = wholeContent)
     }
     else {
       val wholeContent =
-        if (content.isImage)
-          this +: content.toImage.elements
+        if (newContent.isImage)
+          this +: newContent.toImage.elements
         else
-          Seq(this, content)
+          Seq(this, newContent)
 
       Image(wholeContent: _*)
     }
@@ -144,28 +153,28 @@ trait ImageElement
   /**
    *
    *
-   * @param content
+   * @param newContent
    *
    * @return
    */
   @inline
-  def addToFront(content: ImageElement): ImageElement = {
+  def addToFront(newContent: ImageElement): ImageElement = {
     if (isImage) {
       val thisImage = toImage
       val wholeContent =
-        if (content.isImage)
-          content.toImage.elements ++ thisImage.elements
+        if (newContent.isImage)
+          newContent.toImage.elements ++ thisImage.elements
         else
-          content +: thisImage.elements
+          newContent +: thisImage.elements
 
       thisImage.copy(newElements = wholeContent)
     }
     else {
       val wholeContent =
-        if (content.isImage)
-          content.toImage.elements :+ this
+        if (newContent.isImage)
+          newContent.toImage.elements :+ this
         else
-          Seq(content, this)
+          Seq(newContent, this)
 
       Image(wholeContent: _*)
     }
@@ -174,21 +183,97 @@ trait ImageElement
   /**
    *
    *
-   * @param content
+   * @param newContent
    *
    * @return
    */
   @inline
-  def +: (content: ImageElement): ImageElement = addToFront(content)
+  def +: (newContent: ImageElement): ImageElement = addToFront(newContent)
 
   /**
    *
    *
-   * @param content
+   * @param newContent
    *
    * @return
    */
   @inline
-  def :+ (content: ImageElement): ImageElement = addToBack(content)
+  def :+ (newContent: ImageElement): ImageElement = addToBack(newContent)
+
+  /**
+   *
+   *
+   * @param newContent
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  def addToRight(
+      newContent: ImageElement,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: VerticalAlignment = DefaultVerticalAlignment): ImageElement = {
+
+    val ncBounds = newContent.boundary
+
+    val ncNewUpperLeftX = boundary.lowerRightMarker.xInPixels + paddingInPixels
+    val alignmentOffsetY: Double =
+      alignment match {
+        case VATop    => 0.0
+        case VAMiddle => height.half.inPixels - ncBounds.height.half.inPixels
+        case VABottom => height.inPixels - ncBounds.height.inPixels
+      }
+    val ncNewUpperLeftY = boundary.upperLeftMarker.yInPixels + alignmentOffsetY
+
+    val ncCurrenyUpperLeftCorner = ncBounds.upperLeftMarker
+    val totalOffsetX = ncNewUpperLeftX - ncCurrenyUpperLeftCorner.xInPixels
+    val totalOffsetY = ncNewUpperLeftY - ncCurrenyUpperLeftCorner.yInPixels
+
+    val movedContent = newContent.moveBy(totalOffsetX, totalOffsetY)
+
+    addToFront(movedContent)
+  }
+
+  /**
+   *
+   *
+   * @param numberOfReplicas
+   * @param paddingInPixels
+   * @param alignment
+   * @param transformer
+   *
+   * @return
+   */
+  @inline
+  def replicateHorizontally(
+      numberOfReplicas: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: VerticalAlignment = DefaultVerticalAlignment,
+      transformer: SimpleTransformer = IdentitySimpleTransformer): ImageElement = {
+
+    if (numberOfReplicas < 0) {
+      throw new IllegalArgumentException(
+        s"Number of replicas cannot be negative (was $numberOfReplicas)")
+    }
+
+    @tailrec
+    def replicate(
+        replicasLeft: Int,
+        previousTransformedImage: ImageElement,
+        resultImage: ImageElement): ImageElement = {
+
+      if (replicasLeft == 0)
+        return resultImage
+
+      val transformed = transformer(previousTransformedImage)
+
+      replicate(
+        replicasLeft - 1,
+        transformed,
+        resultImage.addToRight(transformed, paddingInPixels, alignment))
+    }
+
+    replicate(numberOfReplicas, this, this)
+  }
 
 }
