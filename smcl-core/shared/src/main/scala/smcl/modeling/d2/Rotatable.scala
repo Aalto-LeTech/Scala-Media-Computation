@@ -26,13 +26,24 @@ package smcl.modeling.d2
  */
 trait Rotatable[ReturnType] {
 
+  // 90 Degs Clockwise
+  // -------------------------------------------------------------------------------------------- \\
+
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   * Rotates this object around its center by 90 degrees clockwise.
    *
    * @return
    */
   @inline
   def rotateBy90DegsCW: ReturnType
+
+  /**
+   * Rotates this object around origo (0,0) by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  def rotateBy90DegsCWAroundOrigo: ReturnType
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -44,13 +55,25 @@ trait Rotatable[ReturnType] {
   @inline
   def rotateBy90DegsCW(centerOfRotation: Pos): ReturnType
 
+
+  // 90 Degs Counterclockwise
+  // -------------------------------------------------------------------------------------------- \\
+
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   * Rotates this object around its center by 90 degrees counterclockwise.
    *
    * @return
    */
   @inline
   def rotateBy90DegsCCW: ReturnType
+
+  /**
+   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  def rotateBy90DegsCCWAroundOrigo: ReturnType
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -62,13 +85,25 @@ trait Rotatable[ReturnType] {
   @inline
   def rotateBy90DegsCCW(centerOfRotation: Pos): ReturnType
 
+
+  // 180 Degs
+  // -------------------------------------------------------------------------------------------- \\
+
   /**
-   * Rotates this object around the origo (0,0) by 180 degrees.
+   * Rotates this object around its center by 180 degrees.
    *
    * @return
    */
   @inline
   def rotateBy180Degs: ReturnType
+
+  /**
+   * Rotates this object around origo (0,0) by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  def rotateBy180DegsAroundOrigo: ReturnType
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -80,8 +115,12 @@ trait Rotatable[ReturnType] {
   @inline
   def rotateBy180Degs(centerOfRotation: Pos): ReturnType
 
+
+  // Free Angle
+  // -------------------------------------------------------------------------------------------- \\
+
   /**
-   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
    *
@@ -89,6 +128,16 @@ trait Rotatable[ReturnType] {
    */
   @inline
   def rotateBy(angleInDegrees: Double): ReturnType
+
+  /**
+   * Rotates this object around its center by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  def rotateByAroundOrigo(angleInDegrees: Double): ReturnType
 
   /**
    * Rotates this object around a given point by the specified number of degrees.
