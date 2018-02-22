@@ -116,7 +116,7 @@ object Initializer extends SMCLInitializer {
       modeling.d3.PointAnchor,
       modeling.d3.RatioAnchor,
       fullfeatured.Bitmap,
-      Renderer,
+      RenderingController,
       Bmp,
       ShapeCreator,
       AbstractBitmaps

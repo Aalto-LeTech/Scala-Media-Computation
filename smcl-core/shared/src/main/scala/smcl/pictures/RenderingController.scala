@@ -31,7 +31,7 @@ import smcl.modeling.d2.BoundaryCalculator
  *
  * @author Aleksi Lukkarinen
  */
-object Renderer
+object RenderingController
     extends InjectablesRegistry {
 
   /** The ColorValidator instance to be used by this object. */

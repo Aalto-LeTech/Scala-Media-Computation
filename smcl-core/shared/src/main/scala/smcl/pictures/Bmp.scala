@@ -53,7 +53,7 @@ object Bmp
    * @return
    */
   def apply(elements: ImageElement*): Bmp =
-    Renderer.createBitmapFrom(elements: _*)
+    RenderingController.createBitmapFrom(elements: _*)
 
   /**
    *
