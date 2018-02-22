@@ -201,9 +201,9 @@ object Rectangle {
 
     val cornerPoints = Seq(
       center + (-halfBase, halfHeight),
-      center + Pos(halfBase, halfHeight),
-      center + Pos(halfBase, -halfHeight),
-      center + Pos(-halfBase, -halfHeight))
+      center + (halfBase, halfHeight),
+      center + (halfBase, -halfHeight),
+      center + (-halfBase, -halfHeight))
 
     // TODO: When no filling, create a Polyline, after it is implemented
     Polygon(
