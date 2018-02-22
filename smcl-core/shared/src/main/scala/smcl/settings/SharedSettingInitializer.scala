@@ -110,7 +110,7 @@ class SharedSettingInitializer() extends SettingInitializer {
 
     DoubleSetting(
       key = SIdDefaultPaddingInPixels,
-      initialValue = 5,
+      initialValue = 1,
       validator = settingValidatorFactory
           .isNegativeDoubleValidator("Padding cannot be negative"))
 
@@ -133,7 +133,7 @@ class SharedSettingInitializer() extends SettingInitializer {
 
     ColorSetting(
       key = SIdDefaultBackgroundColor,
-      initialValue = White.withAbsoluteOpacity(0),
+      initialValue = White,
       validator = settingValidatorFactory.isNullValidator("Color cannot be null"))
 
     ColorSetting(
