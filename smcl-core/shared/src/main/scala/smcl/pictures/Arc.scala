@@ -18,7 +18,7 @@ package smcl.pictures
 
 
 import smcl.colors.rgb
-import smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
+import smcl.infrastructure.Identity
 import smcl.modeling.d2.{Bounds, Dims, Pos}
 import smcl.modeling.{AffineTransformation, Angle}
 import smcl.settings._
@@ -293,7 +293,7 @@ class Arc private(
    */
   override
   def rotateBy90DegsCW: ImageElement = {
-    val newRotationAngle = currentRotationAngleInDegrees - Angle.RightAngleInDegrees
+    val newRotationAngle = currentRotationAngleInDegrees + Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCWAroundPoint(position)
 
     internalCopy(
@@ -320,7 +320,7 @@ class Arc private(
    */
   override
   def rotateBy90DegsCCW: ImageElement = {
-    val newRotationAngle = currentRotationAngleInDegrees + Angle.RightAngleInDegrees
+    val newRotationAngle = currentRotationAngleInDegrees - Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCCWAroundPoint(position)
 
     internalCopy(
@@ -376,9 +376,9 @@ class Arc private(
    */
   override
   def rotateBy(angleInDegrees: Double): ImageElement = {
-    val newRotationAngle = currentRotationAngleInDegrees + angleInDegrees
+    val newRotationAngle = currentRotationAngleInDegrees - angleInDegrees
     val newTransformation =
-      currentTransformation.rotateAroundPoint(Angle(angleInDegrees), position)
+      currentTransformation.rotateAroundPoint(Angle(-angleInDegrees), position)
 
     internalCopy(
       newRotationAngleInDegrees = newRotationAngle,
