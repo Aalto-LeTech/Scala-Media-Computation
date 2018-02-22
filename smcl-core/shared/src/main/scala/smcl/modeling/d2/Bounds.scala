@@ -22,6 +22,7 @@ import scala.util.Random
 import smcl.infrastructure.MathUtils
 import smcl.modeling._
 import smcl.modeling.misc.CoordSysIndepBoundary
+import smcl.settings.{HACenter, HALeft, HARight, HorizontalAlignment, VABottom, VAMiddle, VATop, VerticalAlignment}
 
 
 
@@ -285,6 +286,52 @@ case class Bounds private(
   override
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Bounds]
+  }
+
+  /**
+   *
+   *
+   * @param alignment
+   * @param boundaryToBeAligned
+   *
+   * @return
+   */
+  @inline
+  def horizontalPositionFor(
+      alignment: HorizontalAlignment,
+      boundaryToBeAligned: Bounds): Double = {
+
+    val offset =
+      alignment match {
+        case HALeft   => Len.Zero
+        case HACenter => width.half - boundaryToBeAligned.width.half
+        case HARight  => width - boundaryToBeAligned.width
+      }
+
+    upperLeftMarker.xInPixels + offset.inPixels
+  }
+
+  /**
+   *
+   *
+   * @param alignment
+   * @param boundaryToBeAligned
+   *
+   * @return
+   */
+  @inline
+  def verticalPositionFor(
+      alignment: VerticalAlignment,
+      boundaryToBeAligned: Bounds): Double = {
+
+    val offset =
+      alignment match {
+        case VATop    => Len.Zero
+        case VAMiddle => height.half - boundaryToBeAligned.height.half
+        case VABottom => height - boundaryToBeAligned.height
+      }
+
+    upperLeftMarker.yInPixels + offset.inPixels
   }
 
   /**

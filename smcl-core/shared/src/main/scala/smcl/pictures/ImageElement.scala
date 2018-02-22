@@ -178,25 +178,104 @@ trait ImageElement
    *
    * @return
    */
+  @inline
+  def addToTop(
+      newContent: ImageElement,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: HorizontalAlignment = DefaultHorizontalAlignment): ImageElement = {
+
+    val ncNewUpperLeftX = boundary.horizontalPositionFor(alignment, newContent.boundary)
+
+    val ncNewUpperLeftY =
+      boundary.upperLeftMarker.yInPixels - paddingInPixels - newContent.boundary.height.inPixels
+
+    moveAndAddToSide(newContent, ncNewUpperLeftX, ncNewUpperLeftY)
+  }
+
+  /**
+   *
+   *
+   * @param newContent
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  @inline
   def addToRight(
       newContent: ImageElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: VerticalAlignment = DefaultVerticalAlignment): ImageElement = {
 
-    val ncBounds = newContent.boundary
-
     val ncNewUpperLeftX = boundary.lowerRightMarker.xInPixels + paddingInPixels
-    val alignmentOffsetY: Double =
-      alignment match {
-        case VATop    => 0.0
-        case VAMiddle => height.half.inPixels - ncBounds.height.half.inPixels
-        case VABottom => height.inPixels - ncBounds.height.inPixels
-      }
-    val ncNewUpperLeftY = boundary.upperLeftMarker.yInPixels + alignmentOffsetY
+    val ncNewUpperLeftY = boundary.verticalPositionFor(alignment, newContent.boundary)
 
-    val ncCurrenyUpperLeftCorner = ncBounds.upperLeftMarker
-    val totalOffsetX = ncNewUpperLeftX - ncCurrenyUpperLeftCorner.xInPixels
-    val totalOffsetY = ncNewUpperLeftY - ncCurrenyUpperLeftCorner.yInPixels
+    moveAndAddToSide(newContent, ncNewUpperLeftX, ncNewUpperLeftY)
+  }
+
+  /**
+   *
+   *
+   * @param newContent
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  @inline
+  def addToBottom(
+      newContent: ImageElement,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: HorizontalAlignment = DefaultHorizontalAlignment): ImageElement = {
+
+    val ncNewUpperLeftX = boundary.horizontalPositionFor(alignment, newContent.boundary)
+    val ncNewUpperLeftY = boundary.lowerRightMarker.yInPixels + paddingInPixels
+
+    moveAndAddToSide(newContent, ncNewUpperLeftX, ncNewUpperLeftY)
+  }
+
+  /**
+   *
+   *
+   * @param newContent
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  @inline
+  def addToLeft(
+      newContent: ImageElement,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: VerticalAlignment = DefaultVerticalAlignment): ImageElement = {
+
+    val ncNewUpperLeftX =
+      boundary.upperLeftMarker.xInPixels - paddingInPixels - newContent.boundary.width.inPixels
+
+    val ncNewUpperLeftY = boundary.verticalPositionFor(alignment, newContent.boundary)
+
+    moveAndAddToSide(newContent, ncNewUpperLeftX, ncNewUpperLeftY)
+  }
+
+  /**
+   *
+   *
+   * @param newContent
+   * @param ncNewUpperLeftCornerX
+   * @param ncNewUpperLeftCornerY
+   *
+   * @return
+   */
+  @inline
+  private
+  def moveAndAddToSide(
+      newContent: ImageElement,
+      ncNewUpperLeftCornerX: Double,
+      ncNewUpperLeftCornerY: Double): ImageElement = {
+
+    val ncCurrentUpperLeftCorner = newContent.boundary.upperLeftMarker
+    val totalOffsetX = ncNewUpperLeftCornerX - ncCurrentUpperLeftCorner.xInPixels
+    val totalOffsetY = ncNewUpperLeftCornerY - ncCurrentUpperLeftCorner.yInPixels
 
     val movedContent = newContent.moveBy(totalOffsetX, totalOffsetY)
 
@@ -213,7 +292,6 @@ trait ImageElement
    *
    * @return
    */
-  @inline
   def replicateHorizontally(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -240,6 +318,47 @@ trait ImageElement
         replicasLeft - 1,
         transformed,
         resultImage.addToRight(transformed, paddingInPixels, alignment))
+    }
+
+    replicate(numberOfReplicas, this, this)
+  }
+
+  /**
+   *
+   *
+   * @param numberOfReplicas
+   * @param paddingInPixels
+   * @param alignment
+   * @param transformer
+   *
+   * @return
+   */
+  def replicateVertically(
+      numberOfReplicas: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: HorizontalAlignment = DefaultHorizontalAlignment,
+      transformer: SimpleTransformer = IdentitySimpleTransformer): ImageElement = {
+
+    if (numberOfReplicas < 0) {
+      throw new IllegalArgumentException(
+        s"Number of replicas cannot be negative (was $numberOfReplicas)")
+    }
+
+    @tailrec
+    def replicate(
+        replicasLeft: Int,
+        previousTransformedImage: ImageElement,
+        resultImage: ImageElement): ImageElement = {
+
+      if (replicasLeft == 0)
+        return resultImage
+
+      val transformed = transformer(previousTransformedImage)
+
+      replicate(
+        replicasLeft - 1,
+        transformed,
+        resultImage.addToBottom(transformed, paddingInPixels, alignment))
     }
 
     replicate(numberOfReplicas, this, this)
