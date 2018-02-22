@@ -87,7 +87,7 @@ object Rectangle {
       center: Pos): VectorGraphic = {
 
     apply(
-      sideLength, sideLength,
+      sideLength,
       center,
       hasBorder = ShapesHaveBordersByDefault,
       hasFilling = ShapesHaveFillingsByDefault,
@@ -200,10 +200,10 @@ object Rectangle {
     val halfHeight = height / 2.0
 
     val cornerPoints = Seq(
-      Pos(-halfBase, halfHeight),
-      Pos(halfBase, halfHeight),
-      Pos(halfBase, -halfHeight),
-      Pos(-halfBase, -halfHeight))
+      center + (-halfBase, halfHeight),
+      center + Pos(halfBase, halfHeight),
+      center + Pos(halfBase, -halfHeight),
+      center + Pos(-halfBase, -halfHeight))
 
     // TODO: When no filling, create a Polyline, after it is implemented
     Polygon(
