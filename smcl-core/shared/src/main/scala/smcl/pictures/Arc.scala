@@ -143,9 +143,7 @@ class Arc private(
 
   /** Position of this [[Arc]]. */
   override
-  val position: Pos = Pos(
-    internalCenter.width.inPixels,
-    internalCenter.height.inPixels)
+  val position: Pos = boundary.upperLeftMarker + internalCenter
 
   /** Tells if this [[Arc]] can be rendered on a bitmap. */
   override

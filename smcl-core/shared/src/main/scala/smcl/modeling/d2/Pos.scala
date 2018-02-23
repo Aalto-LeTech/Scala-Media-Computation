@@ -854,15 +854,22 @@ case class Pos private[smcl](
   def toString: String = s"($xInPixels, $yInPixels)"
 
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   * Rotates this object around origo (0,0) by 90 degrees clockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCW: Pos = {
-    Transformer.rotateBy90DegsCW(this)
-  }
+  def rotateBy90DegsCWAroundOrigo: Pos = Transformer.rotateBy90DegsCW(this)
+
+  /**
+   * Rotates this object around its center by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW: Pos = this
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -873,20 +880,26 @@ case class Pos private[smcl](
    */
   @inline
   override
-  def rotateBy90DegsCW(centerOfRotation: Pos): Pos = {
+  def rotateBy90DegsCW(centerOfRotation: Pos): Pos =
     Transformer.rotateBy90DegsCW(this, centerOfRotation)
-  }
 
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCCW: Pos = {
-    Transformer.rotateBy90DegsCCW(this)
-  }
+  def rotateBy90DegsCCWAroundOrigo: Pos = Transformer.rotateBy90DegsCCW(this)
+
+  /**
+   * Rotates this object around the its center by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: Pos = this
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -897,20 +910,26 @@ case class Pos private[smcl](
    */
   @inline
   override
-  def rotateBy90DegsCCW(centerOfRotation: Pos): Pos = {
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Pos =
     Transformer.rotateBy90DegsCCW(this, centerOfRotation)
-  }
 
   /**
-   * Rotates this object around the origo (0,0) by 180 degrees.
+   * Rotates this object around origo (0,0) by 180 degrees.
    *
    * @return
    */
   @inline
   override
-  def rotateBy180Degs: Pos = {
-    Transformer.rotateBy180Degs(this)
-  }
+  def rotateBy180DegsAroundOrigo: Pos = Transformer.rotateBy180Degs(this)
+
+  /**
+   * Rotates this object around its center by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: Pos = this
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -921,12 +940,11 @@ case class Pos private[smcl](
    */
   @inline
   override
-  def rotateBy180Degs(centerOfRotation: Pos): Pos = {
+  def rotateBy180Degs(centerOfRotation: Pos): Pos =
     Transformer.rotateBy180Degs(this, centerOfRotation)
-  }
 
   /**
-   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
    *
@@ -934,12 +952,21 @@ case class Pos private[smcl](
    */
   @inline
   override
-  def rotateBy(angleInDegrees: Double): Pos = {
-    Transformer.rotate(this, angleInDegrees)
-  }
+  def rotateByAroundOrigo(angleInDegrees: Double): Pos = Transformer.rotate(this, angleInDegrees)
 
   /**
-   * Rotates this object around a given point of the specified number of degrees.
+   * Rotates this object around its center by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angleInDegrees: Double): Pos = this
+
+  /**
+   * Rotates this object around a given point by the specified number of degrees.
    *
    * @param angleInDegrees
    * @param centerOfRotation
@@ -978,7 +1005,6 @@ case class Pos private[smcl](
    * @return
    */
   override
-  def transformBy(t: AffineTransformation): Pos =
-    t.process(this)
+  def transformBy(t: AffineTransformation): Pos = t.process(this)
 
 }

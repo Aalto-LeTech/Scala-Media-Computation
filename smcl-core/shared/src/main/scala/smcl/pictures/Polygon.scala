@@ -16,9 +16,9 @@
 
 package smcl.pictures
 
+
 import smcl.colors.rgb
-import smcl.infrastructure.{DrawingSurfaceAdapter, Identity}
-import smcl.modeling.AffineTransformation
+import smcl.infrastructure.Identity
 import smcl.modeling.d2.{BoundaryCalculator, Bounds, Dims, Pos}
 import smcl.settings._
 
@@ -92,9 +92,7 @@ class Polygon private(
 
   /** Position of this [[Polygon]]. */
   override
-  val position: Pos = Pos(
-    internalCenter.width.inPixels,
-    internalCenter.height.inPixels)
+  val position: Pos = boundary.upperLeftMarker + internalCenter
 
   /** Tells if this [[Polygon]] can be rendered on a bitmap. */
   override
@@ -229,14 +227,23 @@ class Polygon private(
     copy(newPoints = points.map(_.moveBy(offsets: _*)))
 
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   * Rotates this object around origo (0,0) by 90 degrees clockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCW: ImageElement =
-    copy(newPoints = points.map(_.rotateBy90DegsCW))
+  def rotateBy90DegsCWAroundOrigo: Polygon =
+    copy(newPoints = points.map(_.rotateBy90DegsCWAroundOrigo))
+
+  /**
+   * Rotates this object around its center by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW: Polygon = rotateBy90DegsCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -247,18 +254,27 @@ class Polygon private(
    */
   @inline
   override
-  def rotateBy90DegsCW(centerOfRotation: Pos): ImageElement =
+  def rotateBy90DegsCW(centerOfRotation: Pos): Polygon =
     copy(newPoints = points.map(_.rotateBy90DegsCW(centerOfRotation)))
 
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCCW: ImageElement =
-    copy(newPoints = points.map(_.rotateBy90DegsCCW))
+  def rotateBy90DegsCCWAroundOrigo: Polygon =
+    copy(newPoints = points.map(_.rotateBy90DegsCCWAroundOrigo))
+
+  /**
+   * Rotates this object around the its center by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: Polygon = rotateBy90DegsCCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -269,18 +285,27 @@ class Polygon private(
    */
   @inline
   override
-  def rotateBy90DegsCCW(centerOfRotation: Pos): ImageElement =
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Polygon =
     copy(newPoints = points.map(_.rotateBy90DegsCCW(centerOfRotation)))
 
   /**
-   * Rotates this object around the origo (0,0) by 180 degrees.
+   * Rotates this object around origo (0,0) by 180 degrees.
    *
    * @return
    */
   @inline
   override
-  def rotateBy180Degs: ImageElement =
-    copy(newPoints = points.map(_.rotateBy180Degs))
+  def rotateBy180DegsAroundOrigo: Polygon =
+    copy(newPoints = points.map(_.rotateBy180DegsAroundOrigo))
+
+  /**
+   * Rotates this object around its center by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: Polygon = rotateBy180Degs(position)
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -291,11 +316,11 @@ class Polygon private(
    */
   @inline
   override
-  def rotateBy180Degs(centerOfRotation: Pos): ImageElement =
+  def rotateBy180Degs(centerOfRotation: Pos): Polygon =
     copy(newPoints = points.map(_.rotateBy180Degs(centerOfRotation)))
 
   /**
-   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
    *
@@ -303,8 +328,20 @@ class Polygon private(
    */
   @inline
   override
-  def rotateBy(angleInDegrees: Double): ImageElement =
-    copy(newPoints = points.map(_.rotateBy(angleInDegrees)))
+  def rotateByAroundOrigo(angleInDegrees: Double): Polygon =
+    copy(newPoints = points.map(_.rotateByAroundOrigo(angleInDegrees)))
+
+  /**
+   * Rotates this object around its center by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angleInDegrees: Double): Polygon =
+    rotateBy(angleInDegrees, position)
 
   /**
    * Rotates this object around a given point by the specified number of degrees.
@@ -318,7 +355,7 @@ class Polygon private(
   override
   def rotateBy(
       angleInDegrees: Double,
-      centerOfRotation: Pos): ImageElement = {
+      centerOfRotation: Pos): Polygon = {
 
     copy(newPoints = points.map(_.rotateBy(angleInDegrees, centerOfRotation)))
   }
