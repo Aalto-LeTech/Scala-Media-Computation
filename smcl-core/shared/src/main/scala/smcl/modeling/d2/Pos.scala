@@ -582,6 +582,61 @@ case class Pos private[smcl](
   /**
    *
    *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def add(offset: Double): Pos = this + (offset, offset)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def add(offset: Len): Pos = {
+    val offsetInPixels = offset.inPixels
+    this + (offsetInPixels, offsetInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offsetX
+   * @param offsetY
+   *
+   * @return
+   */
+  @inline
+  def add(
+      offsetX: Double,
+      offsetY: Double): Pos = {
+
+    this + (offsetX, offsetY)
+  }
+
+  /**
+   *
+   *
+   * @param offsetX
+   * @param offsetY
+   *
+   * @return
+   */
+  @inline
+  def add(
+      offsetX: Len,
+      offsetY: Len): Pos = {
+
+    this + (offsetX.inPixels, offsetY.inPixels)
+  }
+
+  /**
+   *
+   *
    * @param offsets
    *
    * @return
@@ -603,6 +658,61 @@ case class Pos private[smcl](
    */
   @inline
   def subtract(offsets: Dims): Pos = this - offsets
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def subtract(offset: Double): Pos = this - (offset, offset)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def subtract(offset: Len): Pos = {
+    val offsetInPixels = offset.inPixels
+    this - (offsetInPixels, offsetInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offsetX
+   * @param offsetY
+   *
+   * @return
+   */
+  @inline
+  def subtract(
+      offsetX: Double,
+      offsetY: Double): Pos = {
+
+    this - (offsetX, offsetY)
+  }
+
+  /**
+   *
+   *
+   * @param offsetX
+   * @param offsetY
+   *
+   * @return
+   */
+  @inline
+  def subtract(
+      offsetX: Len,
+      offsetY: Len): Pos = {
+
+    this - (offsetX.inPixels, offsetY.inPixels)
+  }
 
   /**
    *
@@ -689,46 +799,46 @@ case class Pos private[smcl](
   /**
    *
    *
-   * @param dxInPixels
+   * @param offsetInPixels
    *
    * @return
    */
   @inline
-  def addX(dxInPixels: Double): Pos =
-    setX(xInPixels + dxInPixels)
+  def addX(offsetInPixels: Double): Pos =
+    setX(xInPixels + offsetInPixels)
 
   /**
    *
    *
-   * @param dx
+   * @param offset
    *
    * @return
    */
   @inline
-  def addX(dx: Len): Pos =
-    setX(xInPixels + dx.inPixels)
+  def addX(offset: Len): Pos =
+    setX(xInPixels + offset.inPixels)
 
   /**
    *
    *
-   * @param dyInPixels
+   * @param offsetInPixels
    *
    * @return
    */
   @inline
-  def addY(dyInPixels: Double): Pos =
-    setY(yInPixels + dyInPixels)
+  def addY(offsetInPixels: Double): Pos =
+    setY(yInPixels + offsetInPixels)
 
   /**
    *
    *
-   * @param dy
+   * @param offset
    *
    * @return
    */
   @inline
-  def addY(dy: Len): Pos =
-    setY(yInPixels + dy.inPixels)
+  def addY(offset: Len): Pos =
+    setY(yInPixels + offset.inPixels)
 
   /**
    *
@@ -752,7 +862,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  def centerWith(destination: Pos): Pos =
+  def centerBetween(destination: Pos): Pos =
     destination + (this - destination).half
 
   /**

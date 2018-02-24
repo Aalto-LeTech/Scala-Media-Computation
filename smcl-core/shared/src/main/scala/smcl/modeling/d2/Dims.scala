@@ -138,6 +138,9 @@ case class Dims private(
     Seq(width.inPixels, height.inPixels)
 
   /** */
+  lazy val center: Dims = Dims(width.half, height.half)
+
+  /** */
   lazy val area: Area = Area.forRectangle(width, height)
 
   /**

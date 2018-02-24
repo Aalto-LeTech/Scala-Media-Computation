@@ -254,6 +254,9 @@ case class Bounds private(
   def position: Pos = upperLeftMarker
 
   /** */
+  lazy val center: Pos = upperLeftMarker.centerBetween(lowerRightMarker)
+
+  /** */
   lazy val width: Len =
     Len(lowerRightMarker.xInPixels - upperLeftMarker.xInPixels + 1)
 
@@ -361,6 +364,218 @@ case class Bounds private(
       newLowerRightMarker: Pos = lowerRightMarker): Bounds = {
 
     Bounds(newUpperLeftMarker, newLowerRightMarker)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def grow(offset: Double): Bounds =
+    copy(
+      newUpperLeftMarker = upperLeftMarker.subtract(offset),
+      newLowerRightMarker = lowerRightMarker.add(offset))
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def grow(offset: Len): Bounds =
+    copy(
+      newUpperLeftMarker = upperLeftMarker.subtract(offset),
+      newLowerRightMarker = lowerRightMarker.add(offset))
+
+  /**
+   *
+   *
+   * @param horizontalOffset
+   * @param verticalOffset
+   *
+   * @return
+   */
+  @inline
+  def grow(
+      horizontalOffset: Double,
+      verticalOffset: Double): Bounds = {
+
+    copy(
+      newUpperLeftMarker = upperLeftMarker.subtract(horizontalOffset, verticalOffset),
+      newLowerRightMarker = lowerRightMarker.add(horizontalOffset, verticalOffset))
+  }
+
+  /**
+   *
+   *
+   * @param horizontalOffset
+   * @param verticalOffset
+   *
+   * @return
+   */
+  @inline
+  def grow(
+      horizontalOffset: Len,
+      verticalOffset: Len): Bounds = {
+
+    copy(
+      newUpperLeftMarker = upperLeftMarker.subtract(horizontalOffset, verticalOffset),
+      newLowerRightMarker = lowerRightMarker.add(horizontalOffset, verticalOffset))
+  }
+
+  /**
+   *
+   *
+   * @param topOffset
+   * @param leftOffset
+   * @param bottomOffset
+   * @param rightOffset
+   *
+   * @return
+   */
+  @inline
+  def grow(
+      topOffset: Double,
+      leftOffset: Double,
+      bottomOffset: Double,
+      rightOffset: Double): Bounds = {
+
+    copy(
+      newUpperLeftMarker = upperLeftMarker.subtract(leftOffset, topOffset),
+      newLowerRightMarker = lowerRightMarker.add(rightOffset, bottomOffset))
+  }
+
+  /**
+   *
+   *
+   * @param topOffset
+   * @param leftOffset
+   * @param bottomOffset
+   * @param rightOffset
+   *
+   * @return
+   */
+  @inline
+  def grow(
+      topOffset: Len,
+      leftOffset: Len,
+      bottomOffset: Len,
+      rightOffset: Len): Bounds = {
+
+    copy(
+      newUpperLeftMarker = upperLeftMarker.subtract(leftOffset, topOffset),
+      newLowerRightMarker = lowerRightMarker.add(rightOffset, bottomOffset))
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def shrink(offset: Double): Bounds =
+    copy(
+      newUpperLeftMarker = upperLeftMarker.add(offset),
+      newLowerRightMarker = lowerRightMarker.subtract(offset))
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def shrink(offset: Len): Bounds =
+    copy(
+      newUpperLeftMarker = upperLeftMarker.add(offset),
+      newLowerRightMarker = lowerRightMarker.subtract(offset))
+
+  /**
+   *
+   *
+   * @param horizontalOffset
+   * @param verticalOffset
+   *
+   * @return
+   */
+  @inline
+  def shrink(
+      horizontalOffset: Double,
+      verticalOffset: Double): Bounds = {
+
+    copy(
+      newUpperLeftMarker = upperLeftMarker.add(horizontalOffset, verticalOffset),
+      newLowerRightMarker = lowerRightMarker.subtract(horizontalOffset, verticalOffset))
+  }
+
+  /**
+   *
+   *
+   * @param horizontalOffset
+   * @param verticalOffset
+   *
+   * @return
+   */
+  @inline
+  def shrink(
+      horizontalOffset: Len,
+      verticalOffset: Len): Bounds = {
+
+    copy(
+      newUpperLeftMarker = upperLeftMarker.add(horizontalOffset, verticalOffset),
+      newLowerRightMarker = lowerRightMarker.subtract(horizontalOffset, verticalOffset))
+  }
+
+  /**
+   *
+   *
+   * @param topOffset
+   * @param leftOffset
+   * @param bottomOffset
+   * @param rightOffset
+   *
+   * @return
+   */
+  @inline
+  def shrink(
+      topOffset: Double,
+      leftOffset: Double,
+      bottomOffset: Double,
+      rightOffset: Double): Bounds = {
+
+    copy(
+      newUpperLeftMarker = upperLeftMarker.add(leftOffset, topOffset),
+      newLowerRightMarker = lowerRightMarker.subtract(rightOffset, bottomOffset))
+  }
+
+  /**
+   *
+   *
+   * @param topOffset
+   * @param leftOffset
+   * @param bottomOffset
+   * @param rightOffset
+   *
+   * @return
+   */
+  @inline
+  def shrink(
+      topOffset: Len,
+      leftOffset: Len,
+      bottomOffset: Len,
+      rightOffset: Len): Bounds = {
+
+    copy(
+      newUpperLeftMarker = upperLeftMarker.add(leftOffset, topOffset),
+      newLowerRightMarker = lowerRightMarker.subtract(rightOffset, bottomOffset))
   }
 
 }
