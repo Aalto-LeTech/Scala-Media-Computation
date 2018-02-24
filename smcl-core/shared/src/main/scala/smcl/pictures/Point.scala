@@ -21,8 +21,8 @@ import scala.language.implicitConversions
 
 import smcl.colors.rgb
 import smcl.infrastructure.{FlatMap, Identity}
-import smcl.modeling.Len
 import smcl.modeling.d2.{Bounds, CoordinateTuple, Dims, Pos}
+import smcl.modeling.{Angle, Len}
 
 
 
@@ -442,6 +442,17 @@ class Point private(
     copy(newPosition = position.rotateBy180Degs(centerOfRotation))
 
   /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateByAroundOrigo(angle: Angle): Point = rotateByAroundOrigo(angle)
+
+  /**
    * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -454,6 +465,17 @@ class Point private(
     copy(newPosition = position.rotateByAroundOrigo(angleInDegrees))
 
   /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angle: Angle): Point = rotateBy(angle)
+
+  /**
    * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -463,6 +485,23 @@ class Point private(
   @inline
   override
   def rotateBy(angleInDegrees: Double): Point = this
+
+  /**
+   * Rotates this object around a given point by the specified angle.
+   *
+   * @param angle
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(
+      angle: Angle,
+      centerOfRotation: Pos): Point = {
+
+    rotateBy(angle, centerOfRotation)
+  }
 
   /**
    * Rotates this object around a given point by the specified number of degrees.
@@ -489,6 +528,7 @@ class Point private(
    *
    * @return
    */
+  @inline
   override
   def scaleBy(
       widthFactor: Double,

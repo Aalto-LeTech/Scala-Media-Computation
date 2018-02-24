@@ -17,6 +17,11 @@
 package smcl.modeling.d2
 
 
+import smcl.modeling.Angle
+
+
+
+
 /**
  *
  *
@@ -120,6 +125,16 @@ trait Rotatable[ReturnType] {
   // -------------------------------------------------------------------------------------------- \\
 
   /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  def rotateBy(angle: Angle): ReturnType = rotateBy(angle.inDegrees)
+
+  /**
    * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -128,6 +143,16 @@ trait Rotatable[ReturnType] {
    */
   @inline
   def rotateBy(angleInDegrees: Double): ReturnType
+
+  /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  def rotateByAroundOrigo(angle: Angle): ReturnType = rotateByAroundOrigo(angle.inDegrees)
 
   /**
    * Rotates this object around its center by the specified number of degrees.
@@ -140,6 +165,22 @@ trait Rotatable[ReturnType] {
   def rotateByAroundOrigo(angleInDegrees: Double): ReturnType
 
   /**
+   * Rotates this object around a given point by the specified angle.
+   *
+   * @param angle
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  def rotateBy(
+      angle: Angle,
+      centerOfRotation: Pos): ReturnType = {
+
+    rotateBy(angle.inDegrees, centerOfRotation)
+  }
+
+  /**
    * Rotates this object around a given point by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -147,6 +188,7 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
+  @inline
   def rotateBy(
       angleInDegrees: Double,
       centerOfRotation: Pos): ReturnType

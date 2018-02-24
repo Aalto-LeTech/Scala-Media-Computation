@@ -417,6 +417,17 @@ class Arc private(
   }
 
   /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateByAroundOrigo(angle: Angle): Arc = rotateByAroundOrigo(angle)
+
+  /**
    * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -436,6 +447,17 @@ class Arc private(
   }
 
   /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angle: Angle): Arc = rotateBy(angle)
+
+  /**
    * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -445,6 +467,23 @@ class Arc private(
   @inline
   override
   def rotateBy(angleInDegrees: Double): Arc = rotateBy(angleInDegrees, position)
+
+  /**
+   * Rotates this object around a given point by the specified angle.
+   *
+   * @param angle
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(
+      angle: Angle,
+      centerOfRotation: Pos): Arc = {
+
+    rotateBy(angle, centerOfRotation)
+  }
 
   /**
    * Rotates this object around a given point by the specified number of degrees.

@@ -20,7 +20,7 @@ package smcl.pictures
 import smcl.colors.ColorValidator
 import smcl.infrastructure.{BitmapBufferAdapter, Displayable, Identity, InjectablesRegistry, PRF}
 import smcl.modeling.d2._
-import smcl.modeling.{AffineTransformation, Len}
+import smcl.modeling.{AffineTransformation, Angle, Len}
 
 
 
@@ -398,6 +398,17 @@ class Bmp private(
   }
 
   /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateByAroundOrigo(angle: Angle): Bmp = rotateByAroundOrigo(angle)
+
+  /**
    * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -414,6 +425,17 @@ class Bmp private(
   }
 
   /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angle: Angle): Bmp = rotateBy(angle)
+
+  /**
    * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -424,6 +446,23 @@ class Bmp private(
   override
   def rotateBy(angleInDegrees: Double): Bmp =
     rotateBy(angleInDegrees, position)
+
+  /**
+   * Rotates this object around a given point by the specified angle.
+   *
+   * @param angle
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(
+      angle: Angle,
+      centerOfRotation: Pos): Bmp = {
+
+    rotateBy(angle, centerOfRotation)
+  }
 
   /**
    * Rotates this object around a given point by the specified number of degrees.

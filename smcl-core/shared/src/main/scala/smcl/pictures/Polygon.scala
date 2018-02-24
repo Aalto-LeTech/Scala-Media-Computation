@@ -19,6 +19,7 @@ package smcl.pictures
 
 import smcl.colors.rgb
 import smcl.infrastructure.Identity
+import smcl.modeling.Angle
 import smcl.modeling.d2.{BoundaryCalculator, Bounds, Dims, Pos}
 import smcl.settings._
 
@@ -320,6 +321,17 @@ class Polygon private(
     copy(newPoints = points.map(_.rotateBy180Degs(centerOfRotation)))
 
   /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateByAroundOrigo(angle: Angle): Polygon = rotateByAroundOrigo(angle)
+
+  /**
    * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -332,6 +344,17 @@ class Polygon private(
     copy(newPoints = points.map(_.rotateByAroundOrigo(angleInDegrees)))
 
   /**
+   * Rotates this object around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angle: Angle): Polygon = rotateBy(angle)
+
+  /**
    * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
@@ -342,6 +365,23 @@ class Polygon private(
   override
   def rotateBy(angleInDegrees: Double): Polygon =
     rotateBy(angleInDegrees, position)
+
+  /**
+   * Rotates this object around a given point by the specified angle.
+   *
+   * @param angle
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(
+      angle: Angle,
+      centerOfRotation: Pos): Polygon = {
+
+    rotateBy(angle, centerOfRotation)
+  }
 
   /**
    * Rotates this object around a given point by the specified number of degrees.
