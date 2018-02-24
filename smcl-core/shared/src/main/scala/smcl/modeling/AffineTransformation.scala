@@ -983,7 +983,7 @@ case class AffineTransformation(
       gamma = beta,
       delta = -alpha,
       tauX = tauY,
-      tauY = tauX)
+      tauY = -tauX)
   }
 
   /**

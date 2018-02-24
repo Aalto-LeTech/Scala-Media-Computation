@@ -747,6 +747,17 @@ case class Pos private[smcl](
   /**
    *
    *
+   * @param destination
+   *
+   * @return
+   */
+  @inline
+  def centerWith(destination: Pos): Pos =
+    destination + (this - destination).half
+
+  /**
+   *
+   *
    * @param lowerRightCorner
    *
    * @return

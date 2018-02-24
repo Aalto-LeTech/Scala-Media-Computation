@@ -72,7 +72,10 @@ object Arc {
     val currentVerticalScalingFactor = InitialScalingFactor
     val currentHorizontalShearingFactor = InitialShearingFactor
     val currentVerticalShearingFactor = InitialShearingFactor
-    val currentTransformation = AffineTransformation.Identity
+
+    val x = upperLeftCorner.centerWith(lowerRightCorner)
+    val currentTransformation =
+      AffineTransformation.forTranslationOf(x.xInPixels, x.yInPixels)
 
     new Arc(
       identity,
@@ -157,20 +160,6 @@ class Arc private(
   @inline
   override
   def isArc: Boolean = true
-
-  /**
-   *
-   *
-   * @param offsets
-   *
-   * @return
-   */
-  @inline
-  def moveBy(offsets: Double*): Arc = {
-    copy(
-      newUpperLeftCorner = upperLeftCorner + offsets,
-      newLowerRightCorner = lowerRightCorner + offsets)
-  }
 
   /**
    *
@@ -262,6 +251,19 @@ class Arc private(
   /**
    *
    *
+   * @param offsets
+   *
+   * @return
+   */
+  @inline
+  def moveBy(offsets: Double*): Arc =
+    copy(
+      newUpperLeftCorner = upperLeftCorner + offsets,
+      newLowerRightCorner = lowerRightCorner + offsets)
+
+  /**
+   *
+   *
    * @param widthFactor
    * @param heightFactor
    *
@@ -292,7 +294,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy90DegsCWAroundOrigo: ImageElement = {
+  def rotateBy90DegsCWAroundOrigo: Arc = {
     val newRotationAngle = currentRotationAngleInDegrees + Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCWAroundOrigo
 
@@ -308,7 +310,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy90DegsCW: ImageElement = rotateBy90DegsCW(position)
+  def rotateBy90DegsCW: Arc = rotateBy90DegsCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -319,7 +321,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy90DegsCW(centerOfRotation: Pos): ImageElement = {
+  def rotateBy90DegsCW(centerOfRotation: Pos): Arc = {
     val newRotationAngle = currentRotationAngleInDegrees + Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCWAroundPoint(centerOfRotation)
 
@@ -335,7 +337,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy90DegsCCWAroundOrigo: ImageElement = {
+  def rotateBy90DegsCCWAroundOrigo: Arc = {
     val newRotationAngle = currentRotationAngleInDegrees - Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCCWAroundOrigo
 
@@ -351,7 +353,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy90DegsCCW: ImageElement = rotateBy90DegsCCW(position)
+  def rotateBy90DegsCCW: Arc = rotateBy90DegsCCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -362,7 +364,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy90DegsCCW(centerOfRotation: Pos): ImageElement = {
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Arc = {
     val newRotationAngle = currentRotationAngleInDegrees - Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCCWAroundPoint(centerOfRotation)
 
@@ -378,7 +380,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy180DegsAroundOrigo: ImageElement = {
+  def rotateBy180DegsAroundOrigo: Arc = {
     val newRotationAngle = currentRotationAngleInDegrees + Angle.StraightAngleInDegrees
     val newTransformation = currentTransformation.rotate180DegsAroundOrigo
 
@@ -394,7 +396,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy180Degs: ImageElement = rotateBy180Degs(position)
+  def rotateBy180Degs: Arc = rotateBy180Degs(position)
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -405,7 +407,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy180Degs(centerOfRotation: Pos): ImageElement = {
+  def rotateBy180Degs(centerOfRotation: Pos): Arc = {
     val newRotationAngle = currentRotationAngleInDegrees + Angle.StraightAngleInDegrees
     val newTransformation = currentTransformation.rotate180DegsAroundPoint(centerOfRotation)
 
@@ -423,8 +425,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateByAroundOrigo(angleInDegrees: Double): ImageElement = {
-
+  def rotateByAroundOrigo(angleInDegrees: Double): Arc = {
     val newRotationAngle = currentRotationAngleInDegrees - angleInDegrees
     val newTransformation =
       currentTransformation.rotateAroundOrigo(Angle(-angleInDegrees))
@@ -443,8 +444,7 @@ class Arc private(
    */
   @inline
   override
-  def rotateBy(angleInDegrees: Double): ImageElement =
-    rotateBy(angleInDegrees, position)
+  def rotateBy(angleInDegrees: Double): Arc = rotateBy(angleInDegrees, position)
 
   /**
    * Rotates this object around a given point by the specified number of degrees.
@@ -458,11 +458,11 @@ class Arc private(
   override
   def rotateBy(
       angleInDegrees: Double,
-      centerOfRotation: Pos): ImageElement = {
+      centerOfRotation: Pos): Arc = {
 
-    val newRotationAngle = currentRotationAngleInDegrees - angleInDegrees
+    val newRotationAngle = currentRotationAngleInDegrees + angleInDegrees
     val newTransformation =
-      currentTransformation.rotateAroundPoint(Angle(-angleInDegrees), centerOfRotation)
+      currentTransformation.rotateAroundPoint(Angle(angleInDegrees), centerOfRotation)
 
     internalCopy(
       newRotationAngleInDegrees = newRotationAngle,
