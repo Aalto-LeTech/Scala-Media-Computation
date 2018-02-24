@@ -117,17 +117,19 @@ object RenderingController
       }
       else if (contentItem.isArc) {
         val arc = contentItem.asInstanceOf[Arc]
-        //val topLeft = arc.upperLeftCorner
-        val topLeftX = -arc.dimensions.width.half.inPixels //  xOffsetToOrigoInPixels + topLeft.xInPixels
-        val topLeftY = -arc.dimensions.height.half.inPixels // yOffsetToOrigoInPixels + topLeft.yInPixels
+        val topLeftX = -arc.dimensions.width.half.inPixels
+        val topLeftY = -arc.dimensions.height.half.inPixels
+        val width = arc.dimensions.width.inPixels
+        val height = arc.dimensions.height.inPixels
+        val transformation =
+          arc.currentTransformation.translate(xOffsetToOrigoInPixels, yOffsetToOrigoInPixels)
 
         targetDrawingSurface.drawArc(
           topLeftX, topLeftY,
-          arc.dimensions.width.inPixels,
-          arc.dimensions.height.inPixels,
+          width, height,
           arc.startAngleInDegrees,
           arc.arcAngleInDegrees,
-          arc.currentTransformation.translate(xOffsetToOrigoInPixels, yOffsetToOrigoInPixels),
+          transformation,
           arc.hasBorder, arc.hasFilling,
           arc.color, arc.fillColor)
       }
