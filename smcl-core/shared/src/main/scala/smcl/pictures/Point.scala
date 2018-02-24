@@ -16,12 +16,13 @@
 
 package smcl.pictures
 
+
 import scala.language.implicitConversions
 
 import smcl.colors.rgb
-import smcl.infrastructure.{DrawingSurfaceAdapter, FlatMap, Identity}
+import smcl.infrastructure.{FlatMap, Identity}
+import smcl.modeling.Len
 import smcl.modeling.d2.{Bounds, CoordinateTuple, Dims, Pos}
-import smcl.modeling.{AffineTransformation, Len}
 
 
 
@@ -348,15 +349,23 @@ class Point private(
   }
 
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   * Rotates this object around origo (0,0) by 90 degrees clockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCW: Point = {
-    copy(newPosition = position.rotateBy90DegsCW)
-  }
+  def rotateBy90DegsCWAroundOrigo: Point =
+    copy(newPosition = position.rotateBy90DegsCWAroundOrigo)
+
+  /**
+   * Rotates this object around its center by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW: Point = this
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -367,20 +376,27 @@ class Point private(
    */
   @inline
   override
-  def rotateBy90DegsCW(centerOfRotation: Pos): Point = {
+  def rotateBy90DegsCW(centerOfRotation: Pos): Point =
     copy(newPosition = position.rotateBy90DegsCW(centerOfRotation))
-  }
 
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCCW: Point = {
-    copy(newPosition = position.rotateBy90DegsCCW)
-  }
+  def rotateBy90DegsCCWAroundOrigo: Point =
+    copy(newPosition = position.rotateBy90DegsCCWAroundOrigo)
+
+  /**
+   * Rotates this object around the its center by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: Point = this
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -391,20 +407,27 @@ class Point private(
    */
   @inline
   override
-  def rotateBy90DegsCCW(centerOfRotation: Pos): Point = {
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Point =
     copy(newPosition = position.rotateBy90DegsCCW(centerOfRotation))
-  }
 
   /**
-   * Rotates this object around the origo (0,0) by 180 degrees.
+   * Rotates this object around origo (0,0) by 180 degrees.
    *
    * @return
    */
   @inline
   override
-  def rotateBy180Degs: Point = {
-    copy(newPosition = position.rotateBy180Degs)
-  }
+  def rotateBy180DegsAroundOrigo: Point =
+    copy(newPosition = position.rotateBy180DegsAroundOrigo)
+
+  /**
+   * Rotates this object around its center by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: Point = this
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -415,12 +438,11 @@ class Point private(
    */
   @inline
   override
-  def rotateBy180Degs(centerOfRotation: Pos): Point = {
+  def rotateBy180Degs(centerOfRotation: Pos): Point =
     copy(newPosition = position.rotateBy180Degs(centerOfRotation))
-  }
 
   /**
-   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
    *
@@ -428,12 +450,22 @@ class Point private(
    */
   @inline
   override
-  def rotateBy(angleInDegrees: Double): Point = {
-    copy(newPosition = position.rotateBy(angleInDegrees))
-  }
+  def rotateByAroundOrigo(angleInDegrees: Double): Point =
+    copy(newPosition = position.rotateByAroundOrigo(angleInDegrees))
 
   /**
-   * Rotates this object around a given point of the specified number of degrees.
+   * Rotates this object around its center by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angleInDegrees: Double): Point = this
+
+  /**
+   * Rotates this object around a given point by the specified number of degrees.
    *
    * @param angleInDegrees
    * @param centerOfRotation
@@ -441,6 +473,7 @@ class Point private(
    * @return
    */
   @inline
+  override
   def rotateBy(
       angleInDegrees: Double,
       centerOfRotation: Pos): Point = {
@@ -457,7 +490,10 @@ class Point private(
    * @return
    */
   override
-  def scaleBy(widthFactor: Double, heightFactor: Double): Point = {
+  def scaleBy(
+      widthFactor: Double,
+      heightFactor: Double): Point = {
+
     this
   }
 

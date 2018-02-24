@@ -18,7 +18,7 @@ package smcl.pictures
 
 
 import smcl.colors.ColorValidator
-import smcl.infrastructure.{BitmapBufferAdapter, Displayable, DrawingSurfaceAdapter, Identity, InjectablesRegistry, PRF}
+import smcl.infrastructure.{BitmapBufferAdapter, Displayable, Identity, InjectablesRegistry, PRF}
 import smcl.modeling.d2._
 import smcl.modeling.{AffineTransformation, Len}
 
@@ -271,13 +271,13 @@ class Bmp private(
   }
 
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   * Rotates this object around origo (0,0) by 90 degrees clockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCW: Bmp = {
+  def rotateBy90DegsCWAroundOrigo: Bmp = {
     if (buffer.isEmpty)
       return this
 
@@ -293,6 +293,15 @@ class Bmp private(
     this
 
   }
+
+  /**
+   * Rotates this object around its center by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW: Bmp = rotateBy90DegsCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -311,18 +320,27 @@ class Bmp private(
   }
 
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCCW: Bmp = {
+  def rotateBy90DegsCCWAroundOrigo: Bmp = {
     if (buffer.isEmpty)
       return this
 
     this  // TODO
   }
+
+  /**
+   * Rotates this object around the its center by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: Bmp = rotateBy90DegsCCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -341,18 +359,27 @@ class Bmp private(
   }
 
   /**
-   * Rotates this object around the origo (0,0) by 180 degrees.
+   * Rotates this object around origo (0,0) by 180 degrees.
    *
    * @return
    */
   @inline
   override
-  def rotateBy180Degs: Bmp = {
+  def rotateBy180DegsAroundOrigo: Bmp = {
     if (buffer.isEmpty)
       return this
 
     this  // TODO
   }
+
+  /**
+   * Rotates this object around its center by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: Bmp = rotateBy180Degs(position)
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -371,7 +398,7 @@ class Bmp private(
   }
 
   /**
-   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
    *
@@ -379,7 +406,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy(angleInDegrees: Double): Bmp = {
+  def rotateByAroundOrigo(angleInDegrees: Double): Bmp = {
     if (buffer.isEmpty)
       return this
 
@@ -387,16 +414,30 @@ class Bmp private(
   }
 
   /**
-   * Rotates this object around a given point of the specified number of degrees.
+   * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
    *
    * @return
    */
   @inline
+  override
+  def rotateBy(angleInDegrees: Double): Bmp =
+    rotateBy(angleInDegrees, position)
+
+  /**
+   * Rotates this object around a given point by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override
   def rotateBy(
       angleInDegrees: Double,
-      centerOfRotation: Pos): ImageElement = {
+      centerOfRotation: Pos): Bmp = {
 
     if (buffer.isEmpty)
       return this

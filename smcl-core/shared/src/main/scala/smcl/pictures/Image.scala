@@ -261,16 +261,24 @@ class Image private(
     this
   }
 
+
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees clockwise.
+   * Rotates this object around origo (0,0) by 90 degrees clockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCW: Image = {
-    map{_.rotateBy90DegsCW}
-  }
+  def rotateBy90DegsCWAroundOrigo: ImageElement = map{_.rotateBy90DegsCWAroundOrigo}
+
+  /**
+   * Rotates this object around its center by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCW: ImageElement = rotateBy90DegsCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -281,20 +289,26 @@ class Image private(
    */
   @inline
   override
-  def rotateBy90DegsCW(centerOfRotation: Pos): Image = {
+  def rotateBy90DegsCW(centerOfRotation: Pos): ImageElement =
     map{_.rotateBy90DegsCW(centerOfRotation)}
-  }
 
   /**
-   * Rotates this object around the origo (0,0) by 90 degrees counterclockwise.
+   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
    *
    * @return
    */
   @inline
   override
-  def rotateBy90DegsCCW: Image = {
-    map{_.rotateBy90DegsCCW}
-  }
+  def rotateBy90DegsCCWAroundOrigo: ImageElement = map{_.rotateBy90DegsCCWAroundOrigo}
+
+  /**
+   * Rotates this object around the its center by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy90DegsCCW: ImageElement = rotateBy90DegsCCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -305,20 +319,26 @@ class Image private(
    */
   @inline
   override
-  def rotateBy90DegsCCW(centerOfRotation: Pos): Image = {
+  def rotateBy90DegsCCW(centerOfRotation: Pos): ImageElement =
     map{_.rotateBy90DegsCCW(centerOfRotation)}
-  }
 
   /**
-   * Rotates this object around the origo (0,0) by 180 degrees.
+   * Rotates this object around origo (0,0) by 180 degrees.
    *
    * @return
    */
   @inline
   override
-  def rotateBy180Degs: Image = {
-    map{_.rotateBy180Degs}
-  }
+  def rotateBy180DegsAroundOrigo: ImageElement = map{_.rotateBy180DegsAroundOrigo}
+
+  /**
+   * Rotates this object around its center by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy180Degs: ImageElement = rotateBy180Degs(position)
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -329,12 +349,11 @@ class Image private(
    */
   @inline
   override
-  def rotateBy180Degs(centerOfRotation: Pos): Image = {
+  def rotateBy180Degs(centerOfRotation: Pos): ImageElement =
     map{_.rotateBy180Degs(centerOfRotation)}
-  }
 
   /**
-   * Rotates this object around the origo (0,0) by the specified number of degrees.
+   * Rotates this object around its center by the specified number of degrees.
    *
    * @param angleInDegrees
    *
@@ -342,9 +361,19 @@ class Image private(
    */
   @inline
   override
-  def rotateBy(angleInDegrees: Double): Image = {
-    map{_.rotateBy(angleInDegrees)}
-  }
+  def rotateByAroundOrigo(angleInDegrees: Double): ImageElement =
+    map{_.rotateByAroundOrigo(angleInDegrees)}
+
+  /**
+   * Rotates this object around its center by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override
+  def rotateBy(angleInDegrees: Double): ImageElement = rotateBy(angleInDegrees, position)
 
   /**
    * Rotates this object around a given point by the specified number of degrees.
@@ -358,7 +387,7 @@ class Image private(
   override
   def rotateBy(
       angleInDegrees: Double,
-      centerOfRotation: Pos): Image = {
+      centerOfRotation: Pos): ImageElement = {
 
     map{_.rotateBy(angleInDegrees, centerOfRotation)}
   }
