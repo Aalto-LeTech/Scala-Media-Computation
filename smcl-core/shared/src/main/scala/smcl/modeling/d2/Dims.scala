@@ -207,24 +207,170 @@ case class Dims private(
   /**
    *
    *
-   * @param amount
+   * @param offset
    *
    * @return
    */
   @inline
-  def wider(amount: Double): Dims =
-    setWidth(width + amount)
+  def wider(offset: Double): Dims =
+    setWidth(width + offset)
 
   /**
    *
    *
-   * @param amount
+   * @param offset
    *
    * @return
    */
   @inline
-  def higher(amount: Double): Dims =
-    setHeight(height + amount)
+  def wider(offset: Len): Dims =
+    setWidth(width + offset)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def higher(offset: Double): Dims =
+    setHeight(height + offset)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def higher(offset: Len): Dims =
+    setHeight(height + offset)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def grow(offset: Double): Dims =
+    copy(
+      newWidth = width + offset,
+      newHeight = height + offset)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def grow(offset: Len): Dims =
+    copy(
+      newWidth = width + offset,
+      newHeight = height + offset)
+
+  /**
+   *
+   *
+   * @param widthOffset
+   * @param heightOffset
+   *
+   * @return
+   */
+  @inline
+  def grow(
+      widthOffset: Double,
+      heightOffset: Double): Dims = {
+
+    copy(
+      newWidth = width + widthOffset,
+      newHeight = height + heightOffset)
+  }
+
+  /**
+   *
+   *
+   * @param widthOffset
+   * @param heightOffset
+   *
+   * @return
+   */
+  @inline
+  def grow(
+      widthOffset: Len,
+      heightOffset: Len): Dims = {
+
+    copy(
+      newWidth = width + widthOffset,
+      newHeight = height + heightOffset)
+  }
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def shrink(offset: Double): Dims =
+    copy(
+      newWidth = width - offset,
+      newHeight = height - offset)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def shrink(offset: Len): Dims =
+    copy(
+      newWidth = width - offset,
+      newHeight = height - offset)
+
+  /**
+   *
+   *
+   * @param widthOffset
+   * @param heightOffset
+   *
+   * @return
+   */
+  @inline
+  def shrink(
+      widthOffset: Double,
+      heightOffset: Double): Dims = {
+
+    copy(
+      newWidth = width - widthOffset,
+      newHeight = height - heightOffset)
+  }
+
+  /**
+   *
+   *
+   * @param widthOffset
+   * @param heightOffset
+   *
+   * @return
+   */
+  @inline
+  def shrink(
+      widthOffset: Len,
+      heightOffset: Len): Dims = {
+
+    copy(
+      newWidth = width - widthOffset,
+      newHeight = height - heightOffset)
+  }
 
   /**
    *
