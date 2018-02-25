@@ -335,10 +335,14 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  def clampX(min: Double, max: Double): Pos =
+  def clampX(
+      min: Double,
+      max: Double): Pos = {
+
     Pos(
       xInPixels atLeast min atMost max,
       yInPixels)
+  }
 
   /**
    *
@@ -349,10 +353,14 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  def clampX(xLimitMin: Pos, xLimitMax: Pos): Pos =
+  def clampX(
+      xLimitMin: Pos,
+      xLimitMax: Pos): Pos = {
+
     Pos(
       xInPixels atLeast xLimitMin.xInPixels atMost xLimitMax.xInPixels,
       yInPixels)
+  }
 
   /**
    *
@@ -363,10 +371,14 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  def clampY(min: Double, max: Double): Pos =
+  def clampY(
+      min: Double,
+      max: Double): Pos = {
+
     Pos(
       xInPixels,
       yInPixels atLeast min atMost max)
+  }
 
   /**
    *
@@ -377,10 +389,14 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  def clampY(yLimitMin: Pos, yLimitMax: Pos): Pos =
+  def clampY(
+      yLimitMin: Pos,
+      yLimitMax: Pos): Pos = {
+
     Pos(
       xInPixels,
       yInPixels atLeast yLimitMin.yInPixels atMost yLimitMax.yInPixels)
+  }
 
   /**
    *
@@ -435,9 +451,7 @@ case class Pos private[smcl](
    */
   @inline
   override
-  def map(f: (Double) => Double): Pos = {
-    Pos(f(xInPixels), f(yInPixels))
-  }
+  def map(f: (Double) => Double): Pos = Pos(f(xInPixels), f(yInPixels))
 
   /**
    *
@@ -447,9 +461,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  def flatMap(f: (CoordinateTuple) => Pos): Pos = {
-    f(toTuple)
-  }
+  def flatMap(f: (CoordinateTuple) => Pos): Pos = f(toTuple)
 
   /**
    *
@@ -460,27 +472,25 @@ case class Pos private[smcl](
    */
   @inline
   override
-  def canEqual(other: Any): Boolean = {
-    other.isInstanceOf[Pos]
-  }
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Pos]
 
   /**
    *
    *
-   * @param dX
-   * @param dY
+   * @param xOffset
+   * @param yOffset
    *
    * @return
    */
   @inline
   def moveBy(
-      dX: Double,
-      dY: Double): Pos = {
+      xOffset: Double,
+      yOffset: Double): Pos = {
 
     // -- DEBUG --
-    //println(s"Move: ($xInPixels, $yInPixels) --> (${xInPixels + dX}, ${xInPixels + dY})")
+    //println(s"Move: ($xInPixels, $yInPixels) --> (${xInPixels + xOffset}, ${xInPixels + yOffset})")
 
-    Pos(xInPixels + dX, yInPixels + dY)
+    Pos(xInPixels + xOffset, yInPixels + yOffset)
   }
 
   /**
