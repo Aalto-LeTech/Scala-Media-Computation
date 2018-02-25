@@ -116,7 +116,11 @@ trait PresetColors {
         canonicalName)
       with Immutable {
 
-    private val tidiedCSSName: Option[String] = {
+    /**
+     *
+     */
+    private
+    val tidiedCSSName: Option[String] = {
       val trimmedLowerCase = cssName map (_.trim.toLowerCase)
 
       if (trimmedLowerCase.nonEmpty && trimmedLowerCase.get.nonEmpty)
@@ -125,7 +129,20 @@ trait PresetColors {
         None
     }
 
-    private val presetMapKey = tidiedCSSName getOrElse canonicalName.get
+    /**
+     *
+     *
+     * @param other
+     *
+     * @return
+     */
+    @inline
+    override
+    def canEqual(other: Any): Boolean = other.isInstanceOf[PresetColor]
+
+    private
+    val presetMapKey = tidiedCSSName getOrElse canonicalName.get
+
     allPresetColors = allPresetColors + (presetMapKey -> this)
   }
 

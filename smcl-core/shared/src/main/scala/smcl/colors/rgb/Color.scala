@@ -745,6 +745,60 @@ class Color protected(
   /**
    *
    *
+   * @return
+   */
+  override
+  lazy val hashCode: Int = {
+    val prime = 31
+
+    var result = 1
+    result = prime * result + isPreset.##
+    result = prime * result + red
+    result = prime * result + green
+    result = prime * result + blue
+    result = prime * result + opacity
+    result = prime * result + canonicalName.##
+
+    result
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Color]
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  override
+  def equals(other: Any): Boolean = {
+    other match {
+      case that: Color =>
+        that.canEqual(this) &&
+            that.isPreset == this.isPreset &&
+            that.red == this.red &&
+            that.green == this.green &&
+            that.blue == this.blue &&
+            that.opacity == this.opacity &&
+            that.canonicalName == this.canonicalName
+
+      case _ => false
+    }
+  }
+
+  /**
+   *
+   *
    * @param that
    *
    * @return
