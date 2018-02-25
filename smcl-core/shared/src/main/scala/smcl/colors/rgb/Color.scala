@@ -32,7 +32,8 @@ import smcl.infrastructure._
 object Color extends InjectablesRegistry {
 
   /** The ColorValidator instance to be used by this object. */
-  private lazy val colorValidator: ColorValidator = {
+  private
+  lazy val colorValidator: ColorValidator = {
     injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
   }
 
@@ -84,9 +85,8 @@ object Color extends InjectablesRegistry {
    *
    * @return
    */
-  def apply(rgbaTuple: (Int, Int, Int, Int)): Color = {
+  def apply(rgbaTuple: (Int, Int, Int, Int)): Color =
     (Color(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
-  }
 
   /**
    *
@@ -178,9 +178,8 @@ object Color extends InjectablesRegistry {
    *
    * @return
    */
-  def apply(rgbTuple: (Int, Int, Int)): Color = {
+  def apply(rgbTuple: (Int, Int, Int)): Color =
     (Color(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
-  }
 
   /**
    *
@@ -236,9 +235,8 @@ object Color extends InjectablesRegistry {
    *
    * @return
    */
-  def apply(grayOpacityTuple: (Int, Int)): Color = {
+  def apply(grayOpacityTuple: (Int, Int)): Color =
     (Color(_: Int, _: Int)).tupled.apply(grayOpacityTuple)
-  }
 
   /**
    *
@@ -271,13 +269,13 @@ object Color extends InjectablesRegistry {
    *
    * @return
    */
-  private[smcl] def apply(platformColor: ColorAdapter): Color = {
+  private[smcl]
+  def apply(platformColor: ColorAdapter): Color =
     Color(
       platformColor.red,
       platformColor.green,
       platformColor.blue,
       platformColor.opacity)
-  }
 
   /**
    *
@@ -287,7 +285,8 @@ object Color extends InjectablesRegistry {
    *
    * @return
    */
-  private[smcl] def apply(
+  private[smcl]
+  def apply(
       platformColor: ColorAdapter,
       name: Option[String]): Color = {
 
@@ -460,10 +459,9 @@ object Color extends InjectablesRegistry {
    *
    * @return
    */
-  def fromHSI(hsiTuple: (Double, Double, Double)): Color = {
+  def fromHSI(hsiTuple: (Double, Double, Double)): Color =
     (fromHSI(_: Double, _: Double, _: Double, ColorValidator.MaximumOpacity))
         .tupled.apply(hsiTuple)
-  }
 
   /**
    *
@@ -626,7 +624,7 @@ class Color protected(
   @inline
   val descriptionTitle: String = "RGBA Color"
 
-  /** Information about this [[smcl.pictures.operations.Renderable]] instance. */
+  /** */
   lazy val describedProperties = Map(
     "Canonical Name" -> canonicalName.orUnnamed,
     "CSS Name" -> cssName.orUnnamed,
@@ -751,7 +749,8 @@ class Color protected(
    *
    * @return
    */
-  override def compare(that: Color): Int = {
+  override
+  def compare(that: Color): Int = {
     Math.signum(that.toHSIHueInDegrees - this.toHSIHueInDegrees).toInt
   }
 
