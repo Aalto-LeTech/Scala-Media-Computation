@@ -19,7 +19,8 @@ package smcl.viewers
 
 import smcl.infrastructure.Displayable
 import smcl.infrastructure.exceptions.{ImplementationNotSetError, UnknownMediaTypeError}
-import smcl.pictures.Bmp
+import smcl.pictures
+import smcl.pictures.fullfeatured
 import smcl.pictures.fullfeatured.Bitmap
 
 
@@ -34,7 +35,8 @@ private[smcl]
 object DefaultViewerApplicationClient extends ViewerApplicationClient {
 
   /** Bitmap viewer to be used. */
-  private var _bitmapViewerApplication: Option[BitmapViewerApplication] = None
+  private
+  var _bitmapViewerApplication: Option[BitmapViewerApplication] = None
 
   /**
    *
@@ -43,10 +45,10 @@ object DefaultViewerApplicationClient extends ViewerApplicationClient {
    */
   override def display(resource: Displayable): Unit = {
     resource match {
-      case bmp: Bitmap =>
+      case bmp: fullfeatured.Bitmap =>
         bitmapViewerApplication.display(bmp)
 
-      case bmp: Bmp =>
+      case bmp: pictures.Bitmap =>
         if (bmp.buffer.isDefined)
           bitmapViewerApplication.display(Bitmap(bmp.buffer.get))
         else
@@ -60,9 +62,8 @@ object DefaultViewerApplicationClient extends ViewerApplicationClient {
   /**
    *
    */
-  def closeAllViewersWithoutSaving(): Unit = {
+  def closeAllViewersWithoutSaving(): Unit =
     bitmapViewerApplication.closeAllViewersWithoutSaving()
-  }
 
   /**
    *
@@ -78,6 +79,7 @@ object DefaultViewerApplicationClient extends ViewerApplicationClient {
    * @return
    */
   private def bitmapViewerApplication: BitmapViewerApplication =
-    _bitmapViewerApplication.getOrElse(throw ImplementationNotSetError("DefaultViewerClient"))
+    _bitmapViewerApplication.getOrElse(
+      throw ImplementationNotSetError("DefaultViewerClient"))
 
 }

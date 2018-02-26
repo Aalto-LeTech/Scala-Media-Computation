@@ -30,7 +30,7 @@ import smcl.modeling.{AffineTransformation, Angle, Len}
  *
  * @author Aleksi Lukkarinen
  */
-object Bmp
+object Bitmap
     extends InjectablesRegistry {
 
   /** The ColorValidator instance to be used by this object. */
@@ -52,7 +52,7 @@ object Bmp
    *
    * @return
    */
-  def apply(elements: PictureElement*): Bmp =
+  def apply(elements: PictureElement*): Bitmap =
     RenderingController.createBitmapFrom(elements: _*)
 
   /**
@@ -65,7 +65,7 @@ object Bmp
    */
   def apply(
       widthInPixels: Int,
-      heightInPixels: Int): Bmp = {
+      heightInPixels: Int): Bitmap = {
 
     apply(
       Len(widthInPixels),
@@ -82,7 +82,7 @@ object Bmp
    */
   def apply(
       width: Len,
-      height: Len): Bmp = {
+      height: Len): Bitmap = {
 
     bitmapValidator.validateBitmapSize(
       width,
@@ -106,7 +106,7 @@ object Bmp
    *
    * @return
    */
-  def apply(buffer: BitmapBufferAdapter): Bmp = {
+  def apply(buffer: BitmapBufferAdapter): Bitmap = {
     val newIdentity: Identity = Identity()
 
     apply(newIdentity, Pos.Origo, Some(buffer))
@@ -125,16 +125,16 @@ object Bmp
   def apply(
       identity: Identity,
       upperLeftCorner: Pos,
-      buffer: Option[BitmapBufferAdapter]): Bmp = {
+      buffer: Option[BitmapBufferAdapter]): Bitmap = {
 
     if (buffer.isEmpty) {
-      return new Bmp(identity, false, Dims.Zeros, upperLeftCorner, None)
+      return new Bitmap(identity, false, Dims.Zeros, upperLeftCorner, None)
     }
 
     val isRenderable =
       buffer.get.widthInPixels > 0 && buffer.get.heightInPixels > 0
 
-    new Bmp(
+    new Bitmap(
       identity,
       isRenderable,
       Dims(buffer.get.widthInPixels, buffer.get.heightInPixels),
@@ -158,7 +158,7 @@ object Bmp
  *
  * @author Aleksi Lukkarinen
  */
-class Bmp private(
+class Bitmap private(
     override val identity: Identity,
     val isRenderable: Boolean,
     val dimensions: Dims,
@@ -196,7 +196,7 @@ class Bmp private(
    */
   @inline
   override
-  def toBitmap: Bmp = this
+  def toBitmap: Bitmap = this
 
   /**
    *
@@ -276,8 +276,8 @@ class Bmp private(
    * @return
    */
   @inline
-  def copy(newPosition: Pos = position): Bmp = {
-    new Bmp(identity, isRenderable, dimensions, newPosition, buffer)
+  def copy(newPosition: Pos = position): Bitmap = {
+    new Bitmap(identity, isRenderable, dimensions, newPosition, buffer)
   }
 
   /**
@@ -285,21 +285,21 @@ class Bmp private(
    */
   @inline
   override
-  def display(): Bmp = {
+  def display(): Bitmap = {
     super.display()
 
     this
   }
 
   /**
-   * Transforms the content of this [[Bmp]] using the specified affine
-   * transformation. The upperLeftCorner of this [[Bmp]] remains unchanged.
+   * Transforms the content of this [[Bitmap]] using the specified affine
+   * transformation. The upperLeftCorner of this [[Bitmap]] remains unchanged.
    *
    * @param t
    *
    * @return
    */
-  def transformContentWith(t: AffineTransformation): Bmp = {
+  def transformContentWith(t: AffineTransformation): Bitmap = {
     if (buffer.isEmpty)
       return this
 
@@ -307,7 +307,7 @@ class Bmp private(
       transformation = t,
       resizeCanvasBasedOnTransformation = false)._1
 
-    new Bmp(
+    new Bitmap(
       identity = identity,
       isRenderable = isRenderable,
       dimensions = Dims(newBuffer.widthInPixels, newBuffer.heightInPixels),
@@ -322,7 +322,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy90DegsCWAroundOrigo: Bmp = {
+  def rotateBy90DegsCWAroundOrigo: Bitmap = {
     if (buffer.isEmpty)
       return this
 
@@ -346,7 +346,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy90DegsCW: Bmp = rotateBy90DegsCW(position)
+  def rotateBy90DegsCW: Bitmap = rotateBy90DegsCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -357,7 +357,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy90DegsCW(centerOfRotation: Pos): Bmp = {
+  def rotateBy90DegsCW(centerOfRotation: Pos): Bitmap = {
     if (buffer.isEmpty)
       return this
 
@@ -371,7 +371,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy90DegsCCWAroundOrigo: Bmp = {
+  def rotateBy90DegsCCWAroundOrigo: Bitmap = {
     if (buffer.isEmpty)
       return this
 
@@ -385,7 +385,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy90DegsCCW: Bmp = rotateBy90DegsCCW(position)
+  def rotateBy90DegsCCW: Bitmap = rotateBy90DegsCCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -396,7 +396,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy90DegsCCW(centerOfRotation: Pos): Bmp = {
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Bitmap = {
     if (buffer.isEmpty)
       return this
 
@@ -410,7 +410,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy180DegsAroundOrigo: Bmp = {
+  def rotateBy180DegsAroundOrigo: Bitmap = {
     if (buffer.isEmpty)
       return this
 
@@ -424,7 +424,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy180Degs: Bmp = rotateBy180Degs(position)
+  def rotateBy180Degs: Bitmap = rotateBy180Degs(position)
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -435,7 +435,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy180Degs(centerOfRotation: Pos): Bmp = {
+  def rotateBy180Degs(centerOfRotation: Pos): Bitmap = {
     if (buffer.isEmpty)
       return this
 
@@ -451,7 +451,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateByAroundOrigo(angle: Angle): Bmp = rotateByAroundOrigo(angle)
+  def rotateByAroundOrigo(angle: Angle): Bitmap = rotateByAroundOrigo(angle)
 
   /**
    * Rotates this object around its center by the specified number of degrees.
@@ -462,7 +462,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateByAroundOrigo(angleInDegrees: Double): Bmp = {
+  def rotateByAroundOrigo(angleInDegrees: Double): Bitmap = {
     if (buffer.isEmpty)
       return this
 
@@ -478,7 +478,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy(angle: Angle): Bmp = rotateBy(angle)
+  def rotateBy(angle: Angle): Bitmap = rotateBy(angle)
 
   /**
    * Rotates this object around its center by the specified number of degrees.
@@ -489,7 +489,7 @@ class Bmp private(
    */
   @inline
   override
-  def rotateBy(angleInDegrees: Double): Bmp =
+  def rotateBy(angleInDegrees: Double): Bitmap =
     rotateBy(angleInDegrees, position)
 
   /**
@@ -504,7 +504,7 @@ class Bmp private(
   override
   def rotateBy(
       angle: Angle,
-      centerOfRotation: Pos): Bmp = {
+      centerOfRotation: Pos): Bitmap = {
 
     rotateBy(angle, centerOfRotation)
   }
@@ -521,7 +521,7 @@ class Bmp private(
   override
   def rotateBy(
       angleInDegrees: Double,
-      centerOfRotation: Pos): Bmp = {
+      centerOfRotation: Pos): Bitmap = {
 
     if (buffer.isEmpty)
       return this
@@ -536,7 +536,7 @@ class Bmp private(
       newBuffer.widthInPixels,
       newBuffer.heightInPixels)
 
-    new Bmp(identity, isRenderable, newDims, position, Some(newBuffer))
+    new Bitmap(identity, isRenderable, newDims, position, Some(newBuffer))
   }
 
   /**
@@ -554,7 +554,7 @@ class Bmp private(
       upperLeftX: Double,
       upperLeftY: Double,
       lowerRightX: Double,
-      lowerRightY: Double): Bmp = {
+      lowerRightY: Double): Bitmap = {
 
     println("crop... to be implemented")
     //Pic(self.crop(topLeft.xInt, topLeft.yInt, (topLeft.x + width - 1).round.toInt, (topLeft.y + height - 1).round.toInt), Center) // XXX pwa // XXX anchor
@@ -581,7 +581,7 @@ class Bmp private(
    * @return
    */
   override
-  def scaleBy(widthFactor: Double, heightFactor: Double): Bmp = {
+  def scaleBy(widthFactor: Double, heightFactor: Double): Bitmap = {
     this
   }
 

@@ -53,9 +53,9 @@ object RenderingController
    *
    * @return
    */
-  def createBitmapFrom(elements: PictureElement*): Bmp = {
+  def createBitmapFrom(elements: PictureElement*): Bitmap = {
     if (elements.isEmpty)
-      return Bmp(0, 0)
+      return Bitmap(0, 0)
 
     val bounds =
       if (ifContainsOnlyAnImageThatDefinesAViewport(elements))
@@ -67,7 +67,7 @@ object RenderingController
     val heightInPixels = bounds.height.floor
 
     if (widthInPixels < 1 || heightInPixels < 1)
-      return Bmp(0, 0)
+      return Bitmap(0, 0)
 
     bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
@@ -81,7 +81,7 @@ object RenderingController
       buffer.drawingSurface,
       upperLeftPos.xInPixels, upperLeftPos.yInPixels)
 
-    Bmp(buffer)
+    Bitmap(buffer)
   }
 
   private
@@ -134,7 +134,7 @@ object RenderingController
           arc.color, arc.fillColor)
       }
       else if (contentItem.isBitmap) {
-        val bmp = contentItem.asInstanceOf[Bmp]
+        val bmp = contentItem.asInstanceOf[Bitmap]
         if (bmp.buffer.isEmpty)
           return
 

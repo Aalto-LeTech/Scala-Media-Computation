@@ -40,7 +40,7 @@ trait PictureElement
         with Movable[PictureElement]
         with Rotatable[PictureElement]
         with Scalable[PictureElement]
-        with Cropable[Bmp] {
+        with Cropable[Bitmap] {
 
   /** */
   type SimpleTransformer = PictureElement => PictureElement
@@ -84,7 +84,7 @@ trait PictureElement
    * @return
    */
   @inline
-  def toBitmap: Bmp = Bmp(this)
+  def toBitmap: Bitmap = Bitmap(this)
 
   /**
    *
@@ -120,7 +120,7 @@ trait PictureElement
       upperLeftCornerX: Double,
       upperLeftCornerY: Double,
       lowerRightCornerX: Double,
-      lowerRightCornerY: Double): Bmp = {
+      lowerRightCornerY: Double): Bitmap = {
 
     toBitmap.crop(
       upperLeftCornerX,

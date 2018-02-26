@@ -24,7 +24,7 @@ import scala.language.implicitConversions
 
 import smcl.colors.rgb.Color
 import smcl.modeling.AffineTransformation
-import smcl.pictures.Bmp
+import smcl.pictures.Bitmap
 
 
 /**
@@ -66,7 +66,7 @@ package object jvmawt {
   /**
    *
    */
-  implicit def SMCLBitmapWrapper(self: Bmp): RichBitmap =
+  implicit def SMCLBitmapWrapper(self: Bitmap): RichBitmap =
     new RichBitmap(self)
 
   /**

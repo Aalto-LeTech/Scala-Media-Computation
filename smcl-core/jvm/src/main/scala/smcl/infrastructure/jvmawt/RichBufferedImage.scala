@@ -19,14 +19,14 @@ package smcl.infrastructure.jvmawt
 
 import java.awt.image.BufferedImage
 
-import smcl.pictures.Bmp
+import smcl.pictures.Bitmap
 
 
 
 
 /**
  * Enables instances of the `java.awt.image.BufferedImage` class to converted into SMCL's
- * [[Bmp]] instances. This is to enable collaboration with Java's AWT and Swing libraries.
+ * [[Bitmap]] instances. This is to enable collaboration with Java's AWT and Swing libraries.
  *
  * @param self
  *
@@ -35,21 +35,21 @@ import smcl.pictures.Bmp
 class RichBufferedImage(val self: BufferedImage) {
 
   /**
-   * Returns a [[Bmp]] instance that contains the content of a given
+   * Returns a [[Bitmap]] instance that contains the content of a given
    * `java.awt.image.BufferedImage` instance.
    * <br />
    * Note: A deep copy is made of the original `BufferedImage`, so the
-   * [[Bmp]] cannot be modified via manipulating the original. Also,
+   * [[Bitmap]] cannot be modified via manipulating the original. Also,
    * the memory consumption will be a doubled (original + copy).
    *
    * @return
    */
-  def toSMCLBitmap: Option[Bmp] = {
+  def toSMCLBitmap: Option[Bitmap] = {
     if (self == null)
       return None
 
     val copiedBuffer = BitmapUtils.deepCopy(self)
-    val bitmap = Bmp(AWTBitmapBufferAdapter(copiedBuffer))
+    val bitmap = Bitmap(AWTBitmapBufferAdapter(copiedBuffer))
 
     Some(bitmap)
   }

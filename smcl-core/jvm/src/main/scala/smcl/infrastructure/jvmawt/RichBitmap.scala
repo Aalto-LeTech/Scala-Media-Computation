@@ -21,13 +21,13 @@ import java.awt.image.{BufferedImage, ImageObserver}
 import java.awt.{Component, Graphics}
 import javax.swing.Icon
 
-import smcl.pictures.Bmp
+import smcl.pictures.Bitmap
 
 
 
 
 /**
- * Enables instances of the [[Bmp]] class to be drawn on platform-dependent drawing surfaces
+ * Enables instances of the [[Bitmap]] class to be drawn on platform-dependent drawing surfaces
  * as well as to be converted into platform-dependent representations. This is to enable
  * collaboration with Java's AWT and Swing libraries.
  *
@@ -35,10 +35,10 @@ import smcl.pictures.Bmp
  *
  * @author Aleksi Lukkarinen
  */
-class RichBitmap(val self: Bmp) {
+class RichBitmap(val self: Bitmap) {
 
   /**
-   * Draws this [[Bmp]] onto a `java.awt.Graphics`.
+   * Draws this [[Bitmap]] onto a `java.awt.Graphics`.
    *
    * @param drawingSurface
    * @param x
@@ -48,7 +48,7 @@ class RichBitmap(val self: Bmp) {
     drawOnto(drawingSurface, x, y, null)
 
   /**
-   * Draws this [[Bmp]] onto a `java.awt.Graphics`.
+   * Draws this [[Bitmap]] onto a `java.awt.Graphics`.
    *
    * @param drawingSurface
    * @param x
@@ -61,7 +61,7 @@ class RichBitmap(val self: Bmp) {
     }
 
   /**
-   * Returns the content of this [[Bmp]] as a `java.awt.image.BufferedImage`.
+   * Returns the content of this [[Bitmap]] as a `java.awt.image.BufferedImage`.
    * <br/>
    * Note: The internal `BufferedImage` instance will not be returned; instead,
    * a deep copy will be made and returned. This makes calling this method
@@ -76,7 +76,7 @@ class RichBitmap(val self: Bmp) {
 
   /**
    * Returns a `javax.swing.Icon` that is able to draw the content of this
-   * [[Bmp]] onto itself.
+   * [[Bitmap]] onto itself.
    * <br/>
    * NOTE: The icon will keep a reference to the internal
    * `java.awt.image.BufferedImage` instance, so the memory reserved by it
@@ -89,7 +89,7 @@ class RichBitmap(val self: Bmp) {
       new Icon {
 
         /**
-         * Paints the content of the [[Bmp]] instance onto the place of this icon.
+         * Paints the content of the [[Bitmap]] instance onto the place of this icon.
          *
          * @param target
          * @param graphics
@@ -126,7 +126,7 @@ class RichBitmap(val self: Bmp) {
 
   /**
    * Returns the internal `java.awt.image.BufferedImage`
-   * instance of this [[Bmp]].
+   * instance of this [[Bitmap]].
    *
    * @return a `java.awt.image.BufferedImage` instance, if it exists
    */
