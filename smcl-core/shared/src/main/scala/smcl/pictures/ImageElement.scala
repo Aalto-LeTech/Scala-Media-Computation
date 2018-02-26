@@ -147,15 +147,29 @@ trait ImageElement
    * @return
    */
   @inline
-  def addToBack(content: Seq[ImageElement]): ImageElement = {
-    val wholeContent = content.foldLeft(Seq(this)){(allElements, currentElement) =>
+  def addToBack(content: Seq[ImageElement]): ImageElement =
+    Image(appendTo(content, Seq(this)))
+
+  /**
+   *
+   *
+   * @param contentToAppend
+   * @param existingContent
+   *
+   * @return
+   */
+  @inline
+  protected final
+  def appendTo(
+      contentToAppend: Seq[ImageElement],
+      existingContent: Seq[ImageElement]): Seq[ImageElement] = {
+
+    contentToAppend.foldLeft(existingContent){(allElements, currentElement) =>
       if (currentElement.isImage)
         allElements ++ currentElement.toImage.elements
       else
         allElements :+ currentElement
     }
-
-    Image(wholeContent: _*)
   }
 
   /**
@@ -176,15 +190,29 @@ trait ImageElement
    * @return
    */
   @inline
-  def addToFront(content: Seq[ImageElement]): ImageElement = {
-    val wholeContent = content.foldRight(Seq(this)){(currentElement, allElements) =>
+  def addToFront(content: Seq[ImageElement]): ImageElement =
+    Image(prependTo(content, Seq(this)))
+
+  /**
+   *
+   *
+   * @param contentToPrepend
+   * @param existingContent
+   *
+   * @return
+   */
+  @inline
+  protected final
+  def prependTo(
+      contentToPrepend: Seq[ImageElement],
+      existingContent: Seq[ImageElement]): Seq[ImageElement] = {
+
+    contentToPrepend.foldRight(existingContent){(currentElement, allElements) =>
       if (currentElement.isImage)
         currentElement.toImage.elements ++ allElements
       else
         currentElement +: allElements
     }
-
-    Image(wholeContent: _*)
   }
 
   /**

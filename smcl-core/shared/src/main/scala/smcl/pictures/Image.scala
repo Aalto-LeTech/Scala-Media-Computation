@@ -215,18 +215,11 @@ class Image private(
    *
    * @return
    */
+  // Has to return a copy of *this* Image because of viewports/anchors etc.
   @inline
   override
-  def addToBack(content: ImageElement): ImageElement = {
-    val wholeContent =
-      if (content.isImage)
-        elements ++ content.toImage.elements
-      else
-        elements :+ content
-
-    // Has to be a copy of *this* Image because of viewports/anchors etc.
-    copy(newElements = wholeContent)
-  }
+  def addToBack(content: Seq[ImageElement]): ImageElement =
+    copy(newElements = appendTo(content, this.elements))
 
   /**
    *
@@ -235,18 +228,11 @@ class Image private(
    *
    * @return
    */
+  // Has to return a copy of *this* Image because of viewports/anchors etc.
   @inline
   override
-  def addToFront(content: ImageElement): ImageElement = {
-    val wholeContent =
-      if (content.isImage)
-        content.toImage.elements ++ elements
-      else
-        content +: elements
-
-    // Has to be a copy of *this* Image because of viewports/anchors etc.
-    copy(newElements = wholeContent)
-  }
+  def addToFront(content: Seq[ImageElement]): ImageElement =
+    copy(newElements = prependTo(content, this.elements))
 
   /**
    *
