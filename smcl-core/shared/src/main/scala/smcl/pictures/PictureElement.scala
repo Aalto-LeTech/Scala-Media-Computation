@@ -18,6 +18,7 @@ package smcl.pictures
 
 
 import scala.annotation.tailrec
+import scala.collection.mutable.ListBuffer
 
 import smcl.infrastructure.Identity
 import smcl.modeling.d2._
@@ -332,48 +333,19 @@ trait PictureElement
    * @return
    */
   @inline
-  def addCopiesAtPos(content: PictureElement, positions: Seq[Pos]): PictureElement =
-    positions.foldLeft(this)(_.addAtPos(content, _))
-
-  /**
-   *
-   *
-   * @param contentsAndUpperLeftCornerPoss
-   *
-   * @return
-   */
-  @inline
-  def addAtPos(contentsAndUpperLeftCornerPoss: Seq[(PictureElement, Pos)]): PictureElement =
-    contentsAndUpperLeftCornerPoss.foldLeft(this)(_.addAtPos(_))
-
-  /**
-   *
-   *
-   * @param contentAndUpperLeftCornerPos
-   *
-   * @return
-   */
-  @inline
-  def addAtPos(contentAndUpperLeftCornerPos: (PictureElement, Pos)): PictureElement =
-    (addAtPos(_: PictureElement, _: Pos)).tupled.apply(contentAndUpperLeftCornerPos)
-
-  /**
-   *
-   *
-   * @param content
-   * @param upperLeftCorner
-   *
-   * @return
-   */
-  @inline
-  def addAtPos(
+  def addCopiesAtPos(
       content: PictureElement,
-      upperLeftCorner: Pos): PictureElement = {
+      positions: Seq[Pos]): PictureElement = {
 
-    addAt(
-      content,
-      upperLeftCorner.xInPixels,
-      upperLeftCorner.yInPixels)
+    val wholeContent = ListBuffer[PictureElement]()
+    val mover =
+      if (content.isPicture)
+        wholeContent ++= content.moveTo(_: Pos).toPicture.elements
+      else
+        wholeContent += content.moveTo(_: Pos)
+
+    positions.foreach(mover)
+    addToFront(wholeContent)
   }
 
   /**
@@ -385,19 +357,81 @@ trait PictureElement
    * @return
    */
   @inline
-  def addCopiesAt(content: PictureElement, positions: Seq[(Double, Double)]): PictureElement =
-    positions.foldLeft(this)((picture, coords) => picture.addAt(content, coords._1, coords._2))
+  def addCopiesAt(
+      content: PictureElement,
+      positions: Seq[(Double, Double)]): PictureElement = {
+
+    val wholeContent = ListBuffer[PictureElement]()
+    val mover =
+      if (content.isPicture) {
+        wholeContent ++= content.moveTo(_: Double, _: Double).toPicture.elements
+      }
+      else {
+        wholeContent += content.moveTo(_: Double, _: Double)
+      }
+
+    positions.foreach(coords => mover(coords._1, coords._2))
+    addToFront(wholeContent)
+  }
 
   /**
    *
    *
-   * @param contentsAndUpperLeftCornerCoordinatesInPixels
+   * @param contentsAndPositions
    *
    * @return
    */
   @inline
-  def addAt(contentsAndUpperLeftCornerCoordinatesInPixels: Seq[(PictureElement, Double, Double)]): PictureElement = {
-    val movedContent = contentsAndUpperLeftCornerCoordinatesInPixels.map{params =>
+  def addAtPos(contentsAndPositions: Seq[(PictureElement, Pos)]): PictureElement = {
+    val movedContent = contentsAndPositions.map{params =>
+      params._1.moveTo(params._2.xInPixels, params._2.yInPixels)
+    }
+
+    addToFront(movedContent)
+  }
+
+  /**
+   *
+   *
+   * @param contentAndPosition
+   *
+   * @return
+   */
+  @inline
+  def addAtPos(contentAndPosition: (PictureElement, Pos)): PictureElement =
+    addAtPos(
+      contentAndPosition._1,
+      contentAndPosition._2)
+
+  /**
+   *
+   *
+   * @param content
+   * @param position
+   *
+   * @return
+   */
+  @inline
+  def addAtPos(
+      content: PictureElement,
+      position: Pos): PictureElement = {
+
+    addAt(
+      content,
+      position.xInPixels,
+      position.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param contentsAndCoordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  def addAt(contentsAndCoordinatesInPixels: Seq[(PictureElement, Double, Double)]): PictureElement = {
+    val movedContent = contentsAndCoordinatesInPixels.map{params =>
       params._1.moveTo(params._2, params._3)
     }
 
@@ -407,30 +441,33 @@ trait PictureElement
   /**
    *
    *
-   * @param contentAndUpperLeftCornerCoordinatesInPixels
+   * @param contentAndCoordinatesInPixels
    *
    * @return
    */
   @inline
-  def addAt(contentAndUpperLeftCornerCoordinatesInPixels: (PictureElement, Double, Double)): PictureElement =
-    (addAt(_: PictureElement, _: Double, _: Double)).tupled.apply(contentAndUpperLeftCornerCoordinatesInPixels)
+  def addAt(contentAndCoordinatesInPixels: (PictureElement, Double, Double)): PictureElement =
+    addAt(
+      contentAndCoordinatesInPixels._1,
+      contentAndCoordinatesInPixels._2,
+      contentAndCoordinatesInPixels._3)
 
   /**
    *
    *
    * @param content
-   * @param upperLeftCornerX
-   * @param upperLeftCornerY
+   * @param xCoordinate
+   * @param yCoordinate
    *
    * @return
    */
   @inline
   def addAt(
       content: PictureElement,
-      upperLeftCornerX: Double,
-      upperLeftCornerY: Double): PictureElement = {
+      xCoordinate: Double,
+      yCoordinate: Double): PictureElement = {
 
-    addToFront(content.moveTo(upperLeftCornerX, upperLeftCornerY))
+    addToFront(content.moveTo(xCoordinate, yCoordinate))
   }
 
   /**

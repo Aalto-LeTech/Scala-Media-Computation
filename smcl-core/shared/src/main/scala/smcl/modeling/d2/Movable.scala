@@ -87,6 +87,19 @@ trait Movable[ReturnType]
   /**
    *
    *
+   * @param position
+   *
+   * @return
+   */
+  @inline
+  def moveTo(position: Pos): ReturnType =
+    moveTo(
+      position.xInPixels,
+      position.yInPixels)
+
+  /**
+   *
+   *
    * @param xCoordinateInPixels
    * @param yCoordinateInPixels
    *
