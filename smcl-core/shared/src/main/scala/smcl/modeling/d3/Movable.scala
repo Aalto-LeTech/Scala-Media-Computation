@@ -40,20 +40,68 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
-  def + (offsets: (Double, Double, Double)): ReturnType = {
-    moveBy(offsets._1, offsets._2, offsets._3)
-  }
+  def moveBy(offsets: Dims): ReturnType =
+    moveBy(
+      offsets.width.inPixels,
+      offsets.height.inPixels,
+      offsets.depth.inPixels)
 
   /**
    *
    *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
   @inline
-  def - (offsets: (Double, Double, Double)): ReturnType = {
-    moveBy(-offsets._1, -offsets._2, -offsets._3)
-  }
+  def + (offsetsInPixels: CoordinateTuple): ReturnType =
+    moveBy(
+      offsetsInPixels._1,
+      offsetsInPixels._2,
+      offsetsInPixels._3)
+
+  /**
+   *
+   *
+   * @param offsetsInPixels
+   *
+   * @return
+   */
+  @inline
+  def - (offsetsInPixels: CoordinateTuple): ReturnType =
+    moveBy(
+      -offsetsInPixels._1,
+      -offsetsInPixels._2,
+      -offsetsInPixels._3)
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   * @param zOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double,
+      zOffsetInPixels: Double): ReturnType
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   * @param zCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double,
+      zCoordinateInPixels: Double): ReturnType
 
 }

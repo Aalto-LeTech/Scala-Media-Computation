@@ -146,7 +146,7 @@ class Arc private(
 
   /** Position of this [[Arc]]. */
   override
-  val position: Pos = boundary.upperLeftMarker + internalCenter
+  val position: Pos = boundary.center
 
   /** Tells if this [[Arc]] can be rendered on a bitmap. */
   override
@@ -196,7 +196,6 @@ class Arc private(
       newColor = newColor,
       newFillColor = newFillColor)
   }
-
 
   /**
    *
@@ -251,15 +250,80 @@ class Arc private(
   /**
    *
    *
-   * @param offsets
+   * @param coordinatesInPixels
    *
    * @return
    */
   @inline
-  def moveBy(offsets: Double*): Arc =
-    copy(
-      newUpperLeftCorner = upperLeftCorner + offsets,
-      newLowerRightCorner = lowerRightCorner + offsets)
+  override
+  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+    moveBy(
+      coordinatesInPixels.head - position.xInPixels,
+      coordinatesInPixels.tail.head - position.yInPixels)
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): ImageElement = {
+
+    moveBy(
+      xCoordinateInPixels - position.xInPixels,
+      yCoordinateInPixels - position.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param offsetsInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveBy(offsetsInPixels: Seq[Double]): Arc = {
+    val newUL = upperLeftCorner.moveBy(offsetsInPixels)
+    val newLR = lowerRightCorner.moveBy(offsetsInPixels)
+    val newTx = currentTransformation.translate(
+      offsetsInPixels.head,
+      offsetsInPixels.tail.head)
+
+    internalCopy(
+      newUpperLeftCorner = newUL,
+      newLowerRightCorner = newLR,
+      newTransformation = newTx)
+  }
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double): ImageElement = {
+
+    val newUL = upperLeftCorner.moveBy(xOffsetInPixels, yOffsetInPixels)
+    val newLR = lowerRightCorner.moveBy(xOffsetInPixels, yOffsetInPixels)
+    val newTx = currentTransformation.translate(xOffsetInPixels, yOffsetInPixels)
+
+    internalCopy(
+      newUpperLeftCorner = newUL,
+      newLowerRightCorner = newLR,
+      newTransformation = newTx)
+  }
 
   /**
    *

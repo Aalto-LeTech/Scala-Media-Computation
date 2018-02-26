@@ -477,37 +477,78 @@ case class Pos private[smcl](
   /**
    *
    *
-   * @param xOffset
-   * @param yOffset
-   *
-   * @return
-   */
-  @inline
-  def moveBy(
-      xOffset: Double,
-      yOffset: Double): Pos = {
-
-    // -- DEBUG --
-    //println(s"Move: ($xInPixels, $yInPixels) --> (${xInPixels + xOffset}, ${xInPixels + yOffset})")
-
-    Pos(xInPixels + xOffset, yInPixels + yOffset)
-  }
-
-  /**
-   *
-   *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
   @inline
   override
-  def moveBy(offsets: Double*): Pos = {
+  def moveBy(offsetsInPixels: Seq[Double]): Pos = {
     require(
-      offsets.length == NumberOfDimensions,
-      s"Exactly $NumberOfDimensions offsets must be given (found: ${offsets.length})")
+      offsetsInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions offsets must be given (found: ${offsetsInPixels.length})")
 
-    moveBy(offsets(0), offsets(1))
+    moveBy(
+      offsetsInPixels.head,
+      offsetsInPixels.tail.head)
+  }
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double): Pos = {
+
+    // -- DEBUG --
+    //println(s"Move: ($xInPixels, $yInPixels) --> (${xInPixels + xOffset}, ${xInPixels + yOffset})")
+
+    Pos(
+      xInPixels + xOffsetInPixels,
+      yInPixels + yOffsetInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(coordinatesInPixels: Seq[Double]): Pos = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions offsets must be given (found: ${coordinatesInPixels.length})")
+
+    Pos(
+      coordinatesInPixels.head,
+      coordinatesInPixels.tail.head)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): Pos = {
+
+    Pos(
+      xCoordinateInPixels,
+      yCoordinateInPixels)
   }
 
   /**

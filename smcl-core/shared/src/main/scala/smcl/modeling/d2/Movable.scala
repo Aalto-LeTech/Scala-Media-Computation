@@ -40,20 +40,61 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
-  def + (offsets: (Double, Double)): ReturnType = {
-    moveBy(offsets._1, offsets._2)
-  }
+  def moveBy(offsets: Dims): ReturnType =
+    moveBy(
+      offsets.width.inPixels,
+      offsets.height.inPixels)
 
   /**
    *
    *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
   @inline
-  def - (offsets: (Double, Double)): ReturnType = {
-    moveBy(-offsets._1, -offsets._2)
-  }
+  def + (offsetsInPixels: CoordinateTuple): ReturnType =
+    moveBy(
+      offsetsInPixels._1,
+      offsetsInPixels._2)
+
+  /**
+   *
+   *
+   * @param offsetsInPixels
+   *
+   * @return
+   */
+  @inline
+  def - (offsetsInPixels: CoordinateTuple): ReturnType =
+    moveBy(
+      -offsetsInPixels._1,
+      -offsetsInPixels._2)
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double): ReturnType
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): ReturnType
 
 }

@@ -48,6 +48,15 @@ trait ImageElement
   /** */
   val IdentitySimpleTransformer: SimpleTransformer = (i: ImageElement) => i
 
+
+  /**
+   * Position of this [[ImageElement]].
+   *
+   * @return
+   */
+  @inline
+  def position: Pos = boundary.center
+
   /**
    *
    *
@@ -123,17 +132,28 @@ trait ImageElement
   /**
    *
    *
-   * @param newContent
+   * @param content
    *
    * @return
    */
   @inline
-  def addToBack(newContent: ImageElement): ImageElement = {
-    val wholeContent =
-      if (newContent.isImage)
-        this +: newContent.toImage.elements
+  def addToBack(content: ImageElement): ImageElement = addToBack(Seq(content))
+
+  /**
+   *
+   *
+   * @param content
+   *
+   * @return
+   */
+  @inline
+  def addToBack(content: Seq[ImageElement]): ImageElement = {
+    val wholeContent = content.foldLeft(Seq(this)){(allElements, currentElement) =>
+      if (currentElement.isImage)
+        allElements ++ currentElement.toImage.elements
       else
-        Seq(this, newContent)
+        allElements :+ currentElement
+    }
 
     Image(wholeContent: _*)
   }
@@ -141,38 +161,56 @@ trait ImageElement
   /**
    *
    *
-   * @param newContent
+   * @param content
    *
    * @return
    */
   @inline
-  def addToFront(newContent: ImageElement): ImageElement =
-    newContent.addToBack(this)
+  def addToFront(content: ImageElement): ImageElement = content.addToBack(this)
 
   /**
    *
    *
-   * @param newContent
+   * @param content
    *
    * @return
    */
   @inline
-  def +: (newContent: ImageElement): ImageElement = addToFront(newContent)
+  def addToFront(content: Seq[ImageElement]): ImageElement = {
+    val wholeContent = content.foldRight(Seq(this)){(currentElement, allElements) =>
+      if (currentElement.isImage)
+        currentElement.toImage.elements ++ allElements
+      else
+        currentElement +: allElements
+    }
+
+    Image(wholeContent: _*)
+  }
 
   /**
    *
    *
-   * @param newContent
+   * @param content
    *
    * @return
    */
   @inline
-  def :+ (newContent: ImageElement): ImageElement = addToBack(newContent)
+  def +: (content: ImageElement): ImageElement = addToFront(content)
 
   /**
    *
    *
-   * @param newContent
+   * @param content
+   *
+   * @return
+   */
+  @inline
+  def :+ (content: ImageElement): ImageElement = addToBack(content)
+
+  /**
+   *
+   *
+   * @param content
    * @param paddingInPixels
    * @param alignment
    *
@@ -180,22 +218,22 @@ trait ImageElement
    */
   @inline
   def addToTop(
-      newContent: ImageElement,
+      content: ImageElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: HorizontalAlignment = DefaultHorizontalAlignment): ImageElement = {
 
-    val ncNewUpperLeftX = boundary.horizontalPositionFor(alignment, newContent.boundary)
+    val newUpperLeftCornerX = boundary.horizontalPositionFor(alignment, content.boundary)
 
-    val ncNewUpperLeftY =
-      boundary.upperLeftMarker.yInPixels - paddingInPixels - newContent.boundary.height.inPixels
+    val newUpperLeftCornerY =
+      boundary.upperLeftMarker.yInPixels - paddingInPixels - content.boundary.height.inPixels
 
-    moveAndAddToSide(newContent, ncNewUpperLeftX, ncNewUpperLeftY)
+    addAt(content, newUpperLeftCornerX, newUpperLeftCornerY)
   }
 
   /**
    *
    *
-   * @param newContent
+   * @param content
    * @param paddingInPixels
    * @param alignment
    *
@@ -203,20 +241,20 @@ trait ImageElement
    */
   @inline
   def addToRight(
-      newContent: ImageElement,
+      content: ImageElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: VerticalAlignment = DefaultVerticalAlignment): ImageElement = {
 
-    val ncNewUpperLeftX = boundary.lowerRightMarker.xInPixels + paddingInPixels
-    val ncNewUpperLeftY = boundary.verticalPositionFor(alignment, newContent.boundary)
+    val newUpperLeftCornerX = boundary.lowerRightMarker.xInPixels + paddingInPixels
+    val newUpperLeftCornerY = boundary.verticalPositionFor(alignment, content.boundary)
 
-    moveAndAddToSide(newContent, ncNewUpperLeftX, ncNewUpperLeftY)
+    addAt(content, newUpperLeftCornerX, newUpperLeftCornerY)
   }
 
   /**
    *
    *
-   * @param newContent
+   * @param content
    * @param paddingInPixels
    * @param alignment
    *
@@ -224,20 +262,20 @@ trait ImageElement
    */
   @inline
   def addToBottom(
-      newContent: ImageElement,
+      content: ImageElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: HorizontalAlignment = DefaultHorizontalAlignment): ImageElement = {
 
-    val ncNewUpperLeftX = boundary.horizontalPositionFor(alignment, newContent.boundary)
-    val ncNewUpperLeftY = boundary.lowerRightMarker.yInPixels + paddingInPixels
+    val newUpperLeftCornerX = boundary.horizontalPositionFor(alignment, content.boundary)
+    val newUpperLeftCornerY = boundary.lowerRightMarker.yInPixels + paddingInPixels
 
-    moveAndAddToSide(newContent, ncNewUpperLeftX, ncNewUpperLeftY)
+    addAt(content, newUpperLeftCornerX, newUpperLeftCornerY)
   }
 
   /**
    *
    *
-   * @param newContent
+   * @param content
    * @param paddingInPixels
    * @param alignment
    *
@@ -245,41 +283,126 @@ trait ImageElement
    */
   @inline
   def addToLeft(
-      newContent: ImageElement,
+      content: ImageElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: VerticalAlignment = DefaultVerticalAlignment): ImageElement = {
 
-    val ncNewUpperLeftX =
-      boundary.upperLeftMarker.xInPixels - paddingInPixels - newContent.boundary.width.inPixels
+    val newUpperLeftCornerX =
+      boundary.upperLeftMarker.xInPixels - paddingInPixels - content.boundary.width.inPixels
 
-    val ncNewUpperLeftY = boundary.verticalPositionFor(alignment, newContent.boundary)
+    val newUpperLeftCornerY = boundary.verticalPositionFor(alignment, content.boundary)
 
-    moveAndAddToSide(newContent, ncNewUpperLeftX, ncNewUpperLeftY)
+    addAt(content, newUpperLeftCornerX, newUpperLeftCornerY)
   }
 
   /**
    *
    *
-   * @param newContent
-   * @param ncNewUpperLeftCornerX
-   * @param ncNewUpperLeftCornerY
+   * @param content
+   * @param positions
    *
    * @return
    */
   @inline
-  private
-  def moveAndAddToSide(
-      newContent: ImageElement,
-      ncNewUpperLeftCornerX: Double,
-      ncNewUpperLeftCornerY: Double): ImageElement = {
+  def addCopiesAtPos(content: ImageElement, positions: Seq[Pos]): ImageElement =
+    positions.foldLeft(this)(_.addAtPos(content, _))
 
-    val ncCurrentUpperLeftCorner = newContent.boundary.upperLeftMarker
-    val totalOffsetX = ncNewUpperLeftCornerX - ncCurrentUpperLeftCorner.xInPixels
-    val totalOffsetY = ncNewUpperLeftCornerY - ncCurrentUpperLeftCorner.yInPixels
+  /**
+   *
+   *
+   * @param contentsAndUpperLeftCornerPoss
+   *
+   * @return
+   */
+  @inline
+  def addAtPos(contentsAndUpperLeftCornerPoss: Seq[(ImageElement, Pos)]): ImageElement =
+    contentsAndUpperLeftCornerPoss.foldLeft(this)(_.addAtPos(_))
 
-    val movedContent = newContent.moveBy(totalOffsetX, totalOffsetY)
+  /**
+   *
+   *
+   * @param contentAndUpperLeftCornerPos
+   *
+   * @return
+   */
+  @inline
+  def addAtPos(contentAndUpperLeftCornerPos: (ImageElement, Pos)): ImageElement =
+    (addAtPos(_: ImageElement, _: Pos)).tupled.apply(contentAndUpperLeftCornerPos)
+
+  /**
+   *
+   *
+   * @param content
+   * @param upperLeftCorner
+   *
+   * @return
+   */
+  @inline
+  def addAtPos(
+      content: ImageElement,
+      upperLeftCorner: Pos): ImageElement = {
+
+    addAt(
+      content,
+      upperLeftCorner.xInPixels,
+      upperLeftCorner.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param content
+   * @param positions
+   *
+   * @return
+   */
+  @inline
+  def addCopiesAt(content: ImageElement, positions: Seq[(Double, Double)]): ImageElement =
+    positions.foldLeft(this)((picture, coords) => picture.addAt(content, coords._1, coords._2))
+
+  /**
+   *
+   *
+   * @param contentsAndUpperLeftCornerCoordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  def addAt(contentsAndUpperLeftCornerCoordinatesInPixels: Seq[(ImageElement, Double, Double)]): ImageElement = {
+    val movedContent = contentsAndUpperLeftCornerCoordinatesInPixels.map{params =>
+      params._1.moveTo(params._2, params._3)
+    }
 
     addToFront(movedContent)
+  }
+
+  /**
+   *
+   *
+   * @param contentAndUpperLeftCornerCoordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  def addAt(contentAndUpperLeftCornerCoordinatesInPixels: (ImageElement, Double, Double)): ImageElement =
+    (addAt(_: ImageElement, _: Double, _: Double)).tupled.apply(contentAndUpperLeftCornerCoordinatesInPixels)
+
+  /**
+   *
+   *
+   * @param content
+   * @param upperLeftCornerX
+   * @param upperLeftCornerY
+   *
+   * @return
+   */
+  @inline
+  def addAt(
+      content: ImageElement,
+      upperLeftCornerX: Double,
+      upperLeftCornerY: Double): ImageElement = {
+
+    addToFront(content.moveTo(upperLeftCornerX, upperLeftCornerY))
   }
 
   /**

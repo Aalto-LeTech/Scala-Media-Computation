@@ -106,7 +106,7 @@ object Point {
  */
 class Point private(
     override val identity: Identity,
-    val position: Pos,
+    override val position: Pos,
     val color: rgb.Color)
     extends VectorGraphic
         with FlatMap[Point, (Pos, rgb.Color)] {
@@ -185,14 +185,59 @@ class Point private(
   /**
    *
    *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
   @inline
-  def moveBy(offsets: Double*): Point = {
-    copy(newPosition =
-        position.moveBy(offsets: _*))
+  override
+  def moveBy(offsetsInPixels: Seq[Double]): Point =
+    copy(newPosition = position.moveBy(offsetsInPixels))
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double): ImageElement = {
+
+    copy(newPosition = position.moveBy(xOffsetInPixels, yOffsetInPixels))
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+    copy(newPosition = position.moveTo(coordinatesInPixels))
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): ImageElement = {
+
+    copy(newPosition = position.moveTo(xCoordinateInPixels, yCoordinateInPixels))
   }
 
   /**

@@ -229,31 +229,83 @@ case class Pos private(
   /**
    *
    *
-   * @param dX
-   * @param dY
-   *
-   * @return
-   */
-  @inline
-  def moveBy(dX: Double, dY: Double, dZ: Double): Pos = {
-    Pos(xInPixels + dX, yInPixels + dY, zInPixels + dZ)
-  }
-
-  /**
-   *
-   *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
   @inline
   override
-  def moveBy(offsets: Double*): Pos = {
+  def moveBy(offsetsInPixels: Seq[Double]): Pos = {
     require(
-      offsets.length == NumberOfDimensions,
-      s"Exactly $NumberOfDimensions offsets must be given (found: ${offsets.length})")
+      offsetsInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions offsets must be given (found: ${offsetsInPixels.length})")
 
-    moveBy(offsets(0), offsets(1), offsets(2))
+    Pos(
+      xInPixels + offsetsInPixels.head,
+      yInPixels + offsetsInPixels.tail.head,
+      zInPixels + offsetsInPixels.tail.tail.head)
+  }
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   * @param zOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double,
+      zOffsetInPixels: Double): Pos = {
+
+    Pos(
+      xInPixels + xOffsetInPixels,
+      yInPixels + yOffsetInPixels,
+      zInPixels + zOffsetInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(coordinatesInPixels: Seq[Double]): Pos = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions offsets must be given (found: ${coordinatesInPixels.length})")
+
+    Pos(
+      coordinatesInPixels.head,
+      coordinatesInPixels.tail.head,
+      coordinatesInPixels.tail.tail.head)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   * @param zCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double,
+      zCoordinateInPixels: Double): Pos = {
+
+    Pos(
+      xCoordinateInPixels,
+      yCoordinateInPixels,
+      zCoordinateInPixels)
   }
 
   /**

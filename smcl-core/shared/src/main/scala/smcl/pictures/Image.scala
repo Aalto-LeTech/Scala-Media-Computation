@@ -139,24 +139,32 @@ class Image private(
 
   /**
    *
-   *
-   * @param viewport
-   *
-   * @return
    */
   @inline
   override
-  def setViewport(viewport: Viewport): Image =
-    copy(newViewport = Option(viewport))
+  def display(): Image = {
+    super.display()
+
+    this
+  }
 
   /**
    *
    *
+   * @param newElements
+   * @param newViewport
+   * @param newAnchor
+   *
    * @return
    */
   @inline
-  override
-  def removeViewport: Image = copy(newViewport = None)
+  def copy(
+      newElements: Seq[ImageElement] = elements,
+      newViewport: Option[Viewport] = viewport,
+      newAnchor: Anchor[HasAnchor] = anchor): Image = {
+
+    new Image(identity, newElements, newViewport, newAnchor)
+  }
 
   /**
    *
@@ -182,85 +190,120 @@ class Image private(
   /**
    *
    *
-   * @param newElements
-   * @param newViewport
-   * @param newAnchor
-   *
-   * @return
-   */
-  @inline
-  def copy(
-      newElements: Seq[ImageElement] = elements,
-      newViewport: Option[Viewport] = viewport,
-      newAnchor: Anchor[HasAnchor] = anchor): Image = {
-
-    new Image(identity, newElements, newViewport, newAnchor)
-  }
-
-  /**
-   *
-   *
-   * @param newContent
+   * @param viewport
    *
    * @return
    */
   @inline
   override
-  def addToBack(newContent: ImageElement): ImageElement = {
-    val wholeContent =
-      if (newContent.isImage)
-        elements ++ newContent.toImage.elements
-      else
-        elements :+ newContent
+  def setViewport(viewport: Viewport): Image =
+    copy(newViewport = Option(viewport))
 
-    // Has to be copy of *this* Image because of viewports/anchors etc.
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def removeViewport: Image = copy(newViewport = None)
+
+  /**
+   *
+   *
+   * @param content
+   *
+   * @return
+   */
+  @inline
+  override
+  def addToBack(content: ImageElement): ImageElement = {
+    val wholeContent =
+      if (content.isImage)
+        elements ++ content.toImage.elements
+      else
+        elements :+ content
+
+    // Has to be a copy of *this* Image because of viewports/anchors etc.
     copy(newElements = wholeContent)
   }
 
   /**
    *
    *
-   * @param newContent
+   * @param content
    *
    * @return
    */
   @inline
   override
-  def addToFront(newContent: ImageElement): ImageElement = {
+  def addToFront(content: ImageElement): ImageElement = {
     val wholeContent =
-      if (newContent.isImage)
-        newContent.toImage.elements ++ elements
+      if (content.isImage)
+        content.toImage.elements ++ elements
       else
-        newContent +: elements
+        content +: elements
 
-    // Has to be copy of *this* Image because of viewports/anchors etc.
+    // Has to be a copy of *this* Image because of viewports/anchors etc.
     copy(newElements = wholeContent)
   }
 
   /**
    *
    *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
   @inline
   override
-  def moveBy(offsets: Double*): Image = {
-    map{_.moveBy(offsets: _*)}
+  def moveBy(offsetsInPixels: Seq[Double]): Image = map{_.moveBy(offsetsInPixels)}
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double): ImageElement = {
+
+    map{_.moveBy(xOffsetInPixels, yOffsetInPixels)}
   }
 
   /**
    *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
    */
   @inline
   override
-  def display(): Image = {
-    super.display()
+  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+    map{_.moveTo(coordinatesInPixels)}
 
-    this
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): ImageElement = {
+
+    map{_.moveTo(xCoordinateInPixels, yCoordinateInPixels)}
   }
-
 
   /**
    * Rotates this object around origo (0,0) by 90 degrees clockwise.

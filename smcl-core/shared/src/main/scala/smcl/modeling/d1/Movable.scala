@@ -17,6 +17,7 @@
 package smcl.modeling.d1
 
 
+import smcl.modeling.Len
 import smcl.modeling.misc.AbstractMovable
 
 
@@ -30,4 +31,76 @@ import smcl.modeling.misc.AbstractMovable
  * @author Aleksi Lukkarinen
  */
 trait Movable[ReturnType]
-    extends AbstractMovable[ReturnType]
+    extends AbstractMovable[ReturnType] {
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def moveBy(offset: Dims): ReturnType = moveBy(offset.lengthInPixels)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def + (offset: Len): ReturnType = moveBy(offset.inPixels)
+
+  /**
+   *
+   *
+   * @param offsetInPixels
+   *
+   * @return
+   */
+  @inline
+  def + (offsetInPixels: Double): ReturnType = moveBy(offsetInPixels)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  def - (offset: Len): ReturnType = moveBy(-offset.inPixels)
+
+  /**
+   *
+   *
+   * @param offsetInPixels
+   *
+   * @return
+   */
+  @inline
+  def - (offsetInPixels: Double): ReturnType = moveBy(-offsetInPixels)
+
+  /**
+   *
+   *
+   * @param offsetInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveBy(offsetInPixels: Double): ReturnType
+
+  /**
+   *
+   *
+   * @param coordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveTo(coordinateInPixels: Double): ReturnType
+
+}

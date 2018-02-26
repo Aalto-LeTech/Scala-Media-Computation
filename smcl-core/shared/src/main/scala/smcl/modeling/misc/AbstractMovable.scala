@@ -29,21 +29,28 @@ trait AbstractMovable[ReturnType] {
   /**
    *
    *
-   * @param offsets
+   * @param coordinatesInPixels
    *
    * @return
    */
-  def moveBy(offsets: Double*): ReturnType
+  def moveTo(coordinatesInPixels: Seq[Double]): ReturnType
 
   /**
    *
    *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
-  def + (offsets: Seq[Double]): ReturnType = {
-    moveBy(offsets: _*)
-  }
+  def moveBy(offsetsInPixels: Seq[Double]): ReturnType
+
+  /**
+   *
+   *
+   * @param offsetsInPixels
+   *
+   * @return
+   */
+  def + (offsetsInPixels: Seq[Double]): ReturnType = moveBy(offsetsInPixels)
 
 }

@@ -91,10 +91,6 @@ class Polygon private(
   val dimensions: Dims =
     Dims(boundary.width, boundary.height)
 
-  /** Position of this [[Polygon]]. */
-  override
-  val position: Pos = boundary.upperLeftMarker + internalCenter
-
   /** Tells if this [[Polygon]] can be rendered on a bitmap. */
   override
   val isRenderable: Boolean = true
@@ -218,14 +214,60 @@ class Polygon private(
   /**
    *
    *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
   @inline
   override
-  def moveBy(offsets: Double*): ImageElement =
-    copy(newPoints = points.map(_.moveBy(offsets: _*)))
+  def moveBy(offsetsInPixels: Seq[Double]): ImageElement =
+    copy(newPoints = points.map(_.moveBy(offsetsInPixels)))
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double): ImageElement = {
+
+    copy(newPoints = points.map(_.moveBy(xOffsetInPixels, yOffsetInPixels)))
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+    copy(newPoints = points.map(_.moveTo(coordinatesInPixels)))
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): ImageElement = {
+
+    copy(newPoints = points.map(_.moveBy(xCoordinateInPixels, yCoordinateInPixels)))
+  }
 
   /**
    * Rotates this object around origo (0,0) by 90 degrees clockwise.

@@ -116,7 +116,7 @@ object Bmp
    *
    *
    * @param identity
-   * @param position
+   * @param upperLeftCorner
    * @param buffer
    *
    * @return
@@ -124,11 +124,11 @@ object Bmp
   private
   def apply(
       identity: Identity,
-      position: Pos,
+      upperLeftCorner: Pos,
       buffer: Option[BitmapBufferAdapter]): Bmp = {
 
     if (buffer.isEmpty) {
-      return new Bmp(identity, false, Dims.Zeros, position, None)
+      return new Bmp(identity, false, Dims.Zeros, upperLeftCorner, None)
     }
 
     val isRenderable =
@@ -138,7 +138,7 @@ object Bmp
       identity,
       isRenderable,
       Dims(buffer.get.widthInPixels, buffer.get.heightInPixels),
-      position,
+      upperLeftCorner,
       buffer)
   }
 
@@ -153,7 +153,7 @@ object Bmp
  * @param identity
  * @param isRenderable
  * @param dimensions
- * @param position
+ * @param upperLeftCorner
  * @param buffer
  *
  * @author Aleksi Lukkarinen
@@ -162,7 +162,7 @@ class Bmp private(
     override val identity: Identity,
     val isRenderable: Boolean,
     val dimensions: Dims,
-    val position: Pos,
+    upperLeftCorner: Pos,
     private[smcl] val buffer: Option[BitmapBufferAdapter])
     extends ImageElement
         with Displayable {
@@ -172,11 +172,10 @@ class Bmp private(
   val boundary: Bounds =
     if (isRenderable)
       Bounds(
-        position,
+        upperLeftCorner,
         Pos(
-          position.xInPixels + width.inPixels - 1,
-          position.yInPixels + height.inPixels - 1
-        )
+          upperLeftCorner.xInPixels + width.inPixels - 1,
+          upperLeftCorner.yInPixels + height.inPixels - 1)
       )
     else
       Bounds.NotDefined
@@ -202,13 +201,59 @@ class Bmp private(
   /**
    *
    *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
   @inline
-  def moveBy(offsets: Double*): ImageElement = {
-    copy(newPosition = position.moveBy(offsets: _*))
+  override
+  def moveBy(offsetsInPixels: Seq[Double]): ImageElement =
+    copy(newPosition = position.moveBy(offsetsInPixels))
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double): ImageElement = {
+
+    copy(newPosition = position.moveBy(xOffsetInPixels, yOffsetInPixels))
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+    copy(newPosition = position.moveTo(coordinatesInPixels))
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): ImageElement = {
+
+    copy(newPosition = position.moveTo(xCoordinateInPixels, yCoordinateInPixels))
   }
 
   /**
@@ -248,7 +293,7 @@ class Bmp private(
 
   /**
    * Transforms the content of this [[Bmp]] using the specified affine
-   * transformation. The position of this [[Bmp]] remains unchanged.
+   * transformation. The upperLeftCorner of this [[Bmp]] remains unchanged.
    *
    * @param t
    *
@@ -266,7 +311,7 @@ class Bmp private(
       identity = identity,
       isRenderable = isRenderable,
       dimensions = Dims(newBuffer.widthInPixels, newBuffer.heightInPixels),
-      position = position,
+      upperLeftCorner = upperLeftCorner,
       buffer = Some(newBuffer))
   }
 

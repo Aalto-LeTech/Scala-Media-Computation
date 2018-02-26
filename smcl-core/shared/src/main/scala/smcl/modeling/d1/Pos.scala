@@ -118,19 +118,58 @@ case class Pos private(
   /**
    *
    *
-   * @param offsets
+   * @param offsetsInPixels
    *
    * @return
    */
   @inline
   override
-  def moveBy(offsets: Double*): Pos = {
+  def moveBy(offsetsInPixels: Seq[Double]): Pos = {
     require(
-      offsets.length == NumberOfDimensions,
-      s"Exactly $NumberOfDimensions offsets must be given (found: ${offsets.length})")
+      offsetsInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions offset must be given (found: ${offsetsInPixels.length})")
 
-    Pos(inPixels + offsets(0))
+    Pos(inPixels + offsetsInPixels.head)
   }
+
+  /**
+   *
+   *
+   * @param offsetInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveBy(offsetInPixels: Double): Pos = Pos(inPixels + offsetInPixels)
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(coordinatesInPixels: Seq[Double]): Pos = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinate must be given (found: ${coordinatesInPixels.length})")
+
+    Pos(coordinatesInPixels.head)
+  }
+
+  /**
+   *
+   *
+   * @param coordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveTo(coordinateInPixels: Double): Pos = Pos(coordinateInPixels)
 
   /**
    *
@@ -167,78 +206,6 @@ case class Pos private(
   override
   def compare(that: Pos): Int = {
     inPixels.compare(that.inPixels)
-  }
-
-  /**
-   *
-   *
-   * @param offset
-   *
-   * @return
-   */
-  @inline
-  def + (offset: Double): Pos = {
-    Pos(inPixels + offset)
-  }
-
-  /**
-   *
-   *
-   * @param offset
-   *
-   * @return
-   */
-  @inline
-  def - (offset: Double): Pos = {
-    Pos(inPixels - offset)
-  }
-
-  /**
-   *
-   *
-   * @param offset
-   *
-   * @return
-   */
-  @inline
-  def + (offset: Len): Pos = {
-    Pos(inPixels + offset.inPixels)
-  }
-
-  /**
-   *
-   *
-   * @param offset
-   *
-   * @return
-   */
-  @inline
-  def - (offset: Len): Pos = {
-    Pos(inPixels - offset.inPixels)
-  }
-
-  /**
-   *
-   *
-   * @param offset
-   *
-   * @return
-   */
-  @inline
-  def + (offset: Pos): Pos = {
-    Pos(inPixels + offset.inPixels)
-  }
-
-  /**
-   *
-   *
-   * @param offset
-   *
-   * @return
-   */
-  @inline
-  def - (offset: Pos): Pos = {
-    Pos(inPixels - offset.inPixels)
   }
 
   /**
