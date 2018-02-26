@@ -38,7 +38,7 @@ trait TypeQueryable {
    * @return
    */
   @inline
-  def isImage: Boolean = false
+  def isPicture: Boolean = false
 
   /**
    *

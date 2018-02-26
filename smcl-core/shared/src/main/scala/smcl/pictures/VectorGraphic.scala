@@ -25,4 +25,4 @@ package smcl.pictures
  * @author Aleksi Lukkarinen
  */
 trait VectorGraphic
-    extends ImageElement
+    extends PictureElement

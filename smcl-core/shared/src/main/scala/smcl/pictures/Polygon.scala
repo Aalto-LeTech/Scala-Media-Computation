@@ -206,7 +206,7 @@ class Polygon private(
   override
   def scaleBy(
       widthFactor: Double,
-      heightFactor: Double): ImageElement = {
+      heightFactor: Double): PictureElement = {
 
     copy(newPoints = points.map(_.scaleBy(widthFactor, heightFactor)))
   }
@@ -220,7 +220,7 @@ class Polygon private(
    */
   @inline
   override
-  def moveBy(offsetsInPixels: Seq[Double]): ImageElement =
+  def moveBy(offsetsInPixels: Seq[Double]): PictureElement =
     copy(newPoints = points.map(_.moveBy(offsetsInPixels)))
 
   /**
@@ -235,7 +235,7 @@ class Polygon private(
   override
   def moveBy(
       xOffsetInPixels: Double,
-      yOffsetInPixels: Double): ImageElement = {
+      yOffsetInPixels: Double): PictureElement = {
 
     copy(newPoints = points.map(_.moveBy(xOffsetInPixels, yOffsetInPixels)))
   }
@@ -249,7 +249,7 @@ class Polygon private(
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+  def moveTo(coordinatesInPixels: Seq[Double]): PictureElement =
     copy(newPoints = points.map(_.moveTo(coordinatesInPixels)))
 
   /**
@@ -264,7 +264,7 @@ class Polygon private(
   override
   def moveTo(
       xCoordinateInPixels: Double,
-      yCoordinateInPixels: Double): ImageElement = {
+      yCoordinateInPixels: Double): PictureElement = {
 
     copy(newPoints = points.map(_.moveBy(xCoordinateInPixels, yCoordinateInPixels)))
   }

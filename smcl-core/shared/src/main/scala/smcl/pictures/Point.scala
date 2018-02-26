@@ -206,7 +206,7 @@ class Point private(
   override
   def moveBy(
       xOffsetInPixels: Double,
-      yOffsetInPixels: Double): ImageElement = {
+      yOffsetInPixels: Double): PictureElement = {
 
     copy(newPosition = position.moveBy(xOffsetInPixels, yOffsetInPixels))
   }
@@ -220,7 +220,7 @@ class Point private(
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+  def moveTo(coordinatesInPixels: Seq[Double]): PictureElement =
     copy(newPosition = position.moveTo(coordinatesInPixels))
 
   /**
@@ -235,7 +235,7 @@ class Point private(
   override
   def moveTo(
       xCoordinateInPixels: Double,
-      yCoordinateInPixels: Double): ImageElement = {
+      yCoordinateInPixels: Double): PictureElement = {
 
     copy(newPosition = position.moveTo(xCoordinateInPixels, yCoordinateInPixels))
   }

@@ -32,25 +32,25 @@ import smcl.viewers.{display => displayInViewer}
  *
  * @author Aleksi Lukkarinen
  */
-trait ImageElement
+trait PictureElement
     extends HasPos
         with HasBounds
         with HasDims
         with TypeQueryable
-        with Movable[ImageElement]
-        with Rotatable[ImageElement]
-        with Scalable[ImageElement]
+        with Movable[PictureElement]
+        with Rotatable[PictureElement]
+        with Scalable[PictureElement]
         with Cropable[Bmp] {
 
   /** */
-  type SimpleTransformer = ImageElement => ImageElement
+  type SimpleTransformer = PictureElement => PictureElement
 
   /** */
-  val IdentitySimpleTransformer: SimpleTransformer = (i: ImageElement) => i
+  val IdentitySimpleTransformer: SimpleTransformer = (i: PictureElement) => i
 
 
   /**
-   * Position of this [[ImageElement]].
+   * Position of this [[PictureElement]].
    *
    * @return
    */
@@ -72,7 +72,7 @@ trait ImageElement
   def identity: Identity
 
   /**
-   * Tells if this [[ImageElement]] can be rendered on a bitmap.
+   * Tells if this [[PictureElement]] can be rendered on a bitmap.
    *
    * @return
    */
@@ -92,13 +92,13 @@ trait ImageElement
    * @return
    */
   @inline
-  def toImage: Image = Image(this)
+  def toPicture: Picture = Picture(this)
 
   /**
    *
    */
   @inline
-  def display(): ImageElement = {
+  def display(): PictureElement = {
     displayInViewer(toBitmap)
 
     this
@@ -137,7 +137,7 @@ trait ImageElement
    * @return
    */
   @inline
-  def addToBack(content: ImageElement): ImageElement = addToBack(Seq(content))
+  def addToBack(content: PictureElement): PictureElement = addToBack(Seq(content))
 
   /**
    *
@@ -147,8 +147,8 @@ trait ImageElement
    * @return
    */
   @inline
-  def addToBack(content: Seq[ImageElement]): ImageElement =
-    Image(appendTo(content, Seq(this)))
+  def addToBack(content: Seq[PictureElement]): PictureElement =
+    Picture(appendTo(content, Seq(this)))
 
   /**
    *
@@ -161,12 +161,12 @@ trait ImageElement
   @inline
   protected final
   def appendTo(
-      contentToAppend: Seq[ImageElement],
-      existingContent: Seq[ImageElement]): Seq[ImageElement] = {
+      contentToAppend: Seq[PictureElement],
+      existingContent: Seq[PictureElement]): Seq[PictureElement] = {
 
     contentToAppend.foldLeft(existingContent){(allElements, currentElement) =>
-      if (currentElement.isImage)
-        allElements ++ currentElement.toImage.elements
+      if (currentElement.isPicture)
+        allElements ++ currentElement.toPicture.elements
       else
         allElements :+ currentElement
     }
@@ -180,7 +180,7 @@ trait ImageElement
    * @return
    */
   @inline
-  def addToFront(content: ImageElement): ImageElement = content.addToBack(this)
+  def addToFront(content: PictureElement): PictureElement = content.addToBack(this)
 
   /**
    *
@@ -190,8 +190,8 @@ trait ImageElement
    * @return
    */
   @inline
-  def addToFront(content: Seq[ImageElement]): ImageElement =
-    Image(prependTo(content, Seq(this)))
+  def addToFront(content: Seq[PictureElement]): PictureElement =
+    Picture(prependTo(content, Seq(this)))
 
   /**
    *
@@ -204,12 +204,12 @@ trait ImageElement
   @inline
   protected final
   def prependTo(
-      contentToPrepend: Seq[ImageElement],
-      existingContent: Seq[ImageElement]): Seq[ImageElement] = {
+      contentToPrepend: Seq[PictureElement],
+      existingContent: Seq[PictureElement]): Seq[PictureElement] = {
 
     contentToPrepend.foldRight(existingContent){(currentElement, allElements) =>
-      if (currentElement.isImage)
-        currentElement.toImage.elements ++ allElements
+      if (currentElement.isPicture)
+        currentElement.toPicture.elements ++ allElements
       else
         currentElement +: allElements
     }
@@ -223,7 +223,7 @@ trait ImageElement
    * @return
    */
   @inline
-  def +: (content: ImageElement): ImageElement = addToFront(content)
+  def +: (content: PictureElement): PictureElement = addToFront(content)
 
   /**
    *
@@ -233,7 +233,7 @@ trait ImageElement
    * @return
    */
   @inline
-  def :+ (content: ImageElement): ImageElement = addToBack(content)
+  def :+ (content: PictureElement): PictureElement = addToBack(content)
 
   /**
    *
@@ -246,9 +246,9 @@ trait ImageElement
    */
   @inline
   def addToTop(
-      content: ImageElement,
+      content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
-      alignment: HorizontalAlignment = DefaultHorizontalAlignment): ImageElement = {
+      alignment: HorizontalAlignment = DefaultHorizontalAlignment): PictureElement = {
 
     val newUpperLeftCornerX = boundary.horizontalPositionFor(alignment, content.boundary)
 
@@ -269,9 +269,9 @@ trait ImageElement
    */
   @inline
   def addToRight(
-      content: ImageElement,
+      content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
-      alignment: VerticalAlignment = DefaultVerticalAlignment): ImageElement = {
+      alignment: VerticalAlignment = DefaultVerticalAlignment): PictureElement = {
 
     val newUpperLeftCornerX = boundary.lowerRightMarker.xInPixels + paddingInPixels
     val newUpperLeftCornerY = boundary.verticalPositionFor(alignment, content.boundary)
@@ -290,9 +290,9 @@ trait ImageElement
    */
   @inline
   def addToBottom(
-      content: ImageElement,
+      content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
-      alignment: HorizontalAlignment = DefaultHorizontalAlignment): ImageElement = {
+      alignment: HorizontalAlignment = DefaultHorizontalAlignment): PictureElement = {
 
     val newUpperLeftCornerX = boundary.horizontalPositionFor(alignment, content.boundary)
     val newUpperLeftCornerY = boundary.lowerRightMarker.yInPixels + paddingInPixels
@@ -311,9 +311,9 @@ trait ImageElement
    */
   @inline
   def addToLeft(
-      content: ImageElement,
+      content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
-      alignment: VerticalAlignment = DefaultVerticalAlignment): ImageElement = {
+      alignment: VerticalAlignment = DefaultVerticalAlignment): PictureElement = {
 
     val newUpperLeftCornerX =
       boundary.upperLeftMarker.xInPixels - paddingInPixels - content.boundary.width.inPixels
@@ -332,7 +332,7 @@ trait ImageElement
    * @return
    */
   @inline
-  def addCopiesAtPos(content: ImageElement, positions: Seq[Pos]): ImageElement =
+  def addCopiesAtPos(content: PictureElement, positions: Seq[Pos]): PictureElement =
     positions.foldLeft(this)(_.addAtPos(content, _))
 
   /**
@@ -343,7 +343,7 @@ trait ImageElement
    * @return
    */
   @inline
-  def addAtPos(contentsAndUpperLeftCornerPoss: Seq[(ImageElement, Pos)]): ImageElement =
+  def addAtPos(contentsAndUpperLeftCornerPoss: Seq[(PictureElement, Pos)]): PictureElement =
     contentsAndUpperLeftCornerPoss.foldLeft(this)(_.addAtPos(_))
 
   /**
@@ -354,8 +354,8 @@ trait ImageElement
    * @return
    */
   @inline
-  def addAtPos(contentAndUpperLeftCornerPos: (ImageElement, Pos)): ImageElement =
-    (addAtPos(_: ImageElement, _: Pos)).tupled.apply(contentAndUpperLeftCornerPos)
+  def addAtPos(contentAndUpperLeftCornerPos: (PictureElement, Pos)): PictureElement =
+    (addAtPos(_: PictureElement, _: Pos)).tupled.apply(contentAndUpperLeftCornerPos)
 
   /**
    *
@@ -367,8 +367,8 @@ trait ImageElement
    */
   @inline
   def addAtPos(
-      content: ImageElement,
-      upperLeftCorner: Pos): ImageElement = {
+      content: PictureElement,
+      upperLeftCorner: Pos): PictureElement = {
 
     addAt(
       content,
@@ -385,7 +385,7 @@ trait ImageElement
    * @return
    */
   @inline
-  def addCopiesAt(content: ImageElement, positions: Seq[(Double, Double)]): ImageElement =
+  def addCopiesAt(content: PictureElement, positions: Seq[(Double, Double)]): PictureElement =
     positions.foldLeft(this)((picture, coords) => picture.addAt(content, coords._1, coords._2))
 
   /**
@@ -396,7 +396,7 @@ trait ImageElement
    * @return
    */
   @inline
-  def addAt(contentsAndUpperLeftCornerCoordinatesInPixels: Seq[(ImageElement, Double, Double)]): ImageElement = {
+  def addAt(contentsAndUpperLeftCornerCoordinatesInPixels: Seq[(PictureElement, Double, Double)]): PictureElement = {
     val movedContent = contentsAndUpperLeftCornerCoordinatesInPixels.map{params =>
       params._1.moveTo(params._2, params._3)
     }
@@ -412,8 +412,8 @@ trait ImageElement
    * @return
    */
   @inline
-  def addAt(contentAndUpperLeftCornerCoordinatesInPixels: (ImageElement, Double, Double)): ImageElement =
-    (addAt(_: ImageElement, _: Double, _: Double)).tupled.apply(contentAndUpperLeftCornerCoordinatesInPixels)
+  def addAt(contentAndUpperLeftCornerCoordinatesInPixels: (PictureElement, Double, Double)): PictureElement =
+    (addAt(_: PictureElement, _: Double, _: Double)).tupled.apply(contentAndUpperLeftCornerCoordinatesInPixels)
 
   /**
    *
@@ -426,9 +426,9 @@ trait ImageElement
    */
   @inline
   def addAt(
-      content: ImageElement,
+      content: PictureElement,
       upperLeftCornerX: Double,
-      upperLeftCornerY: Double): ImageElement = {
+      upperLeftCornerY: Double): PictureElement = {
 
     addToFront(content.moveTo(upperLeftCornerX, upperLeftCornerY))
   }
@@ -447,7 +447,7 @@ trait ImageElement
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: VerticalAlignment = DefaultVerticalAlignment,
-      transformer: SimpleTransformer = IdentitySimpleTransformer): ImageElement = {
+      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
 
     if (numberOfReplicas < 0) {
       throw new IllegalArgumentException(
@@ -457,18 +457,18 @@ trait ImageElement
     @tailrec
     def replicate(
         replicasLeft: Int,
-        previousTransformedImage: ImageElement,
-        resultImage: ImageElement): ImageElement = {
+        previousTransformedPicture: PictureElement,
+        resultPicture: PictureElement): PictureElement = {
 
       if (replicasLeft == 0)
-        return resultImage
+        return resultPicture
 
-      val transformed = transformer(previousTransformedImage)
+      val transformed = transformer(previousTransformedPicture)
 
       replicate(
         replicasLeft - 1,
         transformed,
-        resultImage.addToRight(transformed, paddingInPixels, alignment))
+        resultPicture.addToRight(transformed, paddingInPixels, alignment))
     }
 
     replicate(numberOfReplicas, this, this)
@@ -488,7 +488,7 @@ trait ImageElement
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: HorizontalAlignment = DefaultHorizontalAlignment,
-      transformer: SimpleTransformer = IdentitySimpleTransformer): ImageElement = {
+      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
 
     if (numberOfReplicas < 0) {
       throw new IllegalArgumentException(
@@ -498,18 +498,18 @@ trait ImageElement
     @tailrec
     def replicate(
         replicasLeft: Int,
-        previousTransformedImage: ImageElement,
-        resultImage: ImageElement): ImageElement = {
+        previousTransformedPicture: PictureElement,
+        resultPicture: PictureElement): PictureElement = {
 
       if (replicasLeft == 0)
-        return resultImage
+        return resultPicture
 
-      val transformed = transformer(previousTransformedImage)
+      val transformed = transformer(previousTransformedPicture)
 
       replicate(
         replicasLeft - 1,
         transformed,
-        resultImage.addToBottom(transformed, paddingInPixels, alignment))
+        resultPicture.addToBottom(transformed, paddingInPixels, alignment))
     }
 
     replicate(numberOfReplicas, this, this)

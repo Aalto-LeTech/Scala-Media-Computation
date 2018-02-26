@@ -29,7 +29,7 @@ import smcl.modeling.d2.{Bounds, Pos}
  *
  * @author Aleksi Lukkarinen
  */
-trait Cropable[ReturnType <: ImageElement] {
+trait Cropable[ReturnType <: PictureElement] {
 
   /**
    *

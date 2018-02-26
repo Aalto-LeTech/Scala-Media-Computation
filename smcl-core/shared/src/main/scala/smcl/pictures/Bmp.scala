@@ -52,7 +52,7 @@ object Bmp
    *
    * @return
    */
-  def apply(elements: ImageElement*): Bmp =
+  def apply(elements: PictureElement*): Bmp =
     RenderingController.createBitmapFrom(elements: _*)
 
   /**
@@ -164,7 +164,7 @@ class Bmp private(
     val dimensions: Dims,
     upperLeftCorner: Pos,
     private[smcl] val buffer: Option[BitmapBufferAdapter])
-    extends ImageElement
+    extends PictureElement
         with Displayable {
 
   /** */
@@ -207,7 +207,7 @@ class Bmp private(
    */
   @inline
   override
-  def moveBy(offsetsInPixels: Seq[Double]): ImageElement =
+  def moveBy(offsetsInPixels: Seq[Double]): PictureElement =
     copy(newPosition = position.moveBy(offsetsInPixels))
 
   /**
@@ -222,7 +222,7 @@ class Bmp private(
   override
   def moveBy(
       xOffsetInPixels: Double,
-      yOffsetInPixels: Double): ImageElement = {
+      yOffsetInPixels: Double): PictureElement = {
 
     copy(newPosition = position.moveBy(xOffsetInPixels, yOffsetInPixels))
   }
@@ -236,7 +236,7 @@ class Bmp private(
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+  def moveTo(coordinatesInPixels: Seq[Double]): PictureElement =
     copy(newPosition = position.moveTo(coordinatesInPixels))
 
   /**
@@ -251,7 +251,7 @@ class Bmp private(
   override
   def moveTo(
       xCoordinateInPixels: Double,
-      yCoordinateInPixels: Double): ImageElement = {
+      yCoordinateInPixels: Double): PictureElement = {
 
     copy(newPosition = position.moveTo(xCoordinateInPixels, yCoordinateInPixels))
   }

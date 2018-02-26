@@ -256,7 +256,7 @@ class Arc private(
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+  def moveTo(coordinatesInPixels: Seq[Double]): PictureElement =
     moveBy(
       coordinatesInPixels.head - position.xInPixels,
       coordinatesInPixels.tail.head - position.yInPixels)
@@ -273,7 +273,7 @@ class Arc private(
   override
   def moveTo(
       xCoordinateInPixels: Double,
-      yCoordinateInPixels: Double): ImageElement = {
+      yCoordinateInPixels: Double): PictureElement = {
 
     moveBy(
       xCoordinateInPixels - position.xInPixels,
@@ -313,7 +313,7 @@ class Arc private(
   override
   def moveBy(
       xOffsetInPixels: Double,
-      yOffsetInPixels: Double): ImageElement = {
+      yOffsetInPixels: Double): PictureElement = {
 
     val newUL = upperLeftCorner.moveBy(xOffsetInPixels, yOffsetInPixels)
     val newLR = lowerRightCorner.moveBy(xOffsetInPixels, yOffsetInPixels)

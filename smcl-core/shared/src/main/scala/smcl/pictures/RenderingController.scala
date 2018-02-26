@@ -53,13 +53,13 @@ object RenderingController
    *
    * @return
    */
-  def createBitmapFrom(elements: ImageElement*): Bmp = {
+  def createBitmapFrom(elements: PictureElement*): Bmp = {
     if (elements.isEmpty)
       return Bmp(0, 0)
 
     val bounds =
       if (ifContainsOnlyAnImageThatDefinesAViewport(elements))
-        elements.head.toImage.viewport.get.boundary
+        elements.head.toPicture.viewport.get.boundary
       else
         BoundaryCalculator.fromBoundaries(elements)
 
@@ -86,11 +86,11 @@ object RenderingController
 
   private
   def ifContainsOnlyAnImageThatDefinesAViewport(
-      elements: Seq[ImageElement]): Boolean = {
+      elements: Seq[PictureElement]): Boolean = {
 
     elements.lengthCompare(1) == 0 &&
-        elements.head.isImage &&
-        elements.head.toImage.viewport.isDefined
+        elements.head.isPicture &&
+        elements.head.toPicture.viewport.isDefined
   }
 
   /**
@@ -103,7 +103,7 @@ object RenderingController
    */
   private
   def renderElements(
-      content: Seq[ImageElement],
+      content: Seq[PictureElement],
       targetDrawingSurface: DrawingSurfaceAdapter,
       xOffsetToOrigoInPixels: Double,
       yOffsetToOrigoInPixels: Double): Unit = {
@@ -112,8 +112,8 @@ object RenderingController
     while (renderingQueue.nonEmpty) {
       val contentItem = renderingQueue.dequeue()
 
-      if (contentItem.isImage) {
-        renderingQueue ++= contentItem.toImage.elements.reverse
+      if (contentItem.isPicture) {
+        renderingQueue ++= contentItem.toPicture.elements.reverse
       }
       else if (contentItem.isArc) {
         val arc = contentItem.asInstanceOf[Arc]

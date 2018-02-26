@@ -28,7 +28,7 @@ import smcl.modeling.d2.{Bounds, HasBounds, Pos}
  *
  * @author Aleksi Lukkarinen
  */
-trait HasViewport[ReturnType <: ImageElement] {
+trait HasViewport[ReturnType <: PictureElement] {
 
   self: HasBounds =>
 

@@ -45,7 +45,7 @@ object Crosshair {
   def forWidth(
       widthInPixels: Double,
       color: Color,
-      center: Pos): ImageElement = {
+      center: Pos): PictureElement = {
 
     apply(widthInPixels / 2.0, color, center)
   }
@@ -63,7 +63,7 @@ object Crosshair {
   def apply(
       radiusInPixels: Double = DefaultCircleRadiusInPixels / 3.0,
       color: Color = DefaultPrimaryColor,
-      center: Pos = Pos.Origo): ImageElement = {
+      center: Pos = Pos.Origo): PictureElement = {
 
     val top = center.addY(radiusInPixels)
     val bottom = center.addY(-radiusInPixels)
@@ -80,7 +80,7 @@ object Crosshair {
       color = color,
       fillColor = DefaultSecondaryColor)
 
-    Image(hLine, vLine, circle)
+    Picture(hLine, vLine, circle)
   }
 
 }

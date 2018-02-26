@@ -26,7 +26,7 @@ import smcl.modeling.d2._
 /**
  *
  */
-object Image {
+object Picture {
 
   /**
    *
@@ -36,7 +36,7 @@ object Image {
    * @return
    */
   @inline
-  def apply(elements: ImageElement*): Image =
+  def apply(elements: PictureElement*): Picture =
     apply(elements, Anchor.Center)
 
   /**
@@ -49,8 +49,8 @@ object Image {
    */
   @inline
   def apply(
-      elements: Seq[ImageElement],
-      anchor: Anchor[HasAnchor]): Image = {
+      elements: Seq[PictureElement],
+      anchor: Anchor[HasAnchor]): Picture = {
 
     apply(elements, viewport = None, anchor)
   }
@@ -66,13 +66,13 @@ object Image {
    */
   @inline
   def apply(
-      elements: Seq[ImageElement] = Seq(),
+      elements: Seq[PictureElement] = Seq(),
       viewport: Option[Viewport] = None,
-      anchor: Anchor[HasAnchor] = Anchor.Center): Image = {
+      anchor: Anchor[HasAnchor] = Anchor.Center): Picture = {
 
     val identity: Identity = Identity()
 
-    new Image(identity, elements, viewport, anchor)
+    new Picture(identity, elements, viewport, anchor)
   }
 
 }
@@ -90,15 +90,15 @@ object Image {
  *
  * @author Aleksi Lukkarinen
  */
-class Image private(
+class Picture private(
     override val identity: Identity,
-    val elements: Seq[ImageElement],
+    val elements: Seq[PictureElement],
     val viewport: Option[Viewport],
     val anchor: Anchor[HasAnchor])
-    extends ImageElement
+    extends PictureElement
         with HasAnchor
-        with HasViewport[Image]
-        with FlatMap[Image, Seq[ImageElement]] {
+        with HasViewport[Picture]
+        with FlatMap[Picture, Seq[PictureElement]] {
 
   // TODO: Tarkistukset
 
@@ -126,7 +126,7 @@ class Image private(
    */
   @inline
   override
-  def isImage: Boolean = true
+  def isPicture: Boolean = true
 
   /**
    *
@@ -135,14 +135,14 @@ class Image private(
    */
   @inline
   override
-  def toImage: Image = this
+  def toPicture: Picture = this
 
   /**
    *
    */
   @inline
   override
-  def display(): Image = {
+  def display(): Picture = {
     super.display()
 
     this
@@ -159,11 +159,11 @@ class Image private(
    */
   @inline
   def copy(
-      newElements: Seq[ImageElement] = elements,
+      newElements: Seq[PictureElement] = elements,
       newViewport: Option[Viewport] = viewport,
-      newAnchor: Anchor[HasAnchor] = anchor): Image = {
+      newAnchor: Anchor[HasAnchor] = anchor): Picture = {
 
-    new Image(identity, newElements, newViewport, newAnchor)
+    new Picture(identity, newElements, newViewport, newAnchor)
   }
 
   /**
@@ -174,7 +174,7 @@ class Image private(
    * @return
    */
   @inline
-  def map(f: (ImageElement) => ImageElement): Image =
+  def map(f: (PictureElement) => PictureElement): Picture =
     copy(newElements = elements.map(f))
 
   /**
@@ -185,7 +185,7 @@ class Image private(
    */
   @inline
   override
-  def flatMap(f: (Seq[ImageElement]) => Image): Image = f(elements)
+  def flatMap(f: (Seq[PictureElement]) => Picture): Picture = f(elements)
 
   /**
    *
@@ -196,7 +196,7 @@ class Image private(
    */
   @inline
   override
-  def setViewport(viewport: Viewport): Image =
+  def setViewport(viewport: Viewport): Picture =
     copy(newViewport = Option(viewport))
 
   /**
@@ -206,7 +206,7 @@ class Image private(
    */
   @inline
   override
-  def removeViewport: Image = copy(newViewport = None)
+  def removeViewport: Picture = copy(newViewport = None)
 
   /**
    *
@@ -215,10 +215,10 @@ class Image private(
    *
    * @return
    */
-  // Has to return a copy of *this* Image because of viewports/anchors etc.
+  // Has to return a copy of *this* Picture because of viewports/anchors etc.
   @inline
   override
-  def addToBack(content: Seq[ImageElement]): ImageElement =
+  def addToBack(content: Seq[PictureElement]): PictureElement =
     copy(newElements = appendTo(content, this.elements))
 
   /**
@@ -228,10 +228,10 @@ class Image private(
    *
    * @return
    */
-  // Has to return a copy of *this* Image because of viewports/anchors etc.
+  // Has to return a copy of *this* Picture because of viewports/anchors etc.
   @inline
   override
-  def addToFront(content: Seq[ImageElement]): ImageElement =
+  def addToFront(content: Seq[PictureElement]): PictureElement =
     copy(newElements = prependTo(content, this.elements))
 
   /**
@@ -243,7 +243,7 @@ class Image private(
    */
   @inline
   override
-  def moveBy(offsetsInPixels: Seq[Double]): Image = map{_.moveBy(offsetsInPixels)}
+  def moveBy(offsetsInPixels: Seq[Double]): Picture = map{_.moveBy(offsetsInPixels)}
 
   /**
    *
@@ -257,7 +257,7 @@ class Image private(
   override
   def moveBy(
       xOffsetInPixels: Double,
-      yOffsetInPixels: Double): ImageElement = {
+      yOffsetInPixels: Double): PictureElement = {
 
     map{_.moveBy(xOffsetInPixels, yOffsetInPixels)}
   }
@@ -271,7 +271,7 @@ class Image private(
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): ImageElement =
+  def moveTo(coordinatesInPixels: Seq[Double]): PictureElement =
     map{_.moveTo(coordinatesInPixels)}
 
   /**
@@ -286,7 +286,7 @@ class Image private(
   override
   def moveTo(
       xCoordinateInPixels: Double,
-      yCoordinateInPixels: Double): ImageElement = {
+      yCoordinateInPixels: Double): PictureElement = {
 
     map{_.moveTo(xCoordinateInPixels, yCoordinateInPixels)}
   }
@@ -298,7 +298,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy90DegsCWAroundOrigo: ImageElement = map{_.rotateBy90DegsCWAroundOrigo}
+  def rotateBy90DegsCWAroundOrigo: PictureElement = map{_.rotateBy90DegsCWAroundOrigo}
 
   /**
    * Rotates this object around its center by 90 degrees clockwise.
@@ -307,7 +307,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy90DegsCW: ImageElement = rotateBy90DegsCW(position)
+  def rotateBy90DegsCW: PictureElement = rotateBy90DegsCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -318,7 +318,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy90DegsCW(centerOfRotation: Pos): ImageElement =
+  def rotateBy90DegsCW(centerOfRotation: Pos): PictureElement =
     map{_.rotateBy90DegsCW(centerOfRotation)}
 
   /**
@@ -328,7 +328,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy90DegsCCWAroundOrigo: ImageElement = map{_.rotateBy90DegsCCWAroundOrigo}
+  def rotateBy90DegsCCWAroundOrigo: PictureElement = map{_.rotateBy90DegsCCWAroundOrigo}
 
   /**
    * Rotates this object around the its center by 90 degrees counterclockwise.
@@ -337,7 +337,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy90DegsCCW: ImageElement = rotateBy90DegsCCW(position)
+  def rotateBy90DegsCCW: PictureElement = rotateBy90DegsCCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -348,7 +348,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy90DegsCCW(centerOfRotation: Pos): ImageElement =
+  def rotateBy90DegsCCW(centerOfRotation: Pos): PictureElement =
     map{_.rotateBy90DegsCCW(centerOfRotation)}
 
   /**
@@ -358,7 +358,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy180DegsAroundOrigo: ImageElement = map{_.rotateBy180DegsAroundOrigo}
+  def rotateBy180DegsAroundOrigo: PictureElement = map{_.rotateBy180DegsAroundOrigo}
 
   /**
    * Rotates this object around its center by 180 degrees.
@@ -367,7 +367,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy180Degs: ImageElement = rotateBy180Degs(position)
+  def rotateBy180Degs: PictureElement = rotateBy180Degs(position)
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -378,7 +378,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy180Degs(centerOfRotation: Pos): ImageElement =
+  def rotateBy180Degs(centerOfRotation: Pos): PictureElement =
     map{_.rotateBy180Degs(centerOfRotation)}
 
   /**
@@ -390,7 +390,7 @@ class Image private(
    */
   @inline
   override
-  def rotateByAroundOrigo(angleInDegrees: Double): ImageElement =
+  def rotateByAroundOrigo(angleInDegrees: Double): PictureElement =
     map{_.rotateByAroundOrigo(angleInDegrees)}
 
   /**
@@ -402,7 +402,7 @@ class Image private(
    */
   @inline
   override
-  def rotateBy(angleInDegrees: Double): ImageElement = rotateBy(angleInDegrees, position)
+  def rotateBy(angleInDegrees: Double): PictureElement = rotateBy(angleInDegrees, position)
 
   /**
    * Rotates this object around a given point by the specified number of degrees.
@@ -416,7 +416,7 @@ class Image private(
   override
   def rotateBy(
       angleInDegrees: Double,
-      centerOfRotation: Pos): ImageElement = {
+      centerOfRotation: Pos): PictureElement = {
 
     map{_.rotateBy(angleInDegrees, centerOfRotation)}
   }
@@ -432,7 +432,7 @@ class Image private(
   override
   def scaleBy(
       widthFactor: Double,
-      heightFactor: Double): Image = {
+      heightFactor: Double): Picture = {
 
     this
   }
