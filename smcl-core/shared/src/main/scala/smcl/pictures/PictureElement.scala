@@ -33,6 +33,24 @@ import smcl.viewers.{display => displayInViewer}
  *
  * @author Aleksi Lukkarinen
  */
+object PictureElement {
+
+  /** */
+  type SimpleTransformer = PictureElement => PictureElement
+
+  /** */
+  val IdentitySimpleTransformer: SimpleTransformer = (i: PictureElement) => i
+
+}
+
+
+
+
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
 trait PictureElement
     extends HasPos
         with HasBounds
@@ -42,13 +60,6 @@ trait PictureElement
         with Rotatable[PictureElement]
         with Scalable[PictureElement]
         with Cropable[Bitmap] {
-
-  /** */
-  type SimpleTransformer = PictureElement => PictureElement
-
-  /** */
-  val IdentitySimpleTransformer: SimpleTransformer = (i: PictureElement) => i
-
 
   /**
    * Position of this [[PictureElement]].
@@ -63,6 +74,7 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def points: Seq[Pos] = Seq()
 
   /**
@@ -70,6 +82,7 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def identity: Identity
 
   /**
@@ -77,6 +90,7 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def isRenderable: Boolean
 
   /**
@@ -545,11 +559,12 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def replicateUpwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: HorizontalAlignment = DefaultHorizontalAlignment,
-      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
+      transformer: PictureElement.SimpleTransformer = PictureElement.IdentitySimpleTransformer): PictureElement = {
 
     replicateTo(
       TopSide,
@@ -569,11 +584,12 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def replicateDownwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: HorizontalAlignment = DefaultHorizontalAlignment,
-      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
+      transformer: PictureElement.SimpleTransformer = PictureElement.IdentitySimpleTransformer): PictureElement = {
 
     replicateTo(
       BottomSide,
@@ -593,11 +609,12 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def replicateLeftwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: VerticalAlignment = DefaultVerticalAlignment,
-      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
+      transformer: PictureElement.SimpleTransformer = PictureElement.IdentitySimpleTransformer): PictureElement = {
 
     replicateTo(
       LeftSide,
@@ -617,11 +634,12 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def replicateRightwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: VerticalAlignment = DefaultVerticalAlignment,
-      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
+      transformer: PictureElement.SimpleTransformer = PictureElement.IdentitySimpleTransformer): PictureElement = {
 
     replicateTo(
       RightSide,
@@ -641,6 +659,7 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def alternateUpwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -665,6 +684,7 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def alternateDownwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -689,6 +709,7 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def alternateLeftwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -713,6 +734,7 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def alternateRightwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -743,7 +765,7 @@ trait PictureElement
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: SideIndependentAlignment,
-      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
+      transformer: PictureElement.SimpleTransformer = PictureElement.IdentitySimpleTransformer): PictureElement = {
 
     if (numberOfReplicas < 0) {
       throw new IllegalArgumentException(
