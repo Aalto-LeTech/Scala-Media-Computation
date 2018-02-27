@@ -27,4 +27,47 @@ import scala.language.implicitConversions
  */
 package object pictures {
 
+
+
+
+  /**
+   * Base class for identifying edges.
+   */
+  sealed abstract class Side
+
+
+
+
+  /**
+   * A constant for identifying a bottom side.
+   */
+  case object BottomSide extends Side
+
+
+
+
+  /**
+   * A constant for identifying a top side.
+   */
+  case object TopSide extends Side
+
+
+
+
+  /**
+   * A constant for identifying a left side.
+   */
+  case object LeftSide extends Side
+
+
+
+
+  /**
+   * A constant for identifying a right side.
+   */
+  case object RightSide extends Side
+
+
+
+
 }

@@ -239,6 +239,31 @@ trait PictureElement
   /**
    *
    *
+   * @param targetSide
+   * @param content
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  @inline
+  def addTo(
+      targetSide: Side,
+      content: PictureElement,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: SideIndependentAlignment): PictureElement = {
+
+    targetSide match {
+      case TopSide    => addToTop(content, paddingInPixels, alignment.toHorizontal)
+      case BottomSide => addToBottom(content, paddingInPixels, alignment.toHorizontal)
+      case LeftSide   => addToLeft(content, paddingInPixels, alignment.toVertical)
+      case RightSide  => addToRight(content, paddingInPixels, alignment.toVertical)
+    }
+  }
+
+  /**
+   *
+   *
    * @param content
    * @param paddingInPixels
    * @param alignment
@@ -520,35 +545,18 @@ trait PictureElement
    *
    * @return
    */
-  def replicateHorizontally(
+  def replicateUpwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
-      alignment: VerticalAlignment = DefaultVerticalAlignment,
+      alignment: HorizontalAlignment = DefaultHorizontalAlignment,
       transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
 
-    if (numberOfReplicas < 0) {
-      throw new IllegalArgumentException(
-        s"Number of replicas cannot be negative (was $numberOfReplicas)")
-    }
-
-    @tailrec
-    def replicate(
-        replicasLeft: Int,
-        previousTransformedPicture: PictureElement,
-        resultPicture: PictureElement): PictureElement = {
-
-      if (replicasLeft == 0)
-        return resultPicture
-
-      val transformed = transformer(previousTransformedPicture)
-
-      replicate(
-        replicasLeft - 1,
-        transformed,
-        resultPicture.addToRight(transformed, paddingInPixels, alignment))
-    }
-
-    replicate(numberOfReplicas, this, this)
+    replicateTo(
+      TopSide,
+      numberOfReplicas,
+      paddingInPixels,
+      alignment.sideIndependent,
+      transformer)
   }
 
   /**
@@ -561,10 +569,84 @@ trait PictureElement
    *
    * @return
    */
-  def replicateVertically(
+  def replicateDownwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: HorizontalAlignment = DefaultHorizontalAlignment,
+      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
+
+    replicateTo(
+      BottomSide,
+      numberOfReplicas,
+      paddingInPixels,
+      alignment.sideIndependent,
+      transformer)
+  }
+
+  /**
+   *
+   *
+   * @param numberOfReplicas
+   * @param paddingInPixels
+   * @param alignment
+   * @param transformer
+   *
+   * @return
+   */
+  def replicateLeftwards(
+      numberOfReplicas: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: VerticalAlignment = DefaultVerticalAlignment,
+      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
+
+    replicateTo(
+      LeftSide,
+      numberOfReplicas,
+      paddingInPixels,
+      alignment.sideIndependent,
+      transformer)
+  }
+
+  /**
+   *
+   *
+   * @param numberOfReplicas
+   * @param paddingInPixels
+   * @param alignment
+   * @param transformer
+   *
+   * @return
+   */
+  def replicateRightwards(
+      numberOfReplicas: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: VerticalAlignment = DefaultVerticalAlignment,
+      transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
+
+    replicateTo(
+      RightSide,
+      numberOfReplicas,
+      paddingInPixels,
+      alignment.sideIndependent,
+      transformer)
+  }
+
+  /**
+   *
+   *
+   * @param side
+   * @param numberOfReplicas
+   * @param paddingInPixels
+   * @param alignment
+   * @param transformer
+   *
+   * @return
+   */
+  def replicateTo(
+      side: Side,
+      numberOfReplicas: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: SideIndependentAlignment,
       transformer: SimpleTransformer = IdentitySimpleTransformer): PictureElement = {
 
     if (numberOfReplicas < 0) {
@@ -586,7 +668,7 @@ trait PictureElement
       replicate(
         replicasLeft - 1,
         transformed,
-        resultPicture.addToBottom(transformed, paddingInPixels, alignment))
+        resultPicture.addTo(side, transformed, paddingInPixels, alignment))
     }
 
     replicate(numberOfReplicas, this, this)

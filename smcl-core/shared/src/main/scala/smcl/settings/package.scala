@@ -36,9 +36,99 @@ package object settings
 
 
   /**
+   * Base class for stating alignment on a side independently of the side in question.
+   */
+  sealed abstract class SideIndependentAlignment {
+
+    /**
+     *
+     *
+     * @return
+     */
+    def toHorizontal: HorizontalAlignment
+
+    /**
+     *
+     *
+     * @return
+     */
+    def toVertical: VerticalAlignment
+
+  }
+
+
+
+
+  /**
+   * A constant for stating that alignment is to be at the top or the left of a side.
+   */
+  case object SIATopOrLeft
+      extends SideIndependentAlignment {
+
+    /** */
+    override
+    val toHorizontal: HorizontalAlignment = HALeft
+
+    /** */
+    override
+    val toVertical: VerticalAlignment = VATop
+
+  }
+
+
+
+
+  /**
+   * A constant for stating that alignment is to be at the center of a side.
+   */
+  case object SIACenter
+      extends SideIndependentAlignment {
+
+    /** */
+    override
+    val toHorizontal: HorizontalAlignment = HACenter
+
+    /** */
+    override
+    val toVertical: VerticalAlignment = VAMiddle
+
+  }
+
+
+
+
+  /**
+   * A constant for stating that alignment is to be at the bottom or the right of a side.
+   */
+  case object SIABottomOrRight
+      extends SideIndependentAlignment {
+
+    /** */
+    override
+    val toHorizontal: HorizontalAlignment = HARight
+
+    /** */
+    override
+    val toVertical: VerticalAlignment = VABottom
+
+  }
+
+
+
+
+  /**
    * Base class for horizontal alignment constants.
    */
-  sealed abstract class HorizontalAlignment
+  sealed abstract class HorizontalAlignment {
+
+    /**
+     *
+     *
+     * @return
+     */
+    def sideIndependent: SideIndependentAlignment
+
+  }
 
 
 
@@ -46,7 +136,18 @@ package object settings
   /**
    * A constant for setting horizontal alignment to the left.
    */
-  case object HALeft extends HorizontalAlignment
+  case object HALeft
+      extends HorizontalAlignment {
+
+    /**
+     *
+     *
+     * @return
+     */
+    override
+    val sideIndependent: SideIndependentAlignment = SIATopOrLeft
+
+  }
 
 
 
@@ -54,7 +155,18 @@ package object settings
   /**
    * A constant for setting horizontal alignment to the center.
    */
-  case object HACenter extends HorizontalAlignment
+  case object HACenter
+      extends HorizontalAlignment {
+
+    /**
+     *
+     *
+     * @return
+     */
+    override
+    val sideIndependent: SideIndependentAlignment = SIACenter
+
+  }
 
 
 
@@ -62,7 +174,18 @@ package object settings
   /**
    * A constant for setting horizontal alignment to the right.
    */
-  case object HARight extends HorizontalAlignment
+  case object HARight
+      extends HorizontalAlignment {
+
+    /**
+     *
+     *
+     * @return
+     */
+    override
+    val sideIndependent: SideIndependentAlignment = SIABottomOrRight
+
+  }
 
 
 
@@ -70,7 +193,16 @@ package object settings
   /**
    * Base class for vertical alignment constants.
    */
-  sealed abstract class VerticalAlignment
+  sealed abstract class VerticalAlignment {
+
+    /**
+     *
+     *
+     * @return
+     */
+    def sideIndependent: SideIndependentAlignment
+
+  }
 
 
 
@@ -78,7 +210,18 @@ package object settings
   /**
    * A constant for setting vertical alignment to the left.
    */
-  case object VATop extends VerticalAlignment
+  case object VATop
+      extends VerticalAlignment {
+
+    /**
+     *
+     *
+     * @return
+     */
+    override
+    val sideIndependent: SideIndependentAlignment = SIATopOrLeft
+
+  }
 
 
 
@@ -86,7 +229,18 @@ package object settings
   /**
    * A constant for setting vertical alignment to the center.
    */
-  case object VAMiddle extends VerticalAlignment
+  case object VAMiddle
+      extends VerticalAlignment {
+
+    /**
+     *
+     *
+     * @return
+     */
+    override
+    val sideIndependent: SideIndependentAlignment = SIACenter
+
+  }
 
 
 
@@ -94,7 +248,18 @@ package object settings
   /**
    * A constant for setting vertical alignment to the right.
    */
-  case object VABottom extends VerticalAlignment
+  case object VABottom
+      extends VerticalAlignment {
+
+    /**
+     *
+     *
+     * @return
+     */
+    override
+    val sideIndependent: SideIndependentAlignment = SIABottomOrRight
+
+  }
 
 
 
@@ -110,7 +275,8 @@ package object settings
   /**
    * A constant for updating viewer per default setting.
    */
-  case object UpdateViewerPerDefaults extends ViewerUpdateStyle
+  case object UpdateViewerPerDefaults
+      extends ViewerUpdateStyle
 
 
 
@@ -118,7 +284,8 @@ package object settings
   /**
    * A constant for preventing viewer updates.
    */
-  case object PreventViewerUpdates extends ViewerUpdateStyle
+  case object PreventViewerUpdates
+      extends ViewerUpdateStyle
 
 
 
@@ -134,7 +301,8 @@ package object settings
   /**
    * A constant for stating that positions are center points.
    */
-  case object CenterPosition extends PositionType
+  case object CenterPosition
+      extends PositionType
 
 
 
@@ -142,7 +310,8 @@ package object settings
   /**
    * A constant for stating that positions are upper left corner points.
    */
-  case object UpperLeftCornerPosition extends PositionType
+  case object UpperLeftCornerPosition
+      extends PositionType
 
 
 
