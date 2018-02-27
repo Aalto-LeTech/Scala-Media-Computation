@@ -20,7 +20,7 @@ package smcl.pictures
 import smcl.colors.rgb
 import smcl.infrastructure.Identity
 import smcl.modeling.Angle
-import smcl.modeling.d2.{BoundaryCalculator, Bounds, Dims, Pos}
+import smcl.modeling.d2.{BoundaryCalculator, Bounds, Dims, NumberOfDimensions, Pos}
 import smcl.settings._
 
 
@@ -247,10 +247,53 @@ class Polygon private(
    *
    * @return
    */
+  override
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): PictureElement = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    moveBy(
+      coordinatesInPixels.head - boundary.upperLeftMarker.xInPixels,
+      coordinatesInPixels.tail.head - boundary.upperLeftMarker.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  override
+  def moveUpperLeftCornerTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): PictureElement = {
+
+    moveBy(
+      xCoordinateInPixels - boundary.upperLeftMarker.xInPixels,
+      yCoordinateInPixels - boundary.upperLeftMarker.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): PictureElement =
-    copy(newPoints = points.map(_.moveTo(coordinatesInPixels)))
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): PictureElement = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    moveBy(
+      coordinatesInPixels.head - boundary.center.xInPixels,
+      coordinatesInPixels.tail.head - boundary.center.yInPixels)
+  }
 
   /**
    *
@@ -262,11 +305,13 @@ class Polygon private(
    */
   @inline
   override
-  def moveTo(
+  def moveCenterTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): PictureElement = {
 
-    copy(newPoints = points.map(_.moveBy(xCoordinateInPixels, yCoordinateInPixels)))
+    moveBy(
+      xCoordinateInPixels - boundary.center.xInPixels,
+      yCoordinateInPixels - boundary.center.yInPixels)
   }
 
   /**

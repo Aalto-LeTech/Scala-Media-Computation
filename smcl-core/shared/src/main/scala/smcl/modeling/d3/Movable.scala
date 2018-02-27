@@ -17,7 +17,9 @@
 package smcl.modeling.d3
 
 
+import smcl.modeling.Len
 import smcl.modeling.misc.AbstractMovable
+import smcl.settings._
 
 
 
@@ -40,7 +42,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
-  def moveBy(offsets: Dims): ReturnType =
+  def + (offsets: Dims): ReturnType =
     moveBy(
       offsets.width.inPixels,
       offsets.height.inPixels,
@@ -63,6 +65,20 @@ trait Movable[ReturnType]
   /**
    *
    *
+   * @param offsets
+   *
+   * @return
+   */
+  @inline
+  def - (offsets: Dims): ReturnType =
+    moveBy(
+      -offsets.width.inPixels,
+      -offsets.height.inPixels,
+      -offsets.depth.inPixels)
+
+  /**
+   *
+   *
    * @param offsetsInPixels
    *
    * @return
@@ -73,6 +89,41 @@ trait Movable[ReturnType]
       -offsetsInPixels._1,
       -offsetsInPixels._2,
       -offsetsInPixels._3)
+
+  /**
+   *
+   *
+   * @param offsets
+   *
+   * @return
+   */
+  @inline
+  def moveBy(offsets: Dims): ReturnType =
+    moveBy(
+      offsets.width.inPixels,
+      offsets.height.inPixels,
+      offsets.depth.inPixels)
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   * @param zOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveBy(
+      xOffsetInPixels: Len,
+      yOffsetInPixels: Len,
+      zOffsetInPixels: Len): ReturnType = {
+
+    moveBy(
+      xOffsetInPixels.inPixels,
+      yOffsetInPixels.inPixels,
+      zOffsetInPixels.inPixels)
+  }
 
   /**
    *
@@ -93,12 +144,64 @@ trait Movable[ReturnType]
    *
    *
    * @param position
+   * @param positionType
    *
    * @return
    */
   @inline
-  def moveTo(position: Pos): ReturnType =
+  def moveTo(
+      position: Pos,
+      positionType: PositionType): ReturnType = {
+
     moveTo(
+      position.xInPixels,
+      position.yInPixels,
+      position.zInPixels,
+      positionType)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   * @param zCoordinateInPixels
+   * @param positionType
+   *
+   * @return
+   */
+  @inline
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double,
+      zCoordinateInPixels: Double,
+      positionType: PositionType): ReturnType = {
+
+    positionType match {
+      case CenterPosition =>
+        moveCenterTo(
+          xCoordinateInPixels,
+          yCoordinateInPixels,
+          zCoordinateInPixels)
+
+      case UpperLeftCornerPosition =>
+        moveUpperLeftCornerTo(
+          xCoordinateInPixels,
+          yCoordinateInPixels,
+          zCoordinateInPixels)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param position
+   *
+   * @return
+   */
+  @inline
+  def moveUpperLeftCornerTo(position: Pos): ReturnType =
+    moveUpperLeftCornerTo(
       position.xInPixels,
       position.yInPixels,
       position.zInPixels)
@@ -113,7 +216,36 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
-  def moveTo(
+  def moveUpperLeftCornerTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double,
+      zCoordinateInPixels: Double): ReturnType
+
+  /**
+   *
+   *
+   * @param position
+   *
+   * @return
+   */
+  @inline
+  def moveCenterTo(position: Pos): ReturnType =
+    moveCenterTo(
+      position.xInPixels,
+      position.yInPixels,
+      position.zInPixels)
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   * @param zCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveCenterTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double,
       zCoordinateInPixels: Double): ReturnType

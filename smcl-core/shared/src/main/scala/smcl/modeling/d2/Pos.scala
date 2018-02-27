@@ -509,9 +509,9 @@ case class Pos private[smcl](
     // -- DEBUG --
     //println(s"Move: ($xInPixels, $yInPixels) --> (${xInPixels + xOffset}, ${xInPixels + yOffset})")
 
-    Pos(
-      xInPixels + xOffsetInPixels,
-      yInPixels + yOffsetInPixels)
+    copy(
+      newXInPixels = xInPixels + xOffsetInPixels,
+      newYInPixels = yInPixels + yOffsetInPixels)
   }
 
   /**
@@ -523,14 +523,14 @@ case class Pos private[smcl](
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): Pos = {
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Pos = {
     require(
       coordinatesInPixels.length == NumberOfDimensions,
-      s"Exactly $NumberOfDimensions offsets must be given (found: ${coordinatesInPixels.length})")
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
 
-    Pos(
-      coordinatesInPixels.head,
-      coordinatesInPixels.tail.head)
+    copy(
+      newXInPixels = coordinatesInPixels.head,
+      newYInPixels = coordinatesInPixels.tail.head)
   }
 
   /**
@@ -542,13 +542,52 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  def moveTo(
+  override
+  def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): Pos = {
 
-    Pos(
-      xCoordinateInPixels,
-      yCoordinateInPixels)
+    copy(
+      newXInPixels = xCoordinateInPixels,
+      newYInPixels = yCoordinateInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): Pos = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions offsets must be given (found: ${coordinatesInPixels.length})")
+
+    copy(
+      newXInPixels = coordinatesInPixels.head,
+      newYInPixels = coordinatesInPixels.tail.head)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): Pos = {
+
+    copy(
+      newXInPixels = xCoordinateInPixels,
+      newYInPixels = yCoordinateInPixels)
   }
 
   /**
@@ -603,21 +642,6 @@ case class Pos private[smcl](
     val maxY = positions.maxBy(_.yInPixels).yInPixels
 
     Pos(maxX, maxY)
-  }
-
-  /**
-   *
-   *
-   * @param offsets
-   *
-   * @return
-   */
-  @inline
-  def + (offsets: Dims): Pos = {
-    val x = xInPixels + offsets.width.inPixels
-    val y = yInPixels + offsets.height.inPixels
-
-    Pos(x, y)
   }
 
   /**
@@ -683,21 +707,6 @@ case class Pos private[smcl](
       offsetY: Len): Pos = {
 
     this + (offsetX.inPixels, offsetY.inPixels)
-  }
-
-  /**
-   *
-   *
-   * @param offsets
-   *
-   * @return
-   */
-  @inline
-  def - (offsets: Dims): Pos = {
-    val x = xInPixels - offsets.width.inPixels
-    val y = yInPixels - offsets.height.inPixels
-
-    Pos(x, y)
   }
 
   /**

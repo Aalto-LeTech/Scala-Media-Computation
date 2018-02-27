@@ -256,6 +256,7 @@ case class Pos private(
    * @return
    */
   @inline
+  override
   def moveBy(
       xOffsetInPixels: Double,
       yOffsetInPixels: Double,
@@ -276,7 +277,41 @@ case class Pos private(
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): Pos = {
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Pos =
+    moveCenterTo(coordinatesInPixels)
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   * @param zCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveUpperLeftCornerTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double,
+      zCoordinateInPixels: Double): Pos = {
+
+    Pos(
+      xCoordinateInPixels,
+      yCoordinateInPixels,
+      zCoordinateInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): Pos = {
     require(
       coordinatesInPixels.length == NumberOfDimensions,
       s"Exactly $NumberOfDimensions offsets must be given (found: ${coordinatesInPixels.length})")
@@ -297,7 +332,8 @@ case class Pos private(
    * @return
    */
   @inline
-  def moveTo(
+  override
+  def moveCenterTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double,
       zCoordinateInPixels: Double): Pos = {
@@ -378,40 +414,7 @@ case class Pos private(
    * @return
    */
   override
-  def inverse: Pos =
-    Pos(-xInPixels, -yInPixels, -zInPixels)
-
-  /**
-   *
-   *
-   * @param offset
-   *
-   * @return
-   */
-  @inline
-  def + (offset: Dims): Pos = {
-    val x = xInPixels + offset.width.inPixels
-    val y = yInPixels + offset.height.inPixels
-    val z = zInPixels + offset.depth.inPixels
-
-    Pos(x, y, z)
-  }
-
-  /**
-   *
-   *
-   * @param offset
-   *
-   * @return
-   */
-  @inline
-  def - (offset: Dims): Pos = {
-    val x = xInPixels - offset.width.inPixels
-    val y = yInPixels - offset.height.inPixels
-    val z = zInPixels - offset.depth.inPixels
-
-    Pos(x, y, z)
-  }
+  def inverse: Pos = Pos(-xInPixels, -yInPixels, -zInPixels)
 
   /**
    *

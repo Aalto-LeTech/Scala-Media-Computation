@@ -445,6 +445,24 @@ trait SharedSettingDefinitions {
   }
 
 
+  /** An internal setting ID for the "DefaultPositionType" setting. */
+  private[smcl]
+  val SIdDefaultPositionType = "DefaultPositionType"
+
+  private lazy val DefaultPositionType0 = {
+    Settings(SIdDefaultPositionType)
+        .asInstanceOf[ObjectSetting[PositionType]]
+  }
+
+  def DefaultPositionType: PositionType = {
+    DefaultPositionType0.value
+  }
+
+  def DefaultPositionType_=(newValue: PositionType): Unit = {
+    DefaultPositionType0.value = newValue
+  }
+
+
   /** An internal setting ID for the "ColorVisualizationTileSideLengthInPixels" setting. */
   private[smcl]
   val SIdColorVisualizationTileSideLengthInPixels =

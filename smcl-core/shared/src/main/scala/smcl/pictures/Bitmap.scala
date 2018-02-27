@@ -234,10 +234,47 @@ class Bitmap private(
    *
    * @return
    */
+  override
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): PictureElement = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    copy(newPosition = position.moveUpperLeftCornerTo(coordinatesInPixels))
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  override
+  def moveUpperLeftCornerTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): PictureElement = {
+
+    copy(newPosition = position.moveUpperLeftCornerTo(xCoordinateInPixels, yCoordinateInPixels))
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): PictureElement =
-    copy(newPosition = position.moveTo(coordinatesInPixels))
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): PictureElement = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    copy(newPosition = position.moveCenterTo(coordinatesInPixels))
+  }
 
   /**
    *
@@ -249,11 +286,11 @@ class Bitmap private(
    */
   @inline
   override
-  def moveTo(
+  def moveCenterTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): PictureElement = {
 
-    copy(newPosition = position.moveTo(xCoordinateInPixels, yCoordinateInPixels))
+    copy(newPosition = position.moveCenterTo(xCoordinateInPixels, yCoordinateInPixels))
   }
 
   /**

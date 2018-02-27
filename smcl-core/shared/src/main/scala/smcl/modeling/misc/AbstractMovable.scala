@@ -17,6 +17,11 @@
 package smcl.modeling.misc
 
 
+import smcl.settings._
+
+
+
+
 /**
  *
  *
@@ -26,6 +31,26 @@ package smcl.modeling.misc
  */
 trait AbstractMovable[ReturnType] {
 
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   * @param positionType
+   *
+   * @return
+   */
+  @inline
+  def moveTo(
+      coordinatesInPixels: Seq[Double],
+      positionType: PositionType = DefaultPositionType): ReturnType = {
+
+    positionType match {
+      case CenterPosition          => moveCenterTo(coordinatesInPixels)
+      case UpperLeftCornerPosition => moveUpperLeftCornerTo(coordinatesInPixels)
+    }
+  }
+
   /**
    *
    *
@@ -33,7 +58,16 @@ trait AbstractMovable[ReturnType] {
    *
    * @return
    */
-  def moveTo(coordinatesInPixels: Seq[Double]): ReturnType
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): ReturnType
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): ReturnType
 
   /**
    *

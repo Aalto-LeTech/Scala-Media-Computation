@@ -152,7 +152,30 @@ case class Pos private(
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): Pos = {
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Pos =
+    moveCenterTo(coordinatesInPixels)
+
+  /**
+   *
+   *
+   * @param coordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveUpperLeftCornerTo(coordinateInPixels: Double): Pos = Pos(coordinateInPixels)
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): Pos = {
     require(
       coordinatesInPixels.length == NumberOfDimensions,
       s"Exactly $NumberOfDimensions coordinate must be given (found: ${coordinatesInPixels.length})")
@@ -169,7 +192,7 @@ case class Pos private(
    */
   @inline
   override
-  def moveTo(coordinateInPixels: Double): Pos = Pos(coordinateInPixels)
+  def moveCenterTo(coordinateInPixels: Double): Pos = Pos(coordinateInPixels)
 
   /**
    *

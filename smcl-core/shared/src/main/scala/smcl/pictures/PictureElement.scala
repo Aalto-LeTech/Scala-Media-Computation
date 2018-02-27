@@ -256,7 +256,10 @@ trait PictureElement
     val newUpperLeftCornerY =
       boundary.upperLeftMarker.yInPixels - paddingInPixels - content.boundary.height.inPixels
 
-    addAt(content, newUpperLeftCornerX, newUpperLeftCornerY)
+    addAt(
+      content,
+      newUpperLeftCornerX, newUpperLeftCornerY,
+      UpperLeftCornerPosition)
   }
 
   /**
@@ -277,7 +280,10 @@ trait PictureElement
     val newUpperLeftCornerX = boundary.lowerRightMarker.xInPixels + paddingInPixels
     val newUpperLeftCornerY = boundary.verticalPositionFor(alignment, content.boundary)
 
-    addAt(content, newUpperLeftCornerX, newUpperLeftCornerY)
+    addAt(
+      content,
+      newUpperLeftCornerX, newUpperLeftCornerY,
+      UpperLeftCornerPosition)
   }
 
   /**
@@ -298,7 +304,10 @@ trait PictureElement
     val newUpperLeftCornerX = boundary.horizontalPositionFor(alignment, content.boundary)
     val newUpperLeftCornerY = boundary.lowerRightMarker.yInPixels + paddingInPixels
 
-    addAt(content, newUpperLeftCornerX, newUpperLeftCornerY)
+    addAt(
+      content,
+      newUpperLeftCornerX, newUpperLeftCornerY,
+      UpperLeftCornerPosition)
   }
 
   /**
@@ -321,7 +330,10 @@ trait PictureElement
 
     val newUpperLeftCornerY = boundary.verticalPositionFor(alignment, content.boundary)
 
-    addAt(content, newUpperLeftCornerX, newUpperLeftCornerY)
+    addAt(
+      content,
+      newUpperLeftCornerX, newUpperLeftCornerY,
+      UpperLeftCornerPosition)
   }
 
   /**
@@ -329,20 +341,22 @@ trait PictureElement
    *
    * @param content
    * @param positions
+   * @param positionType
    *
    * @return
    */
   @inline
   def addCopiesAtPos(
       content: PictureElement,
-      positions: Seq[Pos]): PictureElement = {
+      positions: Seq[Pos],
+      positionType: PositionType): PictureElement = {
 
     val wholeContent = ListBuffer[PictureElement]()
     val mover =
       if (content.isPicture)
-        wholeContent ++= content.moveTo(_: Pos).toPicture.elements
+        wholeContent ++= content.moveTo(_: Pos, positionType).toPicture.elements
       else
-        wholeContent += content.moveTo(_: Pos)
+        wholeContent += content.moveTo(_: Pos, positionType)
 
     positions.foreach(mover)
     addToFront(wholeContent)
@@ -353,21 +367,23 @@ trait PictureElement
    *
    * @param content
    * @param positions
+   * @param positionType
    *
    * @return
    */
   @inline
   def addCopiesAt(
       content: PictureElement,
-      positions: Seq[(Double, Double)]): PictureElement = {
+      positions: Seq[(Double, Double)],
+      positionType: PositionType): PictureElement = {
 
     val wholeContent = ListBuffer[PictureElement]()
     val mover =
       if (content.isPicture) {
-        wholeContent ++= content.moveTo(_: Double, _: Double).toPicture.elements
+        wholeContent ++= content.moveTo(_: Double, _: Double, positionType).toPicture.elements
       }
       else {
-        wholeContent += content.moveTo(_: Double, _: Double)
+        wholeContent += content.moveTo(_: Double, _: Double, positionType)
       }
 
     positions.foreach(coords => mover(coords._1, coords._2))
@@ -378,13 +394,17 @@ trait PictureElement
    *
    *
    * @param contentsAndPositions
+   * @param positionType
    *
    * @return
    */
   @inline
-  def addAtPos(contentsAndPositions: Seq[(PictureElement, Pos)]): PictureElement = {
+  def addAtPos(
+      contentsAndPositions: Seq[(PictureElement, Pos)],
+      positionType: PositionType): PictureElement = {
+
     val movedContent = contentsAndPositions.map{params =>
-      params._1.moveTo(params._2.xInPixels, params._2.yInPixels)
+      params._1.moveTo(params._2.xInPixels, params._2.yInPixels, positionType)
     }
 
     addToFront(movedContent)
@@ -394,27 +414,35 @@ trait PictureElement
    *
    *
    * @param contentAndPosition
+   * @param positionType
    *
    * @return
    */
   @inline
-  def addAtPos(contentAndPosition: (PictureElement, Pos)): PictureElement =
+  def addAtPos(
+      contentAndPosition: (PictureElement, Pos),
+      positionType: PositionType): PictureElement = {
+
     addAtPos(
       contentAndPosition._1,
-      contentAndPosition._2)
+      contentAndPosition._2,
+      positionType)
+  }
 
   /**
    *
    *
    * @param content
    * @param position
+   * @param positionType
    *
    * @return
    */
   @inline
   def addAtPos(
       content: PictureElement,
-      position: Pos): PictureElement = {
+      position: Pos,
+      positionType: PositionType): PictureElement = {
 
     addAt(
       content,
@@ -426,13 +454,17 @@ trait PictureElement
    *
    *
    * @param contentsAndCoordinatesInPixels
+   * @param positionType
    *
    * @return
    */
   @inline
-  def addAt(contentsAndCoordinatesInPixels: Seq[(PictureElement, Double, Double)]): PictureElement = {
+  def addAt(
+      contentsAndCoordinatesInPixels: Seq[(PictureElement, Double, Double)],
+      positionType: PositionType): PictureElement = {
+
     val movedContent = contentsAndCoordinatesInPixels.map{params =>
-      params._1.moveTo(params._2, params._3)
+      params._1.moveTo(params._2, params._3, positionType)
     }
 
     addToFront(movedContent)
@@ -442,15 +474,21 @@ trait PictureElement
    *
    *
    * @param contentAndCoordinatesInPixels
+   * @param positionType
    *
    * @return
    */
   @inline
-  def addAt(contentAndCoordinatesInPixels: (PictureElement, Double, Double)): PictureElement =
+  def addAt(
+      contentAndCoordinatesInPixels: (PictureElement, Double, Double),
+      positionType: PositionType): PictureElement = {
+
     addAt(
       contentAndCoordinatesInPixels._1,
       contentAndCoordinatesInPixels._2,
-      contentAndCoordinatesInPixels._3)
+      contentAndCoordinatesInPixels._3,
+      positionType)
+  }
 
   /**
    *
@@ -458,6 +496,7 @@ trait PictureElement
    * @param content
    * @param xCoordinate
    * @param yCoordinate
+   * @param positionType
    *
    * @return
    */
@@ -465,9 +504,10 @@ trait PictureElement
   def addAt(
       content: PictureElement,
       xCoordinate: Double,
-      yCoordinate: Double): PictureElement = {
+      yCoordinate: Double,
+      positionType: PositionType = DefaultPositionType): PictureElement = {
 
-    addToFront(content.moveTo(xCoordinate, yCoordinate))
+    addToFront(content.moveTo(xCoordinate, yCoordinate, positionType))
   }
 
   /**

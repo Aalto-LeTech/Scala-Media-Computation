@@ -218,7 +218,7 @@ class Picture private(
   // Has to return a copy of *this* Picture because of viewports/anchors etc.
   @inline
   override
-  def addToBack(content: Seq[PictureElement]): PictureElement =
+  def addToBack(content: Seq[PictureElement]): Picture =
     copy(newElements = appendTo(content, this.elements))
 
   /**
@@ -231,7 +231,7 @@ class Picture private(
   // Has to return a copy of *this* Picture because of viewports/anchors etc.
   @inline
   override
-  def addToFront(content: Seq[PictureElement]): PictureElement =
+  def addToFront(content: Seq[PictureElement]): Picture =
     copy(newElements = prependTo(content, this.elements))
 
   /**
@@ -243,7 +243,15 @@ class Picture private(
    */
   @inline
   override
-  def moveBy(offsetsInPixels: Seq[Double]): Picture = map{_.moveBy(offsetsInPixels)}
+  def moveBy(offsetsInPixels: Seq[Double]): Picture = {
+    require(
+      offsetsInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions offsets must be given (found: ${offsetsInPixels.length})")
+
+    moveBy(
+      offsetsInPixels.head,
+      offsetsInPixels.tail.head)
+  }
 
   /**
    *
@@ -257,7 +265,7 @@ class Picture private(
   override
   def moveBy(
       xOffsetInPixels: Double,
-      yOffsetInPixels: Double): PictureElement = {
+      yOffsetInPixels: Double): Picture = {
 
     map{_.moveBy(xOffsetInPixels, yOffsetInPixels)}
   }
@@ -271,8 +279,15 @@ class Picture private(
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): PictureElement =
-    map{_.moveTo(coordinatesInPixels)}
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Picture = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    moveUpperLeftCornerTo(
+      coordinatesInPixels.head,
+      coordinatesInPixels.tail.head)
+  }
 
   /**
    *
@@ -284,11 +299,51 @@ class Picture private(
    */
   @inline
   override
-  def moveTo(
+  def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
-      yCoordinateInPixels: Double): PictureElement = {
+      yCoordinateInPixels: Double): Picture = {
 
-    map{_.moveTo(xCoordinateInPixels, yCoordinateInPixels)}
+    moveBy(
+      xCoordinateInPixels - boundary.upperLeftMarker.xInPixels,
+      yCoordinateInPixels - boundary.upperLeftMarker.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): Picture = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    moveCenterTo(
+      coordinatesInPixels.head,
+      coordinatesInPixels.tail.head)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): Picture = {
+
+    moveBy(
+      xCoordinateInPixels - boundary.center.xInPixels,
+      yCoordinateInPixels - boundary.center.yInPixels)
   }
 
   /**
@@ -298,7 +353,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy90DegsCWAroundOrigo: PictureElement = map{_.rotateBy90DegsCWAroundOrigo}
+  def rotateBy90DegsCWAroundOrigo: Picture = map{_.rotateBy90DegsCWAroundOrigo}
 
   /**
    * Rotates this object around its center by 90 degrees clockwise.
@@ -307,7 +362,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy90DegsCW: PictureElement = rotateBy90DegsCW(position)
+  def rotateBy90DegsCW: Picture = rotateBy90DegsCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees clockwise.
@@ -318,7 +373,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy90DegsCW(centerOfRotation: Pos): PictureElement =
+  def rotateBy90DegsCW(centerOfRotation: Pos): Picture =
     map{_.rotateBy90DegsCW(centerOfRotation)}
 
   /**
@@ -328,7 +383,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy90DegsCCWAroundOrigo: PictureElement = map{_.rotateBy90DegsCCWAroundOrigo}
+  def rotateBy90DegsCCWAroundOrigo: Picture = map{_.rotateBy90DegsCCWAroundOrigo}
 
   /**
    * Rotates this object around the its center by 90 degrees counterclockwise.
@@ -337,7 +392,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy90DegsCCW: PictureElement = rotateBy90DegsCCW(position)
+  def rotateBy90DegsCCW: Picture = rotateBy90DegsCCW(position)
 
   /**
    * Rotates this object around a given point by 90 degrees counterclockwise.
@@ -348,7 +403,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy90DegsCCW(centerOfRotation: Pos): PictureElement =
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Picture =
     map{_.rotateBy90DegsCCW(centerOfRotation)}
 
   /**
@@ -358,7 +413,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy180DegsAroundOrigo: PictureElement = map{_.rotateBy180DegsAroundOrigo}
+  def rotateBy180DegsAroundOrigo: Picture = map{_.rotateBy180DegsAroundOrigo}
 
   /**
    * Rotates this object around its center by 180 degrees.
@@ -367,7 +422,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy180Degs: PictureElement = rotateBy180Degs(position)
+  def rotateBy180Degs: Picture = rotateBy180Degs(position)
 
   /**
    * Rotates this object around a given point by 180 degrees.
@@ -378,7 +433,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy180Degs(centerOfRotation: Pos): PictureElement =
+  def rotateBy180Degs(centerOfRotation: Pos): Picture =
     map{_.rotateBy180Degs(centerOfRotation)}
 
   /**
@@ -390,7 +445,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateByAroundOrigo(angleInDegrees: Double): PictureElement =
+  def rotateByAroundOrigo(angleInDegrees: Double): Picture =
     map{_.rotateByAroundOrigo(angleInDegrees)}
 
   /**
@@ -402,7 +457,7 @@ class Picture private(
    */
   @inline
   override
-  def rotateBy(angleInDegrees: Double): PictureElement = rotateBy(angleInDegrees, position)
+  def rotateBy(angleInDegrees: Double): Picture = rotateBy(angleInDegrees, position)
 
   /**
    * Rotates this object around a given point by the specified number of degrees.
@@ -416,7 +471,7 @@ class Picture private(
   override
   def rotateBy(
       angleInDegrees: Double,
-      centerOfRotation: Pos): PictureElement = {
+      centerOfRotation: Pos): Picture = {
 
     map{_.rotateBy(angleInDegrees, centerOfRotation)}
   }

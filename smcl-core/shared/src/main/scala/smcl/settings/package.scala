@@ -124,6 +124,30 @@ package object settings
 
 
   /**
+   * Base class for position type constants.
+   */
+  sealed abstract class PositionType
+
+
+
+
+  /**
+   * A constant for stating that positions are center points.
+   */
+  case object CenterPosition extends PositionType
+
+
+
+
+  /**
+   * A constant for stating that positions are upper left corner points.
+   */
+  case object UpperLeftCornerPosition extends PositionType
+
+
+
+
+  /**
    * Application of the [[RichSettingMap]] class.
    */
   implicit def SettingMapWrapper(self: SettingMap): RichSettingMap = {

@@ -146,6 +146,11 @@ class SharedSettingInitializer() extends SettingInitializer {
       initialValue = LightBlue,
       validator = settingValidatorFactory.isNullValidator("Color cannot be null"))
 
+    ObjectSetting[PositionType](
+      key = SIdDefaultPositionType,
+      initialValue = CenterPosition,
+      validator = settingValidatorFactory.EmptyValidator)
+
     ObjectSetting[HorizontalAlignment](
       key = SIdDefaultHorizontalAlignment,
       initialValue = HALeft,

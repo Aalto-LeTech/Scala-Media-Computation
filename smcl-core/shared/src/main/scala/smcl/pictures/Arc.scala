@@ -19,7 +19,7 @@ package smcl.pictures
 
 import smcl.colors.rgb
 import smcl.infrastructure.Identity
-import smcl.modeling.d2.{Bounds, Dims, Pos}
+import smcl.modeling.d2.{Bounds, Dims, NumberOfDimensions, Pos}
 import smcl.modeling.{AffineTransformation, Angle}
 import smcl.settings._
 
@@ -256,10 +256,15 @@ class Arc private(
    */
   @inline
   override
-  def moveTo(coordinatesInPixels: Seq[Double]): PictureElement =
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): PictureElement = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
     moveBy(
-      coordinatesInPixels.head - position.xInPixels,
-      coordinatesInPixels.tail.head - position.yInPixels)
+      coordinatesInPixels.head - boundary.upperLeftMarker.xInPixels,
+      coordinatesInPixels.tail.head - boundary.upperLeftMarker.yInPixels)
+  }
 
   /**
    *
@@ -271,13 +276,51 @@ class Arc private(
    */
   @inline
   override
-  def moveTo(
+  def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): PictureElement = {
 
     moveBy(
-      xCoordinateInPixels - position.xInPixels,
-      yCoordinateInPixels - position.yInPixels)
+      xCoordinateInPixels - boundary.upperLeftMarker.xInPixels,
+      yCoordinateInPixels - boundary.upperLeftMarker.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): PictureElement = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    moveBy(
+      coordinatesInPixels.head - boundary.center.xInPixels,
+      coordinatesInPixels.tail.head - boundary.center.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): PictureElement = {
+
+    moveBy(
+      xCoordinateInPixels - boundary.center.xInPixels,
+      yCoordinateInPixels - boundary.center.yInPixels)
   }
 
   /**
