@@ -592,4 +592,100 @@ trait PictureElement
     replicate(numberOfReplicas, this, this)
   }
 
+  /**
+   *
+   *
+   * @param alternatives
+   * @param numberOfAlternations
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  def alternateHorizontallyWith(
+      alternatives: Seq[PictureElement],
+      numberOfAlternations: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: VerticalAlignment = DefaultVerticalAlignment): PictureElement = {
+
+    val NumberOfFirstAlternation = 1
+
+    if (numberOfAlternations < 0) {
+      throw new IllegalArgumentException(
+        s"Number of alternations cannot be negative (was $numberOfAlternations)")
+    }
+
+    val numberOfSourceElements = alternatives.length + 1
+
+    @tailrec
+    def alternate(
+        numberOfNextAlternation: Int,
+        resultPicture: PictureElement): PictureElement = {
+
+      if (numberOfNextAlternation > numberOfAlternations)
+        return resultPicture
+
+      val numberOfNextElement = numberOfNextAlternation % numberOfSourceElements
+      val selectedElement =
+        if (numberOfNextElement == 0)
+          this
+        else
+          alternatives(numberOfNextElement - 1)
+
+      alternate(
+        numberOfNextAlternation + 1,
+        resultPicture.addToRight(selectedElement, paddingInPixels, alignment))
+    }
+
+    alternate(NumberOfFirstAlternation, this)
+  }
+
+  /**
+   *
+   *
+   * @param alternatives
+   * @param numberOfAlternations
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  def alternateVerticallyWith(
+      alternatives: Seq[PictureElement],
+      numberOfAlternations: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: HorizontalAlignment = DefaultHorizontalAlignment): PictureElement = {
+
+    val NumberOfFirstAlternation = 1
+
+    if (numberOfAlternations < 0) {
+      throw new IllegalArgumentException(
+        s"Number of alternations cannot be negative (was $numberOfAlternations)")
+    }
+
+    val numberOfSourceElements = alternatives.length + 1
+
+    @tailrec
+    def alternate(
+        numberOfNextAlternation: Int,
+        resultPicture: PictureElement): PictureElement = {
+
+      if (numberOfNextAlternation > numberOfAlternations)
+        return resultPicture
+
+      val numberOfNextElement = numberOfNextAlternation % numberOfSourceElements
+      val selectedElement =
+        if (numberOfNextElement == 0)
+          this
+        else
+          alternatives(numberOfNextElement - 1)
+
+      alternate(
+        numberOfNextAlternation + 1,
+        resultPicture.addToBottom(selectedElement, paddingInPixels, alignment))
+    }
+
+    alternate(NumberOfFirstAlternation, this)
+  }
+
 }
