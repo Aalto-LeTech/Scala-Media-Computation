@@ -634,6 +634,102 @@ trait PictureElement
   /**
    *
    *
+   * @param alternatives
+   * @param numberOfAlternations
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  def alternateUpwardsWith(
+      alternatives: Seq[PictureElement],
+      numberOfAlternations: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: HorizontalAlignment = DefaultHorizontalAlignment): PictureElement = {
+
+    alternateWith(
+      alternatives,
+      TopSide,
+      numberOfAlternations,
+      paddingInPixels,
+      alignment.sideIndependent)
+  }
+
+  /**
+   *
+   *
+   * @param alternatives
+   * @param numberOfAlternations
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  def alternateDownwardsWith(
+      alternatives: Seq[PictureElement],
+      numberOfAlternations: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: HorizontalAlignment = DefaultHorizontalAlignment): PictureElement = {
+
+    alternateWith(
+      alternatives,
+      BottomSide,
+      numberOfAlternations,
+      paddingInPixels,
+      alignment.sideIndependent)
+  }
+
+  /**
+   *
+   *
+   * @param alternatives
+   * @param numberOfAlternations
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  def alternateLeftwardsWith(
+      alternatives: Seq[PictureElement],
+      numberOfAlternations: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: VerticalAlignment = DefaultVerticalAlignment): PictureElement = {
+
+    alternateWith(
+      alternatives,
+      LeftSide,
+      numberOfAlternations,
+      paddingInPixels,
+      alignment.sideIndependent)
+  }
+
+  /**
+   *
+   *
+   * @param alternatives
+   * @param numberOfAlternations
+   * @param paddingInPixels
+   * @param alignment
+   *
+   * @return
+   */
+  def alternateRightwardsWith(
+      alternatives: Seq[PictureElement],
+      numberOfAlternations: Int,
+      paddingInPixels: Double = DefaultPaddingInPixels,
+      alignment: VerticalAlignment = DefaultVerticalAlignment): PictureElement = {
+
+    alternateWith(
+      alternatives,
+      RightSide,
+      numberOfAlternations,
+      paddingInPixels,
+      alignment.sideIndependent)
+  }
+
+  /**
+   *
+   *
    * @param side
    * @param numberOfReplicas
    * @param paddingInPixels
@@ -678,17 +774,19 @@ trait PictureElement
    *
    *
    * @param alternatives
+   * @param side
    * @param numberOfAlternations
    * @param paddingInPixels
    * @param alignment
    *
    * @return
    */
-  def alternateHorizontallyWith(
+  def alternateWith(
       alternatives: Seq[PictureElement],
+      side: Side,
       numberOfAlternations: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
-      alignment: VerticalAlignment = DefaultVerticalAlignment): PictureElement = {
+      alignment: SideIndependentAlignment): PictureElement = {
 
     val NumberOfFirstAlternation = 1
 
@@ -716,55 +814,7 @@ trait PictureElement
 
       alternate(
         numberOfNextAlternation + 1,
-        resultPicture.addToRight(selectedElement, paddingInPixels, alignment))
-    }
-
-    alternate(NumberOfFirstAlternation, this)
-  }
-
-  /**
-   *
-   *
-   * @param alternatives
-   * @param numberOfAlternations
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
-  def alternateVerticallyWith(
-      alternatives: Seq[PictureElement],
-      numberOfAlternations: Int,
-      paddingInPixels: Double = DefaultPaddingInPixels,
-      alignment: HorizontalAlignment = DefaultHorizontalAlignment): PictureElement = {
-
-    val NumberOfFirstAlternation = 1
-
-    if (numberOfAlternations < 0) {
-      throw new IllegalArgumentException(
-        s"Number of alternations cannot be negative (was $numberOfAlternations)")
-    }
-
-    val numberOfSourceElements = alternatives.length + 1
-
-    @tailrec
-    def alternate(
-        numberOfNextAlternation: Int,
-        resultPicture: PictureElement): PictureElement = {
-
-      if (numberOfNextAlternation > numberOfAlternations)
-        return resultPicture
-
-      val numberOfNextElement = numberOfNextAlternation % numberOfSourceElements
-      val selectedElement =
-        if (numberOfNextElement == 0)
-          this
-        else
-          alternatives(numberOfNextElement - 1)
-
-      alternate(
-        numberOfNextAlternation + 1,
-        resultPicture.addToBottom(selectedElement, paddingInPixels, alignment))
+        resultPicture.addTo(side, selectedElement, paddingInPixels, alignment))
     }
 
     alternate(NumberOfFirstAlternation, this)
