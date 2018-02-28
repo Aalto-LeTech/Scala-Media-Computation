@@ -123,7 +123,23 @@ trait PictureElement
    * @return
    */
   @inline
+  def toBitmapCopy: Bitmap = toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   def toPicture: Picture = Picture(this)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toPixelSnapshot: AbstractPixelSnapshot = PixelSnapshot(this)
 
   /**
    *

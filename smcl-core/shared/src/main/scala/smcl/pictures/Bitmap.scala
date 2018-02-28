@@ -109,7 +109,7 @@ object Bitmap
   def apply(buffer: BitmapBufferAdapter): Bitmap = {
     val newIdentity: Identity = Identity()
 
-    apply(newIdentity, Pos.Origo, Some(buffer))
+    apply(newIdentity, Pos.Origo, Option(buffer))
   }
 
   /**
@@ -166,14 +166,8 @@ class Bitmap private(
 
   /** */
   override
-  val dimensions: Dims = {
-    if (buffer.isEmpty)
-      Dims.Zeros
-    else {
-      val b = buffer.get
-      Dims(b.widthInPixels, b.heightInPixels)
-    }
-  }
+  val dimensions: Dims =
+    buffer.fold(Dims.Zeros){b => Dims(b.widthInPixels, b.heightInPixels)}
 
   /** */
   override
@@ -205,6 +199,15 @@ class Bitmap private(
   @inline
   override
   def toBitmap: Bitmap = this
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toBitmapCopy: Bitmap = Bitmap(buffer.map(_.copy).orNull)
 
   /**
    *
@@ -309,21 +312,16 @@ class Bitmap private(
    * @return
    */
   @inline
-  def saveAsPngTo(filename: String): String = {
-    if (buffer.isEmpty)
-      return "Error: No BitmapBufferAdapter to save."
-
-    buffer.get.saveAsPngTo(filename)
-  }
+  def saveAsPngTo(filename: String): String =
+    buffer.fold("Error: No BitmapBufferAdapter to save.")(_.saveAsPngTo(filename))
 
   /**
    *
    * @return
    */
   @inline
-  def copy(newPosition: Pos = position): Bitmap = {
-    new Bitmap(identity, isRenderable, newPosition, buffer)
-  }
+  def copy(newPosition: Pos = position): Bitmap =
+    new Bitmap(identity, isRenderable, newPosition, buffer.map(_.copy))
 
   /**
    *

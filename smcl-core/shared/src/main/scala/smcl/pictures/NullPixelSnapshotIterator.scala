@@ -14,7 +14,7 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.infrastructure
+package smcl.pictures
 
 
 /**
@@ -22,64 +22,50 @@ package smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-object DoneStatus {
-
-  /** */
-  lazy val Done: DoneStatus = apply().setDone()
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def apply(): DoneStatus = new DoneStatus()
-
-}
-
-
-
-
-/**
- *
- *
- * @author Aleksi Lukkarinen
- */
-class DoneStatus private() {
-
-  /** */
-  private
-  var hasNotBeenDone = true
-
-  /**
-   *
-   */
-  def setDone(): DoneStatus = {
-    if (hasNotBeenDone) {
-      synchronized{
-        if (hasNotBeenDone) {
-          hasNotBeenDone = false
-        }
-      }
-    }
-
-    this
-  }
+case class NullPixelSnapshotIterator(
+    relatedPixelSnapshot: NullPixelSnapshot)
+    extends AbstractPixelSnapshotIterator {
 
   /**
    *
    *
    * @return
    */
-  @inline
-  def isNotDone: Boolean = hasNotBeenDone
+  def currentXInPixels: Int = minXInPixels
 
   /**
    *
    *
    * @return
    */
-  @inline
-  def isDone: Boolean = !hasNotBeenDone
+  def currentYInPixels: Int = minYInPixels
+
+  /**
+   *
+   *
+   * @return
+   */
+  def columnHasChanged: Boolean = false
+
+  /**
+   *
+   *
+   * @return
+   */
+  def rowHasChanged: Boolean = false
+
+  /**
+   *
+   *
+   * @return
+   */
+  def hasNext: Boolean = false
+
+  /**
+   *
+   *
+   * @return
+   */
+  def next(): Pixel = Iterator.empty.next()
 
 }

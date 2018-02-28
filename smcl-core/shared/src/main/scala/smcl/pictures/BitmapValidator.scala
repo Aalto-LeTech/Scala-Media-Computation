@@ -18,7 +18,7 @@ package smcl.pictures
 
 
 import smcl.modeling.Len
-import smcl.pictures.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
+import smcl.pictures.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError, PixelSnapshotInvalidatedError}
 import smcl.settings.{BitmapHeightWarningLimitInPixels, BitmapWidthWarningLimitInPixels}
 
 
@@ -184,7 +184,7 @@ class BitmapValidator private[smcl]() {
    * @param actualWidth
    * @param actualHeight
    *
-   * @throws MinimumBitmapSizeNotMetError
+   * @throws PixelSnapshotInvalidatedError
    * @throws MaximumBitmapSizeExceededError
    */
   @inline

@@ -17,62 +17,47 @@
 package smcl.pictures
 
 
-import scala.collection.AbstractIterator
-
-import smcl.pictures.fullfeatured.AbstractBitmap
-
-
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-case class PixelSnapshotDownwardsLeftwardsIterator[BitmapType <: AbstractBitmap](
-    relatedPixelSnapshot: PixelSnapshot[BitmapType])
-    extends AbstractIterator[Pixel[BitmapType]] {
+case class PixelSnapshotDownwardsLeftwardsIterator(
+    relatedPixelSnapshot: PixelSnapshot)
+    extends AbstractPixelSnapshotIterator {
 
   /** */
-  lazy val widthInPixels: Int = relatedPixelSnapshot.widthInPixels
+  private
+  var _currentX: Int = maxXInPixels
 
   /** */
-  lazy val heightInPixels: Int = relatedPixelSnapshot.heightInPixels
+  private
+  var _currentY: Int = minYInPixels
 
   /** */
-  val MinXInPixels: Int = 0
-
-  /** */
-  val MinYInPixels: Int = 0
-
-  /** */
-  lazy val MaxXInPixels: Int = widthInPixels - 1
-
-  /** */
-  lazy val MaxYInPixels: Int = heightInPixels - 1
-
-  /** */
-  private var _currentXInPixels: Int = MaxXInPixels
-
-  /** */
-  private var _currentYInPixels: Int = MinYInPixels
-
-  /** */
-  private var _columnHasChanged: Boolean = false
+  private
+  var _columnHasChanged: Boolean = false
 
   /**
    *
    *
    * @return
    */
-  def currentXInPixels: Int = _currentXInPixels
+  def currentXInPixels: Int = _currentX
 
   /**
    *
    *
    * @return
    */
-  def currentYInPixels: Int = _currentYInPixels
+  def currentYInPixels: Int = _currentY
+
+  /**
+   *
+   *
+   * @return
+   */
+  def rowHasChanged: Boolean = true
 
   /**
    *
@@ -84,14 +69,15 @@ case class PixelSnapshotDownwardsLeftwardsIterator[BitmapType <: AbstractBitmap]
   /**
    *
    */
-  private def advance(): Unit = {
-    if (_currentYInPixels < MaxYInPixels) {
-      _currentYInPixels += 1
+  private
+  def advance(): Unit = {
+    if (_currentY < maxXInPixels) {
+      _currentY += 1
       _columnHasChanged = false
     }
     else {
-      _currentYInPixels = MinYInPixels
-      _currentXInPixels -= 1
+      _currentY = minYInPixels
+      _currentX -= 1
       _columnHasChanged = true
     }
   }
@@ -102,23 +88,23 @@ case class PixelSnapshotDownwardsLeftwardsIterator[BitmapType <: AbstractBitmap]
    * @return
    */
   def hasNext: Boolean =
-    _currentYInPixels <= MaxYInPixels &&
-        _currentXInPixels >= MinXInPixels
+    _currentY <= maxYInPixels &&
+        _currentX >= minXInPixels
 
   /**
    *
    *
    * @return
    */
-  def next(): Pixel[BitmapType] = {
+  def next(): Pixel = {
     if (!hasNext)
       return Iterator.empty.next()
 
-    val nextResult = Pixel[BitmapType](
+    val nextResult = Pixel(
       relatedPixelSnapshot,
-      MinXInPixels, MaxXInPixels,
-      MinYInPixels, MaxYInPixels,
-      _currentXInPixels, _currentYInPixels)
+      minXInPixels, maxXInPixels,
+      minYInPixels, maxYInPixels,
+      _currentX, _currentY)
 
     advance()
 

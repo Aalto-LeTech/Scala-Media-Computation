@@ -23,7 +23,7 @@ import smcl.colors.ColorValidator
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import smcl.infrastructure._
 import smcl.pictures.operations.{Scale, _}
-import smcl.pictures.{BitmapValidator, ConvolutionKernel, PixelSnapshot, PixelSnapshotReceiver}
+import smcl.pictures.{BitmapValidator, ConvolutionKernel}
 import smcl.settings._
 
 
@@ -166,8 +166,7 @@ class Bitmap private[pictures](
       operations,
       bitmapValidator,
       colorValidator,
-      uniqueIdentifier)
-        with PixelSnapshotReceiver[Bitmap] {
+      uniqueIdentifier) {
 
   /**
    *
@@ -309,54 +308,6 @@ class Bitmap private[pictures](
       viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
 
     apply(IteratePixels(function), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param snapshotBuffer
-   */
-  private[smcl]
-  def applyPixelSnapshot(
-      snapshotBuffer: BitmapBufferAdapter): Bitmap = {
-
-    apply(
-      ApplyPixelSnapshot(snapshotBuffer),
-      UpdateViewerPerDefaults)
-  }
-
-  /**
-   *
-   *
-   * @param snapshotBuffer
-   * @param viewerHandling
-   */
-  private[smcl] def applyPixelSnapshot(
-      snapshotBuffer: BitmapBufferAdapter,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
-
-    apply(ApplyPixelSnapshot(snapshotBuffer), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def createPixelSnapshot: PixelSnapshot[Bitmap] = {
-    val flooredWidth = widthInPixels.floor.toInt
-    val flooredHeight = heightInPixels.floor.toInt
-
-    val buffer =
-      toRenderedRepresentation.copyPortionXYWH(
-        0, 0, flooredWidth, flooredHeight)
-
-    new PixelSnapshot[Bitmap](
-      flooredWidth,
-      flooredHeight,
-      this,
-      buffer,
-      this)
   }
 
   /**

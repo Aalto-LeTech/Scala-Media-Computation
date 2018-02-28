@@ -17,48 +17,26 @@
 package smcl.pictures
 
 
-import scala.collection.AbstractIterator
-
-import smcl.pictures.fullfeatured.AbstractBitmap
-
-
-
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-case class PixelSnapshotUpwardsRightwardsIterator[BitmapType <: AbstractBitmap](
-    relatedPixelSnapshot: PixelSnapshot[BitmapType])
-    extends AbstractIterator[Pixel[BitmapType]] {
+case class PixelSnapshotUpwardsRightwardsIterator(
+    relatedPixelSnapshot: PixelSnapshot)
+    extends AbstractPixelSnapshotIterator {
 
   /** */
-  lazy val widthInPixels: Int = relatedPixelSnapshot.widthInPixels
+  private
+  var _currentXInPixels: Int = minXInPixels
 
   /** */
-  lazy val heightInPixels: Int = relatedPixelSnapshot.heightInPixels
+  private
+  var _currentYInPixels: Int = maxYInPixels
 
   /** */
-  val MinXInPixels: Int = 0
-
-  /** */
-  val MinYInPixels: Int = 0
-
-  /** */
-  lazy val MaxXInPixels: Int = widthInPixels - 1
-
-  /** */
-  lazy val MaxYInPixels: Int = heightInPixels - 1
-
-  /** */
-  private var _currentXInPixels: Int = MinXInPixels
-
-  /** */
-  private var _currentYInPixels: Int = MaxYInPixels
-
-  /** */
-  private var _columnHasChanged: Boolean = false
+  private
+  var _columnHasChanged: Boolean = false
 
   /**
    *
@@ -79,18 +57,26 @@ case class PixelSnapshotUpwardsRightwardsIterator[BitmapType <: AbstractBitmap](
    *
    * @return
    */
+  def rowHasChanged: Boolean = true
+
+  /**
+   *
+   *
+   * @return
+   */
   def columnHasChanged: Boolean = hasNext && _columnHasChanged
 
   /**
    *
    */
-  private def advance(): Unit = {
-    if (_currentYInPixels > MinYInPixels) {
+  private
+  def advance(): Unit = {
+    if (_currentYInPixels > minYInPixels) {
       _currentYInPixels -= 1
       _columnHasChanged = false
     }
     else {
-      _currentYInPixels = MaxYInPixels
+      _currentYInPixels = maxYInPixels
       _currentXInPixels += 1
       _columnHasChanged = true
     }
@@ -102,22 +88,22 @@ case class PixelSnapshotUpwardsRightwardsIterator[BitmapType <: AbstractBitmap](
    * @return
    */
   def hasNext: Boolean =
-    _currentYInPixels >= MinYInPixels &&
-        _currentXInPixels <= MaxXInPixels
+    _currentYInPixels >= minYInPixels &&
+        _currentXInPixels <= maxXInPixels
 
   /**
    *
    *
    * @return
    */
-  def next(): Pixel[BitmapType] = {
+  def next(): Pixel = {
     if (!hasNext)
       return Iterator.empty.next()
 
-    val nextResult = Pixel[BitmapType](
+    val nextResult = Pixel(
       relatedPixelSnapshot,
-      MinXInPixels, MaxXInPixels,
-      MinYInPixels, MaxYInPixels,
+      minXInPixels, maxXInPixels,
+      minYInPixels, maxYInPixels,
       _currentXInPixels, _currentYInPixels)
 
     advance()

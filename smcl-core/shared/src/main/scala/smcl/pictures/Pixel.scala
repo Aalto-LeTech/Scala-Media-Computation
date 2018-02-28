@@ -17,11 +17,6 @@
 package smcl.pictures
 
 
-import smcl.pictures.fullfeatured.AbstractBitmap
-
-
-
-
 /**
  *
  *
@@ -32,12 +27,11 @@ import smcl.pictures.fullfeatured.AbstractBitmap
  * @param MaxYInPixels
  * @param currentXInPixels
  * @param currentYInPixels
- * @tparam BitmapType
  *
  * @author Aleksi Lukkarinen
  */
-case class Pixel[BitmapType <: AbstractBitmap] private[pictures](
-    relatedPixelSnapshot: PixelSnapshot[BitmapType],
+case class Pixel private[pictures](
+    relatedPixelSnapshot: PixelSnapshot,
     MinXInPixels: Int,
     MaxXInPixels: Int,
     MinYInPixels: Int,
@@ -49,7 +43,6 @@ case class Pixel[BitmapType <: AbstractBitmap] private[pictures](
   private[this]
   lazy val linearPosition: Int =
     currentYInPixels * (MaxXInPixels - MinXInPixels + 1) + currentXInPixels
-
 
   /**
    *
@@ -116,7 +109,8 @@ case class Pixel[BitmapType <: AbstractBitmap] private[pictures](
    *
    * @return
    */
-  override def toString: String =
+  override
+  def toString: String =
     s"Pixel($currentXInPixels, $currentYInPixels): $red - $green - $blue - $opacity"
 
 }

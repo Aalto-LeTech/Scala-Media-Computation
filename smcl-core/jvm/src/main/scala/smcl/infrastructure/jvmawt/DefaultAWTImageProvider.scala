@@ -21,10 +21,11 @@ import java.io.{File, IOException}
 import java.nio.file.attribute.BasicFileAttributes
 import java.nio.file.{Files, NoSuchFileException}
 import java.util.Locale
-import javax.imageio.stream.ImageInputStream
-import javax.imageio.{ImageIO, ImageReader}
 
 import scala.util.{Try, _}
+
+import javax.imageio.stream.ImageInputStream
+import javax.imageio.{ImageIO, ImageReader}
 
 import smcl.infrastructure.exceptions._
 import smcl.infrastructure.{BitmapBufferAdapter, CommonFileUtils, EnsureClosingOfAfter}

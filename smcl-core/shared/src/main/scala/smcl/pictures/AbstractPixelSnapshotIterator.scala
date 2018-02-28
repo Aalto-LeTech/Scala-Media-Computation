@@ -17,25 +17,119 @@
 package smcl.pictures
 
 
-import smcl.infrastructure.BitmapBufferAdapter
-import smcl.pictures.fullfeatured.AbstractBitmap
+import scala.collection.AbstractIterator
 
 
 
 
 /**
- * An interface for an object capable to apply a [[PixelSnapshot]] instance.
+ *
  *
  * @author Aleksi Lukkarinen
  */
-private[pictures]
-trait PixelSnapshotReceiver[BitmapType <: AbstractBitmap] {
+abstract class AbstractPixelSnapshotIterator
+    extends AbstractIterator[Pixel] {
+
+  /** */
+  def relatedPixelSnapshot: AbstractPixelSnapshot
 
   /**
    *
    *
-   * @param snapshotBuffer
+   * @return
    */
-  private[smcl] def applyPixelSnapshot(
-      snapshotBuffer: BitmapBufferAdapter): BitmapType
+  @inline
+  def widthInPixels: Int = relatedPixelSnapshot.widthInPixels
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def heightInPixels: Int = relatedPixelSnapshot.heightInPixels
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def minXInPixels: Int = relatedPixelSnapshot.minXInPixels
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def maxXInPixels: Int = relatedPixelSnapshot.maxXInPixels
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def minYInPixels: Int = relatedPixelSnapshot.minYInPixels
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def maxYInPixels: Int = relatedPixelSnapshot.maxYInPixels
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def currentXInPixels: Int
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def currentYInPixels: Int
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def rowHasChanged: Boolean
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def columnHasChanged: Boolean
+
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def hasNext: Boolean
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def next(): Pixel
+
 }
