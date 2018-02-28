@@ -86,6 +86,14 @@ trait PictureElement
   def identity: Identity
 
   /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def aspectRatio: AspectRatio = boundary.aspectRatio
+
+  /**
    * Tells if this [[PictureElement]] can be rendered on a bitmap.
    *
    * @return

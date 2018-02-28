@@ -143,6 +143,10 @@ case class Dims private(
   /** */
   lazy val area: Area = Area.forRectangle(width, height)
 
+  /** */
+  lazy val aspectRatio: AspectRatio =
+    AspectRatio.forDimensions(width, height)
+
   /**
    *
    *

@@ -278,6 +278,10 @@ case class Bounds private(
   lazy val area: Area =
     Area.forRectangle(width.inPixels, height.inPixels)
 
+  /** */
+  lazy val aspectRatio: AspectRatio =
+    AspectRatio.forDimensions(width, height)
+
   /**
    *
    *
