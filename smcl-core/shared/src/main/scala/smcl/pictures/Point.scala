@@ -21,7 +21,7 @@ import scala.language.implicitConversions
 
 import smcl.colors.rgb
 import smcl.infrastructure.{FlatMap, Identity}
-import smcl.modeling.d2.{Bounds, CoordinateTuple, Dims, Pos}
+import smcl.modeling.d2.{Bounds, CoordinateTuple, Pos}
 import smcl.modeling.{Angle, Len}
 
 
@@ -111,18 +111,16 @@ class Point private(
     extends VectorGraphic
         with FlatMap[Point, (Pos, rgb.Color)] {
 
-  /** */
-  lazy val dimensions: Dims =
-    position.dimensions
-
   /**
    *
    *
    * @return
    */
+  @inline
   def boundary: Bounds = position.boundary
 
   /** Tells if this [[Point]] can be rendered on a bitmap. */
+  @inline
   def isRenderable: Boolean = true
 
   /**

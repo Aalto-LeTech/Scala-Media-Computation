@@ -62,15 +62,7 @@ trait PictureElement
         with Cropable[Bitmap] {
 
   /**
-   * Position of this [[PictureElement]].
-   *
-   * @return
-   */
-  @inline
-  def position: Pos = boundary.center
-
-  /**
-   *
+   * The points used to define this [[PictureElement]].
    *
    * @return
    */
@@ -78,7 +70,7 @@ trait PictureElement
   def points: Seq[Pos] = Seq()
 
   /**
-   *
+   * The unique identity of this [[PictureElement]].
    *
    * @return
    */
@@ -86,7 +78,23 @@ trait PictureElement
   def identity: Identity
 
   /**
+   * The position of this [[PictureElement]].
    *
+   * @return
+   */
+  @inline
+  def position: Pos = boundary.center
+
+  /**
+   * The dimensions of this [[PictureElement]].
+   *
+   * @return
+   */
+  @inline
+  def dimensions: Dims = boundary.dimensions
+
+  /**
+   * The aspect ratio of this [[PictureElement]].
    *
    * @return
    */

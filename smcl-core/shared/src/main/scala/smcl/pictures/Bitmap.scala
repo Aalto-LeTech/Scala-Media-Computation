@@ -128,7 +128,7 @@ object Bitmap
       buffer: Option[BitmapBufferAdapter]): Bitmap = {
 
     if (buffer.isEmpty) {
-      return new Bitmap(identity, false, Dims.Zeros, upperLeftCorner, None)
+      return new Bitmap(identity, false, upperLeftCorner, None)
     }
 
     val isRenderable =
@@ -137,7 +137,6 @@ object Bitmap
     new Bitmap(
       identity,
       isRenderable,
-      Dims(buffer.get.widthInPixels, buffer.get.heightInPixels),
       upperLeftCorner,
       buffer)
   }
@@ -152,7 +151,6 @@ object Bitmap
  *
  * @param identity
  * @param isRenderable
- * @param dimensions
  * @param upperLeftCorner
  * @param buffer
  *
@@ -161,11 +159,21 @@ object Bitmap
 class Bitmap private(
     override val identity: Identity,
     val isRenderable: Boolean,
-    val dimensions: Dims,
     upperLeftCorner: Pos,
     private[smcl] val buffer: Option[BitmapBufferAdapter])
     extends PictureElement
         with Displayable {
+
+  /** */
+  override
+  val dimensions: Dims = {
+    if (buffer.isEmpty)
+      Dims.Zeros
+    else {
+      val b = buffer.get
+      Dims(b.widthInPixels, b.heightInPixels)
+    }
+  }
 
   /** */
   override
@@ -314,7 +322,7 @@ class Bitmap private(
    */
   @inline
   def copy(newPosition: Pos = position): Bitmap = {
-    new Bitmap(identity, isRenderable, dimensions, newPosition, buffer)
+    new Bitmap(identity, isRenderable, newPosition, buffer)
   }
 
   /**
@@ -347,7 +355,6 @@ class Bitmap private(
     new Bitmap(
       identity = identity,
       isRenderable = isRenderable,
-      dimensions = Dims(newBuffer.widthInPixels, newBuffer.heightInPixels),
       upperLeftCorner = upperLeftCorner,
       buffer = Some(newBuffer))
   }
@@ -569,11 +576,7 @@ class Bitmap private(
           angleInDegrees,
           centerOfRotation))
 
-    val newDims = Dims(
-      newBuffer.widthInPixels,
-      newBuffer.heightInPixels)
-
-    new Bitmap(identity, isRenderable, newDims, position, Some(newBuffer))
+    new Bitmap(identity, isRenderable, position, Some(newBuffer))
   }
 
   /**
