@@ -82,7 +82,7 @@ lazy val projectFullName: String = "Scala Media Computation Library"
 lazy val projectMajorVersion: Int = 0
 lazy val projectMinorVersion: Int = 0
 lazy val projectMicroVersion: Int = 4
-lazy val projectIsRelease: Boolean = false
+lazy val projectIsRelease: Boolean = true
 
 lazy val buildTime: Long = System.currentTimeMillis()
 
@@ -750,7 +750,7 @@ lazy val smcl: Project = project.in(file("."))
 
         val templateContent: String =
           s"""# Release Notes for $projectFullName ${smclVersion.toString}
-            |""".stripMargin
+             |""".stripMargin
         IO.writeLines(notesFile, templateContent.split("\n"))
 
         notesFile
