@@ -17,7 +17,7 @@
 package smcl.pictures
 
 
-import smcl.infrastructure.DoneStatus
+import smcl.infrastructure.{BitmapBufferAdapter, DoneStatus}
 
 
 
@@ -25,112 +25,84 @@ import smcl.infrastructure.DoneStatus
 /**
  *
  *
+ * @param copiedBitmap
+ *
  * @author Aleksi Lukkarinen
  */
-class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
+class DefaultPixelSnapshot protected[pictures](
+    private val copiedBitmap: Bitmap)
     extends PixelSnapshot {
 
-  private
-  val NullIterator: AbstractPixelSnapshotIterator = NullPixelSnapshotIterator(this)
-
   /** */
-  private
-  val EmptyColorArray: Array[Int] = Array.empty
+  private[this]
+  val buffer: BitmapBufferAdapter = copiedBitmap.buffer.get
 
   /** */
   override
-  val widthInPixels: Int = 0
+  val widthInPixels: Int = buffer.widthInPixels
 
   /** */
   override
-  val heightInPixels: Int = 0
+  val heightInPixels: Int = buffer.heightInPixels
 
   /** */
   override
-  val areaInPixels: Int = 0
+  val areaInPixels: Int = heightInPixels * widthInPixels
 
   /** */
   override
-  val minXInPixels: Int = -1
+  val minXInPixels: Int = 0
 
   /** */
   override
-  val maxXInPixels: Int = -1
+  val maxXInPixels: Int = widthInPixels - 1
 
   /** */
   override
-  val minYInPixels: Int = -1
+  val minYInPixels: Int = 0
 
   /** */
   override
-  val maxYInPixels: Int = -1
+  val maxYInPixels: Int = heightInPixels - 1
 
   /** */
   override
   val invalidation: DoneStatus = DoneStatus()
 
   /** */
-  @inline
-  private[pictures]
-  def reds: Array[Int] = EmptyColorArray
+  private[this]
+  var (_reds, _greens, _blues, _opacities) =
+    buffer.colorComponentArrays
 
   /** */
   @inline
   private[pictures]
-  def greens: Array[Int] = EmptyColorArray
+  def reds: Array[Int] = _reds
 
   /** */
   @inline
   private[pictures]
-  def blues: Array[Int] = EmptyColorArray
+  def greens: Array[Int] = _greens
 
   /** */
   @inline
   private[pictures]
-  def opacities: Array[Int] = EmptyColorArray
+  def blues: Array[Int] = _blues
+
+  /** */
+  @inline
+  private[pictures]
+  def opacities: Array[Int] = _opacities
 
   /**
    *
    *
    * @return
    */
-  override
-  val redComponentArray: Array[Int] = {
+  @inline
+  def redComponentArray: Array[Int] = {
     checkForInvalidation()
-    EmptyColorArray.clone
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  override
-  val greenComponentArray: Array[Int] = {
-    checkForInvalidation()
-    EmptyColorArray.clone
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  override
-  val blueComponentArray: Array[Int] = {
-    checkForInvalidation()
-    EmptyColorArray.clone
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  override
-  val opacityComponentArray: Array[Int] = {
-    checkForInvalidation()
-    EmptyColorArray.clone
+    _reds.clone
   }
 
   /**
@@ -139,7 +111,39 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
+  def greenComponentArray: Array[Int] = {
+    checkForInvalidation()
+    _greens.clone
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def blueComponentArray: Array[Int] = {
+    checkForInvalidation()
+    _blues.clone
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def opacityComponentArray: Array[Int] = {
+    checkForInvalidation()
+    _opacities.clone
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   def componentArrays: (Array[Int], Array[Int], Array[Int], Array[Int]) = {
     checkForInvalidation()
     (redComponentArray, greenComponentArray, blueComponentArray, opacityComponentArray)
@@ -151,10 +155,11 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def setRedComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "red")
+
+    _reds = array.clone
   }
 
   /**
@@ -163,10 +168,11 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def setGreenComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "green")
+
+    _greens = array.clone
   }
 
   /**
@@ -175,10 +181,11 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def setBlueComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "blue")
+
+    _blues = array.clone
   }
 
   /**
@@ -187,10 +194,11 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def setOpacityComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "opacity")
+
+    _opacities = array.clone
   }
 
   /**
@@ -212,18 +220,22 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
     checkComponentArrayLength(greens, "green")
     checkComponentArrayLength(blues, "blue")
     checkComponentArrayLength(opacities, "opacity")
+
+    _reds = reds.clone
+    _greens = greens.clone
+    _blues = blues.clone
+    _opacities = opacities.clone
   }
 
   /**
    *
    */
   @inline
-  override
   def toBitmap: Bitmap = {
     checkForInvalidation()
+    buffer.setColorComponentArrays(_reds, _greens, _blues, _opacities)
     invalidation.setDone()
-
-    bitmap
+    copiedBitmap
   }
 
   /**
@@ -235,15 +247,23 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def pixel(
       x: Int,
       y: Int): Pixel = {
 
     checkForInvalidation()
 
-    throw new IllegalStateException(
-      "This pixel snapshot has no pixels to modify")
+    require(x >= 0 && x < widthInPixels,
+      s"X coordinate is out or range ($minXInPixels..$maxXInPixels)")
+
+    require(x >= 0 && x < widthInPixels,
+      s"Y coordinate is out or range ($minYInPixels..$maxYInPixels)")
+
+    Pixel(
+      this,
+      minXInPixels, maxXInPixels,
+      minYInPixels, maxYInPixels,
+      x, y)
   }
 
   /**
@@ -254,7 +274,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
   override
   def iterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
-    NullIterator
+    PixelSnapshotRightwardsDownwardsIterator(this)
   }
 
   /**
@@ -262,10 +282,9 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def downwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
-    NullIterator
+    PixelSnapshotDownwardsLeftwardsIterator(this)
   }
 
   /**
@@ -273,10 +292,9 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def leftwardsDownwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
-    NullIterator
+    PixelSnapshotLeftwardsDownwardsIterator(this)
   }
 
   /**
@@ -284,10 +302,9 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def leftwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
-    NullIterator
+    PixelSnapshotLeftwardsUpwardsIterator(this)
   }
 
   /**
@@ -295,10 +312,9 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def downwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
-    NullIterator
+    PixelSnapshotDownwardsRightwardsIterator(this)
   }
 
   /**
@@ -306,10 +322,9 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def rightwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
-    NullIterator
+    PixelSnapshotRightwardsUpwardsIterator(this)
   }
 
   /**
@@ -317,10 +332,9 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def upwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
-    NullIterator
+    PixelSnapshotUpwardsLeftwardsIterator(this)
   }
 
   /**
@@ -328,19 +342,9 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
   def upwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
-    NullIterator
+    PixelSnapshotUpwardsRightwardsIterator(this)
   }
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  override
-  def toString: String = s"PixelSnapshot (0 x 0 pixels)"
 
 }

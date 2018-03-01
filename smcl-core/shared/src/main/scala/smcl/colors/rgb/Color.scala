@@ -796,6 +796,16 @@ class Color protected(
     }
   }
 
+  @inline
+  def copy(
+      newRed: Int = red,
+      newGreen: Int = green,
+      newBlue: Int = blue,
+      newOpacity: Int = opacity): Color = {
+
+    Color(newRed, newGreen, newBlue, newOpacity)
+  }
+
   /**
    *
    *

@@ -31,6 +31,7 @@ case class NullPixelSnapshotIterator(
    *
    * @return
    */
+  @inline
   def currentXInPixels: Int = minXInPixels
 
   /**
@@ -38,6 +39,7 @@ case class NullPixelSnapshotIterator(
    *
    * @return
    */
+  @inline
   def currentYInPixels: Int = minYInPixels
 
   /**
@@ -45,6 +47,7 @@ case class NullPixelSnapshotIterator(
    *
    * @return
    */
+  @inline
   def columnHasChanged: Boolean = false
 
   /**
@@ -52,6 +55,7 @@ case class NullPixelSnapshotIterator(
    *
    * @return
    */
+  @inline
   def rowHasChanged: Boolean = false
 
   /**
@@ -59,6 +63,7 @@ case class NullPixelSnapshotIterator(
    *
    * @return
    */
+  @inline
   def hasNext: Boolean = false
 
   /**
@@ -66,6 +71,7 @@ case class NullPixelSnapshotIterator(
    *
    * @return
    */
+  @inline
   def next(): Pixel = Iterator.empty.next()
 
 }

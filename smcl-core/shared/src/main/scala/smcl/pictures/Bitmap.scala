@@ -18,6 +18,7 @@ package smcl.pictures
 
 
 import smcl.colors.ColorValidator
+import smcl.colors.rgb.Color
 import smcl.infrastructure.{BitmapBufferAdapter, Displayable, Identity, InjectablesRegistry, PRF}
 import smcl.modeling.d2._
 import smcl.modeling.{AffineTransformation, Angle, Len}
@@ -232,6 +233,65 @@ class Bitmap private(
   @inline
   override
   def toBitmapCopy: Bitmap = Bitmap(buffer.map(_.copy).orNull)
+
+  /**
+   *
+   *
+   * @param translator
+   *
+   * @return
+   */
+  @inline
+  def iterateColorsByPixel(translator: Color => Color): Bitmap =
+    iterateColorsByPixel(Seq(translator))
+
+  /**
+   *
+   *
+   * @param translators
+   *
+   * @return
+   */
+  @inline
+  def iterateColorsByPixel(translators: Seq[Color => Color]): Bitmap =
+    withPixelSnapshot(_.iterateColorsByPixel(translators))
+
+  /**
+   *
+   *
+   * @param translator
+   *
+   * @return
+   */
+  @inline
+  def iteratePixels(translator: Pixel => Pixel): Bitmap =
+    iteratePixels(Seq(translator))
+
+  /**
+   *
+   *
+   * @param translators
+   *
+   * @return
+   */
+  @inline
+  def iteratePixels(translators: Seq[Pixel => Pixel]): Bitmap =
+    withPixelSnapshot(_.iteratePixels(translators))
+
+  /**
+   *
+   *
+   * @param f
+   *
+   * @return
+   */
+  @inline
+  def withPixelSnapshot(f: PixelSnapshot => Unit): Bitmap = {
+    val snapshot = PixelSnapshot(toBitmapCopy)
+    f(snapshot)
+    snapshot.toBitmap
+  }
+
 
   /**
    *

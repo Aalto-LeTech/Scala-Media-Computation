@@ -31,7 +31,7 @@ abstract class AbstractPixelSnapshotIterator
     extends AbstractIterator[Pixel] {
 
   /** */
-  def relatedPixelSnapshot: AbstractPixelSnapshot
+  def relatedPixelSnapshot: PixelSnapshot
 
   /**
    *

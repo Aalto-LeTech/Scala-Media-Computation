@@ -17,6 +17,11 @@
 package smcl.pictures
 
 
+import smcl.colors.rgb.Color
+
+
+
+
 /**
  *
  *
@@ -49,6 +54,7 @@ case class Pixel private[pictures](
    *
    * @return
    */
+  @inline
   def red: Int = relatedPixelSnapshot.reds(linearPosition)
 
   /**
@@ -56,6 +62,7 @@ case class Pixel private[pictures](
    *
    * @param value
    */
+  @inline
   def red_=(value: Int): Unit =
     relatedPixelSnapshot.reds(linearPosition) = value
 
@@ -64,6 +71,7 @@ case class Pixel private[pictures](
    *
    * @return
    */
+  @inline
   def green: Int = relatedPixelSnapshot.greens(linearPosition)
 
   /**
@@ -71,6 +79,7 @@ case class Pixel private[pictures](
    *
    * @param value
    */
+  @inline
   def green_=(value: Int): Unit =
     relatedPixelSnapshot.greens(linearPosition) = value
 
@@ -79,6 +88,7 @@ case class Pixel private[pictures](
    *
    * @return
    */
+  @inline
   def blue: Int = relatedPixelSnapshot.blues(linearPosition)
 
   /**
@@ -86,6 +96,7 @@ case class Pixel private[pictures](
    *
    * @param value
    */
+  @inline
   def blue_=(value: Int): Unit =
     relatedPixelSnapshot.blues(linearPosition) = value
 
@@ -94,6 +105,7 @@ case class Pixel private[pictures](
    *
    * @return
    */
+  @inline
   def opacity: Int = relatedPixelSnapshot.opacities(linearPosition)
 
   /**
@@ -101,6 +113,7 @@ case class Pixel private[pictures](
    *
    * @param value
    */
+  @inline
   def opacity_=(value: Int): Unit =
     relatedPixelSnapshot.opacities(linearPosition) = value
 
@@ -109,6 +122,41 @@ case class Pixel private[pictures](
    *
    * @return
    */
+  @inline
+  def color: Color = Color(red, green, blue, opacity)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def color_=(value: Color): Unit = {
+    red = value.red
+    green = value.green
+    blue = value.blue
+    opacity = value.opacity
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def setFrom(other: Pixel): Unit = {
+    red = other.red
+    green = other.green
+    blue = other.blue
+    opacity = other.opacity
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   override
   def toString: String =
     s"Pixel($currentXInPixels, $currentYInPixels): $red - $green - $blue - $opacity"

@@ -139,7 +139,7 @@ trait PictureElement
    * @return
    */
   @inline
-  def toPixelSnapshot: AbstractPixelSnapshot = PixelSnapshot(this)
+  def toPixelSnapshot: PixelSnapshot = PixelSnapshot(this)
 
   /**
    *

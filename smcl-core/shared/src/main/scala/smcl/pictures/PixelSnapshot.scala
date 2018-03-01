@@ -17,7 +17,10 @@
 package smcl.pictures
 
 
-import smcl.infrastructure.BitmapBufferAdapter
+import smcl.colors.rgb.Color
+import smcl.infrastructure.DoneStatus
+import smcl.infrastructure.exceptions.InvalidColorComponentArrayLengthError
+import smcl.pictures.exceptions.PixelSnapshotInvalidatedError
 
 
 
@@ -36,7 +39,7 @@ object PixelSnapshot {
    *
    * @return
    */
-  def apply(source: PictureElement): AbstractPixelSnapshot = {
+  def apply(source: PictureElement): PixelSnapshot = {
     val bitmapCopy = source.toBitmapCopy
 
     if (bitmapCopy.buffer.isEmpty
@@ -46,7 +49,7 @@ object PixelSnapshot {
       return new NullPixelSnapshot(bitmapCopy)
     }
 
-    new PixelSnapshot(bitmapCopy)
+    new DefaultPixelSnapshot(bitmapCopy)
   }
 
 }
@@ -57,180 +60,240 @@ object PixelSnapshot {
 /**
  *
  *
- * @param bitmap
- *
  * @author Aleksi Lukkarinen
  */
-class PixelSnapshot protected[pictures](bitmap: Bitmap)
-    extends AbstractPixelSnapshot {
+trait PixelSnapshot
+    extends Iterable[Pixel] {
 
   /** */
-  private[this]
-  val buffer: BitmapBufferAdapter = bitmap.buffer.get
-
-  /** */
-  val widthInPixels: Int = buffer.widthInPixels
-
-  /** */
-  val heightInPixels: Int = buffer.heightInPixels
-
-  /** */
-  private[this]
-  var (_reds, _greens, _blues, _opacities) =
-    buffer.colorComponentArrays
-
-  /** */
+  @inline
   private[pictures]
-  def reds: Array[Int] = _reds
+  def reds: Array[Int]
 
   /** */
+  @inline
   private[pictures]
-  def greens: Array[Int] = _greens
+  def greens: Array[Int]
 
   /** */
+  @inline
   private[pictures]
-  def blues: Array[Int] = _blues
+  def blues: Array[Int]
 
   /** */
+  @inline
   private[pictures]
-  def opacities: Array[Int] = _opacities
+  def opacities: Array[Int]
 
   /**
    *
    *
    * @return
    */
-  def redComponentArray: Array[Int] = {
-    checkForInvalidation()
-    _reds.clone
-  }
+  @inline
+  def widthInPixels: Int
 
   /**
    *
    *
    * @return
    */
-  def greenComponentArray: Array[Int] = {
-    checkForInvalidation()
-    _greens.clone
-  }
+  @inline
+  def heightInPixels: Int
 
   /**
    *
    *
    * @return
    */
-  def blueComponentArray: Array[Int] = {
-    checkForInvalidation()
-    _blues.clone
-  }
+  def areaInPixels: Int
 
   /**
    *
    *
    * @return
    */
-  def opacityComponentArray: Array[Int] = {
-    checkForInvalidation()
-    _opacities.clone
-  }
+  def minXInPixels: Int
 
   /**
    *
    *
    * @return
    */
-  def componentArrays: (Array[Int], Array[Int], Array[Int], Array[Int]) = {
-    checkForInvalidation()
-    (redComponentArray, greenComponentArray, blueComponentArray, opacityComponentArray)
-  }
+  def maxXInPixels: Int
 
   /**
    *
    *
    * @return
    */
-  def setRedComponentArray(array: Array[Int]): Unit = {
-    checkForInvalidation()
-    checkComponentArrayLength(array, "red")
-
-    _reds = array.clone
-  }
+  def minYInPixels: Int
 
   /**
    *
    *
    * @return
    */
-  def setGreenComponentArray(array: Array[Int]): Unit = {
-    checkForInvalidation()
-    checkComponentArrayLength(array, "green")
-
-    _greens = array.clone
-  }
+  def maxYInPixels: Int
 
   /**
    *
    *
    * @return
    */
-  def setBlueComponentArray(array: Array[Int]): Unit = {
-    checkForInvalidation()
-    checkComponentArrayLength(array, "blue")
-
-    _blues = array.clone
-  }
+  def invalidation: DoneStatus
 
   /**
    *
    *
    * @return
    */
-  def setOpacityComponentArray(array: Array[Int]): Unit = {
-    checkForInvalidation()
-    checkComponentArrayLength(array, "opacity")
-
-    _opacities = array.clone
-  }
+  @inline
+  def redComponentArray: Array[Int]
 
   /**
    *
    *
    * @return
    */
-  override
+  @inline
+  def greenComponentArray: Array[Int]
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def blueComponentArray: Array[Int]
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def opacityComponentArray: Array[Int]
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def componentArrays: (Array[Int], Array[Int], Array[Int], Array[Int])
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def setRedComponentArray(array: Array[Int]): Unit
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def setGreenComponentArray(array: Array[Int]): Unit
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def setBlueComponentArray(array: Array[Int]): Unit
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def setOpacityComponentArray(array: Array[Int]): Unit
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
   def setComponentArrays(
       reds: Array[Int],
       greens: Array[Int],
       blues: Array[Int],
-      opacities: Array[Int]): Unit = {
+      opacities: Array[Int]): Unit
 
-    checkForInvalidation()
+  /**
+   *
+   *
+   * @param colorTranslator
+   *
+   * @return
+   */
+  @inline
+  def iterateColorsByPixel(colorTranslator: Color => Color): PixelSnapshot =
+    iterateColorsByPixel(Seq(colorTranslator))
 
-    checkComponentArrayLength(reds, "red")
-    checkComponentArrayLength(greens, "green")
-    checkComponentArrayLength(blues, "blue")
-    checkComponentArrayLength(opacities, "opacity")
+  /**
+   *
+   *
+   * @param colorTranslator
+   *
+   * @return
+   */
+  @inline
+  def iterateColorsByPixel(colorTranslator: Seq[Color => Color]): PixelSnapshot = {
+    colorTranslator.foreach{currentTranslator =>
+      val i = iterator
+      while (i.hasNext) {
+        val pixel = i.next()
+        pixel.color = currentTranslator(pixel.color)
+      }
+    }
 
-    _reds = reds.clone
-    _greens = greens.clone
-    _blues = blues.clone
-    _opacities = opacities.clone
+    this
+  }
+
+  /**
+   *
+   *
+   * @param pixelTranslator
+   *
+   * @return
+   */
+  @inline
+  def iteratePixels(pixelTranslator: Pixel => Pixel): PixelSnapshot =
+    iteratePixels(Seq(pixelTranslator))
+
+  /**
+   *
+   *
+   * @param pixelTranslator
+   *
+   * @return
+   */
+  @inline
+  def iteratePixels(pixelTranslator: Seq[Pixel => Pixel]): PixelSnapshot = {
+    pixelTranslator.foreach{currentTranslator =>
+      val i = iterator
+      while (i.hasNext) {
+        val pixel = i.next()
+        pixel.setFrom(currentTranslator(pixel))
+      }
+    }
+
+    this
   }
 
   /**
    *
    */
-  def toBitmap: Bitmap = {
-    checkForInvalidation()
-
-    buffer.setColorComponentArrays(_reds, _greens, _blues, _opacities)
-    val bitmap = Bitmap(buffer)
-
-    invalidation.setDone()
-
-    bitmap
-  }
+  @inline
+  def toBitmap: Bitmap
 
   /**
    *
@@ -240,96 +303,103 @@ class PixelSnapshot protected[pictures](bitmap: Bitmap)
    *
    * @return
    */
+  @inline
   def pixel(
       x: Int,
-      y: Int): Pixel = {
-
-    checkForInvalidation()
-
-    require(x >= 0 && x < widthInPixels,
-      s"X coordinate is out or range ($minXInPixels..$maxXInPixels)")
-
-    require(x >= 0 && x < widthInPixels,
-      s"Y coordinate is out or range ($minYInPixels..$maxYInPixels)")
-
-    Pixel(
-      this,
-      minXInPixels, maxXInPixels,
-      minYInPixels, maxYInPixels,
-      x, y)
-  }
+      y: Int): Pixel
 
   /**
    *
    * @return
    */
+  @inline
   override
-  def iterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    PixelSnapshotRightwardsDownwardsIterator(this)
-  }
+  def iterator: AbstractPixelSnapshotIterator
 
   /**
    *
    * @return
    */
-  def downwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    PixelSnapshotDownwardsLeftwardsIterator(this)
-  }
+  @inline
+  def downwardsLeftwardsIterator: AbstractPixelSnapshotIterator
 
   /**
    *
    * @return
    */
-  def leftwardsDownwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    PixelSnapshotLeftwardsDownwardsIterator(this)
-  }
+  @inline
+  def leftwardsDownwardsIterator: AbstractPixelSnapshotIterator
 
   /**
    *
    * @return
    */
-  def leftwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    PixelSnapshotLeftwardsUpwardsIterator(this)
-  }
+  @inline
+  def leftwardsUpwardsIterator: AbstractPixelSnapshotIterator
 
   /**
    *
    * @return
    */
-  def downwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    PixelSnapshotDownwardsRightwardsIterator(this)
-  }
+  @inline
+  def downwardsRightwardsIterator: AbstractPixelSnapshotIterator
 
   /**
    *
    * @return
    */
-  def rightwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    PixelSnapshotRightwardsUpwardsIterator(this)
-  }
+  @inline
+  def rightwardsUpwardsIterator: AbstractPixelSnapshotIterator
 
   /**
    *
    * @return
    */
-  def upwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    PixelSnapshotUpwardsLeftwardsIterator(this)
-  }
+  @inline
+  def upwardsLeftwardsIterator: AbstractPixelSnapshotIterator
 
   /**
    *
    * @return
    */
-  def upwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    PixelSnapshotUpwardsRightwardsIterator(this)
+  @inline
+  def upwardsRightwardsIterator: AbstractPixelSnapshotIterator
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String =
+    s"PixelSnapshot ($widthInPixels x $heightInPixels pixels)"
+
+  /**
+   *
+   *
+   */
+  @inline
+  def checkForInvalidation(): Unit = {
+    if (invalidation.isDone)
+      throw PixelSnapshotInvalidatedError()
+  }
+
+  /**
+   *
+   *
+   * @param array
+   * @param colorOfArray
+   */
+  @inline
+  def checkComponentArrayLength(
+      array: Array[Int],
+      colorOfArray: String): Unit = {
+
+    if (array.length != areaInPixels)
+      throw InvalidColorComponentArrayLengthError(
+        s"Expected length for the given ${colorOfArray.toLowerCase} RGBA component array is " +
+            s"$areaInPixels, but actually was ${array.length}")
   }
 
 }
