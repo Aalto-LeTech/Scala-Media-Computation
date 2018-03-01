@@ -52,6 +52,7 @@ object Bitmap
    *
    * @return
    */
+  @inline
   def apply(elements: PictureElement*): Bitmap =
     RenderingController.createBitmapFrom(elements: _*)
 
@@ -63,6 +64,7 @@ object Bitmap
    *
    * @return
    */
+  @inline
   def apply(
       widthInPixels: Int,
       heightInPixels: Int): Bitmap = {
@@ -80,13 +82,12 @@ object Bitmap
    *
    * @return
    */
+  @inline
   def apply(
       width: Len,
       height: Len): Bitmap = {
 
-    bitmapValidator.validateBitmapSize(
-      width,
-      height)
+    bitmapValidator.validateBitmapSize(width, height)
 
     val newIdentity: Identity = Identity()
 
@@ -102,10 +103,28 @@ object Bitmap
   /**
    *
    *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  @inline
+  def apply(sourceResourcePath: String): Bitmap = {
+    // The ImageProvider is trusted with validation of the source resource path.
+    val loadedBufferTry = PRF.tryToLoadImageFromPath(sourceResourcePath)
+    if (loadedBufferTry.isFailure)
+      throw loadedBufferTry.failed.get
+
+    apply(loadedBufferTry.get)
+  }
+
+  /**
+   *
+   *
    * @param buffer
    *
    * @return
    */
+  @inline
   def apply(buffer: BitmapBufferAdapter): Bitmap = {
     val newIdentity: Identity = Identity()
 
@@ -115,30 +134,53 @@ object Bitmap
   /**
    *
    *
-   * @param identity
-   * @param upperLeftCorner
+   * @param center
    * @param buffer
    *
    * @return
    */
+  @inline
+  private
+  def apply(
+      center: Pos,
+      buffer: Option[BitmapBufferAdapter]): Bitmap = {
+
+    val newIdentity: Identity = Identity()
+
+    apply(newIdentity, center, buffer)
+  }
+
+  /**
+   *
+   *
+   * @param identity
+   * @param center
+   * @param buffer
+   *
+   * @return
+   */
+  @inline
   private
   def apply(
       identity: Identity,
-      upperLeftCorner: Pos,
+      center: Pos,
       buffer: Option[BitmapBufferAdapter]): Bitmap = {
 
-    if (buffer.isEmpty) {
-      return new Bitmap(identity, false, upperLeftCorner, None)
-    }
-
     val isRenderable =
-      buffer.get.widthInPixels > 0 && buffer.get.heightInPixels > 0
+      buffer.isDefined &&
+          buffer.get.widthInPixels > 0 &&
+          buffer.get.heightInPixels > 0
 
-    new Bitmap(
-      identity,
-      isRenderable,
-      upperLeftCorner,
-      buffer)
+    val boundary: Bounds =
+      if (!isRenderable)
+        Bounds.NotDefined
+      else
+        Bounds.apply(
+          center,
+          buffer.get.widthInPixels,
+          buffer.get.heightInPixels)
+
+    new Bitmap(identity, isRenderable, boundary, buffer)
   }
 
 }
@@ -151,7 +193,7 @@ object Bitmap
  *
  * @param identity
  * @param isRenderable
- * @param upperLeftCorner
+ * @param boundary
  * @param buffer
  *
  * @author Aleksi Lukkarinen
@@ -159,28 +201,10 @@ object Bitmap
 class Bitmap private(
     override val identity: Identity,
     val isRenderable: Boolean,
-    upperLeftCorner: Pos,
+    override val boundary: Bounds,
     private[smcl] val buffer: Option[BitmapBufferAdapter])
     extends PictureElement
         with Displayable {
-
-  /** */
-  override
-  val dimensions: Dims =
-    buffer.fold(Dims.Zeros){b => Dims(b.widthInPixels, b.heightInPixels)}
-
-  /** */
-  override
-  val boundary: Bounds =
-    if (isRenderable)
-      Bounds(
-        upperLeftCorner,
-        Pos(
-          upperLeftCorner.xInPixels + width.inPixels - 1,
-          upperLeftCorner.yInPixels + height.inPixels - 1)
-      )
-    else
-      Bounds.NotDefined
 
   /**
    *
@@ -219,7 +243,7 @@ class Bitmap private(
   @inline
   override
   def moveBy(offsetsInPixels: Seq[Double]): PictureElement =
-    copy(newPosition = position.moveBy(offsetsInPixels))
+    this //copy(newPosition = boundary.moveBy(offsetsInPixels))
 
   /**
    *
@@ -235,7 +259,7 @@ class Bitmap private(
       xOffsetInPixels: Double,
       yOffsetInPixels: Double): PictureElement = {
 
-    copy(newPosition = position.moveBy(xOffsetInPixels, yOffsetInPixels))
+    this //copy(newPosition = boundary.moveBy(xOffsetInPixels, yOffsetInPixels))
   }
 
   /**
@@ -251,7 +275,7 @@ class Bitmap private(
       coordinatesInPixels.length == NumberOfDimensions,
       s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
 
-    copy(newPosition = position.moveUpperLeftCornerTo(coordinatesInPixels))
+    this //copy(newPosition = boundary.moveUpperLeftCornerTo(coordinatesInPixels))
   }
 
   /**
@@ -267,7 +291,7 @@ class Bitmap private(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): PictureElement = {
 
-    copy(newPosition = position.moveUpperLeftCornerTo(xCoordinateInPixels, yCoordinateInPixels))
+    this //copy(newPosition = boundary.moveUpperLeftCornerTo(xCoordinateInPixels, yCoordinateInPixels))
   }
 
   /**
@@ -284,7 +308,7 @@ class Bitmap private(
       coordinatesInPixels.length == NumberOfDimensions,
       s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
 
-    copy(newPosition = position.moveCenterTo(coordinatesInPixels))
+    this //copy(newPosition = boundary.moveCenterTo(coordinatesInPixels))
   }
 
   /**
@@ -301,7 +325,7 @@ class Bitmap private(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): PictureElement = {
 
-    copy(newPosition = position.moveCenterTo(xCoordinateInPixels, yCoordinateInPixels))
+    this //copy(newPosition = boundary.moveCenterTo(xCoordinateInPixels, yCoordinateInPixels))
   }
 
   /**
@@ -319,9 +343,10 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
-  def copy(newPosition: Pos = position): Bitmap =
-    new Bitmap(identity, isRenderable, newPosition, buffer.map(_.copy))
+  //@inline
+  //private
+  //def internalCopy(newPosition: Pos = position): Bitmap =
+  //  new Bitmap(identity, isRenderable, newPosition, buffer.map(_.copy))
 
   /**
    *
@@ -336,7 +361,7 @@ class Bitmap private(
 
   /**
    * Transforms the content of this [[Bitmap]] using the specified affine
-   * transformation. The upperLeftCorner of this [[Bitmap]] remains unchanged.
+   * transformation. The center of this [[Bitmap]] remains unchanged.
    *
    * @param t
    *
@@ -353,7 +378,7 @@ class Bitmap private(
     new Bitmap(
       identity = identity,
       isRenderable = isRenderable,
-      upperLeftCorner = upperLeftCorner,
+      boundary = boundary,
       buffer = Some(newBuffer))
   }
 
@@ -574,7 +599,7 @@ class Bitmap private(
           angleInDegrees,
           centerOfRotation))
 
-    new Bitmap(identity, isRenderable, position, Some(newBuffer))
+    new Bitmap(identity, isRenderable, boundary, Some(newBuffer))
   }
 
   /**

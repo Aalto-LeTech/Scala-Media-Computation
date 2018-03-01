@@ -46,45 +46,44 @@ object Bounds {
     createInstance(Pos.Origo, Pos.Origo, isDefined = false)
 
   /**
-   * Creates a new [[Bounds]] instance.
+   * Creates a new [[Bounds]] instance based on center point, width, and height.
    *
-   * @param upperLeftMarker
-   * @param lowerRightMarker
-   * @param isDefined
-   *
-   * @return
-   */
-  @inline
-  private
-  def createInstance(
-      upperLeftMarker: Pos,
-      lowerRightMarker: Pos,
-      isDefined: Boolean): Bounds = {
-
-    new Bounds(upperLeftMarker, lowerRightMarker, isDefined)
-  }
-
-  /**
-   * Creates a new [[Bounds]] instance.
-   *
-   * @param upperLeftXInPixels
-   * @param upperLeftYInPixels
-   * @param lowerRightXInPixels
-   * @param lowerRightYInPixels
+   * @param center
+   * @param width
+   * @param height
    *
    * @return
    */
   @inline
   def apply(
-      upperLeftXInPixels: Double,
-      upperLeftYInPixels: Double,
-      lowerRightXInPixels: Double,
-      lowerRightYInPixels: Double): Bounds = {
+      center: Pos,
+      width: Len,
+      height: Len): Bounds = {
 
-    val (x0, x1) = MathUtils.sort(upperLeftXInPixels, lowerRightXInPixels)
-    val (y0, y1) = MathUtils.sort(upperLeftYInPixels, lowerRightYInPixels)
+    apply(center, width.inPixels, height.inPixels)
+  }
 
-    createInstance(Pos(x0, y0), Pos(x1, y1), isDefined = true)
+  /**
+   * Creates a new [[Bounds]] instance based on center point, width, and height.
+   *
+   * @param center
+   * @param width
+   * @param height
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      center: Pos,
+      width: Double,
+      height: Double): Bounds = {
+
+    val halfWidth = width / 2.0
+    val halfHeight = height / 2.0
+    val upperLeftCorner = center - (halfWidth, halfHeight)
+    val lowerRightCorner = center + (halfWidth, halfHeight)
+
+    createInstance(upperLeftCorner, lowerRightCorner, isDefined = true)
   }
 
   /**
@@ -95,9 +94,8 @@ object Bounds {
    * @return
    */
   @inline
-  def apply(position: Pos): Bounds = {
+  def apply(position: Pos): Bounds =
     createInstance(position, position, isDefined = true)
-  }
 
   /**
    * Creates a new [[Bounds]] instance.
@@ -131,6 +129,48 @@ object Bounds {
       s"Exactly two marker positions must be given (currently: ${markers.length})")
 
     apply(markers: _*)
+  }
+
+  /**
+   * Creates a new [[Bounds]] instance.
+   *
+   * @param upperLeftXInPixels
+   * @param upperLeftYInPixels
+   * @param lowerRightXInPixels
+   * @param lowerRightYInPixels
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      upperLeftXInPixels: Double,
+      upperLeftYInPixels: Double,
+      lowerRightXInPixels: Double,
+      lowerRightYInPixels: Double): Bounds = {
+
+    val (x0, x1) = MathUtils.sort(upperLeftXInPixels, lowerRightXInPixels)
+    val (y0, y1) = MathUtils.sort(upperLeftYInPixels, lowerRightYInPixels)
+
+    createInstance(Pos(x0, y0), Pos(x1, y1), isDefined = true)
+  }
+
+  /**
+   * Creates a new [[Bounds]] instance.
+   *
+   * @param upperLeftMarker
+   * @param lowerRightMarker
+   * @param isDefined
+   *
+   * @return
+   */
+  @inline
+  private
+  def createInstance(
+      upperLeftMarker: Pos,
+      lowerRightMarker: Pos,
+      isDefined: Boolean): Bounds = {
+
+    new Bounds(upperLeftMarker, lowerRightMarker, isDefined)
   }
 
 
