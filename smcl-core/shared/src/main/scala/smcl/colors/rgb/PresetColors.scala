@@ -140,6 +140,18 @@ trait PresetColors {
     override
     def canEqual(other: Any): Boolean = other.isInstanceOf[PresetColor]
 
+    /**
+     *
+     *
+     * @return
+     */
+    override
+    def toString: String =
+      if (cssName.isDefined)
+        cssName.get
+      else
+        super.toString
+
     private
     val presetMapKey = tidiedCSSName getOrElse canonicalName.get
 
