@@ -35,11 +35,21 @@ import smcl.colors.rgb.Color
 private[infrastructure]
 class RicherColor(val self: Color) {
 
-  /** This [[Color]] as a `java.awt.Color`. */
-  def toAWTColor: LowLevelColor = AWTColorAdapter(self).awtColor
+  /**
+   * This [[Color]] as a `java.awt.Color`.
+   *
+   * @return
+   */
+  final
+  def toAWTColor: LowLevelColor = AWTColorAdapter.awtColorFrom(self)
 
-  /** This [[Color]] as a `java.awt.Color` with full opacity. */
+  /**
+   * This [[Color]] as a `java.awt.Color` with full opacity.
+   *
+   * @return
+   */
+  final
   def toOpaqueAWTColor: LowLevelColor =
-    AWTColorAdapter(self.withFullOpacity).awtColor
+    AWTColorAdapter.awtColorFrom(self.withFullOpacity)
 
 }

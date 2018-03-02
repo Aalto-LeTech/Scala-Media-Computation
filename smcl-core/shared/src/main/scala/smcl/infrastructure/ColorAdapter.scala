@@ -62,6 +62,6 @@ trait ColorAdapter {
    *
    * @return
    */
-  def applicationColor: Color
+  def smclColor: Color
 
 }

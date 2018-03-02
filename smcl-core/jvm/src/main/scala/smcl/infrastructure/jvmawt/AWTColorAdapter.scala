@@ -36,16 +36,19 @@ object AWTColorAdapter {
   /**
    *
    *
-   * @param applicationColor
+   * @param smclColor
    *
    * @return
    */
-  def apply(applicationColor: Color): AWTColorAdapter =
+  @inline
+  def apply(smclColor: Color): AWTColorAdapter =
     new AWTColorAdapter(
-      applicationColor.red,
-      applicationColor.green,
-      applicationColor.blue,
-      applicationColor.opacity)
+      smclColor.red,
+      smclColor.green,
+      smclColor.blue,
+      smclColor.opacity,
+      knownSMCLColor = Some(smclColor),
+      knownAWTColor = None)
 
   /**
    *
@@ -54,8 +57,61 @@ object AWTColorAdapter {
    *
    * @return
    */
+  @inline
   def apply(awtColor: LowLevelColor): AWTColorAdapter =
     new AWTColorAdapter(
+      awtColor.getRed,
+      awtColor.getGreen,
+      awtColor.getBlue,
+      awtColor.getAlpha,
+      knownSMCLColor = None,
+      knownAWTColor = Some(awtColor))
+
+  /**
+   *
+   *
+   * @param smclColor
+   *
+   * @return
+   */
+  @inline
+  def awtColorFrom(smclColor: Color): LowLevelColor =
+    awtColorFrom(
+      smclColor.red,
+      smclColor.green,
+      smclColor.blue,
+      smclColor.opacity)
+
+  /**
+   *
+   *
+   * @param red
+   * @param green
+   * @param blue
+   * @param opacity
+   *
+   * @return
+   */
+  @inline
+  def awtColorFrom(
+      red: Int,
+      green: Int,
+      blue: Int,
+      opacity: Int): LowLevelColor = {
+
+    new LowLevelColor(red, green, blue, opacity)
+  }
+
+  /**
+   *
+   *
+   * @param awtColor
+   *
+   * @return
+   */
+  @inline
+  def smclColorFrom(awtColor: LowLevelColor): Color =
+    Color(
       awtColor.getRed,
       awtColor.getGreen,
       awtColor.getBlue,
@@ -69,53 +125,58 @@ object AWTColorAdapter {
 /**
  *
  *
+ * @param red
+ * @param green
+ * @param blue
+ * @param opacity
+ * @param knownSMCLColor
+ * @param knownAWTColor
+ *
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-case class AWTColorAdapter(
-    private val redComponent: Int,
-    private val greenComponent: Int,
-    private val blueComponent: Int,
-    private val opacityComponent: Int) extends ColorAdapter {
+class AWTColorAdapter private(
+    override val red: Int,
+    override val green: Int,
+    override val blue: Int,
+    override val opacity: Int,
+    knownSMCLColor: Option[Color],
+    knownAWTColor: Option[LowLevelColor]
+) extends ColorAdapter {
 
   /** */
-  private[infrastructure]
-  lazy val awtColor = new LowLevelColor(redComponent, greenComponent, blueComponent, opacityComponent)
+  private
+  var memoizedSMCLColor: Option[Color] = knownSMCLColor
+
+  /** */
+  private
+  var memoizedAWTColor: Option[LowLevelColor] = knownAWTColor
 
   /**
    *
    *
    * @return
    */
-  def applicationColor: Color =
-    Color(redComponent, greenComponent, blueComponent, opacityComponent)
+  override
+  def smclColor: Color = {
+    if (memoizedSMCLColor.isEmpty) {
+      memoizedSMCLColor = Some(Color(red, green, blue, opacity))
+    }
+
+    memoizedSMCLColor.get
+  }
 
   /**
    *
    *
    * @return
    */
-  override def red: Int = redComponent
+  def awtColor: LowLevelColor = {
+    if (memoizedAWTColor.isEmpty) {
+      memoizedAWTColor = Some(AWTColorAdapter.awtColorFrom(red, green, blue, opacity))
+    }
 
-  /**
-   *
-   *
-   * @return
-   */
-  override def green: Int = greenComponent
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def blue: Int = blueComponent
-
-  /**
-   *
-   *
-   * @return
-   */
-  override def opacity: Int = opacityComponent
+    memoizedAWTColor.get
+  }
 
 }
