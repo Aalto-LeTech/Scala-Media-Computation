@@ -81,8 +81,8 @@ lazy val projectFullName: String = "Scala Media Computation Library"
 
 lazy val projectMajorVersion: Int = 0
 lazy val projectMinorVersion: Int = 0
-lazy val projectMicroVersion: Int = 5
-lazy val projectIsRelease: Boolean = true
+lazy val projectMicroVersion: Int = 6
+lazy val projectIsRelease: Boolean = false
 
 lazy val buildTime: Long = System.currentTimeMillis()
 
