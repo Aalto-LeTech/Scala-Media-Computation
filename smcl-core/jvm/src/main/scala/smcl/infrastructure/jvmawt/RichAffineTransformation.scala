@@ -31,7 +31,6 @@ import smcl.modeling.AffineTransformation
  *
  * @author Aleksi Lukkarinen
  */
-private[infrastructure]
 class RichAffineTransformation(val self: AffineTransformation) {
 
   /** This [[AffineTransformation]] as an AWT's 'AffineTransform'. */

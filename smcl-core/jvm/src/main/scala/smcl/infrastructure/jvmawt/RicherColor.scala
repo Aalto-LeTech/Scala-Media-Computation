@@ -32,7 +32,6 @@ import smcl.colors.rgb.Color
  *
  * @author Aleksi Lukkarinen
  */
-private[infrastructure]
 class RicherColor(val self: Color) {
 
   /**

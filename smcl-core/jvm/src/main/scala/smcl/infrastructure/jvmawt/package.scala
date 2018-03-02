@@ -45,21 +45,18 @@ package object jvmawt {
   /**
    *
    */
-  private[smcl]
   implicit def SMCLAffineTransformationWrapper(self: AffineTransformation): RichAffineTransformation =
     new RichAffineTransformation(self)
 
   /**
    *
    */
-  private[smcl]
   implicit def AWTColorWrapper(self: LowLevelColor): RichAWTColor =
     new RichAWTColor(self)
 
   /**
    *
    */
-  private[smcl]
   implicit def SMCLColorWrapper(self: Color): RicherColor =
     new RicherColor(self)
 
