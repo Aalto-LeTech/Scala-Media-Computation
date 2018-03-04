@@ -752,12 +752,10 @@ class Color protected(
     val prime = 31
 
     var result = 1
-    result = prime * result + isPreset.##
     result = prime * result + red
     result = prime * result + green
     result = prime * result + blue
     result = prime * result + opacity
-    result = prime * result + canonicalName.##
 
     result
   }
@@ -785,12 +783,55 @@ class Color protected(
     other match {
       case that: Color =>
         that.canEqual(this) &&
-            that.isPreset == this.isPreset &&
+            that.red == this.red &&
+            that.green == this.green &&
+            that.blue == this.blue &&
+            that.opacity == this.opacity
+
+      case _ => false
+    }
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def equalsIncludingName(other: Any): Boolean = {
+    other match {
+      case that: Color =>
+        that.canEqual(this) &&
             that.red == this.red &&
             that.green == this.green &&
             that.blue == this.blue &&
             that.opacity == this.opacity &&
             that.canonicalName == this.canonicalName
+
+      case _ => false
+    }
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def equalsIncludingNameAndPresetness(other: Any): Boolean = {
+    other match {
+      case that: Color =>
+        that.canEqual(this) &&
+            that.red == this.red &&
+            that.green == this.green &&
+            that.blue == this.blue &&
+            that.opacity == this.opacity &&
+            that.canonicalName == this.canonicalName &&
+            that.isPreset == this.isPreset
 
       case _ => false
     }
