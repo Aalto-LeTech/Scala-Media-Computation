@@ -29,6 +29,11 @@ import smcl.infrastructure.enumerators.DownwardsLeftwardsMatrixEnumerator.checkA
  */
 object MatrixEnumerator2D {
 
+  /** */
+  private
+  type LiftedEnumeratorConstructor =
+    (Int, Int, Int, Int, MatrixEnumerationStyle2D) => AbstractMatrixEnumerator2D
+
   /**
    *
    *
@@ -55,18 +60,21 @@ object MatrixEnumerator2D {
     val lowerRightColumn = upperLeftColumn + width - 1
     val lowerRightRow = upperLeftRow + height - 1
 
-    val constructor = enumerationStyle match {
-      case MESDownwardsLeftwards  => (new DownwardsLeftwardsMatrixEnumerator(_, _, _, _, _)).curried
-      case MESDownwardsRightwards => (new DownwardsRightwardsMatrixEnumerator(_, _, _, _, _)).curried
-      case MESLeftwardsDownwards  => (new LeftwardsDownwardsMatrixEnumerator(_, _, _, _, _)).curried
-      case MESLeftwardsUpwards    => (new LeftwardsUpwardsMatrixEnumerator(_, _, _, _, _)).curried
-      case MESRightwardsDownwards => (new RightwardsDownwardsMatrixEnumerator(_, _, _, _, _)).curried
-      case MESRightwardsUpwards   => (new RightwardsUpwardsMatrixEnumerator(_, _, _, _, _)).curried
-      case MESUpwardsLeftwards    => (new UpwardsLeftwardsMatrixEnumerator(_, _, _, _, _)).curried
-      case MESUpwardsRightwards   => (new UpwardsRightwardsMatrixEnumerator(_, _, _, _, _)).curried
+    val constructor: LiftedEnumeratorConstructor = enumerationStyle match {
+      case MESDownwardsLeftwards  => new DownwardsLeftwardsMatrixEnumerator(_, _, _, _, _)
+      case MESDownwardsRightwards => new DownwardsRightwardsMatrixEnumerator(_, _, _, _, _)
+      case MESLeftwardsDownwards  => new LeftwardsDownwardsMatrixEnumerator(_, _, _, _, _)
+      case MESLeftwardsUpwards    => new LeftwardsUpwardsMatrixEnumerator(_, _, _, _, _)
+      case MESRightwardsDownwards => new RightwardsDownwardsMatrixEnumerator(_, _, _, _, _)
+      case MESRightwardsUpwards   => new RightwardsUpwardsMatrixEnumerator(_, _, _, _, _)
+      case MESUpwardsLeftwards    => new UpwardsLeftwardsMatrixEnumerator(_, _, _, _, _)
+      case MESUpwardsRightwards   => new UpwardsRightwardsMatrixEnumerator(_, _, _, _, _)
     }
 
-    constructor(upperLeftColumn)(upperLeftRow)(lowerRightColumn)(lowerRightRow)(enumerationStyle)
+    constructor(
+      upperLeftColumn, upperLeftRow,
+      lowerRightColumn, lowerRightRow,
+      enumerationStyle)
   }
 
 }

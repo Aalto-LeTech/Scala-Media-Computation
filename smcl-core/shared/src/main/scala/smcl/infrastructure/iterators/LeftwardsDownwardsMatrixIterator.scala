@@ -17,7 +17,7 @@
 package smcl.infrastructure.iterators
 
 
-import smcl.infrastructure.enumerators.{AbstractMatrixEnumerator2D, LeftwardsDownwardsMatrixEnumerator}
+import smcl.infrastructure.enumerators.{AbstractMatrixEnumerator2D, MESLeftwardsDownwards}
 
 
 
@@ -45,11 +45,10 @@ object LeftwardsDownwardsMatrixIterator {
       width: Int,
       height: Int): MatrixIterator2D = {
 
-    val enumerator =
-      LeftwardsDownwardsMatrixEnumerator(
-        startColumn, startRow, width, height)
-
-    new LeftwardsDownwardsMatrixIterator(enumerator)
+    MatrixIterator2D(
+      startColumn, startRow,
+      width, height,
+      MESLeftwardsDownwards)
   }
 
 }
@@ -62,7 +61,7 @@ object LeftwardsDownwardsMatrixIterator {
  *
  * @author Aleksi Lukkarinen
  */
-class LeftwardsDownwardsMatrixIterator private(
+class LeftwardsDownwardsMatrixIterator private[iterators](
     enumerator: AbstractMatrixEnumerator2D)
     extends MatrixIterator2D(enumerator) {
 

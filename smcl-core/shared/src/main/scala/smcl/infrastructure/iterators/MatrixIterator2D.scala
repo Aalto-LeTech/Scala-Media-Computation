@@ -19,7 +19,7 @@ package smcl.infrastructure.iterators
 
 import scala.collection.AbstractIterator
 
-import smcl.infrastructure.enumerators.AbstractMatrixEnumerator2D
+import smcl.infrastructure.enumerators.{AbstractMatrixEnumerator2D, _}
 
 
 
@@ -30,6 +30,47 @@ import smcl.infrastructure.enumerators.AbstractMatrixEnumerator2D
  * @author Aleksi Lukkarinen
  */
 object MatrixIterator2D {
+
+  /** */
+  private
+  type LiftedIteratorConstructor =
+    AbstractMatrixEnumerator2D => MatrixIterator2D
+
+  /**
+   *
+   *
+   * @param startColumn
+   * @param startRow
+   * @param width
+   * @param height
+   * @param enumerationStyle
+   *
+   * @return
+   */
+  def apply(
+      startColumn: Int,
+      startRow: Int,
+      width: Int,
+      height: Int,
+      enumerationStyle: MatrixEnumerationStyle2D): MatrixIterator2D = {
+
+    val enumerator =
+      MatrixEnumerator2D(
+        startColumn, startRow, width, height, MESDownwardsLeftwards)
+
+    val constructor: LiftedIteratorConstructor = enumerationStyle match {
+      case MESDownwardsLeftwards  => new DownwardsLeftwardsMatrixIterator(_)
+      case MESDownwardsRightwards => new DownwardsRightwardsMatrixIterator(_)
+      case MESLeftwardsDownwards  => new LeftwardsDownwardsMatrixIterator(_)
+      case MESLeftwardsUpwards    => new LeftwardsUpwardsMatrixIterator(_)
+      case MESRightwardsDownwards => new RightwardsDownwardsMatrixIterator(_)
+      case MESRightwardsUpwards   => new RightwardsUpwardsMatrixIterator(_)
+      case MESUpwardsLeftwards    => new UpwardsLeftwardsMatrixIterator(_)
+      case MESUpwardsRightwards   => new UpwardsRightwardsMatrixIterator(_)
+    }
+
+    constructor(enumerator)
+  }
 
 }
 
