@@ -16,6 +16,7 @@
 
 package smcl.pictures
 
+
 import smcl.colors.rgb
 import smcl.infrastructure.MathUtils
 import smcl.modeling.Angle
@@ -133,8 +134,10 @@ object Triangle {
     val halfHeight: Double =
       HeightOfEquilateralTriangleAsFactorOfSide * sideLength / 2.0
 
+    val halfBase: Double = sideLength / 2.0
+
     createIsosceles(
-      halfHeight, sideLength / 2.0,
+      halfHeight, halfBase,
       center,
       hasBorder, hasFilling,
       color, fillColor)
@@ -211,8 +214,10 @@ object Triangle {
     val halfSide: Double =
       SideOfEquilateralTriangleAsFactorOfHeight * height / 2.0
 
+    val halfHeight: Double = height / 2.0
+
     createIsosceles(
-      height / 2.0, halfSide,
+      halfHeight, halfSide,
       center,
       hasBorder, hasFilling,
       color, fillColor)
@@ -322,8 +327,10 @@ object Triangle {
     val halfHeight: Double =
       math.sqrt(sideLength * sideLength - baseLength * baseLength / 4.0) / 2.0
 
+    val halfBase: Double = baseLength / 2.0
+
     createIsosceles(
-      halfHeight, baseLength / 2.0,
+      halfHeight, halfBase,
       center,
       hasBorder, hasFilling,
       color, fillColor)
@@ -438,18 +445,22 @@ object Triangle {
       color: rgb.Color,
       fillColor: rgb.Color): VectorGraphic = {
 
+    val correctedHalfHeight = halfHeight - 0.5
+
+    val correctedHalfBase = halfBase - 0.5
+
     val firstCorner: Pos = Pos(
       center.xInPixels,
-      center.yInPixels - halfHeight)
+      center.yInPixels - correctedHalfHeight)
 
-    val bottomY = center.yInPixels + halfHeight
+    val bottomY = center.yInPixels + correctedHalfHeight
 
     val secondCorner: Pos = Pos(
-      center.xInPixels + halfBase,
+      center.xInPixels + correctedHalfBase,
       bottomY)
 
     val thirdCorner: Pos = Pos(
-      center.xInPixels - halfBase,
+      center.xInPixels - correctedHalfBase,
       bottomY)
 
     apply(
@@ -567,12 +578,8 @@ object Triangle {
             rightSideLength * rightSideLength) /
             (2 * leftSideLength * baseLength))
 
-    println(leftAngle)
-
     val prelimTop =
-      Pos(leftSideLength, 0).rotateBy(-leftAngle)
-
-    val halfHeight = prelimTop.yInPixels / 2.0
+      Pos(leftSideLength, 0).rotateByAroundOrigo(-leftAngle)
 
     val xOffset =
       if (leftAngle <= Angle.RightAngleInDegrees) {
@@ -584,7 +591,9 @@ object Triangle {
         halfWidth - baseLength
       }
 
-    println(xOffset)
+    // TODO: Fix: X-offset - 1 !!!!
+
+    val halfHeight = (prelimTop.yInPixels - 1) / 2.0
 
     val firstCorner: Pos = Pos(
       center.xInPixels + prelimTop.xInPixels + xOffset,

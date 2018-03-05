@@ -73,13 +73,17 @@ object Arc {
     val currentHorizontalShearingFactor = InitialShearingFactor
     val currentVerticalShearingFactor = InitialShearingFactor
 
-    val x = upperLeftCorner.centerBetween(lowerRightCorner)
+    val correctionOffsets = (0.5, 0.5)
+    val correctedUpperLeftCorner = upperLeftCorner + correctionOffsets
+    val correctedLowerRightCorner = lowerRightCorner - correctionOffsets
+
+    val x = correctedUpperLeftCorner.centerBetween(correctedLowerRightCorner)
     val currentTransformation =
       AffineTransformation.forTranslationOf(x.xInPixels, x.yInPixels)
 
     new Arc(
       identity,
-      upperLeftCorner, lowerRightCorner,
+      correctedUpperLeftCorner, correctedLowerRightCorner,
       startAngleInDegrees, arcAngleInDegrees,
       currentRotationAngleInDegrees,
       currentHorizontalScalingFactor,

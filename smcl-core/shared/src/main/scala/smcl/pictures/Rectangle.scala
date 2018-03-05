@@ -16,6 +16,7 @@
 
 package smcl.pictures
 
+
 import smcl.colors
 import smcl.colors.rgb
 import smcl.modeling.d2.Pos
@@ -196,8 +197,8 @@ object Rectangle {
       color: rgb.Color = DefaultPrimaryColor,
       fillColor: rgb.Color = DefaultSecondaryColor): VectorGraphic = {
 
-    val halfBase = baseLength / 2.0
-    val halfHeight = height / 2.0
+    val halfBase = (baseLength - 1) / 2.0
+    val halfHeight = (height - 1) / 2.0
 
     val cornerPoints = Seq(
       center + (-halfBase, halfHeight),
