@@ -43,7 +43,7 @@ object RightwardsDownwardsMatrixIterator {
       startColumn: Int,
       startRow: Int,
       width: Int,
-      height: Int): RightwardsDownwardsMatrixIterator = {
+      height: Int): MatrixIterator2D = {
 
     val enumerator =
       RightwardsDownwardsMatrixEnumerator(

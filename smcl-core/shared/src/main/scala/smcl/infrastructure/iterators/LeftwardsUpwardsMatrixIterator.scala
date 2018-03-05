@@ -17,9 +17,7 @@
 package smcl.infrastructure.iterators
 
 
-import scala.collection.AbstractIterator
-
-import smcl.infrastructure.enumerators.AbstractMatrixEnumerator2D
+import smcl.infrastructure.enumerators.{AbstractMatrixEnumerator2D, LeftwardsUpwardsMatrixEnumerator}
 
 
 
@@ -29,7 +27,30 @@ import smcl.infrastructure.enumerators.AbstractMatrixEnumerator2D
  *
  * @author Aleksi Lukkarinen
  */
-object MatrixIterator2D {
+object LeftwardsUpwardsMatrixIterator {
+
+  /**
+   *
+   *
+   * @param startColumn
+   * @param startRow
+   * @param width
+   * @param height
+   *
+   * @return
+   */
+  def apply(
+      startColumn: Int,
+      startRow: Int,
+      width: Int,
+      height: Int): MatrixIterator2D = {
+
+    val enumerator =
+      LeftwardsUpwardsMatrixEnumerator(
+        startColumn, startRow, width, height)
+
+    new LeftwardsUpwardsMatrixIterator(enumerator)
+  }
 
 }
 
@@ -39,90 +60,10 @@ object MatrixIterator2D {
 /**
  *
  *
- * @param enumerator
- *
  * @author Aleksi Lukkarinen
  */
-class MatrixIterator2D(
-    private val enumerator: AbstractMatrixEnumerator2D)
-    extends AbstractIterator[(Int, Int)] {
-
-  /** */
-  val width: Int = enumerator.width
-
-  /** */
-  val height: Int = enumerator.height
-
-  /** */
-  val upperLeftColumn: Int = enumerator.upperLeftColumn
-
-  /** */
-  val lowerRightColumn: Int = enumerator.lowerRightColumn
-
-  /** */
-  val upperLeftRow: Int = enumerator.upperLeftRow
-
-  /** */
-  val lowerRightRow: Int = enumerator.lowerRightRow
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def currentColumn: Int = enumerator.currentColumn
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def currentRow: Int = enumerator.currentRow
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def rowHasChanged: Boolean = enumerator.rowHasChanged
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def columnHasChanged: Boolean = enumerator.columnHasChanged
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  override
-  def hasNext: Boolean = enumerator.hasNextCell
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def hasNoMoreCells: Boolean = enumerator.hasNoMoreCells
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def next: (Int, Int) = {
-    enumerator.advance()
-    enumerator.colRowTuple
-  }
+class LeftwardsUpwardsMatrixIterator private(
+    enumerator: AbstractMatrixEnumerator2D)
+    extends MatrixIterator2D(enumerator) {
 
 }
