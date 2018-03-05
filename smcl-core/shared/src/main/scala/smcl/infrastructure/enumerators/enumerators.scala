@@ -24,4 +24,87 @@ package smcl.infrastructure
  */
 package object enumerators {
 
+
+
+
+  /**
+   * Base class for two-dimensional matrix enumeration style constants.
+   */
+  sealed abstract class MatrixEnumerationStyle2D
+
+
+
+
+  /**
+   * A constant for indicating that matrix enumeration proceeds downwards and leftwards.
+   */
+  case object MESDownwardsLeftwards
+      extends MatrixEnumerationStyle2D
+
+
+
+
+  /**
+   * A constant for indicating that matrix enumeration proceeds downwards and rightwards.
+   */
+  case object MESDownwardsRightwards
+      extends MatrixEnumerationStyle2D
+
+
+
+
+  /**
+   * A constant for indicating that matrix enumeration proceeds leftwards and downwards.
+   */
+  case object MESLeftwardsDownwards
+      extends MatrixEnumerationStyle2D
+
+
+
+
+  /**
+   * A constant for indicating that matrix enumeration proceeds leftwards and upwards.
+   */
+  case object MESLeftwardsUpwards
+      extends MatrixEnumerationStyle2D
+
+
+
+
+  /**
+   * A constant for indicating that matrix enumeration proceeds rightwards and downwards.
+   */
+  case object MESRightwardsDownwards
+      extends MatrixEnumerationStyle2D
+
+
+
+
+  /**
+   * A constant for indicating that matrix enumeration proceeds rightwards and upwards.
+   */
+  case object MESRightwardsUpwards
+      extends MatrixEnumerationStyle2D
+
+
+
+
+  /**
+   * A constant for indicating that matrix enumeration proceeds upwards and leftwards.
+   */
+  case object MESUpwardsLeftwards
+      extends MatrixEnumerationStyle2D
+
+
+
+
+  /**
+   * A constant for indicating that matrix enumeration proceeds upwards and rightwards.
+   */
+  case object MESUpwardsRightwards
+      extends MatrixEnumerationStyle2D
+
+
+
+
 }

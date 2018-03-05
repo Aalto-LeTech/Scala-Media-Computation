@@ -30,27 +30,16 @@ import smcl.infrastructure.exceptions.NoMoreCellsToEnumerateError
 object NullMatrixEnumerator2D
     extends MatrixEnumerator2DCompanion {
 
-  /** */
-  val Instance: AbstractMatrixEnumerator2D = new NullMatrixEnumerator2D()
-
   /**
    *
    *
-   * @param upperLeftColumn
-   * @param upperLeftRow
-   * @param lowerRightColumn
-   * @param lowerRightRow
+   * @param enumerationStyle
    *
    * @return
    */
-  override
-  def instantiateEnumerator(
-      upperLeftColumn: Int,
-      upperLeftRow: Int,
-      lowerRightColumn: Int,
-      lowerRightRow: Int): AbstractMatrixEnumerator2D = {
+  def apply(enumerationStyle: MatrixEnumerationStyle2D): AbstractMatrixEnumerator2D = {
 
-    Instance
+    new NullMatrixEnumerator2D(enumerationStyle)
   }
 
 }
@@ -61,14 +50,18 @@ object NullMatrixEnumerator2D
 /**
  *
  *
+ * @param enumerationStyle
+ *
  * @author Aleksi Lukkarinen
  */
-class NullMatrixEnumerator2D private()
+class NullMatrixEnumerator2D private(
+    enumerationStyle: MatrixEnumerationStyle2D)
     extends AbstractMatrixEnumerator2D(
       upperLeftColumn = NullMatrixEnumerator2D.UndefinedValue,
       lowerRightColumn = NullMatrixEnumerator2D.UndefinedValue,
       upperLeftRow = NullMatrixEnumerator2D.UndefinedValue,
-      lowerRightRow = NullMatrixEnumerator2D.UndefinedValue) {
+      lowerRightRow = NullMatrixEnumerator2D.UndefinedValue,
+      enumerationStyle = enumerationStyle) {
 
   setInternalState(enumerationState)
 

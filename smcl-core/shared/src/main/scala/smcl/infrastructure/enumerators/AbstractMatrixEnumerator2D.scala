@@ -24,6 +24,7 @@ package smcl.infrastructure.enumerators
  * @param upperLeftRow
  * @param lowerRightColumn
  * @param lowerRightRow
+ * @param enumerationStyle
  *
  * @author Aleksi Lukkarinen
  */
@@ -31,7 +32,8 @@ abstract class AbstractMatrixEnumerator2D(
     val upperLeftColumn: Int,
     val upperLeftRow: Int,
     val lowerRightColumn: Int,
-    val lowerRightRow: Int) {
+    val lowerRightRow: Int,
+    val enumerationStyle: MatrixEnumerationStyle2D) {
 
   /** */
   val width: Int = lowerRightColumn - upperLeftColumn + 1

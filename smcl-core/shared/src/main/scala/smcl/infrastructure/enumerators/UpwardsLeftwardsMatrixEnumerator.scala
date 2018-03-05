@@ -35,22 +35,21 @@ object UpwardsLeftwardsMatrixEnumerator
    *
    * @param upperLeftColumn
    * @param upperLeftRow
-   * @param lowerRightColumn
-   * @param lowerRightRow
+   * @param width
+   * @param height
    *
    * @return
    */
-  def instantiateEnumerator(
+  def apply(
       upperLeftColumn: Int,
       upperLeftRow: Int,
-      lowerRightColumn: Int,
-      lowerRightRow: Int): AbstractMatrixEnumerator2D = {
+      width: Int,
+      height: Int): AbstractMatrixEnumerator2D = {
 
-    new UpwardsLeftwardsMatrixEnumerator(
-      upperLeftColumn,
-      upperLeftRow,
-      lowerRightColumn,
-      lowerRightRow)
+    MatrixEnumerator2D(
+      upperLeftColumn, upperLeftRow,
+      width, height,
+      MESUpwardsLeftwards)
   }
 
 }
@@ -65,16 +64,18 @@ object UpwardsLeftwardsMatrixEnumerator
  * @param upperLeftRow
  * @param lowerRightColumn
  * @param lowerRightRow
+ * @param enumerationStyle
  *
  * @author Aleksi Lukkarinen
  */
-class UpwardsLeftwardsMatrixEnumerator private(
+class UpwardsLeftwardsMatrixEnumerator private[enumerators](
     override val upperLeftColumn: Int,
     override val upperLeftRow: Int,
     override val lowerRightColumn: Int,
-    override val lowerRightRow: Int)
+    override val lowerRightRow: Int,
+    enumerationStyle: MatrixEnumerationStyle2D)
     extends AbstractMatrixEnumerator2D(
-      upperLeftColumn, upperLeftRow, lowerRightColumn, lowerRightRow) {
+      upperLeftColumn, upperLeftRow, lowerRightColumn, lowerRightRow, enumerationStyle) {
 
   /**
    *

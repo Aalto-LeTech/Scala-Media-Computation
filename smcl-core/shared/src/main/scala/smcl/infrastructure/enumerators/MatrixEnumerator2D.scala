@@ -17,7 +17,7 @@
 package smcl.infrastructure.enumerators
 
 
-import smcl.infrastructure.exceptions.NoMoreCellsToEnumerateError
+import smcl.infrastructure.enumerators.DownwardsLeftwardsMatrixEnumerator.checkArguments
 
 
 
@@ -27,8 +27,7 @@ import smcl.infrastructure.exceptions.NoMoreCellsToEnumerateError
  *
  * @author Aleksi Lukkarinen
  */
-object DownwardsLeftwardsMatrixEnumerator
-    extends MatrixEnumerator2DCompanion {
+object MatrixEnumerator2D {
 
   /**
    *
@@ -37,6 +36,7 @@ object DownwardsLeftwardsMatrixEnumerator
    * @param upperLeftRow
    * @param width
    * @param height
+   * @param enumerationStyle
    *
    * @return
    */
@@ -44,82 +44,29 @@ object DownwardsLeftwardsMatrixEnumerator
       upperLeftColumn: Int,
       upperLeftRow: Int,
       width: Int,
-      height: Int): AbstractMatrixEnumerator2D = {
+      height: Int,
+      enumerationStyle: MatrixEnumerationStyle2D): AbstractMatrixEnumerator2D = {
 
-    MatrixEnumerator2D(
-      upperLeftColumn, upperLeftRow,
-      width, height,
-      MESDownwardsLeftwards)
-  }
+    checkArguments(upperLeftColumn, upperLeftRow, width, height)
 
-}
+    if (width == 0 || height == 0)
+      return NullMatrixEnumerator2D(enumerationStyle)
 
+    val lowerRightColumn = upperLeftColumn + width - 1
+    val lowerRightRow = upperLeftRow + height - 1
 
-
-
-/**
- *
- *
- * @param upperLeftColumn
- * @param upperLeftRow
- * @param lowerRightColumn
- * @param lowerRightRow
- * @param enumerationStyle
- *
- * @author Aleksi Lukkarinen
- */
-class DownwardsLeftwardsMatrixEnumerator private[enumerators](
-    override val upperLeftColumn: Int,
-    override val upperLeftRow: Int,
-    override val lowerRightColumn: Int,
-    override val lowerRightRow: Int,
-    enumerationStyle: MatrixEnumerationStyle2D)
-    extends AbstractMatrixEnumerator2D(
-      upperLeftColumn, upperLeftRow, lowerRightColumn, lowerRightRow, enumerationStyle) {
-
-  /**
-   *
-   *
-   * @return
-   */
-  //noinspection ConvertExpressionToSAM
-  override protected
-  def enumerationState: MatrixEnumerator2DInternalEnumerationState =
-    new MatrixEnumerator2DInternalEnumerationState {
-
-      _currentColumn = lowerRightColumn
-      _currentRow = upperLeftRow
-      _rowHasChanged = true
-      _columnHasChanged = false
-
-      /**
-       *
-       *
-       * @return
-       */
-      def hasNextCell: Boolean =
-        currentColumn > upperLeftColumn || currentRow < lowerRightRow
-
-      /**
-       *
-       *
-       * @return
-       */
-      override
-      def advance(): Unit = {
-        if (!hasNextCell)
-          throw NoMoreCellsToEnumerateError
-
-        if (_currentRow < lowerRightRow) {
-          _currentRow += 1
-          _columnHasChanged = false
-        }
-        else {
-          _currentRow = upperLeftRow
-          _currentColumn -= 1
-          _columnHasChanged = true
-        }
-      }
+    val constructor = enumerationStyle match {
+      case MESDownwardsLeftwards  => (new DownwardsLeftwardsMatrixEnumerator(_, _, _, _, _)).curried
+      case MESDownwardsRightwards => (new DownwardsRightwardsMatrixEnumerator(_, _, _, _, _)).curried
+      case MESLeftwardsDownwards  => (new LeftwardsDownwardsMatrixEnumerator(_, _, _, _, _)).curried
+      case MESLeftwardsUpwards    => (new LeftwardsUpwardsMatrixEnumerator(_, _, _, _, _)).curried
+      case MESRightwardsDownwards => (new RightwardsDownwardsMatrixEnumerator(_, _, _, _, _)).curried
+      case MESRightwardsUpwards   => (new RightwardsUpwardsMatrixEnumerator(_, _, _, _, _)).curried
+      case MESUpwardsLeftwards    => (new UpwardsLeftwardsMatrixEnumerator(_, _, _, _, _)).curried
+      case MESUpwardsRightwards   => (new UpwardsRightwardsMatrixEnumerator(_, _, _, _, _)).curried
     }
+
+    constructor(upperLeftColumn)(upperLeftRow)(lowerRightColumn)(lowerRightRow)(enumerationStyle)
+  }
 
 }
