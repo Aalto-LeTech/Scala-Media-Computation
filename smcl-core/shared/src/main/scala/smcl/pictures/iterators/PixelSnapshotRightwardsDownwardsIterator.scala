@@ -14,101 +14,24 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.pictures
+package smcl.pictures.iterators
+
+
+import smcl.infrastructure.enumerators.MESRightwardsDownwards
+import smcl.pictures.PixelSnapshot
+
+
 
 
 /**
  *
  *
+ * @param relatedPixelSnapshot
+ *
  * @author Aleksi Lukkarinen
  */
-case class PixelSnapshotDownwardsRightwardsIterator(
-    relatedPixelSnapshot: PixelSnapshot)
-    extends AbstractPixelSnapshotIterator {
-
-  /** */
-  private
-  var _currentX: Int = minXInPixels
-
-  /** */
-  private
-  var _currentY: Int = minYInPixels
-
-  /** */
-  private
-  var _columnHasChanged: Boolean = false
-
-  /**
-   *
-   *
-   * @return
-   */
-  def currentXInPixels: Int = _currentX
-
-  /**
-   *
-   *
-   * @return
-   */
-  def currentYInPixels: Int = _currentY
-
-  /**
-   *
-   *
-   * @return
-   */
-  def rowHasChanged: Boolean = true
-
-  /**
-   *
-   *
-   * @return
-   */
-  def columnHasChanged: Boolean = hasNext && _columnHasChanged
-
-  /**
-   *
-   */
-  private
-  def advance(): Unit = {
-    if (_currentY < maxYInPixels) {
-      _currentY += 1
-      _columnHasChanged = false
-    }
-    else {
-      _currentY = minYInPixels
-      _currentX += 1
-      _columnHasChanged = true
-    }
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  def hasNext: Boolean =
-    _currentY <= maxYInPixels &&
-        _currentX <= maxXInPixels
-
-  /**
-   *
-   *
-   * @return
-   */
-  def next(): Pixel = {
-    if (!hasNext)
-      return Iterator.empty.next()
-
-    val nextResult = Pixel(
-      relatedPixelSnapshot,
-      minXInPixels, maxXInPixels,
-      minYInPixels, maxYInPixels,
-      _currentX, _currentY)
-
-    advance()
-
-    nextResult
-  }
+case class PixelSnapshotRightwardsDownwardsIterator(
+    override val relatedPixelSnapshot: PixelSnapshot)
+    extends AbstractPixelSnapshotIterator(relatedPixelSnapshot, MESRightwardsDownwards) {
 
 }

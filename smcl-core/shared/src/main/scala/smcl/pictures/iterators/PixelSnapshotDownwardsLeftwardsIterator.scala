@@ -14,10 +14,11 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.pictures
+package smcl.pictures.iterators
 
 
-import scala.collection.AbstractIterator
+import smcl.infrastructure.enumerators.MESDownwardsLeftwards
+import smcl.pictures.PixelSnapshot
 
 
 
@@ -25,111 +26,12 @@ import scala.collection.AbstractIterator
 /**
  *
  *
+ * @param relatedPixelSnapshot
+ *
  * @author Aleksi Lukkarinen
  */
-abstract class AbstractPixelSnapshotIterator
-    extends AbstractIterator[Pixel] {
-
-  /** */
-  def relatedPixelSnapshot: PixelSnapshot
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def widthInPixels: Int = relatedPixelSnapshot.widthInPixels
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def heightInPixels: Int = relatedPixelSnapshot.heightInPixels
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def minXInPixels: Int = relatedPixelSnapshot.minXInPixels
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def maxXInPixels: Int = relatedPixelSnapshot.maxXInPixels
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def minYInPixels: Int = relatedPixelSnapshot.minYInPixels
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def maxYInPixels: Int = relatedPixelSnapshot.maxYInPixels
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def currentXInPixels: Int
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def currentYInPixels: Int
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def rowHasChanged: Boolean
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def columnHasChanged: Boolean
-
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  override
-  def hasNext: Boolean
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  override
-  def next(): Pixel
+case class PixelSnapshotDownwardsLeftwardsIterator(
+    override val relatedPixelSnapshot: PixelSnapshot)
+    extends AbstractPixelSnapshotIterator(relatedPixelSnapshot, MESDownwardsLeftwards) {
 
 }

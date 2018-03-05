@@ -16,62 +16,11 @@
 
 package smcl.pictures
 
-
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-case class NullPixelSnapshotIterator(
-    relatedPixelSnapshot: NullPixelSnapshot)
-    extends AbstractPixelSnapshotIterator {
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def currentXInPixels: Int = minXInPixels
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def currentYInPixels: Int = minYInPixels
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def columnHasChanged: Boolean = false
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def rowHasChanged: Boolean = false
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def hasNext: Boolean = false
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def next(): Pixel = Iterator.empty.next()
+package object iterators {
 
 }

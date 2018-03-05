@@ -21,6 +21,7 @@ import smcl.colors.rgb.Color
 import smcl.infrastructure.DoneStatus
 import smcl.infrastructure.exceptions.InvalidColorComponentArrayLengthError
 import smcl.pictures.exceptions.PixelSnapshotInvalidatedError
+import smcl.pictures.iterators._
 
 
 
@@ -314,56 +315,80 @@ trait PixelSnapshot
    */
   @inline
   override
-  def iterator: AbstractPixelSnapshotIterator
+  def iterator: AbstractPixelSnapshotIterator = {
+    checkForInvalidation()
+    PixelSnapshotRightwardsDownwardsIterator(this)
+  }
 
   /**
    *
    * @return
    */
   @inline
-  def downwardsLeftwardsIterator: AbstractPixelSnapshotIterator
+  def downwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
+    checkForInvalidation()
+    PixelSnapshotRightwardsDownwardsIterator(this)
+  }
 
   /**
    *
    * @return
    */
   @inline
-  def leftwardsDownwardsIterator: AbstractPixelSnapshotIterator
+  def leftwardsDownwardsIterator: AbstractPixelSnapshotIterator = {
+    checkForInvalidation()
+    PixelSnapshotRightwardsDownwardsIterator(this)
+  }
 
   /**
    *
    * @return
    */
   @inline
-  def leftwardsUpwardsIterator: AbstractPixelSnapshotIterator
+  def leftwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
+    checkForInvalidation()
+    PixelSnapshotRightwardsDownwardsIterator(this)
+  }
 
   /**
    *
    * @return
    */
   @inline
-  def downwardsRightwardsIterator: AbstractPixelSnapshotIterator
+  def downwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
+    checkForInvalidation()
+    PixelSnapshotRightwardsDownwardsIterator(this)
+  }
 
   /**
    *
    * @return
    */
   @inline
-  def rightwardsUpwardsIterator: AbstractPixelSnapshotIterator
+  def rightwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
+    checkForInvalidation()
+    PixelSnapshotRightwardsDownwardsIterator(this)
+  }
 
   /**
    *
    * @return
    */
   @inline
-  def upwardsLeftwardsIterator: AbstractPixelSnapshotIterator
+  def upwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
+    checkForInvalidation()
+    PixelSnapshotUpwardsLeftwardsIterator(this)
+  }
 
   /**
    *
    * @return
    */
   @inline
-  def upwardsRightwardsIterator: AbstractPixelSnapshotIterator
+  def upwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
+    checkForInvalidation()
+    PixelSnapshotUpwardsRightwardsIterator(this)
+  }
 
   /**
    *

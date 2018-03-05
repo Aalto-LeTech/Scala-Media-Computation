@@ -30,9 +30,6 @@ import smcl.infrastructure.DoneStatus
 class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
     extends PixelSnapshot {
 
-  private
-  val NullIterator: AbstractPixelSnapshotIterator = NullPixelSnapshotIterator(this)
-
   /** */
   private
   val EmptyColorArray: Array[Int] = Array.empty
@@ -244,94 +241,6 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
 
     throw new IllegalStateException(
       "This pixel snapshot has no pixels to modify")
-  }
-
-  /**
-   *
-   * @return
-   */
-  @inline
-  override
-  def iterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    NullIterator
-  }
-
-  /**
-   *
-   * @return
-   */
-  @inline
-  override
-  def downwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    NullIterator
-  }
-
-  /**
-   *
-   * @return
-   */
-  @inline
-  override
-  def leftwardsDownwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    NullIterator
-  }
-
-  /**
-   *
-   * @return
-   */
-  @inline
-  override
-  def leftwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    NullIterator
-  }
-
-  /**
-   *
-   * @return
-   */
-  @inline
-  override
-  def downwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    NullIterator
-  }
-
-  /**
-   *
-   * @return
-   */
-  @inline
-  override
-  def rightwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    NullIterator
-  }
-
-  /**
-   *
-   * @return
-   */
-  @inline
-  override
-  def upwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    NullIterator
-  }
-
-  /**
-   *
-   * @return
-   */
-  @inline
-  override
-  def upwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
-    checkForInvalidation()
-    NullIterator
   }
 
   /**
