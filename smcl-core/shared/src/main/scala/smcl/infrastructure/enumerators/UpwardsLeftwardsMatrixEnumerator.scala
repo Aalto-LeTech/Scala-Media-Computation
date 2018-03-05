@@ -27,50 +27,68 @@ import smcl.infrastructure.exceptions.NoMoreCellsToEnumerateError
  *
  * @author Aleksi Lukkarinen
  */
-object NullMatrixEnumerator
+object UpwardsLeftwardsMatrixEnumerator
+    extends MatrixEnumerator2DCompanion {
+
+  /**
+   *
+   *
+   * @param upperLeftColumn
+   * @param upperLeftRow
+   * @param lowerRightColumn
+   * @param lowerRightRow
+   *
+   * @return
+   */
+  def instantiateEnumerator(
+      upperLeftColumn: Int,
+      upperLeftRow: Int,
+      lowerRightColumn: Int,
+      lowerRightRow: Int): AbstractMatrixEnumerator2D = {
+
+    new UpwardsLeftwardsMatrixEnumerator(
+      upperLeftColumn,
+      upperLeftRow,
+      lowerRightColumn,
+      lowerRightRow)
+  }
+
+}
+
+
+
+
+/**
+ *
+ *
+ * @param upperLeftColumn
+ * @param upperLeftRow
+ * @param lowerRightColumn
+ * @param lowerRightRow
+ *
+ * @author Aleksi Lukkarinen
+ */
+class UpwardsLeftwardsMatrixEnumerator private(
+    override val upperLeftColumn: Int,
+    override val upperLeftRow: Int,
+    override val lowerRightColumn: Int,
+    override val lowerRightRow: Int)
     extends AbstractMatrixEnumerator2D(
-      startColumn = AbstractMatrixEnumerator2D.UndefinedValue,
-      endColumn = AbstractMatrixEnumerator2D.UndefinedValue,
-      startRow = AbstractMatrixEnumerator2D.UndefinedValue,
-      endRow = AbstractMatrixEnumerator2D.UndefinedValue) {
-
-  setInternalState(enumerationState)
+      upperLeftColumn, upperLeftRow, lowerRightColumn, lowerRightRow) {
 
   /**
    *
    *
    * @return
    */
-  override
-  def width: Int = 0
-
-  /**
-   *
-   *
-   * @return
-   */
-  override
-  val height: Int = 0
-
-  /**
-   *
-   *
-   * @return
-   */
-  def hasNextCell: Boolean = false
-
-  /**
-   *
-   *
-   * @return
-   */
+  //noinspection ConvertExpressionToSAM
   override protected
   def enumerationState: MatrixEnumerator2DInternalEnumerationState =
     new MatrixEnumerator2DInternalEnumerationState {
 
-      _currentColumn = AbstractMatrixEnumerator2D.UndefinedValue
-      _currentRow = AbstractMatrixEnumerator2D.UndefinedValue
-      _rowHasChanged = false
+      _currentColumn = lowerRightColumn
+      _currentRow = lowerRightRow
+      _rowHasChanged = true
       _columnHasChanged = false
 
       /**
@@ -78,9 +96,29 @@ object NullMatrixEnumerator
        *
        * @return
        */
+      def hasNextCell: Boolean =
+        currentColumn > upperLeftColumn || currentRow > upperLeftRow
+
+      /**
+       *
+       *
+       * @return
+       */
       override
-      def advance(): Unit =
-        throw NoMoreCellsToEnumerateError
+      def advance(): Unit = {
+        if (!hasNextCell)
+          throw NoMoreCellsToEnumerateError
+
+        if (_currentRow > upperLeftRow) {
+          _currentRow -= 1
+          _columnHasChanged = false
+        }
+        else {
+          _currentRow = lowerRightRow
+          _currentColumn -= 1
+          _columnHasChanged = true
+        }
+      }
     }
 
 }

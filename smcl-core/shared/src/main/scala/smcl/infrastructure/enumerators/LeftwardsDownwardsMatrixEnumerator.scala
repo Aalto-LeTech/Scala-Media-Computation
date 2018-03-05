@@ -27,7 +27,7 @@ import smcl.infrastructure.exceptions.NoMoreCellsToEnumerateError
  *
  * @author Aleksi Lukkarinen
  */
-object RightwardsDownwardsMatrixEnumerator
+object LeftwardsDownwardsMatrixEnumerator
     extends MatrixEnumerator2DCompanion {
 
   /**
@@ -46,7 +46,7 @@ object RightwardsDownwardsMatrixEnumerator
       lowerRightColumn: Int,
       lowerRightRow: Int): AbstractMatrixEnumerator2D = {
 
-    new RightwardsDownwardsMatrixEnumerator(
+    new LeftwardsDownwardsMatrixEnumerator(
       upperLeftColumn,
       upperLeftRow,
       lowerRightColumn,
@@ -68,7 +68,7 @@ object RightwardsDownwardsMatrixEnumerator
  *
  * @author Aleksi Lukkarinen
  */
-class RightwardsDownwardsMatrixEnumerator private(
+class LeftwardsDownwardsMatrixEnumerator private(
     override val upperLeftColumn: Int,
     override val upperLeftRow: Int,
     override val lowerRightColumn: Int,
@@ -86,7 +86,7 @@ class RightwardsDownwardsMatrixEnumerator private(
   def enumerationState: MatrixEnumerator2DInternalEnumerationState =
     new MatrixEnumerator2DInternalEnumerationState {
 
-      _currentColumn = upperLeftColumn
+      _currentColumn = lowerRightColumn
       _currentRow = upperLeftRow
       _rowHasChanged = false
       _columnHasChanged = true
@@ -97,7 +97,7 @@ class RightwardsDownwardsMatrixEnumerator private(
        * @return
        */
       def hasNextCell: Boolean =
-        currentRow < lowerRightRow || currentColumn < lowerRightColumn
+        currentRow < lowerRightRow || currentColumn > upperLeftColumn
 
       /**
        *
@@ -109,12 +109,12 @@ class RightwardsDownwardsMatrixEnumerator private(
         if (!hasNextCell)
           throw NoMoreCellsToEnumerateError
 
-        if (_currentColumn < lowerRightColumn) {
-          _currentColumn += 1
+        if (_currentColumn > upperLeftColumn) {
+          _currentColumn -= 1
           _rowHasChanged = false
         }
         else {
-          _currentColumn = upperLeftColumn
+          _currentColumn = lowerRightColumn
           _currentRow += 1
           _rowHasChanged = true
         }

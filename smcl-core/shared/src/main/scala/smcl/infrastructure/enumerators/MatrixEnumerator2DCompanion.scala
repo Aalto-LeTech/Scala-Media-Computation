@@ -14,12 +14,10 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.infrastructure.iterators
+package smcl.infrastructure.enumerators
 
 
-import scala.collection.AbstractIterator
-
-import smcl.infrastructure.enumerators.AbstractMatrixEnumerator2D
+import smcl.infrastructure.exceptions.{NegativeHeightError, NegativeUpperLeftColumnError, NegativeUpperLeftRowError, NegativeWidthError}
 
 
 
@@ -27,90 +25,85 @@ import smcl.infrastructure.enumerators.AbstractMatrixEnumerator2D
 /**
  *
  *
- * @param enumerator
- *
  * @author Aleksi Lukkarinen
  */
-class MatrixIterator2D(
-    private val enumerator: AbstractMatrixEnumerator2D)
-    extends AbstractIterator[(Int, Int)] {
+trait MatrixEnumerator2DCompanion {
 
   /** */
-  val width: Int = enumerator.width
+  val InitialValue: Int = MatrixEnumerator2DInternalState.InitialValue
 
   /** */
-  val height: Int = enumerator.height
-
-  /** */
-  val upperLeftColumn: Int = enumerator.upperLeftColumn
-
-  /** */
-  val lowerRightColumn: Int = enumerator.lowerRightColumn
-
-  /** */
-  val upperLeftRow: Int = enumerator.upperLeftRow
-
-  /** */
-  val lowerRightRow: Int = enumerator.lowerRightRow
+  val UndefinedValue: Int = Integer.MIN_VALUE
 
   /**
    *
    *
-   * @return
+   * @param upperLeftColumn
+   * @param upperLeftRow
+   * @param width
+   * @param height
    */
-  @inline
-  def currentColumn: Int = enumerator.currentColumn
+  def checkArguments(
+      upperLeftColumn: Int,
+      upperLeftRow: Int,
+      width: Int,
+      height: Int): Unit = {
 
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def currentRow: Int = enumerator.currentRow
+    if (upperLeftColumn < 0)
+      throw NegativeUpperLeftColumnError(upperLeftColumn)
 
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def rowHasChanged: Boolean = enumerator.rowHasChanged
+    if (upperLeftRow < 0)
+      throw NegativeUpperLeftRowError(upperLeftRow)
 
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def columnHasChanged: Boolean = enumerator.columnHasChanged
+    if (width < 0)
+      throw NegativeWidthError(width)
 
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  override
-  def hasNext: Boolean = enumerator.hasNextCell
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def hasNoMoreCells: Boolean = enumerator.hasNoMoreCells
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def next: (Int, Int) = {
-    enumerator.advance()
-    enumerator.colRowTuple
+    if (height < 0)
+      throw NegativeHeightError(height)
   }
+
+  /**
+   *
+   *
+   * @param upperLeftColumn
+   * @param upperLeftRow
+   * @param width
+   * @param height
+   *
+   * @return
+   */
+  def apply(
+      upperLeftColumn: Int,
+      upperLeftRow: Int,
+      width: Int,
+      height: Int): AbstractMatrixEnumerator2D = {
+
+    checkArguments(upperLeftColumn, upperLeftRow, width, height)
+
+    if (width == 0 || height == 0)
+      return NullMatrixEnumerator2D.Instance
+
+    instantiateEnumerator(
+      upperLeftColumn,
+      upperLeftRow,
+      lowerRightColumn = upperLeftColumn + width - 1,
+      lowerRightRow = upperLeftRow + height - 1)
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftColumn
+   * @param upperLeftRow
+   * @param lowerRightColumn
+   * @param lowerRightRow
+   *
+   * @return
+   */
+  def instantiateEnumerator(
+      upperLeftColumn: Int,
+      upperLeftRow: Int,
+      lowerRightColumn: Int,
+      lowerRightRow: Int): AbstractMatrixEnumerator2D
 
 }

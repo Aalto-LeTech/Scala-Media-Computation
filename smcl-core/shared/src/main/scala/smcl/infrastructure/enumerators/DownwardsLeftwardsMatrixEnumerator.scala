@@ -27,7 +27,7 @@ import smcl.infrastructure.exceptions.NoMoreCellsToEnumerateError
  *
  * @author Aleksi Lukkarinen
  */
-object RightwardsDownwardsMatrixEnumerator
+object DownwardsLeftwardsMatrixEnumerator
     extends MatrixEnumerator2DCompanion {
 
   /**
@@ -46,7 +46,7 @@ object RightwardsDownwardsMatrixEnumerator
       lowerRightColumn: Int,
       lowerRightRow: Int): AbstractMatrixEnumerator2D = {
 
-    new RightwardsDownwardsMatrixEnumerator(
+    new DownwardsLeftwardsMatrixEnumerator(
       upperLeftColumn,
       upperLeftRow,
       lowerRightColumn,
@@ -68,7 +68,7 @@ object RightwardsDownwardsMatrixEnumerator
  *
  * @author Aleksi Lukkarinen
  */
-class RightwardsDownwardsMatrixEnumerator private(
+class DownwardsLeftwardsMatrixEnumerator private(
     override val upperLeftColumn: Int,
     override val upperLeftRow: Int,
     override val lowerRightColumn: Int,
@@ -86,10 +86,10 @@ class RightwardsDownwardsMatrixEnumerator private(
   def enumerationState: MatrixEnumerator2DInternalEnumerationState =
     new MatrixEnumerator2DInternalEnumerationState {
 
-      _currentColumn = upperLeftColumn
+      _currentColumn = lowerRightColumn
       _currentRow = upperLeftRow
-      _rowHasChanged = false
-      _columnHasChanged = true
+      _rowHasChanged = true
+      _columnHasChanged = false
 
       /**
        *
@@ -97,7 +97,7 @@ class RightwardsDownwardsMatrixEnumerator private(
        * @return
        */
       def hasNextCell: Boolean =
-        currentRow < lowerRightRow || currentColumn < lowerRightColumn
+        currentColumn > upperLeftColumn || currentRow < lowerRightRow
 
       /**
        *
@@ -109,14 +109,14 @@ class RightwardsDownwardsMatrixEnumerator private(
         if (!hasNextCell)
           throw NoMoreCellsToEnumerateError
 
-        if (_currentColumn < lowerRightColumn) {
-          _currentColumn += 1
-          _rowHasChanged = false
+        if (_currentRow < lowerRightRow) {
+          _currentRow += 1
+          _columnHasChanged = false
         }
         else {
-          _currentColumn = upperLeftColumn
-          _currentRow += 1
-          _rowHasChanged = true
+          _currentRow = upperLeftRow
+          _currentColumn -= 1
+          _columnHasChanged = true
         }
       }
     }

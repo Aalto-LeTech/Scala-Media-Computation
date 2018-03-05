@@ -20,43 +20,36 @@ package smcl.infrastructure.enumerators
 /**
  *
  *
- * @author Aleksi Lukkarinen
- */
-object AbstractMatrixEnumerator2D {
-
-  /** */
-  val InitialValue: Int = MatrixEnumerator2DInternalState.InitialValue
-
-  /** */
-  val UndefinedValue: Int = Integer.MIN_VALUE
-
-}
-
-
-
-
-/**
- *
- *
- * @param startColumn
- * @param endColumn
- * @param startRow
- * @param endRow
+ * @param upperLeftColumn
+ * @param upperLeftRow
+ * @param lowerRightColumn
+ * @param lowerRightRow
  *
  * @author Aleksi Lukkarinen
  */
 abstract class AbstractMatrixEnumerator2D(
-    val startColumn: Int,
-    val endColumn: Int,
-    val startRow: Int,
-    val endRow: Int) {
+    val upperLeftColumn: Int,
+    val upperLeftRow: Int,
+    val lowerRightColumn: Int,
+    val lowerRightRow: Int) {
+
+  /** */
+  val width: Int = lowerRightColumn - upperLeftColumn + 1
+
+  /** */
+  val height: Int = lowerRightRow - upperLeftRow + 1
 
   /** */
   private[this]
   var _internalState: MatrixEnumerator2DInternalState =
     MatrixEnumerator2DInternalInitialState
 
-  /** */
+  /**
+   *
+   *
+   * @param s
+   */
+  @inline
   protected
   def setInternalState(s: MatrixEnumerator2DInternalState): Unit =
     _internalState = s
@@ -69,22 +62,6 @@ abstract class AbstractMatrixEnumerator2D(
   @inline
   protected
   def enumerationState: MatrixEnumerator2DInternalEnumerationState
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def width: Int
-
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  def height: Int
 
   /**
    *
@@ -132,7 +109,7 @@ abstract class AbstractMatrixEnumerator2D(
    * @return
    */
   @inline
-  def hasNextCell: Boolean
+  def hasNextCell: Boolean = _internalState.hasNextCell
 
   /**
    *
@@ -166,7 +143,7 @@ abstract class AbstractMatrixEnumerator2D(
      * @return
      */
     @inline
-    def hasNextCell: Boolean = AbstractMatrixEnumerator2D.this.hasNextCell
+    def hasNextCell: Boolean = true
 
     /**
      *
@@ -196,7 +173,7 @@ abstract class AbstractMatrixEnumerator2D(
      * @return
      */
     @inline
-    def hasNextCell: Boolean = AbstractMatrixEnumerator2D.this.hasNextCell
+    def hasNextCell: Boolean
 
   }
 

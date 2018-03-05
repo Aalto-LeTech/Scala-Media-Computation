@@ -27,7 +27,7 @@ import smcl.infrastructure.exceptions.NoMoreCellsToEnumerateError
  *
  * @author Aleksi Lukkarinen
  */
-object RightwardsDownwardsMatrixEnumerator
+object RightwardsUpwardsMatrixEnumerator
     extends MatrixEnumerator2DCompanion {
 
   /**
@@ -46,7 +46,7 @@ object RightwardsDownwardsMatrixEnumerator
       lowerRightColumn: Int,
       lowerRightRow: Int): AbstractMatrixEnumerator2D = {
 
-    new RightwardsDownwardsMatrixEnumerator(
+    new RightwardsUpwardsMatrixEnumerator(
       upperLeftColumn,
       upperLeftRow,
       lowerRightColumn,
@@ -68,7 +68,7 @@ object RightwardsDownwardsMatrixEnumerator
  *
  * @author Aleksi Lukkarinen
  */
-class RightwardsDownwardsMatrixEnumerator private(
+class RightwardsUpwardsMatrixEnumerator private(
     override val upperLeftColumn: Int,
     override val upperLeftRow: Int,
     override val lowerRightColumn: Int,
@@ -87,7 +87,7 @@ class RightwardsDownwardsMatrixEnumerator private(
     new MatrixEnumerator2DInternalEnumerationState {
 
       _currentColumn = upperLeftColumn
-      _currentRow = upperLeftRow
+      _currentRow = lowerRightRow
       _rowHasChanged = false
       _columnHasChanged = true
 
@@ -97,7 +97,7 @@ class RightwardsDownwardsMatrixEnumerator private(
        * @return
        */
       def hasNextCell: Boolean =
-        currentRow < lowerRightRow || currentColumn < lowerRightColumn
+        currentRow > upperLeftRow || currentColumn < lowerRightColumn
 
       /**
        *
@@ -115,7 +115,7 @@ class RightwardsDownwardsMatrixEnumerator private(
         }
         else {
           _currentColumn = upperLeftColumn
-          _currentRow += 1
+          _currentRow -= 1
           _rowHasChanged = true
         }
       }
