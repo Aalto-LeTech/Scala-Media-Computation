@@ -22,6 +22,7 @@ import smcl.colors.rgb.Color
 import smcl.infrastructure.{BitmapBufferAdapter, Displayable, Identity, InjectablesRegistry, PRF}
 import smcl.modeling.d2._
 import smcl.modeling.{AffineTransformation, Angle, Len}
+import smcl.settings.DefaultBackgroundColor
 
 
 
@@ -33,6 +34,12 @@ import smcl.modeling.{AffineTransformation, Angle, Len}
  */
 object Bitmap
     extends InjectablesRegistry {
+
+  /** */
+  type LocationToColorGenerator = (Int, Int) => Color
+
+  /** */
+  val BackgroundColorGenerator: LocationToColorGenerator = (_, _) => DefaultBackgroundColor
 
   /** The ColorValidator instance to be used by this object. */
   protected
@@ -62,6 +69,24 @@ object Bitmap
    *
    * @param widthInPixels
    * @param heightInPixels
+   * @param contentGenerator
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      widthInPixels: Int,
+      heightInPixels: Int,
+      contentGenerator: LocationToColorGenerator): Bitmap = {
+
+    apply(widthInPixels, heightInPixels).setColorsByLocation(contentGenerator)
+  }
+
+  /**
+   *
+   *
+   * @param widthInPixels
+   * @param heightInPixels
    *
    * @return
    */
@@ -73,6 +98,24 @@ object Bitmap
     apply(
       Len(widthInPixels),
       Len(heightInPixels))
+  }
+
+  /**
+   *
+   *
+   * @param width
+   * @param height
+   * @param contentGenerator
+   *
+   * @return
+   */
+  @inline
+  def apply(
+      width: Len,
+      height: Len,
+      contentGenerator: LocationToColorGenerator): Bitmap = {
+
+    apply(width, height).setColorsByLocation(contentGenerator)
   }
 
   /**
@@ -237,46 +280,79 @@ class Bitmap private(
   /**
    *
    *
-   * @param translator
+   * @param generator
    *
    * @return
    */
   @inline
-  def iterateColorsByPixel(translator: Color => Color): Bitmap =
-    iterateColorsByPixel(Seq(translator))
+  def setColorsByLocation(generator: (Int, Int) => Color): Bitmap =
+    withPixelSnapshot(_.setColorsByLocation(generator))
 
   /**
    *
    *
-   * @param translators
+   * @param transformers
    *
    * @return
    */
   @inline
-  def iterateColorsByPixel(translators: Seq[Color => Color]): Bitmap =
-    withPixelSnapshot(_.iterateColorsByPixel(translators))
+  def transformColorToColor(transformers: Seq[Color => Color]): Bitmap =
+    withPixelSnapshot(_.transformColorToColor(transformers))
 
   /**
    *
    *
-   * @param translator
+   * @param transformer
    *
    * @return
    */
   @inline
-  def iteratePixels(translator: Pixel => Pixel): Bitmap =
-    iteratePixels(Seq(translator))
+  def transformColorToColor(transformer: Color => Color): Bitmap =
+    withPixelSnapshot(_.transformColorToColor(transformer))
 
   /**
    *
    *
-   * @param translators
+   * @param transformers
    *
    * @return
    */
   @inline
-  def iteratePixels(translators: Seq[Pixel => Pixel]): Bitmap =
-    withPixelSnapshot(_.iteratePixels(translators))
+  def transformLocationColorToColor(transformers: Seq[(Int, Int, Color) => Color]): Bitmap =
+    withPixelSnapshot(_.transformLocationColorToColor(transformers))
+
+  /**
+   *
+   *
+   * @param transformer
+   *
+   * @return
+   */
+  @inline
+  def transformLocationColorToColor(transformer: (Int, Int, Color) => Color): Bitmap =
+    withPixelSnapshot(_.transformLocationColorToColor(transformer))
+
+  /**
+   *
+   *
+   * @param transformers
+   *
+   * @return
+   */
+  @inline
+  def iteratePixels(transformers: Seq[Pixel => Unit]): Bitmap =
+    withPixelSnapshot(_.iteratePixels(transformers))
+
+  /**
+   *
+   *
+   * @param transformer
+   *
+   * @return
+   */
+  @inline
+  def iteratePixels(transformer: Pixel => Unit): Bitmap =
+    withPixelSnapshot(_.iteratePixels(transformer))
 
   /**
    *
@@ -291,7 +367,6 @@ class Bitmap private(
     f(snapshot)
     snapshot.toBitmap
   }
-
 
   /**
    *

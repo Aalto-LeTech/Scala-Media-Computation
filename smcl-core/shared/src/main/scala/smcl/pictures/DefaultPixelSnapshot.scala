@@ -17,6 +17,7 @@
 package smcl.pictures
 
 
+import smcl.colors.rgb.Color
 import smcl.infrastructure.{BitmapBufferAdapter, DoneStatus}
 
 
@@ -241,29 +242,53 @@ class DefaultPixelSnapshot protected[pictures](
   /**
    *
    *
-   * @param x
-   * @param y
+   * @param xInPixels
+   * @param yInPixels
    *
    * @return
    */
   @inline
   def pixel(
-      x: Int,
-      y: Int): Pixel = {
+      xInPixels: Int,
+      yInPixels: Int): Pixel = {
 
     checkForInvalidation()
 
-    require(x >= 0 && x < widthInPixels,
+    require(xInPixels >= 0 && xInPixels < widthInPixels,
       s"X coordinate is out or range ($minXInPixels..$maxXInPixels)")
 
-    require(x >= 0 && x < widthInPixels,
+    require(yInPixels >= 0 && yInPixels < heightInPixels,
       s"Y coordinate is out or range ($minYInPixels..$maxYInPixels)")
 
     Pixel(
       this,
       minXInPixels, maxXInPixels,
       minYInPixels, maxYInPixels,
-      x, y)
+      xInPixels, yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param yInPixels
+   *
+   * @return
+   */
+  @inline
+  def color(
+      xInPixels: Int,
+      yInPixels: Int): Color = {
+
+    checkForInvalidation()
+
+    require(xInPixels >= 0 && xInPixels < widthInPixels,
+      s"X coordinate is out or range ($minXInPixels..$maxXInPixels)")
+
+    require(yInPixels >= 0 && yInPixels < heightInPixels,
+      s"Y coordinate is out or range ($minYInPixels..$maxYInPixels)")
+
+    getColorInternal(arrayPosition(xInPixels, yInPixels))
   }
 
 }

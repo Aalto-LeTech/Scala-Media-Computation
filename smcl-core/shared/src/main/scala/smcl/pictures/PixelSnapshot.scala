@@ -19,6 +19,7 @@ package smcl.pictures
 
 import smcl.colors.rgb.Color
 import smcl.infrastructure.DoneStatus
+import smcl.infrastructure.enumerators.{MESRightwardsDownwards, MatrixEnumerator2D}
 import smcl.infrastructure.exceptions.InvalidColorComponentArrayLengthError
 import smcl.pictures.exceptions.PixelSnapshotInvalidatedError
 import smcl.pictures.iterators._
@@ -231,64 +232,172 @@ trait PixelSnapshot
   /**
    *
    *
-   * @param colorTranslator
+   * @param generator
    *
    * @return
    */
   @inline
-  def iterateColorsByPixel(colorTranslator: Color => Color): PixelSnapshot =
-    iterateColorsByPixel(Seq(colorTranslator))
+  def setColorsByLocation(generator: (Int, Int) => Color): PixelSnapshot =
+    iterateLocationsAndReturnSelf{(x, y) =>
+      setColorInternal(arrayPosition(x, y), generator(x, y))
+    }
 
   /**
    *
    *
-   * @param colorTranslator
+   * @param transformers
    *
    * @return
    */
   @inline
-  def iterateColorsByPixel(colorTranslator: Seq[Color => Color]): PixelSnapshot = {
-    colorTranslator.foreach{currentTranslator =>
-      val i = iterator
-      while (i.hasNext) {
-        val pixel = i.next()
-        pixel.color = currentTranslator(pixel.color)
-      }
+  def transformColorToColor(transformers: Seq[Color => Color]): PixelSnapshot =
+    transformColorToColor(transformers.reduceLeft(_ andThen _))
+
+  /**
+   *
+   *
+   * @param transformer
+   *
+   * @return
+   */
+  @inline
+  def transformColorToColor(transformer: Color => Color): PixelSnapshot =
+    iterateComponentArrayIndicesAndReturnSelf{i =>
+      setColorInternal(i, transformer(getColorInternal(i)))
     }
 
+  /**
+   *
+   *
+   * @param transformers
+   *
+   * @return
+   */
+  @inline
+  def transformLocationColorToColor(transformers: Seq[(Int, Int, Color) => Color]): PixelSnapshot = {
+    transformers.foreach{t => transformLocationColorToColor(t)}
     this
   }
 
   /**
    *
    *
-   * @param pixelTranslator
+   * @param transformer
    *
    * @return
    */
   @inline
-  def iteratePixels(pixelTranslator: Pixel => Pixel): PixelSnapshot =
-    iteratePixels(Seq(pixelTranslator))
+  def transformLocationColorToColor(transformer: (Int, Int, Color) => Color): PixelSnapshot =
+    iterateLocationsAndReturnSelf{(x, y) =>
+      val p = arrayPosition(x, y)
+      setColorInternal(p, transformer(x, y, getColorInternal(p)))
+    }
 
   /**
    *
    *
-   * @param pixelTranslator
+   * @param transformers
    *
    * @return
    */
   @inline
-  def iteratePixels(pixelTranslator: Seq[Pixel => Pixel]): PixelSnapshot = {
-    pixelTranslator.foreach{currentTranslator =>
-      val i = iterator
-      while (i.hasNext) {
-        val pixel = i.next()
-        pixel.setFrom(currentTranslator(pixel))
-      }
-    }
-
+  def iteratePixels(transformers: Seq[Pixel => Unit]): PixelSnapshot = {
+    transformers.foreach{t => iteratePixels(t)}
     this
   }
+
+  /**
+   *
+   *
+   * @param transformer
+   *
+   * @return
+   */
+  @inline
+  def iteratePixels(transformer: Pixel => Unit): PixelSnapshot =
+    iterateLocationsAndReturnSelf((x, y) => transformer(pixel(x, y)))
+
+  /**
+   *
+   *
+   * @param callback
+   *
+   * @return
+   */
+  @inline
+  private
+  def iterateLocationsAndReturnSelf(callback: (Int, Int) => Unit): PixelSnapshot = {
+    iterateLocations(callback)
+    this
+  }
+
+  /**
+   *
+   *
+   * @param callback
+   *
+   * @return
+   */
+  @inline
+  private
+  def iterateComponentArrayValuesAndReturnSelf(callback: (Int, Int, Int, Int) => Unit): PixelSnapshot = {
+    iterateComponentArrayValues(callback)
+    this
+  }
+
+  /**
+   *
+   *
+   * @param callback
+   *
+   * @return
+   */
+  @inline
+  private
+  def iterateComponentArrayIndicesAndReturnSelf(callback: Int => Unit): PixelSnapshot = {
+    iterateComponentArrayIndices(callback)
+    this
+  }
+
+  /**
+   *
+   *
+   * @param callback
+   *
+   * @return
+   */
+  @inline
+  private
+  def iterateLocations(callback: (Int, Int) => Unit): Unit = {
+    val e = MatrixEnumerator2D(0, 0, widthInPixels, heightInPixels, MESRightwardsDownwards)
+    while (e.hasNextCell) {
+      e.advance()
+      callback(e.currentColumn, e.currentRow)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param callback
+   *
+   * @return
+   */
+  @inline
+  def iterateComponentArrayValues(callback: (Int, Int, Int, Int) => Unit): Unit =
+    iterateComponentArrayIndices(i => callback(reds(i), greens(i), blues(i), opacities(i)))
+
+  /**
+   *
+   *
+   * @param callback
+   *
+   * @return
+   */
+  @inline
+  def iterateComponentArrayIndices(callback: Int => Unit): Unit =
+    for (i <- 0 until areaInPixels)
+      callback(i)
 
   /**
    *
@@ -299,15 +408,28 @@ trait PixelSnapshot
   /**
    *
    *
-   * @param x
-   * @param y
+   * @param xInPixels
+   * @param yInPixels
    *
    * @return
    */
   @inline
   def pixel(
-      x: Int,
-      y: Int): Pixel
+      xInPixels: Int,
+      yInPixels: Int): Pixel
+
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param yInPixels
+   *
+   * @return
+   */
+  @inline
+  def color(
+      xInPixels: Int,
+      yInPixels: Int): Color
 
   /**
    *
@@ -425,6 +547,58 @@ trait PixelSnapshot
       throw InvalidColorComponentArrayLengthError(
         s"Expected length for the given ${colorOfArray.toLowerCase} RGBA component array is " +
             s"$areaInPixels, but actually was ${array.length}")
+  }
+
+  /**
+   *
+   *
+   * @param arrayPosition
+   *
+   * @return
+   */
+  @inline
+  protected
+  def getColorInternal(arrayPosition: Int): Color = {
+    Color(
+      reds(arrayPosition),
+      greens(arrayPosition),
+      blues(arrayPosition),
+      opacities(arrayPosition))
+  }
+
+  /**
+   *
+   *
+   * @param arrayPosition
+   * @param newColor
+   */
+  @inline
+  protected
+  def setColorInternal(
+      arrayPosition: Int,
+      newColor: Color): Unit = {
+
+    reds(arrayPosition) = newColor.red
+    greens(arrayPosition) = newColor.green
+    blues(arrayPosition) = newColor.blue
+    opacities(arrayPosition) = newColor.opacity
+  }
+
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param yInPixels
+   *
+   * @return
+   */
+  @inline
+  protected
+  def arrayPosition(
+      xInPixels: Int,
+      yInPixels: Int): Int = {
+
+    yInPixels * widthInPixels + xInPixels
   }
 
 }

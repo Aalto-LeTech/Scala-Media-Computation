@@ -17,6 +17,7 @@
 package smcl.pictures
 
 
+import smcl.colors.rgb.Color
 import smcl.infrastructure.DoneStatus
 
 
@@ -226,21 +227,38 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
   /**
    *
    *
-   * @param x
-   * @param y
+   * @param xInPixels
+   * @param yInPixels
    *
    * @return
    */
   @inline
   override
   def pixel(
-      x: Int,
-      y: Int): Pixel = {
+      xInPixels: Int,
+      yInPixels: Int): Pixel = {
 
     checkForInvalidation()
 
-    throw new IllegalStateException(
-      "This pixel snapshot has no pixels to modify")
+    throw new IllegalStateException("This pixel snapshot has no pixels")
+  }
+
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param yInPixels
+   *
+   * @return
+   */
+  @inline
+  def color(
+      xInPixels: Int,
+      yInPixels: Int): Color = {
+
+    checkForInvalidation()
+
+    throw new IllegalStateException("This pixel snapshot has no pixels")
   }
 
   /**
