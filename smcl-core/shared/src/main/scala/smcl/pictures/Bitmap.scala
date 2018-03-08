@@ -18,10 +18,11 @@ package smcl.pictures
 
 
 import smcl.colors.ColorValidator
-import smcl.colors.rgb.Color
+import smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import smcl.infrastructure.{BitmapBufferAdapter, Displayable, Identity, InjectablesRegistry, PRF}
 import smcl.modeling.d2._
 import smcl.modeling.{AffineTransformation, Angle, Len}
+import smcl.pictures.filters._
 import smcl.settings.DefaultBackgroundColor
 
 
@@ -275,7 +276,11 @@ class Bitmap private(
    */
   @inline
   override
-  def toBitmapCopy: Bitmap = Bitmap(buffer.map(_.copy).orNull)
+  def toBitmapCopy: Bitmap = {
+    val newBuffer = buffer.map(_.copy).orNull
+
+    Bitmap(identity, position, Option(newBuffer))
+  }
 
   /**
    *
@@ -285,6 +290,7 @@ class Bitmap private(
    *
    * @return
    */
+  @inline
   override
   def mergePixelsWith(
       another: PictureElement,
@@ -296,6 +302,142 @@ class Bitmap private(
 
     mergedSnapshot.toBitmap
   }
+
+  /**
+   *
+   *
+   * @param translator
+   *
+   * @return
+   */
+  @inline
+  def translateColorsWith(translator: ColorComponentTranslationTable): Bitmap = {
+    if (buffer.isEmpty)
+      return this
+
+    val oldBuffer = buffer.get
+    if (oldBuffer.widthInPixels <= 0 || oldBuffer.heightInPixels <= 0)
+      return this
+
+    val newBuffer = oldBuffer.createFilteredVersionWith(translator)
+
+    Bitmap(identity, position, Some(newBuffer))
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def keepOnlyRedComponent: Bitmap = KeepOnlyRedComponent(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def keepOnlyRedAndGreenComponents: Bitmap = KeepOnlyRedAndGreenComponents(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def keepOnlyRedAndBlueComponents: Bitmap = KeepOnlyRedAndBlueComponents(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def keepOnlyGreenComponent: Bitmap = KeepOnlyGreenComponent(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def keepOnlyGreenAndBlueComponents: Bitmap = KeepOnlyGreenAndBlueComponents(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def keepOnlyBlueComponent: Bitmap = KeepOnlyBlueComponent(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def negate: Bitmap = Negate(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def negateRedComponent: Bitmap = NegateRedComponent(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def negateRedAndGreenComponents: Bitmap = NegateRedAndGreenComponents(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def negateRedAndBlueComponents: Bitmap = NegateRedAndBlueComponents(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def negateGreenComponent: Bitmap = NegateGreenComponent(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def negateGreenAndBlueComponents: Bitmap = NegateGreenAndBlueComponents(this).toBitmap
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def negateBlueComponent: Bitmap = NegateBlueComponent(this).toBitmap
+
+  /**
+   *
+   *
+   * @param strengthAsPercentage
+   *
+   * @return
+   */
+  @inline
+  def posterize(strengthAsPercentage: Int): Bitmap =
+    Posterize(this, strengthAsPercentage).toBitmap
 
   /**
    *
