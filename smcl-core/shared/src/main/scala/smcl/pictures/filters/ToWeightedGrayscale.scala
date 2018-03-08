@@ -17,7 +17,7 @@
 package smcl.pictures.filters
 
 
-import smcl.colors.rgb.ColorComponentTranslationTable
+import smcl.colors.ColorValidator
 import smcl.infrastructure.{CommonValidators, InjectablesRegistry}
 import smcl.pictures.PictureElement
 
@@ -29,7 +29,7 @@ import smcl.pictures.PictureElement
  *
  * @author Aleksi Lukkarinen
  */
-object Posterize
+object ToWeightedGrayscale
     extends InjectablesRegistry {
 
   /** The CommonValidators instance to be used by this object. */
@@ -38,35 +38,54 @@ object Posterize
     injectable(InjectablesRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
   }
 
+  /** The ColorValidator instance to be used by this object. */
+  private
+  lazy val colorValidator: ColorValidator = {
+    injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
+  }
+
   /**
    *
    *
-   * @param strengthAsPercentage
+   * @param redWeight
+   * @param greenWeight
+   * @param blueWeight
    *
    * @return
    */
   @inline
-  def apply(strengthAsPercentage: Int): Filter = {
-    commonValidators.validatePercentage(strengthAsPercentage, Some("strength"))
+  def apply(
+      redWeight: Double,
+      greenWeight: Double,
+      blueWeight: Double): Filter = {
 
-    new Posterize(strengthAsPercentage)
+    commonValidators.validateZeroToOneFactor(redWeight, Option("Red weight"))
+    commonValidators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
+    commonValidators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
+
+    colorValidator.validateRGBColorWeightCombination(redWeight, greenWeight, blueWeight)
+
+    new ToWeightedGrayscale(redWeight, greenWeight, blueWeight)
   }
 
   /**
    *
    *
    * @param target
-   * @param strengthAsPercentage
+   * @param redWeight
+   * @param greenWeight
+   * @param blueWeight
    *
    * @return
    */
   @inline
   def apply(
       target: PictureElement,
-      strengthAsPercentage: Int): PictureElement = {
+      redWeight: Double,
+      greenWeight: Double,
+      blueWeight: Double): PictureElement = {
 
-    val filter = apply(strengthAsPercentage)
-
+    val filter = apply(redWeight, greenWeight, blueWeight)
     filter(target.toBitmap)
   }
 
@@ -78,17 +97,17 @@ object Posterize
 /**
  *
  *
- * @param strengthAsPercentage
+ * @param redWeight
+ * @param greenWeight
+ * @param blueWeight
  *
  * @author Aleksi Lukkarinen
  */
-class Posterize private(val strengthAsPercentage: Int)
+class ToWeightedGrayscale private(
+    val redWeight: Double,
+    val greenWeight: Double,
+    val blueWeight: Double)
     extends Filter {
-
-  /** */
-  private
-  lazy val translationTable: ColorComponentTranslationTable =
-    ColorComponentTranslationTable.forPosterization(strengthAsPercentage)
 
   /**
    *
@@ -100,7 +119,14 @@ class Posterize private(val strengthAsPercentage: Int)
   @inline
   override
   def apply(target: PictureElement): PictureElement = {
-    target.toBitmap.translateColorsWith(translationTable)
+    target.toBitmapCopy.translateColorsWith{(red, green, blue, opacity) =>
+      val weightedRed = redWeight * red
+      val weightedGreen = greenWeight * green
+      val weightedBlue = blueWeight * blue
+      val intensity = (weightedRed + weightedGreen + weightedBlue).toInt
+
+      (intensity, intensity, intensity, opacity)
+    }
   }
 
 }

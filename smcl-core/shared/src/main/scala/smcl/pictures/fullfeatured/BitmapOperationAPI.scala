@@ -96,63 +96,6 @@ trait BitmapOperationAPI {
    *
    *
    * @param bmp
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def toGrayscaleByLuminocity(
-      bmp: Bitmap,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
-
-    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-
-    bmp.toGrayscaleByLuminocity(viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bmp
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def toGrayscaleByLightness(
-      bmp: Bitmap,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
-
-    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-
-    bmp.toGrayscaleByLightness(viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bmp
-   * @param redWeight
-   * @param greenWeight
-   * @param blueWeight
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def toGrayscale(
-      bmp: Bitmap,
-      redWeight: Double,
-      greenWeight: Double,
-      blueWeight: Double,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
-
-    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-
-    bmp.toGrayscale(redWeight, greenWeight, blueWeight, viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bmp
    * @param colorToTrim
    * @param viewerHandling
    *

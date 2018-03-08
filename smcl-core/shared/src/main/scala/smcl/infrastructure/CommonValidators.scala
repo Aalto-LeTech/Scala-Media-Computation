@@ -100,7 +100,7 @@ class CommonValidators() {
       valueCandidate: Double,
       factorNameOption: Option[String]): Unit = {
 
-    if (!percentIsInRange(valueCandidate)) {
+    if (!zeroToOneFactorIsInRange(valueCandidate)) {
       val strError = factorNameOption.fold("Given")({_.capitalize}) +
           s" factor must be between $MinimumZeroToOneFactor and $MaximumZeroToOneFactor (was $valueCandidate)"
 

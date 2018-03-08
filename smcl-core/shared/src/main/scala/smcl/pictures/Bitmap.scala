@@ -311,7 +311,52 @@ class Bitmap private(
    * @return
    */
   @inline
-  def translateColorsWith(translator: ColorComponentTranslationTable): Bitmap = {
+  def translateColorsWith(translator: ColorComponentTranslationTable): Bitmap =
+    toProvideModifiedCopyOfOldBuffer{oldBuffer =>
+      oldBuffer.createFilteredVersionWith(translator)
+    }
+
+  /**
+   *
+   *
+   * @param translator
+   *
+   * @return
+   */
+  @inline
+  private[pictures]
+  def translateColorsWith(translator: (Int, Int, Int, Int) => (Int, Int, Int, Int)): Bitmap =
+    toProvideModifiedCopyOfOldBuffer{oldBuffer =>
+      val newBuffer = oldBuffer.copy
+
+      val (reds, greens, blues, opacities) = newBuffer.colorComponentArrays
+
+      for (i <- reds.indices) {
+        val (newRed, newGreen, newBlue, newOpacity) =
+          translator(reds(i), greens(i), blues(i), opacities(i))
+
+        reds(i) = newRed
+        greens(i) = newGreen
+        blues(i) = newBlue
+        opacities(i) = newOpacity
+      }
+
+      newBuffer.setColorComponentArrays(reds, greens, blues, opacities)
+      newBuffer
+    }
+
+  /**
+   *
+   *
+   * @param newCopyProvider
+   *
+   * @return
+   */
+  @inline
+  private
+  def toProvideModifiedCopyOfOldBuffer(
+      newCopyProvider: BitmapBufferAdapter => BitmapBufferAdapter): Bitmap = {
+
     if (buffer.isEmpty)
       return this
 
@@ -319,7 +364,7 @@ class Bitmap private(
     if (oldBuffer.widthInPixels <= 0 || oldBuffer.heightInPixels <= 0)
       return this
 
-    val newBuffer = oldBuffer.createFilteredVersionWith(translator)
+    val newBuffer = newCopyProvider(oldBuffer)
 
     Bitmap(identity, position, Some(newBuffer))
   }
@@ -327,10 +372,12 @@ class Bitmap private(
   /**
    *
    *
+   * @param f
+   *
    * @return
    */
   @inline
-  def keepOnlyRedComponent: Bitmap = KeepOnlyRedComponent(this).toBitmap
+  def applySimpleFilter(f: Filter): Bitmap = f(this).toBitmap
 
   /**
    *
@@ -338,7 +385,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def keepOnlyRedAndGreenComponents: Bitmap = KeepOnlyRedAndGreenComponents(this).toBitmap
+  def keepOnlyRedComponent: Bitmap =
+    applySimpleFilter(KeepOnlyRedComponent)
 
   /**
    *
@@ -346,7 +394,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def keepOnlyRedAndBlueComponents: Bitmap = KeepOnlyRedAndBlueComponents(this).toBitmap
+  def keepOnlyRedAndGreenComponents: Bitmap =
+    applySimpleFilter(KeepOnlyRedAndGreenComponents)
 
   /**
    *
@@ -354,7 +403,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def keepOnlyGreenComponent: Bitmap = KeepOnlyGreenComponent(this).toBitmap
+  def keepOnlyRedAndBlueComponents: Bitmap =
+    applySimpleFilter(KeepOnlyRedAndBlueComponents)
 
   /**
    *
@@ -362,7 +412,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def keepOnlyGreenAndBlueComponents: Bitmap = KeepOnlyGreenAndBlueComponents(this).toBitmap
+  def keepOnlyGreenComponent: Bitmap =
+    applySimpleFilter(KeepOnlyGreenComponent)
 
   /**
    *
@@ -370,7 +421,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def keepOnlyBlueComponent: Bitmap = KeepOnlyBlueComponent(this).toBitmap
+  def keepOnlyGreenAndBlueComponents: Bitmap =
+    applySimpleFilter(KeepOnlyGreenAndBlueComponents)
 
   /**
    *
@@ -378,7 +430,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def negate: Bitmap = Negate(this).toBitmap
+  def keepOnlyBlueComponent: Bitmap =
+    applySimpleFilter(KeepOnlyBlueComponent)
 
   /**
    *
@@ -386,7 +439,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def negateRedComponent: Bitmap = NegateRedComponent(this).toBitmap
+  def negate: Bitmap =
+    applySimpleFilter(Negate)
 
   /**
    *
@@ -394,7 +448,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def negateRedAndGreenComponents: Bitmap = NegateRedAndGreenComponents(this).toBitmap
+  def negateRedComponent: Bitmap =
+    applySimpleFilter(NegateRedComponent)
 
   /**
    *
@@ -402,7 +457,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def negateRedAndBlueComponents: Bitmap = NegateRedAndBlueComponents(this).toBitmap
+  def negateRedAndGreenComponents: Bitmap =
+    applySimpleFilter(NegateRedAndGreenComponents)
 
   /**
    *
@@ -410,7 +466,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def negateGreenComponent: Bitmap = NegateGreenComponent(this).toBitmap
+  def negateRedAndBlueComponents: Bitmap =
+    applySimpleFilter(NegateRedAndBlueComponents)
 
   /**
    *
@@ -418,7 +475,8 @@ class Bitmap private(
    * @return
    */
   @inline
-  def negateGreenAndBlueComponents: Bitmap = NegateGreenAndBlueComponents(this).toBitmap
+  def negateGreenComponent: Bitmap =
+    applySimpleFilter(NegateGreenComponent)
 
   /**
    *
@@ -426,7 +484,55 @@ class Bitmap private(
    * @return
    */
   @inline
-  def negateBlueComponent: Bitmap = NegateBlueComponent(this).toBitmap
+  def negateGreenAndBlueComponents: Bitmap =
+    applySimpleFilter(NegateGreenAndBlueComponents)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def negateBlueComponent: Bitmap =
+    applySimpleFilter(NegateBlueComponent)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toGrayscaleByLightness: Bitmap =
+    applySimpleFilter(ToGrayscaleByLightness)
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def toGrayscaleByLuminocity: Bitmap =
+    applySimpleFilter(ToGrayscaleByLuminocity)
+
+  /**
+   *
+   *
+   * @param redWeight
+   * @param greenWeight
+   * @param blueWeight
+   *
+   * @return
+   */
+  @inline
+  def toGrayscale(
+      redWeight: Double,
+      greenWeight: Double,
+      blueWeight: Double): PictureElement = {
+
+    val filter = ToWeightedGrayscale(redWeight, greenWeight, blueWeight)
+
+    applySimpleFilter(filter)
+  }
 
   /**
    *
@@ -437,7 +543,7 @@ class Bitmap private(
    */
   @inline
   def posterize(strengthAsPercentage: Int): Bitmap =
-    Posterize(this, strengthAsPercentage).toBitmap
+    applySimpleFilter(Posterize(strengthAsPercentage))
 
   /**
    *

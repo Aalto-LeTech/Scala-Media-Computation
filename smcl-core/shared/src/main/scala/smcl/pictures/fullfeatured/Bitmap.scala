@@ -313,57 +313,6 @@ class Bitmap private[pictures](
   /**
    *
    *
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def toGrayscaleByLuminocity(
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
-
-    apply(ToGrayscaleByLuminocity(), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def toGrayscaleByLightness(
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
-
-    apply(ToGrayscaleByLightness(), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param redWeight
-   * @param greenWeight
-   * @param blueWeight
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def toGrayscale(
-      redWeight: Double,
-      greenWeight: Double,
-      blueWeight: Double,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
-
-    apply(
-      ToWeightedGrayscale(
-        redWeight,
-        greenWeight,
-        blueWeight,
-        colorValidator),
-      viewerHandling)
-  }
-
-  /**
-   *
-   *
    * @param fromXInPixels
    * @param fromYInPixels
    * @param toXInPixels
