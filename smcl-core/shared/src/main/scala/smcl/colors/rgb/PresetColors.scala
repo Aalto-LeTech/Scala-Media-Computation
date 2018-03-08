@@ -27,138 +27,9 @@ package smcl.colors.rgb
  */
 trait PresetColors {
 
-  // Map for all preset colors; content is added by the PresetRGBAColor constructor.
-  private var allPresetColors: Map[String, PresetColor] = Map()
-
-
-
-
-  /**
-   * Additional constructors for the [[PresetColor]].
-   */
-  case object PresetColor {
-
-    /**
-     *
-     *
-     * @param rgbaInt
-     * @param canonicalName
-     * @param cssName
-     *
-     * @return
-     */
-    def apply(
-        rgbaInt: Int,
-        canonicalName: String,
-        cssName: String): PresetColor = {
-
-      new PresetColor(rgbaInt, Option(canonicalName), Option(cssName))
-    }
-
-    /**
-     *
-     *
-     * @param color
-     * @param canonicalName
-     * @param cssName
-     *
-     * @return
-     */
-    def apply(
-        color: Color,
-        canonicalName: String,
-        cssName: String): PresetColor = {
-
-      apply(color.toARGBInt, canonicalName, cssName)
-    }
-
-    /**
-     *
-     *
-     * @param color
-     * @param canonicalName
-     *
-     * @return
-     */
-    def apply(
-        color: Color,
-        canonicalName: String): PresetColor = {
-
-      apply(color, canonicalName, null)
-    }
-
-  }
-
-
-
-
-  /**
-   * A preset RGBA color.
-   *
-   * @param argbInt
-   * @param canonicalName
-   * @param cssName
-   */
-  sealed case class PresetColor private(
-      argbInt: Int,
-      override val canonicalName: Option[String],
-      override val cssName: Option[String]) extends {
-
-    /** Returns `true` if this [[PresetColor]] is provided by SMCL, otherwise `false`. */
-    override val isPreset: Boolean = true
-
-  } with
-      Color(
-        redComponentOf(argbInt),
-        greenComponentOf(argbInt),
-        blueComponentOf(argbInt),
-        opacityComponentOf(argbInt),
-        canonicalName)
-      with Immutable {
-
-    /**
-     *
-     */
-    private
-    val tidiedCSSName: Option[String] = {
-      val trimmedLowerCase = cssName map (_.trim.toLowerCase)
-
-      if (trimmedLowerCase.nonEmpty && trimmedLowerCase.get.nonEmpty)
-        trimmedLowerCase
-      else
-        None
-    }
-
-    /**
-     *
-     *
-     * @param other
-     *
-     * @return
-     */
-    @inline
-    override
-    def canEqual(other: Any): Boolean = other.isInstanceOf[PresetColor]
-
-    /**
-     *
-     *
-     * @return
-     */
-    override
-    def toString: String =
-      if (cssName.isDefined)
-        cssName.get
-      else
-        super.toString
-
-    private
-    val presetMapKey = tidiedCSSName getOrElse canonicalName.get
-
-    allPresetColors = allPresetColors + (presetMapKey -> this)
-  }
-
-
+  // Map for all preset colors; content is added by the PresetColor companion object.
+  private[colors]
+  var _allPresetColors: Map[String, PresetColor] = Map.empty
 
 
   /** Color constant for <em>"alice blue"</em> (<code>0xfff0f8ff</code>). */
@@ -607,10 +478,6 @@ trait PresetColors {
   val YellowGreen = PresetColor(0xff9acd32, "yellow green", "yellowgreen")
 
 
-
-
-
-
   /** Color constant for <em>"African green"</em> (RGB approximation: 49, 148, 0). */
   val AfricanGreen = PresetColor(Color(49, 148, 0, 255), "African green")
 
@@ -765,9 +632,6 @@ trait PresetColors {
   val VietnameseYellow = PresetColor(Color(255, 255, 0, 255), "Vietnamese yellow")
 
 
-
-
-
   /** Color constant for 10-percent black. */
   val Black10 = PresetColor(Black.tintByPercentage(90), "black10")
 
@@ -832,6 +696,6 @@ trait PresetColors {
    * All preset color definitions as a mapping from
    * color names to the corresponding [[PresetColor]] objects.
    */
-  def PresetColors: Map[String, PresetColor] = allPresetColors
+  def PresetColors: Map[String, PresetColor] = _allPresetColors
 
 }

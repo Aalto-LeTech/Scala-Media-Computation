@@ -280,6 +280,26 @@ class Bitmap private(
   /**
    *
    *
+   * @param another
+   * @param pixelMerger
+   *
+   * @return
+   */
+  override
+  def mergePixelsWith(
+      another: PictureElement,
+      pixelMerger: (Color, Color) => Color): Bitmap = {
+
+    val mergedSnapshot = toPixelSnapshot.mergeWith(
+      another.toPixelSnapshot,
+      pixelMerger)
+
+    mergedSnapshot.toBitmap
+  }
+
+  /**
+   *
+   *
    * @param generator
    *
    * @return

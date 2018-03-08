@@ -22,7 +22,8 @@ package smcl.infrastructure
  *
  * @author Aleksi Lukkarinen
  */
-object RichOptionString extends InjectablesRegistry {
+object RichOptionString
+    extends InjectablesRegistry {
 
   /** The StringUtils instance to be used by this object. */
   private lazy val stringUtils: StringUtils = {

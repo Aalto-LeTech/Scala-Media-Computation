@@ -75,13 +75,17 @@ class CommonValidators() {
    * @throws InvalidPercentageError
    */
   @inline
-  def validatePercentage(valueCandidate: Double, percentageNameOption: Option[String]): Unit =
+  def validatePercentage(
+      valueCandidate: Double,
+      percentageNameOption: Option[String]): Unit = {
+
     if (!percentIsInRange(valueCandidate)) {
       val strError = percentageNameOption.fold("Given")({_.capitalize}) +
           s" percentage must be between $MinimumPercentage and $MaximumPercentage (was $valueCandidate)"
 
       throw InvalidPercentageError(strError)
     }
+  }
 
   /**
    *
@@ -92,12 +96,16 @@ class CommonValidators() {
    * @throws InvalidZeroToOneFactorError
    */
   @inline
-  def validateZeroToOneFactor(valueCandidate: Double, factorNameOption: Option[String]): Unit =
+  def validateZeroToOneFactor(
+      valueCandidate: Double,
+      factorNameOption: Option[String]): Unit = {
+
     if (!percentIsInRange(valueCandidate)) {
       val strError = factorNameOption.fold("Given")({_.capitalize}) +
           s" factor must be between $MinimumZeroToOneFactor and $MaximumZeroToOneFactor (was $valueCandidate)"
 
       throw InvalidZeroToOneFactorError(strError)
     }
+  }
 
 }

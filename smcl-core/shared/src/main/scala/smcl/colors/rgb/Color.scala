@@ -29,7 +29,14 @@ import smcl.infrastructure._
  *
  * @author Aleksi Lukkarinen
  */
-object Color extends InjectablesRegistry {
+object Color
+    extends InjectablesRegistry {
+
+  /** The ColorValidator instance to be used by this object. */
+  private
+  lazy val commonValidators: CommonValidators = {
+    injectable(InjectablesRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
+  }
 
   /** The ColorValidator instance to be used by this object. */
   private
@@ -59,7 +66,10 @@ object Color extends InjectablesRegistry {
 
     val resultName = colorValidator.validateCanonicalColorName(name)
 
-    new Color(red, green, blue, opacity, resultName)
+    new Color(
+      red, green, blue, opacity,
+      resultName,
+      commonValidators, colorValidator)
   }
 
   /**
@@ -74,7 +84,7 @@ object Color extends InjectablesRegistry {
       rgbaTuple: (Int, Int, Int, Int),
       name: Option[String]): Color = {
 
-    (Color(_: Int, _: Int, _: Int, _: Int, name))
+    (apply(_: Int, _: Int, _: Int, _: Int, name))
         .tupled.apply(rgbaTuple)
   }
 
@@ -86,7 +96,7 @@ object Color extends InjectablesRegistry {
    * @return
    */
   def apply(rgbaTuple: (Int, Int, Int, Int)): Color =
-    (Color(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
+    (apply(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
 
   /**
    *
@@ -102,7 +112,7 @@ object Color extends InjectablesRegistry {
       opacity: Int,
       name: Option[String]): Color = {
 
-    Color(gray, gray, gray, opacity, name)
+    apply(gray, gray, gray, opacity, name)
   }
 
   /**
@@ -117,7 +127,7 @@ object Color extends InjectablesRegistry {
       grayOpacityTuple: (Int, Int),
       name: Option[String]): Color = {
 
-    (Color(_: Int, _: Int, name)).tupled.apply(grayOpacityTuple)
+    (apply(_: Int, _: Int, name)).tupled.apply(grayOpacityTuple)
   }
 
   /**
@@ -136,7 +146,7 @@ object Color extends InjectablesRegistry {
       blue: Int,
       name: Option[String]): Color = {
 
-    Color(red, green, blue, ColorValidator.MaximumOpacity, name)
+    apply(red, green, blue, ColorValidator.MaximumOpacity, name)
   }
 
   /**
@@ -153,7 +163,7 @@ object Color extends InjectablesRegistry {
       green: Int,
       blue: Int): Color = {
 
-    Color(red, green, blue, ColorValidator.MaximumOpacity)
+    apply(red, green, blue, ColorValidator.MaximumOpacity)
   }
 
   /**
@@ -168,7 +178,7 @@ object Color extends InjectablesRegistry {
       rgbTuple: (Int, Int, Int),
       name: Option[String]): Color = {
 
-    (Color(_: Int, _: Int, _: Int, name)).tupled.apply(rgbTuple)
+    (apply(_: Int, _: Int, _: Int, name)).tupled.apply(rgbTuple)
   }
 
   /**
@@ -179,7 +189,7 @@ object Color extends InjectablesRegistry {
    * @return
    */
   def apply(rgbTuple: (Int, Int, Int)): Color =
-    (Color(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
+    (apply(_: Int, _: Int, _: Int)).tupled.apply(rgbTuple)
 
   /**
    *
@@ -195,7 +205,7 @@ object Color extends InjectablesRegistry {
       opacity: Int,
       name: Option[String]): Color = {
 
-    (Color(_: Int, _: Int, _: Int, opacity, name)).tupled.apply(rgbTuple)
+    (apply(_: Int, _: Int, _: Int, opacity, name)).tupled.apply(rgbTuple)
   }
 
   /**
@@ -210,7 +220,7 @@ object Color extends InjectablesRegistry {
       rgbTuple: (Int, Int, Int),
       opacity: Int): Color = {
 
-    (Color(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
+    (apply(_: Int, _: Int, _: Int, opacity)).tupled.apply(rgbTuple)
   }
 
   /**
@@ -225,7 +235,7 @@ object Color extends InjectablesRegistry {
       gray: Int,
       opacity: Int): Color = {
 
-    Color(gray, gray, gray, opacity)
+    apply(gray, gray, gray, opacity)
   }
 
   /**
@@ -236,7 +246,7 @@ object Color extends InjectablesRegistry {
    * @return
    */
   def apply(grayOpacityTuple: (Int, Int)): Color =
-    (Color(_: Int, _: Int)).tupled.apply(grayOpacityTuple)
+    (apply(_: Int, _: Int)).tupled.apply(grayOpacityTuple)
 
   /**
    *
@@ -250,7 +260,7 @@ object Color extends InjectablesRegistry {
       argbInt: Int,
       name: Option[String]): Color = {
 
-    Color(rgbaTupleFrom(argbInt), name)
+    apply(rgbaTupleFrom(argbInt), name)
   }
 
   /**
@@ -271,7 +281,7 @@ object Color extends InjectablesRegistry {
    */
   private[smcl]
   def apply(platformColor: ColorAdapter): Color =
-    Color(
+    apply(
       platformColor.red,
       platformColor.green,
       platformColor.blue,
@@ -290,7 +300,7 @@ object Color extends InjectablesRegistry {
       platformColor: ColorAdapter,
       name: Option[String]): Color = {
 
-    Color(
+    apply(
       platformColor.red,
       platformColor.green,
       platformColor.blue,
@@ -377,7 +387,7 @@ object Color extends InjectablesRegistry {
       value: Double,
       opacity: Int): Color = {
 
-    Color(hsvToRGB(hueInDegrees, saturation, value), opacity)
+    apply(hsvToRGB(hueInDegrees, saturation, value), opacity)
   }
 
   /**
@@ -413,7 +423,7 @@ object Color extends InjectablesRegistry {
       opacity: Int,
       name: Option[String]): Color = {
 
-    Color(hsvToRGB(hueInDegrees, saturation, value), opacity, name)
+    apply(hsvToRGB(hueInDegrees, saturation, value), opacity, name)
   }
 
   /**
@@ -515,7 +525,7 @@ object Color extends InjectablesRegistry {
       intensity: Double,
       opacity: Int): Color = {
 
-    Color(hsiToRGB(hueInDegrees, saturation, intensity), opacity)
+    apply(hsiToRGB(hueInDegrees, saturation, intensity), opacity)
   }
 
   /**
@@ -550,7 +560,7 @@ object Color extends InjectablesRegistry {
       opacity: Int,
       name: Option[String]): Color = {
 
-    Color(hsiToRGB(hueInDegrees, saturation, intensity), opacity, name)
+    apply(hsiToRGB(hueInDegrees, saturation, intensity), opacity, name)
   }
 
   /**
@@ -592,7 +602,9 @@ class Color protected(
     val green: Int,
     val blue: Int,
     val opacity: Int,
-    val canonicalName: Option[String] = None) extends {
+    val canonicalName: Option[String] = None,
+    private val commonValidators: CommonValidators,
+    private val colorValidator: ColorValidator) extends {
 
   /** Returns `true` if this [[Color]] is provided by SMCL, otherwise `false`. */
   val isPreset: Boolean = false
@@ -621,7 +633,6 @@ class Color protected(
   lazy val toHexString: String = toARGBInt.toARGBHexColorString
 
   /** First text paragraph of the description of this class. */
-  @inline
   val descriptionTitle: String = "RGBA Color"
 
   /** */
@@ -747,6 +758,7 @@ class Color protected(
    *
    * @return
    */
+  @inline
   override
   lazy val hashCode: Int = {
     val prime = 31
@@ -779,17 +791,15 @@ class Color protected(
    */
   @inline
   override
-  def equals(other: Any): Boolean = {
-    other match {
-      case that: Color =>
-        that.canEqual(this) &&
-            that.red == this.red &&
-            that.green == this.green &&
-            that.blue == this.blue &&
-            that.opacity == this.opacity
+  def equals(other: Any): Boolean = other match {
+    case that: Color =>
+      that.canEqual(this) &&
+          that.red == this.red &&
+          that.green == this.green &&
+          that.blue == this.blue &&
+          that.opacity == this.opacity
 
-      case _ => false
-    }
+    case _ => false
   }
 
   /**
@@ -800,19 +810,18 @@ class Color protected(
    * @return
    */
   @inline
-  def equalsIncludingName(other: Any): Boolean = {
-    other match {
-      case that: Color =>
-        that.canEqual(this) &&
-            that.red == this.red &&
-            that.green == this.green &&
-            that.blue == this.blue &&
-            that.opacity == this.opacity &&
-            that.canonicalName == this.canonicalName
+  def equalsIncludingName(other: Any): Boolean = other match {
+    case that: Color =>
+      that.canEqual(this) &&
+          that.red == this.red &&
+          that.green == this.green &&
+          that.blue == this.blue &&
+          that.opacity == this.opacity &&
+          that.canonicalName == this.canonicalName
 
-      case _ => false
-    }
+    case _ => false
   }
+
 
   /**
    *
@@ -822,21 +831,29 @@ class Color protected(
    * @return
    */
   @inline
-  def equalsIncludingNameAndPresetness(other: Any): Boolean = {
-    other match {
-      case that: Color =>
-        that.canEqual(this) &&
-            that.red == this.red &&
-            that.green == this.green &&
-            that.blue == this.blue &&
-            that.opacity == this.opacity &&
-            that.canonicalName == this.canonicalName &&
-            that.isPreset == this.isPreset
+  def equalsIncludingNameAndPresetness(other: Any): Boolean = other match {
+    case that: Color =>
+      that.canEqual(this) &&
+          that.red == this.red &&
+          that.green == this.green &&
+          that.blue == this.blue &&
+          that.opacity == this.opacity &&
+          that.canonicalName == this.canonicalName &&
+          that.isPreset == this.isPreset
 
-      case _ => false
-    }
+    case _ => false
   }
 
+  /**
+   *
+   *
+   * @param newRed
+   * @param newGreen
+   * @param newBlue
+   * @param newOpacity
+   *
+   * @return
+   */
   @inline
   def copy(
       newRed: Int = red,
@@ -854,6 +871,7 @@ class Color protected(
    *
    * @return
    */
+  @inline
   override
   def compare(that: Color): Int = {
     Math.signum(that.toHSIHueInDegrees - this.toHSIHueInDegrees).toInt
@@ -866,6 +884,7 @@ class Color protected(
    *
    * @return
    */
+  @inline
   def compareByHSISaturation(that: Color): Int = {
     Math.signum(that.toHSISaturation - this.toHSISaturation).toInt
   }
@@ -877,8 +896,433 @@ class Color protected(
    *
    * @return
    */
+  @inline
   def compareByHSIIntensity(that: Color): Int = {
     Math.signum(that.toHSIIntensity - this.toHSIIntensity).toInt
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  def toString: String = {
+    s"RGBA color; red: $red, green: $green, blue: $blue, opacity: $opacity"
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThis
+   *
+   * @return
+   */
+  @inline
+  def mixWithUsingPortionOfThis(
+      that: Color,
+      portionOfThis: Double): Color = {
+
+    commonValidators.validateZeroToOneFactor(portionOfThis, None)
+
+    mixWithUsingPortionOfThisInternal(that, portionOfThis)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThis
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithUsingPortionOfThisInternal(
+      that: Color,
+      portionOfThis: Double): Color = {
+
+    mixWithUsingPortionsOfThisInternal(
+      that,
+      redPortionOfThis = portionOfThis,
+      greenPortionOfThis = portionOfThis,
+      bluePortionOfThis = portionOfThis,
+      opacityPortionOfThis = portionOfThis)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThis
+   *
+   * @return
+   */
+  @inline
+  def mixWithUsingPortionOfThis(
+      that: Color,
+      portionOfThis: Double,
+      resultOpacity: Int): Color = {
+
+    commonValidators.validateZeroToOneFactor(portionOfThis, None)
+    colorValidator.validateOpacityComponent(resultOpacity)
+
+    mixWithUsingPortionOfThisInternal(
+      that, portionOfThis, resultOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThis
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithUsingPortionOfThisInternal(
+      that: Color,
+      portionOfThis: Double,
+      resultOpacity: Int): Color = {
+
+    mixWithUsingPortionsOfThisInternal(
+      that,
+      redPortionOfThis = portionOfThis,
+      greenPortionOfThis = portionOfThis,
+      bluePortionOfThis = portionOfThis,
+      resultOpacity = resultOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThis
+   * @param greenPortionOfThis
+   * @param bluePortionOfThis
+   * @param opacityPortionOfThis
+   *
+   * @return
+   */
+  @inline
+  def mixWithUsingPortionsOfThis(
+      that: Color,
+      redPortionOfThis: Double,
+      greenPortionOfThis: Double,
+      bluePortionOfThis: Double,
+      opacityPortionOfThis: Double): Color = {
+
+    commonValidators.validateZeroToOneFactor(redPortionOfThis, None)
+    commonValidators.validateZeroToOneFactor(greenPortionOfThis, None)
+    commonValidators.validateZeroToOneFactor(bluePortionOfThis, None)
+    commonValidators.validateZeroToOneFactor(opacityPortionOfThis, None)
+
+    mixWithUsingPortionsOfThisInternal(
+      that,
+      redPortionOfThis,
+      greenPortionOfThis,
+      bluePortionOfThis,
+      opacityPortionOfThis)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThis
+   * @param greenPortionOfThis
+   * @param bluePortionOfThis
+   * @param opacityPortionOfThis
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithUsingPortionsOfThisInternal(
+      that: Color,
+      redPortionOfThis: Double,
+      greenPortionOfThis: Double,
+      bluePortionOfThis: Double,
+      opacityPortionOfThis: Double): Color = {
+
+    val resultOpacity =
+      (opacityPortionOfThis * this.opacity +
+          (1 - opacityPortionOfThis) * that.opacity).toInt
+
+    mixWithUsingPortionsOfThisInternal(
+      that,
+      redPortionOfThis,
+      greenPortionOfThis,
+      bluePortionOfThis,
+      resultOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThis
+   * @param greenPortionOfThis
+   * @param bluePortionOfThis
+   * @param resultOpacity
+   *
+   * @return
+   */
+  @inline
+  def mixWithUsingPortionsOfThis(
+      that: Color,
+      redPortionOfThis: Double,
+      greenPortionOfThis: Double,
+      bluePortionOfThis: Double,
+      resultOpacity: Int): Color = {
+
+    commonValidators.validateZeroToOneFactor(redPortionOfThis, None)
+    commonValidators.validateZeroToOneFactor(greenPortionOfThis, None)
+    commonValidators.validateZeroToOneFactor(bluePortionOfThis, None)
+    colorValidator.validateOpacityComponent(resultOpacity)
+
+    mixWithUsingPortionsOfThisInternal(
+      that,
+      redPortionOfThis,
+      greenPortionOfThis,
+      bluePortionOfThis,
+      resultOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThis
+   * @param greenPortionOfThis
+   * @param bluePortionOfThis
+   * @param resultOpacity
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithUsingPortionsOfThisInternal(
+      that: Color,
+      redPortionOfThis: Double,
+      greenPortionOfThis: Double,
+      bluePortionOfThis: Double,
+      resultOpacity: Int): Color = {
+
+    val resultRed =
+      (redPortionOfThis * this.red +
+          (1 - redPortionOfThis) * that.red).toInt
+
+    val resultGreen =
+      (greenPortionOfThis * this.green +
+          (1 - greenPortionOfThis) * that.green).toInt
+
+    val resultBlue =
+      (bluePortionOfThis * this.blue +
+          (1 - bluePortionOfThis) * that.blue).toInt
+
+    Color(resultRed, resultGreen, resultBlue, resultOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThat
+   *
+   * @return
+   */
+  @inline
+  def mixWithUsingPortionOfThat(
+      that: Color,
+      portionOfThat: Double): Color = {
+
+    commonValidators.validateZeroToOneFactor(portionOfThat, None)
+
+    mixWithUsingPortionOfThatInternal(that, portionOfThat)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThat
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithUsingPortionOfThatInternal(
+      that: Color,
+      portionOfThat: Double): Color = {
+
+    that.mixWithUsingPortionOfThisInternal(this, portionOfThat)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThat
+   *
+   * @return
+   */
+  @inline
+  def mixWithUsingPortionOfThat(
+      that: Color,
+      portionOfThat: Double,
+      resultOpacity: Int): Color = {
+
+    commonValidators.validateZeroToOneFactor(portionOfThat, None)
+    colorValidator.validateOpacityComponent(resultOpacity)
+
+    mixWithUsingPortionOfThatInternal(
+      that, portionOfThat, resultOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThat
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithUsingPortionOfThatInternal(
+      that: Color,
+      portionOfThat: Double,
+      resultOpacity: Int): Color = {
+
+    that.mixWithUsingPortionsOfThisInternal(
+      this,
+      redPortionOfThis = portionOfThat,
+      greenPortionOfThis = portionOfThat,
+      bluePortionOfThis = portionOfThat,
+      resultOpacity = resultOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThat
+   * @param greenPortionOfThat
+   * @param bluePortionOfThat
+   * @param opacityPortionOfThat
+   *
+   * @return
+   */
+  @inline
+  def mixWithUsingPortionsOfThat(
+      that: Color,
+      redPortionOfThat: Double,
+      greenPortionOfThat: Double,
+      bluePortionOfThat: Double,
+      opacityPortionOfThat: Double): Color = {
+
+    commonValidators.validateZeroToOneFactor(redPortionOfThat, None)
+    commonValidators.validateZeroToOneFactor(greenPortionOfThat, None)
+    commonValidators.validateZeroToOneFactor(bluePortionOfThat, None)
+    commonValidators.validateZeroToOneFactor(opacityPortionOfThat, None)
+
+    mixWithUsingPortionsOfThatInternal(
+      that,
+      redPortionOfThat,
+      greenPortionOfThat,
+      bluePortionOfThat,
+      opacityPortionOfThat)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThat
+   * @param greenPortionOfThat
+   * @param bluePortionOfThat
+   * @param opacityPortionOfThat
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithUsingPortionsOfThatInternal(
+      that: Color,
+      redPortionOfThat: Double,
+      greenPortionOfThat: Double,
+      bluePortionOfThat: Double,
+      opacityPortionOfThat: Double): Color = {
+
+    that.mixWithUsingPortionsOfThisInternal(
+      this,
+      redPortionOfThat,
+      greenPortionOfThat,
+      bluePortionOfThat,
+      opacityPortionOfThat)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThat
+   * @param greenPortionOfThat
+   * @param bluePortionOfThat
+   * @param resultOpacity
+   *
+   * @return
+   */
+  @inline
+  def mixWithUsingPortionsOfThat(
+      that: Color,
+      redPortionOfThat: Double,
+      greenPortionOfThat: Double,
+      bluePortionOfThat: Double,
+      resultOpacity: Int): Color = {
+
+    commonValidators.validateZeroToOneFactor(redPortionOfThat, None)
+    commonValidators.validateZeroToOneFactor(greenPortionOfThat, None)
+    commonValidators.validateZeroToOneFactor(bluePortionOfThat, None)
+    colorValidator.validateOpacityComponent(resultOpacity)
+
+    mixWithUsingPortionsOfThatInternal(
+      that,
+      redPortionOfThat,
+      greenPortionOfThat,
+      bluePortionOfThat,
+      resultOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThat
+   * @param greenPortionOfThat
+   * @param bluePortionOfThat
+   * @param resultOpacity
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithUsingPortionsOfThatInternal(
+      that: Color,
+      redPortionOfThat: Double,
+      greenPortionOfThat: Double,
+      bluePortionOfThat: Double,
+      resultOpacity: Int): Color = {
+
+    that.mixWithUsingPortionsOfThisInternal(
+      this,
+      redPortionOfThat,
+      greenPortionOfThat,
+      bluePortionOfThat,
+      resultOpacity)
   }
 
 }

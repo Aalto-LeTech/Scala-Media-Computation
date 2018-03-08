@@ -20,6 +20,7 @@ package smcl.pictures
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 
+import smcl.colors.rgb.Color
 import smcl.infrastructure.Identity
 import smcl.modeling.d2._
 import smcl.settings._
@@ -149,6 +150,21 @@ trait PictureElement
     displayInViewer(toBitmap)
 
     this
+  }
+
+  /**
+   *
+   *
+   * @param another
+   * @param pixelMerger
+   *
+   * @return
+   */
+  def mergePixelsWith(
+      another: PictureElement,
+      pixelMerger: (Color, Color) => Color): Bitmap = {
+
+    toPixelSnapshot.mergeWith(another.toPixelSnapshot, pixelMerger).toBitmap
   }
 
   /**

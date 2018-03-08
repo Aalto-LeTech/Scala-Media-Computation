@@ -232,6 +232,33 @@ trait PixelSnapshot
   /**
    *
    *
+   * @param another
+   * @param pixelMerger
+   *
+   * @return
+   */
+  def mergeWith(
+      another: PixelSnapshot,
+      pixelMerger: (Color, Color) => Color): PixelSnapshot = {
+
+    val width = widthInPixels.min(another.widthInPixels)
+    val height = heightInPixels.min(another.heightInPixels)
+
+    val resultSnap = Bitmap(width, height).toPixelSnapshot
+    resultSnap.iterateLocations{(x, y) =>
+      val firstColor = getColorInternal(arrayPosition(x, y))
+      val secondColor = another.getColorInternal(another.arrayPosition(x, y))
+
+      val newColor = pixelMerger(firstColor, secondColor)
+      resultSnap.setColorInternal(resultSnap.arrayPosition(x, y), newColor)
+    }
+
+    resultSnap
+  }
+
+  /**
+   *
+   *
    * @param generator
    *
    * @return
