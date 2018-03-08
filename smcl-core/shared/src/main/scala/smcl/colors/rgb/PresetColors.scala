@@ -607,6 +607,167 @@ trait PresetColors {
   val YellowGreen = PresetColor(0xff9acd32, "yellow green", "yellowgreen")
 
 
+
+
+
+
+  /** Color constant for <em>"African green"</em> (RGB approximation: 49, 148, 0). */
+  val AfricanGreen = PresetColor(Color(49, 148, 0, 255), "African green")
+
+  /** Color constant for <em>"African red"</em> (RGB approximation: 149, 32, 56). */
+  val AfricanRed = PresetColor(Color(149, 32, 56, 255), "African red")
+
+  /** Color constant for <em>"African yellow"</em> (RGB approximation: 247, 198, 8). */
+  val AfricanYellow = PresetColor(Color(247, 198, 8, 255), "African yellow")
+
+  /** Color constant for <em>"American blue"</em> (RGB approximation: 60, 59, 110). */
+  val AmericanBlue = PresetColor(Color(60, 59, 110, 255), "American blue")
+
+  /** Color constant for <em>"American red"</em> (RGB approximation: 178, 34, 52). */
+  val AmericanRed = PresetColor(Color(178, 34, 52, 255), "American red")
+
+  /** Color constant for <em>"Australian blue"</em> (RGB approximation: 0, 0, 139). */
+  val AustralianBlue = PresetColor(Color(0, 0, 139, 255), "Australian blue")
+
+  /** Color constant for <em>"Australian red"</em> (RGB approximation: 255, 0, 0). */
+  val AustralianRed = PresetColor(Color(255, 0, 0, 255), "Australian red")
+
+  /** Color constant for <em>"Austrian red"</em> (RGB approximation: 237, 41, 57). */
+  val AustrianRed = PresetColor(Color(237, 41, 57, 255), "Austrian red")
+
+  /** Color constant for <em>"Belgian red"</em> (RGB approximation: 237, 41, 57). */
+  val BelgianRed = PresetColor(Color(237, 41, 57, 255), "Belgian red")
+
+  /** Color constant for <em>"Belgian yellow"</em> (RGB approximation: 250, 224, 66). */
+  val BelgianYellow = PresetColor(Color(250, 224, 66, 255), "Belgian yellow")
+
+  /** Color constant for <em>"Brazilian blue"</em> (RGB approximation: 0, 39, 118). */
+  val BrazilianBlue = PresetColor(Color(0, 39, 118, 255), "Brazilian blue")
+
+  /** Color constant for <em>"Brazilian green"</em> (RGB approximation: 0, 155, 58). */
+  val BrazilianGreen = PresetColor(Color(0, 155, 58, 255), "Brazilian green")
+
+  /** Color constant for <em>"British blue"</em> (RGB approximation: 0, 36, 125). */
+  val BritishBlue = PresetColor(Color(0, 36, 125, 255), "British blue")
+
+  /** Color constant for <em>"British red"</em> (RGB approximation: 207, 20, 43). */
+  val BritishRed = PresetColor(Color(207, 20, 43, 255), "British red")
+
+  /** Color constant for <em>"Brazilian yellow"</em> (RGB approximation: 254, 223, 0). */
+  val BrazilianYellow = PresetColor(Color(254, 223, 0, 255), "Brazilian yellow")
+
+  /** Color constant for <em>"Canadian red"</em> (RGB approximation: 255, 0, 0). */
+  val CanadianRed = PresetColor(Color(255, 0, 0, 255), "Canadian red")
+
+  /** Color constant for <em>"Chinese blue"</em> (RGB approximation: 0, 0, 149). */
+  val ChineseBlue = PresetColor(Color(0, 0, 149, 255), "Chinese blue")
+
+  /** Color constant for <em>"Chinese red"</em> (RGB approximation: 254, 0, 0). */
+  val ChineseRed = PresetColor(Color(254, 0, 0, 255), "Chinese red")
+
+  /** Color constant for <em>"Czech blue"</em> (RGB approximation: 17, 69, 126). */
+  val CzechBlue = PresetColor(Color(17, 69, 126, 255), "Czech blue")
+
+  /** Color constant for <em>"Czech red"</em> (RGB approximation: 215, 20, 26). */
+  val CzechRed = PresetColor(Color(215, 20, 26, 255), "Czech red")
+
+  /** Color constant for <em>"European blue"</em> (RGB approximation: 0, 51, 153). */
+  val EuropeanBlue = PresetColor(Color(0, 51, 153, 255), "European blue")
+
+  /** Color constant for <em>"European yellow"</em> (RGB approximation: 255, 204, 0). */
+  val EuropeanYellow = PresetColor(Color(255, 204, 0, 255), "European yellow")
+
+  /** Color constant for <em>"Danish red"</em> (RGB approximation: 198, 12, 48). */
+  val DanishRed = PresetColor(Color(198, 12, 48, 255), "Danish red")
+
+  /** Color constant for <em>"Finnish blue"</em> (RGB approximation: 0, 63, 135). */
+  val FinnishBlue = PresetColor(Color(0, 63, 135, 255), "Finnish blue")
+
+  /** Color constant for <em>"French blue"</em> (RGB approximation: 0, 35, 149). */
+  val FrenchBlue = PresetColor(Color(0, 35, 149, 255), "French blue")
+
+  /** Color constant for <em>"French red"</em> (RGB approximation: 237, 41, 57). */
+  val FrenchRed = PresetColor(Color(237, 41, 57, 255), "French red")
+
+  /** Color constant for <em>"German red"</em> (RGB approximation: 221, 0, 0). */
+  val GermanRed = PresetColor(Color(221, 0, 0, 255), "German red")
+
+  /** Color constant for <em>"German yellow"</em> (RGB approximation: 255, 206, 0). */
+  val GermanYellow = PresetColor(Color(255, 206, 0, 255), "German yellow")
+
+  /** Color constant for <em>"Greek blue"</em> (RGB approximation: 13, 94, 175). */
+  val GreekBlue = PresetColor(Color(13, 94, 175, 255), "Greek blue")
+
+  /** Color constant for <em>"Greenlandic red"</em> (RGB approximation: 192, 12, 48). */
+  val GreenlandicRed = PresetColor(Color(192, 12, 48, 255), "Greenlandic red")
+
+  /** Color constant for <em>"Hungarian green"</em> (RGB approximation: 67, 111, 77). */
+  val HungarianGreen = PresetColor(Color(67, 111, 77, 255), "Hungarian green")
+
+  /** Color constant for <em>"Hungarian red"</em> (RGB approximation: 205, 42, 62). */
+  val HungarianRed = PresetColor(Color(205, 42, 62, 255), "Hungarian red")
+
+  /** Color constant for <em>"Icelandic blue"</em> (RGB approximation: 0, 56, 151). */
+  val IcelandicBlue = PresetColor(Color(0, 56, 151, 255), "Icelandic blue")
+
+  /** Color constant for <em>"Icelandic red"</em> (RGB approximation: 215, 40, 40). */
+  val IcelandicRed = PresetColor(Color(215, 40, 40, 255), "Icelandic red")
+
+  /** Color constant for <em>"Irish green"</em> (RGB approximation: 22, 155, 98). */
+  val IrishGreen = PresetColor(Color(22, 155, 98, 255), "Irish green")
+
+  /** Color constant for <em>"Irish orange"</em> (RGB approximation: 255, 136, 62). */
+  val IrishOrange = PresetColor(Color(255, 136, 62, 255), "Irish orange")
+
+  /** Color constant for <em>"Italian green"</em> (RGB approximation: 0, 146, 70). */
+  val ItalianGreen = PresetColor(Color(0, 146, 70, 255), "Italian green")
+
+  /** Color constant for <em>"Italian red"</em> (RGB approximation: 206, 43, 55). */
+  val ItalianRed = PresetColor(Color(206, 43, 55, 255), "Italian red")
+
+  /** Color constant for <em>"Japanese red"</em> (RGB approximation: 188, 0, 45). */
+  val JapaneseRed = PresetColor(Color(188, 0, 45, 255), "Japanese red")
+
+  /** Color constant for <em>"Norwegian blue"</em> (RGB approximation: 0, 40, 104). */
+  val NorwegianBlue = PresetColor(Color(0, 40, 104, 255), "Norwegian blue")
+
+  /** Color constant for <em>"Norwegian red"</em> (RGB approximation: 239, 43, 45). */
+  val NorwegianRed = PresetColor(Color(239, 43, 45, 255), "Norwegian red")
+
+  /** Color constant for <em>"Romanian blue"</em> (RGB approximation: 0, 43, 127). */
+  val RomanianBlue = PresetColor(Color(0, 43, 127, 255), "Romanian blue")
+
+  /** Color constant for <em>"Romanian red"</em> (RGB approximation: 206, 17, 38). */
+  val RomanianRed = PresetColor(Color(206, 17, 38, 255), "Romanian red")
+
+  /** Color constant for <em>"Romanian yellow"</em> (RGB approximation: 252, 209, 22). */
+  val RomanianYellow = PresetColor(Color(252, 209, 22, 255), "Romanian yellow")
+
+  /** Color constant for <em>"Russian blue"</em> (RGB approximation: 0, 57, 166). */
+  val RussianBlue = PresetColor(Color(0, 57, 166, 255), "Russian blue")
+
+  /** Color constant for <em>"Russian red"</em> (RGB approximation: 213, 43, 30). */
+  val RussianRed = PresetColor(Color(213, 43, 30, 255), "Russian red")
+
+  /** Color constant for <em>"Somali blue"</em> (RGB approximation: 65, 137, 221). */
+  val SomaliBlue = PresetColor(Color(65, 137, 221, 255), "Somali blue")
+
+  /** Color constant for <em>"Swedish blue"</em> (RGB approximation: 0, 107, 168). */
+  val SwedishBlue = PresetColor(Color(0, 107, 168, 255), "Swedish blue")
+
+  /** Color constant for <em>"Swedish yellow"</em> (RGB approximation: 254, 205, 1). */
+  val SwedishYellow = PresetColor(Color(254, 205, 1, 255), "Swedish yellow")
+
+  /** Color constant for <em>"Vietnamese red"</em> (RGB approximation: 218, 37, 29). */
+  val VietnameseRed = PresetColor(Color(218, 37, 29, 255), "Vietnamese red")
+
+  /** Color constant for <em>"Vietnamese yellow"</em> (RGB approximation: 255, 255, 0). */
+  val VietnameseYellow = PresetColor(Color(255, 255, 0, 255), "Vietnamese yellow")
+
+
+
+
+
   /** Color constant for 10-percent black. */
   val Black10 = PresetColor(Black.tintByPercentage(90), "black10")
 
