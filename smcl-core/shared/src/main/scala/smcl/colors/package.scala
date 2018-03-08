@@ -60,4 +60,33 @@ package object colors
   implicit def ColorWrapper(self: Color): rgb.RichColor =
     rgb.ColorWrapper(self)
 
+
+
+
+  /**
+   * Base class for constants indicating the color mixing source the given portions apply.
+   */
+  sealed abstract class MixUsingPortionsSource
+
+
+
+
+  /**
+   * A constant for stating that the given portions apply for "this" color.
+   */
+  case object MUPortionsOfThis
+      extends MixUsingPortionsSource
+
+
+
+
+  /**
+   * A constant for stating that the given portions apply for "the other" color.
+   */
+  case object MUPortionsOfTheOther
+      extends MixUsingPortionsSource
+
+
+
+
 }

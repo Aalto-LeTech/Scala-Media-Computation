@@ -908,8 +908,223 @@ class Color protected(
    */
   override
   def toString: String = {
-    s"RGBA color; red: $red, green: $green, blue: $blue, opacity: $opacity"
+    s"Color(red: $red, green: $green, blue: $blue, opacity: $opacity)"
   }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThis
+   *
+   * @return
+   */
+  @inline
+  def mixWith(
+      that: Color,
+      portionOfThis: Double,
+      portionsSource: MixUsingPortionsSource): Color = {
+
+    portionsSource match {
+      case MUPortionsOfThis     => mixWithUsingPortionOfThis(that, portionOfThis)
+      case MUPortionsOfTheOther => mixWithUsingPortionOfThat(that, portionOfThis)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThis
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithInternal(
+      that: Color,
+      portionOfThis: Double,
+      portionsSource: MixUsingPortionsSource): Color = {
+
+    portionsSource match {
+      case MUPortionsOfThis     => mixWithUsingPortionOfThisInternal(that, portionOfThis)
+      case MUPortionsOfTheOther => mixWithUsingPortionOfThatInternal(that, portionOfThis)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThis
+   *
+   * @return
+   */
+  @inline
+  def mixWith(
+      that: Color,
+      portionOfThis: Double,
+      resultOpacity: Int,
+      portionsSource: MixUsingPortionsSource): Color = {
+
+    portionsSource match {
+      case MUPortionsOfThis     => mixWithUsingPortionOfThis(that, portionOfThis, resultOpacity)
+      case MUPortionsOfTheOther => mixWithUsingPortionOfThat(that, portionOfThis, resultOpacity)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param portionOfThis
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithInternal(
+      that: Color,
+      portionOfThis: Double,
+      resultOpacity: Int,
+      portionsSource: MixUsingPortionsSource): Color = {
+
+    portionsSource match {
+      case MUPortionsOfThis =>
+        mixWithUsingPortionOfThisInternal(that, portionOfThis, resultOpacity)
+
+      case MUPortionsOfTheOther =>
+        mixWithUsingPortionOfThatInternal(that, portionOfThis, resultOpacity)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThis
+   * @param greenPortionOfThis
+   * @param bluePortionOfThis
+   * @param opacityPortionOfThis
+   *
+   * @return
+   */
+  @inline
+  def mixWith(
+      that: Color,
+      redPortionOfThis: Double,
+      greenPortionOfThis: Double,
+      bluePortionOfThis: Double,
+      opacityPortionOfThis: Double,
+      portionsSource: MixUsingPortionsSource): Color = {
+
+    portionsSource match {
+      case MUPortionsOfThis =>
+        mixWithUsingPortionsOfThis(
+          that, redPortionOfThis, greenPortionOfThis, bluePortionOfThis, opacityPortionOfThis)
+
+      case MUPortionsOfTheOther =>
+        mixWithUsingPortionsOfThat(
+          that, redPortionOfThis, greenPortionOfThis, bluePortionOfThis, opacityPortionOfThis)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThis
+   * @param greenPortionOfThis
+   * @param bluePortionOfThis
+   * @param opacityPortionOfThis
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithInternal(
+      that: Color,
+      redPortionOfThis: Double,
+      greenPortionOfThis: Double,
+      bluePortionOfThis: Double,
+      opacityPortionOfThis: Double,
+      portionsSource: MixUsingPortionsSource): Color = {
+
+    portionsSource match {
+      case MUPortionsOfThis =>
+        mixWithUsingPortionsOfThisInternal(
+          that, redPortionOfThis, greenPortionOfThis, bluePortionOfThis, opacityPortionOfThis)
+
+      case MUPortionsOfTheOther =>
+        mixWithUsingPortionsOfThatInternal(
+          that, redPortionOfThis, greenPortionOfThis, bluePortionOfThis, opacityPortionOfThis)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThis
+   * @param greenPortionOfThis
+   * @param bluePortionOfThis
+   * @param resultOpacity
+   *
+   * @return
+   */
+  @inline
+  def mixWith(
+      that: Color,
+      redPortionOfThis: Double,
+      greenPortionOfThis: Double,
+      bluePortionOfThis: Double,
+      resultOpacity: Int,
+      portionsSource: MixUsingPortionsSource): Color = {
+
+    portionsSource match {
+      case MUPortionsOfThis =>
+        mixWithUsingPortionsOfThis(
+          that, redPortionOfThis, greenPortionOfThis, bluePortionOfThis, resultOpacity)
+
+      case MUPortionsOfTheOther =>
+        mixWithUsingPortionsOfThat(
+          that, redPortionOfThis, greenPortionOfThis, bluePortionOfThis, resultOpacity)
+    }
+  }
+
+  /**
+   *
+   *
+   * @param that
+   * @param redPortionOfThis
+   * @param greenPortionOfThis
+   * @param bluePortionOfThis
+   * @param resultOpacity
+   * @param portionsSource
+   *
+   * @return
+   */
+  @inline
+  private[smcl]
+  def mixWithInternal(
+      that: Color,
+      redPortionOfThis: Double,
+      greenPortionOfThis: Double,
+      bluePortionOfThis: Double,
+      resultOpacity: Int,
+      portionsSource: MixUsingPortionsSource): Color = {
+
+    portionsSource match {
+      case MUPortionsOfThis =>
+        mixWithUsingPortionsOfThisInternal(
+          that, redPortionOfThis, greenPortionOfThis, bluePortionOfThis, resultOpacity)
+
+      case MUPortionsOfTheOther =>
+        mixWithUsingPortionsOfThatInternal(
+          that, redPortionOfThis, greenPortionOfThis, bluePortionOfThis, resultOpacity)
+    }
+  }
+
 
   /**
    *
