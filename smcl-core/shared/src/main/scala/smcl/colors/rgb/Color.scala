@@ -783,6 +783,16 @@ class Color protected(
   def canEqual(other: Any): Boolean = other.isInstanceOf[Color]
 
   /**
+   * An equality comparison method that directly calls the equals() method.
+   *
+   * @param other
+   *
+   * @return
+   */
+  @inline
+  def is(other: Color): Boolean = equals(other)
+
+  /**
    *
    *
    * @param other
@@ -906,6 +916,7 @@ class Color protected(
    *
    * @return
    */
+  @inline
   override
   def toString: String = {
     s"Color(red: $red, green: $green, blue: $blue, opacity: $opacity)"
