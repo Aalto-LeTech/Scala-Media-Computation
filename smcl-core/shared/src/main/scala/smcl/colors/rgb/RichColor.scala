@@ -31,12 +31,14 @@ import smcl.infrastructure.{CommonValidators, InjectablesRegistry}
 object RichColor extends InjectablesRegistry {
 
   /** The ColorValidator instance to be used by this object. */
-  private lazy val colorValidator: ColorValidator = {
+  private
+  lazy val colorValidator: ColorValidator = {
     injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
   }
 
   /** The CommonValidators instance to be used by this object. */
-  private lazy val commonValidators: CommonValidators = {
+  private
+  lazy val commonValidators: CommonValidators = {
     injectable(InjectablesRegistry.IIdCommonValidators).asInstanceOf[CommonValidators]
   }
 
@@ -69,6 +71,13 @@ class RichColor private[smcl](
     val self: Color,
     private val commonValidators: CommonValidators,
     private val colorValidator: ColorValidator) {
+
+  /** The factor the amount of which colors are shaded by the darker() method. */
+  final def DefaultShadingFactor = 0.1
+
+  /** The factor the amount of which colors are tinted by the lighter() method. */
+  final def DefaultTintingFactor = 0.1
+
 
   ///////////////////////////////////////////////////////////////////////////////////
   //
@@ -490,10 +499,9 @@ class RichColor private[smcl](
       greenWeight: Double = 0.33,
       blueWeight: Double = 0.33): Color = {
 
-    val validators = new CommonValidators()
-    validators.validateZeroToOneFactor(redWeight, Option("Red weight"))
-    validators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
-    validators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
+    commonValidators.validateZeroToOneFactor(redWeight, Option("Red weight"))
+    commonValidators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
+    commonValidators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
 
     colorValidator.validateRGBColorWeightCombination(redWeight, greenWeight, blueWeight)
 
@@ -504,6 +512,13 @@ class RichColor private[smcl](
 
     Color(grayIntensity, ColorValidator.FullyOpaque)
   }
+
+  /**
+   *
+   *
+   * @return
+   */
+  final def darker: Color = shadeByFactor(DefaultShadingFactor)
 
   /**
    *
@@ -535,6 +550,13 @@ class RichColor private[smcl](
   /**
    *
    *
+   * @return
+   */
+  final def lighter: Color = tintByFactor(DefaultTintingFactor)
+
+  /**
+   *
+   *
    * @param tintingFactorInPercents
    */
   final def tintByPercentage(tintingFactorInPercents: Double): Color = {
@@ -551,9 +573,9 @@ class RichColor private[smcl](
   final def tintByFactor(tintingFactorFromZeroToOne: Double): Color = {
     commonValidators.validateZeroToOneFactor(tintingFactorFromZeroToOne, Option("Tinting"))
 
-    val newRed = (self.red + tintingFactorFromZeroToOne * (ColorValidator.MaximumRed - self.red)).toInt
-    val newGreen = (self.green + tintingFactorFromZeroToOne * (ColorValidator.MaximumGreen - self.green)).toInt
-    val newBlue = (self.blue + tintingFactorFromZeroToOne * (ColorValidator.MaximumBlue - self.blue)).toInt
+    val newRed = (self.red + tintingFactorFromZeroToOne * (ColorValidator.MaximumRed - self.red)).ceil.toInt
+    val newGreen = (self.green + tintingFactorFromZeroToOne * (ColorValidator.MaximumGreen - self.green)).ceil.toInt
+    val newBlue = (self.blue + tintingFactorFromZeroToOne * (ColorValidator.MaximumBlue - self.blue)).ceil.toInt
 
     Color(newRed, newGreen, newBlue, self.opacity)
   }
