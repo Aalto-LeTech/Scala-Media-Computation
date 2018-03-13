@@ -67,7 +67,7 @@ class RichOptionString private[smcl](
    * not conform with the rule above.
    */
   final def toAmericanTitleCase: Option[String] =
-    self map stringUtils.toTitleCase
+    self map stringUtils.toAmericanTitleCase
 
   /**
    * Returns the <code>StrUnnamed</code> string if the given

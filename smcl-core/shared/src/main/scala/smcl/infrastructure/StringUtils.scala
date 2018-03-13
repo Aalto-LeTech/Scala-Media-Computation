@@ -24,15 +24,38 @@ package smcl.infrastructure
  */
 class StringUtils {
 
+  /** Characters allowed in a string that represents a hexadecimal number. */
+  val HexCharsWithoutPrefixChars: Seq[Char] = ('0' to '9') ++ ('a' to 'f') ++ ('A' to 'F')
+
+  /** As [[HexCharsWithoutPrefixChars]] but as strings. */
+  val HexCharsWithoutPrefixCharsAsStrings: Seq[String] =
+    HexCharsWithoutPrefixChars.map(_.toString)
+
   /**
-   * Returns an string, in which the first letter of every
-   * word is capitalized and other letters are in lower case.
+   * Checks whether or not a given string contains
+   * only characters 0-9 and A-F, ignoring case.
    *
    * @param s
    *
    * @return
    */
-  def toTitleCase(s: String): String =
+  final def containsOnlyHexCharsWithoutPrefixChars(s: String): Boolean =
+    s.forall(HexCharsWithoutPrefixChars.contains(_))
+
+  /**
+   * Converts the string into American-style title case, i.e.,
+   * every word begins with a capital letter and all other
+   * letters are in lower case.
+   * <br>
+   * This function does not take into account any
+   * spellings (e.g., "eLearning" or "StringUtils") that do
+   * not conform with the rule above.
+   *
+   * @param s
+   *
+   * @return
+   */
+  final def toAmericanTitleCase(s: String): String =
     s.toLowerCase.split(StrSpace).map(_.capitalize).mkString(StrSpace)
 
 }

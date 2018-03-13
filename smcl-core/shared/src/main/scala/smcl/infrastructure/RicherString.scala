@@ -30,7 +30,7 @@ object RicherString extends InjectablesRegistry {
   }
 
   /**
-   * Return a new RicherString instance.
+   * Return a new [[RicherString]] instance.
    *
    * @param self
    *
@@ -66,11 +66,21 @@ class RicherString private[smcl](
    * not conform with the rule above.
    */
   final def toAmericanTitleCase: String = {
-    stringUtils.toTitleCase(self)
+    stringUtils.toAmericanTitleCase(self)
   }
 
   /**
-   * Returns the <code>StrUnnamed</code> string if the given
+   * Checks whether or not a given string contains
+   * only characters 0-9 and A-F, ignoring case.
+   *
+   * @return
+   */
+  final def containsOnlyHexCharsWithoutPrefixChars: Boolean =
+    stringUtils.containsOnlyHexCharsWithoutPrefixChars(self)
+
+
+  /**
+   * Returns the `StrUnnamed` string if the given
    * string is null or contains only whitespace; otherwise,
    * a trimmed version of the string itself is returned.
    *
