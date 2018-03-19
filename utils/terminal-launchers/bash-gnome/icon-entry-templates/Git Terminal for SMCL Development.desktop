@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_GB]=[.......fill.........]/Scala-Media-Computation/utils/terminal-launchers/bash-gnome/icons/smcl-git-terminal.png
+Name[en_GB]=Git Terminal for SMCL Development
+Exec=[.......fill.........]/Scala-Media-Computation/utils/terminal-launchers/bash-gnome/smcl-gnome-terminals.sh git
+Name=Git Terminal for SMCL Development
+Icon=[.......fill.........]/Scala-Media-Computation/utils/terminal-launchers/bash-gnome/icons/smcl-git-terminal.png

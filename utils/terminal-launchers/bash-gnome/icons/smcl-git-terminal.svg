@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="512"
+   height="512"
+   viewBox="0 0 512.00001 512.00001"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="smcl-git-terminal.svg"
+   inkscape:export-filename="/u/90/lukkark1/unix/bin/script-images/smcl-git-terminal.svg.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4203">
+      <stop
+         style="stop-color:#d9d9d9;stop-opacity:1"
+         offset="0"
+         id="stop4205" />
+      <stop
+         id="stop4207"
+         offset="0.37522116"
+         style="stop-color:#ababab;stop-opacity:1" />
+      <stop
+         style="stop-color:#e5e5e5;stop-opacity:1"
+         offset="1"
+         id="stop4209" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4193"
+       inkscape:collect="always">
+      <stop
+         id="stop4195"
+         offset="0"
+         style="stop-color:#d9d9d9;stop-opacity:1" />
+      <stop
+         style="stop-color:#ababab;stop-opacity:1"
+         offset="0.49321526"
+         id="stop4197" />
+      <stop
+         id="stop4199"
+         offset="1"
+         style="stop-color:#e5e5e5;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4183">
+      <stop
+         style="stop-color:#808080;stop-opacity:1"
+         offset="0"
+         id="stop4185" />
+      <stop
+         id="stop4191"
+         offset="0.48740289"
+         style="stop-color:#d5d5d5;stop-opacity:1" />
+      <stop
+         style="stop-color:#777777;stop-opacity:1"
+         offset="1"
+         id="stop4187" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4158">
+      <stop
+         style="stop-color:#1e1e1e;stop-opacity:1"
+         offset="0"
+         id="stop4160" />
+      <stop
+         id="stop4158"
+         offset="0.61581522"
+         style="stop-color:#434343;stop-opacity:1" />
+      <stop
+         style="stop-color:#2a2a2a;stop-opacity:1"
+         offset="1"
+         id="stop4162" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4193"
+       id="linearGradient4164"
+       x1="380.06314"
+       y1="34.670677"
+       x2="380.06314"
+       y2="654.65344"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.74429822,0,0,0.78112773,-30.023184,526.42282)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4158"
+       id="linearGradient4181"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.68947366,0,0,0.72359033,-8.9548882,546.30639)"
+       x1="380.06314"
+       y1="34.670677"
+       x2="380.06314"
+       y2="654.65344" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4183"
+       id="linearGradient4189"
+       x1="317.85715"
+       y1="566.36212"
+       x2="317.85715"
+       y2="1025.6478"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4203"
+       id="linearGradient4201"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.74429822,0,0,0.78112773,-30.023184,526.42282)"
+       x1="380.06314"
+       y1="34.670677"
+       x2="380.06314"
+       y2="654.65344" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="83.631627"
+     inkscape:cy="228.9301"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1865"
+     inkscape:window-height="1176"
+     inkscape:window-x="55"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     units="px" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-540.36216)">
+    <rect
+       style="fill:url(#linearGradient4164);fill-opacity:1.0;fill-rule:evenodd;stroke:none;stroke-width:20;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3336"
+       width="484.85715"
+       height="484.85715"
+       x="13.571428"
+       y="553.93359"
+       ry="24.285715" />
+    <g
+       id="g4217">
+      <rect
+         style="fill:url(#linearGradient4201);fill-opacity:1;fill-rule:evenodd;stroke:#afafaf;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect4177"
+         width="484.85715"
+         height="484.85715"
+         x="13.571428"
+         y="553.93359"
+         ry="24.285715" />
+      <rect
+         ry="22.496843"
+         y="571.79071"
+         x="31.428572"
+         height="449.14285"
+         width="449.14285"
+         id="rect4179"
+         style="fill:url(#linearGradient4181);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient4189);stroke-width:3;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:98.69778442px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="303.99185"
+       y="627.67224"
+       id="text4213"
+       sodipodi:linespacing="125%"
+       transform="scale(0.81832749,1.2220047)"><tspan
+         sodipodi:role="line"
+         id="tspan4215"
+         x="303.99185"
+         y="627.67224"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:197.39556885px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#ffffff">SMCL</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4221"
+       y="955.58807"
+       x="248.76489"
+       style="font-style:normal;font-weight:normal;font-size:80.76711273px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:161.53422546px;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#00ff00"
+         y="955.58807"
+         x="248.76491"
+         id="tspan4223"
+         sodipodi:role="line">Git</tspan></text>
+  </g>
+</svg>

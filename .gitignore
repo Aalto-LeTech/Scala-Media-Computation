@@ -30,6 +30,7 @@
 !/smcl-bitmap-viewer
 !/smcl-core
 !/smcl-library-info
+!/utils
 !/.gitattributes
 !/.gitignore
 !/build.sbt
