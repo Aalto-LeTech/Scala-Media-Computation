@@ -78,11 +78,11 @@ addSbtPlugin("ly.jamie" % "sbt-slack-notify" % "0.3.1")
 //
 //
 //
-addSbtPlugin("fi.aalto.cs" % "sbt-env-vars" % "0.1.0")
+addSbtPlugin("fi.aalto.cs" % "sbt-env-vars" % "0.1.1")
 
 //
 // sbt-libraryinfo
 //
 //
 //
-addSbtPlugin("fi.aalto.cs" % "sbt-library-info" % "0.2.0")
+addSbtPlugin("fi.aalto.cs" % "sbt-library-info" % "0.2.1")

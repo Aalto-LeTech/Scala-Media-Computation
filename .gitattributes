@@ -1,14 +1,21 @@
 *.dic           text
-*.gitattributes eol=lf
-*.gitignore     eol=lf
-*.java          eol=lf
+*.desktop       text eol=lf
+*.gif           binary
+*.gitattributes text eol=lf
+*.gitignore     text eol=lf
+*.java          text eol=lf
+*.jar           binary
 *.jpg           binary
-*.md            eol=lf
-*.mf            eol=lf
+*.md            text eol=lf
+*.mf            text eol=lf
 *.pdf           binary
 *.png           binary
-*.properties    eol=lf
-*.scala         eol=lf
-*.sbt           eol=lf
+*.properties    text eol=lf
+*.scala         text eol=lf
+*.sbt           text eol=lf
+*.sh            text eol=lf
+*.svg           text eol=lf
 *.txt           text
-*.xml           eol=lf
+*.xml           text eol=lf
+*.zip           binary
+

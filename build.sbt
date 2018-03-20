@@ -203,7 +203,7 @@ isSnapshot in Global := !projectIsRelease
 
 scalaVersion in Global := "2.12.4"
 
-parallelExecution in Global := false
+parallelExecution in Global := true
 
 logLevel in Global := Level.Info
 
