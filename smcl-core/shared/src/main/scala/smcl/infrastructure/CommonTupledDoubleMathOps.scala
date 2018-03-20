@@ -20,6 +20,9 @@ package smcl.infrastructure
 /**
  * An interface for some common mathematical operations.
  *
+ * @tparam ElementType
+ * @tparam ItemTupleType
+ *
  * @author Aleksi Lukkarinen
  */
 trait CommonTupledDoubleMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType]

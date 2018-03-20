@@ -74,7 +74,8 @@ trait InjectablesRegistry {
    *
    * @throws ImplementationNotSetError
    */
-  protected def injectable[InjectableType](id: String): InjectableType = {
+  protected
+  def injectable[InjectableType](id: String): InjectableType = {
     injectablesRegistry.getOrElse(id, {
       throw InjectableNotInjectedError(id)
     }).asInstanceOf[InjectableType]

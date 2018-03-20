@@ -25,7 +25,7 @@ import smcl.infrastructure._
 import smcl.modeling.AffineTransformation
 import smcl.pictures.operations._
 import smcl.pictures.{BitmapValidator, PixelRectangle}
-import smcl.settings.{PreventViewerUpdates, ViewerUpdateStyle}
+import smcl.settings.{VUSPreventViewerUpdates, ViewerUpdateStyle}
 import smcl.viewers.{display => displayInViewer}
 
 
@@ -158,7 +158,7 @@ abstract class AbstractBitmap private[pictures](
    */
   private[pictures]
   def applyInitialization(newOperation: Renderable): AbstractBitmap = {
-    apply(newOperation, PreventViewerUpdates)
+    apply(newOperation, VUSPreventViewerUpdates)
   }
 
   /**
@@ -196,7 +196,7 @@ abstract class AbstractBitmap private[pictures](
    */
   private[pictures]
   def applyInitialization(newOperation: BufferProvider): AbstractBitmap = {
-    apply(newOperation, PreventViewerUpdates)
+    apply(newOperation, VUSPreventViewerUpdates)
   }
 
   /**

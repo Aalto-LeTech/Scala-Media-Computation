@@ -45,7 +45,7 @@ package object fullfeatured
       diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
     ShapeCreator.circle(diameterInPixels, color, backgroundColor, viewerHandling)
   }
@@ -123,7 +123,7 @@ package object fullfeatured
       heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
     ShapeCreator.ellipse(widthInPixels, heightInPixels, color, backgroundColor, viewerHandling)
   }
@@ -212,7 +212,7 @@ package object fullfeatured
   def hLine(
       lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
     ShapeCreator.hLine(lengthInPixels, color, viewerHandling)
   }
@@ -290,7 +290,7 @@ package object fullfeatured
       toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
     ShapeCreator.line(
       fromXInPixels, fromYInPixels,
@@ -408,7 +408,7 @@ package object fullfeatured
       widthInPixels: Double = DefaultBitmapWidthInPixels,
       heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
     ShapeCreator.rectangle(
       widthInPixels, heightInPixels, color, viewerHandling)
@@ -497,7 +497,7 @@ package object fullfeatured
       roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
     ShapeCreator.rRectangle(
       widthInPixels, heightInPixels,
@@ -610,7 +610,7 @@ package object fullfeatured
       roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
     ShapeCreator.rSquare(
       sideLengthInPixels,
@@ -711,7 +711,7 @@ package object fullfeatured
   def square(
       sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
     ShapeCreator.square(sideLengthInPixels, color, viewerHandling)
   }
@@ -779,7 +779,7 @@ package object fullfeatured
   def vLine(
       lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): fullfeatured.Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): fullfeatured.Bitmap = {
 
     ShapeCreator.vLine(lengthInPixels, color, viewerHandling)
   }
@@ -848,7 +848,7 @@ package object fullfeatured
       viewerHandling: ViewerUpdateStyle)(
       bitmap: BitmapType): BitmapType = {
 
-    if (viewerHandling == UpdateViewerPerDefaults) {
+    if (viewerHandling == VUSUpdateViewerPerDefaults) {
       if (NewBitmapsAreDisplayedAutomatically)
         bitmap.display()
     }

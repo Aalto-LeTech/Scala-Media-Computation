@@ -54,9 +54,8 @@ object Pos {
    * @return
    */
   @inline
-  def apply(valuePixels: Double): Pos = {
+  def apply(valuePixels: Double): Pos =
     new Pos(valuePixels, isDefined = true)
-  }
 
 }
 
@@ -114,6 +113,76 @@ case class Pos private(
    * a not-a-number; otherwise <code>false</code>.
    */
   val isNaN: Boolean = inPixels.isNaN
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def inPixelsFloored: Int = inPixels.floor.toInt
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def toTupleWith[ResultType](
+      f: Double => ResultType): (Pos, ResultType) = {
+
+    (this, convertWith(f))
+  }
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def toTupleFlooredWith[ResultType](
+      f: Int => ResultType): (Pos, ResultType) = {
+
+    val fPos = floor
+
+    (fPos, f(fPos.inPixelsFloored))
+  }
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def convertWith[ResultType](
+      f: Double => ResultType): ResultType = {
+
+    f(inPixels)
+  }
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def convertFlooredWith[ResultType](
+      f: Int => ResultType): ResultType = {
+
+    f(inPixelsFloored)
+  }
 
   /**
    *

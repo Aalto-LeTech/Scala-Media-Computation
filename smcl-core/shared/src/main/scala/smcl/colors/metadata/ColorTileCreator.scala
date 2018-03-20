@@ -19,7 +19,7 @@ package smcl.colors.metadata
 
 import smcl.colors.rgb.Color
 import smcl.pictures.fullfeatured
-import smcl.settings.{ColorVisualizationTileSideLengthInPixels, PreventViewerUpdates}
+import smcl.settings.{ColorVisualizationTileSideLengthInPixels, VUSPreventViewerUpdates}
 
 
 
@@ -42,7 +42,7 @@ object ColorTileCreator {
     fullfeatured.Bitmap(
       widthInPixels = ColorVisualizationTileSideLengthInPixels,
       heightInPixels = ColorVisualizationTileSideLengthInPixels,
-      viewerHandling = PreventViewerUpdates) map {tile =>
+      viewerHandling = VUSPreventViewerUpdates) map {tile =>
 
       tile.drawRectangle(
         0,
@@ -52,7 +52,7 @@ object ColorTileCreator {
         hasBorder = false,
         hasFilling = true,
         fillColor = colorToIllustrate,
-        viewerHandling = PreventViewerUpdates)
+        viewerHandling = VUSPreventViewerUpdates)
     }
   }
 
@@ -70,7 +70,7 @@ object ColorTileCreator {
     fullfeatured.Bitmap(
       widthInPixels = ColorVisualizationTileSideLengthInPixels,
       heightInPixels = ColorVisualizationTileSideLengthInPixels,
-      viewerHandling = PreventViewerUpdates) map {tile =>
+      viewerHandling = VUSPreventViewerUpdates) map {tile =>
 
       tile.drawRectangle(
         0,
@@ -80,7 +80,7 @@ object ColorTileCreator {
         hasBorder = false,
         hasFilling = true,
         fillColor = backgroundColor,
-        viewerHandling = PreventViewerUpdates) map {tile =>
+        viewerHandling = VUSPreventViewerUpdates) map {tile =>
 
         tile.drawRectangle(
           upperLeftCornerXInPixels = (0.25 * tile.widthInPixels.toDouble).toInt,
@@ -90,7 +90,7 @@ object ColorTileCreator {
           hasBorder = false,
           hasFilling = true,
           fillColor = colorToIllustrate,
-          viewerHandling = PreventViewerUpdates)
+          viewerHandling = VUSPreventViewerUpdates)
       }
     }
   }

@@ -65,6 +65,18 @@ trait BitmapBufferAdapter {
   /**
    *
    *
+   * @param xInPixels
+   * @param yInPixels
+   *
+   * @return
+   */
+  def colorAt(
+      xInPixels: Double,
+      yInPixels: Double): Color
+
+  /**
+   *
+   *
    * @param colorToTrim
    *
    * @return
@@ -78,7 +90,8 @@ trait BitmapBufferAdapter {
    *
    * @return
    */
-  def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): BitmapBufferAdapter
+  def iteratePixelsWith(
+      function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): BitmapBufferAdapter
 
   /**
    *
@@ -135,7 +148,8 @@ trait BitmapBufferAdapter {
    *
    * @return
    */
-  def createFilteredVersionWith(kernel: ConvolutionKernel): BitmapBufferAdapter
+  def createFilteredVersionWith(
+      kernel: ConvolutionKernel): BitmapBufferAdapter
 
   /**
    *
@@ -144,7 +158,8 @@ trait BitmapBufferAdapter {
    *
    * @return
    */
-  def createFilteredVersionWith(translator: ColorComponentTranslationTable): BitmapBufferAdapter
+  def createFilteredVersionWith(
+      translator: ColorComponentTranslationTable): BitmapBufferAdapter
 
   /**
    *
@@ -164,10 +179,10 @@ trait BitmapBufferAdapter {
    * @return
    */
   def copyPortionXYXY(
-      topLeftX: Int,
-      topLeftY: Int,
-      bottomRightX: Int,
-      bottomRightY: Int): BitmapBufferAdapter
+      topLeftX: Double,
+      topLeftY: Double,
+      bottomRightX: Double,
+      bottomRightY: Double): BitmapBufferAdapter
 
   /**
    *
@@ -180,10 +195,10 @@ trait BitmapBufferAdapter {
    * @return
    */
   def copyPortionXYWH(
-      topLeftX: Int,
-      topLeftY: Int,
-      width: Int,
-      height: Int): BitmapBufferAdapter
+      topLeftX: Double,
+      topLeftY: Double,
+      width: Double,
+      height: Double): BitmapBufferAdapter
 
   /**
    *

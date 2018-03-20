@@ -148,7 +148,7 @@ class SharedSettingInitializer() extends SettingInitializer {
 
     ObjectSetting[PositionType](
       key = SIdDefaultPositionType,
-      initialValue = CenterPosition,
+      initialValue = PosTypeCenter,
       validator = settingValidatorFactory.EmptyValidator)
 
     ObjectSetting[HorizontalAlignment](

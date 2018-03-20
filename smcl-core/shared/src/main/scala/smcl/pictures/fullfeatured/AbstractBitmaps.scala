@@ -23,7 +23,7 @@ import smcl.pictures.BitmapValidator
 import smcl.pictures.operations._
 import smcl.colors.ColorValidator
 import smcl.infrastructure.{InjectablesRegistry, _}
-import smcl.settings.{NewBitmapsAreDisplayedAutomatically, UpdateViewerPerDefaults, ViewerUpdateStyle}
+import smcl.settings.{NewBitmapsAreDisplayedAutomatically, VUSUpdateViewerPerDefaults, ViewerUpdateStyle}
 
 
 
@@ -72,7 +72,7 @@ object AbstractBitmaps extends InjectablesRegistry {
         val newBitmap = new Bitmap(
           operationList, bitmapValidator, colorValidator, Identity())
 
-        if (viewerHandling == UpdateViewerPerDefaults) {
+        if (viewerHandling == VUSUpdateViewerPerDefaults) {
           if (NewBitmapsAreDisplayedAutomatically)
             newBitmap.display()
         }
@@ -89,7 +89,7 @@ object AbstractBitmaps extends InjectablesRegistry {
    * @return
    */
   def apply(sourceResourcePath: String): Seq[AbstractBitmap] = {
-    apply(sourceResourcePath, UpdateViewerPerDefaults)
+    apply(sourceResourcePath, VUSUpdateViewerPerDefaults)
   }
 
 }

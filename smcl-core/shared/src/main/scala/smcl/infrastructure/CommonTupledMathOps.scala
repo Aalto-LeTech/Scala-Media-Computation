@@ -20,6 +20,9 @@ package smcl.infrastructure
 /**
  * An interface for some common mathematical operations.
  *
+ * @tparam ElementType
+ * @tparam ItemTupleType
+ *
  * @author Aleksi Lukkarinen
  */
 trait CommonTupledMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] {
@@ -32,9 +35,7 @@ trait CommonTupledMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] 
    * @return
    */
   @inline
-  def toAbsTuple: ItemTupleType = {
-    this.abs.toTuple
-  }
+  def toAbsTuple: ItemTupleType = this.abs.toTuple
 
   /**
    *
@@ -42,9 +43,7 @@ trait CommonTupledMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] 
    * @return
    */
   @inline
-  def toFlooredTuple: ItemTupleType = {
-    this.floor.toTuple
-  }
+  def toFlooredTuple: ItemTupleType = this.floor.toTuple
 
   /**
    *
@@ -52,9 +51,7 @@ trait CommonTupledMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] 
    * @return
    */
   @inline
-  def toCeilingTuple: ItemTupleType = {
-    this.ceiling.toTuple
-  }
+  def toCeilingTuple: ItemTupleType = this.ceiling.toTuple
 
   /**
    *
@@ -62,9 +59,7 @@ trait CommonTupledMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] 
    * @return
    */
   @inline
-  def toInversedTuple: ItemTupleType = {
-    this.inverse.toTuple
-  }
+  def toInversedTuple: ItemTupleType = this.inverse.toTuple
 
   /**
    *
@@ -72,9 +67,8 @@ trait CommonTupledMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] 
    * @return
    */
   @inline
-  def toPowerTuple(exponent: Double): ItemTupleType = {
+  def toPowerTuple(exponent: Double): ItemTupleType =
     this.power(exponent).toTuple
-  }
 
   /**
    *
@@ -82,9 +76,7 @@ trait CommonTupledMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] 
    * @return
    */
   @inline
-  def toRoundedTuple: ItemTupleType = {
-    this.round.toTuple
-  }
+  def toRoundedTuple: ItemTupleType = this.round.toTuple
 
   /**
    *
@@ -92,8 +84,6 @@ trait CommonTupledMathOps[ElementType <: ToTuple[ItemTupleType], ItemTupleType] 
    * @return
    */
   @inline
-  def toSignumTuple: ItemTupleType = {
-    this.signum.toTuple
-  }
+  def toSignumTuple: ItemTupleType = this.signum.toTuple
 
 }

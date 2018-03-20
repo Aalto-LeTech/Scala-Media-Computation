@@ -19,7 +19,7 @@ package smcl.modeling.d2
 
 import smcl.modeling.Len
 import smcl.modeling.misc.AbstractMovable
-import smcl.settings.{CenterPosition, PositionType, UpperLeftCornerPosition}
+import smcl.settings.{PosTypeCenter, PositionType, PosTypeUpperLeftCorner}
 
 
 
@@ -165,12 +165,12 @@ trait Movable[ReturnType]
       positionType: PositionType): ReturnType = {
 
     positionType match {
-      case CenterPosition =>
+      case PosTypeCenter =>
         moveCenterTo(
           xCoordinateInPixels,
           yCoordinateInPixels)
 
-      case UpperLeftCornerPosition =>
+      case PosTypeUpperLeftCorner =>
         moveUpperLeftCornerTo(
           xCoordinateInPixels,
           yCoordinateInPixels)

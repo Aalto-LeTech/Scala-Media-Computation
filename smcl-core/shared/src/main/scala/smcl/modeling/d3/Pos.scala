@@ -176,14 +176,122 @@ case class Pos private(
   def isOrigo: Boolean = this == Pos.Origo
 
   /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def xInPixelsFloored: Int = xInPixels.floor.toInt
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def yInPixelsFloored: Int = yInPixels.floor.toInt
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  def zInPixelsFloored: Int = zInPixels.floor.toInt
+
+  /**
    * Converts the object to a tuple.
    *
    * @return
    */
   @inline
   override
-  def toTuple: (Double, Double, Double) = {
+  def toTuple: (Double, Double, Double) =
     (xInPixels, yInPixels, zInPixels)
+
+  /**
+   * Converts the object to a tuple.
+   *
+   * @return
+   */
+  @inline
+  override
+  def toFlooredTuple: (Double, Double, Double) =
+    (xInPixelsFloored, yInPixelsFloored, zInPixelsFloored)
+
+  /**
+   * Converts the object to a tuple.
+   *
+   * @return
+   */
+  @inline
+  def toFlooredIntTuple: (Int, Int, Int) =
+    (xInPixelsFloored, yInPixelsFloored, zInPixelsFloored)
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def toTupleWith[ResultType](
+      f: (Double, Double, Double) => ResultType): (Pos, ResultType) = {
+
+    (this, convertWith(f))
+  }
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def toTupleFlooredWith[ResultType](
+      f: (Int, Int, Int) => ResultType): (Pos, ResultType) = {
+
+    val fPos = floor
+    val result = f(
+      fPos.xInPixelsFloored,
+      fPos.yInPixelsFloored,
+      fPos.zInPixelsFloored)
+
+    (fPos, result)
+  }
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def convertWith[ResultType](
+      f: (Double, Double, Double) => ResultType): ResultType = {
+
+    f(xInPixels, yInPixels, zInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def convertFlooredWith[ResultType](
+      f: (Int, Int, Int) => ResultType): ResultType = {
+
+    f(xInPixelsFloored, yInPixelsFloored, zInPixelsFloored)
   }
 
   /**
@@ -194,12 +302,11 @@ case class Pos private(
    */
   @inline
   override
-  def map(f: (Double) => Double): Pos = {
+  def map(f: (Double) => Double): Pos =
     Pos(
       f(xInPixels),
       f(yInPixels),
       f(zInPixels))
-  }
 
   /**
    *
@@ -209,9 +316,7 @@ case class Pos private(
    * @return
    */
   @inline
-  def flatMap(f: (CoordinateTuple) => Pos): Pos = {
-    f(toTuple)
-  }
+  def flatMap(f: (CoordinateTuple) => Pos): Pos = f(toTuple)
 
   /**
    *
@@ -222,9 +327,7 @@ case class Pos private(
    */
   @inline
   override
-  def canEqual(other: Any): Boolean = {
-    other.isInstanceOf[Pos]
-  }
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Pos]
 
   /**
    *
@@ -474,8 +577,7 @@ case class Pos private(
    */
   @inline
   override
-  def toString: String = {
+  def toString: String =
     s"Pos(x: $xInPixels px, y: $yInPixels px, z: $zInPixels px)"
-  }
 
 }
