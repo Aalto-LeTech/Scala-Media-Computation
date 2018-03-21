@@ -22,15 +22,8 @@
  */
 
 
-import org.scalajs.sbtplugin.ScalaJSPluginInternal
-import org.scalajs.sbtplugin.cross.CrossProject
 import sbt.Keys._
-import sbt.inConfig
-
-
-
-
-enablePlugins(ScalaJSPlugin)
+import sbtcrossproject.{CrossProject, CrossType}  // To be removed after updating to Scala.js 1.0 ?
 
 
 //--------------------------------------------------------------------------------------------------
@@ -86,26 +79,16 @@ lazy val projectIsRelease: Boolean = false
 
 lazy val buildTime: Long = System.currentTimeMillis()
 
-lazy val projectIdJvmPostfix: String = "-jvm"
-lazy val projectIdJsPostfix: String = "-js"
-lazy val projectIdTestPostfix: String = "-tests"
-
 lazy val prjSmclLibraryInfoId: String = "smcl-library-info"
-lazy val prjSmclLibraryInfoJvmId: String = prjSmclLibraryInfoId + projectIdJvmPostfix
-lazy val prjSmclLibraryInfoJsId: String = prjSmclLibraryInfoId + projectIdJsPostfix
 lazy val prjSmclLibraryInfoName: String = projectFullName + ": Library Information Class Resources"
 lazy val prjSmclLibraryInfoDescription: String =
   "The code resources providing library information capabilities."
 
 lazy val prjSmclBitmapViewerId: String = "smcl-bitmap-viewer"
-lazy val prjSmclBitmapViewerJvmId: String = prjSmclBitmapViewerId + projectIdJvmPostfix
-lazy val prjSmclBitmapViewerJsId: String = prjSmclBitmapViewerId + projectIdJsPostfix
 lazy val prjSmclBitmapViewerName: String = projectFullName + ": Bitmap Viewer"
 lazy val prjSmclBitmapViewerDescription: String = "Bitmap viewers for " + projectFullName + "."
 
 lazy val prjSmclCoreId: String = "smcl-core"
-lazy val prjSmclCoreJvmId: String = prjSmclCoreId + projectIdJvmPostfix
-lazy val prjSmclCoreJsId: String = prjSmclCoreId + projectIdJsPostfix
 lazy val prjSmclCoreName: String = projectFullName + ": Core Library"
 lazy val prjSmclCoreDescription: String = "A class library for bitmap processing using Scala."
 
@@ -421,7 +404,7 @@ lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
      * @see http://www.scalatest.org
      * @see http://search.maven.org/#search|ga|1|scalatest
      */
-    "org.scalatest" %%% "scalatest" % "3.0.4" % testConfIDCommaString withSources () withJavadoc (),
+    "org.scalatest" %%% "scalatest" % "3.0.4" % testConfIDCommaString,
 
     /**
      * ScalaCheck
@@ -429,7 +412,7 @@ lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
      * @see https://www.scalacheck.org/
      * @see http://search.maven.org/#search|ga|1|scalacheck
      */
-    "org.scalacheck" %%% "scalacheck" % "1.13.4" % testConfIDCommaString withSources () withJavadoc ()
+    "org.scalacheck" %%% "scalacheck" % "1.13.4" % testConfIDCommaString
 
     /**
      * Scalactic
@@ -437,7 +420,7 @@ lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
      * @see http://www.scalactic.org/
      * @see http://search.maven.org/#search|ga|1|scalactic
      */
-    // "org.scalactic" %% "scalactic" % "3.0.1" withSources() withJavadoc()
+    // "org.scalactic" %% "scalactic" % "3.0.1"
 
     /**
      * Scalaz
@@ -527,9 +510,10 @@ lazy val smclGeneralJsSettings: Seq[Def.Setting[_]] = Seq(
      * @see https://www.scala-js.org/
      * @see http://search.maven.org/#search|ga|1|scalajs-dom
      */
-    "org.scala-js" %%% "scalajs-dom" % "0.9.4" withSources () withJavadoc ()
+    "org.scala-js" %%% "scalajs-dom" % "0.9.4"
   ),
 
+  // TODO: Check the correctness of the line below when updating to Scala.js 1.0
   jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv,
 
   isJVMAWTPlatform := false,
@@ -553,7 +537,7 @@ lazy val smclGeneralJvmSettings: Seq[Def.Setting[_]] = Seq(
      * @see https://www.scala-js.org/
      * @see http://search.maven.org/#search|ga|1|scalajs-stubs
      */
-    "org.scala-js" %% "scalajs-stubs" % "0.6.22" % "provided" withSources () withJavadoc ()
+    "org.scala-js" %% "scalajs-stubs" % "0.6.21" % "provided"
   ),
 
   isJVMAWTPlatform := true,
@@ -606,7 +590,8 @@ lazy val `smcl-library-info`: Project = project.in(file("smcl-library-info"))
 //--------------------------------------------------------------------------------------------------
 
 lazy val smclBitmapViewer: CrossProject =
-  CrossProject(prjSmclBitmapViewerJvmId, prjSmclBitmapViewerJsId, file(prjSmclBitmapViewerId), CrossType.Full)
+  CrossProject(prjSmclBitmapViewerId, file(prjSmclBitmapViewerId))(JVMPlatform, JSPlatform)
+      .crossType(CrossType.Full)
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .enablePlugins(LibraryInfoPlugin)
       .disablePlugins(SbtGithubReleasePlugin)
@@ -634,7 +619,7 @@ lazy val smclBitmapViewer: CrossProject =
            * @see http://reactivex.io/rxscala/
            * @see http://search.maven.org/#search|ga|1|rxscala
            */
-          "io.reactivex" %% "rxscala" % "0.26.5" withSources () withJavadoc (),
+          "io.reactivex" %% "rxscala" % "0.26.5",
 
           /**
            * Scala Swing
@@ -642,19 +627,20 @@ lazy val smclBitmapViewer: CrossProject =
            * @see http://www.scala-lang.org/
            * @see http://search.maven.org/#search|ga|1|scala-swing
            */
-          "org.scala-lang.modules" %% "scala-swing" % "2.0.0" withSources () withJavadoc ()
+          "org.scala-lang.modules" %% "scala-swing" % "2.0.0"
         ),
       )
+      .jsConfigure(_.enablePlugins(JSDependenciesPlugin))
       .jsSettings(
         smclGeneralJsSettings,
 
         onLoadMessage := prjSmclBitmapViewerName + " JS/HTML5 Project Loaded",
         moduleInitializerCommand := smclBitmapViewerInitializerCommandJSHTML5,
 
-        inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-        inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
-        inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-        inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+        inConfig(ItgTest)(ScalaJSPlugin.testConfigSettings),
+        inConfig(GUITest)(ScalaJSPlugin.testConfigSettings),
+        inConfig(SmokeTest)(ScalaJSPlugin.testConfigSettings),
+        inConfig(LearningTest)(ScalaJSPlugin.testConfigSettings)
       )
       .dependsOn(smclCore % confToConfSemiColonString)
 
@@ -669,7 +655,8 @@ lazy val smclBitmapViewerJS: Project = smclBitmapViewer.js
 //--------------------------------------------------------------------------------------------------
 
 lazy val smclCore: CrossProject =
-  CrossProject(prjSmclCoreJvmId, prjSmclCoreJsId, file(prjSmclCoreId), CrossType.Full)
+  CrossProject(prjSmclCoreId, file(prjSmclCoreId))(JVMPlatform, JSPlatform)
+      .crossType(CrossType.Full)
       .configs(ItgTest, GUITest, SmokeTest, LearningTest)
       .enablePlugins(LibraryInfoPlugin)
       .disablePlugins(SbtGithubReleasePlugin)
@@ -691,16 +678,17 @@ lazy val smclCore: CrossProject =
         onLoadMessage := prjSmclCoreName + " JVM/AWT Project Loaded",
         moduleInitializerCommand := smclCoreInitializerCommandJVMAWT
       )
+      .jsConfigure(_.enablePlugins(JSDependenciesPlugin))
       .jsSettings(
         smclGeneralJsSettings,
 
         onLoadMessage := prjSmclCoreName + " JS/HTML5 Project Loaded",
         moduleInitializerCommand := smclCoreInitializerCommandJSHTML5,
 
-        inConfig(ItgTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-        inConfig(GUITest)(ScalaJSPluginInternal.scalaJSTestSettings),
-        inConfig(SmokeTest)(ScalaJSPluginInternal.scalaJSTestSettings),
-        inConfig(LearningTest)(ScalaJSPluginInternal.scalaJSTestSettings)
+        inConfig(ItgTest)(ScalaJSPlugin.testConfigSettings),
+        inConfig(GUITest)(ScalaJSPlugin.testConfigSettings),
+        inConfig(SmokeTest)(ScalaJSPlugin.testConfigSettings),
+        inConfig(LearningTest)(ScalaJSPlugin.testConfigSettings)
       )
 
 lazy val smclCoreJVM: Project = smclCore.jvm

@@ -19,6 +19,13 @@
  */
 
 
+
+// For Scala.js 1.0 in the future:
+// libraryDependencies += "org.scala-js" %% "scalajs-env-nodejs" % "1.0.0-M3"
+
+
+
+
 //--------------------------------------------------------------------------------------------------
 //
 // PLUGINS
@@ -30,7 +37,37 @@
 //
 // https://dl.bintray.com/sbt/sbt-plugin-releases/org.scala-js/sbt-scalajs/
 //
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.22")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.21")
+
+//
+// sbt-crossproject
+//
+//
+//
+addSbtPlugin("org.portable-scala" % "sbt-crossproject" % "0.3.1")
+
+//
+// sbt-scalajs-crossproject
+//
+//
+//
+addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "0.3.1")
+
+// For Scala.js 1.0 in the future:
+//
+// sbt-jsdependencies
+//
+//
+//
+// addSbtPlugin("org.scala-js" % "sbt-jsdependencies" % "1.0.0-M3")
+
+// For Scala.js 1.0 in the future:
+//
+// For PhantomJS Testing:
+//
+//
+//
+// addSbtPlugin("org.scala-js" % "sbt-scalajs-env-phantomjs" % "1.0.0-M3")
 
 //
 // sbt-native-packager
@@ -65,6 +102,13 @@ addSbtPlugin("ohnosequences" % "sbt-github-release" % "0.7.0")
 libraryDependencies += "javax.activation" % "activation" % "1.1.1"
 
 //
+// sbt-dependency-graph
+//
+// https://github.com/jrudolph/sbt-dependency-graph
+//
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.9.0")
+
+//
 // sbt-slack-notify
 //
 // https://github.com/jamiely/sbt-slack-notify
@@ -76,13 +120,13 @@ addSbtPlugin("ly.jamie" % "sbt-slack-notify" % "0.3.1")
 //
 // sbt-env-vars
 //
+// https://version.aalto.fi/gitlab/LeTech/sbt/sbt-env-vars
 //
-//
-addSbtPlugin("fi.aalto.cs" % "sbt-env-vars" % "0.1.1")
+addSbtPlugin("fi.aalto.cs" % "sbt-env-vars" % "0.1.2")
 
 //
 // sbt-libraryinfo
 //
+// https://version.aalto.fi/gitlab/LeTech/sbt/sbt-library-info
 //
-//
-addSbtPlugin("fi.aalto.cs" % "sbt-library-info" % "0.2.1")
+addSbtPlugin("fi.aalto.cs" % "sbt-library-info" % "0.2.2")

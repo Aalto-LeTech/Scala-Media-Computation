@@ -3,10 +3,10 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="smcl" target="1.8" />
-      <module name="smcl-bitmap-viewer-js" target="1.8" />
-      <module name="smcl-bitmap-viewer-jvm" target="1.8" />
-      <module name="smcl-core-js" target="1.8" />
-      <module name="smcl-core-jvm" target="1.8" />
+      <module name="smcl-bitmap-viewerJS" target="1.8" />
+      <module name="smcl-bitmap-viewerJVM" target="1.8" />
+      <module name="smcl-coreJS" target="1.8" />
+      <module name="smcl-coreJVM" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
