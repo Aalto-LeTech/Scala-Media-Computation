@@ -275,7 +275,7 @@ package object settings
   /**
    * A constant for updating viewer per default setting.
    */
-  case object UpdateViewerPerDefaults
+  case object VUSUpdateViewerPerDefaults
       extends ViewerUpdateStyle
 
 
@@ -284,7 +284,7 @@ package object settings
   /**
    * A constant for preventing viewer updates.
    */
-  case object PreventViewerUpdates
+  case object VUSPreventViewerUpdates
       extends ViewerUpdateStyle
 
 
@@ -301,7 +301,7 @@ package object settings
   /**
    * A constant for stating that positions are center points.
    */
-  case object CenterPosition
+  case object PosTypeCenter
       extends PositionType
 
 
@@ -310,7 +310,7 @@ package object settings
   /**
    * A constant for stating that positions are upper left corner points.
    */
-  case object UpperLeftCornerPosition
+  case object PosTypeUpperLeftCorner
       extends PositionType
 
 

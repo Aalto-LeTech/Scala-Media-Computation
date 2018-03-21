@@ -153,9 +153,7 @@ case class Dims private(
    * @return
    */
   @inline
-  def toTuple: DimensionTuple = {
-    (width, height)
-  }
+  def toTuple: DimensionTuple = (width, height)
 
   /**
    *
@@ -163,9 +161,8 @@ case class Dims private(
    * @return
    */
   @inline
-  def toDoubleTuple: (Double, Double) = {
+  def toDoubleTuple: (Double, Double) =
     (width.inPixels, height.inPixels)
-  }
 
   /**
    *

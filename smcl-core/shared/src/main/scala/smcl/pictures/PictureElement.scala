@@ -346,7 +346,7 @@ trait PictureElement
     addAt(
       content,
       newUpperLeftCornerX, newUpperLeftCornerY,
-      UpperLeftCornerPosition)
+      PosTypeUpperLeftCorner)
   }
 
   /**
@@ -370,7 +370,7 @@ trait PictureElement
     addAt(
       content,
       newUpperLeftCornerX, newUpperLeftCornerY,
-      UpperLeftCornerPosition)
+      PosTypeUpperLeftCorner)
   }
 
   /**
@@ -394,7 +394,7 @@ trait PictureElement
     addAt(
       content,
       newUpperLeftCornerX, newUpperLeftCornerY,
-      UpperLeftCornerPosition)
+      PosTypeUpperLeftCorner)
   }
 
   /**
@@ -420,7 +420,7 @@ trait PictureElement
     addAt(
       content,
       newUpperLeftCornerX, newUpperLeftCornerY,
-      UpperLeftCornerPosition)
+      PosTypeUpperLeftCorner)
   }
 
   /**

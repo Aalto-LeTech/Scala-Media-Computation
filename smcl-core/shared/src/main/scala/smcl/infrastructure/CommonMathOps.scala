@@ -20,6 +20,8 @@ package smcl.infrastructure
 /**
  * An interface for some common mathematical operations.
  *
+ * @tparam ElementType
+ *
  * @author Aleksi Lukkarinen
  */
 trait CommonMathOps[ElementType] {

@@ -209,18 +209,87 @@ case class Pos private[smcl](
    */
   @inline
   override
-  def toTuple: (Double, Double) = {
-    (xInPixels, yInPixels)
-  }
+  def toTuple: (Double, Double) = (xInPixels, yInPixels)
 
   /**
-   * Converts the object to a floored tuple of Ints.
+   * Converts the object to a tuple.
    *
    * @return
    */
   @inline
-  def toFlooredIntTuple: (Int, Int) =
-    (xInPixelsFloored, yInPixelsFloored)
+  override
+  def toFlooredTuple: (Double, Double) = (xInPixelsFloored, yInPixelsFloored)
+
+  /**
+   * Converts the object to a tuple.
+   *
+   * @return
+   */
+  @inline
+  def toFlooredIntTuple: (Int, Int) = (xInPixelsFloored, yInPixelsFloored)
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def toTupleWith[ResultType](
+      f: (Double, Double) => ResultType): (Pos, ResultType) = {
+
+    (this, convertWith(f))
+  }
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def toTupleFlooredWith[ResultType](
+      f: (Int, Int) => ResultType): (Pos, ResultType) = {
+
+    val fPos = floor
+    val result = f(fPos.xInPixelsFloored, fPos.yInPixelsFloored)
+
+    (fPos, result)
+  }
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def convertWith[ResultType](
+      f: (Double, Double) => ResultType): ResultType = {
+
+    f(xInPixels, yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param f
+   * @tparam ResultType
+   *
+   * @return
+   */
+  @inline
+  def convertFlooredWith[ResultType](
+      f: (Int, Int) => ResultType): ResultType = {
+
+    f(xInPixelsFloored, yInPixelsFloored)
+  }
 
   /**
    *

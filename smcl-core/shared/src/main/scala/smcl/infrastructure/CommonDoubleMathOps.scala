@@ -20,6 +20,8 @@ package smcl.infrastructure
 /**
  * An interface for some common mathematical operations that use Double values.
  *
+ * @tparam ElementType
+ *
  * @author Aleksi Lukkarinen
  */
 trait CommonDoubleMathOps[ElementType]

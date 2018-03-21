@@ -154,8 +154,8 @@ trait Movable[ReturnType]
       positionType: PositionType): ReturnType = {
 
     positionType match {
-      case CenterPosition          => moveCenterTo(coordinateInPixels)
-      case UpperLeftCornerPosition => moveUpperLeftCornerTo(coordinateInPixels)
+      case PosTypeCenter          => moveCenterTo(coordinateInPixels)
+      case PosTypeUpperLeftCorner => moveUpperLeftCornerTo(coordinateInPixels)
     }
   }
 

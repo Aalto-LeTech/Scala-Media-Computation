@@ -21,9 +21,10 @@ import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 import java.awt.{AlphaComposite, Graphics2D}
 import java.io.File
-import javax.imageio.ImageIO
 
 import scala.util.{Failure, Try}
+
+import javax.imageio.ImageIO
 
 import smcl.colors.ColorValidator
 import smcl.colors.rgb._
@@ -44,18 +45,21 @@ import smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroun
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object AWTBitmapBufferAdapter extends InjectablesRegistry {
+object AWTBitmapBufferAdapter
+    extends InjectablesRegistry {
 
   /** A constant for buffer of a 'normalized' type. */
   val NormalizedBufferType: Int = BufferedImage.TYPE_INT_ARGB
 
   /** The ColorValidator instance to be used by this object. */
-  private lazy val colorValidator: ColorValidator = {
+  private
+  lazy val colorValidator: ColorValidator = {
     injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
   }
 
   /** The BitmapValidator instance to be used by this object. */
-  private lazy val bitmapValidator: BitmapValidator = {
+  private
+  lazy val bitmapValidator: BitmapValidator = {
     injectable(InjectablesRegistry.IIdBitmapValidator).asInstanceOf[BitmapValidator]
   }
 
@@ -67,7 +71,10 @@ object AWTBitmapBufferAdapter extends InjectablesRegistry {
    *
    * @return
    */
-  def apply(widthInPixels: Len, heightInPixels: Len): AWTBitmapBufferAdapter = {
+  def apply(
+      widthInPixels: Len,
+      heightInPixels: Len): AWTBitmapBufferAdapter = {
+
     bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
     val newBuffer = createNormalizedLowLevelBitmapBufferOf(widthInPixels, heightInPixels)
@@ -83,7 +90,10 @@ object AWTBitmapBufferAdapter extends InjectablesRegistry {
    *
    * @return
    */
-  def apply(widthInPixels: Int, heightInPixels: Int): AWTBitmapBufferAdapter = {
+  def apply(
+      widthInPixels: Int,
+      heightInPixels: Int): AWTBitmapBufferAdapter = {
+
     val width = Len(widthInPixels)
     val height = Len(heightInPixels)
 
@@ -119,7 +129,8 @@ object AWTBitmapBufferAdapter extends InjectablesRegistry {
    *
    * @return
    */
-  private[infrastructure] def createNormalizedLowLevelBitmapBufferOf(
+  private[infrastructure]
+  def createNormalizedLowLevelBitmapBufferOf(
       width: Len,
       height: Len): BufferedImage = {
 
@@ -152,7 +163,8 @@ object AWTBitmapBufferAdapter extends InjectablesRegistry {
    *
    * @return
    */
-  private[infrastructure] def convertToNormalizedLowLevelBitmapBufferIfNecessary(
+  private[infrastructure]
+  def convertToNormalizedLowLevelBitmapBufferIfNecessary(
       buffer: BufferedImage): BufferedImage = {
 
     var bufferCandidate = buffer
@@ -224,6 +236,25 @@ class AWTBitmapBufferAdapter private(
   override
   def drawingSurface: AWTDrawingSurfaceAdapter = AWTDrawingSurfaceAdapter(this)
 
+  /**
+   *
+   *
+   * @param xInPixels
+   * @param yInPixels
+   *
+   * @return
+   */
+  override
+  def colorAt(
+      xInPixels: Double,
+      yInPixels: Double): Color = {
+
+    val argbInt = awtBufferedImage.getRGB(
+      xInPixels.floor.toInt,
+      yInPixels.floor.toInt)
+
+    Color(argbInt)
+  }
 
   /**
    *
@@ -587,9 +618,8 @@ class AWTBitmapBufferAdapter private(
    * @return
    */
   override
-  def copy: AWTBitmapBufferAdapter = {
+  def copy: AWTBitmapBufferAdapter =
     AWTBitmapBufferAdapter(BitmapUtils.deepCopy(awtBufferedImage))
-  }
 
   /**
    *
@@ -603,10 +633,10 @@ class AWTBitmapBufferAdapter private(
    */
   override
   def copyPortionXYXY(
-      topLeftX: Int,
-      topLeftY: Int,
-      bottomRightX: Int,
-      bottomRightY: Int): AWTBitmapBufferAdapter = {
+      topLeftX: Double,
+      topLeftY: Double,
+      bottomRightX: Double,
+      bottomRightY: Double): AWTBitmapBufferAdapter = {
 
     val (x0, x1) =
       if (topLeftX > bottomRightX)
@@ -638,15 +668,23 @@ class AWTBitmapBufferAdapter private(
    */
   override
   def copyPortionXYWH(
-      topLeftX: Int,
-      topLeftY: Int,
-      width: Int,
-      height: Int): AWTBitmapBufferAdapter = {
+      topLeftX: Double,
+      topLeftY: Double,
+      width: Double,
+      height: Double): AWTBitmapBufferAdapter = {
+
+    val flooredWidth: Int = width.floor.toInt
+    val flooredHeight: Int = height.floor.toInt
 
     val sourceBufferArea =
-      awtBufferedImage.getSubimage(topLeftX, topLeftY, width, height)
+      awtBufferedImage.getSubimage(
+        topLeftX.floor.toInt,
+        topLeftY.floor.toInt,
+        flooredWidth,
+        flooredHeight)
 
-    val newBuffer = AWTBitmapBufferAdapter.createNormalizedLowLevelBitmapBufferOf(Len(width), Len(height))
+    val newBuffer = AWTBitmapBufferAdapter
+        .createNormalizedLowLevelBitmapBufferOf(Len(flooredWidth), Len(flooredHeight))
 
     var drawingSurface: Graphics2D = null
     try {
@@ -666,9 +704,8 @@ class AWTBitmapBufferAdapter private(
    * @return
    */
   override
-  def emptyAlike: AWTBitmapBufferAdapter = {
+  def emptyAlike: AWTBitmapBufferAdapter =
     AWTBitmapBufferAdapter(widthInPixels, heightInPixels)
-  }
 
   /**
    *
@@ -680,6 +717,8 @@ class AWTBitmapBufferAdapter private(
   override
   def saveAsPngTo(filename: String): String = {
     val destFile = new File(filename)
+
+    // TODO: Refactor to throw SMCL exceptions
 
     if (destFile.exists())
       return "Error: The given file exists."

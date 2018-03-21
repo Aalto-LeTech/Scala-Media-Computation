@@ -17,7 +17,7 @@
 package smcl.pictures.fullfeatured
 
 
-import smcl.settings.{UpdateViewerPerDefaults, ViewerUpdateStyle}
+import smcl.settings.{VUSUpdateViewerPerDefaults, ViewerUpdateStyle}
 
 
 
@@ -52,7 +52,7 @@ object Bitmaps {
    * @return
    */
   def apply(sourceResourcePath: String): Seq[Bitmap] = {
-    apply(sourceResourcePath, UpdateViewerPerDefaults)
+    apply(sourceResourcePath, VUSUpdateViewerPerDefaults)
   }
 
 }

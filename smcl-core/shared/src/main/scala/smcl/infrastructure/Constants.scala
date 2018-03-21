@@ -30,73 +30,100 @@ import scala.collection.immutable.Range.Inclusive
 trait Constants {
 
   /** An empty string. */
-  protected[smcl] val StrEmpty: String = ""
+  protected[smcl]
+  val StrEmpty: String = ""
 
   /** A string containing a single space. */
-  protected[smcl] val StrSpace: String = " "
+  protected[smcl]
+  val StrSpace: String = " "
 
   /** A string containing a single period. */
-  protected[smcl] val StrPeriod: String = "."
+  protected[smcl]
+  val StrPeriod: String = "."
 
   /** A string containing a single comma. */
-  protected[smcl] val StrComma: String = ","
+  protected[smcl]
+  val StrComma: String = ","
 
   /** A string containing a single colon. */
-  protected[smcl] val StrColon: String = ":"
+  protected[smcl]
+  val StrColon: String = ":"
 
   /** A string containing a single colon. */
-  protected[smcl] val StrColonAsUnicode: String = "\u003A"
+  protected[smcl]
+  val StrColonAsUnicode: String = "\u003A"
 
   /** A string containing a single semicolon. */
-  protected[smcl] val StrSemicolon: String = ";"
+  protected[smcl]
+  val StrSemicolon: String = ";"
 
   /** A string containing a single semicolon. */
-  protected[smcl] val StrSemicolonAsUnicode: String = "\u003B"
+  protected[smcl]
+  val StrSemicolonAsUnicode: String = "\u003B"
 
   /** A string containing a single left angle bracket. */
-  protected[smcl] val StrLeftAngleBracket: String = "["
+  protected[smcl]
+  val StrLeftAngleBracket: String = "["
 
   /** A string containing a single right angle bracket. */
-  protected[smcl] val StrRightAngleBracket: String = "]"
+  protected[smcl]
+  val StrRightAngleBracket: String = "]"
 
   /** A string containing a single zero. */
-  protected[smcl] val StrZero: String = "0"
+  protected[smcl]
+  val StrZero: String = "0"
 
   /** A string containing a new-line separator. */
-  protected[smcl] val StrNewLine: String = System.lineSeparator
+  protected[smcl]
+  val StrNewLine: String = System.lineSeparator
 
   /** Length of a string containing a new-line separator. */
-  protected[smcl] val StrNewLineLength: Int = System.lineSeparator.length
+  protected[smcl]
+  val StrNewLineLength: Int = System.lineSeparator.length
 
   /** A string containing text "&lt;unnamed&gt;". */
-  protected[smcl] val StrUnnamed: String = "<unnamed>"
+  protected[smcl]
+  val StrUnnamed: String = "<unnamed>"
 
   /** Number of bits in one byte. */
-  protected[smcl] val OneByte: Int = 8
+  protected[smcl]
+  val OneByte: Int = 8
 
   /** Number of bits in two bytes. */
-  protected[smcl] val TwoBytes: Int = OneByte + OneByte
+  protected[smcl]
+  val TwoBytes: Int = OneByte + OneByte
 
   /** Number of bits in three bytes. */
-  protected[smcl] val ThreeBytes: Int = TwoBytes + OneByte
+  protected[smcl]
+  val ThreeBytes: Int = TwoBytes + OneByte
 
   /** Bits belonging to the rightmost byte of an `Int`. */
-  protected[smcl] val FirstByte: Int = 0xFF
+  protected[smcl]
+  val FirstByte: Int = 0xFF
 
   /** Bits belonging to the second-rightmost byte of an `Int`. */
-  protected[smcl] val SecondByte: Int = FirstByte << OneByte
+  protected[smcl]
+  val SecondByte: Int = FirstByte << OneByte
 
   /** Bits belonging to the second-leftmost byte of an `Int`. */
-  protected[smcl] val ThirdByte: Int = SecondByte << OneByte
+  protected[smcl]
+  val ThirdByte: Int = SecondByte << OneByte
 
   /** Bits belonging to the leftmost byte of an `Int`. */
-  protected[smcl] val FourthByte: Int = ThirdByte << OneByte
+  protected[smcl]
+  val FourthByte: Int = ThirdByte << OneByte
 
   /** The value range that a single unsigned byte can represent. */
-  protected[smcl] val ByteRange: Inclusive = 0 to 255
+  protected[smcl]
+  val ByteRange: Inclusive = 0 to 255
 
   /** 2 * PI */
-  protected[smcl] val PI2: Double = 2 * Math.PI
+  protected[smcl]
+  val PI2: Double = 2 * Math.PI
+
+
+
+  // TODO: Replace the usages of the constants below with the facilities of Angle
 
   /** Number of degrees representing a full circle. */
   val FullCircleInDegrees: Int = 360

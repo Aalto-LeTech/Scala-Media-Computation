@@ -54,7 +54,7 @@ object ShapeCreator
       diameterInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     validateCircleParameters(diameterInPixels, color, backgroundColor)
 
@@ -210,7 +210,7 @@ object ShapeCreator
       heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     validateEllipseParameters(widthInPixels, heightInPixels, color, backgroundColor)
 
@@ -385,7 +385,7 @@ object ShapeCreator
   def hLine(
       lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     validateHorizontalLineParameters(lengthInPixels, color)
 
@@ -513,7 +513,7 @@ object ShapeCreator
       toYInPixels: Double,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     val (bitmapWidth, bitmapHeight, isAscending) =
       calculateAndValidateLineParameters(
@@ -748,7 +748,7 @@ object ShapeCreator
       widthInPixels: Double = DefaultBitmapWidthInPixels,
       heightInPixels: Double = DefaultBitmapHeightInPixels,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     validateRectangleParameters(widthInPixels, heightInPixels, color)
 
@@ -895,7 +895,7 @@ object ShapeCreator
       roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     validateRoundedRectangleParameters(
       widthInPixels, heightInPixels,
@@ -1111,7 +1111,7 @@ object ShapeCreator
       roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
       color: Color = DefaultPrimaryColor,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     validateRoundedSquareParameters(
       sideLengthInPixels,
@@ -1307,7 +1307,7 @@ object ShapeCreator
   def square(
       sideLengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     validateSquareParameters(sideLengthInPixels, color)
 
@@ -1424,7 +1424,7 @@ object ShapeCreator
   def vLine(
       lengthInPixels: Double = DefaultBitmapWidthInPixels,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     validateVerticalLineParameters(lengthInPixels, color)
 

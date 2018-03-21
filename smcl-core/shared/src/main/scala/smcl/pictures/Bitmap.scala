@@ -372,6 +372,21 @@ class Bitmap private(
   /**
    *
    *
+   * @param xInPixels
+   * @param yInPixels
+   *
+   * @return
+   */
+  def colorAt(
+      xInPixels: Double,
+      yInPixels: Double): Option[Color] = {
+
+    buffer.map(_.colorAt(xInPixels, yInPixels))
+  }
+
+  /**
+   *
+   *
    * @param f
    *
    * @return
@@ -1022,20 +1037,15 @@ class Bitmap private(
       lowerRightX: Double,
       lowerRightY: Double): Bitmap = {
 
-    println("crop... to be implemented")
-    //Pic(self.crop(topLeft.xInt, topLeft.yInt, (topLeft.x + width - 1).round.toInt, (topLeft.y + height - 1).round.toInt), Center) // XXX pwa // XXX anchor
+    if (buffer.isEmpty)
+      return this
 
-    /*
-    if (self.dimensions == background.dimensions)
-      self
-    else {
-      val (cropX, cropY) = (from.x.floor.toInt, from.y.floor.toInt) // XXX pyöristys vai floor?
-      val bgWithCroppedPicOnTop = self.crop(cropX, cropY, cropX + background.width - 1, cropY + background.height - 1)  // XXX -1 ei kiva
-      PicWithAnchor(bgWithCroppedPicOnTop, background.anchor)    // XXX pwa
-    }
-    */
+    val newBuffer =
+      buffer.get.copyPortionXYXY(
+        upperLeftX, upperLeftY,
+        lowerRightX, lowerRightY)
 
-    this
+    new Bitmap(identity, isRenderable, boundary, Some(newBuffer))
   }
 
   /**

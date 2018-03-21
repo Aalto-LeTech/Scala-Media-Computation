@@ -46,8 +46,8 @@ trait AbstractMovable[ReturnType] {
       positionType: PositionType = DefaultPositionType): ReturnType = {
 
     positionType match {
-      case CenterPosition          => moveCenterTo(coordinatesInPixels)
-      case UpperLeftCornerPosition => moveUpperLeftCornerTo(coordinatesInPixels)
+      case PosTypeCenter          => moveCenterTo(coordinatesInPixels)
+      case PosTypeUpperLeftCorner => moveUpperLeftCornerTo(coordinatesInPixels)
     }
   }
 

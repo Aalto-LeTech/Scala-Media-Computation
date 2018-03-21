@@ -44,7 +44,7 @@ object Bitmap extends BitmapCompanion[Bitmap] {
       widthInPixels: Int = DefaultBitmapWidthInPixels,
       heightInPixels: Int = DefaultBitmapHeightInPixels,
       initialBackgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     super.apply(
       widthInPixels,
@@ -92,7 +92,7 @@ object Bitmap extends BitmapCompanion[Bitmap] {
       heightInPixels,
       initialBackgroundColor,
       processor,
-      PreventViewerUpdates)
+      VUSPreventViewerUpdates)
   }
 
   /**
@@ -115,7 +115,7 @@ object Bitmap extends BitmapCompanion[Bitmap] {
    * @return
    */
   def apply(sourceResourcePath: String): Bitmap = {
-    apply(sourceResourcePath, UpdateViewerPerDefaults)
+    apply(sourceResourcePath, VUSUpdateViewerPerDefaults)
   }
 
   /**
@@ -204,7 +204,7 @@ class Bitmap private[pictures](
    */
   private[pictures]
   override def applyInitialization(newOperation: Renderable): Bitmap = {
-    super.apply(newOperation, PreventViewerUpdates).asInstanceOf[Bitmap]
+    super.apply(newOperation, VUSPreventViewerUpdates).asInstanceOf[Bitmap]
   }
 
   /**
@@ -232,7 +232,7 @@ class Bitmap private[pictures](
    */
   private[pictures]
   override def applyInitialization(newOperation: BufferProvider): Bitmap = {
-    super.apply(newOperation, PreventViewerUpdates).asInstanceOf[Bitmap]
+    super.apply(newOperation, VUSPreventViewerUpdates).asInstanceOf[Bitmap]
   }
 
   /**
@@ -260,7 +260,7 @@ class Bitmap private[pictures](
    */
   def clear(
       color: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(Clear(color), viewerHandling)
   }
@@ -275,7 +275,7 @@ class Bitmap private[pictures](
    */
   def convolveWith(
       kernel: ConvolutionKernel,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(ConvolveWithCustomKernel(kernel), viewerHandling)
   }
@@ -290,7 +290,7 @@ class Bitmap private[pictures](
    */
   def filterWith(
       translator: ColorComponentTranslationTable,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(FilterWithComponentTranslationTable(translator), viewerHandling)
   }
@@ -305,7 +305,7 @@ class Bitmap private[pictures](
    */
   def iteratePixelsWith(
       function: (Int, Int, Int, Int) => (Int, Int, Int, Int),
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(IteratePixels(function), viewerHandling)
   }
@@ -328,7 +328,7 @@ class Bitmap private[pictures](
       toXInPixels: Int,
       toYInPixels: Int,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawLine(
@@ -356,7 +356,7 @@ class Bitmap private[pictures](
       yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
       color: Color = DefaultPrimaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawPolyline(
@@ -389,7 +389,7 @@ class Bitmap private[pictures](
       hasFilling: Boolean = false,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawPolygon(
@@ -425,7 +425,7 @@ class Bitmap private[pictures](
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawSquare(
@@ -463,7 +463,7 @@ class Bitmap private[pictures](
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawRectangle(
@@ -504,7 +504,7 @@ class Bitmap private[pictures](
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawRoundedSquare(
@@ -548,7 +548,7 @@ class Bitmap private[pictures](
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawRoundedRectangle(
@@ -587,7 +587,7 @@ class Bitmap private[pictures](
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawCircle(
@@ -625,7 +625,7 @@ class Bitmap private[pictures](
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawEllipse(
@@ -668,7 +668,7 @@ class Bitmap private[pictures](
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       DrawArc(
@@ -695,37 +695,9 @@ class Bitmap private[pictures](
    */
   def trim(
       colorToTrim: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(Trim(this, colorToTrim), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param windowTopLeftX
-   * @param windowTopLeftY
-   * @param windowBottomRightX
-   * @param windowBottomRightY
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def crop(
-      windowTopLeftX: Int,
-      windowTopLeftY: Int,
-      windowBottomRightX: Int,
-      windowBottomRightY: Int,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
-
-    apply(
-      Crop(
-        this,
-        windowTopLeftX,
-        windowTopLeftY,
-        windowBottomRightX,
-        windowBottomRightY),
-      viewerHandling)
   }
 
   /**
@@ -746,7 +718,7 @@ class Bitmap private[pictures](
       extraPixelsOntoRightEdge: Int = 0,
       extraPixelsOntoBottomEdge: Int = 0,
       color: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       AugmentCanvas(
@@ -774,7 +746,7 @@ class Bitmap private[pictures](
       topBitmapUpperLeftY: Int,
       topBitmapOpacity: Int = ColorValidator.MaximumOpacity,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       OverlayFreely(
@@ -805,7 +777,7 @@ class Bitmap private[pictures](
       upperLeftY: Int,
       opacity: Int = ColorValidator.MaximumOpacity,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       OverlayFreely(
@@ -941,7 +913,7 @@ class Bitmap private[pictures](
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
       opacityForAllBitmaps: Int = ColorValidator.MaximumOpacity,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       OverlayPerAlignments(this +: bitmapsToLayOverThisFromBottomToTop)(
@@ -967,7 +939,7 @@ class Bitmap private[pictures](
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
       paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       AppendHorizontally(bitmapsToCombineWith :+ this)(
@@ -993,7 +965,7 @@ class Bitmap private[pictures](
       verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
       paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       AppendHorizontally(this +: bitmapsToCombineWith)(
@@ -1030,7 +1002,7 @@ class Bitmap private[pictures](
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
       paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       AppendVertically(bitmapsToCombineWith :+ this)(
@@ -1067,7 +1039,7 @@ class Bitmap private[pictures](
       horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
       paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       AppendVertically(this +: bitmapsToCombineWith)(
@@ -1086,7 +1058,7 @@ class Bitmap private[pictures](
    * @return
    */
   def flipHorizontally(
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(FlipHorizontally(), viewerHandling)
   }
@@ -1099,7 +1071,7 @@ class Bitmap private[pictures](
    * @return
    */
   def flipVertically(
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(FlipVertically(), viewerHandling)
   }
@@ -1112,7 +1084,7 @@ class Bitmap private[pictures](
    * @return
    */
   def flipDiagonally(
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(FlipDiagonally(), viewerHandling)
   }
@@ -1131,7 +1103,7 @@ class Bitmap private[pictures](
       scalingFactorHorizontal: Double = 1.0,
       scalingFactorVertical: Double = 1.0,
       resizeCanvasBasedOnTransformation: Boolean = true,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       Scale(
@@ -1165,7 +1137,7 @@ class Bitmap private[pictures](
   def scaleHorizontally(
       scalingFactor: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     scale(
       scalingFactorHorizontal = scalingFactor,
@@ -1185,7 +1157,7 @@ class Bitmap private[pictures](
   def scaleVertically(
       scalingFactor: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     scale(
       scalingFactorVertical = scalingFactor,
@@ -1209,7 +1181,7 @@ class Bitmap private[pictures](
       shearingFactorVertical: Double = 0.0,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       Shear(
@@ -1246,7 +1218,7 @@ class Bitmap private[pictures](
       shearingFactor: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     shear(
       shearingFactorHorizontal = shearingFactor,
@@ -1269,7 +1241,7 @@ class Bitmap private[pictures](
       shearingFactor: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     shear(
       shearingFactorVertical = shearingFactor,
@@ -1292,7 +1264,7 @@ class Bitmap private[pictures](
       angleInDegrees: Double,
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       Rotate(
@@ -1315,7 +1287,7 @@ class Bitmap private[pictures](
   def rotate90DegsCW(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       Rotate(
@@ -1338,7 +1310,7 @@ class Bitmap private[pictures](
   def rotate90DegsCCW(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       Rotate(
@@ -1361,7 +1333,7 @@ class Bitmap private[pictures](
   def rotate180Degs(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       Rotate(
@@ -1384,7 +1356,7 @@ class Bitmap private[pictures](
   def turn(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     rotate90DegsCW(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
@@ -1401,7 +1373,7 @@ class Bitmap private[pictures](
   def unturn(
       resizeCanvasBasedOnTransformation: Boolean = CanvasesAreResizedBasedOnTransformations,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     rotate90DegsCCW(resizeCanvasBasedOnTransformation, backgroundColor, viewerHandling)
   }
@@ -1420,7 +1392,7 @@ class Bitmap private[pictures](
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       ReplicateHorizontally(
@@ -1446,7 +1418,7 @@ class Bitmap private[pictures](
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
       backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = UpdateViewerPerDefaults): Bitmap = {
+      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(
       ReplicateVertically(
