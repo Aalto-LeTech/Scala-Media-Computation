@@ -1,7 +1,7 @@
 # Release Notes for Scala Media Computation Library 0.0.4
 
 
-In addition to miscellaneous refactorings, small additions, and bug fixes that have bee introduced, the most essential changes are listed below.
+In addition to miscellaneous refactorings, small additions, and bug fixes that have been introduced, the most essential changes are listed below.
 
 
 ## User-Visible Functionality
