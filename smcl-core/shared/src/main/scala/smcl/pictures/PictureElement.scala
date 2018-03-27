@@ -860,7 +860,10 @@ trait PictureElement
         resultPicture.addTo(side, transformed, paddingInPixels, alignment))
     }
 
-    replicate(numberOfReplicas, this, this)
+    replicate(
+      numberOfReplicas,
+      previousTransformedPicture = this,
+      resultPicture = this)
   }
 
   /**
@@ -910,7 +913,9 @@ trait PictureElement
         resultPicture.addTo(side, selectedElement, paddingInPixels, alignment))
     }
 
-    alternate(NumberOfFirstAlternation, this)
+    alternate(
+      NumberOfFirstAlternation,
+      resultPicture = this)
   }
 
 }
