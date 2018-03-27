@@ -394,7 +394,9 @@ class AWTBitmapBufferAdapter private(
    * @return
    */
   override
-  def iteratePixelsWith(function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): AWTBitmapBufferAdapter = {
+  def iteratePixelsWith(
+      function: (Int, Int, Int, Int) => (Int, Int, Int, Int)): AWTBitmapBufferAdapter = {
+
     val newBuffer = copyPortionXYWH(0, 0, widthInPixels, heightInPixels)
 
     val (reds, greens, blues, opacities) = newBuffer.colorComponentArrays
@@ -552,24 +554,33 @@ class AWTBitmapBufferAdapter private(
   /**
    *
    *
-   * @param minX
-   * @param minY
-   * @param maxX
-   * @param maxY
+   * @param minXInPixels
+   * @param minYInPixels
+   * @param maxXInPixels
+   * @param maxYInPixels
    *
    * @return
    */
   override
   def boundaryOverflowsForLTRB(
-      minX: Double,
-      minY: Double,
-      maxX: Double,
-      maxY: Double): (Double, Double, Double, Double) = {
+      minXInPixels: Double,
+      minYInPixels: Double,
+      maxXInPixels: Double,
+      maxYInPixels: Double): (Double, Double, Double, Double) = {
 
-    val overflowLeft = if (minX < 0) -minX else 0
-    val overflowTop = if (minY < 0) -minY else 0
-    val overflowRight = if (maxX > awtBufferedImage.getWidth) maxX - awtBufferedImage.getWidth else 0
-    val overflowBottom = if (maxY > awtBufferedImage.getHeight) maxY - awtBufferedImage.getHeight else 0
+    val overflowLeft = if (minXInPixels < 0) -minXInPixels else 0
+
+    val overflowTop = if (minYInPixels < 0) -minYInPixels else 0
+
+    val overflowRight =
+      if (maxXInPixels > awtBufferedImage.getWidth)
+        maxXInPixels - awtBufferedImage.getWidth
+      else 0
+
+    val overflowBottom =
+      if (maxYInPixels > awtBufferedImage.getHeight)
+        maxYInPixels - awtBufferedImage.getHeight
+      else 0
 
     (overflowLeft, overflowTop, overflowRight, overflowBottom)
   }
@@ -582,7 +593,9 @@ class AWTBitmapBufferAdapter private(
    * @return
    */
   override
-  def createFilteredVersionWith(kernel: ConvolutionKernel): AWTBitmapBufferAdapter = {
+  def createFilteredVersionWith(
+      kernel: ConvolutionKernel): AWTBitmapBufferAdapter = {
+
     val lowLevelKernel = new Kernel(kernel.width, kernel.height, kernel.toRowMajorArray)
     val operation = new ConvolveOp(lowLevelKernel)
 
@@ -601,7 +614,9 @@ class AWTBitmapBufferAdapter private(
    * @return
    */
   override
-  def createFilteredVersionWith(translator: ColorComponentTranslationTable): AWTBitmapBufferAdapter = {
+  def createFilteredVersionWith(
+      translator: ColorComponentTranslationTable): AWTBitmapBufferAdapter = {
+
     val lowLevelLookupTable = new ShortLookupTable(0, translator.toArray)
     val operation = new LookupOp(lowLevelLookupTable, null)
 
@@ -624,62 +639,62 @@ class AWTBitmapBufferAdapter private(
   /**
    *
    *
-   * @param topLeftX
-   * @param topLeftY
-   * @param bottomRightX
-   * @param bottomRightY
+   * @param topLeftXInPixels
+   * @param topLeftYInPixels
+   * @param bottomRightXInPixels
+   * @param bottomRightYInPixels
    *
    * @return
    */
   override
   def copyPortionXYXY(
-      topLeftX: Double,
-      topLeftY: Double,
-      bottomRightX: Double,
-      bottomRightY: Double): AWTBitmapBufferAdapter = {
+      topLeftXInPixels: Double,
+      topLeftYInPixels: Double,
+      bottomRightXInPixels: Double,
+      bottomRightYInPixels: Double): AWTBitmapBufferAdapter = {
 
     val (x0, x1) =
-      if (topLeftX > bottomRightX)
-        (bottomRightX, topLeftX)
+      if (topLeftXInPixels > bottomRightXInPixels)
+        (bottomRightXInPixels, topLeftXInPixels)
       else
-        (topLeftX, bottomRightX)
+        (topLeftXInPixels, bottomRightXInPixels)
 
     val (y0, y1) =
-      if (topLeftY > bottomRightY)
-        (bottomRightY, topLeftY)
+      if (topLeftYInPixels > bottomRightYInPixels)
+        (bottomRightYInPixels, topLeftYInPixels)
       else
-        (topLeftY, bottomRightY)
+        (topLeftYInPixels, bottomRightYInPixels)
 
     val width = x1 - x0 + 1
     val height = y1 - y0 + 1
 
-    copyPortionXYWH(topLeftX, topLeftY, width, height)
+    copyPortionXYWH(topLeftXInPixels, topLeftYInPixels, width, height)
   }
 
   /**
    *
    *
-   * @param topLeftX
-   * @param topLeftY
-   * @param width
-   * @param height
+   * @param topLeftXInPixels
+   * @param topLeftYInPixels
+   * @param widthInPixels
+   * @param heightInPixels
    *
    * @return
    */
   override
   def copyPortionXYWH(
-      topLeftX: Double,
-      topLeftY: Double,
-      width: Double,
-      height: Double): AWTBitmapBufferAdapter = {
+      topLeftXInPixels: Double,
+      topLeftYInPixels: Double,
+      widthInPixels: Double,
+      heightInPixels: Double): AWTBitmapBufferAdapter = {
 
-    val flooredWidth: Int = width.floor.toInt
-    val flooredHeight: Int = height.floor.toInt
+    val flooredWidth: Int = widthInPixels.floor.toInt
+    val flooredHeight: Int = heightInPixels.floor.toInt
 
     val sourceBufferArea =
       awtBufferedImage.getSubimage(
-        topLeftX.floor.toInt,
-        topLeftY.floor.toInt,
+        topLeftXInPixels.floor.toInt,
+        topLeftYInPixels.floor.toInt,
         flooredWidth,
         flooredHeight)
 

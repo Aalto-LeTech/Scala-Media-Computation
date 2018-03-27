@@ -136,7 +136,7 @@ class Viewport private(
    * @return
    */
   @inline
-  def upperLeftCorner: Pos = boundary.upperLeftMarker
+  def upperLeftCorner: Pos = boundary.upperLeftCorner
 
   /**
    *
@@ -144,7 +144,7 @@ class Viewport private(
    * @return
    */
   @inline
-  def lowerRightCorner: Pos = boundary.lowerRightMarker
+  def lowerRightCorner: Pos = boundary.lowerRightCorner
 
   /**
    *

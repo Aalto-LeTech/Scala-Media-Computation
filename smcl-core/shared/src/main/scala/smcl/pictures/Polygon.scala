@@ -254,8 +254,8 @@ class Polygon private(
       s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
 
     moveBy(
-      coordinatesInPixels.head - boundary.upperLeftMarker.xInPixels,
-      coordinatesInPixels.tail.head - boundary.upperLeftMarker.yInPixels)
+      coordinatesInPixels.head - boundary.upperLeftCorner.xInPixels,
+      coordinatesInPixels.tail.head - boundary.upperLeftCorner.yInPixels)
   }
 
   /**
@@ -272,8 +272,8 @@ class Polygon private(
       yCoordinateInPixels: Double): PictureElement = {
 
     moveBy(
-      xCoordinateInPixels - boundary.upperLeftMarker.xInPixels,
-      yCoordinateInPixels - boundary.upperLeftMarker.yInPixels)
+      xCoordinateInPixels - boundary.upperLeftCorner.xInPixels,
+      yCoordinateInPixels - boundary.upperLeftCorner.yInPixels)
   }
 
   /**

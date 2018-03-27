@@ -1017,35 +1017,78 @@ class Bitmap private(
           angleInDegrees,
           centerOfRotation))
 
-    new Bitmap(identity, isRenderable, boundary, Some(newBuffer))
+    new Bitmap(identity, isRenderable, boundary, Some(newBuffer)) // DEFINE A NEW BOUNDARY!!!!
   }
 
   /**
    *
    *
-   * @param upperLeftX
-   * @param upperLeftY
-   * @param lowerRightX
-   * @param lowerRightY
+   * @param upperLeftXInPixels
+   * @param upperLeftYInPixels
+   * @param lowerRightXInPixels
+   * @param lowerRightYInPixels
    *
    * @return
    */
+  @inline
   override
   def crop(
-      upperLeftX: Double,
-      upperLeftY: Double,
-      lowerRightX: Double,
-      lowerRightY: Double): Bitmap = {
+      upperLeftXInPixels: Double,
+      upperLeftYInPixels: Double,
+      lowerRightXInPixels: Double,
+      lowerRightYInPixels: Double): Bitmap = {
 
     if (buffer.isEmpty)
       return this
 
-    val newBuffer =
-      buffer.get.copyPortionXYXY(
-        upperLeftX, upperLeftY,
-        lowerRightX, lowerRightY)
+    // TODO: Check parameters: Have to be inside the bitmap
 
-    new Bitmap(identity, isRenderable, boundary, Some(newBuffer))
+    val newBuffer = buffer.get.copyPortionXYXY(
+      upperLeftXInPixels, upperLeftYInPixels,
+      lowerRightXInPixels, lowerRightYInPixels)
+
+    val newUpperLeftCorner = Pos.Origo
+
+    val newLowerRightCorner =
+      newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
+
+    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+
+    new Bitmap(identity, isRenderable, newBounds, Option(newBuffer))
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftCorner
+   * @param widthInPixels
+   * @param heightInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def crop(
+      upperLeftCorner: Pos,
+      widthInPixels: Double,
+      heightInPixels: Double): Bitmap = {
+
+    if (buffer.isEmpty)
+      return this
+
+    // TODO: Check parameters: Have to be inside the bitmap
+
+    val newBuffer = buffer.get.copyPortionXYWH(
+        upperLeftCorner.xInPixels, upperLeftCorner.yInPixels,
+        widthInPixels, heightInPixels)
+
+    val newUpperLeftCorner = Pos.Origo
+    val newLowerRightCorner =
+      newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
+
+    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+
+    new Bitmap(identity, isRenderable, newBounds, Option(newBuffer))
   }
 
   /**
@@ -1056,6 +1099,7 @@ class Bitmap private(
    *
    * @return
    */
+  @inline
   override
   def scaleBy(widthFactor: Double, heightFactor: Double): Bitmap = {
     this

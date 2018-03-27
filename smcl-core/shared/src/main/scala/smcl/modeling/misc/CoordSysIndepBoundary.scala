@@ -44,17 +44,17 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType]
    * @return
    */
   @inline
-  def markers: Seq[PositionType]
+  def corners: Seq[PositionType]
 
   /**
-   * Provides an iterator for the boundary marker positions.
+   * Provides an iterator for the boundary corner positions.
    *
    * @return
    */
   @inline
   override
   def iterator: Iterator[PositionType] = {
-    markers.iterator
+    corners.iterator
   }
 
   /**
@@ -68,7 +68,7 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType]
   def flatMap(
       f: (Seq[PositionType]) => CoordSysIndepBoundary[PositionType, DimensionType]): CoordSysIndepBoundary[PositionType, DimensionType] = {
 
-    f(markers)
+    f(corners)
   }
 
   /**
@@ -82,18 +82,18 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType]
 
     @tailrec
     def hashCodeRecursive(
-        markers: Seq[PositionType],
+        corners: Seq[PositionType],
         sum: Int): Int = {
 
-      if (markers.isEmpty)
+      if (corners.isEmpty)
         return sum
 
       hashCodeRecursive(
-        markers.tail,
-        prime * sum + markers.head.##)
+        corners.tail,
+        prime * sum + corners.head.##)
     }
 
-    hashCodeRecursive(markers, 1)
+    hashCodeRecursive(corners, 1)
   }
 
   /**
@@ -120,7 +120,7 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType]
     other match {
       case that: CoordSysIndepBoundary[PositionType, DimensionType] =>
         that.canEqual(this) &&
-            that.markers == this.markers
+            that.corners == this.corners
 
       case _ => false
     }

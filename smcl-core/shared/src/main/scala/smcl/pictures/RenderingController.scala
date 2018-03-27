@@ -74,7 +74,7 @@ object RenderingController
     val buffer: BitmapBufferAdapter =
       PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
 
-    val upperLeftPos = bounds.upperLeftMarker.inverse
+    val upperLeftPos = bounds.upperLeftCorner.inverse
 
     renderElements(
       elements,
@@ -138,7 +138,7 @@ object RenderingController
         if (bmp.buffer.isEmpty)
           return
 
-        val topLeft = bmp.boundary.upperLeftMarker
+        val topLeft = bmp.boundary.upperLeftCorner
         val topLeftX = xOffsetToOrigoInPixels + topLeft.xInPixels
         val topLeftY = yOffsetToOrigoInPixels + topLeft.yInPixels
 

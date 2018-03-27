@@ -98,8 +98,8 @@ object BoundaryCalculator {
     val boundary = it.next().boundary
 
     if (boundary.isDefined) {
-      val ul = boundary.upperLeftMarker
-      val lr = boundary.lowerRightMarker
+      val ul = boundary.upperLeftCorner
+      val lr = boundary.lowerRightCorner
 
       val x0New = if (ul.xInPixels < x0) ul.xInPixels else x0
       val y0New = if (ul.yInPixels < y0) ul.yInPixels else y0

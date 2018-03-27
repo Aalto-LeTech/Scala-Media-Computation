@@ -34,26 +34,6 @@ trait Cropable[ReturnType <: PictureElement] {
   /**
    *
    *
-   * @param background
-   * @param upperLeftCornerOfCropped
-   *
-   * @return
-   */
-  @inline
-  def cropToSizeOf(
-      background: d2.HasDims,
-      upperLeftCornerOfCropped: Pos): ReturnType = {
-
-    crop(
-      upperLeftCornerOfCropped,
-      background.dimensions.width.inPixels,
-      background.dimensions.height.inPixels)
-  }
-
-
-  /**
-   *
-   *
    * @param boundary
    *
    * @return
@@ -61,8 +41,8 @@ trait Cropable[ReturnType <: PictureElement] {
   @inline
   def crop(boundary: Bounds): ReturnType = {
     crop(
-      boundary.upperLeftMarker,
-      boundary.lowerRightMarker)
+      boundary.upperLeftCorner,
+      boundary.lowerRightCorner)
   }
 
   /**
@@ -88,40 +68,52 @@ trait Cropable[ReturnType <: PictureElement] {
   /**
    *
    *
+   * @param upperLeftXInPixels
+   * @param upperLeftYInPixels
+   * @param lowerRightXInPixels
+   * @param lowerRightYInPixels
+   *
+   * @return
+   */
+  @inline
+  def crop(
+      upperLeftXInPixels: Double,
+      upperLeftYInPixels: Double,
+      lowerRightXInPixels: Double,
+      lowerRightYInPixels: Double): ReturnType
+
+  /**
+   *
+   *
+   * @param background
+   * @param upperLeftCornerOfCropped
+   *
+   * @return
+   */
+  @inline
+  def cropToSizeOf(
+      background: d2.HasDims,
+      upperLeftCornerOfCropped: Pos): ReturnType = {
+
+    crop(
+      upperLeftCornerOfCropped,
+      background.dimensions.width.inPixels,
+      background.dimensions.height.inPixels)
+  }
+
+  /**
+   *
+   *
    * @param upperLeftCorner
-   * @param width
-   * @param height
+   * @param widthInPixels
+   * @param heightInPixels
    *
    * @return
    */
   @inline
   def crop(
       upperLeftCorner: Pos,
-      width: Double,
-      height: Double): ReturnType = {
-
-    crop(
-      upperLeftCorner.xInPixels,
-      upperLeftCorner.yInPixels,
-      upperLeftCorner.xInPixels + width - 1,
-      upperLeftCorner.yInPixels + height - 1)
-  }
-
-  /**
-   *
-   *
-   * @param upperLeftX
-   * @param upperLeftY
-   * @param lowerRightX
-   * @param lowerRightY
-   *
-   * @return
-   */
-  @inline
-  def crop(
-      upperLeftX: Double,
-      upperLeftY: Double,
-      lowerRightX: Double,
-      lowerRightY: Double): ReturnType
+      widthInPixels: Double,
+      heightInPixels: Double): ReturnType
 
 }

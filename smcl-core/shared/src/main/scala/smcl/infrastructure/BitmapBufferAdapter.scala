@@ -128,18 +128,18 @@ trait BitmapBufferAdapter {
   /**
    *
    *
-   * @param minX
-   * @param minY
-   * @param maxX
-   * @param maxY
+   * @param minXInPixels
+   * @param minYInPixels
+   * @param maxXInPixels
+   * @param maxYInPixels
    *
    * @return
    */
   def boundaryOverflowsForLTRB(
-      minX: Double,
-      minY: Double,
-      maxX: Double,
-      maxY: Double): (Double, Double, Double, Double)
+      minXInPixels: Double,
+      minYInPixels: Double,
+      maxXInPixels: Double,
+      maxYInPixels: Double): (Double, Double, Double, Double)
 
   /**
    *
@@ -171,34 +171,34 @@ trait BitmapBufferAdapter {
   /**
    *
    *
-   * @param topLeftX
-   * @param topLeftY
-   * @param bottomRightX
-   * @param bottomRightY
+   * @param topLeftXInPixels
+   * @param topLeftYInPixels
+   * @param bottomRightXInPixels
+   * @param bottomRightYInPixels
    *
    * @return
    */
   def copyPortionXYXY(
-      topLeftX: Double,
-      topLeftY: Double,
-      bottomRightX: Double,
-      bottomRightY: Double): BitmapBufferAdapter
+      topLeftXInPixels: Double,
+      topLeftYInPixels: Double,
+      bottomRightXInPixels: Double,
+      bottomRightYInPixels: Double): BitmapBufferAdapter
 
   /**
    *
    *
-   * @param topLeftX
-   * @param topLeftY
-   * @param width
-   * @param height
+   * @param topLeftXInPixels
+   * @param topLeftYInPixels
+   * @param widthInPixels
+   * @param heightInPixels
    *
    * @return
    */
   def copyPortionXYWH(
-      topLeftX: Double,
-      topLeftY: Double,
-      width: Double,
-      height: Double): BitmapBufferAdapter
+      topLeftXInPixels: Double,
+      topLeftYInPixels: Double,
+      widthInPixels: Double,
+      heightInPixels: Double): BitmapBufferAdapter
 
   /**
    *

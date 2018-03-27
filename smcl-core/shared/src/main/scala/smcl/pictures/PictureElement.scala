@@ -160,6 +160,7 @@ trait PictureElement
    *
    * @return
    */
+  @inline
   def mergePixelsWith(
       another: PictureElement,
       pixelMerger: (Color, Color) => Color): Bitmap = {
@@ -170,26 +171,48 @@ trait PictureElement
   /**
    *
    *
-   * @param upperLeftCornerX
-   * @param upperLeftCornerY
-   * @param lowerRightCornerX
-   * @param lowerRightCornerY
+   * @param upperLeftCornerXInPixels
+   * @param upperLeftCornerYInPixels
+   * @param lowerRightCornerXInPixels
+   * @param lowerRightCornerYInPixels
    *
    * @return
    */
   @inline
   override
   def crop(
-      upperLeftCornerX: Double,
-      upperLeftCornerY: Double,
-      lowerRightCornerX: Double,
-      lowerRightCornerY: Double): Bitmap = {
+      upperLeftCornerXInPixels: Double,
+      upperLeftCornerYInPixels: Double,
+      lowerRightCornerXInPixels: Double,
+      lowerRightCornerYInPixels: Double): Bitmap = {
 
     toBitmap.crop(
-      upperLeftCornerX,
-      upperLeftCornerY,
-      lowerRightCornerX,
-      lowerRightCornerY)
+      upperLeftCornerXInPixels,
+      upperLeftCornerYInPixels,
+      lowerRightCornerXInPixels,
+      lowerRightCornerYInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param upperLeftCorner
+   * @param widthInPixels
+   * @param heightInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def crop(
+      upperLeftCorner: Pos,
+      widthInPixels: Double,
+      heightInPixels: Double): Bitmap = {
+
+    toBitmap.crop(
+      upperLeftCorner,
+      widthInPixels,
+      heightInPixels)
   }
 
   /**
@@ -341,7 +364,7 @@ trait PictureElement
     val newUpperLeftCornerX = boundary.horizontalPositionFor(alignment, content.boundary)
 
     val newUpperLeftCornerY =
-      boundary.upperLeftMarker.yInPixels - paddingInPixels - content.boundary.height.inPixels
+      boundary.upperLeftCorner.yInPixels - paddingInPixels - content.boundary.height.inPixels
 
     addAt(
       content,
@@ -364,7 +387,7 @@ trait PictureElement
       paddingInPixels: Double = DefaultPaddingInPixels,
       alignment: VerticalAlignment = DefaultVerticalAlignment): PictureElement = {
 
-    val newUpperLeftCornerX = boundary.lowerRightMarker.xInPixels + paddingInPixels
+    val newUpperLeftCornerX = boundary.lowerRightCorner.xInPixels + paddingInPixels
     val newUpperLeftCornerY = boundary.verticalPositionFor(alignment, content.boundary)
 
     addAt(
@@ -389,7 +412,7 @@ trait PictureElement
       alignment: HorizontalAlignment = DefaultHorizontalAlignment): PictureElement = {
 
     val newUpperLeftCornerX = boundary.horizontalPositionFor(alignment, content.boundary)
-    val newUpperLeftCornerY = boundary.lowerRightMarker.yInPixels + paddingInPixels
+    val newUpperLeftCornerY = boundary.lowerRightCorner.yInPixels + paddingInPixels
 
     addAt(
       content,
@@ -413,7 +436,7 @@ trait PictureElement
       alignment: VerticalAlignment = DefaultVerticalAlignment): PictureElement = {
 
     val newUpperLeftCornerX =
-      boundary.upperLeftMarker.xInPixels - paddingInPixels - content.boundary.width.inPixels
+      boundary.upperLeftCorner.xInPixels - paddingInPixels - content.boundary.width.inPixels
 
     val newUpperLeftCornerY = boundary.verticalPositionFor(alignment, content.boundary)
 
@@ -581,8 +604,8 @@ trait PictureElement
    *
    *
    * @param content
-   * @param xCoordinate
-   * @param yCoordinate
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
    * @param positionType
    *
    * @return
@@ -590,11 +613,11 @@ trait PictureElement
   @inline
   def addAt(
       content: PictureElement,
-      xCoordinate: Double,
-      yCoordinate: Double,
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double,
       positionType: PositionType = DefaultPositionType): PictureElement = {
 
-    addToFront(content.moveTo(xCoordinate, yCoordinate, positionType))
+    addToFront(content.moveTo(xCoordinateInPixels, yCoordinateInPixels, positionType))
   }
 
   /**

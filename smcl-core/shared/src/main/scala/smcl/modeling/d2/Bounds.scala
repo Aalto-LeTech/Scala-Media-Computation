@@ -22,7 +22,7 @@ import scala.util.Random
 import smcl.infrastructure.MathUtils
 import smcl.modeling._
 import smcl.modeling.misc.CoordSysIndepBoundary
-import smcl.settings.{HACenter, HALeft, HARight, HorizontalAlignment, VABottom, VAMiddle, VATop, VerticalAlignment}
+import smcl.settings._
 
 
 
@@ -67,19 +67,19 @@ object Bounds {
    * Creates a new [[Bounds]] instance based on center point, width, and height.
    *
    * @param center
-   * @param width
-   * @param height
+   * @param widthInPixels
+   * @param heightInPixels
    *
    * @return
    */
   @inline
   def apply(
       center: Pos,
-      width: Double,
-      height: Double): Bounds = {
+      widthInPixels: Double,
+      heightInPixels: Double): Bounds = {
 
-    val halfWidth = width / 2.0
-    val halfHeight = height / 2.0
+    val halfWidth = widthInPixels / 2.0
+    val halfHeight = heightInPixels / 2.0
     val upperLeftCorner = center - (halfWidth, halfHeight)
     val lowerRightCorner = center + (halfWidth, halfHeight)
 
@@ -100,35 +100,35 @@ object Bounds {
   /**
    * Creates a new [[Bounds]] instance.
    *
-   * @param upperLeft
-   * @param lowerRight
+   * @param upperLeftCorner
+   * @param lowerRightCorner
    *
    * @return
    */
   @inline
   def apply(
-      upperLeft: Pos,
-      lowerRight: Pos): Bounds = {
+      upperLeftCorner: Pos,
+      lowerRightCorner: Pos): Bounds = {
 
     apply(
-      upperLeft.xInPixels, upperLeft.yInPixels,
-      lowerRight.xInPixels, lowerRight.yInPixels)
+      upperLeftCorner.xInPixels, upperLeftCorner.yInPixels,
+      lowerRightCorner.xInPixels, lowerRightCorner.yInPixels)
   }
 
   /**
    * Creates a new [[Bounds]] instance.
    *
-   * @param markers
+   * @param corners
    *
    * @return
    */
   @inline
-  def apply(markers: Pos*): Bounds = {
+  def apply(corners: Pos*): Bounds = {
     require(
-      markers.length == 2,
-      s"Exactly two marker positions must be given (currently: ${markers.length})")
+      corners.length == 2,
+      s"Exactly two corner positions must be given (currently: ${corners.length})")
 
-    apply(markers: _*)
+    apply(corners: _*)
   }
 
   /**
@@ -157,8 +157,8 @@ object Bounds {
   /**
    * Creates a new [[Bounds]] instance.
    *
-   * @param upperLeftMarker
-   * @param lowerRightMarker
+   * @param upperLeftCorner
+   * @param lowerRightCorner
    * @param isDefined
    *
    * @return
@@ -166,11 +166,11 @@ object Bounds {
   @inline
   private
   def createInstance(
-      upperLeftMarker: Pos,
-      lowerRightMarker: Pos,
+      upperLeftCorner: Pos,
+      lowerRightCorner: Pos,
       isDefined: Boolean): Bounds = {
 
-    new Bounds(upperLeftMarker, lowerRightMarker, isDefined)
+    new Bounds(upperLeftCorner, lowerRightCorner, isDefined)
   }
 
 
@@ -272,37 +272,37 @@ object Bounds {
 /**
  * Rectangular boundary in two-dimensional Cartesian coordinate system.
  *
- * @param upperLeftMarker
- * @param lowerRightMarker
+ * @param upperLeftCorner
+ * @param lowerRightCorner
  * @param isDefined
  *
  * @author Aleksi Lukkarinen
  */
 case class Bounds private(
-    upperLeftMarker: Pos,
-    lowerRightMarker: Pos,
+    upperLeftCorner: Pos,
+    lowerRightCorner: Pos,
     isDefined: Boolean)
     extends CoordSysIndepBoundary[Pos, Dims]
         with HasArea {
 
   /** */
-  lazy val markers: Seq[Pos] =
-    Seq(upperLeftMarker, lowerRightMarker)
+  lazy val corners: Seq[Pos] =
+    Seq(upperLeftCorner, lowerRightCorner)
 
   /** Position of this boundary. */
   @inline
-  def position: Pos = upperLeftMarker
+  def position: Pos = upperLeftCorner
 
   /** */
-  lazy val center: Pos = upperLeftMarker.centerBetween(lowerRightMarker)
+  lazy val center: Pos = upperLeftCorner.centerBetween(lowerRightCorner)
 
   /** */
   lazy val width: Len =
-    Len(lowerRightMarker.xInPixels - upperLeftMarker.xInPixels + 1)
+    Len(lowerRightCorner.xInPixels - upperLeftCorner.xInPixels + 1)
 
   /** */
   lazy val height: Len =
-    Len(lowerRightMarker.yInPixels - upperLeftMarker.yInPixels + 1)
+    Len(lowerRightCorner.yInPixels - upperLeftCorner.yInPixels + 1)
 
   /** */
   lazy val dimensions: Dims =
@@ -355,7 +355,7 @@ case class Bounds private(
         case HARight  => width - boundaryToBeAligned.width
       }
 
-    upperLeftMarker.xInPixels + offset.inPixels
+    upperLeftCorner.xInPixels + offset.inPixels
   }
 
   /**
@@ -378,7 +378,7 @@ case class Bounds private(
         case VABottom => height - boundaryToBeAligned.height
       }
 
-    upperLeftMarker.yInPixels + offset.inPixels
+    upperLeftCorner.yInPixels + offset.inPixels
   }
 
   /**
@@ -391,23 +391,23 @@ case class Bounds private(
     val offsetX = Random.nextDouble() * width.inPixels
     val offsetY = Random.nextDouble() * height.inPixels
 
-    upperLeftMarker + (offsetX, offsetY)
+    upperLeftCorner + (offsetX, offsetY)
   }
 
   /**
    *
    *
-   * @param newUpperLeftMarker
-   * @param newLowerRightMarker
+   * @param newUpperLeftCorner
+   * @param newLowerRightCorner
    *
    * @return
    */
   @inline
   def copy(
-      newUpperLeftMarker: Pos = upperLeftMarker,
-      newLowerRightMarker: Pos = lowerRightMarker): Bounds = {
+      newUpperLeftCorner: Pos = upperLeftCorner,
+      newLowerRightCorner: Pos = lowerRightCorner): Bounds = {
 
-    Bounds(newUpperLeftMarker, newLowerRightMarker)
+    Bounds(newUpperLeftCorner, newLowerRightCorner)
   }
 
   /**
@@ -420,8 +420,8 @@ case class Bounds private(
   @inline
   def grow(offset: Double): Bounds =
     copy(
-      newUpperLeftMarker = upperLeftMarker.subtract(offset),
-      newLowerRightMarker = lowerRightMarker.add(offset))
+      newUpperLeftCorner = upperLeftCorner.subtract(offset),
+      newLowerRightCorner = lowerRightCorner.add(offset))
 
   /**
    *
@@ -433,8 +433,8 @@ case class Bounds private(
   @inline
   def grow(offset: Len): Bounds =
     copy(
-      newUpperLeftMarker = upperLeftMarker.subtract(offset),
-      newLowerRightMarker = lowerRightMarker.add(offset))
+      newUpperLeftCorner = upperLeftCorner.subtract(offset),
+      newLowerRightCorner = lowerRightCorner.add(offset))
 
   /**
    *
@@ -450,8 +450,8 @@ case class Bounds private(
       verticalOffset: Double): Bounds = {
 
     copy(
-      newUpperLeftMarker = upperLeftMarker.subtract(horizontalOffset, verticalOffset),
-      newLowerRightMarker = lowerRightMarker.add(horizontalOffset, verticalOffset))
+      newUpperLeftCorner = upperLeftCorner.subtract(horizontalOffset, verticalOffset),
+      newLowerRightCorner = lowerRightCorner.add(horizontalOffset, verticalOffset))
   }
 
   /**
@@ -468,8 +468,8 @@ case class Bounds private(
       verticalOffset: Len): Bounds = {
 
     copy(
-      newUpperLeftMarker = upperLeftMarker.subtract(horizontalOffset, verticalOffset),
-      newLowerRightMarker = lowerRightMarker.add(horizontalOffset, verticalOffset))
+      newUpperLeftCorner = upperLeftCorner.subtract(horizontalOffset, verticalOffset),
+      newLowerRightCorner = lowerRightCorner.add(horizontalOffset, verticalOffset))
   }
 
   /**
@@ -490,8 +490,8 @@ case class Bounds private(
       rightOffset: Double): Bounds = {
 
     copy(
-      newUpperLeftMarker = upperLeftMarker.subtract(leftOffset, topOffset),
-      newLowerRightMarker = lowerRightMarker.add(rightOffset, bottomOffset))
+      newUpperLeftCorner = upperLeftCorner.subtract(leftOffset, topOffset),
+      newLowerRightCorner = lowerRightCorner.add(rightOffset, bottomOffset))
   }
 
   /**
@@ -512,8 +512,8 @@ case class Bounds private(
       rightOffset: Len): Bounds = {
 
     copy(
-      newUpperLeftMarker = upperLeftMarker.subtract(leftOffset, topOffset),
-      newLowerRightMarker = lowerRightMarker.add(rightOffset, bottomOffset))
+      newUpperLeftCorner = upperLeftCorner.subtract(leftOffset, topOffset),
+      newLowerRightCorner = lowerRightCorner.add(rightOffset, bottomOffset))
   }
 
   /**
@@ -526,8 +526,8 @@ case class Bounds private(
   @inline
   def shrink(offset: Double): Bounds =
     copy(
-      newUpperLeftMarker = upperLeftMarker.add(offset),
-      newLowerRightMarker = lowerRightMarker.subtract(offset))
+      newUpperLeftCorner = upperLeftCorner.add(offset),
+      newLowerRightCorner = lowerRightCorner.subtract(offset))
 
   /**
    *
@@ -539,8 +539,8 @@ case class Bounds private(
   @inline
   def shrink(offset: Len): Bounds =
     copy(
-      newUpperLeftMarker = upperLeftMarker.add(offset),
-      newLowerRightMarker = lowerRightMarker.subtract(offset))
+      newUpperLeftCorner = upperLeftCorner.add(offset),
+      newLowerRightCorner = lowerRightCorner.subtract(offset))
 
   /**
    *
@@ -556,8 +556,8 @@ case class Bounds private(
       verticalOffset: Double): Bounds = {
 
     copy(
-      newUpperLeftMarker = upperLeftMarker.add(horizontalOffset, verticalOffset),
-      newLowerRightMarker = lowerRightMarker.subtract(horizontalOffset, verticalOffset))
+      newUpperLeftCorner = upperLeftCorner.add(horizontalOffset, verticalOffset),
+      newLowerRightCorner = lowerRightCorner.subtract(horizontalOffset, verticalOffset))
   }
 
   /**
@@ -574,8 +574,8 @@ case class Bounds private(
       verticalOffset: Len): Bounds = {
 
     copy(
-      newUpperLeftMarker = upperLeftMarker.add(horizontalOffset, verticalOffset),
-      newLowerRightMarker = lowerRightMarker.subtract(horizontalOffset, verticalOffset))
+      newUpperLeftCorner = upperLeftCorner.add(horizontalOffset, verticalOffset),
+      newLowerRightCorner = lowerRightCorner.subtract(horizontalOffset, verticalOffset))
   }
 
   /**
@@ -596,8 +596,8 @@ case class Bounds private(
       rightOffset: Double): Bounds = {
 
     copy(
-      newUpperLeftMarker = upperLeftMarker.add(leftOffset, topOffset),
-      newLowerRightMarker = lowerRightMarker.subtract(rightOffset, bottomOffset))
+      newUpperLeftCorner = upperLeftCorner.add(leftOffset, topOffset),
+      newLowerRightCorner = lowerRightCorner.subtract(rightOffset, bottomOffset))
   }
 
   /**
@@ -618,8 +618,8 @@ case class Bounds private(
       rightOffset: Len): Bounds = {
 
     copy(
-      newUpperLeftMarker = upperLeftMarker.add(leftOffset, topOffset),
-      newLowerRightMarker = lowerRightMarker.subtract(rightOffset, bottomOffset))
+      newUpperLeftCorner = upperLeftCorner.add(leftOffset, topOffset),
+      newLowerRightCorner = lowerRightCorner.subtract(rightOffset, bottomOffset))
   }
 
 }

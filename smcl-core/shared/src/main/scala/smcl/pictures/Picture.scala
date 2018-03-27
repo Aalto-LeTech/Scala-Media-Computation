@@ -114,7 +114,7 @@ class Picture private(
   /** Position of this object. */
   @inline
   override
-  def position: Pos = boundary.upperLeftMarker
+  def position: Pos = boundary.upperLeftCorner
 
   /** */
   val isRenderable: Boolean = width > 0 && height > 0
@@ -304,8 +304,8 @@ class Picture private(
       yCoordinateInPixels: Double): Picture = {
 
     moveBy(
-      xCoordinateInPixels - boundary.upperLeftMarker.xInPixels,
-      yCoordinateInPixels - boundary.upperLeftMarker.yInPixels)
+      xCoordinateInPixels - boundary.upperLeftCorner.xInPixels,
+      yCoordinateInPixels - boundary.upperLeftCorner.yInPixels)
   }
 
   /**
