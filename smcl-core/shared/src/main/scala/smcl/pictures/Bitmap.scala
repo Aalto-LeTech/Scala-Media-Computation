@@ -225,7 +225,18 @@ object Bitmap
           buffer.get.widthInPixels,
           buffer.get.heightInPixels)
 
-    new Bitmap(identity, isRenderable, boundary, buffer)
+    val contentCorners =
+      if (!isRenderable)
+        BitmapContentCorners.NotDefined
+      else
+        BitmapContentCorners(boundary)
+
+    new Bitmap(
+      identity,
+      isRenderable,
+      boundary,
+      contentCorners,
+      buffer)
   }
 
 }
@@ -247,6 +258,7 @@ class Bitmap private(
     override val identity: Identity,
     val isRenderable: Boolean,
     override val boundary: Bounds,
+    val contentCorners: BitmapContentCorners,
     private[smcl] val buffer: Option[BitmapBufferAdapter])
     extends PictureElement
         with Displayable {
@@ -777,6 +789,7 @@ class Bitmap private(
     this
   }
 
+/*
   /**
    * Transforms the content of this [[Bitmap]] using the specified affine
    * transformation. The center of this [[Bitmap]] remains unchanged.
@@ -785,6 +798,7 @@ class Bitmap private(
    *
    * @return
    */
+  private
   def transformContentWith(t: AffineTransformation): Bitmap = {
     if (buffer.isEmpty)
       return this
@@ -799,7 +813,7 @@ class Bitmap private(
       boundary = boundary,
       buffer = Some(newBuffer))
   }
-
+*/
   /**
    * Rotates this object around origo (0,0) by 90 degrees clockwise.
    *
@@ -1017,7 +1031,7 @@ class Bitmap private(
           angleInDegrees,
           centerOfRotation))
 
-    new Bitmap(identity, isRenderable, boundary, Some(newBuffer)) // DEFINE A NEW BOUNDARY!!!!
+    new Bitmap(identity, isRenderable, boundary, contentCorners, Some(newBuffer)) // DEFINE A NEW BOUNDARY AND CONTENT CORNERS!!!!
   }
 
   /**
@@ -1053,8 +1067,14 @@ class Bitmap private(
       newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+    val newContentCorners = BitmapContentCorners(newBounds)
 
-    new Bitmap(identity, isRenderable, newBounds, Option(newBuffer))
+    new Bitmap(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**
@@ -1079,16 +1099,22 @@ class Bitmap private(
     // TODO: Check parameters: Have to be inside the bitmap
 
     val newBuffer = buffer.get.copyPortionXYWH(
-        upperLeftCorner.xInPixels, upperLeftCorner.yInPixels,
-        widthInPixels, heightInPixels)
+      upperLeftCorner.xInPixels, upperLeftCorner.yInPixels,
+      widthInPixels, heightInPixels)
 
     val newUpperLeftCorner = Pos.Origo
     val newLowerRightCorner =
       newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+    val newContentCorners = BitmapContentCorners(newBounds)
 
-    new Bitmap(identity, isRenderable, newBounds, Option(newBuffer))
+    new Bitmap(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**
