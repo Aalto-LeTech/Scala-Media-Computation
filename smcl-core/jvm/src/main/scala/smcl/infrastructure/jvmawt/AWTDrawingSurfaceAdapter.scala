@@ -72,12 +72,12 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color = DefaultBackgroundColor,
       useSourceColorLiterally: Boolean = false): Unit = {
 
-    withDrawingSurface{ds =>
+    owner.withGraphics2D{g =>
       if (useSourceColorLiterally)
-        ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
 
-      ds.setColor(AWTColorAdapter(color).awtColor)
-      ds.fillRect(0, 0, owner.widthInPixels, owner.heightInPixels)
+      g.setColor(AWTColorAdapter(color).awtColor)
+      g.fillRect(0, 0, owner.widthInPixels, owner.heightInPixels)
     }
   }
 
@@ -115,10 +115,10 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
 
     val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumOpacity
 
-    withDrawingSurface{ds =>
-      ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
+    owner.withGraphics2D{g =>
+      g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
 
-      ds.drawImage(bitmap.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage, x, y, null)
+      g.drawImage(bitmap.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage, x, y, null)
     }
   }
 
@@ -139,10 +139,10 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
 
     val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumOpacity
 
-    withDrawingSurface{ds =>
-      ds.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
+    owner.withGraphics2D{g =>
+      g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, normalizedOpacity))
 
-      ds.drawImage(
+      g.drawImage(
         bitmap.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage,
         transformation.toAWTAffineTransform,
         null)
@@ -181,9 +181,9 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val x = xInPixels.floor.toInt
     val y = yInPixels.floor.toInt
 
-    withDrawingSurface{ds =>
-      ds.setColor(color.toAWTColor)
-      ds.drawLine(x, y, x, y)
+    owner.withGraphics2D{g =>
+      g.setColor(color.toAWTColor)
+      g.drawLine(x, y, x, y)
     }
   }
 
@@ -216,15 +216,15 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val width: Int = widthInPixels.floor.toInt
     val height: Int = heightInPixels.floor.toInt
 
-    withDrawingSurface{ds =>
+    owner.withGraphics2D{g =>
       if (hasFilling) {
-        ds.setColor(fillColor.toAWTColor)
-        ds.fillOval(upperLeftX, upperLeftY, width, height)
+        g.setColor(fillColor.toAWTColor)
+        g.fillOval(upperLeftX, upperLeftY, width, height)
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAWTColor)
-        ds.drawOval(upperLeftX, upperLeftY, width, height)
+        g.setColor(color.toAWTColor)
+        g.drawOval(upperLeftX, upperLeftY, width, height)
       }
     }
   }
@@ -267,17 +267,17 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       arcAngleInDegrees,
       Arc2D.OPEN)
 
-    withDrawingSurface{ds =>
-      ds.transform(transformation.toAWTAffineTransform)
+    owner.withGraphics2D{g =>
+      g.transform(transformation.toAWTAffineTransform)
 
       if (hasFilling) {
-        ds.setColor(fillColor.toAWTColor)
-        ds.fill(shape)
+        g.setColor(fillColor.toAWTColor)
+        g.fill(shape)
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAWTColor)
-        ds.draw(shape)
+        g.setColor(color.toAWTColor)
+        g.draw(shape)
       }
     }
   }
@@ -311,15 +311,15 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val width: Int = widthInPixels.floor.toInt
     val height: Int = heightInPixels.floor.toInt
 
-    withDrawingSurface{ds =>
+    owner.withGraphics2D{g =>
       if (hasFilling) {
-        ds.setColor(fillColor.toAWTColor)
-        ds.fillRect(upperLeftX, upperLeftY, width, height)
+        g.setColor(fillColor.toAWTColor)
+        g.fillRect(upperLeftX, upperLeftY, width, height)
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAWTColor)
-        ds.drawRect(upperLeftX, upperLeftY, width, height)
+        g.setColor(color.toAWTColor)
+        g.drawRect(upperLeftX, upperLeftY, width, height)
       }
     }
   }
@@ -358,15 +358,15 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val roundingWidth: Int = roundingWidthInPixels.floor.toInt
     val roundingHeight: Int = roundingHeightInPixels.floor.toInt
 
-    withDrawingSurface{ds =>
+    owner.withGraphics2D{g =>
       if (hasFilling) {
-        ds.setColor(fillColor.toAWTColor)
-        ds.fillRoundRect(upperLeftX, upperLeftY, width, height, roundingWidth, roundingHeight)
+        g.setColor(fillColor.toAWTColor)
+        g.fillRoundRect(upperLeftX, upperLeftY, width, height, roundingWidth, roundingHeight)
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAWTColor)
-        ds.drawRoundRect(upperLeftX, upperLeftY, width, height, roundingWidth, roundingHeight)
+        g.setColor(color.toAWTColor)
+        g.drawRoundRect(upperLeftX, upperLeftY, width, height, roundingWidth, roundingHeight)
       }
     }
   }
@@ -389,9 +389,9 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val xs = xCoordinates.map(_.floor.toInt).toArray
     val ys = yCoordinates.map(_.floor.toInt).toArray
 
-    withDrawingSurface{ds =>
-      ds.setColor(color.toAWTColor)
-      ds.drawPolyline(xs, ys, numberOfCoordinatesToDraw)
+    owner.withGraphics2D{g =>
+      g.setColor(color.toAWTColor)
+      g.drawPolyline(xs, ys, numberOfCoordinatesToDraw)
     }
   }
 
@@ -419,15 +419,15 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val xs = xCoordinates.map(_.floor.toInt).toArray
     val ys = yCoordinates.map(_.floor.toInt).toArray
 
-    withDrawingSurface{ds =>
+    owner.withGraphics2D{g =>
       if (hasFilling) {
-        ds.setColor(fillColor.toAWTColor)
-        ds.fillPolygon(xs, ys, numberOfCoordinatesToDraw)
+        g.setColor(fillColor.toAWTColor)
+        g.fillPolygon(xs, ys, numberOfCoordinatesToDraw)
       }
 
       if (hasBorder) {
-        ds.setColor(color.toAWTColor)
-        ds.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
+        g.setColor(color.toAWTColor)
+        g.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
       }
     }
   }
@@ -454,9 +454,9 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val endX = toXInPixels.floor.toInt
     val endY = toYInPixels.floor.toInt
 
-    withDrawingSurface{ds =>
-      ds.setColor(color.toAWTColor)
-      ds.drawLine(startX, startY, endX, endY)
+    owner.withGraphics2D{g =>
+      g.setColor(color.toAWTColor)
+      g.drawLine(startX, startY, endX, endY)
     }
   }
 
@@ -469,47 +469,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @return
    */
   def use[ResultType](workUnit: Graphics2D => ResultType): ResultType = {
-    withDrawingSurface[ResultType](workUnit)
-  }
-
-  /**
-   *
-   *
-   * @param workUnit
-   * @tparam ResultType
-   *
-   * @return
-   */
-  protected
-  def withDrawingSurface[ResultType](workUnit: Graphics2D => ResultType): ResultType = {
-    var drawingSurface: Graphics2D = null
-    var memorizedThrowable: Throwable = null
-
-    try {
-      drawingSurface = owner.awtBufferedImage.createGraphics()
-      workUnit(drawingSurface)
-    }
-    catch {
-      case caughtThrowable: Throwable =>
-        memorizedThrowable = caughtThrowable
-        throw caughtThrowable
-    }
-    finally {
-      if (drawingSurface != null) {
-        if (memorizedThrowable != null) {
-          try {
-            drawingSurface.dispose()
-          }
-          catch {
-            case caughtThrowable: Throwable =>
-              memorizedThrowable.addSuppressed(caughtThrowable)
-          }
-        }
-        else {
-          drawingSurface.dispose()
-        }
-      }
-    }
+    owner.withGraphics2D[ResultType](workUnit)
   }
 
 }

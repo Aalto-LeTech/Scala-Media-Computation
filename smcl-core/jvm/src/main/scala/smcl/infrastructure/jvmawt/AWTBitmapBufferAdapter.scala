@@ -77,7 +77,7 @@ object AWTBitmapBufferAdapter
 
     bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
 
-    val newBuffer = createNormalizedLowLevelBitmapBufferOf(widthInPixels, heightInPixels)
+    val newBuffer = createNormalizedLowLevelBitmapBufferOf(widthInPixels, heightInPixels, None)
 
     new AWTBitmapBufferAdapter(newBuffer, colorValidator)
   }
@@ -99,7 +99,7 @@ object AWTBitmapBufferAdapter
 
     bitmapValidator.validateBitmapSize(width, height)
 
-    val newBuffer = createNormalizedLowLevelBitmapBufferOf(width, height)
+    val newBuffer = createNormalizedLowLevelBitmapBufferOf(width, height, None)
 
     new AWTBitmapBufferAdapter(newBuffer, colorValidator)
   }
@@ -129,32 +129,29 @@ object AWTBitmapBufferAdapter
    *
    * @return
    */
-  private[infrastructure]
+  private[jvmawt]
   def createNormalizedLowLevelBitmapBufferOf(
       width: Len,
-      height: Len): BufferedImage = {
+      height: Len,
+      initializer: Option[Graphics2D => Unit]): BufferedImage = {
 
     val newBuffer = new BufferedImage(
-      width.inPixels.closestInt,
-      height.inPixels.closestInt, NormalizedBufferType)
+      width.inPixels.floor.toInt,
+      height.inPixels.floor.toInt, NormalizedBufferType)
 
-    var drawingSurface: Graphics2D = null
-    try {
-      drawingSurface = newBuffer.createGraphics()
-      drawingSurface.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
-      drawingSurface.setColor(DefaultBackgroundColor.toAWTColor)
-      drawingSurface.fillRect(
+    performWithGraphics2DOf(newBuffer){g =>
+      g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC))
+      g.setColor(DefaultBackgroundColor.toAWTColor)
+      g.fillRect(
         0, 0,
-        width.inPixels.closestInt,
-        height.inPixels.closestInt)
-    }
-    finally {
-      drawingSurface.dispose()
+        width.inPixels.floor.toInt,
+        height.inPixels.floor.toInt)
+
+      initializer.foreach(i => i(g))
     }
 
     newBuffer
   }
-
 
   /**
    *
@@ -163,30 +160,66 @@ object AWTBitmapBufferAdapter
    *
    * @return
    */
-  private[infrastructure]
+  private[jvmawt]
   def convertToNormalizedLowLevelBitmapBufferIfNecessary(
       buffer: BufferedImage): BufferedImage = {
 
     var bufferCandidate = buffer
 
     if (bufferCandidate.getType != NormalizedBufferType) {
-      val newBuffer = createNormalizedLowLevelBitmapBufferOf(
-        Len(bufferCandidate.getWidth),
-        Len(bufferCandidate.getHeight))
+      val initializer = (g: Graphics2D) => g.drawImage(bufferCandidate, null, 0, 0)
 
-      var drawingSurface: Graphics2D = null
-      try {
-        drawingSurface = newBuffer.createGraphics()
-        drawingSurface.drawImage(bufferCandidate, null, 0, 0)
-      }
-      finally {
-        drawingSurface.dispose()
-      }
+      val newBuffer = createNormalizedLowLevelBitmapBufferOf(
+        Len(bufferCandidate.getWidth), Len(bufferCandidate.getHeight), Some(initializer))
 
       bufferCandidate = newBuffer
     }
 
     bufferCandidate
+  }
+
+  /**
+   *
+   *
+   * @param bitmap
+   * @param workUnit
+   * @tparam ResultType
+   *
+   * @return
+   */
+  private[jvmawt]
+  def performWithGraphics2DOf[ResultType](
+      bitmap: BufferedImage)(
+      workUnit: Graphics2D => ResultType): ResultType = {
+
+    var gr2D: Graphics2D = null
+    var memorizedThrowable: Throwable = null
+
+    try {
+      gr2D = bitmap.createGraphics()
+      workUnit(gr2D)
+    }
+    catch {
+      case caughtThrowable: Throwable =>
+        memorizedThrowable = caughtThrowable
+        throw caughtThrowable
+    }
+    finally {
+      if (gr2D != null) {
+        if (memorizedThrowable != null) {
+          try {
+            gr2D.dispose()
+          }
+          catch {
+            case caughtThrowable: Throwable =>
+              memorizedThrowable.addSuppressed(caughtThrowable)
+          }
+        }
+        else {
+          gr2D.dispose()
+        }
+      }
+    }
   }
 
 }
@@ -235,6 +268,18 @@ class AWTBitmapBufferAdapter private(
    */
   override
   def drawingSurface: AWTDrawingSurfaceAdapter = AWTDrawingSurfaceAdapter(this)
+
+  /**
+   *
+   *
+   * @param workUnit
+   * @tparam ResultType
+   *
+   * @return
+   */
+  private[jvmawt]
+  def withGraphics2D[ResultType](workUnit: Graphics2D => ResultType): ResultType =
+    AWTBitmapBufferAdapter.performWithGraphics2DOf(awtBufferedImage)(workUnit)
 
   /**
    *
@@ -698,17 +743,11 @@ class AWTBitmapBufferAdapter private(
         flooredWidth,
         flooredHeight)
 
-    val newBuffer = AWTBitmapBufferAdapter
-        .createNormalizedLowLevelBitmapBufferOf(Len(flooredWidth), Len(flooredHeight))
+    val initializer = (g: Graphics2D) => g.drawImage(sourceBufferArea, null, 0, 0)
 
-    var drawingSurface: Graphics2D = null
-    try {
-      drawingSurface = newBuffer.createGraphics()
-      drawingSurface.drawImage(sourceBufferArea, null, 0, 0)
-    }
-    finally {
-      drawingSurface.dispose()
-    }
+    val newBuffer = AWTBitmapBufferAdapter.createNormalizedLowLevelBitmapBufferOf(
+      Len(flooredWidth), Len(flooredHeight),
+      Some(initializer))
 
     AWTBitmapBufferAdapter(newBuffer)
   }
