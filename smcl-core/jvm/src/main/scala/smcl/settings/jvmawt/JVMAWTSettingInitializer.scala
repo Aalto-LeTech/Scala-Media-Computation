@@ -19,7 +19,7 @@ package smcl.settings.jvmawt
 
 import smcl.infrastructure.SettingInitializer
 import smcl.pictures.BitmapValidatorFunctionFactory
-import smcl.settings.{ObjectSetting, SettingValidatorFactory}
+import smcl.settings.{BooleanSetting, ObjectSetting, SIdShapesHaveBordersByDefault, SettingValidatorFactory}
 
 
 
@@ -39,6 +39,11 @@ class JVMAWTSettingInitializer()
   def apply(
       settingValidatorFactory: SettingValidatorFactory,
       bitmapValidatorFunctionFactory: BitmapValidatorFunctionFactory): Unit = {
+
+    BooleanSetting(
+      key = SIdDrawingIsAntialiased,
+      initialValue = false,
+      validator = settingValidatorFactory.EmptyValidator)
 
     ObjectSetting[AWTAffineTransformationInterpolationMethod](
       key = "AffineTransformationInterpolationMethod",

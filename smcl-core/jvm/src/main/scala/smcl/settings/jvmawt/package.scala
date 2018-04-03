@@ -76,7 +76,8 @@ package object jvmawt {
     "AffineTransformationInterpolationMethod"
 
   /** */
-  private lazy val AffineTransformationInterpolationMethod0 = {
+  private
+  lazy val AffineTransformationInterpolationMethod0 = {
     Settings(SIdAffineTransformationInterpolationMethod)
         .asInstanceOf[ObjectSetting[AWTAffineTransformationInterpolationMethod]]
   }
@@ -100,5 +101,32 @@ package object jvmawt {
 
     AffineTransformationInterpolationMethod0.value = newValue
   }
+
+
+
+  /** An internal setting ID for the "DrawingIsAntialiased" setting. */
+  private[smcl]
+  val SIdDrawingIsAntialiased = "DrawingIsAntialiased"
+
+  private lazy val DrawingIsAntialiased0 =
+    Settings(SIdDrawingIsAntialiased).asInstanceOf[BooleanSetting]
+
+  def DrawingIsAntialiased: Boolean = {
+    DrawingIsAntialiased0.value
+  }
+
+  def DrawingIsAntialiased_=(newValue: Boolean): Unit = {
+    DrawingIsAntialiased0.value = newValue
+  }
+
+  def UseAntialiasing(): Unit = {
+    DrawingIsAntialiased0.value = true
+  }
+
+  def DoNotUseAntialiasing(): Unit = {
+    DrawingIsAntialiased0.value = false
+  }
+
+
 
 }

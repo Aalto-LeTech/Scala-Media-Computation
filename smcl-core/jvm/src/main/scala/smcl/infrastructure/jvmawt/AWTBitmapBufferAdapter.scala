@@ -19,7 +19,7 @@ package smcl.infrastructure.jvmawt
 
 import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
-import java.awt.{AlphaComposite, Graphics2D}
+import java.awt.{AlphaComposite, Graphics2D, RenderingHints}
 import java.io.File
 
 import scala.util.{Failure, Try}
@@ -33,7 +33,7 @@ import smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorCompo
 import smcl.modeling.d2.Dims
 import smcl.modeling.{AffineTransformation, Len}
 import smcl.pictures.{BitmapValidator, _}
-import smcl.settings.jvmawt.AffineTransformationInterpolationMethod
+import smcl.settings.jvmawt.{AffineTransformationInterpolationMethod, DrawingIsAntialiased}
 import smcl.settings.{CanvasesAreResizedBasedOnTransformations, DefaultBackgroundColor}
 
 
@@ -187,7 +187,7 @@ object AWTBitmapBufferAdapter
    *
    * @return
    */
-  private[jvmawt]
+  private[jvmawt] final
   def performWithGraphics2DOf[ResultType](
       bitmap: BufferedImage)(
       workUnit: Graphics2D => ResultType): ResultType = {
@@ -197,6 +197,8 @@ object AWTBitmapBufferAdapter
 
     try {
       gr2D = bitmap.createGraphics()
+
+      setDefaultGraphics2DProperies(gr2D)
       workUnit(gr2D)
     }
     catch {
@@ -220,6 +222,30 @@ object AWTBitmapBufferAdapter
         }
       }
     }
+  }
+
+  @inline
+  private final
+  def setDefaultGraphics2DProperies(g: Graphics2D): Unit = {
+    val antialiasingState =
+      if (DrawingIsAntialiased)
+        RenderingHints.VALUE_ANTIALIAS_ON
+      else
+        RenderingHints.VALUE_ANTIALIAS_OFF
+
+    g.setRenderingHint(
+      RenderingHints.KEY_ANTIALIASING,
+      antialiasingState)
+
+    val textAntialiasingState =
+      if (DrawingIsAntialiased)
+        RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+      else
+        RenderingHints.VALUE_TEXT_ANTIALIAS_OFF
+
+    g.setRenderingHint(
+      RenderingHints.KEY_TEXT_ANTIALIASING,
+      textAntialiasingState)
   }
 
 }
