@@ -283,7 +283,8 @@ case class Bounds private(
     lowerRightCorner: Pos,
     isDefined: Boolean)
     extends CoordSysIndepBoundary[Pos, Dims]
-        with HasArea {
+        with HasArea
+        with Movable[Bounds] {
 
   /** */
   lazy val corners: Seq[Pos] =
@@ -321,6 +322,9 @@ case class Bounds private(
   /** */
   lazy val aspectRatio: AspectRatio =
     AspectRatio.forDimensions(width, height)
+
+  /** */
+  lazy val isUndefined: Boolean = !isDefined
 
   /**
    *
@@ -388,6 +392,9 @@ case class Bounds private(
    */
   @inline
   def randomPosInside: Pos = {
+    if (isUndefined)
+      return Pos.Origo
+
     val offsetX = Random.nextDouble() * width.inPixels
     val offsetY = Random.nextDouble() * height.inPixels
 
@@ -395,7 +402,9 @@ case class Bounds private(
   }
 
   /**
-   *
+   * If this boundary is defined, returns a new [[Bounds]] instance
+   * with the given corners. Otherwise, returns this instance, as
+   * an undefined boundary cannot be used.
    *
    * @param newUpperLeftCorner
    * @param newLowerRightCorner
@@ -406,6 +415,9 @@ case class Bounds private(
   def copy(
       newUpperLeftCorner: Pos = upperLeftCorner,
       newLowerRightCorner: Pos = lowerRightCorner): Bounds = {
+
+    if (isUndefined)
+      return this
 
     Bounds(newUpperLeftCorner, newLowerRightCorner)
   }
@@ -620,6 +632,128 @@ case class Bounds private(
     copy(
       newUpperLeftCorner = upperLeftCorner.add(leftOffset, topOffset),
       newLowerRightCorner = lowerRightCorner.subtract(rightOffset, bottomOffset))
+  }
+
+  /**
+   *
+   *
+   * @param offsetsInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveBy(offsetsInPixels: Seq[Double]): Bounds = {
+    copy(
+      newUpperLeftCorner = upperLeftCorner.moveBy(offsetsInPixels),
+      newLowerRightCorner = lowerRightCorner.moveBy(offsetsInPixels))
+  }
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double): Bounds = {
+
+    copy(
+      newUpperLeftCorner = upperLeftCorner.moveBy(xOffsetInPixels, yOffsetInPixels),
+      newLowerRightCorner = lowerRightCorner.moveBy(xOffsetInPixels, yOffsetInPixels))
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Bounds = {
+    if (isUndefined)
+      return this
+
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    moveBy(
+      coordinatesInPixels.head - upperLeftCorner.xInPixels,
+      coordinatesInPixels.tail.head - upperLeftCorner.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveUpperLeftCornerTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): Bounds = {
+
+    if (isUndefined)
+      return this
+
+    moveBy(
+      xCoordinateInPixels - upperLeftCorner.xInPixels,
+      yCoordinateInPixels - upperLeftCorner.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): Bounds = {
+    if (isUndefined)
+      return this
+
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    moveBy(
+      coordinatesInPixels.head - center.xInPixels,
+      coordinatesInPixels.tail.head - center.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): Bounds = {
+
+    if (isUndefined)
+      return this
+
+    moveBy(
+      xCoordinateInPixels - center.xInPixels,
+      yCoordinateInPixels - center.yInPixels)
   }
 
 }

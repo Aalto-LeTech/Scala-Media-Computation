@@ -247,6 +247,7 @@ class Polygon private(
    *
    * @return
    */
+  @inline
   override
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): PictureElement = {
     require(
@@ -266,6 +267,7 @@ class Polygon private(
    *
    * @return
    */
+  @inline
   override
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,

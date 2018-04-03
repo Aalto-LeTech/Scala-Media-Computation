@@ -291,7 +291,7 @@ class Bitmap private(
   def toBitmapCopy: Bitmap = {
     val newBuffer = buffer.map(_.copy).orNull
 
-    Bitmap(identity, position, Option(newBuffer))
+    internalCopy(newBuffer = Option(newBuffer))
   }
 
   /**
@@ -554,7 +554,7 @@ class Bitmap private(
   def toGrayscale(
       redWeight: Double,
       greenWeight: Double,
-      blueWeight: Double): PictureElement = {
+      blueWeight: Double): Bitmap = {
 
     val filter = ToWeightedGrayscale(redWeight, greenWeight, blueWeight)
 
@@ -672,8 +672,10 @@ class Bitmap private(
    */
   @inline
   override
-  def moveBy(offsetsInPixels: Seq[Double]): PictureElement =
-    this //copy(newPosition = boundary.moveBy(offsetsInPixels))
+  def moveBy(offsetsInPixels: Seq[Double]): Bitmap =
+    internalBufferPreservingCopy(
+      newBoundary = boundary.moveBy(offsetsInPixels),
+      newContentCorners = contentCorners.moveBy(offsetsInPixels))
 
   /**
    *
@@ -687,41 +689,11 @@ class Bitmap private(
   override
   def moveBy(
       xOffsetInPixels: Double,
-      yOffsetInPixels: Double): PictureElement = {
+      yOffsetInPixels: Double): Bitmap = {
 
-    this //copy(newPosition = boundary.moveBy(xOffsetInPixels, yOffsetInPixels))
-  }
-
-  /**
-   *
-   *
-   * @param coordinatesInPixels
-   *
-   * @return
-   */
-  override
-  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): PictureElement = {
-    require(
-      coordinatesInPixels.length == NumberOfDimensions,
-      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
-
-    this //copy(newPosition = boundary.moveUpperLeftCornerTo(coordinatesInPixels))
-  }
-
-  /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   *
-   * @return
-   */
-  override
-  def moveUpperLeftCornerTo(
-      xCoordinateInPixels: Double,
-      yCoordinateInPixels: Double): PictureElement = {
-
-    this //copy(newPosition = boundary.moveUpperLeftCornerTo(xCoordinateInPixels, yCoordinateInPixels))
+    internalBufferPreservingCopy(
+      newBoundary = boundary.moveBy(xOffsetInPixels, yOffsetInPixels),
+      newContentCorners = contentCorners.moveBy(xOffsetInPixels, yOffsetInPixels))
   }
 
   /**
@@ -733,12 +705,52 @@ class Bitmap private(
    */
   @inline
   override
-  def moveCenterTo(coordinatesInPixels: Seq[Double]): PictureElement = {
+  def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Bitmap = {
     require(
       coordinatesInPixels.length == NumberOfDimensions,
       s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
 
-    this //copy(newPosition = boundary.moveCenterTo(coordinatesInPixels))
+    moveBy(
+      coordinatesInPixels.head - boundary.upperLeftCorner.xInPixels,
+      coordinatesInPixels.tail.head - boundary.upperLeftCorner.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveUpperLeftCornerTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double): Bitmap = {
+
+    moveBy(
+      xCoordinateInPixels - boundary.upperLeftCorner.xInPixels,
+      yCoordinateInPixels - boundary.upperLeftCorner.yInPixels)
+  }
+
+  /**
+   *
+   *
+   * @param coordinatesInPixels
+   *
+   * @return
+   */
+  @inline
+  override
+  def moveCenterTo(coordinatesInPixels: Seq[Double]): Bitmap = {
+    require(
+      coordinatesInPixels.length == NumberOfDimensions,
+      s"Exactly $NumberOfDimensions coordinates must be given (found: ${coordinatesInPixels.length})")
+
+    moveBy(
+      coordinatesInPixels.head - boundary.center.xInPixels,
+      coordinatesInPixels.tail.head - boundary.center.yInPixels)
   }
 
   /**
@@ -753,9 +765,11 @@ class Bitmap private(
   override
   def moveCenterTo(
       xCoordinateInPixels: Double,
-      yCoordinateInPixels: Double): PictureElement = {
+      yCoordinateInPixels: Double): Bitmap = {
 
-    this //copy(newPosition = boundary.moveCenterTo(xCoordinateInPixels, yCoordinateInPixels))
+    moveBy(
+      xCoordinateInPixels - boundary.center.xInPixels,
+      yCoordinateInPixels - boundary.center.yInPixels)
   }
 
   /**
@@ -770,13 +784,64 @@ class Bitmap private(
     buffer.fold("Error: No BitmapBufferAdapter to save.")(_.saveAsPngTo(filename))
 
   /**
+   * Creates a copy of this bitmap with given arguments.
+   *
+   * This is an unsafe method, as it can be used to create [[Bitmap]] instances,
+   * whose internal state is incoherent. As such, it is not for public use.
+   *
+   * @param newIdentity
+   * @param newIsRenderable
+   * @param newBoundary
+   * @param newContentCorners
+   * @param newBuffer
    *
    * @return
    */
-  //@inline
-  //private
-  //def internalCopy(newPosition: Pos = position): Bitmap =
-  //  new Bitmap(identity, isRenderable, newPosition, buffer.map(_.copy))
+  @inline
+  private
+  def internalCopy(
+      newIdentity: Identity = identity,
+      newIsRenderable: Boolean = isRenderable,
+      newBoundary: Bounds = boundary,
+      newContentCorners: BitmapContentCorners = contentCorners,
+      newBuffer: Option[BitmapBufferAdapter] = buffer): Bitmap = {
+
+    new Bitmap(
+      newIdentity,
+      newIsRenderable,
+      newBoundary,
+      newContentCorners,
+      newBuffer) // e.g., buffer.map(_.copy) to make a new copy of the internal buffer
+  }
+
+  /**
+   * Creates a copy of this bitmap with given arguments.
+   *
+   * This is an unsafe method, as it can be used to create [[Bitmap]] instances,
+   * whose internal state is incoherent. As such, it is not for public use.
+   *
+   * @param newIdentity
+   * @param newIsRenderable
+   * @param newBoundary
+   * @param newContentCorners
+   *
+   * @return
+   */
+  @inline
+  private
+  def internalBufferPreservingCopy(
+      newIdentity: Identity = identity,
+      newIsRenderable: Boolean = isRenderable,
+      newBoundary: Bounds = boundary,
+      newContentCorners: BitmapContentCorners = contentCorners): Bitmap = {
+
+    internalCopy(
+      newIdentity,
+      newIsRenderable,
+      newBoundary,
+      newContentCorners,
+      buffer)
+  }
 
   /**
    *
@@ -1069,7 +1134,7 @@ class Bitmap private(
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
     val newContentCorners = BitmapContentCorners(newBounds)
 
-    new Bitmap(
+    internalCopy(
       identity,
       isRenderable,
       newBounds,
@@ -1109,7 +1174,7 @@ class Bitmap private(
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
     val newContentCorners = BitmapContentCorners(newBounds)
 
-    new Bitmap(
+    internalCopy(
       identity,
       isRenderable,
       newBounds,

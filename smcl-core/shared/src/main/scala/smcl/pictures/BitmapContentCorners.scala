@@ -17,8 +17,7 @@
 package smcl.pictures
 
 
-import smcl.modeling.AffineTransformation
-import smcl.modeling.d2.{BoundaryCalculator, Bounds, Pos}
+import smcl.modeling.d2.{Bounds, Pos}
 
 
 
@@ -140,5 +139,71 @@ class BitmapContentCorners private(
 
   /** */
   val isUndefined: Boolean = !isDefined
+
+  /**
+   *
+   *
+   * @param offsetsInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveBy(offsetsInPixels: Seq[Double]): BitmapContentCorners =
+    internalCopy(
+      newUpperLeftCorner = upperLeftCorner.moveBy(offsetsInPixels),
+      newUpperRightCorner = upperRightCorner.moveBy(offsetsInPixels),
+      newLowerRightCorner = lowerRightCorner.moveBy(offsetsInPixels),
+      newLowerLeftCorner = lowerLeftCorner.moveBy(offsetsInPixels))
+
+  /**
+   *
+   *
+   * @param xOffsetInPixels
+   * @param yOffsetInPixels
+   *
+   * @return
+   */
+  @inline
+  def moveBy(
+      xOffsetInPixels: Double,
+      yOffsetInPixels: Double): BitmapContentCorners = {
+
+    internalCopy(
+      newUpperLeftCorner = upperLeftCorner.moveBy(xOffsetInPixels, yOffsetInPixels),
+      newUpperRightCorner = upperRightCorner.moveBy(xOffsetInPixels, yOffsetInPixels),
+      newLowerRightCorner = lowerRightCorner.moveBy(xOffsetInPixels, yOffsetInPixels),
+      newLowerLeftCorner = lowerLeftCorner.moveBy(xOffsetInPixels, yOffsetInPixels))
+  }
+
+  /**
+   * Creates a copy of these bitmap content corners with given arguments.
+   *
+   * This is an unsafe method, as it can be used to create [[BitmapContentCorners]]
+   * instances, whose internal state is incoherent. As such, it is not for public use.
+   *
+   * @param newUpperLeftCorner
+   * @param newUpperRightCorner
+   * @param newLowerRightCorner
+   * @param newLowerLeftCorner
+   *
+   * @return
+   */
+  @inline
+  private
+  def internalCopy(
+      newUpperLeftCorner: Pos = upperLeftCorner,
+      newUpperRightCorner: Pos = upperRightCorner,
+      newLowerRightCorner: Pos = lowerRightCorner,
+      newLowerLeftCorner: Pos = lowerLeftCorner): BitmapContentCorners = {
+
+    if (isUndefined)
+      return this
+
+    BitmapContentCorners(
+      newUpperLeftCorner,
+      newUpperRightCorner,
+      newLowerRightCorner,
+      newLowerLeftCorner)
+  }
 
 }
