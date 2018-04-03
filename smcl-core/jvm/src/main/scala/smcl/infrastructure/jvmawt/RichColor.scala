@@ -32,7 +32,7 @@ import smcl.colors.rgb.Color
  *
  * @author Aleksi Lukkarinen
  */
-class RicherColor(val self: Color) {
+class RichColor(val self: Color) {
 
   /**
    * This [[Color]] as a `java.awt.Color`.

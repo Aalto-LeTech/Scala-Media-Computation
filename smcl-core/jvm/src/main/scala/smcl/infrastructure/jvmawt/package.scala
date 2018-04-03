@@ -57,8 +57,8 @@ package object jvmawt {
   /**
    *
    */
-  implicit def SMCLColorWrapper(self: Color): RicherColor =
-    new RicherColor(self)
+  implicit def SMCLColorWrapper(self: Color): RichColor =
+    new RichColor(self)
 
   /**
    *
