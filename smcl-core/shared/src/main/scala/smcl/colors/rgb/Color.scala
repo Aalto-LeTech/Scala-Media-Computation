@@ -44,6 +44,12 @@ object Color
   lazy val colorValidator: ColorValidator =
     injectable(InjectablesRegistry.IIdColorValidator).asInstanceOf[ColorValidator]
 
+  /** The factor the amount of which colors are shaded by the darker() method. */
+  final def DefaultShadingFactor = 0.1
+
+  /** The factor the amount of which colors are tinted by the lighter() method. */
+  final def DefaultTintingFactor = 0.1
+
   /**
    * Internal method for actually instantiating the [[Color]] class.
    * All other constructors are to call this method.
@@ -237,7 +243,6 @@ object Color
   }
 
   /**
-   *
    *
    * @group Grayscale Constructors
    *
@@ -1216,6 +1221,49 @@ class Color protected[smcl](
   /**
    *
    *
+   * @param newRed
+   * @param newGreen
+   * @param newBlue
+   * @param newOpacity
+   *
+   * @return
+   */
+  @inline
+  def copy(
+      newRed: Int = red,
+      newGreen: Int = green,
+      newBlue: Int = blue,
+      newOpacity: Int = opacity): Color = {
+
+    Color.instantiateColor(
+      newRed, newGreen, newBlue,
+      newOpacity)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override
+  def toString: String =
+    s"Color(red: $red, green: $green, blue: $blue, opacity: $opacity)"
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  //
+  //
+  //
+  //  COLOR COMPARISONS
+  //
+  //
+  //
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   *
+   *
    * @group Comparing Colors
    *
    * @param other
@@ -1307,28 +1355,6 @@ class Color protected[smcl](
   /**
    *
    *
-   * @param newRed
-   * @param newGreen
-   * @param newBlue
-   * @param newOpacity
-   *
-   * @return
-   */
-  @inline
-  def copy(
-      newRed: Int = red,
-      newGreen: Int = green,
-      newBlue: Int = blue,
-      newOpacity: Int = opacity): Color = {
-
-    Color.instantiateColor(
-      newRed, newGreen, newBlue,
-      newOpacity)
-  }
-
-  /**
-   *
-   *
    * @group Comparing Colors
    *
    * @param that
@@ -1366,15 +1392,16 @@ class Color protected[smcl](
   def compareByHSIIntensity(that: Color): Int =
     Math.signum(that.toHSIIntensity - this.toHSIIntensity).toInt
 
-  /**
-   *
-   *
-   * @return
-   */
-  @inline
-  override
-  def toString: String =
-    s"Color(red: $red, green: $green, blue: $blue, opacity: $opacity)"
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  //
+  //
+  //
+  //  COLOR MIXING
+  //
+  //
+  //
+  ///////////////////////////////////////////////////////////////////////////////////
 
   /**
    *
@@ -1605,7 +1632,6 @@ class Color protected[smcl](
           that, redPortionOfThis, greenPortionOfThis, bluePortionOfThis, resultOpacity)
     }
   }
-
 
   /**
    *
@@ -2053,6 +2079,508 @@ class Color protected[smcl](
       greenPortionOfThat,
       bluePortionOfThat,
       resultOpacity)
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  //
+  //
+  //
+  //  REDNESS TRANSFORMATIONS
+  //
+  //
+  //
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   *
+   *
+   * @param newAbsoluteRednessInPercents
+   */
+  final def withAbsoluteRednessPercentage(newAbsoluteRednessInPercents: Double): Color = {
+    commonValidators.validatePercentage(newAbsoluteRednessInPercents, Option("Redness"))
+
+    withAbsoluteRednessFactor(newAbsoluteRednessInPercents / 100.0)
+  }
+
+  /**
+   *
+   *
+   * @param newAbsoluteRednessFactorFromZeroToOne
+   */
+  final def withAbsoluteRednessFactor(newAbsoluteRednessFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(newAbsoluteRednessFactorFromZeroToOne, Option("Redness"))
+
+    withAbsoluteRedness((newAbsoluteRednessFactorFromZeroToOne * ColorValidator.MaximumRed).toInt)
+  }
+
+  /**
+   *
+   *
+   * @param newAbsoluteRedness
+   */
+  final def withAbsoluteRedness(newAbsoluteRedness: Int): Color = {
+    colorValidator.validateRedComponent(newAbsoluteRedness)
+
+    Color(newAbsoluteRedness, green, blue, opacity)
+  }
+
+  /**
+   *
+   *
+   * @param rednessIncrementInPercents
+   */
+  final def increaseRednessByPercentage(rednessIncrementInPercents: Double): Color = {
+    commonValidators.validatePercentage(rednessIncrementInPercents, Option("Redness increment"))
+
+    increaseRednessByFactor(rednessIncrementInPercents / 100.0)
+  }
+
+  /**
+   *
+   *
+   * @param rednessIncrementFactorFromZeroToOne
+   */
+  final def increaseRednessByFactor(rednessIncrementFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(rednessIncrementFactorFromZeroToOne, Option("Redness increment"))
+
+    val newRed = (red + rednessIncrementFactorFromZeroToOne * (ColorValidator.MaximumRed - red)).toInt
+
+    Color(newRed, green, blue, opacity)
+  }
+
+  /**
+   *
+   *
+   * @param rednessDecrementInPercents
+   */
+  final def decreaseRednessByPercentage(rednessDecrementInPercents: Double): Color = {
+    commonValidators.validatePercentage(rednessDecrementInPercents, Option("Redness decrement"))
+
+    decreaseRednessByFactor(rednessDecrementInPercents / 100)
+  }
+
+  /**
+   *
+   *
+   * @param rednessDecrementFactorFromZeroToOne
+   */
+  final def decreaseRednessByFactor(rednessDecrementFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(rednessDecrementFactorFromZeroToOne, Option("Redness decrement"))
+
+    val invertedFactor: Double = 1.0 - rednessDecrementFactorFromZeroToOne
+    val newRed = (invertedFactor * red).toInt
+
+    Color(newRed, green, blue, opacity)
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  //
+  //
+  //
+  //  GREENNESS TRANSFORMATIONS
+  //
+  //
+  //
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   *
+   *
+   * @param newAbsoluteGreennessInPercents
+   */
+  final def withAbsoluteGreennessPercentage(newAbsoluteGreennessInPercents: Double): Color = {
+    commonValidators.validatePercentage(newAbsoluteGreennessInPercents, Option("Greenness"))
+
+    withAbsoluteGreennessFactor(newAbsoluteGreennessInPercents / 100.0)
+  }
+
+  /**
+   *
+   *
+   * @param newAbsoluteGreennessFactorFromZeroToOne
+   */
+  final def withAbsoluteGreennessFactor(newAbsoluteGreennessFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(newAbsoluteGreennessFactorFromZeroToOne, Option("Greenness"))
+
+    withAbsoluteGreenness((newAbsoluteGreennessFactorFromZeroToOne * ColorValidator.MaximumGreen).toInt)
+  }
+
+  /**
+   *
+   *
+   * @param newAbsoluteGreenness
+   */
+  final def withAbsoluteGreenness(newAbsoluteGreenness: Int): Color = {
+    colorValidator.validateGreenComponent(newAbsoluteGreenness)
+
+    Color(red, newAbsoluteGreenness, blue, opacity)
+  }
+
+  /**
+   *
+   *
+   * @param greennessIncrementInPercents
+   */
+  final def increaseGreennessByPercentage(greennessIncrementInPercents: Double): Color = {
+    commonValidators.validatePercentage(greennessIncrementInPercents, Option("Greenness increment"))
+
+    increaseGreennessByFactor(greennessIncrementInPercents / 100.0)
+  }
+
+  /**
+   *
+   *
+   * @param greennessIncrementFactorFromZeroToOne
+   */
+  final def increaseGreennessByFactor(greennessIncrementFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(greennessIncrementFactorFromZeroToOne, Option("Greenness increment"))
+
+    val newGreen = (green + greennessIncrementFactorFromZeroToOne * (ColorValidator.MaximumGreen - green)).toInt
+
+    Color(red, newGreen, blue, opacity)
+  }
+
+  /**
+   *
+   *
+   * @param greennessDecrementInPercents
+   */
+  final def decreaseGreennessByPercentage(greennessDecrementInPercents: Double): Color = {
+    commonValidators.validatePercentage(greennessDecrementInPercents, Option("Greenness decrement"))
+
+    decreaseGreennessByFactor(greennessDecrementInPercents / 100)
+  }
+
+  /**
+   *
+   *
+   * @param greennessDecrementFactorFromZeroToOne
+   */
+  final def decreaseGreennessByFactor(greennessDecrementFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(greennessDecrementFactorFromZeroToOne, Option("Greenness decrement"))
+
+    val invertedFactor: Double = 1.0 - greennessDecrementFactorFromZeroToOne
+    val newGreen = (invertedFactor * green).toInt
+
+    Color(red, newGreen, blue, opacity)
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  //
+  //
+  //
+  //  BLUENESS TRANSFORMATIONS
+  //
+  //
+  //
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   *
+   *
+   * @param newAbsoluteBluenessInPercents
+   */
+  final def withAbsoluteBluenessPercentage(newAbsoluteBluenessInPercents: Double): Color = {
+    commonValidators.validatePercentage(newAbsoluteBluenessInPercents, Option("Blueness"))
+
+    withAbsoluteBluenessFactor(newAbsoluteBluenessInPercents / 100.0)
+  }
+
+  /**
+   *
+   *
+   * @param newAbsoluteBluenessFactorFromZeroToOne
+   */
+  final def withAbsoluteBluenessFactor(newAbsoluteBluenessFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(newAbsoluteBluenessFactorFromZeroToOne, Option("Blueness"))
+
+    withAbsoluteBlueness((newAbsoluteBluenessFactorFromZeroToOne * ColorValidator.MaximumBlue).toInt)
+  }
+
+  /**
+   *
+   *
+   * @param newAbsoluteBlueness
+   */
+  final def withAbsoluteBlueness(newAbsoluteBlueness: Int): Color = {
+    colorValidator.validateBlueComponent(newAbsoluteBlueness)
+
+    Color(red, green, newAbsoluteBlueness, opacity)
+  }
+
+  /**
+   *
+   *
+   * @param bluenessIncrementInPercents
+   */
+  final def increaseBluenessByPercentage(bluenessIncrementInPercents: Double): Color = {
+    commonValidators.validatePercentage(bluenessIncrementInPercents, Option("Blueness increment"))
+
+    increaseBluenessByFactor(bluenessIncrementInPercents / 100.0)
+  }
+
+  /**
+   *
+   *
+   * @param bluenessIncrementFactorFromZeroToOne
+   */
+  final def increaseBluenessByFactor(bluenessIncrementFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(bluenessIncrementFactorFromZeroToOne, Option("Blueness increment"))
+
+    val newBlue = (blue + bluenessIncrementFactorFromZeroToOne * (ColorValidator.MaximumBlue - blue)).toInt
+
+    Color(red, green, newBlue, opacity)
+  }
+
+  /**
+   *
+   *
+   * @param bluenessDecrementInPercents
+   */
+  final def decreaseBluenessByPercentage(bluenessDecrementInPercents: Double): Color = {
+    commonValidators.validatePercentage(bluenessDecrementInPercents, Option("Blueness decrement"))
+
+    decreaseBluenessByFactor(bluenessDecrementInPercents / 100)
+  }
+
+  /**
+   *
+   *
+   * @param bluenessDecrementFactorFromZeroToOne
+   */
+  final def decreaseBluenessByFactor(bluenessDecrementFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(bluenessDecrementFactorFromZeroToOne, Option("Blueness decrement"))
+
+    val invertedFactor: Double = 1.0 - bluenessDecrementFactorFromZeroToOne
+    val newBlue = (invertedFactor * blue).toInt
+
+    Color(red, green, newBlue, opacity)
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  //
+  //
+  //
+  //  OPACITY TRANSFORMATIONS
+  //
+  //
+  //
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * Returns a new [[Color]] identical with this one except having full opacity.
+   */
+  final def withFullOpacity: Color =
+    if (isOpaque) this
+    else Color(red, green, blue, ColorValidator.MaximumOpacity)
+
+  /**
+   * Returns a new [[Color]] identical with this one except having full transparency.
+   */
+  final def withFullTransparency: Color =
+    if (isTransparent) this
+    else Color(red, green, blue, ColorValidator.MinimumOpacity)
+
+  /**
+   *
+   *
+   * @param newAbsoluteOpacityInPercents
+   */
+  final def withAbsoluteOpacityPercentage(newAbsoluteOpacityInPercents: Double): Color = {
+    commonValidators.validatePercentage(newAbsoluteOpacityInPercents, Option("Opacity"))
+
+    withAbsoluteOpacityFactor(newAbsoluteOpacityInPercents / 100.0)
+  }
+
+  /**
+   *
+   *
+   * @param newAbsoluteOpacityFactorFromZeroToOne
+   */
+  final def withAbsoluteOpacityFactor(newAbsoluteOpacityFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(newAbsoluteOpacityFactorFromZeroToOne, Option("Opacity"))
+
+    withAbsoluteOpacity((newAbsoluteOpacityFactorFromZeroToOne * ColorValidator.FullyOpaque).toInt)
+  }
+
+  /**
+   *
+   *
+   * @param newAbsoluteOpacity
+   */
+  final def withAbsoluteOpacity(newAbsoluteOpacity: Int): Color = {
+    colorValidator.validateOpacityComponent(newAbsoluteOpacity)
+
+    Color(red, green, blue, newAbsoluteOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param opacityIncrementInPercents
+   */
+  final def increaseOpacityByPercentage(opacityIncrementInPercents: Double): Color = {
+    commonValidators.validatePercentage(opacityIncrementInPercents, Option("Opacity increment"))
+
+    increaseOpacityByFactor(opacityIncrementInPercents / 100.0)
+  }
+
+  /**
+   *
+   *
+   * @param opacityIncrementFactorFromZeroToOne
+   */
+  final def increaseOpacityByFactor(opacityIncrementFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(opacityIncrementFactorFromZeroToOne, Option("Opacity increment"))
+
+    val newOpacity = (opacity + opacityIncrementFactorFromZeroToOne * (ColorValidator.MaximumOpacity - opacity)).toInt
+
+    Color(red, green, blue, newOpacity)
+  }
+
+  /**
+   *
+   *
+   * @param opacityDecrementInPercents
+   */
+  final def decreaseOpacityByPercentage(opacityDecrementInPercents: Double): Color = {
+    commonValidators.validatePercentage(opacityDecrementInPercents, Option("Opacity decrement"))
+
+    decreaseOpacityByFactor(opacityDecrementInPercents / 100)
+  }
+
+  /**
+   *
+   *
+   * @param opacityDecrementFactorFromZeroToOne
+   */
+  final def decreaseOpacityByFactor(opacityDecrementFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(opacityDecrementFactorFromZeroToOne, Option("Opacity decrement"))
+
+    val invertedFactor: Double = 1.0 - opacityDecrementFactorFromZeroToOne
+    val newOpacity = (invertedFactor * opacity).toInt
+
+    Color(red, green, blue, newOpacity)
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  //
+  //
+  //
+  //  TRANSFORMATIONS INVOLVING MULTIPLE COLOR COMPONENTS
+  //
+  //
+  //
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   *
+   *
+   * @param adjustmentInDegrees
+   *
+   * @return
+   */
+  final def adjustHueByDegrees(adjustmentInDegrees: Double): Color =
+    adjustHueOfRGBByDegrees(color = this, adjustmentInDegrees)
+
+  /**
+   *
+   *
+   * @param redWeight
+   * @param greenWeight
+   * @param blueWeight
+   *
+   * @return
+   */
+  final def toWeightedGray(
+      redWeight: Double = 0.33,
+      greenWeight: Double = 0.33,
+      blueWeight: Double = 0.33): Color = {
+
+    commonValidators.validateZeroToOneFactor(redWeight, Option("Red weight"))
+    commonValidators.validateZeroToOneFactor(greenWeight, Option("Green weight"))
+    commonValidators.validateZeroToOneFactor(blueWeight, Option("Blue weight"))
+
+    colorValidator.validateRGBColorWeightCombination(redWeight, greenWeight, blueWeight)
+
+    val weightedRed = redWeight * red
+    val weightedGreen = greenWeight * green
+    val weightedBlue = blueWeight * blue
+    val grayIntensity = (weightedRed + weightedGreen + weightedBlue).toInt.min(ColorValidator.MaximumGray)
+
+    Color(grayIntensity, ColorValidator.FullyOpaque)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  final def darker: Color = shadeByFactor(Color.DefaultShadingFactor)
+
+  /**
+   *
+   *
+   * @param shadingFactorInPercents
+   */
+  final def shadeByPercentage(shadingFactorInPercents: Double): Color = {
+    commonValidators.validatePercentage(shadingFactorInPercents, Option("Shading"))
+
+    shadeByFactor(shadingFactorInPercents / 100)
+  }
+
+  /**
+   *
+   *
+   * @param shadingFactorFromZeroToOne
+   */
+  final def shadeByFactor(shadingFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(shadingFactorFromZeroToOne, Option("Shading"))
+
+    val invertedFactor: Double = 1.0 - shadingFactorFromZeroToOne
+    val newRed = (invertedFactor * red).toInt
+    val newGreen = (invertedFactor * green).toInt
+    val newBlue = (invertedFactor * blue).toInt
+
+    Color(newRed, newGreen, newBlue, opacity)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  final def lighter: Color = tintByFactor(Color.DefaultTintingFactor)
+
+  /**
+   *
+   *
+   * @param tintingFactorInPercents
+   */
+  final def tintByPercentage(tintingFactorInPercents: Double): Color = {
+    commonValidators.validatePercentage(tintingFactorInPercents, Option("Tinting"))
+
+    tintByFactor(tintingFactorInPercents / 100.0)
+  }
+
+  /**
+   *
+   *
+   * @param tintingFactorFromZeroToOne
+   */
+  final def tintByFactor(tintingFactorFromZeroToOne: Double): Color = {
+    commonValidators.validateZeroToOneFactor(tintingFactorFromZeroToOne, Option("Tinting"))
+
+    val newRed = (red + tintingFactorFromZeroToOne * (ColorValidator.MaximumRed - red)).ceil.toInt
+    val newGreen = (green + tintingFactorFromZeroToOne * (ColorValidator.MaximumGreen - green)).ceil.toInt
+    val newBlue = (blue + tintingFactorFromZeroToOne * (ColorValidator.MaximumBlue - blue)).ceil.toInt
+
+    Color(newRed, newGreen, newBlue, opacity)
   }
 
 }

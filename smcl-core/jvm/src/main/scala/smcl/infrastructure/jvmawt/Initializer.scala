@@ -18,7 +18,7 @@ package smcl.infrastructure.jvmawt
 
 
 import smcl.colors.ColorValidator
-import smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, PresetColor, RichColor}
+import smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, PresetColor}
 import smcl.infrastructure._
 import smcl.modeling.d1
 import smcl.pictures._
@@ -103,7 +103,6 @@ object Initializer extends SMCLInitializer {
       RichOptionString,
       Color,
       PresetColor,
-      RichColor,
       ColorComponentTranslationTable,
       BooleanSetting,
       ColorSetting,

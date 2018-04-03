@@ -56,10 +56,6 @@ package object colors
   implicit def ARGBIntWrapper(self: Int): rgb.RichARGBInt =
     rgb.ARGBIntWrapper(self)
 
-  /** An alias for the RichRGBAColor application. */
-  implicit def ColorWrapper(self: Color): rgb.RichColor =
-    rgb.ColorWrapper(self)
-
 
 
 

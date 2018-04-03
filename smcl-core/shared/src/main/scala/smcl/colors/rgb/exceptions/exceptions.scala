@@ -35,8 +35,4 @@ package object exceptions
   implicit def ARGBIntWrapper(self: Int): RichARGBInt =
     new RichARGBInt(self)
 
-  /** Application of the RichRGBAColor class. */
-  implicit def ColorWrapper(self: Color): RichColor =
-    RichColor(self)
-
 }
