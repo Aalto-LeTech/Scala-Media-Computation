@@ -71,6 +71,7 @@ lazy val releaseNotesTemplate: InputKey[File] = inputKey[File](
 //--------------------------------------------------------------------------------------------------
 
 lazy val projectFullName: String = "Scala Media Computation Library"
+lazy val projectAbbrName: String = "SMCL"
 
 lazy val projectMajorVersion: Int = 0
 lazy val projectMinorVersion: Int = 0
@@ -85,11 +86,15 @@ lazy val prjSmclLibraryInfoDescription: String =
   "The code resources providing library information capabilities."
 
 lazy val prjSmclBitmapViewerId: String = "smcl-bitmap-viewer"
-lazy val prjSmclBitmapViewerName: String = projectFullName + ": Bitmap Viewer"
+lazy val prjSmclBitmapViewerSubName: String = "Bitmap Viewer"
+lazy val prjSmclBitmapViewerName: String = projectFullName + ": " + prjSmclBitmapViewerSubName
+lazy val prjSmclBitmapViewerAbbrName: String = projectAbbrName + ": " + prjSmclBitmapViewerSubName
 lazy val prjSmclBitmapViewerDescription: String = "Bitmap viewers for " + projectFullName + "."
 
 lazy val prjSmclCoreId: String = "smcl-core"
-lazy val prjSmclCoreName: String = projectFullName + ": Core Library"
+lazy val prjSmclCoreSubName: String = "Core Library"
+lazy val prjSmclCoreName: String = projectFullName + ": " + prjSmclCoreSubName
+lazy val prjSmclCoreAbbrName: String = projectAbbrName + ": " + prjSmclCoreSubName
 lazy val prjSmclCoreDescription: String = "A class library for bitmap processing using Scala."
 
 lazy val snapshotIdPostfix: String = "-SNAPSHOT"
@@ -607,7 +612,7 @@ lazy val smclBitmapViewer: CrossProject =
         smclGeneralSettings,
         libraryinfoIncludeFileFilter in Compile :=
             (libraryinfoIncludeFileFilter in Compile).value || "SMCLBitmapViewer.scala",
-        scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerName),
+        scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerAbbrName),
         inConfig(ItgTest)(Defaults.testTasks),
         inConfig(GUITest)(Defaults.testTasks),
         inConfig(SmokeTest)(Defaults.testTasks),
@@ -677,7 +682,7 @@ lazy val smclCore: CrossProject =
           "-opt-inline-from:**",
           "-opt-warnings:at-inline-failed",
         ),
-        scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreName),
+        scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreAbbrName),
         inConfig(ItgTest)(Defaults.testTasks),
         inConfig(GUITest)(Defaults.testTasks),
         inConfig(SmokeTest)(Defaults.testTasks),
