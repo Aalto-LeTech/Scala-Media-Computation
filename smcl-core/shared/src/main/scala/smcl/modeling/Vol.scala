@@ -405,7 +405,7 @@ case class Vol private(
    * @return
    */
   @inline
-  protected
+  protected final
   def value: Double = inPixels
 
   /**
@@ -414,8 +414,7 @@ case class Vol private(
    *
    * @return
    */
-  @inline
-  override
+  override final
   def map(f: (Double) => Double): Vol = {
     Vol(f(inPixels))
   }
@@ -428,7 +427,7 @@ case class Vol private(
    * @return
    */
   @inline
-  override
+  override final
   def compare(that: Vol): Int = {
     inPixels.compare(that.inPixels)
   }
@@ -441,6 +440,7 @@ case class Vol private(
    * @return
    */
   @inline
+  final
   def + (offset: Vol): Vol = {
     Vol(inPixels + offset.inPixels)
   }
@@ -453,6 +453,7 @@ case class Vol private(
    * @return
    */
   @inline
+  final
   def - (offset: Vol): Vol = {
     Vol(inPixels - offset.inPixels)
   }
@@ -465,6 +466,7 @@ case class Vol private(
    * @return
    */
   @inline
+  final
   def / (divider: Vol): Double = {
     inPixels / divider.inPixels
   }
@@ -477,6 +479,7 @@ case class Vol private(
    * @return
    */
   @inline
+  final
   def / (divider: Area): Len = {
     Len(inPixels / divider.inPixels)
   }
@@ -489,6 +492,7 @@ case class Vol private(
    * @return
    */
   @inline
+  final
   def / (divider: Len): Area = {
     Area(inPixels / divider.inPixels)
   }
@@ -501,6 +505,7 @@ case class Vol private(
    * @return
    */
   @inline
+  final
   def + (offset: Double): Vol = {
     Vol(inPixels + offset)
   }
@@ -513,6 +518,7 @@ case class Vol private(
    * @return
    */
   @inline
+  final
   def - (offset: Double): Vol = {
     Vol(inPixels - offset)
   }
@@ -525,6 +531,7 @@ case class Vol private(
    * @return
    */
   @inline
+  final
   def * (factor: Double): Vol = {
     Vol(inPixels * factor)
   }
@@ -537,6 +544,7 @@ case class Vol private(
    * @return
    */
   @inline
+  final
   def / (divider: Double): Vol = {
     Vol(inPixels / divider)
   }
@@ -547,7 +555,7 @@ case class Vol private(
    * @return
    */
   @inline
-  override
+  override final
   def min(others: Vol*): Vol = (this +: others).min
 
   /**
@@ -556,7 +564,7 @@ case class Vol private(
    * @return
    */
   @inline
-  override
+  override final
   def max(others: Vol*): Vol = (this +: others).max
 
   /**
@@ -565,7 +573,7 @@ case class Vol private(
    * @return
    */
   @inline
-  override
+  override final
   def toString: String = {
     s"Vol($inPixels px3)"
   }

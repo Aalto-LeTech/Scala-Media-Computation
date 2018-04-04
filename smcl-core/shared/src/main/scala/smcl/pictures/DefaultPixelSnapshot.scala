@@ -77,22 +77,22 @@ class DefaultPixelSnapshot protected[pictures](
 
   /** */
   @inline
-  private[pictures]
+  private[pictures] override final
   def reds: Array[Int] = _reds
 
   /** */
   @inline
-  private[pictures]
+  private[pictures] override final
   def greens: Array[Int] = _greens
 
   /** */
   @inline
-  private[pictures]
+  private[pictures] override final
   def blues: Array[Int] = _blues
 
   /** */
   @inline
-  private[pictures]
+  private[pictures] override final
   def opacities: Array[Int] = _opacities
 
   /**
@@ -101,6 +101,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def redComponentArray: Array[Int] = {
     checkForInvalidation()
     _reds.clone
@@ -112,6 +113,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def greenComponentArray: Array[Int] = {
     checkForInvalidation()
     _greens.clone
@@ -123,6 +125,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def blueComponentArray: Array[Int] = {
     checkForInvalidation()
     _blues.clone
@@ -134,6 +137,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def opacityComponentArray: Array[Int] = {
     checkForInvalidation()
     _opacities.clone
@@ -145,6 +149,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def componentArrays: (Array[Int], Array[Int], Array[Int], Array[Int]) = {
     checkForInvalidation()
     (redComponentArray, greenComponentArray, blueComponentArray, opacityComponentArray)
@@ -156,6 +161,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def setRedComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "red")
@@ -169,6 +175,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def setGreenComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "green")
@@ -182,6 +189,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def setBlueComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "blue")
@@ -195,6 +203,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def setOpacityComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "opacity")
@@ -208,7 +217,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
-  override
+  override final
   def setComponentArrays(
       reds: Array[Int],
       greens: Array[Int],
@@ -232,6 +241,7 @@ class DefaultPixelSnapshot protected[pictures](
    *
    */
   @inline
+  override final
   def toBitmap: Bitmap = {
     checkForInvalidation()
     buffer.setColorComponentArrays(_reds, _greens, _blues, _opacities)
@@ -248,6 +258,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def pixel(
       xInPixels: Int,
       yInPixels: Int): Pixel = {
@@ -276,6 +287,7 @@ class DefaultPixelSnapshot protected[pictures](
    * @return
    */
   @inline
+  override final
   def color(
       xInPixels: Int,
       yInPixels: Int): Color = {

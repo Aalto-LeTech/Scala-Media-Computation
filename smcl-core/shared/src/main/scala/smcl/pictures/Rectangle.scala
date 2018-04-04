@@ -39,7 +39,6 @@ object Rectangle {
    *
    * @return
    */
-  @inline
   def apply(sideLength: Double): VectorGraphic =
     apply(
       sideLength,
@@ -59,7 +58,6 @@ object Rectangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       hasBorder: Boolean,
@@ -82,7 +80,6 @@ object Rectangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       center: Pos): VectorGraphic = {
@@ -108,7 +105,6 @@ object Rectangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       center: Pos,
@@ -132,7 +128,6 @@ object Rectangle {
    *
    * @return
    */
-  @inline
   def apply(
       baseLength: Double,
       height: Double): VectorGraphic = {
@@ -158,7 +153,6 @@ object Rectangle {
    *
    * @return
    */
-  @inline
   def apply(
       baseLength: Double,
       height: Double,
@@ -187,7 +181,6 @@ object Rectangle {
    *
    * @return
    */
-  @inline
   def apply(
       baseLength: Double,
       height: Double,

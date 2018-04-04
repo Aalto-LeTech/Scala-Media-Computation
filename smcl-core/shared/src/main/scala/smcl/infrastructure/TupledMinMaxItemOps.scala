@@ -35,7 +35,6 @@ trait TupledMinMaxItemOps[ContainerType <: ToTuple[ItemTupleType], ItemType, Ite
    *
    * @return
    */
-  @inline
   def minItemsTuple(others: ContainerType*): ItemTupleType = {
     minItems(others: _*).toTuple
   }
@@ -46,7 +45,6 @@ trait TupledMinMaxItemOps[ContainerType <: ToTuple[ItemTupleType], ItemType, Ite
    *
    * @return
    */
-  @inline
   def maxItemsTuple(others: ContainerType*): ItemTupleType = {
     maxItems(others: _*).toTuple
   }

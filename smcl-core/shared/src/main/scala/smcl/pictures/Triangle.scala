@@ -50,7 +50,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def apply(sideLength: Double): VectorGraphic =
     apply(
       sideLength,
@@ -71,7 +70,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       hasBorder: Boolean,
@@ -94,7 +92,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       center: Pos): VectorGraphic = {
@@ -120,7 +117,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       center: Pos,
@@ -150,7 +146,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def basedOnHeight(height: Double): VectorGraphic =
     basedOnHeight(
       height,
@@ -170,7 +165,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def basedOnHeight(
       height: Double,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
@@ -197,7 +191,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def basedOnHeight(
       height: Double,
       center: Pos,
@@ -231,7 +224,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       baseLength: Double): VectorGraphic = {
@@ -257,7 +249,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       baseLength: Double,
@@ -282,7 +273,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       baseLength: Double,
@@ -311,7 +301,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def apply(
       sideLength: Double,
       baseLength: Double,
@@ -344,7 +333,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def basedOnHeightAndBase(
       height: Double,
       baseLength: Double): VectorGraphic = {
@@ -369,7 +357,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def basedOnHeightAndBase(
       height: Double,
       baseLength: Double,
@@ -398,7 +385,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def basedOnHeightAndBase(
       height: Double,
       baseLength: Double,
@@ -653,7 +639,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def validateSides(
       baseLength: Double,
       leftSideLength: Double,
@@ -675,7 +660,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def validateSide(
       length: Double,
       name: String): Unit = {
@@ -695,7 +679,6 @@ object Triangle {
    *
    * @return
    */
-  @inline
   def checkTriangleInequality(
       a: Double,
       b: Double,

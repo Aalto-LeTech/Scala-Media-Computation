@@ -32,7 +32,6 @@ trait RatioBasedAnchor[DimensionType <: CoordSysIndepDimensions]
    *
    * @return
    */
-  @inline
   def ratiosOfWholeDimensions: Seq[Double]
 
 }

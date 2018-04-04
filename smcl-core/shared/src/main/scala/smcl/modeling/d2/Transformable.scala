@@ -38,7 +38,6 @@ trait Transformable[ReturnType] {
    *
    * @return
    */
-  @inline
   def transformBy(t: AffineTransformation): ReturnType
 
 }

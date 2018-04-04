@@ -83,7 +83,7 @@ class LeftwardsUpwardsMatrixEnumerator private[enumerators](
    * @return
    */
   //noinspection ConvertExpressionToSAM
-  override protected
+  override protected final
   def enumerationState: MatrixEnumerator2DInternalEnumerationState =
     new MatrixEnumerator2DInternalEnumerationState {
 
@@ -97,6 +97,7 @@ class LeftwardsUpwardsMatrixEnumerator private[enumerators](
        *
        * @return
        */
+      final
       def hasNextCell: Boolean =
         currentRow > upperLeftRow || currentColumn > upperLeftColumn
 
@@ -105,7 +106,7 @@ class LeftwardsUpwardsMatrixEnumerator private[enumerators](
        *
        * @return
        */
-      override
+      override final
       def advance(): Unit = {
         if (!hasNextCell)
           throw NoMoreCellsToEnumerateError

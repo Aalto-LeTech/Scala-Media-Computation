@@ -36,7 +36,6 @@ trait HasAnchor {
    *
    * @return
    */
-  @inline
   def lengthInPixels: Double = {
     self.lengthInPixels
   }
@@ -46,7 +45,6 @@ trait HasAnchor {
    *
    * @return
    */
-  @inline
   def internalAnchorDims: Dims = {
     anchor.internalDimsWithin(self)
   }
@@ -56,7 +54,6 @@ trait HasAnchor {
    *
    * @return
    */
-  @inline
   def internalAnchorX: Double = {
     anchor.internalXWithin(self)
   }

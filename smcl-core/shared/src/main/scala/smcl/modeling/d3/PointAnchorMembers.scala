@@ -41,7 +41,6 @@ trait PointAnchorMembers[HasAnchorType]
    *
    * @return
    */
-  @inline
   override
   def internalZWithin(
       anchored: HasAnchorType): Double = zInPixels

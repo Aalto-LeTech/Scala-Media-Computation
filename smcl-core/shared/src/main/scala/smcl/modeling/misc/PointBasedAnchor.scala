@@ -33,7 +33,6 @@ trait PointBasedAnchor[DimensionType <: CoordSysIndepDimensions]
    *
    * @return
    */
-  @inline
   def dimensions: Seq[Double]
 
 }

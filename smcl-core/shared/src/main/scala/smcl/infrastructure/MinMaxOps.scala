@@ -31,7 +31,6 @@ trait MinMaxOps[ObjectType] {
    *
    * @return
    */
-  @inline
   def min(others: ObjectType*): ObjectType
 
   /**
@@ -39,7 +38,6 @@ trait MinMaxOps[ObjectType] {
    *
    * @return
    */
-  @inline
   def max(others: ObjectType*): ObjectType
 
 }

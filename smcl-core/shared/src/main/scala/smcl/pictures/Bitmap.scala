@@ -61,7 +61,6 @@ object Bitmap
    *
    * @return
    */
-  @inline
   def apply(elements: PictureElement*): Bitmap =
     RenderingController.createBitmapFrom(elements: _*)
 
@@ -74,7 +73,6 @@ object Bitmap
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Int,
       heightInPixels: Int,
@@ -91,7 +89,6 @@ object Bitmap
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Int,
       heightInPixels: Int): Bitmap = {
@@ -110,7 +107,6 @@ object Bitmap
    *
    * @return
    */
-  @inline
   def apply(
       width: Len,
       height: Len,
@@ -127,7 +123,6 @@ object Bitmap
    *
    * @return
    */
-  @inline
   def apply(
       width: Len,
       height: Len): Bitmap = {
@@ -152,7 +147,6 @@ object Bitmap
    *
    * @return
    */
-  @inline
   def apply(sourceResourcePath: String): Bitmap = {
     // The ImageProvider is trusted with validation of the source resource path.
     val loadedBufferTry = PRF.tryToLoadImageFromPath(sourceResourcePath)
@@ -169,7 +163,6 @@ object Bitmap
    *
    * @return
    */
-  @inline
   def apply(buffer: BitmapBufferAdapter): Bitmap = {
     val newIdentity: Identity = Identity()
 
@@ -184,7 +177,6 @@ object Bitmap
    *
    * @return
    */
-  @inline
   private
   def apply(
       center: Pos,
@@ -204,7 +196,6 @@ object Bitmap
    *
    * @return
    */
-  @inline
   private
   def apply(
       identity: Identity,
@@ -268,7 +259,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def isBitmap: Boolean = true
 
@@ -277,7 +267,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def toBitmap: Bitmap = this
 
@@ -286,7 +275,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def toBitmapCopy: Bitmap = {
     val newBuffer = buffer.map(_.copy).orNull
@@ -302,7 +290,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def mergePixelsWith(
       another: PictureElement,
@@ -322,7 +309,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def translateColorsWith(translator: ColorComponentTranslationTable): Bitmap =
     toProvideModifiedCopyOfOldBuffer{oldBuffer =>
       oldBuffer.createFilteredVersionWith(translator)
@@ -335,7 +321,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   private[pictures]
   def translateColorsWith(translator: (Int, Int, Int, Int) => (Int, Int, Int, Int)): Bitmap =
     toProvideModifiedCopyOfOldBuffer{oldBuffer =>
@@ -364,7 +349,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   private
   def toProvideModifiedCopyOfOldBuffer(
       newCopyProvider: BitmapBufferAdapter => BitmapBufferAdapter): Bitmap = {
@@ -403,7 +387,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def applySimpleFilter(f: Filter): Bitmap = f(this).toBitmap
 
   /**
@@ -411,7 +394,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def keepOnlyRedComponent: Bitmap =
     applySimpleFilter(KeepOnlyRedComponent)
 
@@ -420,7 +402,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def keepOnlyRedAndGreenComponents: Bitmap =
     applySimpleFilter(KeepOnlyRedAndGreenComponents)
 
@@ -429,7 +410,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def keepOnlyRedAndBlueComponents: Bitmap =
     applySimpleFilter(KeepOnlyRedAndBlueComponents)
 
@@ -438,7 +418,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def keepOnlyGreenComponent: Bitmap =
     applySimpleFilter(KeepOnlyGreenComponent)
 
@@ -447,7 +426,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def keepOnlyGreenAndBlueComponents: Bitmap =
     applySimpleFilter(KeepOnlyGreenAndBlueComponents)
 
@@ -456,7 +434,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def keepOnlyBlueComponent: Bitmap =
     applySimpleFilter(KeepOnlyBlueComponent)
 
@@ -465,7 +442,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def negate: Bitmap =
     applySimpleFilter(Negate)
 
@@ -474,7 +450,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def negateRedComponent: Bitmap =
     applySimpleFilter(NegateRedComponent)
 
@@ -483,7 +458,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def negateRedAndGreenComponents: Bitmap =
     applySimpleFilter(NegateRedAndGreenComponents)
 
@@ -492,7 +466,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def negateRedAndBlueComponents: Bitmap =
     applySimpleFilter(NegateRedAndBlueComponents)
 
@@ -501,7 +474,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def negateGreenComponent: Bitmap =
     applySimpleFilter(NegateGreenComponent)
 
@@ -510,7 +482,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def negateGreenAndBlueComponents: Bitmap =
     applySimpleFilter(NegateGreenAndBlueComponents)
 
@@ -519,7 +490,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def negateBlueComponent: Bitmap =
     applySimpleFilter(NegateBlueComponent)
 
@@ -528,7 +498,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def toGrayscaleByLightness: Bitmap =
     applySimpleFilter(ToGrayscaleByLightness)
 
@@ -537,7 +506,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def toGrayscaleByLuminocity: Bitmap =
     applySimpleFilter(ToGrayscaleByLuminocity)
 
@@ -550,7 +518,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def toGrayscale(
       redWeight: Double,
       greenWeight: Double,
@@ -568,7 +535,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def posterize(strengthAsPercentage: Int): Bitmap =
     applySimpleFilter(Posterize(strengthAsPercentage))
 
@@ -579,7 +545,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def setColorsByLocation(generator: (Int, Int) => Color): Bitmap =
     withPixelSnapshot(_.setColorsByLocation(generator))
 
@@ -590,7 +555,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def transformColorToColor(transformers: Seq[Color => Color]): Bitmap =
     withPixelSnapshot(_.transformColorToColor(transformers))
 
@@ -601,7 +565,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def transformColorToColor(transformer: Color => Color): Bitmap =
     withPixelSnapshot(_.transformColorToColor(transformer))
 
@@ -612,7 +575,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def transformLocationColorToColor(transformers: Seq[(Int, Int, Color) => Color]): Bitmap =
     withPixelSnapshot(_.transformLocationColorToColor(transformers))
 
@@ -623,7 +585,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def transformLocationColorToColor(transformer: (Int, Int, Color) => Color): Bitmap =
     withPixelSnapshot(_.transformLocationColorToColor(transformer))
 
@@ -634,7 +595,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def iteratePixels(transformers: Seq[Pixel => Unit]): Bitmap =
     withPixelSnapshot(_.iteratePixels(transformers))
 
@@ -645,7 +605,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def iteratePixels(transformer: Pixel => Unit): Bitmap =
     withPixelSnapshot(_.iteratePixels(transformer))
 
@@ -656,7 +615,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def withPixelSnapshot(f: PixelSnapshot => Unit): Bitmap = {
     val snapshot = PixelSnapshot(toBitmapCopy)
     f(snapshot)
@@ -670,7 +628,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def moveBy(offsetsInPixels: Seq[Double]): Bitmap =
     internalBufferPreservingCopy(
@@ -685,7 +642,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def moveBy(
       xOffsetInPixels: Double,
@@ -703,7 +659,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Bitmap = {
     require(
@@ -723,7 +678,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
@@ -741,7 +695,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(coordinatesInPixels: Seq[Double]): Bitmap = {
     require(
@@ -761,7 +714,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(
       xCoordinateInPixels: Double,
@@ -779,7 +731,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   def saveAsPngTo(filename: String): String =
     buffer.fold("Error: No BitmapBufferAdapter to save.")(_.saveAsPngTo(filename))
 
@@ -797,7 +748,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   private
   def internalCopy(
       newIdentity: Identity = identity,
@@ -827,7 +777,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   private
   def internalBufferPreservingCopy(
       newIdentity: Identity = identity,
@@ -846,7 +795,6 @@ class Bitmap private(
   /**
    *
    */
-  @inline
   override
   def display(): Bitmap = {
     super.display()
@@ -884,7 +832,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCWAroundOrigo: Bitmap = {
     if (buffer.isEmpty)
@@ -908,7 +855,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCW: Bitmap = rotateBy90DegsCW(position)
 
@@ -919,7 +865,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Bitmap = {
     if (buffer.isEmpty)
@@ -933,7 +878,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCWAroundOrigo: Bitmap = {
     if (buffer.isEmpty)
@@ -947,7 +891,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCW: Bitmap = rotateBy90DegsCCW(position)
 
@@ -958,7 +901,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Bitmap = {
     if (buffer.isEmpty)
@@ -972,7 +914,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180DegsAroundOrigo: Bitmap = {
     if (buffer.isEmpty)
@@ -986,7 +927,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180Degs: Bitmap = rotateBy180Degs(position)
 
@@ -997,7 +937,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180Degs(centerOfRotation: Pos): Bitmap = {
     if (buffer.isEmpty)
@@ -1013,7 +952,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateByAroundOrigo(angle: Angle): Bitmap = rotateByAroundOrigo(angle)
 
@@ -1024,7 +962,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Bitmap = {
     if (buffer.isEmpty)
@@ -1040,7 +977,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(angle: Angle): Bitmap = rotateBy(angle)
 
@@ -1051,7 +987,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(angleInDegrees: Double): Bitmap =
     rotateBy(angleInDegrees, position)
@@ -1064,7 +999,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(
       angle: Angle,
@@ -1081,7 +1015,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(
       angleInDegrees: Double,
@@ -1109,7 +1042,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def crop(
       upperLeftXInPixels: Double,
@@ -1151,7 +1083,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def crop(
       upperLeftCorner: Pos,
@@ -1190,7 +1121,6 @@ class Bitmap private(
    *
    * @return
    */
-  @inline
   override
   def scaleBy(widthFactor: Double, heightFactor: Double): Bitmap = {
     this

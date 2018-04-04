@@ -32,11 +32,9 @@ trait HasDims
     extends HasDimensions[Dims] {
 
   /** */
-  @inline
   def width: Len = dimensions.width
 
   /** */
-  @inline
   def height: Len = dimensions.height
 
   /**

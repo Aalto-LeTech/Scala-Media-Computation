@@ -68,22 +68,18 @@ trait PixelSnapshot
     extends Iterable[Pixel] {
 
   /** */
-  @inline
   private[pictures]
   def reds: Array[Int]
 
   /** */
-  @inline
   private[pictures]
   def greens: Array[Int]
 
   /** */
-  @inline
   private[pictures]
   def blues: Array[Int]
 
   /** */
-  @inline
   private[pictures]
   def opacities: Array[Int]
 
@@ -92,7 +88,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def widthInPixels: Int
 
   /**
@@ -100,7 +95,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def heightInPixels: Int
 
   /**
@@ -150,7 +144,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def redComponentArray: Array[Int]
 
   /**
@@ -158,7 +151,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def greenComponentArray: Array[Int]
 
   /**
@@ -166,7 +158,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def blueComponentArray: Array[Int]
 
   /**
@@ -174,7 +165,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def opacityComponentArray: Array[Int]
 
   /**
@@ -182,7 +172,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def componentArrays: (Array[Int], Array[Int], Array[Int], Array[Int])
 
   /**
@@ -190,7 +179,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def setRedComponentArray(array: Array[Int]): Unit
 
   /**
@@ -198,7 +186,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def setGreenComponentArray(array: Array[Int]): Unit
 
   /**
@@ -206,7 +193,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def setBlueComponentArray(array: Array[Int]): Unit
 
   /**
@@ -214,7 +200,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def setOpacityComponentArray(array: Array[Int]): Unit
 
   /**
@@ -222,7 +207,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def setComponentArrays(
       reds: Array[Int],
       greens: Array[Int],
@@ -237,6 +221,8 @@ trait PixelSnapshot
    *
    * @return
    */
+  @inline
+  final
   def mergeWith(
       another: PixelSnapshot,
       pixelMerger: (Color, Color) => Color): PixelSnapshot = {
@@ -264,6 +250,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def setColorsByLocation(generator: (Int, Int) => Color): PixelSnapshot =
     iterateLocationsAndReturnSelf{(x, y) =>
       setColorInternal(arrayPosition(x, y), generator(x, y))
@@ -277,6 +264,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def transformColorToColor(transformers: Seq[Color => Color]): PixelSnapshot =
     transformColorToColor(transformers.reduceLeft(_ andThen _))
 
@@ -288,6 +276,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def transformColorToColor(transformer: Color => Color): PixelSnapshot =
     iterateComponentArrayIndicesAndReturnSelf{i =>
       setColorInternal(i, transformer(getColorInternal(i)))
@@ -301,6 +290,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def transformLocationColorToColor(transformers: Seq[(Int, Int, Color) => Color]): PixelSnapshot = {
     transformers.foreach{t => transformLocationColorToColor(t)}
     this
@@ -314,6 +304,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def transformLocationColorToColor(transformer: (Int, Int, Color) => Color): PixelSnapshot =
     iterateLocationsAndReturnSelf{(x, y) =>
       val p = arrayPosition(x, y)
@@ -328,6 +319,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def iteratePixels(transformers: Seq[Pixel => Unit]): PixelSnapshot = {
     transformers.foreach{t => iteratePixels(t)}
     this
@@ -341,6 +333,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def iteratePixels(transformer: Pixel => Unit): PixelSnapshot =
     iterateLocationsAndReturnSelf((x, y) => transformer(pixel(x, y)))
 
@@ -352,7 +345,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
-  private
+  private final
   def iterateLocationsAndReturnSelf(callback: (Int, Int) => Unit): PixelSnapshot = {
     iterateLocations(callback)
     this
@@ -366,7 +359,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
-  private
+  private final
   def iterateComponentArrayValuesAndReturnSelf(callback: (Int, Int, Int, Int) => Unit): PixelSnapshot = {
     iterateComponentArrayValues(callback)
     this
@@ -380,7 +373,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
-  private
+  private final
   def iterateComponentArrayIndicesAndReturnSelf(callback: Int => Unit): PixelSnapshot = {
     iterateComponentArrayIndices(callback)
     this
@@ -394,7 +387,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
-  private
+  private final
   def iterateLocations(callback: (Int, Int) => Unit): Unit = {
     val e = MatrixEnumerator2D(0, 0, widthInPixels, heightInPixels, MESRightwardsDownwards)
     while (e.hasNextCell) {
@@ -411,6 +404,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def iterateComponentArrayValues(callback: (Int, Int, Int, Int) => Unit): Unit =
     iterateComponentArrayIndices(i => callback(reds(i), greens(i), blues(i), opacities(i)))
 
@@ -422,6 +416,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def iterateComponentArrayIndices(callback: Int => Unit): Unit =
     for (i <- 0 until areaInPixels)
       callback(i)
@@ -429,7 +424,6 @@ trait PixelSnapshot
   /**
    *
    */
-  @inline
   def toBitmap: Bitmap
 
   /**
@@ -440,7 +434,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def pixel(
       xInPixels: Int,
       yInPixels: Int): Pixel
@@ -453,7 +446,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   def color(
       xInPixels: Int,
       yInPixels: Int): Color
@@ -463,7 +455,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
-  override
+  override final
   def iterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
     PixelSnapshotRightwardsDownwardsIterator(this)
@@ -474,6 +466,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def downwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
     PixelSnapshotRightwardsDownwardsIterator(this)
@@ -484,6 +477,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def leftwardsDownwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
     PixelSnapshotRightwardsDownwardsIterator(this)
@@ -494,6 +488,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def leftwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
     PixelSnapshotRightwardsDownwardsIterator(this)
@@ -504,6 +499,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def downwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
     PixelSnapshotRightwardsDownwardsIterator(this)
@@ -514,6 +510,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def rightwardsUpwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
     PixelSnapshotRightwardsDownwardsIterator(this)
@@ -524,6 +521,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def upwardsLeftwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
     PixelSnapshotUpwardsLeftwardsIterator(this)
@@ -534,6 +532,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
+  final
   def upwardsRightwardsIterator: AbstractPixelSnapshotIterator = {
     checkForInvalidation()
     PixelSnapshotUpwardsRightwardsIterator(this)
@@ -544,7 +543,6 @@ trait PixelSnapshot
    *
    * @return
    */
-  @inline
   override
   def toString: String =
     s"PixelSnapshot ($widthInPixels x $heightInPixels pixels)"
@@ -554,6 +552,7 @@ trait PixelSnapshot
    *
    */
   @inline
+  final
   def checkForInvalidation(): Unit = {
     if (invalidation.isDone)
       throw PixelSnapshotInvalidatedError()
@@ -566,6 +565,7 @@ trait PixelSnapshot
    * @param colorOfArray
    */
   @inline
+  final
   def checkComponentArrayLength(
       array: Array[Int],
       colorOfArray: String): Unit = {
@@ -584,7 +584,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
-  protected
+  protected final
   def getColorInternal(arrayPosition: Int): Color = {
     Color(
       reds(arrayPosition),
@@ -600,7 +600,7 @@ trait PixelSnapshot
    * @param newColor
    */
   @inline
-  protected
+  protected final
   def setColorInternal(
       arrayPosition: Int,
       newColor: Color): Unit = {
@@ -620,7 +620,7 @@ trait PixelSnapshot
    * @return
    */
   @inline
-  protected
+  protected final
   def arrayPosition(
       xInPixels: Int,
       yInPixels: Int): Int = {

@@ -42,6 +42,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def + (offsets: Dims): ReturnType =
     moveBy(
       offsets.width.inPixels,
@@ -55,6 +56,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def + (offsetsInPixels: CoordinateTuple): ReturnType =
     moveBy(
       offsetsInPixels._1,
@@ -68,6 +70,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def - (offsets: Dims): ReturnType =
     moveBy(
       -offsets.width.inPixels,
@@ -81,6 +84,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def - (offsetsInPixels: CoordinateTuple): ReturnType =
     moveBy(
       -offsetsInPixels._1,
@@ -94,6 +98,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def moveBy(offsets: Dims): ReturnType =
     moveBy(
       offsets.width.inPixels,
@@ -108,6 +113,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def moveBy(
       xOffset: Len,
       yOffset: Len): ReturnType = {
@@ -125,7 +131,6 @@ trait Movable[ReturnType]
    *
    * @return
    */
-  @inline
   def moveBy(
       xOffsetInPixels: Double,
       yOffsetInPixels: Double): ReturnType
@@ -139,6 +144,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def moveTo(
       position: Pos,
       positionType: PositionType): ReturnType = {
@@ -159,6 +165,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def moveTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double,
@@ -185,6 +192,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def moveUpperLeftCornerTo(position: Pos): ReturnType =
     moveUpperLeftCornerTo(
       position.xInPixels,
@@ -198,7 +206,6 @@ trait Movable[ReturnType]
    *
    * @return
    */
-  @inline
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): ReturnType
@@ -211,6 +218,7 @@ trait Movable[ReturnType]
    * @return
    */
   @inline
+  final
   def moveCenterTo(position: Pos): ReturnType =
     moveCenterTo(
       position.xInPixels,
@@ -224,7 +232,6 @@ trait Movable[ReturnType]
    *
    * @return
    */
-  @inline
   def moveCenterTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): ReturnType

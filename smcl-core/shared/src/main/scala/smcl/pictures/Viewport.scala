@@ -80,6 +80,7 @@ class Viewport private(
    * @return
    */
   @inline
+  final
   def dimensions: Dims = boundary.dimensions
 
   /**
@@ -88,6 +89,7 @@ class Viewport private(
    * @return
    */
   @inline
+  final
   def width: Len = boundary.width
 
   /**
@@ -96,6 +98,7 @@ class Viewport private(
    * @return
    */
   @inline
+  final
   def height: Len = boundary.height
 
   /**
@@ -104,6 +107,7 @@ class Viewport private(
    * @return
    */
   @inline
+  final
   def left: Double = upperLeftCorner.xInPixels
 
   /**
@@ -112,6 +116,7 @@ class Viewport private(
    * @return
    */
   @inline
+  final
   def top: Double = upperLeftCorner.yInPixels
 
   /**
@@ -120,6 +125,7 @@ class Viewport private(
    * @return
    */
   @inline
+  final
   def right: Double = lowerRightCorner.xInPixels
 
   /**
@@ -128,6 +134,7 @@ class Viewport private(
    * @return
    */
   @inline
+  final
   def bottom: Double = lowerRightCorner.yInPixels
 
   /**
@@ -136,6 +143,7 @@ class Viewport private(
    * @return
    */
   @inline
+  final
   def upperLeftCorner: Pos = boundary.upperLeftCorner
 
   /**
@@ -144,6 +152,7 @@ class Viewport private(
    * @return
    */
   @inline
+  final
   def lowerRightCorner: Pos = boundary.lowerRightCorner
 
   /**

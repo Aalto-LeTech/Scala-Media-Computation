@@ -37,6 +37,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
+  final
   def rotateBy90DegsCW(position: Pos): Pos = {
     Pos(position.yInPixels, -position.xInPixels)
   }
@@ -49,6 +50,7 @@ object Transformer {
    * @return a sequence of rotated [[Pos]] instances
    */
   @inline
+  final
   def rotateBy90DegsCW(positions: Seq[Pos]): Seq[Pos] = {
     positions map rotateBy90DegsCW
   }
@@ -62,6 +64,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
+  final
   def rotateBy90DegsCW(
       position: Pos,
       centerOfRotation: Pos): Pos = {
@@ -88,6 +91,7 @@ object Transformer {
    * @return a sequence of rotated [[Pos]] instances
    */
   @inline
+  final
   def rotateBy90DegsCW(
       positions: Seq[Pos],
       centerOfRotation: Pos): Seq[Pos] = {
@@ -103,6 +107,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
+  final
   def rotateBy90DegsCCW(position: Pos): Pos = {
     Pos(-position.yInPixels, position.xInPixels)
   }
@@ -115,6 +120,7 @@ object Transformer {
    * @return a sequence of rotated [[Pos]] instances
    */
   @inline
+  final
   def rotateBy90DegsCCW(positions: Seq[Pos]): Seq[Pos] = {
     positions map rotateBy90DegsCCW
   }
@@ -128,6 +134,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
+  final
   def rotateBy90DegsCCW(
       position: Pos,
       centerOfRotation: Pos): Pos = {
@@ -154,6 +161,7 @@ object Transformer {
    * @return a sequence of rotated [[Pos]] instances
    */
   @inline
+  final
   def rotateBy90DegsCCW(
       positions: Seq[Pos],
       centerOfRotation: Pos): Seq[Pos] = {
@@ -169,6 +177,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
+  final
   def rotateBy180Degs(position: Pos): Pos = {
     Pos(-position.xInPixels, -position.yInPixels)
   }
@@ -181,6 +190,7 @@ object Transformer {
    * @return a sequence of rotated [[Pos]] instances
    */
   @inline
+  final
   def rotateBy180Degs(positions: Seq[Pos]): Seq[Pos] = {
     positions map rotateBy180Degs
   }
@@ -194,6 +204,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
+  final
   def rotateBy180Degs(
       position: Pos,
       centerOfRotation: Pos): Pos = {
@@ -213,6 +224,7 @@ object Transformer {
    * @return a sequence of rotated [[Pos]] instances
    */
   @inline
+  final
   def rotateBy180Degs(
       positions: Seq[Pos],
       centerOfRotation: Pos): Seq[Pos] = {
@@ -229,6 +241,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
+  final
   def rotate(
       position: Pos,
       angleInDegrees: Double): Pos = {
@@ -248,6 +261,7 @@ object Transformer {
    * @return a sequence of rotated [[Pos]] instances
    */
   @inline
+  final
   def rotate(
       positions: Seq[Pos],
       angleInDegrees: Double): Seq[Pos] = {
@@ -268,7 +282,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
-  private
+  private final
   def rotate(
       position: Pos,
       sin: Double,
@@ -290,6 +304,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
+  final
   def rotate(
       position: Pos,
       angleInDegrees: Double,
@@ -311,6 +326,7 @@ object Transformer {
    * @return a sequence of rotated [[Pos]] instances
    */
   @inline
+  final
   def rotate(
       positions: Seq[Pos],
       angleInDegrees: Double,
@@ -333,7 +349,7 @@ object Transformer {
    * @return a rotated [[Pos]] instance
    */
   @inline
-  private
+  private final
   def rotate(
       position: Pos,
       centerOfRotation: Pos,

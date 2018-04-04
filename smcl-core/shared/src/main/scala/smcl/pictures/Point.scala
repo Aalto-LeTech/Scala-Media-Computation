@@ -116,11 +116,9 @@ class Point private(
    *
    * @return
    */
-  @inline
   def boundary: Bounds = position.boundary
 
   /** Tells if this [[Point]] can be rendered on a bitmap. */
-  @inline
   def isRenderable: Boolean = true
 
   /**
@@ -128,7 +126,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def isPoint: Boolean = true
 
@@ -139,7 +136,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def copy(
       newPosition: Pos = position,
       newColor: rgb.Color = color): Point = {
@@ -152,7 +148,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def toString: String = {
     s"Point(x: ${position.xInPixels} px, y: ${position.yInPixels} px)"
@@ -163,7 +158,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def toCoordinateTuple: CoordinateTuple = {
     (position.xInPixels, position.yInPixels)
   }
@@ -175,7 +169,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def flatMap(f: ((Pos, rgb.Color)) => Point): Point = {
     f(position, color)
   }
@@ -187,7 +180,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def moveBy(offsetsInPixels: Seq[Double]): Point =
     copy(newPosition = position.moveBy(offsetsInPixels))
@@ -200,7 +192,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def moveBy(
       xOffsetInPixels: Double,
@@ -243,7 +234,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(coordinatesInPixels: Seq[Double]): PictureElement =
     copy(newPosition = position.moveCenterTo(coordinatesInPixels))
@@ -256,7 +246,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(
       xCoordinateInPixels: Double,
@@ -270,7 +259,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def isOnOrigo: Boolean = position.isOrigo
 
   /**
@@ -278,7 +266,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   lazy val hashCode: Int = {
     val prime = 31
@@ -298,7 +285,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Point]
   }
@@ -310,7 +296,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def equals(other: Any): Boolean = {
     other match {
@@ -330,7 +315,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def distanceFrom(other: Pos): Len = {
     position.distanceFrom(other)
   }
@@ -342,7 +326,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def distanceFrom(other: Point): Len = {
     position.distanceFrom(other.position)
   }
@@ -352,7 +335,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def isOnHorizontalAxis: Boolean = {
     position.isOnHorizontalAxis
   }
@@ -362,7 +344,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def isOnVerticalAxis: Boolean = {
     position.isOnVerticalAxis
   }
@@ -372,7 +353,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def isOnFirstQuadrant: Boolean = {
     position.isOnFirstQuadrant
   }
@@ -382,7 +362,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def isOnSecondQuadrant: Boolean = {
     position.isOnSecondQuadrant
   }
@@ -392,7 +371,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def isOnThirdQuadrant: Boolean = {
     position.isOnThirdQuadrant
   }
@@ -402,7 +380,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   def isOnFourthQuadrant: Boolean = {
     position.isOnFourthQuadrant
   }
@@ -410,7 +387,6 @@ class Point private(
   /**
    *
    */
-  @inline
   override
   def display(): Point = {
     super.display()
@@ -423,7 +399,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCWAroundOrigo: Point =
     copy(newPosition = position.rotateBy90DegsCWAroundOrigo)
@@ -433,7 +408,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCW: Point = this
 
@@ -444,7 +418,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Point =
     copy(newPosition = position.rotateBy90DegsCW(centerOfRotation))
@@ -454,7 +427,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCWAroundOrigo: Point =
     copy(newPosition = position.rotateBy90DegsCCWAroundOrigo)
@@ -464,7 +436,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCW: Point = this
 
@@ -475,7 +446,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Point =
     copy(newPosition = position.rotateBy90DegsCCW(centerOfRotation))
@@ -485,7 +455,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180DegsAroundOrigo: Point =
     copy(newPosition = position.rotateBy180DegsAroundOrigo)
@@ -495,7 +464,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180Degs: Point = this
 
@@ -506,7 +474,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180Degs(centerOfRotation: Pos): Point =
     copy(newPosition = position.rotateBy180Degs(centerOfRotation))
@@ -518,7 +485,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateByAroundOrigo(angle: Angle): Point = rotateByAroundOrigo(angle)
 
@@ -529,7 +495,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Point =
     copy(newPosition = position.rotateByAroundOrigo(angleInDegrees))
@@ -541,7 +506,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(angle: Angle): Point = rotateBy(angle)
 
@@ -552,7 +516,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(angleInDegrees: Double): Point = this
 
@@ -564,7 +527,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(
       angle: Angle,
@@ -581,7 +543,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(
       angleInDegrees: Double,
@@ -598,7 +559,6 @@ class Point private(
    *
    * @return
    */
-  @inline
   override
   def scaleBy(
       widthFactor: Double,

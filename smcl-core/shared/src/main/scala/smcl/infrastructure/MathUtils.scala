@@ -72,6 +72,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def normalizeDegs(valueInDegrees: Double): Double = {
     valueInDegrees % Angle.FullAngleInDegrees
   }
@@ -84,6 +85,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def normalizeToPosDegs(valueInDegrees: Double): Double = {
     val tmp = normalizeDegs(valueInDegrees)
 
@@ -101,6 +103,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def normalizeToNegDegs(valueInDegrees: Double): Double = {
     val tmp = normalizeDegs(valueInDegrees)
 
@@ -118,6 +121,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def normalizeRads(valueInRadians: Double): Double = {
     valueInRadians % Angle.FullAngleInRadians
   }
@@ -130,6 +134,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def normalizeToPosRads(valueInRadians: Double): Double = {
     val tmp = normalizeRads(valueInRadians)
 
@@ -147,6 +152,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def normalizeToNegRads(valueInRadians: Double): Double = {
     val tmp = normalizeRads(valueInRadians)
 
@@ -164,6 +170,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def normalizeGrads(valueInGradians: Double): Double = {
     valueInGradians % Angle.FullAngleInGradians
   }
@@ -176,6 +183,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def normalizeToPosGrads(valueInGradians: Double): Double = {
     val tmp = normalizeGrads(valueInGradians)
 
@@ -193,6 +201,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def normalizeToNegGrads(valueInGradians: Double): Double = {
     val tmp = normalizeGrads(valueInGradians)
 
@@ -210,6 +219,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sinCos(a: Angle): (Double, Double) = sinCosRads(a.inRadians)
 
   /**
@@ -220,6 +230,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sinCos(angleInDegrees: Double): (Double, Double) = {
     sinCosRads(math.toRadians(angleInDegrees))
   }
@@ -232,6 +243,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sinCosRads(angleInRadians: Double): (Double, Double) = {
     val sin = sinRads(angleInRadians)
     val cos = cosRads(angleInRadians)
@@ -247,6 +259,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sin(angleInDegrees: Double): Double = {
     sinRads(math.toRadians(angleInDegrees))
   }
@@ -259,6 +272,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sin(a: Angle): Double = sinRads(a.inRadians)
 
   /**
@@ -269,6 +283,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sinRads(angleInRadians: Double): Double = {
     math.sin(angleInRadians)
   }
@@ -281,6 +296,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sinh(angleInDegrees: Double): Double = {
     sinhRads(math.toRadians(angleInDegrees))
   }
@@ -293,6 +309,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sinh(a: Angle): Double = sinhRads(a.inRadians)
 
   /**
@@ -303,6 +320,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sinhRads(angleInRadians: Double): Double = {
     math.sinh(angleInRadians)
   }
@@ -315,6 +333,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def asin(sin: Double): Double = {
     math.toDegrees(asinRads(sin))
   }
@@ -327,6 +346,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def asinRads(sin: Double): Double = {
     math.asin(sin)
   }
@@ -339,6 +359,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def cos(angleInDegrees: Double): Double = {
     cosRads(math.toRadians(angleInDegrees))
   }
@@ -351,6 +372,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def cos(a: Angle): Double = cosRads(a.inRadians)
 
   /**
@@ -361,6 +383,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def cosRads(angleInRadians: Double): Double = {
     math.cos(angleInRadians)
   }
@@ -373,6 +396,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def cosh(angleInDegrees: Double): Double = {
     coshRads(math.toRadians(angleInDegrees))
   }
@@ -385,6 +409,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def cosh(a: Angle): Double = coshRads(a.inRadians)
 
   /**
@@ -395,6 +420,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def coshRads(angleInRadians: Double): Double = {
     math.cosh(angleInRadians)
   }
@@ -407,6 +433,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def acos(cos: Double): Double = {
     math.toDegrees(acosRads(cos))
   }
@@ -419,6 +446,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def acosRads(cos: Double): Double = {
     math.acos(cos)
   }
@@ -431,6 +459,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def tan(angleInDegrees: Double): Double = {
     tanRads(math.toRadians(angleInDegrees))
   }
@@ -443,6 +472,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def tan(a: Angle): Double = tanRads(a.inRadians)
 
   /**
@@ -453,6 +483,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def tanRads(angleInRadians: Double): Double = {
     math.tan(angleInRadians)
   }
@@ -465,6 +496,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def tanh(angleInDegrees: Double): Double = {
     tanhRads(math.toRadians(angleInDegrees))
   }
@@ -477,6 +509,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def tanh(a: Angle): Double = tanhRads(a.inRadians)
 
   /**
@@ -487,6 +520,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def tanhRads(angleInRadians: Double): Double = {
     math.tanh(angleInRadians)
   }
@@ -499,6 +533,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def atan(tan: Double): Double = {
     math.toDegrees(atanRads(tan))
   }
@@ -511,6 +546,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def atanRads(radianBasedTan: Double): Double = {
     math.atan(radianBasedTan)
   }
@@ -524,6 +560,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sort(a: Double, b: Double): (Double, Double) = {
     if (a < b)
       (a, b)
@@ -540,6 +577,7 @@ object MathUtils {
    * @return
    */
   @inline
+  final
   def sort(a: Double, b: Double, c: Double): (Double, Double, Double) = {
     if (a <= b) {
       if (c <= a && c <= b) {

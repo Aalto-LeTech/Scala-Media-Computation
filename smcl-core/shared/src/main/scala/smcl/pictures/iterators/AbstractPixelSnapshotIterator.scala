@@ -54,6 +54,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def widthInPixels: Int = enumerator.width
 
   /**
@@ -62,6 +63,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def heightInPixels: Int = enumerator.height
 
   /**
@@ -70,6 +72,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def upperLeftColumnInPixels: Int = enumerator.upperLeftColumn
 
   /**
@@ -78,6 +81,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def lowerRightColumnInPixels: Int = enumerator.lowerRightColumn
 
   /**
@@ -86,6 +90,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def upperLeftRowInPixels: Int = enumerator.upperLeftRow
 
   /**
@@ -94,6 +99,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def lowerRightRowInPixels: Int = enumerator.lowerRightRow
 
   /**
@@ -102,6 +108,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def currentColumnInPixels: Int = enumerator.currentColumn
 
   /**
@@ -110,6 +117,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def currentRowInPixels: Int = enumerator.currentRow
 
   /**
@@ -118,6 +126,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def currentCoordinatesInPixels: (Int, Int) = enumerator.colRowTuple
 
   /**
@@ -126,6 +135,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def rowHasChanged: Boolean = enumerator.rowHasChanged
 
   /**
@@ -134,6 +144,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def columnHasChanged: Boolean = enumerator.columnHasChanged
 
   /**
@@ -142,7 +153,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
-  override
+  override final
   def hasNext: Boolean = enumerator.hasNextCell
 
   /**
@@ -151,6 +162,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
+  final
   def hasNoMorePixels: Boolean = enumerator.hasNoMoreCells
 
   /**
@@ -159,7 +171,7 @@ abstract class AbstractPixelSnapshotIterator(
    * @return
    */
   @inline
-  override
+  override final
   def next(): Pixel = {
     enumerator.advance()
 

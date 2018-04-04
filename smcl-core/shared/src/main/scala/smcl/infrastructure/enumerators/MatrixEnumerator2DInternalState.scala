@@ -63,6 +63,7 @@ trait MatrixEnumerator2DInternalState {
    * @return
    */
   @inline
+  final
   def currentColumn: Int = _currentColumn
 
   /**
@@ -71,6 +72,7 @@ trait MatrixEnumerator2DInternalState {
    * @return
    */
   @inline
+  final
   def currentRow: Int = _currentRow
 
   /**
@@ -79,6 +81,7 @@ trait MatrixEnumerator2DInternalState {
    * @return
    */
   @inline
+  final
   def rowHasChanged: Boolean = hasNextCell && _rowHasChanged
 
   /**
@@ -87,6 +90,7 @@ trait MatrixEnumerator2DInternalState {
    * @return
    */
   @inline
+  final
   def columnHasChanged: Boolean = hasNextCell && _columnHasChanged
 
   /**
@@ -94,7 +98,6 @@ trait MatrixEnumerator2DInternalState {
    *
    * @return
    */
-  @inline
   def hasNextCell: Boolean
 
   /**
@@ -102,7 +105,6 @@ trait MatrixEnumerator2DInternalState {
    *
    * @return
    */
-  @inline
   def advance(): Unit
 
 }

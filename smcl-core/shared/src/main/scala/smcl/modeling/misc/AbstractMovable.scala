@@ -31,7 +31,6 @@ import smcl.settings._
  */
 trait AbstractMovable[ReturnType] {
 
-
   /**
    *
    *
@@ -41,6 +40,7 @@ trait AbstractMovable[ReturnType] {
    * @return
    */
   @inline
+  final
   def moveTo(
       coordinatesInPixels: Seq[Double],
       positionType: PositionType = DefaultPositionType): ReturnType = {

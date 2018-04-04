@@ -40,7 +40,6 @@ trait CoordSysIndepPosition[DimensionType <: CoordSysIndepDimensions]
    *
    * @return
    */
-  @inline
   protected
   def coordinates: Seq[Double]
 
@@ -50,7 +49,7 @@ trait CoordSysIndepPosition[DimensionType <: CoordSysIndepDimensions]
    * @return
    */
   @inline
-  override
+  override final
   def iterator: Iterator[Double] = {
     coordinates.iterator
   }
@@ -87,7 +86,6 @@ trait CoordSysIndepPosition[DimensionType <: CoordSysIndepDimensions]
    *
    * @return
    */
-  @inline
   override
   def canEqual(other: Any): Boolean
 
@@ -98,7 +96,6 @@ trait CoordSysIndepPosition[DimensionType <: CoordSysIndepDimensions]
    *
    * @return
    */
-  @inline
   override
   def equals(other: Any): Boolean = {
     other match {

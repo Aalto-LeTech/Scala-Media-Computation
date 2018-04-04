@@ -31,7 +31,6 @@ trait ToTuple[TupleType] {
    *
    * @return
    */
-  @inline
   def toTuple: TupleType
 
 }

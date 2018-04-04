@@ -42,7 +42,7 @@ trait PointAnchorMembers[HasAnchorType]
    * @return
    */
   @inline
-  override
+  override final
   def internalYWithin(
       anchored: HasAnchorType): Double = yInPixels
 

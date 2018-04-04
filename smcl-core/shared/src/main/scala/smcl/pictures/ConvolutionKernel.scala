@@ -82,7 +82,8 @@ case class ConvolutionKernel private(matrix: Seq[Seq[Float]])
    *
    * @return
    */
-  override def toString: String =
+  override
+  def toString: String =
     matrix.map(_.mkString("[", ", ", "]")).mkString("[", ", ", "]")
 
 }

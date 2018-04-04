@@ -30,7 +30,6 @@ trait NamedAnchor
    *
    * @return
    */
-  @inline
   def name: Option[String]
 
 }

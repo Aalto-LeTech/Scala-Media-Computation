@@ -51,6 +51,7 @@ class CommonValidators() {
    * @return
    */
   @inline
+  final
   def percentIsInRange(valueCandidate: Double): Boolean = {
     valueCandidate >= MinimumPercentage && valueCandidate <= MaximumPercentage
   }
@@ -63,6 +64,7 @@ class CommonValidators() {
    * @return
    */
   @inline
+  final
   def zeroToOneFactorIsInRange(valueCandidate: Double): Boolean =
     valueCandidate >= MinimumZeroToOneFactor && valueCandidate <= MaximumZeroToOneFactor
 
@@ -75,6 +77,7 @@ class CommonValidators() {
    * @throws InvalidPercentageError
    */
   @inline
+  final
   def validatePercentage(
       valueCandidate: Double,
       percentageNameOption: Option[String]): Unit = {
@@ -96,6 +99,7 @@ class CommonValidators() {
    * @throws InvalidZeroToOneFactorError
    */
   @inline
+  final
   def validateZeroToOneFactor(
       valueCandidate: Double,
       factorNameOption: Option[String]): Unit = {

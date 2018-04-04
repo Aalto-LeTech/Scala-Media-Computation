@@ -48,6 +48,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def setViewportFrom(
       viewportHolder: HasViewport[ReturnType],
       newName: Option[String] = None): ReturnType = {
@@ -69,6 +70,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    */
   @inline
   //noinspection MutatorLikeMethodIsParameterless
+  final
   def setViewportToContentBoundary(name: Option[String] = None): ReturnType =
     setViewportToContentBoundaryOf(this, name)
 
@@ -81,6 +83,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def setViewportToContentBoundaryOf(
       boundaryHolder: HasBounds,
       name: Option[String]): ReturnType = {
@@ -97,6 +100,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def setViewport(
       upperLeftCorner: Pos,
       lowerRightCorner: Pos): ReturnType = {
@@ -114,6 +118,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def setViewport(
       upperLeftCorner: Pos,
       lowerRightCorner: Pos,
@@ -135,6 +140,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def setViewport(
       upperLeftCornerXInPixels: Double,
       upperLeftCornerYInPixels: Double,
@@ -161,6 +167,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def setViewport(
       upperLeftCornerXInPixels: Double,
       upperLeftCornerYInPixels: Double,
@@ -185,6 +192,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def setViewport(boundary: Bounds): ReturnType =
     setViewport(boundary, name = None)
 
@@ -197,6 +205,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def setViewport(
       boundary: Bounds,
       name: Option[String]): ReturnType = {
@@ -211,7 +220,6 @@ trait HasViewport[ReturnType <: PictureElement] {
    *
    * @return
    */
-  @inline
   def setViewport(viewport: Viewport): ReturnType
 
   /**
@@ -220,6 +228,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def hasViewport: Boolean = viewport != null
 
   /**
@@ -228,7 +237,6 @@ trait HasViewport[ReturnType <: PictureElement] {
    * @return
    */
   //noinspection MutatorLikeMethodIsParameterless
-  @inline
   def removeViewport: ReturnType
 
 }

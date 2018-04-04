@@ -265,19 +265,19 @@ addCommandAlias("cpt", "; clean ; package ; test")
 addCommandAlias("rcpt", "; reload ; clean ; package ; test")
 addCommandAlias("testAll", "; learning:test ; test ; integration:test ; gui:test ; smoke:test")
 
-addCommandAlias("jvmC", "; smcl-core-jvm/clean ; smcl-bitmap-viewer-jvm/clean")
-addCommandAlias("jvmP", "; smcl-core-jvm/package ; smcl-bitmap-viewer-jvm/package")
+addCommandAlias("jvmC", "; smcl-coreJVM/clean ; smcl-bitmap-viewerJVM/clean")
+addCommandAlias("jvmP", "; smcl-coreJVM/package ; smcl-bitmap-viewerJVM/package")
 addCommandAlias("jvmCP", "; jvmC ; jvmP")
 addCommandAlias("jvmCPT", "; jvmC ; jvmP ; jvmUT")
-addCommandAlias("jvmUT", "; smcl-core-jvm/test ; smcl-bitmap-viewer-jvm/test")
-addCommandAlias("jvmIT", "; smcl-core-jvm/integration:test ; smcl-bitmap-viewer-jvm/integration:test")
-addCommandAlias("jvmLT", "; smcl-core-jvm/learning:test ; smcl-bitmap-viewer-jvm/learning:test")
-addCommandAlias("jvmGT", "; smcl-core-jvm/gui:test ; smcl-bitmap-viewer-jvm/gui:test")
-addCommandAlias("jvmST", "; smcl-core-jvm/smoke:test ; smcl-bitmap-viewer-jvm/smoke:test")
+addCommandAlias("jvmUT", "; smcl-coreJVM/test ; smcl-bitmap-viewerJVM/test")
+addCommandAlias("jvmIT", "; smcl-coreJVM/integration:test ; smcl-bitmap-viewerJVM/integration:test")
+addCommandAlias("jvmLT", "; smcl-coreJVM/learning:test ; smcl-bitmap-viewerJVM/learning:test")
+addCommandAlias("jvmGT", "; smcl-coreJVM/gui:test ; smcl-bitmap-viewerJVM/gui:test")
+addCommandAlias("jvmST", "; smcl-coreJVM/smoke:test ; smcl-bitmap-viewerJVM/smoke:test")
 addCommandAlias("jvmTestAll", "; jvmST ; jvmUT ; jvmIT ; jvmLT ; jvmGT")
-addCommandAlias("jvmD", "; smcl-core-jvm/doc ; smcl-bitmap-viewer-jvm/doc")
-addCommandAlias("jvmPublishLocal", "; smcl-core-jvm/publishLocal ; smcl-bitmap-viewer-jvm/publishLocal")
-addCommandAlias("jvmPublishM2", "; smcl-core-jvm/publishM2 ; smcl-bitmap-viewer-jvm/publishM2")
+addCommandAlias("jvmD", "; smcl-coreJVM/doc ; smcl-bitmap-viewerJVM/doc")
+addCommandAlias("jvmPublishLocal", "; smcl-coreJVM/publishLocal ; smcl-bitmap-viewerJVM/publishLocal")
+addCommandAlias("jvmPublishM2", "; smcl-coreJVM/publishM2 ; smcl-bitmap-viewerJVM/publishM2")
 
 
 //--------------------------------------------------------------------------------------------------
@@ -385,11 +385,17 @@ def unitTestFilterForJS(name: String): Boolean =
 lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
   slackNotify := None, // To limit slackNotify to the aggregate project only
 
-  scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
+  scalacOptions ++= Seq(
+    "-deprecation",
+    "-feature",
+    "-unchecked"
+  ),
 
   scalacOptions in (Compile, doc) := Seq(
     "-implicits",
-    "-doc-root-content", baseDirectory.value + "/root-doc.txt"
+    "-groups",
+    "-doc-root-content", baseDirectory.value + "/root-doc.txt",
+    "-doc-version", (scalaVersion in Global).value
   ),
 
   javacOptions ++= Seq(
@@ -666,6 +672,11 @@ lazy val smclCore: CrossProject =
         smclGeneralSettings,
         libraryinfoIncludeFileFilter in Compile :=
             (libraryinfoIncludeFileFilter in Compile).value || "SMCL.scala" || "SMCLCore.scala",
+        scalacOptions ++= Seq(
+          "-opt:l:inline",
+          "-opt-inline-from:**",
+          "-opt-warnings:at-inline-failed",
+        ),
         scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreName),
         inConfig(ItgTest)(Defaults.testTasks),
         inConfig(GUITest)(Defaults.testTasks),

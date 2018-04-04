@@ -55,7 +55,6 @@ object Arc {
    *
    * @return
    */
-  @inline
   def apply(
       upperLeftCorner: Pos,
       lowerRightCorner: Pos,
@@ -161,7 +160,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def isArc: Boolean = true
 
@@ -179,7 +177,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   def copy(
       newUpperLeftCorner: Pos = upperLeftCorner,
       newLowerRightCorner: Pos = lowerRightCorner,
@@ -221,7 +218,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   private
   def internalCopy(
       newUpperLeftCorner: Pos = upperLeftCorner,
@@ -258,7 +254,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): PictureElement = {
     require(
@@ -278,7 +273,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
@@ -296,7 +290,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(coordinatesInPixels: Seq[Double]): PictureElement = {
     require(
@@ -316,7 +309,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(
       xCoordinateInPixels: Double,
@@ -334,7 +326,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   def moveBy(offsetsInPixels: Seq[Double]): Arc = {
     val newUL = upperLeftCorner.moveBy(offsetsInPixels)
     val newLR = lowerRightCorner.moveBy(offsetsInPixels)
@@ -356,7 +347,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def moveBy(
       xOffsetInPixels: Double,
@@ -380,7 +370,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def scaleBy(
       widthFactor: Double,
@@ -403,7 +392,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCWAroundOrigo: Arc = {
     val newRotationAngle = currentRotationAngleInDegrees + Angle.RightAngleInDegrees
@@ -419,7 +407,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCW: Arc = rotateBy90DegsCW(position)
 
@@ -430,7 +417,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Arc = {
     val newRotationAngle = currentRotationAngleInDegrees + Angle.RightAngleInDegrees
@@ -446,7 +432,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCWAroundOrigo: Arc = {
     val newRotationAngle = currentRotationAngleInDegrees - Angle.RightAngleInDegrees
@@ -462,7 +447,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCW: Arc = rotateBy90DegsCCW(position)
 
@@ -473,7 +457,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Arc = {
     val newRotationAngle = currentRotationAngleInDegrees - Angle.RightAngleInDegrees
@@ -489,7 +472,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180DegsAroundOrigo: Arc = {
     val newRotationAngle = currentRotationAngleInDegrees + Angle.StraightAngleInDegrees
@@ -505,7 +487,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180Degs: Arc = rotateBy180Degs(position)
 
@@ -516,7 +497,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180Degs(centerOfRotation: Pos): Arc = {
     val newRotationAngle = currentRotationAngleInDegrees + Angle.StraightAngleInDegrees
@@ -534,7 +514,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateByAroundOrigo(angle: Angle): Arc = rotateByAroundOrigo(angle)
 
@@ -545,7 +524,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Arc = {
     val newRotationAngle = currentRotationAngleInDegrees - angleInDegrees
@@ -564,7 +542,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(angle: Angle): Arc = rotateBy(angle)
 
@@ -575,7 +552,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(angleInDegrees: Double): Arc = rotateBy(angleInDegrees, position)
 
@@ -587,7 +563,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(
       angle: Angle,
@@ -604,7 +579,6 @@ class Arc private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(
       angleInDegrees: Double,

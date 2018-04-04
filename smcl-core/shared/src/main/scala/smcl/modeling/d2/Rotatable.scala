@@ -39,7 +39,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy90DegsCW: ReturnType
 
   /**
@@ -47,7 +46,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy90DegsCWAroundOrigo: ReturnType
 
   /**
@@ -57,7 +55,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy90DegsCW(centerOfRotation: Pos): ReturnType
 
 
@@ -69,7 +66,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy90DegsCCW: ReturnType
 
   /**
@@ -77,7 +73,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy90DegsCCWAroundOrigo: ReturnType
 
   /**
@@ -87,7 +82,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy90DegsCCW(centerOfRotation: Pos): ReturnType
 
 
@@ -99,7 +93,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy180Degs: ReturnType
 
   /**
@@ -107,7 +100,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy180DegsAroundOrigo: ReturnType
 
   /**
@@ -117,7 +109,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy180Degs(centerOfRotation: Pos): ReturnType
 
 
@@ -131,7 +122,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy(angle: Angle): ReturnType = rotateBy(angle.inDegrees)
 
   /**
@@ -141,7 +131,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy(angleInDegrees: Double): ReturnType
 
   /**
@@ -151,7 +140,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateByAroundOrigo(angle: Angle): ReturnType = rotateByAroundOrigo(angle.inDegrees)
 
   /**
@@ -161,7 +149,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateByAroundOrigo(angleInDegrees: Double): ReturnType
 
   /**
@@ -172,7 +159,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy(
       angle: Angle,
       centerOfRotation: Pos): ReturnType = {
@@ -188,7 +174,6 @@ trait Rotatable[ReturnType] {
    *
    * @return
    */
-  @inline
   def rotateBy(
       angleInDegrees: Double,
       centerOfRotation: Pos): ReturnType

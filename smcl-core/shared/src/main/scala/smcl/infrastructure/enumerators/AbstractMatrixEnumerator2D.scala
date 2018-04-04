@@ -51,7 +51,6 @@ abstract class AbstractMatrixEnumerator2D(
    *
    * @param s
    */
-  @inline
   protected
   def setInternalState(s: MatrixEnumerator2DInternalState): Unit =
     _internalState = s
@@ -61,7 +60,6 @@ abstract class AbstractMatrixEnumerator2D(
    *
    * @return
    */
-  @inline
   protected
   def enumerationState: MatrixEnumerator2DInternalEnumerationState
 
@@ -71,6 +69,7 @@ abstract class AbstractMatrixEnumerator2D(
    * @return
    */
   @inline
+  final
   def currentColumn: Int = _internalState.currentColumn
 
   /**
@@ -79,6 +78,7 @@ abstract class AbstractMatrixEnumerator2D(
    * @return
    */
   @inline
+  final
   def currentRow: Int = _internalState.currentRow
 
   /**
@@ -87,6 +87,7 @@ abstract class AbstractMatrixEnumerator2D(
    * @return
    */
   @inline
+  final
   def colRowTuple: (Int, Int) = (currentColumn, currentRow)
 
   /**
@@ -95,6 +96,7 @@ abstract class AbstractMatrixEnumerator2D(
    * @return
    */
   @inline
+  final
   def rowHasChanged: Boolean = _internalState.rowHasChanged
 
   /**
@@ -103,6 +105,7 @@ abstract class AbstractMatrixEnumerator2D(
    * @return
    */
   @inline
+  final
   def columnHasChanged: Boolean = _internalState.columnHasChanged
 
   /**
@@ -111,6 +114,7 @@ abstract class AbstractMatrixEnumerator2D(
    * @return
    */
   @inline
+  final
   def hasNextCell: Boolean = _internalState.hasNextCell
 
   /**
@@ -119,6 +123,7 @@ abstract class AbstractMatrixEnumerator2D(
    * @return
    */
   @inline
+  final
   def hasNoMoreCells: Boolean = !hasNextCell
 
   /**
@@ -127,6 +132,7 @@ abstract class AbstractMatrixEnumerator2D(
    * @return
    */
   @inline
+  final
   def advance(): Unit = _internalState.advance()
 
 
@@ -144,7 +150,6 @@ abstract class AbstractMatrixEnumerator2D(
      *
      * @return
      */
-    @inline
     def hasNextCell: Boolean = true
 
     /**
@@ -153,7 +158,7 @@ abstract class AbstractMatrixEnumerator2D(
      * @return
      */
     @inline
-    override
+    override final
     def advance(): Unit =
       AbstractMatrixEnumerator2D.this.setInternalState(enumerationState)
 
@@ -174,7 +179,6 @@ abstract class AbstractMatrixEnumerator2D(
      *
      * @return
      */
-    @inline
     def hasNextCell: Boolean
 
   }

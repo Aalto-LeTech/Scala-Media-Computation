@@ -43,7 +43,6 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType]
    *
    * @return
    */
-  @inline
   def corners: Seq[PositionType]
 
   /**
@@ -52,7 +51,7 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType]
    * @return
    */
   @inline
-  override
+  override final
   def iterator: Iterator[PositionType] = {
     corners.iterator
   }
@@ -64,7 +63,7 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType]
    * @return
    */
   @inline
-  override
+  override final
   def flatMap(
       f: (Seq[PositionType]) => CoordSysIndepBoundary[PositionType, DimensionType]): CoordSysIndepBoundary[PositionType, DimensionType] = {
 
@@ -103,7 +102,6 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType]
    *
    * @return
    */
-  @inline
   override
   def canEqual(other: Any): Boolean
 
@@ -114,7 +112,6 @@ trait CoordSysIndepBoundary[PositionType <: CoordSysIndepPosition[DimensionType]
    *
    * @return
    */
-  @inline
   override
   def equals(other: Any): Boolean = {
     other match {

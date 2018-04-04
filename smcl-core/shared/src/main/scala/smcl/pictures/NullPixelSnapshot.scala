@@ -69,22 +69,22 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
 
   /** */
   @inline
-  private[pictures]
+  private[pictures] final
   def reds: Array[Int] = EmptyColorArray
 
   /** */
   @inline
-  private[pictures]
+  private[pictures] final
   def greens: Array[Int] = EmptyColorArray
 
   /** */
   @inline
-  private[pictures]
+  private[pictures] final
   def blues: Array[Int] = EmptyColorArray
 
   /** */
   @inline
-  private[pictures]
+  private[pictures] final
   def opacities: Array[Int] = EmptyColorArray
 
   /**
@@ -137,7 +137,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
+  override final
   def componentArrays: (Array[Int], Array[Int], Array[Int], Array[Int]) = {
     checkForInvalidation()
     (redComponentArray, greenComponentArray, blueComponentArray, opacityComponentArray)
@@ -149,7 +149,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
+  override final
   def setRedComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "red")
@@ -161,7 +161,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
+  override final
   def setGreenComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "green")
@@ -173,7 +173,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
+  override final
   def setBlueComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "blue")
@@ -185,7 +185,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
+  override final
   def setOpacityComponentArray(array: Array[Int]): Unit = {
     checkForInvalidation()
     checkComponentArrayLength(array, "opacity")
@@ -197,7 +197,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
+  override final
   def setComponentArrays(
       reds: Array[Int],
       greens: Array[Int],
@@ -216,7 +216,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    *
    */
   @inline
-  override
+  override final
   def toBitmap: Bitmap = {
     checkForInvalidation()
     invalidation.setDone()
@@ -233,7 +233,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
+  override final
   def pixel(
       xInPixels: Int,
       yInPixels: Int): Pixel = {
@@ -252,6 +252,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
+  override final
   def color(
       xInPixels: Int,
       yInPixels: Int): Color = {
@@ -267,7 +268,7 @@ class NullPixelSnapshot protected[pictures](bitmap: Bitmap)
    * @return
    */
   @inline
-  override
+  override final
   def toString: String = s"PixelSnapshot (0 x 0 pixels)"
 
 }

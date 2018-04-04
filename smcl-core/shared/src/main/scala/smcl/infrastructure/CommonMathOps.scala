@@ -31,7 +31,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def abs: ElementType
 
   /**
@@ -39,7 +38,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def floor: ElementType
 
   /**
@@ -47,7 +45,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def ceiling: ElementType
 
   /**
@@ -55,7 +52,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def double: ElementType
 
   /**
@@ -63,7 +59,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def half: ElementType
 
   /**
@@ -71,7 +66,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def inverse: ElementType
 
   /**
@@ -81,7 +75,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def power(exponent: Double): ElementType
 
   /**
@@ -89,7 +82,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def quarter: ElementType
 
   /**
@@ -97,7 +89,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def round: ElementType
 
   /**
@@ -105,7 +96,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def signum: ElementType
 
   /**
@@ -113,7 +103,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def triple: ElementType
 
   /**
@@ -121,7 +110,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def unary_+(): ElementType
 
   /**
@@ -129,7 +117,6 @@ trait CommonMathOps[ElementType] {
    *
    * @return
    */
-  @inline
   def unary_-(): ElementType = inverse
 
 }

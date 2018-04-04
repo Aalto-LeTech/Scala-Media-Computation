@@ -148,6 +148,7 @@ class BitmapContentCorners private(
    * @return
    */
   @inline
+  final
   def moveBy(offsetsInPixels: Seq[Double]): BitmapContentCorners =
     internalCopy(
       newUpperLeftCorner = upperLeftCorner.moveBy(offsetsInPixels),
@@ -164,6 +165,7 @@ class BitmapContentCorners private(
    * @return
    */
   @inline
+  final
   def moveBy(
       xOffsetInPixels: Double,
       yOffsetInPixels: Double): BitmapContentCorners = {
@@ -189,7 +191,7 @@ class BitmapContentCorners private(
    * @return
    */
   @inline
-  private
+  private final
   def internalCopy(
       newUpperLeftCorner: Pos = upperLeftCorner,
       newUpperRightCorner: Pos = upperRightCorner,

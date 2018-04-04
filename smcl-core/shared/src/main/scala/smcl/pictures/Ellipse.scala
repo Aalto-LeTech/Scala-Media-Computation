@@ -45,7 +45,6 @@ object Ellipse {
    *
    * @return
    */
-  @inline
   def apply(
       upperLeftCorner: Pos,
       width: Len,
@@ -77,7 +76,6 @@ object Ellipse {
    *
    * @return
    */
-  @inline
   def apply(
       center: Pos,
       semiMajorAxisInPixels: Double,
@@ -110,7 +108,6 @@ object Ellipse {
    *
    * @return
    */
-  @inline
   def apply(
       upperLeftCorner: Pos,
       lowerRightCorner: Pos,

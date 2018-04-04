@@ -292,6 +292,7 @@ case class Bounds private(
 
   /** Position of this boundary. */
   @inline
+  final
   def position: Pos = upperLeftCorner
 
   /** */
@@ -334,7 +335,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override
+  override final
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Bounds]
   }
@@ -348,6 +349,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def horizontalPositionFor(
       alignment: HorizontalAlignment,
       boundaryToBeAligned: Bounds): Double = {
@@ -371,6 +373,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def verticalPositionFor(
       alignment: VerticalAlignment,
       boundaryToBeAligned: Bounds): Double = {
@@ -391,6 +394,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def randomPosInside: Pos = {
     if (isUndefined)
       return Pos.Origo
@@ -412,6 +416,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def copy(
       newUpperLeftCorner: Pos = upperLeftCorner,
       newLowerRightCorner: Pos = lowerRightCorner): Bounds = {
@@ -430,6 +435,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def grow(offset: Double): Bounds =
     copy(
       newUpperLeftCorner = upperLeftCorner.subtract(offset),
@@ -443,6 +449,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def grow(offset: Len): Bounds =
     copy(
       newUpperLeftCorner = upperLeftCorner.subtract(offset),
@@ -457,6 +464,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def grow(
       horizontalOffset: Double,
       verticalOffset: Double): Bounds = {
@@ -475,6 +483,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def grow(
       horizontalOffset: Len,
       verticalOffset: Len): Bounds = {
@@ -495,6 +504,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def grow(
       topOffset: Double,
       leftOffset: Double,
@@ -517,6 +527,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def grow(
       topOffset: Len,
       leftOffset: Len,
@@ -536,6 +547,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def shrink(offset: Double): Bounds =
     copy(
       newUpperLeftCorner = upperLeftCorner.add(offset),
@@ -549,6 +561,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def shrink(offset: Len): Bounds =
     copy(
       newUpperLeftCorner = upperLeftCorner.add(offset),
@@ -563,6 +576,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def shrink(
       horizontalOffset: Double,
       verticalOffset: Double): Bounds = {
@@ -581,6 +595,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def shrink(
       horizontalOffset: Len,
       verticalOffset: Len): Bounds = {
@@ -601,6 +616,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def shrink(
       topOffset: Double,
       leftOffset: Double,
@@ -623,6 +639,7 @@ case class Bounds private(
    * @return
    */
   @inline
+  final
   def shrink(
       topOffset: Len,
       leftOffset: Len,
@@ -642,7 +659,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override
+  override final
   def moveBy(offsetsInPixels: Seq[Double]): Bounds = {
     copy(
       newUpperLeftCorner = upperLeftCorner.moveBy(offsetsInPixels),
@@ -658,7 +675,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override
+  override final
   def moveBy(
       xOffsetInPixels: Double,
       yOffsetInPixels: Double): Bounds = {
@@ -676,7 +693,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override
+  override final
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Bounds = {
     if (isUndefined)
       return this
@@ -699,7 +716,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override
+  override final
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): Bounds = {
@@ -720,7 +737,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override
+  override final
   def moveCenterTo(coordinatesInPixels: Seq[Double]): Bounds = {
     if (isUndefined)
       return this
@@ -743,7 +760,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override
+  override final
   def moveCenterTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): Bounds = {

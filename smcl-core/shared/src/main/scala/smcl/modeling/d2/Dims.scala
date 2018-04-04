@@ -153,6 +153,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def toTuple: DimensionTuple = (width, height)
 
   /**
@@ -161,6 +162,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def toDoubleTuple: (Double, Double) =
     (width.inPixels, height.inPixels)
 
@@ -172,6 +174,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def setWidth(newWidth: Double): Dims =
     setWidth(Len(newWidth))
 
@@ -183,6 +186,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def setWidth(newWidth: Len): Dims =
     copy(newWidth = newWidth)
 
@@ -194,6 +198,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def setHeight(newHeight: Double): Dims =
     setHeight(Len(newHeight))
 
@@ -205,6 +210,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def setHeight(newHeight: Len): Dims =
     copy(newHeight = newHeight)
 
@@ -216,6 +222,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def wider(offset: Double): Dims =
     setWidth(width + offset)
 
@@ -227,6 +234,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def wider(offset: Len): Dims =
     setWidth(width + offset)
 
@@ -238,6 +246,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def higher(offset: Double): Dims =
     setHeight(height + offset)
 
@@ -249,6 +258,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def higher(offset: Len): Dims =
     setHeight(height + offset)
 
@@ -260,6 +270,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def grow(offset: Double): Dims =
     copy(
       newWidth = width + offset,
@@ -273,6 +284,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def grow(offset: Len): Dims =
     copy(
       newWidth = width + offset,
@@ -287,6 +299,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def grow(
       widthOffset: Double,
       heightOffset: Double): Dims = {
@@ -305,6 +318,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def grow(
       widthOffset: Len,
       heightOffset: Len): Dims = {
@@ -322,6 +336,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def shrink(offset: Double): Dims =
     copy(
       newWidth = width - offset,
@@ -335,6 +350,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def shrink(offset: Len): Dims =
     copy(
       newWidth = width - offset,
@@ -349,6 +365,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def shrink(
       widthOffset: Double,
       heightOffset: Double): Dims = {
@@ -367,6 +384,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def shrink(
       widthOffset: Len,
       heightOffset: Len): Dims = {
@@ -382,6 +400,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def toIntTuple: (Int, Int) = {
     val w = width.inPixels.floor.toInt
     val h = height.inPixels.floor.toInt
@@ -397,7 +416,7 @@ case class Dims private(
    * @return
    */
   @inline
-  override
+  override final
   def map(f: (Double) => Double): Dims = {
     Dims(f(width.inPixels), f(height.inPixels))
   }
@@ -410,6 +429,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def flatMap(f: (DimensionTuple) => Dims): Dims = {
     f(toTuple)
   }
@@ -422,7 +442,7 @@ case class Dims private(
    * @return
    */
   @inline
-  override
+  override final
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Dims]
   }
@@ -433,7 +453,7 @@ case class Dims private(
    * @return
    */
   @inline
-  override
+  override final
   def minItem: Double = lengths.min
 
   /**
@@ -443,7 +463,7 @@ case class Dims private(
    * @return
    */
   @inline
-  override
+  override final
   def minItems(others: Dims*): Dims = {
     val dims = this +: others
     val minWidth = dims.map(_.width).min
@@ -458,7 +478,7 @@ case class Dims private(
    * @return
    */
   @inline
-  override
+  override final
   def maxItem: Double = lengths.max
 
   /**
@@ -468,7 +488,7 @@ case class Dims private(
    * @return
    */
   @inline
-  override
+  override final
   def maxItems(others: Dims*): Dims = {
     val dims = this +: others
     val maxWidth = dims.map(_.width).max
@@ -485,6 +505,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def + (offset: Dims): Dims = {
     val newWidth = this.width + offset.width
     val newHeight = this.height + offset.height
@@ -500,6 +521,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def - (offset: Dims): Dims = {
     val newWidth = this.width - offset.width
     val newHeight = this.height - offset.height
@@ -515,6 +537,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def toBoundsFrom(upperLeftCorner: Pos): Bounds = {
     val lowerRightCorner =
       upperLeftCorner + (width.inPixels, height.inPixels)
@@ -528,6 +551,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def diagonalDistance: Len =
     Len(math.sqrt(
       width.square.inPixels + height.square.inPixels))
@@ -541,6 +565,7 @@ case class Dims private(
    * @return
    */
   @inline
+  final
   def copy(
       newWidth: Len = width,
       newHeight: Len = height): Dims = {
@@ -554,7 +579,7 @@ case class Dims private(
    * @return
    */
   @inline
-  override
+  override final
   def toString: String = {
     s"Dims(w: ${width.inPixels} px, h: ${height.inPixels} px)"
   }

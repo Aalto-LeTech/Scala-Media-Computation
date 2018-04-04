@@ -101,7 +101,7 @@ class Polygon private(
    * @return
    */
   @inline
-  override
+  override final
   def isPolygon: Boolean = true
 
   /**
@@ -109,7 +109,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   lazy val hashCode: Int = {
     val prime = 31
@@ -135,7 +134,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Polygon]
   }
@@ -147,7 +145,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def equals(other: Any): Boolean = {
     other match {
@@ -166,7 +163,6 @@ class Polygon private(
   /**
    *
    */
-  @inline
   override
   def display(): Polygon = {
     super.display()
@@ -179,7 +175,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   def copy(
       newPoints: Seq[Pos] = points,
       newHasBorder: Boolean = hasBorder,
@@ -202,7 +197,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def scaleBy(
       widthFactor: Double,
@@ -218,7 +212,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def moveBy(offsetsInPixels: Seq[Double]): PictureElement =
     copy(newPoints = points.map(_.moveBy(offsetsInPixels)))
@@ -231,7 +224,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def moveBy(
       xOffsetInPixels: Double,
@@ -247,7 +239,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): PictureElement = {
     require(
@@ -267,7 +258,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
@@ -285,7 +275,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(coordinatesInPixels: Seq[Double]): PictureElement = {
     require(
@@ -305,7 +294,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(
       xCoordinateInPixels: Double,
@@ -321,7 +309,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCWAroundOrigo: Polygon =
     copy(newPoints = points.map(_.rotateBy90DegsCWAroundOrigo))
@@ -331,7 +318,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCW: Polygon = rotateBy90DegsCW(position)
 
@@ -342,7 +328,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Polygon =
     copy(newPoints = points.map(_.rotateBy90DegsCW(centerOfRotation)))
@@ -352,7 +337,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCWAroundOrigo: Polygon =
     copy(newPoints = points.map(_.rotateBy90DegsCCWAroundOrigo))
@@ -362,7 +346,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCW: Polygon = rotateBy90DegsCCW(position)
 
@@ -373,7 +356,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Polygon =
     copy(newPoints = points.map(_.rotateBy90DegsCCW(centerOfRotation)))
@@ -383,7 +365,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180DegsAroundOrigo: Polygon =
     copy(newPoints = points.map(_.rotateBy180DegsAroundOrigo))
@@ -393,7 +374,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180Degs: Polygon = rotateBy180Degs(position)
 
@@ -404,7 +384,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy180Degs(centerOfRotation: Pos): Polygon =
     copy(newPoints = points.map(_.rotateBy180Degs(centerOfRotation)))
@@ -416,7 +395,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateByAroundOrigo(angle: Angle): Polygon = rotateByAroundOrigo(angle)
 
@@ -427,7 +405,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Polygon =
     copy(newPoints = points.map(_.rotateByAroundOrigo(angleInDegrees)))
@@ -439,7 +416,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(angle: Angle): Polygon = rotateBy(angle)
 
@@ -450,7 +426,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(angleInDegrees: Double): Polygon =
     rotateBy(angleInDegrees, position)
@@ -463,7 +438,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(
       angle: Angle,
@@ -480,7 +454,6 @@ class Polygon private(
    *
    * @return
    */
-  @inline
   override
   def rotateBy(
       angleInDegrees: Double,

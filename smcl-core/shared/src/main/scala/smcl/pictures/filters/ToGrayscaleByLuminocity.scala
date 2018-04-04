@@ -46,7 +46,6 @@ object ToGrayscaleByLuminocity
    *
    * @return
    */
-  @inline
   override
   def apply(target: PictureElement): PictureElement = {
     target.toBitmapCopy.translateColorsWith{(red, green, blue, opacity) =>

@@ -67,7 +67,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def points: Seq[Pos] = Seq()
 
   /**
@@ -75,7 +74,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def identity: Identity
 
   /**
@@ -83,7 +81,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def position: Pos = boundary.center
 
   /**
@@ -91,7 +88,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def dimensions: Dims = boundary.dimensions
 
   /**
@@ -99,7 +95,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def aspectRatio: AspectRatio = boundary.aspectRatio
 
   /**
@@ -107,7 +102,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def isRenderable: Boolean
 
   /**
@@ -115,7 +109,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def toBitmap: Bitmap = Bitmap(this)
 
   /**
@@ -123,7 +116,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def toBitmapCopy: Bitmap = toBitmap
 
   /**
@@ -131,7 +123,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def toPicture: Picture = Picture(this)
 
   /**
@@ -139,13 +130,11 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def toPixelSnapshot: PixelSnapshot = PixelSnapshot(this)
 
   /**
    *
    */
-  @inline
   def display(): PictureElement = {
     displayInViewer(toBitmap)
 
@@ -160,7 +149,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def mergePixelsWith(
       another: PictureElement,
       pixelMerger: (Color, Color) => Color): Bitmap = {
@@ -178,7 +166,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   override
   def crop(
       upperLeftCornerXInPixels: Double,
@@ -202,7 +189,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   override
   def crop(
       upperLeftCorner: Pos,
@@ -222,7 +208,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addToBack(content: PictureElement): PictureElement = addToBack(Seq(content))
 
   /**
@@ -232,7 +217,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addToBack(content: Seq[PictureElement]): PictureElement =
     Picture(appendTo(content, Seq(this)))
 
@@ -244,7 +228,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   protected final
   def appendTo(
       contentToAppend: Seq[PictureElement],
@@ -265,7 +248,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addToFront(content: PictureElement): PictureElement = content.addToBack(this)
 
   /**
@@ -275,7 +257,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addToFront(content: Seq[PictureElement]): PictureElement =
     Picture(prependTo(content, Seq(this)))
 
@@ -287,7 +268,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   protected final
   def prependTo(
       contentToPrepend: Seq[PictureElement],
@@ -308,7 +288,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def +: (content: PictureElement): PictureElement = addToFront(content)
 
   /**
@@ -318,7 +297,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def :+ (content: PictureElement): PictureElement = addToBack(content)
 
   /**
@@ -331,7 +309,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addTo(
       targetSide: Side,
       content: PictureElement,
@@ -355,7 +332,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addToTop(
       content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -381,7 +357,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addToRight(
       content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -405,7 +380,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addToBottom(
       content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -429,7 +403,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addToLeft(
       content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -455,7 +428,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addCopiesAtPos(
       content: PictureElement,
       positions: Seq[Pos],
@@ -481,7 +453,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addCopiesAt(
       content: PictureElement,
       positions: Seq[(Double, Double)],
@@ -508,7 +479,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addAtPos(
       contentsAndPositions: Seq[(PictureElement, Pos)],
       positionType: PositionType): PictureElement = {
@@ -528,7 +498,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addAtPos(
       contentAndPosition: (PictureElement, Pos),
       positionType: PositionType): PictureElement = {
@@ -548,7 +517,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addAtPos(
       content: PictureElement,
       position: Pos,
@@ -568,7 +536,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addAt(
       contentsAndCoordinatesInPixels: Seq[(PictureElement, Double, Double)],
       positionType: PositionType): PictureElement = {
@@ -588,7 +555,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addAt(
       contentAndCoordinatesInPixels: (PictureElement, Double, Double),
       positionType: PositionType): PictureElement = {
@@ -610,7 +576,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def addAt(
       content: PictureElement,
       xCoordinateInPixels: Double,
@@ -630,7 +595,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def replicateUpwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -655,7 +619,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def replicateDownwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -680,7 +643,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def replicateLeftwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -705,7 +667,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def replicateRightwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -730,7 +691,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def alternateUpwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -755,7 +715,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def alternateDownwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -780,7 +739,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def alternateLeftwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -805,7 +763,6 @@ trait PictureElement
    *
    * @return
    */
-  @inline
   def alternateRightwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,

@@ -49,7 +49,6 @@ object Dims {
    *
    * @return
    */
-  @inline
   def apply(dimensions: Seq[Double]): Dims = {
     require(
       dimensions.length == NumberOfDimensions,
@@ -65,7 +64,6 @@ object Dims {
    *
    * @return
    */
-  @inline
   def apply(inPixels: Double): Dims = {
     require(
       inPixels >= 0.0,
@@ -104,7 +102,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   override
   def map(f: (Double) => Double): Dims = Dims(f(lengthInPixels))
 
@@ -115,7 +112,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   def flatMap(f: (Double) => Dims): Dims = f(lengthInPixels)
 
   /**
@@ -125,7 +121,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   override
   def compare(that: Dims): Int = {
     lengthInPixels.compare(that.lengthInPixels)
@@ -138,7 +133,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   override
   def canEqual(other: Any): Boolean = other.isInstanceOf[Dims]
 
@@ -147,7 +141,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   override
   def min(others: Dims*): Dims = (this +: others).min
 
@@ -156,7 +149,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   override
   def max(others: Dims*): Dims = (this +: others).max
 
@@ -167,7 +159,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   def + (offset: Dims): Dims = {
     Dims(lengthInPixels + offset.lengthInPixels)
   }
@@ -179,7 +170,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   def - (offset: Dims): Dims = {
     Dims(lengthInPixels - offset.lengthInPixels)
   }
@@ -191,7 +181,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   def copy(newLengthInPixels: Double = lengthInPixels): Dims = {
     Dims(newLengthInPixels)
   }
@@ -201,7 +190,6 @@ case class Dims private(lengthInPixels: Double)
    *
    * @return
    */
-  @inline
   override
   def toString: String = {
     s"Dims($lengthInPixels px)"

@@ -58,7 +58,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Double,
       heightInPixels: Double): VectorGraphic = {
@@ -83,7 +82,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -108,7 +106,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -136,7 +133,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -173,7 +169,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def apply(
       circumRadiusInPixels: Double,
       center: Pos = Pos.Origo,
@@ -203,7 +198,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def pointsFor(
       circumRadiusInPixels: Double,
       center: Pos,
@@ -230,7 +224,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def limitCircumRadiusTo(
       widthInPixels: Double,
       heightInPixels: Double): Double = {
@@ -248,7 +241,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def diagonalFromHeight(height: Double): Double =
     DiagonalPerHeightRatio * height
 
@@ -259,7 +251,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def diagonalLengthFromSideLength(side: Double): Double =
     DiagonalPerSideRatio * side
 
@@ -270,7 +261,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def sideLengthFromDiagonalLength(diagonal: Double): Double =
     diagonal / DiagonalPerSideRatio
 
@@ -281,7 +271,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def sideLengthFromHeight(height: Double): Double =
     height / HeightPerSideRatio
 
@@ -292,7 +281,6 @@ object Pentagon {
    *
    * @return
    */
-  @inline
   def circumRadiusFromDiagonal(diagonal: Double): Double =
     diagonal / DiagonalPerCircumradiusRatio
 

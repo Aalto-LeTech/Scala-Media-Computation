@@ -83,7 +83,7 @@ class RightwardsDownwardsMatrixEnumerator private[enumerators](
    * @return
    */
   //noinspection ConvertExpressionToSAM
-  override protected
+  override protected final
   def enumerationState: MatrixEnumerator2DInternalEnumerationState =
     new MatrixEnumerator2DInternalEnumerationState {
 
@@ -97,6 +97,7 @@ class RightwardsDownwardsMatrixEnumerator private[enumerators](
        *
        * @return
        */
+      final
       def hasNextCell: Boolean =
         currentRow < lowerRightRow || currentColumn < lowerRightColumn
 
@@ -105,7 +106,7 @@ class RightwardsDownwardsMatrixEnumerator private[enumerators](
        *
        * @return
        */
-      override
+      override final
       def advance(): Unit = {
         if (!hasNextCell)
           throw NoMoreCellsToEnumerateError

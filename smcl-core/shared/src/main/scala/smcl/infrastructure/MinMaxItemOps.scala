@@ -32,7 +32,6 @@ trait MinMaxItemOps[ContainerType, ItemType] {
    *
    * @return
    */
-  @inline
   def minItem: ItemType
 
   /**
@@ -41,7 +40,6 @@ trait MinMaxItemOps[ContainerType, ItemType] {
    *
    * @return
    */
-  @inline
   def minItems(others: ContainerType*): ContainerType
 
   /**
@@ -49,7 +47,6 @@ trait MinMaxItemOps[ContainerType, ItemType] {
    *
    * @return
    */
-  @inline
   def maxItem: ItemType
 
   /**
@@ -58,7 +55,6 @@ trait MinMaxItemOps[ContainerType, ItemType] {
    *
    * @return
    */
-  @inline
   def maxItems(others: ContainerType*): ContainerType
 
 }

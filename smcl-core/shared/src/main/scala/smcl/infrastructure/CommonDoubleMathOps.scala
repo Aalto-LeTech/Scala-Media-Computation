@@ -35,7 +35,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def abs: ElementType = map(math.abs)
 
   /**
@@ -43,7 +42,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def ceiling: ElementType = map(math.ceil)
 
   /**
@@ -51,7 +49,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def double: ElementType = map(2 * _)
 
   /**
@@ -59,7 +56,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def floor: ElementType = map(math.floor)
 
   /**
@@ -67,7 +63,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def half: ElementType = map(_ / 2.0)
 
   /**
@@ -75,7 +70,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def inverse: ElementType = map(-_)
 
   /**
@@ -83,7 +77,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def unary_+(): ElementType = map(x => x)
 
   /**
@@ -93,7 +86,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def power(exponent: Double): ElementType = {
     map(math.pow(_, exponent))
   }
@@ -110,7 +102,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def round: ElementType = map(d => math.round(d))
 
   /**
@@ -118,7 +109,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def signum: ElementType = map(math.signum)
 
   /**
@@ -126,7 +116,6 @@ trait CommonDoubleMathOps[ElementType]
    *
    * @return
    */
-  @inline
   def triple: ElementType = map(3 * _)
 
 }

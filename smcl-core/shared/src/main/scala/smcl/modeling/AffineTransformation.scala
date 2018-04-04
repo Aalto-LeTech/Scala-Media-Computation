@@ -47,7 +47,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forYAxisRelativeHorizontalFlipOf(
       horizontalSize: Len): AffineTransformation = {
 
@@ -61,7 +60,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forYAxisRelativeHorizontalFlipOf(
       horizontalSizeInPixels: Double): AffineTransformation = {
 
@@ -77,7 +75,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forXAxisRelativeVerticalFlipOf(
       verticalSize: Len): AffineTransformation = {
 
@@ -91,7 +88,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forXAxisRelativeVerticalFlipOf(
       verticalSizeInPixels: Double): AffineTransformation = {
 
@@ -107,7 +103,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forOrigoRelativeDiagonalFlipOf(
       sizes: d2.Dims): AffineTransformation = {
 
@@ -124,7 +119,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forOrigoRelativeDiagonalFlipOf(
       horizontalSize: Len,
       verticalSize: Len): AffineTransformation = {
@@ -142,7 +136,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forOrigoRelativeDiagonalFlipOf(
       horizontalSizeInPixels: Double,
       verticalSizeInPixels: Double): AffineTransformation = {
@@ -160,7 +153,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forTranslationOf(
       lengthX: Len,
       lengthY: Len): AffineTransformation = {
@@ -178,7 +170,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forTranslationOf(
       lengthXInPixels: Double,
       lengthYInPixels: Double): AffineTransformation = {
@@ -196,7 +187,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forOrigoRelativeScalingOf(
       factorX: Double,
       factorY: Double): AffineTransformation = {
@@ -214,7 +204,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forOrigoRelativeShearingOf(
       factorX: Double,
       factorY: Double): AffineTransformation = {
@@ -231,7 +220,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forOrigoCentredRotationOf(
       angle: Angle): AffineTransformation = {
 
@@ -247,7 +235,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forOrigoCentredRotationOf(
       angleInDegrees: Double): AffineTransformation = {
 
@@ -263,7 +250,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   private
   def forOrigoCentredRotationOf(
       cos: Double,
@@ -283,7 +269,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotation(
       angleInDegrees: Double,
       pX: Double,
@@ -304,7 +289,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotation(
       angle: Angle,
       pX: Double,
@@ -325,7 +309,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotation(
       angleInDegrees: Double,
       point: Pos): AffineTransformation = {
@@ -348,7 +331,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotation(
       angle: Angle,
       point: Pos): AffineTransformation = {
@@ -369,7 +351,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotation(
       cos: Double,
       sin: Double,
@@ -395,7 +376,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotationOf90DegsCW(
       point: Pos): AffineTransformation = {
 
@@ -412,7 +392,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotationOf90DegsCW(
       pX: Double,
       pY: Double): AffineTransformation = {
@@ -436,7 +415,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotationOf90DegsCCW(
       point: Pos): AffineTransformation = {
 
@@ -453,7 +431,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotationOf90DegsCCW(
       pX: Double,
       pY: Double): AffineTransformation = {
@@ -477,7 +454,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotationOf180Degs(
       point: Pos): AffineTransformation = {
 
@@ -494,7 +470,6 @@ object AffineTransformation {
    *
    * @return
    */
-  @inline
   def forPointCentredRotationOf180Degs(
       pX: Double,
       pY: Double): AffineTransformation = {
@@ -533,6 +508,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def translate(
       dimensions: d2.Dims): AffineTransformation = {
 
@@ -550,6 +526,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def translate(
       lengthX: Len,
       lengthY: Len): AffineTransformation = {
@@ -566,6 +543,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def translate(
       lengthXInPixels: Double,
       lengthYInPixels: Double): AffineTransformation = {
@@ -588,6 +566,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def scaleRelativeToOrigo(
       factorX: Double,
       factorY: Double): AffineTransformation = {
@@ -611,6 +590,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def scaleRelativeToPoint(
       factorX: Double,
       factorY: Double,
@@ -634,6 +614,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def scaleRelativeToPoint(
       factorX: Double,
       factorY: Double,
@@ -659,6 +640,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def shearRelativeToOrigo(
       factorX: Double,
       factorY: Double,
@@ -682,6 +664,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def shearRelativeToOrigo(
       factorX: Double,
       factorY: Double,
@@ -708,6 +691,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def shearRelativeToPoint(
       factorX: Double,
       factorY: Double,
@@ -735,6 +719,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def shearRelativeToPoint(
       factorX: Double,
       factorY: Double,
@@ -763,6 +748,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def shearRelativeToPoint(
       factorX: Double,
       factorY: Double,
@@ -792,6 +778,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def shearRelativeToPoint(
       factorX: Double,
       factorY: Double,
@@ -817,6 +804,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotateAroundOrigo(angle: Angle): AffineTransformation = {
     rotateDegsAroundOrigo(angle.cos, angle.sin)
   }
@@ -829,6 +817,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotateDegsAroundOrigo(angleInDegrees: Double): AffineTransformation = {
     rotateDegsAroundOrigo(
       MathUtils.cos(angleInDegrees),
@@ -844,7 +833,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
-  private
+  private final
   def rotateDegsAroundOrigo(cos: Double, sin: Double): AffineTransformation = {
     new AffineTransformation(
       alpha = cos * alpha - sin * delta,
@@ -865,6 +854,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotateDegsAroundPoint(
       angleInDegrees: Double,
       pX: Double,
@@ -885,6 +875,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotateDegsAroundPoint(
       angleInDegrees: Double,
       point: Pos): AffineTransformation = {
@@ -909,6 +900,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotateAroundPoint(
       angle: Angle,
       pX: Double,
@@ -930,6 +922,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotateAroundPoint(
       angle: Angle,
       point: Pos): AffineTransformation = {
@@ -952,7 +945,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
-  private
+  private final
   def rotateDegsAroundPoint(
       cos: Double,
       sin: Double,
@@ -976,6 +969,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotate90DegsCWAroundOrigo: AffineTransformation = {
     new AffineTransformation(
       alpha = delta,
@@ -994,6 +988,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotate90DegsCWAroundPoint(
       point: Pos): AffineTransformation = {
 
@@ -1010,6 +1005,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotate90DegsCWAroundPoint(
       pX: Double,
       pY: Double): AffineTransformation = {
@@ -1029,6 +1025,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotate90DegsCCWAroundOrigo: AffineTransformation = {
     new AffineTransformation(
       alpha = -delta,
@@ -1047,6 +1044,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotate90DegsCCWAroundPoint(
       point: Pos): AffineTransformation = {
 
@@ -1063,6 +1061,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotate90DegsCCWAroundPoint(
       pX: Double,
       pY: Double): AffineTransformation = {
@@ -1082,6 +1081,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotate180DegsAroundOrigo: AffineTransformation = {
     new AffineTransformation(
       alpha = -alpha,
@@ -1100,6 +1100,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotate180DegsAroundPoint(
       point: Pos): AffineTransformation = {
 
@@ -1116,6 +1117,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def rotate180DegsAroundPoint(
       pX: Double,
       pY: Double): AffineTransformation = {
@@ -1137,6 +1139,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def flipHorizontallyAroundYAxis(
       horizontalSize: Len): AffineTransformation = {
 
@@ -1151,6 +1154,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def flipHorizontallyAroundYAxis(
       horizontalSizeInPixels: Double): AffineTransformation = {
 
@@ -1171,6 +1175,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def flipVerticallyAroundXAxis(
       verticalSize: Len): AffineTransformation = {
 
@@ -1185,6 +1190,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def flipVerticallyAroundXAxis(
       verticalSizeInPixels: Double): AffineTransformation = {
 
@@ -1205,6 +1211,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def flipDiagonallyAroundOrigo(
       sizes: d2.Dims): AffineTransformation = {
 
@@ -1222,6 +1229,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def flipDiagonallyAroundOrigo(
       horizontalSize: Len,
       verticalSize: Len): AffineTransformation = {
@@ -1240,6 +1248,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def flipDiagonallyAroundOrigo(
       horizontalSizeInPixels: Double,
       verticalSizeInPixels: Double): AffineTransformation = {
@@ -1261,6 +1270,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def process(p: Pos): Pos = {
     val newX = alpha * p.xInPixels + gamma * p.yInPixels + tauX
     val newY = delta * p.xInPixels + beta * p.yInPixels + tauY
@@ -1276,6 +1286,7 @@ case class AffineTransformation(
    * @return
    */
   @inline
+  final
   def process(ps: Seq[Pos]): Seq[Pos] = {
     ps map process
   }

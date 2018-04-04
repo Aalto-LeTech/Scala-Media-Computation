@@ -79,7 +79,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forPoint(coordinates: Seq[Double]): PointAnchor = {
     PointAnchor(coordinates, None)
   }
@@ -92,7 +91,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forPoint(
       coordinates: Seq[Double],
       name: Option[String]): PointAnchor = {
@@ -108,7 +106,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forPoint(
       xInPixels: Double,
       yInPixels: Double): PointAnchor = {
@@ -125,7 +122,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forPoint(
       xInPixels: Double,
       yInPixels: Double,
@@ -141,7 +137,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forRatio(ratios: Seq[Double]): RatioAnchor = {
     RatioAnchor(ratios, None)
   }
@@ -154,7 +149,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forRatio(
       ratios: Seq[Double],
       name: Option[String]): RatioAnchor = {
@@ -170,7 +164,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forRatio(
       widthRatio: Double,
       heightRatio: Double): RatioAnchor = {

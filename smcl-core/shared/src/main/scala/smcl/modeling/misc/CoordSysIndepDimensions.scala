@@ -37,7 +37,6 @@ trait CoordSysIndepDimensions
    *
    * @return
    */
-  @inline
   protected
   def lengths: Seq[Double]
 
@@ -47,7 +46,7 @@ trait CoordSysIndepDimensions
    * @return
    */
   @inline
-  override
+  override final
   def iterator: Iterator[Double] = {
     lengths.iterator
   }
@@ -84,7 +83,6 @@ trait CoordSysIndepDimensions
    *
    * @return
    */
-  @inline
   override
   def canEqual(other: Any): Boolean
 
@@ -95,7 +93,6 @@ trait CoordSysIndepDimensions
    *
    * @return
    */
-  @inline
   override
   def equals(other: Any): Boolean = {
     other match {

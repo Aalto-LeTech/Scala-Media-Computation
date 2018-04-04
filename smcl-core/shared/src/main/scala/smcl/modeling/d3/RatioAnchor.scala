@@ -43,7 +43,6 @@ object RatioAnchor
    *
    * @return
    */
-  @inline
   def apply(ratios: Seq[Double]): RatioAnchor = {
     apply(ratios.head, ratios(1), ratios(2), None)
   }
@@ -56,7 +55,6 @@ object RatioAnchor
    *
    * @return
    */
-  @inline
   def apply(
       ratios: Seq[Double],
       name: Option[String]): RatioAnchor = {
@@ -73,7 +71,6 @@ object RatioAnchor
    *
    * @return
    */
-  @inline
   def apply(
       widthRatio: Double,
       heightRatio: Double,
@@ -141,7 +138,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   override
   def internalXWithin(anchored: HasAnchor): Double = {
     widthRatio * anchored.width.inPixels
@@ -154,7 +150,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   override
   def internalYWithin(anchored: HasAnchor): Double = {
     heightRatio * anchored.height.inPixels
@@ -167,7 +162,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   override
   def internalZWithin(anchored: HasAnchor): Double = {
     depthRatio * anchored.depth.inPixels
@@ -180,7 +174,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   def toPointAnchorFor(anchored: HasDims): PointAnchor = {
     PointAnchor(
       widthRatio * anchored.width.inPixels,
@@ -198,7 +191,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   def copy(
       newWidthRatio: Double = widthRatio,
       newHeightRatio: Double = heightRatio,
@@ -217,7 +209,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   override
   def toString: String = {
     s"RatioAnchor(w: $widthRatio, h: $heightRatio, d: $depthRatio)"

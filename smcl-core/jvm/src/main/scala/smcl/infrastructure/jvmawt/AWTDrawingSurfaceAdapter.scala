@@ -199,7 +199,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
-  @deprecated(message="Use drawArc() instead.", since="0.0.4")
+  //@deprecated(message="Use drawArc() instead.", since="0.0.4")
   override
   def drawEllipse(
       boundingBoxUpperLeftX: Double,
@@ -294,7 +294,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    * @param color
    * @param fillColor
    */
-  @deprecated(message="Use polygons/polylines instead.", since="0.0.4")
+  //@deprecated(message="Use polygons/polylines instead.", since="0.0.4")
   override
   def drawRectangle(
       upperLeftCornerXInPixels: Double,

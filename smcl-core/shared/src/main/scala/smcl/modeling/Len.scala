@@ -77,7 +77,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
-  protected
+  protected final
   def value: Double = inPixels
 
   /**
@@ -87,7 +87,6 @@ case class Len private(inPixels: Double)
    *
    * @return
    */
-  @inline
   def map(f: (Double) => Double): Len = {
     Len(f(inPixels))
   }
@@ -99,7 +98,6 @@ case class Len private(inPixels: Double)
    *
    * @return
    */
-  @inline
   override
   def compare(that: Len): Int = {
     inPixels.compare(that.inPixels)
@@ -111,6 +109,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def center: d1.Pos = d1.Pos(inPixels / 2.0)
 
   /**
@@ -121,6 +120,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def + (offset: Len): Len = {
     Len(inPixels + offset.inPixels)
   }
@@ -133,6 +133,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def - (offset: Len): Len = {
     Len(inPixels - offset.inPixels)
   }
@@ -145,6 +146,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def * (factor: Len): Area = {
     Area(inPixels * factor.inPixels)
   }
@@ -157,6 +159,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def / (divider: Len): Double = {
     inPixels / divider.inPixels
   }
@@ -169,6 +172,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def + (offset: Double): Len = {
     Len(inPixels + offset)
   }
@@ -181,6 +185,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def - (offset: Double): Len = {
     Len(inPixels - offset)
   }
@@ -193,6 +198,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def * (factor: Double): Len = {
     Len(inPixels * factor)
   }
@@ -205,6 +211,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def / (divider: Double): Len = {
     Len(inPixels / divider)
   }
@@ -215,6 +222,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def square: Area = Area(inPixels * inPixels)
 
   /**
@@ -223,6 +231,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def cube: Vol = Vol(inPixels * inPixels * inPixels)
 
   /**
@@ -231,7 +240,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
-  override
+  override final
   def min(others: Len*): Len = (this +: others).min
 
   /**
@@ -240,7 +249,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
-  override
+  override final
   def max(others: Len*): Len = (this +: others).max
 
   /**
@@ -249,6 +258,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def toDims: d1.Dims = d1.Dims(inPixels)
 
   /**
@@ -257,6 +267,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def toDimsWith(height: Len): d2.Dims = {
     d2.Dims(inPixels, height.inPixels)
   }
@@ -267,6 +278,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
+  final
   def toDimsWith(height: Len, depth: Len): d3.Dims = {
     d3.Dims(inPixels, height.inPixels, depth.inPixels)
   }
@@ -277,7 +289,7 @@ case class Len private(inPixels: Double)
    * @return
    */
   @inline
-  override
+  override final
   def toString: String = {
     s"Len($inPixels px)"
   }

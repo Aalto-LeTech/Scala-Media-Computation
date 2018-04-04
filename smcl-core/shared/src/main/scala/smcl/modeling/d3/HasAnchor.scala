@@ -37,15 +37,12 @@ trait HasAnchor {
   def anchor: Anchor[HasAnchor]
 
   /** */
-  @inline
   def width: Len = self.width
 
   /** */
-  @inline
   def height: Len = self.height
 
   /** */
-  @inline
   def depth: Len = self.depth
 
   /**
@@ -53,7 +50,6 @@ trait HasAnchor {
    *
    * @return
    */
-  @inline
   def internalAnchorPos: Pos = {
     anchor.internalPosWithin(self)
   }
@@ -63,7 +59,6 @@ trait HasAnchor {
    *
    * @return
    */
-  @inline
   def internalAnchorDims: Dims = {
     anchor.internalDimsWithin(self)
   }
@@ -73,7 +68,6 @@ trait HasAnchor {
    *
    * @return
    */
-  @inline
   def internalAnchorX: Double = {
     anchor.internalXWithin(self)
   }
@@ -83,7 +77,6 @@ trait HasAnchor {
    *
    * @return
    */
-  @inline
   def internalAnchorY: Double = {
     anchor.internalYWithin(self)
   }
@@ -93,7 +86,6 @@ trait HasAnchor {
    *
    * @return
    */
-  @inline
   def internalAnchorZ: Double = {
     anchor.internalZWithin(self)
   }

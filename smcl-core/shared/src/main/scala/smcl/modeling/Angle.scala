@@ -659,7 +659,7 @@ case class Angle private(
    * @return
    */
   @inline
-  protected
+  protected final
   def value: Double = inDegrees
 
   /** */
@@ -776,7 +776,7 @@ case class Angle private(
    * @return
    */
   @inline
-  override
+  override final
   def inverse: Angle = Angle(-inDegrees)
 
   /**
@@ -788,6 +788,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def isCoterminallyBetweenExclExcl(
       rangeStart: Angle,
       rangeEnd: Angle): Boolean = {
@@ -805,6 +806,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def isCoterminallyBetweenExclIncl(
       rangeStart: Angle,
       rangeEnd: Angle): Boolean = {
@@ -822,6 +824,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def isCoterminallyBetweenInclExcl(
       rangeStart: Angle,
       rangeEnd: Angle): Boolean = {
@@ -839,6 +842,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def isCoterminallyBetweenInclIncl(
       rangeStart: Angle,
       rangeEnd: Angle): Boolean = {
@@ -854,8 +858,6 @@ case class Angle private(
    *
    * @return
    */
-  @inline
-  override
   def map(f: (Double) => Double): Angle = {
     Angle(f(inDegrees))
   }
@@ -867,7 +869,6 @@ case class Angle private(
    *
    * @return
    */
-  @inline
   override
   def compare(that: Angle): Int = {
     inDegrees.compare(that.inDegrees)
@@ -881,6 +882,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def + (other: Angle): Angle = {
     Angle(inDegrees + other.inDegrees)
   }
@@ -893,6 +895,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def - (other: Angle): Angle = {
     Angle(inDegrees - other.inDegrees)
   }
@@ -905,6 +908,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def / (other: Angle): Double = {
     inDegrees / other.inDegrees
   }
@@ -917,6 +921,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def + (angleInDegrees: Double): Angle = {
     Angle(inDegrees + angleInDegrees)
   }
@@ -929,6 +934,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def - (angleInDegrees: Double): Angle = {
     Angle(inDegrees - angleInDegrees)
   }
@@ -941,6 +947,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def * (factor: Double): Angle = {
     Angle(inDegrees * factor)
   }
@@ -953,6 +960,7 @@ case class Angle private(
    * @return
    */
   @inline
+  final
   def / (divider: Double): Angle = {
     Angle(inDegrees / divider)
   }
@@ -963,7 +971,7 @@ case class Angle private(
    * @return
    */
   @inline
-  override
+  override final
   def unary_+(): Angle = this
 
   /**
@@ -972,7 +980,7 @@ case class Angle private(
    * @return
    */
   @inline
-  override
+  override final
   def min(others: Angle*): Angle = (this +: others).min
 
   /**
@@ -981,7 +989,7 @@ case class Angle private(
    * @return
    */
   @inline
-  override
+  override final
   def max(others: Angle*): Angle = (this +: others).max
 
   /**
@@ -990,7 +998,7 @@ case class Angle private(
    * @return
    */
   @inline
-  override
+  override final
   def toString: String = {
     s"Angle($inDegrees deg)"
   }

@@ -323,7 +323,7 @@ case class Area private(
    * @return
    */
   @inline
-  protected
+  protected final
   def value: Double = inPixels
 
   /**
@@ -333,8 +333,6 @@ case class Area private(
    *
    * @return
    */
-  @inline
-  override
   def map(f: (Double) => Double): Area = {
     Area(f(inPixels))
   }
@@ -346,8 +344,6 @@ case class Area private(
    *
    * @return
    */
-  @inline
-  override
   def compare(that: Area): Int = {
     inPixels.compare(that.inPixels)
   }
@@ -360,6 +356,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def + (offset: Area): Area = {
     Area(inPixels + offset.inPixels)
   }
@@ -372,6 +369,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def - (offset: Area): Area = {
     Area(inPixels - offset.inPixels)
   }
@@ -384,6 +382,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def + (offset: Double): Area = {
     Area(inPixels + offset)
   }
@@ -396,6 +395,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def - (offset: Double): Area = {
     Area(inPixels - offset)
   }
@@ -408,6 +408,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def * (factor: Len): Vol = {
     Vol(inPixels * factor.inPixels)
   }
@@ -420,6 +421,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def / (divider: Area): Double = {
     inPixels / divider.inPixels
   }
@@ -432,6 +434,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def / (divider: Len): Len = {
     Len(inPixels / divider.inPixels)
   }
@@ -444,6 +447,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def * (factor: Double): Area = {
     Area(inPixels * factor)
   }
@@ -456,6 +460,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def / (divider: Double): Area = {
     Area(inPixels / divider)
   }
@@ -466,6 +471,7 @@ case class Area private(
    * @return
    */
   @inline
+  final
   def squareRoot: Len = Len(math.sqrt(this.inPixels))
 
   /**
@@ -474,7 +480,7 @@ case class Area private(
    * @return
    */
   @inline
-  override
+  override final
   def min(others: Area*): Area = (this +: others).min
 
   /**
@@ -483,7 +489,7 @@ case class Area private(
    * @return
    */
   @inline
-  override
+  override final
   def max(others: Area*): Area = (this +: others).max
 
   /**
@@ -492,7 +498,7 @@ case class Area private(
    * @return
    */
   @inline
-  override
+  override final
   def toString: String = {
     s"Area($inPixels px2)"
   }

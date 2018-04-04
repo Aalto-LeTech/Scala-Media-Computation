@@ -97,7 +97,6 @@ class Posterize private(val strengthAsPercentage: Int)
    *
    * @return
    */
-  @inline
   override
   def apply(target: PictureElement): PictureElement = {
     target.toBitmap.translateColorsWith(translationTable)

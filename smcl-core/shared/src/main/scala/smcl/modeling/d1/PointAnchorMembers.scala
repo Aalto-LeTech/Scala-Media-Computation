@@ -35,7 +35,6 @@ trait PointAnchorMembers[HasAnchorType]
    *
    * @return
    */
-  @inline
   override
   def internalXWithin(
       anchored: HasAnchorType): Double = xInPixels

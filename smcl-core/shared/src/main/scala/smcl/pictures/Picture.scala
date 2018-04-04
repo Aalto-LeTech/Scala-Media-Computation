@@ -108,12 +108,12 @@ class Picture private(
 
   /** Dimensions of this object. */
   @inline
-  override
+  override final
   def dimensions: Dims = Dims(boundary.width, boundary.height)
 
   /** Position of this object. */
   @inline
-  override
+  override final
   def position: Pos = boundary.upperLeftCorner
 
   /** */
@@ -125,7 +125,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def isPicture: Boolean = true
 
   /**
@@ -134,14 +134,14 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def toPicture: Picture = this
 
   /**
    *
    */
   @inline
-  override
+  override final
   def display(): Picture = {
     super.display()
 
@@ -158,6 +158,7 @@ class Picture private(
    * @return
    */
   @inline
+  final
   def copy(
       newElements: Seq[PictureElement] = elements,
       newViewport: Option[Viewport] = viewport,
@@ -173,7 +174,6 @@ class Picture private(
    *
    * @return
    */
-  @inline
   def map(f: (PictureElement) => PictureElement): Picture =
     copy(newElements = elements.map(f))
 
@@ -183,7 +183,6 @@ class Picture private(
    *
    * @return
    */
-  @inline
   override
   def flatMap(f: (Seq[PictureElement]) => Picture): Picture = f(elements)
 
@@ -194,7 +193,6 @@ class Picture private(
    *
    * @return
    */
-  @inline
   override
   def setViewport(viewport: Viewport): Picture =
     copy(newViewport = Option(viewport))
@@ -204,7 +202,6 @@ class Picture private(
    *
    * @return
    */
-  @inline
   override
   def removeViewport: Picture = copy(newViewport = None)
 
@@ -216,7 +213,6 @@ class Picture private(
    * @return
    */
   // Has to return a copy of *this* Picture because of viewports/anchors etc.
-  @inline
   override
   def addToBack(content: Seq[PictureElement]): Picture =
     copy(newElements = appendTo(content, this.elements))
@@ -229,7 +225,6 @@ class Picture private(
    * @return
    */
   // Has to return a copy of *this* Picture because of viewports/anchors etc.
-  @inline
   override
   def addToFront(content: Seq[PictureElement]): Picture =
     copy(newElements = prependTo(content, this.elements))
@@ -242,7 +237,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def moveBy(offsetsInPixels: Seq[Double]): Picture = {
     require(
       offsetsInPixels.length == NumberOfDimensions,
@@ -262,7 +257,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def moveBy(
       xOffsetInPixels: Double,
       yOffsetInPixels: Double): Picture = {
@@ -278,7 +273,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Picture = {
     require(
       coordinatesInPixels.length == NumberOfDimensions,
@@ -298,7 +293,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): Picture = {
@@ -316,7 +311,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def moveCenterTo(coordinatesInPixels: Seq[Double]): Picture = {
     require(
       coordinatesInPixels.length == NumberOfDimensions,
@@ -336,7 +331,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def moveCenterTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): Picture = {
@@ -352,7 +347,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCWAroundOrigo: Picture = map{_.rotateBy90DegsCWAroundOrigo}
 
   /**
@@ -361,7 +356,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCW: Picture = rotateBy90DegsCW(position)
 
   /**
@@ -372,7 +367,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCW(centerOfRotation: Pos): Picture =
     map{_.rotateBy90DegsCW(centerOfRotation)}
 
@@ -382,7 +377,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCCWAroundOrigo: Picture = map{_.rotateBy90DegsCCWAroundOrigo}
 
   /**
@@ -391,7 +386,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCCW: Picture = rotateBy90DegsCCW(position)
 
   /**
@@ -402,7 +397,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCCW(centerOfRotation: Pos): Picture =
     map{_.rotateBy90DegsCCW(centerOfRotation)}
 
@@ -412,7 +407,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy180DegsAroundOrigo: Picture = map{_.rotateBy180DegsAroundOrigo}
 
   /**
@@ -421,7 +416,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy180Degs: Picture = rotateBy180Degs(position)
 
   /**
@@ -432,7 +427,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy180Degs(centerOfRotation: Pos): Picture =
     map{_.rotateBy180Degs(centerOfRotation)}
 
@@ -444,7 +439,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateByAroundOrigo(angleInDegrees: Double): Picture =
     map{_.rotateByAroundOrigo(angleInDegrees)}
 
@@ -456,7 +451,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy(angleInDegrees: Double): Picture = rotateBy(angleInDegrees, position)
 
   /**
@@ -468,7 +463,7 @@ class Picture private(
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy(
       angleInDegrees: Double,
       centerOfRotation: Pos): Picture = {
@@ -484,7 +479,7 @@ class Picture private(
    *
    * @return
    */
-  override
+  override final
   def scaleBy(
       widthFactor: Double,
       heightFactor: Double): Picture = {

@@ -42,7 +42,6 @@ object StarPentagon {
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -70,7 +69,6 @@ object StarPentagon {
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -98,7 +96,6 @@ object StarPentagon {
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -129,7 +126,6 @@ object StarPentagon {
    *
    * @return
    */
-  @inline
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -173,7 +169,6 @@ object StarPentagon {
    *
    * @return
    */
-  @inline
   def apply(
       circumRadiusInPixels: Double = DefaultCircleRadiusInPixels,
       cuspRadiusInPixels: Double = DefaultStarCuspRadiusInPixels,
@@ -211,7 +206,6 @@ object StarPentagon {
    *
    * @return
    */
-  @inline
   def cuspRadiusPointsFor(
       cuspRadiusInPixels: Double,
       center: Pos): Seq[Pos] = {

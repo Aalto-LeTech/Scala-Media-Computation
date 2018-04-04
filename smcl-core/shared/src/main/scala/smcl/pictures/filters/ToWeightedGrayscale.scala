@@ -53,7 +53,6 @@ object ToWeightedGrayscale
    *
    * @return
    */
-  @inline
   def apply(
       redWeight: Double,
       greenWeight: Double,
@@ -78,7 +77,6 @@ object ToWeightedGrayscale
    *
    * @return
    */
-  @inline
   def apply(
       target: PictureElement,
       redWeight: Double,
@@ -116,7 +114,6 @@ class ToWeightedGrayscale private(
    *
    * @return
    */
-  @inline
   override
   def apply(target: PictureElement): PictureElement = {
     target.toBitmapCopy.translateColorsWith{(red, green, blue, opacity) =>

@@ -169,7 +169,8 @@ object ColorValidator {
 class ColorValidator() {
 
   /** A shortcut to the companion object. */
-  private val Const = ColorValidator
+  private
+  val Const = ColorValidator
 
   /**
    *
@@ -179,6 +180,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def redComponentIsInRange(redCandidate: Int): Boolean = {
     Const.RedRange.contains(redCandidate)
   }
@@ -191,6 +193,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def greenComponentIsInRange(greenCandidate: Int): Boolean = {
     Const.GreenRange.contains(greenCandidate)
   }
@@ -203,6 +206,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def blueComponentIsInRange(blueCandidate: Int): Boolean = {
     Const.BlueRange.contains(blueCandidate)
   }
@@ -215,6 +219,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def grayComponentIsInRange(grayCandidate: Int): Boolean = {
     Const.GrayRange.contains(grayCandidate)
   }
@@ -227,6 +232,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def opacityComponentIsInRange(opacityCandidate: Int): Boolean = {
     Const.OpacityRange.contains(opacityCandidate)
   }
@@ -239,6 +245,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def normalizedRedComponentIsInRange(redCandidate: Double): Boolean = {
     redCandidate >= Const.MinimumNormalizedRed &&
         redCandidate <= Const.MaximumNormalizedRed
@@ -252,6 +259,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def normalizedGreenComponentIsInRange(greenCandidate: Double): Boolean = {
     greenCandidate >= Const.MinimumNormalizedGreen &&
         greenCandidate <= Const.MaximumNormalizedGreen
@@ -265,6 +273,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def normalizedBlueComponentIsInRange(blueCandidate: Double): Boolean = {
     blueCandidate >= Const.MinimumNormalizedBlue &&
         blueCandidate <= Const.MaximumNormalizedGreen
@@ -278,6 +287,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def normalizedGrayComponentIsInRange(grayCandidate: Double): Boolean = {
     grayCandidate >= Const.MinimumNormalizedGray &&
         grayCandidate <= Const.MaximumNormalizedGray
@@ -291,6 +301,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def normalizedOpacityComponentIsInRange(opacityCandidate: Int): Boolean = {
     opacityCandidate >= Const.MinimumNormalizedOpacity &&
         opacityCandidate <= Const.MaximumNormalizedGreen
@@ -304,6 +315,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def hsiSaturationComponentIsInRange(saturationCandidate: Double): Boolean = {
     saturationCandidate >= Const.MinimumHSISaturation &&
         saturationCandidate <= Const.MaximumHSISaturation
@@ -317,6 +329,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def hsiIntensityComponentIsInRange(intensityCandidate: Double): Boolean = {
     intensityCandidate >= Const.MinimumHSIIntensity &&
         intensityCandidate <= Const.MaximumHSIIntensity
@@ -330,6 +343,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def hsvSaturationComponentIsInRange(saturationCandidate: Double): Boolean = {
     saturationCandidate >= Const.MinimumHSVSaturation &&
         saturationCandidate <= Const.MaximumHSVSaturation
@@ -343,6 +357,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def hsvValueComponentIsInRange(valueCandidate: Double): Boolean = {
     valueCandidate >= Const.MinimumHSVValue &&
         valueCandidate <= Const.MaximumHSVValue
@@ -356,6 +371,7 @@ class ColorValidator() {
    * @throws RedComponentOutOfRangeError
    */
   @inline
+  final
   def validateRedComponent(redCandidate: Int): Unit = {
     if (!redComponentIsInRange(redCandidate)) {
       throw RedComponentOutOfRangeError(redCandidate,
@@ -371,6 +387,7 @@ class ColorValidator() {
    * @throws GreenComponentOutOfRangeError
    */
   @inline
+  final
   def validateGreenComponent(greenCandidate: Int): Unit = {
     if (!greenComponentIsInRange(greenCandidate)) {
       throw GreenComponentOutOfRangeError(greenCandidate,
@@ -386,6 +403,7 @@ class ColorValidator() {
    * @throws BlueComponentOutOfRangeError
    */
   @inline
+  final
   def validateBlueComponent(blueCandidate: Int): Unit = {
     if (!blueComponentIsInRange(blueCandidate)) {
       throw BlueComponentOutOfRangeError(blueCandidate,
@@ -401,6 +419,7 @@ class ColorValidator() {
    * @throws GrayComponentOutOfRangeError
    */
   @inline
+  final
   def validateRGBGrayComponent(grayCandidate: Int): Unit = {
     if (!grayComponentIsInRange(grayCandidate)) {
       throw GrayComponentOutOfRangeError(grayCandidate,
@@ -416,6 +435,7 @@ class ColorValidator() {
    * @throws OpacityComponentOutOfRangeError
    */
   @inline
+  final
   def validateOpacityComponent(opacityCandidate: Int): Unit = {
     if (!opacityComponentIsInRange(opacityCandidate)) {
       throw OpacityComponentOutOfRangeError(opacityCandidate,
@@ -431,6 +451,7 @@ class ColorValidator() {
    * @throws SaturationComponentOutOfRangeError
    */
   @inline
+  final
   def validateHSISaturationComponent(saturationCandidate: Double): Unit = {
     if (!hsiSaturationComponentIsInRange(saturationCandidate)) {
       throw hsi.exceptions.SaturationComponentOutOfRangeError(saturationCandidate,
@@ -446,6 +467,7 @@ class ColorValidator() {
    * @throws IntensityComponentOutOfRangeError
    */
   @inline
+  final
   def validateHSIIntensityComponent(intensityCandidate: Double): Unit = {
     if (!hsiIntensityComponentIsInRange(intensityCandidate)) {
       throw IntensityComponentOutOfRangeError(intensityCandidate,
@@ -461,6 +483,7 @@ class ColorValidator() {
    * @throws SaturationComponentOutOfRangeError
    */
   @inline
+  final
   def validateHSVSaturationComponent(saturationCandidate: Double): Unit = {
     if (!hsvSaturationComponentIsInRange(saturationCandidate)) {
       throw hsv.exceptions.SaturationComponentOutOfRangeError(saturationCandidate,
@@ -476,6 +499,7 @@ class ColorValidator() {
    * @throws ValueComponentOutOfRangeError
    */
   @inline
+  final
   def validateHSVValueComponent(valueCandidate: Double): Unit = {
     if (!hsvValueComponentIsInRange(valueCandidate)) {
       throw ValueComponentOutOfRangeError(valueCandidate,
@@ -491,6 +515,7 @@ class ColorValidator() {
    * @throws GrayComponentOutOfRangeError
    */
   @inline
+  final
   def validateGray(grayCandidate: Int): Unit = {
     if (!grayComponentIsInRange(grayCandidate)) {
       throw GrayComponentOutOfRangeError(grayCandidate,
@@ -510,6 +535,7 @@ class ColorValidator() {
    * @throws BlueComponentOutOfRangeError
    */
   @inline
+  final
   def validateRGBColor(redCandidate: Int, greenCandidate: Int, blueCandidate: Int): Unit = {
     validateRedComponent(redCandidate)
     validateGreenComponent(greenCandidate)
@@ -525,6 +551,7 @@ class ColorValidator() {
    * @throws OpacityComponentOutOfRangeError
    */
   @inline
+  final
   def validateRGBGrayAndOpacity(grayCandidate: Int, opacityCandidate: Int): Unit = {
     validateRGBGrayComponent(grayCandidate)
     validateOpacityComponent(opacityCandidate)
@@ -543,6 +570,7 @@ class ColorValidator() {
    * @throws OpacityComponentOutOfRangeError
    */
   @inline
+  final
   def validateRGBAColor(
       redCandidate: Int,
       greenCandidate: Int,
@@ -563,10 +591,10 @@ class ColorValidator() {
    * @throws BlueComponentOutOfRangeError
    * @throws OpacityComponentOutOfRangeError
    */
-  //noinspection ScalaUnnecessaryParentheses
-  def validateRGBAColor(rgbaTuple: (Int, Int, Int, Int)): Unit = {
-    (validateRGBAColor(_: Int, _: Int, _: Int, _: Int)).tupled.apply(rgbaTuple)
-  }
+  @inline
+  final
+  def validateRGBAColor(rgbaTuple: (Int, Int, Int, Int)): Unit =
+    validateRGBAColor(rgbaTuple._1, rgbaTuple._2, rgbaTuple._3, rgbaTuple._4)
 
   /**
    *
@@ -579,6 +607,7 @@ class ColorValidator() {
    * @throws IntensityComponentOutOfRangeError
    */
   @inline
+  final
   def validateHSIColor(
       hueCandidate: Double,
       saturationCandidate: Double,
@@ -599,6 +628,7 @@ class ColorValidator() {
    * @throws ValueComponentOutOfRangeError
    */
   @inline
+  final
   def validateHSVColor(
       hueCandidate: Double,
       saturationCandidate: Double,
@@ -618,6 +648,7 @@ class ColorValidator() {
    * @throws InvalidColorWeightCombinationError
    */
   @inline
+  final
   def validateRGBColorWeightCombination(
       redWeightCandidate: Double,
       greenWeightCandidate: Double,
@@ -644,6 +675,7 @@ class ColorValidator() {
    * @return
    */
   @inline
+  final
   def validateCanonicalColorName(nameCandidate: Option[String]): Option[String] = {
     if (nameCandidate == null)
       throw ColorNameIsNullError

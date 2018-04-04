@@ -87,7 +87,7 @@ class NullMatrixEnumerator2D private(
    * @return
    */
   //noinspection ConvertExpressionToSAM
-  override protected
+  override protected final
   def enumerationState: MatrixEnumerator2DInternalEnumerationState =
     new MatrixEnumerator2DInternalEnumerationState {
 
@@ -110,6 +110,7 @@ class NullMatrixEnumerator2D private(
        * @return
        */
       override
+      final
       def advance(): Unit =
         throw NoMoreCellsToEnumerateError
     }

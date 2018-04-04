@@ -64,6 +64,7 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
+  final
   def minimumWidthIsNotMet(actualWidth: Len): Boolean = {
     actualWidth < BitmapValidator.MinimumBitmapHeight
   }
@@ -76,6 +77,7 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
+  final
   def minimumHeightIsNotMet(actualHeight: Len): Boolean = {
     actualHeight < BitmapValidator.MinimumBitmapHeight
   }
@@ -88,6 +90,7 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
+  final
   def maximumWidthIsExceeded(actualWidth: Len): Boolean = {
     actualWidth > BitmapValidator.MaximumBitmapHeight
   }
@@ -100,6 +103,7 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
+  final
   def maximumHeightIsExceeded(actualHeight: Len): Boolean = {
     actualHeight > BitmapValidator.MaximumBitmapHeight
   }
@@ -112,6 +116,7 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
+  final
   def warningWidthLimitIsExceeded(actualWidth: Len): Boolean = {
     actualWidth > BitmapWidthWarningLimitInPixels
   }
@@ -123,6 +128,7 @@ class BitmapValidator private[smcl]() {
    *
    */
   @inline
+  final
   def warningHeightLimitIsExceeded(actualHeight: Len): Boolean = {
     actualHeight > BitmapHeightWarningLimitInPixels
   }
@@ -136,6 +142,7 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
+  final
   def minimumSizeLimitsAreNotMet(
       actualWidth: Len,
       actualHeight: Len): Boolean = {
@@ -153,6 +160,7 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
+  final
   def maximumSizeLimitsAreExceeded(
       actualWidth: Len,
       actualHeight: Len): Boolean = {
@@ -170,6 +178,7 @@ class BitmapValidator private[smcl]() {
    * @return
    */
   @inline
+  final
   def warningSizeLimitsAreExceeded(
       actualWidth: Len,
       actualHeight: Len): Boolean = {
@@ -188,6 +197,7 @@ class BitmapValidator private[smcl]() {
    * @throws MaximumBitmapSizeExceededError
    */
   @inline
+  final
   def validateBitmapSize(
       actualWidth: Len,
       actualHeight: Len): Unit = {

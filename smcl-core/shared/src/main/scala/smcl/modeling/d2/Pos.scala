@@ -184,6 +184,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def isOrigo: Boolean = this == Pos.Origo
 
   /**
@@ -192,6 +193,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def xInPixelsFloored: Int = xInPixels.floor.toInt
 
   /**
@@ -200,6 +202,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def yInPixelsFloored: Int = yInPixels.floor.toInt
 
   /**
@@ -208,7 +211,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def toTuple: (Double, Double) = (xInPixels, yInPixels)
 
   /**
@@ -217,7 +220,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def toFlooredTuple: (Double, Double) = (xInPixelsFloored, yInPixelsFloored)
 
   /**
@@ -226,6 +229,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def toFlooredIntTuple: (Int, Int) = (xInPixelsFloored, yInPixelsFloored)
 
   /**
@@ -237,6 +241,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def toTupleWith[ResultType](
       f: (Double, Double) => ResultType): (Pos, ResultType) = {
 
@@ -252,6 +257,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def toTupleFlooredWith[ResultType](
       f: (Int, Int) => ResultType): (Pos, ResultType) = {
 
@@ -270,6 +276,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def convertWith[ResultType](
       f: (Double, Double) => ResultType): ResultType = {
 
@@ -285,6 +292,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def convertFlooredWith[ResultType](
       f: (Int, Int) => ResultType): ResultType = {
 
@@ -299,6 +307,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def noLowerThan(yMax: Double): Pos =
     Pos(
       xInPixels,
@@ -312,6 +321,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def noLowerThan(yLimit: Pos): Pos =
     Pos(
       xInPixels,
@@ -325,6 +335,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def noHigherThan(yMin: Double): Pos =
     Pos(
       xInPixels,
@@ -338,6 +349,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def noHigherThan(yLimit: Pos): Pos =
     Pos(
       xInPixels,
@@ -351,6 +363,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def noFurtherLeftThan(xMin: Double): Pos =
     Pos(
       xInPixels atLeast xMin,
@@ -364,6 +377,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def noFurtherLeftThan(xLimit: Pos): Pos =
     Pos(
       xInPixels atLeast xLimit.xInPixels,
@@ -377,6 +391,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def noFurtherRightThan(xMax: Double): Pos =
     Pos(
       xInPixels atMost xMax,
@@ -390,6 +405,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def noFurtherRightThan(xLimit: Pos): Pos =
     Pos(
       xInPixels atMost xLimit.xInPixels,
@@ -404,6 +420,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def clampX(
       min: Double,
       max: Double): Pos = {
@@ -422,6 +439,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def clampX(
       xLimitMin: Pos,
       xLimitMax: Pos): Pos = {
@@ -440,6 +458,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def clampY(
       min: Double,
       max: Double): Pos = {
@@ -458,6 +477,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def clampY(
       yLimitMin: Pos,
       yLimitMax: Pos): Pos = {
@@ -478,6 +498,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def clamp(
       xMin: Double,
       xMax: Double,
@@ -500,6 +521,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def clamp(
       xLimitMin: Pos,
       xLimitMax: Pos,
@@ -520,6 +542,7 @@ case class Pos private[smcl](
    */
   @inline
   override
+  final
   def map(f: (Double) => Double): Pos = Pos(f(xInPixels), f(yInPixels))
 
   /**
@@ -530,6 +553,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def flatMap(f: (CoordinateTuple) => Pos): Pos = f(toTuple)
 
   /**
@@ -540,7 +564,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def canEqual(other: Any): Boolean = other.isInstanceOf[Pos]
 
   /**
@@ -551,7 +575,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def moveBy(offsetsInPixels: Seq[Double]): Pos = {
     require(
       offsetsInPixels.length == NumberOfDimensions,
@@ -571,6 +595,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def moveBy(
       xOffsetInPixels: Double,
       yOffsetInPixels: Double): Pos = {
@@ -591,7 +616,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Pos = {
     require(
       coordinatesInPixels.length == NumberOfDimensions,
@@ -611,7 +636,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): Pos = {
@@ -629,7 +654,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def moveCenterTo(coordinatesInPixels: Seq[Double]): Pos = {
     require(
       coordinatesInPixels.length == NumberOfDimensions,
@@ -649,7 +674,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def moveCenterTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double): Pos = {
@@ -665,7 +690,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def minItem: Double = {
     math.min(xInPixels, yInPixels)
   }
@@ -677,7 +702,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def minItems(others: Pos*): Pos = {
     val positions = this +: others
     val minX = positions.minBy(_.xInPixels).xInPixels
@@ -692,7 +717,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def maxItem: Double = {
     math.max(xInPixels, yInPixels)
   }
@@ -704,7 +729,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def maxItems(others: Pos*): Pos = {
     val positions = this +: others
     val maxX = positions.maxBy(_.xInPixels).xInPixels
@@ -721,6 +746,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def add(offsets: Dims): Pos = this + offsets
 
   /**
@@ -731,6 +757,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def add(offset: Double): Pos = this + (offset, offset)
 
   /**
@@ -741,6 +768,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def add(offset: Len): Pos = {
     val offsetInPixels = offset.inPixels
     this + (offsetInPixels, offsetInPixels)
@@ -755,6 +783,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def add(
       offsetX: Double,
       offsetY: Double): Pos = {
@@ -771,6 +800,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def add(
       offsetX: Len,
       offsetY: Len): Pos = {
@@ -786,6 +816,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def subtract(offsets: Dims): Pos = this - offsets
 
   /**
@@ -796,6 +827,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def subtract(offset: Double): Pos = this - (offset, offset)
 
   /**
@@ -806,6 +838,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def subtract(offset: Len): Pos = {
     val offsetInPixels = offset.inPixels
     this - (offsetInPixels, offsetInPixels)
@@ -820,6 +853,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def subtract(
       offsetX: Double,
       offsetY: Double): Pos = {
@@ -836,6 +870,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def subtract(
       offsetX: Len,
       offsetY: Len): Pos = {
@@ -851,6 +886,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def xDiff(another: Pos): Double =
     another.xInPixels - xInPixels
 
@@ -862,6 +898,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def yDiff(another: Pos): Double =
     another.yInPixels - yInPixels
 
@@ -873,6 +910,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def withX(computeNew: Double => Double): Pos =
     setX(computeNew(xInPixels))
 
@@ -884,6 +922,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def withY(computeNew: Double => Double): Pos =
     setY(computeNew(yInPixels))
 
@@ -895,6 +934,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def distanceFrom(other: Pos): Len = {
     val diffX = other.xInPixels - xInPixels
     val diffY = other.yInPixels - yInPixels
@@ -911,6 +951,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def setX(newXInPixels: Double): Pos =
     copy(newXInPixels = newXInPixels)
 
@@ -922,6 +963,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def setY(newYInPixels: Double): Pos =
     copy(newYInPixels = newYInPixels)
 
@@ -933,6 +975,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def addX(offsetInPixels: Double): Pos =
     setX(xInPixels + offsetInPixels)
 
@@ -944,6 +987,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def addX(offset: Len): Pos =
     setX(xInPixels + offset.inPixels)
 
@@ -955,6 +999,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def addY(offsetInPixels: Double): Pos =
     setY(yInPixels + offsetInPixels)
 
@@ -966,6 +1011,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def addY(offset: Len): Pos =
     setY(yInPixels + offset.inPixels)
 
@@ -977,6 +1023,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def dimsTo(destination: Pos): Dims = {
     Dims(
       destination.xInPixels - xInPixels,
@@ -991,6 +1038,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def centerBetween(destination: Pos): Pos =
     destination + (this - destination).half
 
@@ -1002,6 +1050,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def toBoundsWith(lowerRightCorner: Pos): Bounds = {
     Bounds(this, lowerRightCorner)
   }
@@ -1014,6 +1063,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def toMinMaxWith(other: Pos): (Pos, Pos) = {
     val (xMin, xMax) = MathUtils.sort(xInPixels, other.xInPixels)
     val (yMin, yMax) = MathUtils.sort(yInPixels, other.yInPixels)
@@ -1027,6 +1077,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def isOnHorizontalAxis: Boolean = yInPixels == 0.0
 
   /**
@@ -1035,6 +1086,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def isOnVerticalAxis: Boolean = xInPixels == 0.0
 
   /**
@@ -1043,6 +1095,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def isOnFirstQuadrant: Boolean = quadrant.contains(1)
 
   /**
@@ -1051,6 +1104,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def isOnSecondQuadrant: Boolean = quadrant.contains(2)
 
   /**
@@ -1059,6 +1113,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def isOnThirdQuadrant: Boolean = quadrant.contains(3)
 
   /**
@@ -1067,6 +1122,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def isOnFourthQuadrant: Boolean = quadrant.contains(4)
 
   /**
@@ -1078,6 +1134,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def copy(
       newXInPixels: Double = xInPixels,
       newYInPixels: Double = yInPixels): Pos = {
@@ -1091,6 +1148,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
+  final
   def roughly: String =
     f"$xInPixels%1.2f,$yInPixels%1.2f"
 
@@ -1100,7 +1158,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def toString: String = s"($xInPixels, $yInPixels)"
 
   /**
@@ -1109,7 +1167,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCWAroundOrigo: Pos = Transformer.rotateBy90DegsCW(this)
 
   /**
@@ -1118,7 +1176,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCW: Pos = this
 
   /**
@@ -1129,7 +1187,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCW(centerOfRotation: Pos): Pos =
     Transformer.rotateBy90DegsCW(this, centerOfRotation)
 
@@ -1139,7 +1197,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCCWAroundOrigo: Pos = Transformer.rotateBy90DegsCCW(this)
 
   /**
@@ -1148,7 +1206,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCCW: Pos = this
 
   /**
@@ -1159,7 +1217,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy90DegsCCW(centerOfRotation: Pos): Pos =
     Transformer.rotateBy90DegsCCW(this, centerOfRotation)
 
@@ -1169,7 +1227,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy180DegsAroundOrigo: Pos = Transformer.rotateBy180Degs(this)
 
   /**
@@ -1178,7 +1236,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy180Degs: Pos = this
 
   /**
@@ -1189,7 +1247,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy180Degs(centerOfRotation: Pos): Pos =
     Transformer.rotateBy180Degs(this, centerOfRotation)
 
@@ -1201,7 +1259,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateByAroundOrigo(angleInDegrees: Double): Pos = Transformer.rotate(this, angleInDegrees)
 
   /**
@@ -1212,7 +1270,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy(angleInDegrees: Double): Pos = this
 
   /**
@@ -1224,7 +1282,7 @@ case class Pos private[smcl](
    * @return
    */
   @inline
-  override
+  override final
   def rotateBy(
       angleInDegrees: Double,
       centerOfRotation: Pos): Pos = {
@@ -1240,7 +1298,8 @@ case class Pos private[smcl](
    *
    * @return
    */
-  override
+  @inline
+  override final
   def scaleBy(widthFactor: Double, heightFactor: Double): Pos = {
     copy(
       newXInPixels = widthFactor * width.inPixels,
@@ -1254,7 +1313,8 @@ case class Pos private[smcl](
    *
    * @return
    */
-  override
+  @inline
+  override final
   def transformBy(t: AffineTransformation): Pos = t.process(this)
 
 }

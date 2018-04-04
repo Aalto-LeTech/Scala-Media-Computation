@@ -37,6 +37,7 @@ trait Scalable[ReturnType] {
    * @return
    */
   @inline
+  final
   def scaleTo(targetSize: Double): ReturnType = {
     scaleTo(targetSize, targetSize)
   }
@@ -49,6 +50,7 @@ trait Scalable[ReturnType] {
    * @return
    */
   @inline
+  final
   def scaleWidthTo(targetWidth: Double): ReturnType = {
     scaleBy(targetWidth / dimensions.width.inPixels, 1.0)
   }
@@ -61,6 +63,7 @@ trait Scalable[ReturnType] {
    * @return
    */
   @inline
+  final
   def scaleHeightTo(targetHeight: Double): ReturnType = {
     scaleBy(1.0, targetHeight / dimensions.height.inPixels)
   }
@@ -74,6 +77,7 @@ trait Scalable[ReturnType] {
    * @return
    */
   @inline
+  final
   def scaleTo(
       targetWidth: Double,
       targetHeight: Double): ReturnType = {
@@ -91,6 +95,7 @@ trait Scalable[ReturnType] {
    * @return
    */
   @inline
+  final
   def scaleBy(factor: Double): ReturnType = {
     scaleBy(factor, factor)
   }
@@ -103,6 +108,7 @@ trait Scalable[ReturnType] {
    * @return
    */
   @inline
+  final
   def scaleWidthBy(factor: Double): ReturnType = {
     scaleBy(factor, 1.0)
   }
@@ -115,6 +121,7 @@ trait Scalable[ReturnType] {
    * @return
    */
   @inline
+  final
   def scaleHeightBy(factor: Double): ReturnType = {
     scaleBy(1.0, factor)
   }
@@ -127,7 +134,6 @@ trait Scalable[ReturnType] {
    *
    * @return
    */
-  @inline
   def scaleBy(
       widthFactor: Double,
       heightFactor: Double): ReturnType

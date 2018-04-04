@@ -39,7 +39,6 @@ object PointAnchor
    *
    * @return
    */
-  @inline
   def apply(coordinates: Seq[Double]): PointAnchor = {
     apply(coordinates, None)
   }
@@ -52,7 +51,6 @@ object PointAnchor
    *
    * @return
    */
-  @inline
   def apply(
       coordinates: Seq[Double],
       name: Option[String]): PointAnchor = {
@@ -72,7 +70,6 @@ object PointAnchor
    *
    * @return
    */
-  @inline
   def apply(
       xInPixels: Double,
       yInPixels: Double): PointAnchor = {
@@ -89,7 +86,6 @@ object PointAnchor
    *
    * @return
    */
-  @inline
   def apply(
       xInPixels: Double,
       yInPixels: Double,
@@ -135,6 +131,7 @@ case class PointAnchor private(
    * @return
    */
   @inline
+  final
   def toRatioAnchorFor(anchored: HasDims): RatioAnchor = {
     RatioAnchor(
       xInPixels / anchored.width.inPixels,
@@ -150,6 +147,7 @@ case class PointAnchor private(
    * @return
    */
   @inline
+  final
   def + (offsetX: Int, offsetY: Int): PointAnchor = {
     PointAnchor(
       xInPixels + offsetX,
@@ -165,6 +163,7 @@ case class PointAnchor private(
    * @return
    */
   @inline
+  final
   def - (offsetX: Int, offsetY: Int): PointAnchor = {
     PointAnchor(
       xInPixels - offsetX,
@@ -179,6 +178,7 @@ case class PointAnchor private(
    * @return
    */
   @inline
+  final
   def + (offset: Dims): PointAnchor = {
     PointAnchor(
       xInPixels + offset.width.inPixels,
@@ -193,6 +193,7 @@ case class PointAnchor private(
    * @return
    */
   @inline
+  final
   def - (offset: Dims): PointAnchor = {
     PointAnchor(
       xInPixels - offset.width.inPixels,
@@ -209,6 +210,7 @@ case class PointAnchor private(
    * @return
    */
   @inline
+  final
   def copy(
       newXInPixels: Double,
       newYInPixels: Double,
@@ -226,7 +228,7 @@ case class PointAnchor private(
    * @return
    */
   @inline
-  override
+  override final
   def toString: String = {
     s"PointAnchor(x: $xInPixels px, y: $yInPixels px)"
   }

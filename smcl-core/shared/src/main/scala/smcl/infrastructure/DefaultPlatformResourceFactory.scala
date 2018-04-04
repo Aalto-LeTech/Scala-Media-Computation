@@ -42,7 +42,8 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def availableFonts: Seq[String] = {
+  override
+  def availableFonts: Seq[String] = {
     implementation.availableFonts
   }
 
@@ -51,7 +52,8 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def createCurrentTimestamp: Timestamp = {
+  override
+  def createCurrentTimestamp: Timestamp = {
     implementation.createCurrentTimestamp
   }
 
@@ -63,7 +65,8 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def createPlatformBitmapBuffer(
+  override
+  def createPlatformBitmapBuffer(
       width: Len,
       height: Len): BitmapBufferAdapter = {
 
@@ -75,7 +78,8 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def createPlatformColor(source: Color): ColorAdapter = {
+  override
+  def createPlatformColor(source: Color): ColorAdapter = {
     implementation.createPlatformColor(source)
   }
 
@@ -85,7 +89,8 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def createUniqueIdString: String = {
+  override
+  def createUniqueIdString: String = {
     implementation.createUniqueIdString
   }
 
@@ -94,7 +99,8 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def screenInformationProvider: ScreenInformationProvider = {
+  override
+  def screenInformationProvider: ScreenInformationProvider = {
     implementation.screenInformationProvider
   }
 
@@ -105,7 +111,8 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def tryToLoadImageFromPath(
+  override
+  def tryToLoadImageFromPath(
       sourceResourcePath: String): Try[BitmapBufferAdapter] = {
 
     implementation.tryToLoadImageFromPath(sourceResourcePath)
@@ -118,7 +125,8 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  override def tryToLoadImagesFromPath(
+  override
+  def tryToLoadImagesFromPath(
       sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
 
     implementation.tryToLoadImagesFromPath(sourceResourcePath)
@@ -138,7 +146,8 @@ object DefaultPlatformResourceFactory extends PlatformResourceFactory {
    *
    * @return
    */
-  private def implementation: PlatformResourceFactory = {
+  private
+  def implementation: PlatformResourceFactory = {
     _implementation.getOrElse(
       throw ImplementationNotSetError("DefaultPlatformResourceFactory"))
   }

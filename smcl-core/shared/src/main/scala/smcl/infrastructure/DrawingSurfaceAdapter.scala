@@ -117,7 +117,7 @@ trait DrawingSurfaceAdapter {
    * @param color
    * @param fillColor
    */
-  @deprecated(message="Use drawArc() instead.", since="0.0.4")
+  //@deprecated(message="Use drawArc() instead.", since="0.0.4")
   def drawEllipse(
       boundingBoxUpperLeftX: Double,
       boundingBoxUpperLeftY: Double,
@@ -168,7 +168,7 @@ trait DrawingSurfaceAdapter {
    * @param color
    * @param fillColor
    */
-  @deprecated(message="Use polygons/polylines instead.", since="0.0.4")
+  //@deprecated(message="Use polygons/polylines instead.", since="0.0.4")
   def drawRectangle(
       upperLeftCornerXInPixels: Double,
       upperLeftCornerYInPixels: Double,

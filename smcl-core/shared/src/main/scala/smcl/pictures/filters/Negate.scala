@@ -38,7 +38,6 @@ object Negate
    *
    * @return
    */
-  @inline
   override
   def apply(target: PictureElement): PictureElement = {
     target.toBitmap.translateColorsWith(

@@ -40,7 +40,6 @@ object Circle {
    *
    * @return
    */
-  @inline
   def apply(
       center: Pos,
       radiusInPixels: Double): VectorGraphic = {
@@ -66,7 +65,6 @@ object Circle {
    *
    * @return
    */
-  @inline
   def apply(
       center: Pos,
       radiusInPixels: Double,
@@ -97,7 +95,6 @@ object Circle {
    *
    * @return
    */
-  @inline
   def apply(
       upperLeftCorner: Pos = Pos.Origo - (DefaultCircleRadiusInPixels, DefaultCircleRadiusInPixels),
       width: Len = Len(DefaultCircleRadiusInPixels).double,

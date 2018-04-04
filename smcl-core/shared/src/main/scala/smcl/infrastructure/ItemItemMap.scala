@@ -33,7 +33,6 @@ trait ItemItemMap[CollectionType, ItemType] {
    *
    * @return
    */
-  @inline
   def map(f: (ItemType) => ItemType): CollectionType
 
 }

@@ -41,7 +41,6 @@ object Crosshair {
    *
    * @return
    */
-  @inline
   def forWidth(
       widthInPixels: Double,
       color: Color,
@@ -59,7 +58,6 @@ object Crosshair {
    *
    * @return
    */
-  @inline
   def apply(
       radiusInPixels: Double = DefaultCircleRadiusInPixels / 3.0,
       color: Color = DefaultPrimaryColor,

@@ -32,7 +32,6 @@ object DoneStatus {
    *
    * @return
    */
-  @inline
   def apply(): DoneStatus = new DoneStatus()
 
 }
@@ -72,6 +71,7 @@ class DoneStatus private() {
    * @return
    */
   @inline
+  final
   def isNotDone: Boolean = hasNotBeenDone
 
   /**
@@ -80,6 +80,7 @@ class DoneStatus private() {
    * @return
    */
   @inline
+  final
   def isDone: Boolean = !hasNotBeenDone
 
 }

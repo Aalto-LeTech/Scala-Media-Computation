@@ -123,6 +123,7 @@ object BoundaryCalculator {
    * @return
    */
   @inline
+  final
   def fromPositions(position: Pos): Bounds = {
     Bounds(position)
   }
@@ -135,7 +136,6 @@ object BoundaryCalculator {
    *
    * @return
    */
-  @inline
   def fromPositions(a: Pos, b: Pos): Bounds = {
     val (xMin, xMax) =
       if (a.xInPixels <= b.xInPixels)
@@ -161,7 +161,6 @@ object BoundaryCalculator {
    *
    * @return
    */
-  @inline
   def fromPositions(a: Pos, b: Pos, c: Pos): Bounds = {
     val x1 = a.xInPixels
     val x2 = b.xInPixels

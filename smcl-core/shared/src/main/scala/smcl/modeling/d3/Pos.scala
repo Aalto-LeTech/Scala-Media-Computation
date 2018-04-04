@@ -172,7 +172,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def isOrigo: Boolean = this == Pos.Origo
 
   /**
@@ -180,7 +179,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def xInPixelsFloored: Int = xInPixels.floor.toInt
 
   /**
@@ -188,7 +186,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def yInPixelsFloored: Int = yInPixels.floor.toInt
 
   /**
@@ -196,7 +193,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def zInPixelsFloored: Int = zInPixels.floor.toInt
 
   /**
@@ -204,7 +200,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def toTuple: (Double, Double, Double) =
     (xInPixels, yInPixels, zInPixels)
@@ -214,7 +209,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def toFlooredTuple: (Double, Double, Double) =
     (xInPixelsFloored, yInPixelsFloored, zInPixelsFloored)
@@ -224,7 +218,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def toFlooredIntTuple: (Int, Int, Int) =
     (xInPixelsFloored, yInPixelsFloored, zInPixelsFloored)
 
@@ -236,7 +229,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def toTupleWith[ResultType](
       f: (Double, Double, Double) => ResultType): (Pos, ResultType) = {
 
@@ -251,7 +243,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def toTupleFlooredWith[ResultType](
       f: (Int, Int, Int) => ResultType): (Pos, ResultType) = {
 
@@ -272,7 +263,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def convertWith[ResultType](
       f: (Double, Double, Double) => ResultType): ResultType = {
 
@@ -287,7 +277,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def convertFlooredWith[ResultType](
       f: (Int, Int, Int) => ResultType): ResultType = {
 
@@ -300,7 +289,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def map(f: (Double) => Double): Pos =
     Pos(
@@ -315,7 +303,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def flatMap(f: (CoordinateTuple) => Pos): Pos = f(toTuple)
 
   /**
@@ -325,7 +312,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def canEqual(other: Any): Boolean = other.isInstanceOf[Pos]
 
@@ -336,7 +322,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def moveBy(offsetsInPixels: Seq[Double]): Pos = {
     require(
@@ -358,7 +343,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def moveBy(
       xOffsetInPixels: Double,
@@ -378,7 +362,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Pos =
     moveCenterTo(coordinatesInPixels)
@@ -392,7 +375,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
@@ -412,7 +394,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(coordinatesInPixels: Seq[Double]): Pos = {
     require(
@@ -434,7 +415,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def moveCenterTo(
       xCoordinateInPixels: Double,
@@ -452,7 +432,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def minItem: Double = {
     math.min(math.min(xInPixels, yInPixels), zInPixels)
@@ -464,7 +443,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def minItems(others: Pos*): Pos = {
     val positions = this +: others
@@ -480,7 +458,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def maxItem: Double = {
     math.max(math.max(xInPixels, yInPixels), zInPixels)
@@ -492,7 +469,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def maxItems(others: Pos*): Pos = {
     val positions = this +: others
@@ -526,7 +502,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def distanceFrom(other: Pos): Len = {
     val diffX = math.abs(other.xInPixels - xInPixels)
     val diffY = math.abs(other.yInPixels - yInPixels)
@@ -543,7 +518,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def toMinMaxWith(other: Pos): (Pos, Pos) = {
     val (xMin, xMax) = MathUtils.sort(xInPixels, other.xInPixels)
     val (yMin, yMax) = MathUtils.sort(yInPixels, other.yInPixels)
@@ -561,7 +535,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   def copy(
       newXInPixels: Double = xInPixels,
       newYInPixels: Double = yInPixels,
@@ -575,7 +548,6 @@ case class Pos private(
    *
    * @return
    */
-  @inline
   override
   def toString: String =
     s"Pos(x: $xInPixels px, y: $yInPixels px, z: $zInPixels px)"

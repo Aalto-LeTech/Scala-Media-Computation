@@ -62,7 +62,6 @@ object Color
    *
    * @return a new instance of the [[Color]] class
    */
-  @inline
   private
   def instantiateColor(
       red: Int,
@@ -94,7 +93,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       red: Int,
       green: Int,
@@ -120,7 +118,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       red: Double,
       green: Double,
@@ -146,7 +143,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       red: Int,
       green: Int,
@@ -171,7 +167,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       red: Double,
       green: Double,
@@ -193,7 +188,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       rgbaTuple: (Int, Int, Int, Int),
       name: Option[String]): Color = {
@@ -213,7 +207,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(rgbaTuple: (Int, Int, Int, Int)): Color =
     instantiateColor(
       rgbaTuple._1, rgbaTuple._2, rgbaTuple._3,
@@ -230,7 +223,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       gray: Int,
       opacity: Int,
@@ -252,7 +244,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       gray: Double,
       opacity: Double,
@@ -274,7 +265,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       grayOpacityTuple: (Int, Int),
       name: Option[String]): Color = {
@@ -297,7 +287,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       red: Int,
       green: Int,
@@ -322,7 +311,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       red: Double,
       green: Double,
@@ -345,7 +333,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       red: Int,
       green: Int,
@@ -367,7 +354,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       red: Double,
       green: Double,
@@ -386,7 +372,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       rgbTuple: (Int, Int, Int),
       name: Option[String]): Color = {
@@ -405,7 +390,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(rgbTuple: (Int, Int, Int)): Color =
     apply(rgbTuple._1, rgbTuple._2, rgbTuple._3)
 
@@ -420,7 +404,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       rgbTuple: (Int, Int, Int),
       opacity: Int,
@@ -442,7 +425,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       rgbTuple: (Int, Int, Int),
       opacity: Int): Color = {
@@ -462,7 +444,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       gray: Int,
       opacity: Int): Color = {
@@ -482,7 +463,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       gray: Double,
       opacity: Double): Color = {
@@ -499,7 +479,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(grayOpacityTuple: (Int, Int)): Color =
     apply(grayOpacityTuple._1, grayOpacityTuple._2)
 
@@ -517,7 +496,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       rgbHexString: String,
       opacity: Int): Color = {
@@ -576,7 +554,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(rgbHexString: String): Color =
     apply(
       rgbHexString,
@@ -593,7 +570,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       argbInt: Int,
       name: Option[String]): Color = {
@@ -610,7 +586,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(argbInt: Int): Color = Color(rgbaTupleFrom(argbInt))
 
   /**
@@ -622,7 +597,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(platformColor: ColorAdapter): Color =
     instantiateColor(
       platformColor.red,
@@ -640,7 +614,6 @@ object Color
    *
    * @return
    */
-  @inline
   def apply(
       platformColor: ColorAdapter,
       name: Option[String]): Color = {
@@ -664,7 +637,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSV(
       hueInDegrees: Double,
       saturation: Double,
@@ -684,7 +656,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSV(hsvTuple: (Double, Double, Double)): Color = {
     fromHSV(
       hsvTuple._1, hsvTuple._2, hsvTuple._3,
@@ -702,7 +673,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSV(
       hueInDegrees: Double,
       saturation: Double,
@@ -725,7 +695,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSV(
       hsvTuple: (Double, Double, Double),
       name: Option[String]): Color = {
@@ -748,7 +717,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSV(
       hueInDegrees: Double,
       saturation: Double,
@@ -770,7 +738,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSV(
       hsvTuple: (Double, Double, Double),
       opacity: Int): Color = {
@@ -792,7 +759,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSV(
       hueInDegrees: Double,
       saturation: Double,
@@ -817,7 +783,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSV(
       hsvTuple: (Double, Double, Double),
       opacity: Int,
@@ -840,7 +805,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSI(
       hueInDegrees: Double,
       saturation: Double,
@@ -860,7 +824,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSI(hsiTuple: (Double, Double, Double)): Color =
     fromHSI(
       hsiTuple._1, hsiTuple._2, hsiTuple._3,
@@ -877,7 +840,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSI(
       hueInDegrees: Double,
       saturation: Double,
@@ -900,7 +862,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSI(
       hsiTuple: (Double, Double, Double),
       name: Option[String]): Color = {
@@ -923,7 +884,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSI(
       hueInDegrees: Double,
       saturation: Double,
@@ -945,7 +905,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSI(
       hsiTuple: (Double, Double, Double),
       opacity: Int): Color = {
@@ -967,7 +926,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSI(
       hueInDegrees: Double,
       saturation: Double,
@@ -992,7 +950,6 @@ object Color
    *
    * @return
    */
-  @inline
   def fromHSI(
       hsiTuple: (Double, Double, Double),
       opacity: Int,
@@ -1011,7 +968,6 @@ object Color
    *
    * @return
    */
-  @inline
   def unapply(color: Color): Option[(Int, Int, Int, Int)] = {
     if (color == null)
       return None
@@ -1204,7 +1160,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   override
   lazy val hashCode: Int = {
     val prime = 31
@@ -1228,7 +1183,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def copy(
       newRed: Int = red,
       newGreen: Int = green,
@@ -1245,7 +1199,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   override
   def toString: String =
     s"Color(red: $red, green: $green, blue: $blue, opacity: $opacity)"
@@ -1270,7 +1223,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def canEqual(other: Any): Boolean = other.isInstanceOf[Color]
 
   /**
@@ -1282,7 +1234,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def is(other: Color): Boolean = equals(other)
 
   /**
@@ -1294,7 +1245,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   override
   def equals(other: Any): Boolean = other match {
     case that: Color =>
@@ -1316,7 +1266,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def equalsIncludingName(other: Any): Boolean = other match {
     case that: Color =>
       that.canEqual(this) &&
@@ -1338,7 +1287,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def equalsIncludingNameAndPresetness(other: Any): Boolean = other match {
     case that: Color =>
       that.canEqual(this) &&
@@ -1361,7 +1309,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   override
   def compare(that: Color): Int =
     Math.signum(that.toHSIHueInDegrees - this.toHSIHueInDegrees).toInt
@@ -1375,7 +1322,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def compareByHSISaturation(that: Color): Int =
     Math.signum(that.toHSISaturation - this.toHSISaturation).toInt
 
@@ -1388,7 +1334,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def compareByHSIIntensity(that: Color): Int =
     Math.signum(that.toHSIIntensity - this.toHSIIntensity).toInt
 
@@ -1413,7 +1358,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWith(
       that: Color,
       portionOfThis: Double,
@@ -1435,7 +1379,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithInternal(
       that: Color,
@@ -1458,7 +1401,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWith(
       that: Color,
       portionOfThis: Double,
@@ -1481,7 +1423,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithInternal(
       that: Color,
@@ -1511,7 +1452,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWith(
       that: Color,
       redPortionOfThis: Double,
@@ -1544,7 +1484,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithInternal(
       that: Color,
@@ -1578,7 +1517,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWith(
       that: Color,
       redPortionOfThis: Double,
@@ -1612,7 +1550,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithInternal(
       that: Color,
@@ -1643,7 +1580,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWithUsingPortionOfThis(
       that: Color,
       portionOfThis: Double): Color = {
@@ -1663,7 +1599,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithUsingPortionOfThisInternal(
       that: Color,
@@ -1687,7 +1622,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWithUsingPortionOfThis(
       that: Color,
       portionOfThis: Double,
@@ -1710,7 +1644,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithUsingPortionOfThisInternal(
       that: Color,
@@ -1738,7 +1671,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWithUsingPortionsOfThis(
       that: Color,
       redPortionOfThis: Double,
@@ -1772,7 +1704,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithUsingPortionsOfThisInternal(
       that: Color,
@@ -1806,7 +1737,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWithUsingPortionsOfThis(
       that: Color,
       redPortionOfThis: Double,
@@ -1840,7 +1770,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithUsingPortionsOfThisInternal(
       that: Color,
@@ -1876,7 +1805,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWithUsingPortionOfThat(
       that: Color,
       portionOfThat: Double): Color = {
@@ -1896,7 +1824,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithUsingPortionOfThatInternal(
       that: Color,
@@ -1915,7 +1842,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWithUsingPortionOfThat(
       that: Color,
       portionOfThat: Double,
@@ -1938,7 +1864,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithUsingPortionOfThatInternal(
       that: Color,
@@ -1966,7 +1891,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWithUsingPortionsOfThat(
       that: Color,
       redPortionOfThat: Double,
@@ -2000,7 +1924,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithUsingPortionsOfThatInternal(
       that: Color,
@@ -2030,7 +1953,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   def mixWithUsingPortionsOfThat(
       that: Color,
       redPortionOfThat: Double,
@@ -2064,7 +1986,6 @@ class Color protected[smcl](
    *
    * @return
    */
-  @inline
   private[smcl]
   def mixWithUsingPortionsOfThatInternal(
       that: Color,

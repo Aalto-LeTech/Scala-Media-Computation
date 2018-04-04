@@ -39,6 +39,7 @@ trait Cropable[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def crop(boundary: Bounds): ReturnType = {
     crop(
       boundary.upperLeftCorner,
@@ -54,6 +55,7 @@ trait Cropable[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def crop(
       upperLeftCorner: Pos,
       lowerRightCorner: Pos): ReturnType = {
@@ -75,7 +77,6 @@ trait Cropable[ReturnType <: PictureElement] {
    *
    * @return
    */
-  @inline
   def crop(
       upperLeftXInPixels: Double,
       upperLeftYInPixels: Double,
@@ -91,6 +92,7 @@ trait Cropable[ReturnType <: PictureElement] {
    * @return
    */
   @inline
+  final
   def cropToSizeOf(
       background: d2.HasDims,
       upperLeftCornerOfCropped: Pos): ReturnType = {
@@ -110,7 +112,6 @@ trait Cropable[ReturnType <: PictureElement] {
    *
    * @return
    */
-  @inline
   def crop(
       upperLeftCorner: Pos,
       widthInPixels: Double,

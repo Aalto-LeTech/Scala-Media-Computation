@@ -55,6 +55,7 @@ case class Pixel private[pictures](
    * @return
    */
   @inline
+  final
   def red: Int = relatedPixelSnapshot.reds(linearPosition)
 
   /**
@@ -63,6 +64,7 @@ case class Pixel private[pictures](
    * @param value
    */
   @inline
+  final
   def red_=(value: Int): Unit =
     relatedPixelSnapshot.reds(linearPosition) = value
 
@@ -72,6 +74,7 @@ case class Pixel private[pictures](
    * @return
    */
   @inline
+  final
   def green: Int = relatedPixelSnapshot.greens(linearPosition)
 
   /**
@@ -80,6 +83,7 @@ case class Pixel private[pictures](
    * @param value
    */
   @inline
+  final
   def green_=(value: Int): Unit =
     relatedPixelSnapshot.greens(linearPosition) = value
 
@@ -89,6 +93,7 @@ case class Pixel private[pictures](
    * @return
    */
   @inline
+  final
   def blue: Int = relatedPixelSnapshot.blues(linearPosition)
 
   /**
@@ -97,6 +102,7 @@ case class Pixel private[pictures](
    * @param value
    */
   @inline
+  final
   def blue_=(value: Int): Unit =
     relatedPixelSnapshot.blues(linearPosition) = value
 
@@ -106,6 +112,7 @@ case class Pixel private[pictures](
    * @return
    */
   @inline
+  final
   def opacity: Int = relatedPixelSnapshot.opacities(linearPosition)
 
   /**
@@ -114,6 +121,7 @@ case class Pixel private[pictures](
    * @param value
    */
   @inline
+  final
   def opacity_=(value: Int): Unit =
     relatedPixelSnapshot.opacities(linearPosition) = value
 
@@ -123,6 +131,7 @@ case class Pixel private[pictures](
    * @return
    */
   @inline
+  final
   def color: Color = Color(red, green, blue, opacity)
 
   /**
@@ -131,6 +140,7 @@ case class Pixel private[pictures](
    * @return
    */
   @inline
+  final
   def color_=(value: Color): Unit = {
     red = value.red
     green = value.green
@@ -144,6 +154,7 @@ case class Pixel private[pictures](
    * @return
    */
   @inline
+  final
   def setFrom(other: Pixel): Unit = {
     red = other.red
     green = other.green
@@ -157,7 +168,7 @@ case class Pixel private[pictures](
    * @return
    */
   @inline
-  override
+  override final
   def toString: String =
     s"Pixel($currentXInPixels, $currentYInPixels): $red - $green - $blue - $opacity"
 

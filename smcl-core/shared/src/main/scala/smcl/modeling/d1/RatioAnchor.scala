@@ -43,7 +43,6 @@ object RatioAnchor
    *
    * @return
    */
-  @inline
   def apply(ratio: Double): RatioAnchor = {
     apply(ratio, None)
   }
@@ -96,7 +95,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   override
   def internalXWithin(anchored: HasAnchor): Double = {
     ratio * anchored.lengthInPixels
@@ -109,7 +107,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   def toPointAnchorFor(anchored: HasDims): PointAnchor = {
     PointAnchor(ratio * anchored.lengthInPixels)
   }
@@ -122,7 +119,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   def copy(
       newRatio: Double = ratio,
       newName: Option[String] = name): RatioAnchor = {
@@ -135,7 +131,6 @@ case class RatioAnchor private(
    *
    * @return
    */
-  @inline
   override
   def toString: String = {
     s"RatioAnchor($ratio)"

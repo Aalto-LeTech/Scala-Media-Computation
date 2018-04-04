@@ -42,40 +42,47 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   protected
   def value: Double
 
   /** */
   @inline
+  final
   def isZero: Boolean = value == 0.0
 
   /** */
   @inline
+  final
   def isPositive: Boolean = value > 0.0
 
   /** */
   @inline
+  final
   def isNegative: Boolean = value < 0.0
 
   /** */
   @inline
+  final
   def isInfinity: Boolean = value.isInfinity
 
   /** */
   @inline
+  final
   def isPosInfinity: Boolean = value.isPosInfinity
 
   /** */
   @inline
+  final
   def isNegInfinity: Boolean = value.isNegInfinity
 
   /** */
   @inline
+  final
   def isNaN: Boolean = value.isNaN
 
   /** */
   @inline
+  final
   def isWholeNumber: Boolean = value.isWhole
 
   /**
@@ -84,7 +91,7 @@ trait Magnitude[ElementType]
    * @return
    */
   @inline
-  override
+  override final
   def toTuple: Tuple1[Double] = {
     Tuple1(value)
   }
@@ -94,7 +101,7 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
+  @inline final
   def toIntTuple: Tuple1[Int] = {
     Tuple1(value.toInt)
   }
@@ -106,7 +113,7 @@ trait Magnitude[ElementType]
    * @return
    */
   @inline
-  override
+  override final
   def flatMap(f: (Double) => ElementType): ElementType = {
     f(value)
   }
@@ -130,7 +137,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   override
   def canEqual(other: Any): Boolean
 
@@ -141,7 +147,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   override
   def equals(other: Any): Boolean = {
     other match {
@@ -161,7 +166,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isBetweenExclExcl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
@@ -178,7 +182,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isAbsBetweenExclExcl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
@@ -196,7 +199,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isBetweenExclExcl(
       rangeStart: Double,
       rangeEnd: Double): Boolean = {
@@ -213,7 +215,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isAbsBetweenExclExcl(
       rangeStart: Double,
       rangeEnd: Double): Boolean = {
@@ -231,7 +232,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isBetweenExclIncl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
@@ -248,7 +248,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isAbsBetweenExclIncl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
@@ -266,7 +265,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isBetweenExclIncl(
       rangeStart: Double,
       rangeEnd: Double): Boolean = {
@@ -283,7 +281,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isAbsBetweenExclIncl(
       rangeStart: Double,
       rangeEnd: Double): Boolean = {
@@ -301,7 +298,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isBetweenInclExcl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
@@ -318,7 +314,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isAbsBetweenInclExcl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
@@ -336,7 +331,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isBetweenInclExcl(
       rangeStart: Double,
       rangeEnd: Double): Boolean = {
@@ -353,7 +347,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isAbsBetweenInclExcl(
       rangeStart: Double,
       rangeEnd: Double): Boolean = {
@@ -371,7 +364,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isBetweenInclIncl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
@@ -388,7 +380,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isAbsBetweenInclIncl[E <: Magnitude[E]](
       rangeStart: E,
       rangeEnd: E): Boolean = {
@@ -406,7 +397,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isBetweenInclIncl(
       rangeStart: Double,
       rangeEnd: Double): Boolean = {
@@ -423,7 +413,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def isAbsBetweenInclIncl(
       rangeStart: Double,
       rangeEnd: Double): Boolean = {
@@ -440,7 +429,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def <[E <: Magnitude[E]] (other: Double): Boolean = {
     this.value < other
   }
@@ -452,7 +440,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def <=[E <: Magnitude[E]] (other: Double): Boolean = {
     this.value <= other
   }
@@ -464,7 +451,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def >[E <: Magnitude[E]] (other: Double): Boolean = {
     this.value > other
   }
@@ -476,7 +462,6 @@ trait Magnitude[ElementType]
    *
    * @return
    */
-  @inline
   def >=[E <: Magnitude[E]] (other: Double): Boolean = {
     this.value >= other
   }

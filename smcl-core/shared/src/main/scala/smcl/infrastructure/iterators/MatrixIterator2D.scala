@@ -112,6 +112,7 @@ class MatrixIterator2D(
    * @return
    */
   @inline
+  final
   def currentColumn: Int = enumerator.currentColumn
 
   /**
@@ -120,6 +121,7 @@ class MatrixIterator2D(
    * @return
    */
   @inline
+  final
   def currentRow: Int = enumerator.currentRow
 
   /**
@@ -128,6 +130,7 @@ class MatrixIterator2D(
    * @return
    */
   @inline
+  final
   def rowHasChanged: Boolean = enumerator.rowHasChanged
 
   /**
@@ -136,6 +139,7 @@ class MatrixIterator2D(
    * @return
    */
   @inline
+  final
   def columnHasChanged: Boolean = enumerator.columnHasChanged
 
   /**
@@ -144,7 +148,7 @@ class MatrixIterator2D(
    * @return
    */
   @inline
-  override
+  override final
   def hasNext: Boolean = enumerator.hasNextCell
 
   /**
@@ -153,6 +157,7 @@ class MatrixIterator2D(
    * @return
    */
   @inline
+  final
   def hasNoMoreCells: Boolean = enumerator.hasNoMoreCells
 
   /**
@@ -161,6 +166,7 @@ class MatrixIterator2D(
    * @return
    */
   @inline
+  final
   def next: (Int, Int) = {
     enumerator.advance()
     enumerator.colRowTuple

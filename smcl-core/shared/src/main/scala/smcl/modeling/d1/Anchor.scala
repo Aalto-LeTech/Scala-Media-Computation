@@ -37,7 +37,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forPoint(xInPixels: Double): PointAnchor = {
     PointAnchor(xInPixels, None)
   }
@@ -50,7 +49,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forPoint(
       xInPixels: Double,
       name: Option[String]): PointAnchor = {
@@ -65,7 +63,6 @@ object Anchor {
    *
    * @return
    */
-  @inline
   def forRatio(ratio: Double): RatioAnchor = {
     RatioAnchor(ratio, None)
   }

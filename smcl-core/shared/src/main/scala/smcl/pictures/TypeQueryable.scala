@@ -29,7 +29,6 @@ trait TypeQueryable {
    *
    * @return
    */
-  @inline
   def isBitmap: Boolean = false
 
   /**
@@ -37,7 +36,6 @@ trait TypeQueryable {
    *
    * @return
    */
-  @inline
   def isPicture: Boolean = false
 
   /**
@@ -45,7 +43,6 @@ trait TypeQueryable {
    *
    * @return
    */
-  @inline
   def isPolygon: Boolean = false
 
   /**
@@ -53,7 +50,6 @@ trait TypeQueryable {
    *
    * @return
    */
-  @inline
   def isArc: Boolean = false
 
   /**
@@ -61,7 +57,6 @@ trait TypeQueryable {
    *
    * @return
    */
-  @inline
   def isPoint: Boolean = false
 
 }
