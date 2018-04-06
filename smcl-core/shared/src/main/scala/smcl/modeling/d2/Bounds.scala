@@ -284,15 +284,15 @@ case class Bounds private(
     isDefined: Boolean)
     extends CoordSysIndepBoundary[Pos, Dims]
         with HasArea
-        with Movable[Bounds] {
+        with Movable[Bounds]
+        with Rotatable[Bounds] {
 
   /** */
   lazy val corners: Seq[Pos] =
     Seq(upperLeftCorner, lowerRightCorner)
 
   /** Position of this boundary. */
-  @inline
-  final
+  // TODO: Change this to be the centerpoint!!
   def position: Pos = upperLeftCorner
 
   /** */
@@ -777,6 +777,238 @@ case class Bounds private(
     moveBy(
       xCoordinateInPixels - center.xInPixels,
       yCoordinateInPixels - center.yInPixels)
+  }
+
+  /**
+   * Rotates this boundary around origo (0,0) by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy90DegsCWAroundOrigo: Bounds = {
+    if (isUndefined)
+      return this
+
+    val newUpperRightCorner = upperLeftCorner.rotateBy90DegsCWAroundOrigo
+
+    copy(
+      newUpperLeftCorner = newUpperRightCorner.subtractX(height.inPixels - 1),
+      newLowerRightCorner = newUpperRightCorner.addY(width.inPixels - 1))
+  }
+
+  /**
+   * Rotates this boundary around its center by 90 degrees clockwise.
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy90DegsCW: Bounds = rotateBy90DegsCW(position)
+
+  /**
+   * Rotates this boundary around a given point by 90 degrees clockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy90DegsCW(centerOfRotation: Pos): Bounds = {
+    if (isUndefined)
+      return this
+
+    val newUpperRightCorner = upperLeftCorner.rotateBy90DegsCW(center)
+
+    copy(
+      newUpperLeftCorner = newUpperRightCorner.subtractX(height.inPixels - 1),
+      newLowerRightCorner = newUpperRightCorner.addY(width.inPixels - 1))
+  }
+
+  /**
+   * Rotates this boundary around origo (0,0) by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy90DegsCCWAroundOrigo: Bounds = {
+    if (isUndefined)
+      return this
+
+    val newLowerLeftCorner = upperLeftCorner.rotateBy90DegsCCWAroundOrigo
+
+    copy(
+      newUpperLeftCorner = newLowerLeftCorner.subtractY(width.inPixels - 1),
+      newLowerRightCorner = newLowerLeftCorner.addX(height.inPixels - 1))
+  }
+
+  /**
+   * Rotates this boundary around the its center by 90 degrees counterclockwise.
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy90DegsCCW: Bounds = rotateBy90DegsCCW(position)
+
+  /**
+   * Rotates this boundary around a given point by 90 degrees counterclockwise.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy90DegsCCW(centerOfRotation: Pos): Bounds = {
+    if (isUndefined)
+      return this
+
+    val newLowerLeftCorner = upperLeftCorner.rotateBy90DegsCCW(center)
+
+    copy(
+      newUpperLeftCorner = newLowerLeftCorner.subtractY(width.inPixels - 1),
+      newLowerRightCorner = newLowerLeftCorner.addX(height.inPixels - 1))
+  }
+
+  /**
+   * Rotates this boundary around origo (0,0) by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy180DegsAroundOrigo: Bounds = {
+    if (isUndefined)
+      return this
+
+    val newLowerRightCorner = upperLeftCorner.rotateBy180DegsAroundOrigo
+    val newUpperLeftCorner =
+      newLowerRightCorner - (width.inPixels - 1, height.inPixels - 1)
+
+    copy(
+      newUpperLeftCorner = newUpperLeftCorner,
+      newLowerRightCorner = newLowerRightCorner)
+  }
+
+  /**
+   * Rotates this boundary around its center by 180 degrees.
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy180Degs: Bounds = rotateBy180Degs(position)
+
+  /**
+   * Rotates this boundary around a given point by 180 degrees.
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy180Degs(centerOfRotation: Pos): Bounds = {
+    if (isUndefined)
+      return this
+
+    val newLowerRightCorner = upperLeftCorner.rotateBy180Degs(center)
+    val newUpperLeftCorner =
+      newLowerRightCorner - (width.inPixels - 1, height.inPixels - 1)
+
+    copy(
+      newUpperLeftCorner = newUpperLeftCorner,
+      newLowerRightCorner = newLowerRightCorner)
+  }
+
+  /**
+   * Rotates this boundary around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateByAroundOrigo(angle: Angle): Bounds = rotateByAroundOrigo(angle)
+
+  /**
+   * Rotates this boundary around its center by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateByAroundOrigo(angleInDegrees: Double): Bounds = {
+    if (isUndefined)
+      return this
+
+    ???
+  }
+
+  /**
+   * Rotates this boundary around its center by the specified angle.
+   *
+   * @param angle
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy(angle: Angle): Bounds = rotateBy(angle)
+
+  /**
+   * Rotates this boundary around its center by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy(angleInDegrees: Double): Bounds =
+    rotateBy(angleInDegrees, position)
+
+  /**
+   * Rotates this boundary around a given point by the specified angle.
+   *
+   * @param angle
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy(
+      angle: Angle,
+      centerOfRotation: Pos): Bounds = {
+
+    rotateBy(angle, centerOfRotation)
+  }
+
+  /**
+   * Rotates this boundary around a given point by the specified number of degrees.
+   *
+   * @param angleInDegrees
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  @inline
+  override final
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): Bounds = {
+
+    if (isUndefined)
+      return this
+
+    ???
   }
 
 }

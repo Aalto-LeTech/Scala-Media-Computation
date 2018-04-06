@@ -864,6 +864,25 @@ class Bitmap private(
       buffer = Some(newBuffer))
   }
 */
+
+  /**
+   *
+   *
+   * @param transformation
+   *
+   * @return
+   */
+  @inline
+  private final
+  def transformContentUsing(transformation: AffineTransformation): BitmapBufferAdapter = {
+    val (newBuffer, _) =
+      buffer.get.createTransformedVersionWith(
+        transformation = transformation,
+        resizeCanvasBasedOnTransformation = true)
+
+    newBuffer
+  }
+
   /**
    * Rotates this object around origo (0,0) by 90 degrees clockwise.
    *
@@ -871,27 +890,14 @@ class Bitmap private(
    */
   override
   def rotateBy90DegsCWAroundOrigo: Bitmap = {
-    val newBuffer =
-      if (buffer.isEmpty)
-        return this
-      else {
-        val bitmapTransformation =
-          AffineTransformation.forPointCentredRotationOf90DegsCW(
-            width.half.inPixels, height.half.inPixels)
+    if (!isRenderable)
+      return this
 
-        val (newBuffer, _) =
-          buffer.get.createTransformedVersionWith(
-            transformation = bitmapTransformation,
-            resizeCanvasBasedOnTransformation = true)
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forPointCentredRotationOf90DegsCW(
+        width.half.inPixels, height.half.inPixels))
 
-        newBuffer
-      }
-
-    val newLowerLeftCorner = boundary.upperLeftCorner.rotateBy90DegsCWAroundOrigo
-    val newUpperLeftCorner = newLowerLeftCorner.addY(-(newBuffer.heightInPixels - 1))
-    val newLowerRightCorner = newLowerLeftCorner.addX(newBuffer.widthInPixels - 1)
-
-    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+    val newBounds = boundary.rotateBy90DegsCWAroundOrigo
     val newContentCorners = contentCorners.rotateBy90DegsCWAroundOrigo
 
     internalCopy(
@@ -919,10 +925,22 @@ class Bitmap private(
    */
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Bitmap = {
-    if (buffer.isEmpty)
+    if (!isRenderable)
       return this
 
-    this  // TODO
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forPointCentredRotationOf90DegsCW(
+        width.half.inPixels, height.half.inPixels))
+
+    val newBounds = boundary.rotateBy90DegsCW(position)
+    val newContentCorners = contentCorners.rotateBy90DegsCW(position)
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**
@@ -932,10 +950,22 @@ class Bitmap private(
    */
   override
   def rotateBy90DegsCCWAroundOrigo: Bitmap = {
-    if (buffer.isEmpty)
+    if (!isRenderable)
       return this
 
-    this  // TODO
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forPointCentredRotationOf90DegsCCW(
+        width.half.inPixels, height.half.inPixels))
+
+    val newBounds = boundary.rotateBy90DegsCCWAroundOrigo
+    val newContentCorners = contentCorners.rotateBy90DegsCCWAroundOrigo
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**
@@ -955,10 +985,22 @@ class Bitmap private(
    */
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Bitmap = {
-    if (buffer.isEmpty)
+    if (!isRenderable)
       return this
 
-    this  // TODO
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forPointCentredRotationOf90DegsCCW(
+        width.half.inPixels, height.half.inPixels))
+
+    val newBounds = boundary.rotateBy90DegsCCW(position)
+    val newContentCorners = contentCorners.rotateBy90DegsCCW(position)
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**
@@ -968,10 +1010,22 @@ class Bitmap private(
    */
   override
   def rotateBy180DegsAroundOrigo: Bitmap = {
-    if (buffer.isEmpty)
+    if (!isRenderable)
       return this
 
-    this  // TODO
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forPointCentredRotationOf180Degs(
+        width.half.inPixels, height.half.inPixels))
+
+    val newBounds = boundary.rotateBy180DegsAroundOrigo
+    val newContentCorners = contentCorners.rotateBy180DegsAroundOrigo
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**
@@ -991,10 +1045,22 @@ class Bitmap private(
    */
   override
   def rotateBy180Degs(centerOfRotation: Pos): Bitmap = {
-    if (buffer.isEmpty)
+    if (!isRenderable)
       return this
 
-    this  // TODO
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forPointCentredRotationOf180Degs(
+        width.half.inPixels, height.half.inPixels))
+
+    val newBounds = boundary.rotateBy180Degs(position)
+    val newContentCorners = contentCorners.rotateBy180Degs(position)
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**
@@ -1016,10 +1082,29 @@ class Bitmap private(
    */
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Bitmap = {
-    if (buffer.isEmpty)
+    if (!isRenderable)
       return this
 
-    this  // TODO
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forPointCentredRotation(
+        angleInDegrees,
+        width.half.inPixels, height.half.inPixels))
+
+
+
+    val newUpperRightCorner = boundary.upperLeftCorner.rotateBy90DegsCCWAroundOrigo
+    val newUpperLeftCorner = newUpperRightCorner.subtractX(newBuffer.widthInPixels - 1)
+    val newLowerRightCorner = newUpperRightCorner.addY(newBuffer.heightInPixels - 1)
+
+    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+    val newContentCorners = contentCorners.rotateBy90DegsCCWAroundOrigo
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**

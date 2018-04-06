@@ -38,9 +38,8 @@ object Transformer {
    */
   @inline
   final
-  def rotateBy90DegsCW(position: Pos): Pos = {
-    Pos(position.yInPixels, -position.xInPixels)
-  }
+  def rotateBy90DegsCW(position: Pos): Pos =
+    Pos(-position.yInPixels, position.xInPixels)
 
   /**
    * Rotates a sequence of [[Pos]] instances around the origo (0,0) by 90 degrees clockwise.
@@ -69,15 +68,8 @@ object Transformer {
       position: Pos,
       centerOfRotation: Pos): Pos = {
 
-    val newX =
-      centerOfRotation.xInPixels -
-          centerOfRotation.yInPixels +
-          position.yInPixels
-
-    val newY =
-      centerOfRotation.yInPixels -
-          position.xInPixels +
-          centerOfRotation.xInPixels
+    val newX = -position.yInPixels + centerOfRotation.xInPixels + centerOfRotation.yInPixels
+    val newY = position.xInPixels - centerOfRotation.xInPixels + centerOfRotation.yInPixels
 
     Pos(newX, newY)
   }
@@ -109,7 +101,7 @@ object Transformer {
   @inline
   final
   def rotateBy90DegsCCW(position: Pos): Pos = {
-    Pos(-position.yInPixels, position.xInPixels)
+    Pos(position.yInPixels, -position.xInPixels)
   }
 
   /**
@@ -139,15 +131,8 @@ object Transformer {
       position: Pos,
       centerOfRotation: Pos): Pos = {
 
-    val newX =
-      centerOfRotation.xInPixels +
-          centerOfRotation.yInPixels -
-          position.yInPixels
-
-    val newY =
-      centerOfRotation.yInPixels +
-          position.xInPixels -
-          centerOfRotation.xInPixels
+    val newX = position.yInPixels - centerOfRotation.yInPixels + centerOfRotation.xInPixels
+    val newY = -position.xInPixels + centerOfRotation.xInPixels + centerOfRotation.yInPixels
 
     Pos(newX, newY)
   }

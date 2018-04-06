@@ -294,10 +294,10 @@ class BitmapContentCorners private(
     if (isUndefined)
       return this
 
-    val newLL = upperLeftCorner.rotateBy180DegsAroundOrigo
-    val newUL = upperRightCorner.rotateBy180DegsAroundOrigo
-    val newUR = lowerRightCorner.rotateBy180DegsAroundOrigo
-    val newLR = lowerLeftCorner.rotateBy180DegsAroundOrigo
+    val newLR = upperLeftCorner.rotateBy180DegsAroundOrigo
+    val newLL = upperRightCorner.rotateBy180DegsAroundOrigo
+    val newUL = lowerRightCorner.rotateBy180DegsAroundOrigo
+    val newUR = lowerLeftCorner.rotateBy180DegsAroundOrigo
 
     internalCopy(newUL, newUR, newLR, newLL)
   }

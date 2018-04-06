@@ -365,8 +365,8 @@ object AffineTransformation {
   /** */
   lazy val forOrigoCentredRotationOf90DegsCW: AffineTransformation = {
     AffineTransformation(
-      Zero, One, Zero,
-      -One, Zero, Zero)
+      Zero, -One, Zero,
+      One, Zero, Zero)
   }
 
   /**
@@ -397,15 +397,15 @@ object AffineTransformation {
       pY: Double): AffineTransformation = {
 
     AffineTransformation(
-      Zero, One, pX - pY,
-      -One, Zero, pX + pY)
+      Zero, -One, pX - pY,
+      One, Zero, pX + pY)
   }
 
   /** */
   lazy val forOrigoCentredRotationOf90DegsCCW: AffineTransformation = {
     AffineTransformation(
-      Zero, -One, Zero,
-      One, Zero, Zero)
+      Zero, One, Zero,
+      -One, Zero, Zero)
   }
 
   /**
@@ -436,15 +436,15 @@ object AffineTransformation {
       pY: Double): AffineTransformation = {
 
     AffineTransformation(
-      Zero, -One, pX + pY,
-      One, Zero, pY - pX)
+      Zero, One, pX + pY,
+      -One, Zero, pY - pX)
   }
 
   /** */
   lazy val forOrigoCentredRotationOf180Degs: AffineTransformation = {
     AffineTransformation(
-      One, Zero, Zero,
-      Zero, One, Zero)
+      -One, Zero, Zero,
+      Zero, -One, Zero)
   }
 
   /**
@@ -475,8 +475,8 @@ object AffineTransformation {
       pY: Double): AffineTransformation = {
 
     AffineTransformation(
-      One, Zero, 2 * pX,
-      Zero, One, 2 * pY)
+      -One, Zero, 2 * pX,
+      Zero, -One, 2 * pY)
   }
 
 }

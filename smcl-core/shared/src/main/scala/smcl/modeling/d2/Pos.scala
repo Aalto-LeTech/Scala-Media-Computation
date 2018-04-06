@@ -1018,6 +1018,54 @@ case class Pos private[smcl](
   /**
    *
    *
+   * @param offsetInPixels
+   *
+   * @return
+   */
+  @inline
+  final
+  def subtractX(offsetInPixels: Double): Pos =
+    setX(xInPixels - offsetInPixels)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  final
+  def subtractX(offset: Len): Pos =
+    setX(xInPixels - offset.inPixels)
+
+  /**
+   *
+   *
+   * @param offsetInPixels
+   *
+   * @return
+   */
+  @inline
+  final
+  def subtractY(offsetInPixels: Double): Pos =
+    setY(yInPixels - offsetInPixels)
+
+  /**
+   *
+   *
+   * @param offset
+   *
+   * @return
+   */
+  @inline
+  final
+  def subtractY(offset: Len): Pos =
+    setY(yInPixels - offset.inPixels)
+
+  /**
+   *
+   *
    * @param destination
    *
    * @return
@@ -1168,7 +1216,8 @@ case class Pos private[smcl](
    */
   @inline
   override final
-  def rotateBy90DegsCWAroundOrigo: Pos = Transformer.rotateBy90DegsCW(this)
+  def rotateBy90DegsCWAroundOrigo: Pos =
+    Transformer.rotateBy90DegsCW(this)
 
   /**
    * Rotates this object around its center by 90 degrees clockwise.
