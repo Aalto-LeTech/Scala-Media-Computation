@@ -284,8 +284,7 @@ case class Bounds private(
     isDefined: Boolean)
     extends CoordSysIndepBoundary[Pos, Dims]
         with HasArea
-        with Movable[Bounds]
-        with Rotatable[Bounds] {
+        with Movable[Bounds] {
 
   /** */
   lazy val corners: Seq[Pos] =
@@ -785,7 +784,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override final
+  final
   def rotateBy90DegsCWAroundOrigo: Bounds = {
     if (isUndefined)
       return this
@@ -803,7 +802,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override final
+  final
   def rotateBy90DegsCW: Bounds = rotateBy90DegsCW(position)
 
   /**
@@ -814,7 +813,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override final
+  final
   def rotateBy90DegsCW(centerOfRotation: Pos): Bounds = {
     if (isUndefined)
       return this
@@ -832,7 +831,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override final
+  final
   def rotateBy90DegsCCWAroundOrigo: Bounds = {
     if (isUndefined)
       return this
@@ -850,7 +849,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override final
+  final
   def rotateBy90DegsCCW: Bounds = rotateBy90DegsCCW(position)
 
   /**
@@ -861,7 +860,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override final
+  final
   def rotateBy90DegsCCW(centerOfRotation: Pos): Bounds = {
     if (isUndefined)
       return this
@@ -879,7 +878,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override final
+  final
   def rotateBy180DegsAroundOrigo: Bounds = {
     if (isUndefined)
       return this
@@ -899,7 +898,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override final
+  final
   def rotateBy180Degs: Bounds = rotateBy180Degs(position)
 
   /**
@@ -910,7 +909,7 @@ case class Bounds private(
    * @return
    */
   @inline
-  override final
+  final
   def rotateBy180Degs(centerOfRotation: Pos): Bounds = {
     if (isUndefined)
       return this
@@ -922,93 +921,6 @@ case class Bounds private(
     copy(
       newUpperLeftCorner = newUpperLeftCorner,
       newLowerRightCorner = newLowerRightCorner)
-  }
-
-  /**
-   * Rotates this boundary around its center by the specified angle.
-   *
-   * @param angle
-   *
-   * @return
-   */
-  @inline
-  override final
-  def rotateByAroundOrigo(angle: Angle): Bounds = rotateByAroundOrigo(angle)
-
-  /**
-   * Rotates this boundary around its center by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  @inline
-  override final
-  def rotateByAroundOrigo(angleInDegrees: Double): Bounds = {
-    if (isUndefined)
-      return this
-
-    ???
-  }
-
-  /**
-   * Rotates this boundary around its center by the specified angle.
-   *
-   * @param angle
-   *
-   * @return
-   */
-  @inline
-  override final
-  def rotateBy(angle: Angle): Bounds = rotateBy(angle)
-
-  /**
-   * Rotates this boundary around its center by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
-  @inline
-  override final
-  def rotateBy(angleInDegrees: Double): Bounds =
-    rotateBy(angleInDegrees, position)
-
-  /**
-   * Rotates this boundary around a given point by the specified angle.
-   *
-   * @param angle
-   * @param centerOfRotation
-   *
-   * @return
-   */
-  @inline
-  override final
-  def rotateBy(
-      angle: Angle,
-      centerOfRotation: Pos): Bounds = {
-
-    rotateBy(angle, centerOfRotation)
-  }
-
-  /**
-   * Rotates this boundary around a given point by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   * @param centerOfRotation
-   *
-   * @return
-   */
-  @inline
-  override final
-  def rotateBy(
-      angleInDegrees: Double,
-      centerOfRotation: Pos): Bounds = {
-
-    if (isUndefined)
-      return this
-
-    ???
   }
 
 }

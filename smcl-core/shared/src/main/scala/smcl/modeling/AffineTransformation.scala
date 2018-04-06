@@ -358,8 +358,8 @@ object AffineTransformation {
       pY: Double): AffineTransformation = {
 
     AffineTransformation(
-      cos, -sin, pX + sin * pY - cos * pX,
-      sin, cos, pY - sin * pX - cos * pY)
+      cos, sin, pX + sin * pY - cos * pX,
+      -sin, cos, pY - sin * pX - cos * pY)
   }
 
   /** */

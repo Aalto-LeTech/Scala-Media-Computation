@@ -90,7 +90,7 @@ object MathUtils {
     val tmp = normalizeDegs(valueInDegrees)
 
     if (tmp < 0)
-      Angle.FullAngleInDegrees - tmp
+      tmp + Angle.FullAngleInDegrees
     else
       tmp
   }
@@ -108,7 +108,7 @@ object MathUtils {
     val tmp = normalizeDegs(valueInDegrees)
 
     if (tmp > 0)
-      -Angle.FullAngleInDegrees + tmp
+      tmp - Angle.FullAngleInDegrees
     else
       tmp
   }

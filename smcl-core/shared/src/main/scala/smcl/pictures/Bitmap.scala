@@ -1090,14 +1090,12 @@ class Bitmap private(
         angleInDegrees,
         width.half.inPixels, height.half.inPixels))
 
-
-
-    val newUpperRightCorner = boundary.upperLeftCorner.rotateBy90DegsCCWAroundOrigo
-    val newUpperLeftCorner = newUpperRightCorner.subtractX(newBuffer.widthInPixels - 1)
-    val newLowerRightCorner = newUpperRightCorner.addY(newBuffer.heightInPixels - 1)
+    val newCenter = boundary.center.rotateByAroundOrigo(angleInDegrees)
+    val newUpperLeftCorner = newCenter - (newBuffer.widthInPixels / 2.0, newBuffer.heightInPixels / 2.0)
+    val newLowerRightCorner = newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
-    val newContentCorners = contentCorners.rotateBy90DegsCCWAroundOrigo
+    val newContentCorners = contentCorners.rotateByAroundOrigo(angleInDegrees)
 
     internalCopy(
       identity,
@@ -1157,16 +1155,27 @@ class Bitmap private(
       angleInDegrees: Double,
       centerOfRotation: Pos): Bitmap = {
 
-    if (buffer.isEmpty)
+    if (!isRenderable)
       return this
 
-    val (newBuffer, _) =
-      buffer.get.createTransformedVersionWith(
-        AffineTransformation.forPointCentredRotation(
-          angleInDegrees,
-          centerOfRotation))
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forPointCentredRotation(
+        angleInDegrees,
+        width.half.inPixels, height.half.inPixels))
 
-    new Bitmap(identity, isRenderable, boundary, contentCorners, Some(newBuffer)) // DEFINE A NEW BOUNDARY AND CONTENT CORNERS!!!!
+    val newCenter = boundary.center.rotateByAroundOrigo(angleInDegrees)
+    val newUpperLeftCorner = newCenter - (newBuffer.widthInPixels / 2.0, newBuffer.heightInPixels / 2.0)
+    val newLowerRightCorner = newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
+
+    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+    val newContentCorners = contentCorners.rotateByAroundOrigo(angleInDegrees)
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**
