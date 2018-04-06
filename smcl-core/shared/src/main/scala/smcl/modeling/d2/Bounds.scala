@@ -299,6 +299,12 @@ case class Bounds private(
   lazy val center: Pos = upperLeftCorner.centerBetween(lowerRightCorner)
 
   /** */
+  def upperRightCorner: Pos = Pos(lowerRightCorner.xInPixels, upperLeftCorner.yInPixels)
+
+  /** */
+  def lowerLeftCorner: Pos = Pos(upperLeftCorner.xInPixels, lowerRightCorner.yInPixels)
+
+  /** */
   lazy val width: Len =
     Len(lowerRightCorner.xInPixels - upperLeftCorner.xInPixels + 1)
 

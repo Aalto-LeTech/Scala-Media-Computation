@@ -30,7 +30,7 @@ import smcl.colors.ColorValidator
 import smcl.colors.rgb._
 import smcl.infrastructure._
 import smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
-import smcl.modeling.d2.Dims
+import smcl.modeling.d2.{Dims, Pos}
 import smcl.modeling.{AffineTransformation, Len}
 import smcl.pictures.{BitmapValidator, _}
 import smcl.settings.jvmawt.{AffineTransformationInterpolationMethod, DrawingIsAntialiased}

@@ -17,6 +17,7 @@
 package smcl.pictures
 
 
+import smcl.infrastructure.MathUtils
 import smcl.modeling.d2.{Bounds, Pos}
 
 
@@ -149,12 +150,16 @@ class BitmapContentCorners private(
    */
   @inline
   final
-  def moveBy(offsetsInPixels: Seq[Double]): BitmapContentCorners =
+  def moveBy(offsetsInPixels: Seq[Double]): BitmapContentCorners = {
+    if (isUndefined)
+      return this
+
     internalCopy(
       newUpperLeftCorner = upperLeftCorner.moveBy(offsetsInPixels),
       newUpperRightCorner = upperRightCorner.moveBy(offsetsInPixels),
       newLowerRightCorner = lowerRightCorner.moveBy(offsetsInPixels),
       newLowerLeftCorner = lowerLeftCorner.moveBy(offsetsInPixels))
+  }
 
   /**
    *
@@ -169,6 +174,9 @@ class BitmapContentCorners private(
   def moveBy(
       xOffsetInPixels: Double,
       yOffsetInPixels: Double): BitmapContentCorners = {
+
+    if (isUndefined)
+      return this
 
     internalCopy(
       newUpperLeftCorner = upperLeftCorner.moveBy(xOffsetInPixels, yOffsetInPixels),
@@ -198,14 +206,201 @@ class BitmapContentCorners private(
       newLowerRightCorner: Pos = lowerRightCorner,
       newLowerLeftCorner: Pos = lowerLeftCorner): BitmapContentCorners = {
 
-    if (isUndefined)
-      return this
-
     BitmapContentCorners(
       newUpperLeftCorner,
       newUpperRightCorner,
       newLowerRightCorner,
       newLowerLeftCorner)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def rotateBy90DegsCWAroundOrigo: BitmapContentCorners = {
+    if (isUndefined)
+      return this
+
+    val newUR = upperLeftCorner.rotateBy90DegsCWAroundOrigo
+    val newLR = upperRightCorner.rotateBy90DegsCWAroundOrigo
+    val newLL = lowerRightCorner.rotateBy90DegsCWAroundOrigo
+    val newUL = lowerLeftCorner.rotateBy90DegsCWAroundOrigo
+
+    internalCopy(newUL, newUR, newLR, newLL)
+  }
+
+  /**
+   *
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  def rotateBy90DegsCW(centerOfRotation: Pos): BitmapContentCorners = {
+    if (isUndefined)
+      return this
+
+    val newUR = upperLeftCorner.rotateBy90DegsCW(centerOfRotation)
+    val newLR = upperRightCorner.rotateBy90DegsCW(centerOfRotation)
+    val newLL = lowerRightCorner.rotateBy90DegsCW(centerOfRotation)
+    val newUL = lowerLeftCorner.rotateBy90DegsCW(centerOfRotation)
+
+    internalCopy(newUL, newUR, newLR, newLL)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def rotateBy90DegsCCWAroundOrigo: BitmapContentCorners = {
+    if (isUndefined)
+      return this
+
+    val newLL = upperLeftCorner.rotateBy90DegsCCWAroundOrigo
+    val newUL = upperRightCorner.rotateBy90DegsCCWAroundOrigo
+    val newUR = lowerRightCorner.rotateBy90DegsCCWAroundOrigo
+    val newLR = lowerLeftCorner.rotateBy90DegsCCWAroundOrigo
+
+    internalCopy(newUL, newUR, newLR, newLL)
+  }
+
+  /**
+   *
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  def rotateBy90DegsCCW(centerOfRotation: Pos): BitmapContentCorners = {
+    if (isUndefined)
+      return this
+
+    val newLL = upperLeftCorner.rotateBy90DegsCCW(centerOfRotation)
+    val newUL = upperRightCorner.rotateBy90DegsCCW(centerOfRotation)
+    val newUR = lowerRightCorner.rotateBy90DegsCCW(centerOfRotation)
+    val newLR = lowerLeftCorner.rotateBy90DegsCCW(centerOfRotation)
+
+    internalCopy(newUL, newUR, newLR, newLL)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def rotateBy180DegsAroundOrigo: BitmapContentCorners = {
+    if (isUndefined)
+      return this
+
+    val newLL = upperLeftCorner.rotateBy180DegsAroundOrigo
+    val newUL = upperRightCorner.rotateBy180DegsAroundOrigo
+    val newUR = lowerRightCorner.rotateBy180DegsAroundOrigo
+    val newLR = lowerLeftCorner.rotateBy180DegsAroundOrigo
+
+    internalCopy(newUL, newUR, newLR, newLL)
+  }
+
+  /**
+   *
+   *
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  def rotateBy180Degs(centerOfRotation: Pos): BitmapContentCorners = {
+    if (isUndefined)
+      return this
+
+    val newLR = upperLeftCorner.rotateBy180Degs(centerOfRotation)
+    val newLL = upperRightCorner.rotateBy180Degs(centerOfRotation)
+    val newUL = lowerRightCorner.rotateBy180Degs(centerOfRotation)
+    val newUR = lowerLeftCorner.rotateBy180Degs(centerOfRotation)
+
+    internalCopy(newUL, newUR, newLR, newLL)
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   *
+   * @return
+   */
+  def rotateByAroundOrigo(angleInDegrees: Double): BitmapContentCorners = {
+    if (isUndefined)
+      return this
+
+    normalizeCornersForFreeRotation(
+      rotationAngleInDegrees = angleInDegrees,
+      rotatedUpperLeftCorner = upperLeftCorner.rotateByAroundOrigo(angleInDegrees),
+      rotatedUpperRightCorner = upperRightCorner.rotateByAroundOrigo(angleInDegrees),
+      rotatedLowerRightCorner = lowerRightCorner.rotateByAroundOrigo(angleInDegrees),
+      rotatedLowerLeftCorner = lowerLeftCorner.rotateByAroundOrigo(angleInDegrees))
+  }
+
+  /**
+   *
+   *
+   * @param angleInDegrees
+   * @param centerOfRotation
+   *
+   * @return
+   */
+  def rotateBy(
+      angleInDegrees: Double,
+      centerOfRotation: Pos): BitmapContentCorners = {
+
+    if (isUndefined)
+      return this
+
+    normalizeCornersForFreeRotation(
+      rotationAngleInDegrees = angleInDegrees,
+      rotatedUpperLeftCorner = upperLeftCorner.rotateBy(angleInDegrees, centerOfRotation),
+      rotatedUpperRightCorner = upperRightCorner.rotateBy(angleInDegrees, centerOfRotation),
+      rotatedLowerRightCorner = lowerRightCorner.rotateBy(angleInDegrees, centerOfRotation),
+      rotatedLowerLeftCorner = lowerLeftCorner.rotateBy(angleInDegrees, centerOfRotation))
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  private final
+  def normalizeCornersForFreeRotation(
+      rotationAngleInDegrees: Double,
+      rotatedUpperLeftCorner: Pos,
+      rotatedUpperRightCorner: Pos,
+      rotatedLowerRightCorner: Pos,
+      rotatedLowerLeftCorner: Pos): BitmapContentCorners = {
+
+    val oldUL = rotatedUpperLeftCorner
+    val oldUR = rotatedUpperRightCorner
+    val oldLR = rotatedLowerRightCorner
+    val oldLL = rotatedLowerLeftCorner
+
+    val normalizedAngle =
+      MathUtils.normalizeToPosDegs(rotationAngleInDegrees)
+
+    val (newUL, newUR, newLR, newLL) = {
+      if (normalizedAngle >= 45 && normalizedAngle < 135) {
+        (oldLL, oldUL, oldUR, oldLR)
+      }
+      else if (normalizedAngle < 225) {
+        (oldLR, oldLL, oldUL, oldUR)
+      }
+      else if (normalizedAngle < 315) {
+        (oldUR, oldLR, oldLL, oldUL)
+      }
+      else { // >= 315 || < 45
+        (oldUL, oldUR, oldLR, oldLL)
+      }
+    }
+
+    internalCopy(newUL, newUR, newLR, newLL)
   }
 
 }

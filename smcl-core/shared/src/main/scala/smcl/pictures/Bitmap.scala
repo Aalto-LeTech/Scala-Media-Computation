@@ -23,6 +23,7 @@ import smcl.infrastructure.{BitmapBufferAdapter, Displayable, Identity, Injectab
 import smcl.modeling.d2._
 import smcl.modeling.{AffineTransformation, Angle, Len}
 import smcl.pictures.filters._
+import smcl.settings
 import smcl.settings.DefaultBackgroundColor
 
 
@@ -652,6 +653,42 @@ class Bitmap private(
       newContentCorners = contentCorners.moveBy(xOffsetInPixels, yOffsetInPixels))
   }
 
+
+  /**
+   *
+   *
+   * @param position
+   * @param positionType
+   *
+   * @return
+   */
+  override
+  def moveTo(
+      position: Pos,
+      positionType: settings.PositionType): Bitmap = {
+
+    super.moveTo(position, positionType).asInstanceOf[Bitmap]
+  }
+
+  /**
+   *
+   *
+   * @param xCoordinateInPixels
+   * @param yCoordinateInPixels
+   * @param positionType
+   *
+   * @return
+   */
+  override
+  def moveTo(
+      xCoordinateInPixels: Double,
+      yCoordinateInPixels: Double,
+      positionType: settings.PositionType): Bitmap = {
+
+    super.moveTo(xCoordinateInPixels, yCoordinateInPixels, positionType)
+        .asInstanceOf[Bitmap]
+  }
+
   /**
    *
    *
@@ -834,20 +871,35 @@ class Bitmap private(
    */
   override
   def rotateBy90DegsCWAroundOrigo: Bitmap = {
-    if (buffer.isEmpty)
-      return this
+    val newBuffer =
+      if (buffer.isEmpty)
+        return this
+      else {
+        val bitmapTransformation =
+          AffineTransformation.forPointCentredRotationOf90DegsCW(
+            width.half.inPixels, height.half.inPixels)
 
-    // TODO
+        val (newBuffer, _) =
+          buffer.get.createTransformedVersionWith(
+            transformation = bitmapTransformation,
+            resizeCanvasBasedOnTransformation = true)
 
-    val (newBuffer, upperLeftOffsets) =
-      buffer.get.createTransformedVersionWith(
-        transformation = AffineTransformation.forOrigoCentredRotationOf90DegsCW,
-        resizeCanvasBasedOnTransformation = true)
+        newBuffer
+      }
 
-    //BoundaryCalculator.fromBoundaries()
+    val newLowerLeftCorner = boundary.upperLeftCorner.rotateBy90DegsCWAroundOrigo
+    val newUpperLeftCorner = newLowerLeftCorner.addY(-(newBuffer.heightInPixels - 1))
+    val newLowerRightCorner = newLowerLeftCorner.addX(newBuffer.widthInPixels - 1)
 
-    this
+    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+    val newContentCorners = contentCorners.rotateBy90DegsCWAroundOrigo
 
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
   }
 
   /**

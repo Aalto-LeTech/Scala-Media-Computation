@@ -143,8 +143,6 @@ trait Movable[ReturnType]
    *
    * @return
    */
-  @inline
-  final
   def moveTo(
       position: Pos,
       positionType: PositionType): ReturnType = {
@@ -164,8 +162,6 @@ trait Movable[ReturnType]
    *
    * @return
    */
-  @inline
-  final
   def moveTo(
       xCoordinateInPixels: Double,
       yCoordinateInPixels: Double,
