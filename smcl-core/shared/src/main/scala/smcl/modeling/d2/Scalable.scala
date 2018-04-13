@@ -29,21 +29,15 @@ trait Scalable[ReturnType] {
   self: HasDims =>
 
 
-  /**
-   *
-   *
-   * @param targetSize
-   *
-   * @return
-   */
-  @inline
-  final
-  def scaleTo(targetSize: Double): ReturnType = {
-    scaleTo(targetSize, targetSize)
-  }
+  /** The scaling factor (1.0) that does not cause any effect when scaling. */
+  val IdentityScalingFactor: Double = 1.0
+
+
+  // Width
+  // -------------------------------------------------------------------------------------------- \\
 
   /**
-   *
+   * Scales the width of this object in relation to its center.
    *
    * @param targetWidth
    *
@@ -52,11 +46,33 @@ trait Scalable[ReturnType] {
   @inline
   final
   def scaleWidthTo(targetWidth: Double): ReturnType = {
-    scaleBy(targetWidth / dimensions.width.inPixels, 1.0)
+    val widthFactor = targetWidth / dimensions.width.inPixels
+    val heightFactor = IdentityScalingFactor
+
+    scaleBy(widthFactor, heightFactor)
   }
 
   /**
+   * Scales the width of this object in relation to its center.
    *
+   * @param widthFactor
+   *
+   * @return
+   */
+  @inline
+  final
+  def scaleWidthBy(widthFactor: Double): ReturnType = {
+    val heightFactor = IdentityScalingFactor
+
+    scaleBy(widthFactor, heightFactor)
+  }
+
+
+  // Height
+  // -------------------------------------------------------------------------------------------- \\
+
+  /**
+   * Scales the height of this object in relation to its center.
    *
    * @param targetHeight
    *
@@ -65,11 +81,57 @@ trait Scalable[ReturnType] {
   @inline
   final
   def scaleHeightTo(targetHeight: Double): ReturnType = {
-    scaleBy(1.0, targetHeight / dimensions.height.inPixels)
+    val widthFactor = IdentityScalingFactor
+    val heightFactor = targetHeight / dimensions.height.inPixels
+
+    scaleBy(widthFactor, heightFactor)
   }
 
   /**
+   * Scales the height of this object in relation to its center.
    *
+   * @param heightFactor
+   *
+   * @return
+   */
+  @inline
+  final
+  def scaleHeightBy(heightFactor: Double): ReturnType = {
+    val widthFactor = IdentityScalingFactor
+
+    scaleBy(widthFactor, heightFactor)
+  }
+
+
+  // Both Width and Height
+  // -------------------------------------------------------------------------------------------- \\
+
+  /**
+   * Scales this object in relation to its center.
+   *
+   * @param targetSideLength
+   *
+   * @return
+   */
+  @inline
+  final
+  def scaleTo(targetSideLength: Double): ReturnType =
+    scaleTo(targetSideLength, targetSideLength)
+
+  /**
+   * Scales this object in relation to its center.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  @inline
+  final
+  def scaleBy(factor: Double): ReturnType =
+    scaleBy(factor, factor)
+
+  /**
+   * Scales this object in relation to its center.
    *
    * @param targetWidth
    * @param targetHeight
@@ -82,52 +144,14 @@ trait Scalable[ReturnType] {
       targetWidth: Double,
       targetHeight: Double): ReturnType = {
 
-    scaleBy(
-      targetWidth / dimensions.width.inPixels,
-      targetHeight / dimensions.height.inPixels)
+    val widthFactor = targetWidth / dimensions.width.inPixels
+    val heightFactor = targetHeight / dimensions.height.inPixels
+
+    scaleBy(widthFactor, heightFactor)
   }
 
   /**
-   *
-   *
-   * @param factor
-   *
-   * @return
-   */
-  @inline
-  final
-  def scaleBy(factor: Double): ReturnType = {
-    scaleBy(factor, factor)
-  }
-
-  /**
-   *
-   *
-   * @param factor
-   *
-   * @return
-   */
-  @inline
-  final
-  def scaleWidthBy(factor: Double): ReturnType = {
-    scaleBy(factor, 1.0)
-  }
-
-  /**
-   *
-   *
-   * @param factor
-   *
-   * @return
-   */
-  @inline
-  final
-  def scaleHeightBy(factor: Double): ReturnType = {
-    scaleBy(1.0, factor)
-  }
-
-  /**
-   *
+   * Scales this object in relation to its center.
    *
    * @param widthFactor
    * @param heightFactor

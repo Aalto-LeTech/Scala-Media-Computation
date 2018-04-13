@@ -866,7 +866,8 @@ class Bitmap private(
 */
 
   /**
-   *
+   * An internal method to transform the content of this
+   * bitmap using a given [[AffineTransformation]].
    *
    * @param transformation
    *
@@ -884,7 +885,7 @@ class Bitmap private(
   }
 
   /**
-   * Rotates this object around origo (0,0) by 90 degrees clockwise.
+   * Rotates this bitmap around origo (0,0) by 90 degrees clockwise.
    *
    * @return
    */
@@ -909,7 +910,7 @@ class Bitmap private(
   }
 
   /**
-   * Rotates this object around its center by 90 degrees clockwise.
+   * Rotates this bitmap around its center by 90 degrees clockwise.
    *
    * @return
    */
@@ -917,7 +918,7 @@ class Bitmap private(
   def rotateBy90DegsCW: Bitmap = rotateBy90DegsCW(position)
 
   /**
-   * Rotates this object around a given point by 90 degrees clockwise.
+   * Rotates this bitmap around a given point by 90 degrees clockwise.
    *
    * @param centerOfRotation
    *
@@ -944,7 +945,7 @@ class Bitmap private(
   }
 
   /**
-   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
+   * Rotates this bitmap around origo (0,0) by 90 degrees counterclockwise.
    *
    * @return
    */
@@ -969,7 +970,7 @@ class Bitmap private(
   }
 
   /**
-   * Rotates this object around the its center by 90 degrees counterclockwise.
+   * Rotates this bitmap around the its center by 90 degrees counterclockwise.
    *
    * @return
    */
@@ -977,7 +978,7 @@ class Bitmap private(
   def rotateBy90DegsCCW: Bitmap = rotateBy90DegsCCW(position)
 
   /**
-   * Rotates this object around a given point by 90 degrees counterclockwise.
+   * Rotates this bitmap around a given point by 90 degrees counterclockwise.
    *
    * @param centerOfRotation
    *
@@ -1004,7 +1005,7 @@ class Bitmap private(
   }
 
   /**
-   * Rotates this object around origo (0,0) by 180 degrees.
+   * Rotates this bitmap around origo (0,0) by 180 degrees.
    *
    * @return
    */
@@ -1029,7 +1030,7 @@ class Bitmap private(
   }
 
   /**
-   * Rotates this object around its center by 180 degrees.
+   * Rotates this bitmap around its center by 180 degrees.
    *
    * @return
    */
@@ -1037,7 +1038,7 @@ class Bitmap private(
   def rotateBy180Degs: Bitmap = rotateBy180Degs(position)
 
   /**
-   * Rotates this object around a given point by 180 degrees.
+   * Rotates this bitmap around a given point by 180 degrees.
    *
    * @param centerOfRotation
    *
@@ -1064,7 +1065,7 @@ class Bitmap private(
   }
 
   /**
-   * Rotates this object around its center by the specified angle.
+   * Rotates this bitmap around its center by the specified angle.
    *
    * @param angle
    *
@@ -1074,7 +1075,7 @@ class Bitmap private(
   def rotateByAroundOrigo(angle: Angle): Bitmap = rotateByAroundOrigo(angle)
 
   /**
-   * Rotates this object around its center by the specified number of degrees.
+   * Rotates this bitmap around its center by the specified number of degrees.
    *
    * @param angleInDegrees
    *
@@ -1106,7 +1107,7 @@ class Bitmap private(
   }
 
   /**
-   * Rotates this object around its center by the specified angle.
+   * Rotates this bitmap around its center by the specified angle.
    *
    * @param angle
    *
@@ -1116,7 +1117,7 @@ class Bitmap private(
   def rotateBy(angle: Angle): Bitmap = rotateBy(angle)
 
   /**
-   * Rotates this object around its center by the specified number of degrees.
+   * Rotates this bitmap around its center by the specified number of degrees.
    *
    * @param angleInDegrees
    *
@@ -1127,7 +1128,7 @@ class Bitmap private(
     rotateBy(angleInDegrees, position)
 
   /**
-   * Rotates this object around a given point by the specified angle.
+   * Rotates this bitmap around a given point by the specified angle.
    *
    * @param angle
    * @param centerOfRotation
@@ -1143,7 +1144,7 @@ class Bitmap private(
   }
 
   /**
-   * Rotates this object around a given point by the specified number of degrees.
+   * Rotates this bitmap around a given point by the specified number of degrees.
    *
    * @param angleInDegrees
    * @param centerOfRotation
@@ -1158,6 +1159,8 @@ class Bitmap private(
     if (!isRenderable)
       return this
 
+    // TODO in all rotation methods: Check params, e.g., Pos has to be defined, Angle mustn't be null
+
     val newBuffer = transformContentUsing(
       AffineTransformation.forPointCentredRotation(
         angleInDegrees,
@@ -1169,6 +1172,46 @@ class Bitmap private(
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
     val newContentCorners = contentCorners.rotateByAroundOrigo(angleInDegrees)
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
+  }
+
+  /**
+   * Scales this bitmap in relation to its center.
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(
+      widthFactor: Double,
+      heightFactor: Double): Bitmap = {
+
+    if (!isRenderable)
+      return this
+
+    require(widthFactor > 0, s"The scaling factors must be larger than zero (was $widthFactor)")
+    require(heightFactor > 0, s"The scaling factors must be larger than zero (was $heightFactor)")
+
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forOrigoRelativeScalingOf(
+        widthFactor, heightFactor))
+
+    val newUpperLeftCorner =
+      boundary.center - (newBuffer.widthInPixels / 2.0, newBuffer.heightInPixels / 2.0)
+
+    val newLowerRightCorner =
+      newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
+
+    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+    val newContentCorners = contentCorners // TODO: FIX: contentCorners.scaleBy(widthFactor, heightFactor)
 
     internalCopy(
       identity,
@@ -1257,19 +1300,6 @@ class Bitmap private(
       newBounds,
       newContentCorners,
       Option(newBuffer))
-  }
-
-  /**
-   *
-   *
-   * @param widthFactor
-   * @param heightFactor
-   *
-   * @return
-   */
-  override
-  def scaleBy(widthFactor: Double, heightFactor: Double): Bitmap = {
-    this
   }
 
 }
