@@ -17,7 +17,7 @@
 package smcl.viewers
 
 
-import smcl.pictures.fullfeatured.Bitmap
+import smcl.pictures.Bitmap
 
 
 

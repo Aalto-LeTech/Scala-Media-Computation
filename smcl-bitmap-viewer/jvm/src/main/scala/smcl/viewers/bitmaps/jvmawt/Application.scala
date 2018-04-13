@@ -18,8 +18,9 @@ package smcl.viewers.bitmaps.jvmawt
 
 
 import rx.lang.scala.{JavaConversions, Subject}
-import smcl.pictures.fullfeatured.Bitmap
+
 import smcl.infrastructure.jvmawt.SwingUtils
+import smcl.pictures.Bitmap
 import smcl.viewers.bitmaps.DisplayBitmapEvent
 import smcl.viewers.{BitmapViewerApplication, ExternalViewerEvent, ForceAllViewersToCloseEvent}
 

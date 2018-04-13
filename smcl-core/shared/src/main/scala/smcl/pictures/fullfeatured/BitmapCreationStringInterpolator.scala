@@ -28,6 +28,7 @@ class BitmapCreationStringInterpolator(
     val sc: StringContext)
     extends AnyVal {
 
+  /*
   /**
    * Loads the first bitmap from a file.
    *
@@ -42,7 +43,9 @@ class BitmapCreationStringInterpolator(
 
     Bitmap(pathStringCandidate)
   }
+  */
 
+  /*
   /**
    * Loads all bitmaps from a file.
    *
@@ -57,5 +60,6 @@ class BitmapCreationStringInterpolator(
 
     Bitmaps(pathStringCandidate)
   }
+  */
 
 }

@@ -25,7 +25,7 @@ import rx.lang.scala.{Observable, Observer}
 
 import smcl.SMCL
 import smcl.infrastructure.Identity
-import smcl.pictures.fullfeatured.Bitmap
+import smcl.pictures.Bitmap
 import smcl.viewers.bitmaps.DisplayBitmapEvent
 import smcl.viewers.{ExternalViewerEvent, ForceAllViewersToCloseEvent}
 
@@ -68,14 +68,16 @@ private[jvmawt]
 class ViewerManager(val incomingEventStream: Observable[ExternalViewerEvent])
     extends Observer[ExternalViewerEvent] {
 
-  private[this] var _viewers = Map[Identity, ViewerMainFrame]()
+  private[this]
+  var _viewers = Map[Identity, ViewerMainFrame]()
 
   /**
    *
    *
    * @param event
    */
-  private[this] def processEvent(event: ExternalViewerEvent): Unit = event match {
+  private[this]
+  def processEvent(event: ExternalViewerEvent): Unit = event match {
     case DisplayBitmapEvent(bitmap) => createOrUpdateViewerFor(bitmap)
 
     case ForceAllViewersToCloseEvent() => closeAllViewersWithTheForce()
@@ -90,11 +92,12 @@ class ViewerManager(val incomingEventStream: Observable[ExternalViewerEvent])
    *
    * @param bitmap
    */
-  private[this] def createOrUpdateViewerFor(bitmap: Bitmap): Unit = {
-    val viewer = _viewers.getOrElse(bitmap.uniqueIdentifier, {
+  private[this]
+  def createOrUpdateViewerFor(bitmap: Bitmap): Unit = {
+    val viewer = _viewers.getOrElse(bitmap.identity, {
       val newViewer = ViewerMainFrame(bitmap)
 
-      _viewers = _viewers + (bitmap.uniqueIdentifier -> newViewer)
+      _viewers = _viewers + (bitmap.identity -> newViewer)
 
       newViewer.centerOnScreen()
       newViewer
@@ -109,7 +112,8 @@ class ViewerManager(val incomingEventStream: Observable[ExternalViewerEvent])
   /**
    *
    */
-  private[this] def closeAllViewersWithTheForce(): Unit = {
+  private[this]
+  def closeAllViewersWithTheForce(): Unit = {
     _viewers.values foreach {viewer =>
       Swing.onEDT{
         viewer.forceToClose()
@@ -127,7 +131,8 @@ class ViewerManager(val incomingEventStream: Observable[ExternalViewerEvent])
      *
      * @param event
      */
-    override def onNext(event: ExternalViewerEvent): Unit = {
+    override
+    def onNext(event: ExternalViewerEvent): Unit = {
       processEvent(event)
     }
 
@@ -136,14 +141,16 @@ class ViewerManager(val incomingEventStream: Observable[ExternalViewerEvent])
      *
      * @param error
      */
-    override def onError(error: Throwable): Unit = {
+    override
+    def onError(error: Throwable): Unit = {
       println("An unexpected error occurred with viewer's incoming event stream:\n" + error.toString)
     }
 
     /**
      *
      */
-    override def onCompleted(): Unit = {
+    override
+    def onCompleted(): Unit = {
 
     }
 

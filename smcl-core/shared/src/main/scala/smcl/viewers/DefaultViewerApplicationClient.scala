@@ -19,9 +19,7 @@ package smcl.viewers
 
 import smcl.infrastructure.Displayable
 import smcl.infrastructure.exceptions.{ImplementationNotSetError, UnknownMediaTypeError}
-import smcl.pictures
-import smcl.pictures.fullfeatured
-import smcl.pictures.fullfeatured.Bitmap
+import smcl.pictures.Bitmap
 
 
 
@@ -45,12 +43,9 @@ object DefaultViewerApplicationClient extends ViewerApplicationClient {
    */
   override def display(resource: Displayable): Unit = {
     resource match {
-      case bmp: fullfeatured.Bitmap =>
-        bitmapViewerApplication.display(bmp)
-
-      case bmp: pictures.Bitmap =>
+      case bmp: Bitmap =>
         if (bmp.buffer.isDefined)
-          bitmapViewerApplication.display(Bitmap(bmp.buffer.get))
+          bitmapViewerApplication.display(bmp)
         else
           println("No BitmapBufferAdapter to display.")
 

@@ -54,24 +54,6 @@ object Bitmap extends BitmapCompanion[Bitmap] {
   }
 
   /**
-   *
-   *
-   * @param sourceResourcePath
-   * @param viewerHandling
-   *
-   * @return
-   */
-  override
-  def apply(
-      sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle): Bitmap = {
-
-    super.apply(
-      sourceResourcePath,
-      viewerHandling)
-  }
-
-  /**
    * Creates a new empty [[Bitmap]] instance and applies a processing function to it.
    *
    * @param widthInPixels
@@ -93,29 +75,6 @@ object Bitmap extends BitmapCompanion[Bitmap] {
       initialBackgroundColor,
       processor,
       VUSPreventViewerUpdates)
-  }
-
-  /**
-   * HACK HACK HACK HACK --> REMOVE WHEN UNNECESSARY! See BitmapCompanion as well.
-   *
-   * @param bmpBfrAdapter
-   *
-   * @return
-   */
-  private[smcl]
-  def apply(bmpBfrAdapter: BitmapBufferAdapter): Bitmap = {
-    super.fromBitmapBufferAdapter(bmpBfrAdapter)
-  }
-
-  /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   */
-  def apply(sourceResourcePath: String): Bitmap = {
-    apply(sourceResourcePath, VUSUpdateViewerPerDefaults)
   }
 
   /**
@@ -552,132 +511,6 @@ class Bitmap private[pictures](
   /**
    *
    *
-   * @param bitmapsToCombineWith
-   * @param verticalAlignment
-   * @param paddingInPixels
-   * @param backgroundColor
-   *
-   * @return
-   */
-  def appendOnLeft(
-      bitmapsToCombineWith: Bitmap*)(
-      verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
-      paddingInPixels: Double = DefaultPaddingInPixels,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(
-      AppendHorizontally(bitmapsToCombineWith :+ this)(
-        verticalAlignment,
-        paddingInPixels,
-        backgroundColor,
-        bitmapValidator),
-      viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bitmapsToCombineWith
-   * @param verticalAlignment
-   * @param paddingInPixels
-   * @param backgroundColor
-   *
-   * @return
-   */
-  def appendOnRight(
-      bitmapsToCombineWith: Bitmap*)(
-      verticalAlignment: VerticalAlignment = DefaultVerticalAlignment,
-      paddingInPixels: Double = DefaultPaddingInPixels,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(
-      AppendHorizontally(this +: bitmapsToCombineWith)(
-        verticalAlignment,
-        paddingInPixels,
-        backgroundColor,
-        bitmapValidator),
-      viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bitmap
-   *
-   * @return
-   */
-  def sewOnLeftOf(bitmap: Bitmap): Bitmap = {
-    appendOnRight(bitmap)(VAMiddle)
-  }
-
-  /**
-   *
-   *
-   * @param bitmapsToCombineWith
-   * @param horizontalAlignment
-   * @param paddingInPixels
-   * @param backgroundColor
-   *
-   * @return
-   */
-  def appendOnTop(
-      bitmapsToCombineWith: Bitmap*)(
-      horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
-      paddingInPixels: Double = DefaultPaddingInPixels,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(
-      AppendVertically(bitmapsToCombineWith :+ this)(
-        horizontalAlignment,
-        paddingInPixels,
-        backgroundColor,
-        bitmapValidator),
-      viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bitmap
-   *
-   * @return
-   */
-  def pileOnTopOf(bitmap: Bitmap): Bitmap = {
-    appendOnBottom(bitmap)(HACenter)
-  }
-
-  /**
-   *
-   *
-   * @param bitmapsToCombineWith
-   * @param horizontalAlignment
-   * @param paddingInPixels
-   * @param backgroundColor
-   *
-   * @return
-   */
-  def appendOnBottom(
-      bitmapsToCombineWith: Bitmap*)(
-      horizontalAlignment: HorizontalAlignment = DefaultHorizontalAlignment,
-      paddingInPixels: Double = DefaultPaddingInPixels,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(
-      AppendVertically(this +: bitmapsToCombineWith)(
-        horizontalAlignment,
-        paddingInPixels,
-        backgroundColor,
-        bitmapValidator),
-      viewerHandling)
-  }
-
-  /**
-   *
-   *
    * @param viewerHandling
    *
    * @return
@@ -799,58 +632,6 @@ class Bitmap private[pictures](
       viewerHandling = viewerHandling)
   }
 
-  /**
-   *
-   *
-   * @param numberOfReplicas
-   * @param paddingInPixels
-   * @param backgroundColor
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def replicateHorizontally(
-      numberOfReplicas: Int,
-      paddingInPixels: Double = DefaultPaddingInPixels,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(
-      ReplicateHorizontally(
-        this,
-        numberOfReplicas,
-        paddingInPixels,
-        backgroundColor,
-        bitmapValidator),
-      viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param numberOfReplicas
-   * @param paddingInPixels
-   * @param backgroundColor
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def replicateVertically(
-      numberOfReplicas: Int,
-      paddingInPixels: Double = DefaultPaddingInPixels,
-      backgroundColor: Color = DefaultBackgroundColor,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(
-      ReplicateVertically(
-        this,
-        numberOfReplicas,
-        paddingInPixels,
-        backgroundColor,
-        bitmapValidator),
-      viewerHandling)
-  }
-
 
   // ----------------------------------------------------------------------------------------------
 
@@ -860,6 +641,7 @@ class Bitmap private[pictures](
   //
   //-------------------------------
 
+  /*
   /**
    *
    *
@@ -868,7 +650,9 @@ class Bitmap private[pictures](
    * @return
    */
   def :/\ (other: Bitmap): Bitmap = appendOnTop(other)()
+  */
 
+  /*
   /**
    *
    *
@@ -879,6 +663,7 @@ class Bitmap private[pictures](
   def :/\ (other: scala.collection.Seq[Bitmap]): Bitmap = {
     appendOnTop(other: _*)()
   }
+  */
 
   /**
    *
@@ -897,6 +682,7 @@ class Bitmap private[pictures](
   //
   //-------------------------------
 
+  /*
   /**
    *
    *
@@ -905,7 +691,9 @@ class Bitmap private[pictures](
    * @return
    */
   def /\: (other: Bitmap): Bitmap = appendOnTop(other)()
+  */
 
+  /*
   /**
    *
    *
@@ -916,7 +704,9 @@ class Bitmap private[pictures](
   def /\: (other: scala.collection.Seq[Bitmap]): Bitmap = {
     appendOnTop(other: _*)()
   }
+  */
 
+  /*
   /**
    *
    *
@@ -927,6 +717,7 @@ class Bitmap private[pictures](
   def /\: (other: scala.collection.Traversable[Bitmap]): Bitmap = {
     /\:(other.toSeq)
   }
+  */
 
   //-------------------------------
   //
@@ -934,6 +725,7 @@ class Bitmap private[pictures](
   //
   //-------------------------------
 
+  /*
   /**
    *
    *
@@ -942,7 +734,9 @@ class Bitmap private[pictures](
    * @return
    */
   def :\/ (other: Bitmap): Bitmap = appendOnBottom(other)()
+  */
 
+  /*
   /**
    *
    *
@@ -953,7 +747,9 @@ class Bitmap private[pictures](
   def :\/ (other: scala.collection.Seq[Bitmap]): Bitmap = {
     appendOnBottom(other: _*)()
   }
+  */
 
+  /*
   /**
    *
    *
@@ -964,6 +760,7 @@ class Bitmap private[pictures](
   def :\/ (other: scala.collection.Traversable[Bitmap]): Bitmap = {
     :\/(other.toSeq)
   }
+  */
 
   //-------------------------------
   //
@@ -971,6 +768,7 @@ class Bitmap private[pictures](
   //
   //-------------------------------
 
+  /*
   /**
    *
    *
@@ -979,7 +777,9 @@ class Bitmap private[pictures](
    * @return
    */
   def \/: (other: Bitmap): Bitmap = appendOnBottom(other)()
+  */
 
+  /*
   /**
    *
    *
@@ -990,7 +790,9 @@ class Bitmap private[pictures](
   def \/: (other: scala.collection.Seq[Bitmap]): Bitmap = {
     appendOnBottom(other: _*)()
   }
+  */
 
+  /*
   /**
    *
    *
@@ -1001,6 +803,7 @@ class Bitmap private[pictures](
   def \/: (other: scala.collection.Traversable[Bitmap]): Bitmap = {
     \/:(other.toSeq)
   }
+  */
 
   //-------------------------------
   //
@@ -1008,6 +811,7 @@ class Bitmap private[pictures](
   //
   //-------------------------------
 
+  /*
   /**
    *
    *
@@ -1016,7 +820,9 @@ class Bitmap private[pictures](
    * @return
    */
   def :>> (other: Bitmap): Bitmap = appendOnRight(other)()
+  */
 
+  /*
   /**
    *
    *
@@ -1027,7 +833,9 @@ class Bitmap private[pictures](
   def :>> (other: scala.collection.Seq[Bitmap]): Bitmap = {
     appendOnRight(other: _*)()
   }
+  */
 
+  /*
   /**
    *
    *
@@ -1038,6 +846,7 @@ class Bitmap private[pictures](
   def :>> (other: scala.collection.Traversable[Bitmap]): Bitmap = {
     :>>(other.toSeq)
   }
+  */
 
   //-------------------------------
   //
@@ -1045,6 +854,7 @@ class Bitmap private[pictures](
   //
   //-------------------------------
 
+  /*
   /**
    *
    *
@@ -1053,7 +863,9 @@ class Bitmap private[pictures](
    * @return
    */
   def >>: (other: Bitmap): Bitmap = appendOnRight(other)()
+  */
 
+  /*
   /**
    *
    *
@@ -1064,7 +876,9 @@ class Bitmap private[pictures](
   def >>: (other: scala.collection.Seq[Bitmap]): Bitmap = {
     appendOnRight(other: _*)()
   }
+  */
 
+  /*
   /**
    *
    *
@@ -1075,6 +889,7 @@ class Bitmap private[pictures](
   def >>: (other: scala.collection.Traversable[Bitmap]): Bitmap = {
     >>:(other.toSeq)
   }
+  */
 
   //-------------------------------
   //
@@ -1082,6 +897,7 @@ class Bitmap private[pictures](
   //
   //-------------------------------
 
+  /*
   /**
    *
    *
@@ -1090,7 +906,9 @@ class Bitmap private[pictures](
    * @return
    */
   def :<< (other: Bitmap): Bitmap = appendOnLeft(other)()
+  */
 
+  /*
   /**
    *
    *
@@ -1101,7 +919,9 @@ class Bitmap private[pictures](
   def :<< (other: scala.collection.Seq[Bitmap]): Bitmap = {
     appendOnLeft(other: _*)()
   }
+  */
 
+  /*
   /**
    *
    *
@@ -1112,6 +932,7 @@ class Bitmap private[pictures](
   def :<< (other: scala.collection.Traversable[Bitmap]): Bitmap = {
     :<<(other.toSeq)
   }
+  */
 
   //-------------------------------
   //
@@ -1119,6 +940,7 @@ class Bitmap private[pictures](
   //
   //-------------------------------
 
+  /*
   /**
    *
    *
@@ -1127,7 +949,9 @@ class Bitmap private[pictures](
    * @return
    */
   def <<: (other: Bitmap): Bitmap = appendOnLeft(other)()
+  */
 
+  /*
   /**
    *
    *
@@ -1138,7 +962,9 @@ class Bitmap private[pictures](
   def <<: (other: scala.collection.Seq[Bitmap]): Bitmap = {
     appendOnLeft(other: _*)()
   }
+  */
 
+  /*
   /**
    *
    *
@@ -1149,6 +975,7 @@ class Bitmap private[pictures](
   def <<: (other: scala.collection.Traversable[Bitmap]): Bitmap = {
     <<:(other.toSeq)
   }
+  */
 
   // ----------------------------------------------------------------------------------------------
 

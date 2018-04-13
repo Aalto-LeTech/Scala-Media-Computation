@@ -19,10 +19,10 @@ package smcl.pictures.fullfeatured
 
 import smcl.colors.ColorValidator
 import smcl.colors.rgb.Color
-import smcl.infrastructure.{BitmapBufferAdapter, Identity, InjectablesRegistry, _}
+import smcl.infrastructure.{Identity, InjectablesRegistry, _}
 import smcl.modeling.d2.Dims
 import smcl.pictures.BitmapValidator
-import smcl.pictures.operations.{BitmapOperationList, LoadedBitmap, _}
+import smcl.pictures.operations.{BitmapOperationList, _}
 import smcl.settings.{DefaultBackgroundColor, ViewerUpdateStyle}
 
 
@@ -45,58 +45,6 @@ abstract class BitmapCompanion[BitmapType <: AbstractBitmap]
   /** The BitmapValidator instance to be used by this object. */
   protected lazy val bitmapValidator: BitmapValidator = {
     injectable(InjectablesRegistry.IIdBitmapValidator).asInstanceOf[BitmapValidator]
-  }
-
-  /**
-   *
-   *
-   * @param sourceResourcePath
-   * @param viewerHandling
-   *
-   * @return
-   */
-  protected
-  def apply(
-      sourceResourcePath: String,
-      viewerHandling: ViewerUpdateStyle): BitmapType = {
-
-    displayAsNewIfNecessary(viewerHandling)(
-      loadNewBitmap(sourceResourcePath))
-  }
-
-  /**
-   *
-   *
-   * @param bmpBfrAdapter
-   *
-   * @return
-   */
-  private[pictures]
-  def fromBitmapBufferAdapter(bmpBfrAdapter: BitmapBufferAdapter): BitmapType = {
-    val operationList = BitmapOperationList(
-      LoadedBitmap(bmpBfrAdapter, None, Option(0)))
-
-    instantiateBitmap(operationList, bitmapValidator, colorValidator, Identity())
-  }
-
-  /**
-   * HACK HACK HACK HACK --> REMOVE WHEN UNNECESSARY! See Bitmap as well.
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   */
-  protected
-  def loadNewBitmap(sourceResourcePath: String): BitmapType = {
-    // The ImageProvider is trusted with validation of the source resource path.
-    val loadedBufferTry = PRF.tryToLoadImageFromPath(sourceResourcePath)
-    if (loadedBufferTry.isFailure)
-      throw loadedBufferTry.failed.get
-
-    val operationList = BitmapOperationList(
-      LoadedBitmap(loadedBufferTry.get, Option(sourceResourcePath), Option(0)))
-
-    instantiateBitmap(operationList, bitmapValidator, colorValidator, Identity())
   }
 
   /**

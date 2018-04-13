@@ -22,9 +22,9 @@ import java.awt.{RenderingHints, Graphics2D => JGraphics2D}
 import scala.swing._
 import scala.util.Try
 
-import smcl.pictures.fullfeatured.Bitmap
 import smcl.infrastructure.jvmawt._
 import smcl.modeling.AffineTransformation
+import smcl.pictures.Bitmap
 
 
 
@@ -57,7 +57,7 @@ class ImageDisplayPanel
     super.paintComponent(lowLevelGraphics2D)
 
     val bufferRetrievalTry =
-      Try(_bitmapOption.get.toRenderedRepresentation.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage)
+      Try(_bitmapOption.get.buffer.get.asInstanceOf[AWTBitmapBufferAdapter].awtBufferedImage)
     if (bufferRetrievalTry.isFailure)
       return
 
@@ -144,7 +144,7 @@ class ImageDisplayPanel
       throw new IllegalStateException(
         "Internal error: Bitmap to be displayed has to be set before calling this method.")
 
-    val bitmapSize = _bitmapOption.get.sizeInPixels.toIntTuple
+    val bitmapSize = _bitmapOption.get.dimensions.toIntTuple
     val newSize = _zoomFactor.scaleToDimension(
       new java.awt.Dimension(bitmapSize._1, bitmapSize._2))
 

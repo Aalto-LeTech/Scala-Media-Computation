@@ -27,7 +27,7 @@ import scala.swing.event._
 import smcl.infrastructure.PRF
 import smcl.infrastructure.exceptions.UnexpectedInternalError
 import smcl.infrastructure.jvmawt.SwingUtils
-import smcl.pictures.fullfeatured.Bitmap
+import smcl.pictures.Bitmap
 import smcl.viewers.bitmaps.jvmawt.ScrollingDirection.{Downwards, Leftwards, Upwards}
 
 
@@ -80,11 +80,11 @@ object ViewerMainFrame {
     val screenSize = PRF.screenInformationProvider.dimensions
 
     val width = (0.8 * screenSize.width).inPixels.toInt
-        .min((bitmap.widthInPixels * 1.1).toInt)
+        .min((bitmap.width.inPixels * 1.1).toInt)
         .max(MinimumFrameSize.width)
 
     val height = (0.8 * screenSize.height).inPixels.toInt
-        .min((bitmap.heightInPixels * 1.1).toInt)
+        .min((bitmap.height.inPixels * 1.1).toInt)
         .max(MinimumFrameSize.height)
 
     new Dimension(width, height)
