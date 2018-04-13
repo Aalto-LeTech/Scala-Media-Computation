@@ -19,7 +19,6 @@ package smcl.pictures.fullfeatured
 
 import smcl.colors.rgb.Color
 import smcl.infrastructure.{CollectionCreator, InjectablesRegistry}
-import smcl.pictures.operations.{DrawCircle, DrawEllipse, DrawLine, DrawRoundedRectangle, DrawRoundedSquare}
 import smcl.settings._
 
 
@@ -173,6 +172,7 @@ object ShapeCreator
         diameterInPixels
 
     def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      /*
       val radius = (imageSide - 2) / 2
 
       bmp.applyInitialization(
@@ -185,6 +185,8 @@ object ShapeCreator
           color = color,
           fillColor = color
         ))
+        */
+      bmp
     }
 
     Bitmap(
@@ -353,6 +355,7 @@ object ShapeCreator
       val ellipseCenterX = (ellipseWidth / 2) + 1
       val ellipseCenterY = (ellipseHeight / 2) + 1
 
+      /*
       bmp.applyInitialization(
         DrawEllipse(
           centerXInPixels = ellipseCenterX,
@@ -364,6 +367,9 @@ object ShapeCreator
           color = color,
           fillColor = color
         ))
+        */
+
+      bmp
     }
 
     Bitmap(
@@ -724,7 +730,7 @@ object ShapeCreator
         else
           (0.0, bitmapHeight - 1.0, bitmapWidth - 1, 0.0)
 
-      bmp.applyInitialization(DrawLine(x0, y0, x1, y1, color))
+      bmp // .applyInitialization(DrawLine(x0, y0, x1, y1, color))
     }
 
     Bitmap(
@@ -1074,6 +1080,7 @@ object ShapeCreator
       backgroundColor: Color): Bitmap = {
 
     def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      /*
       bmp.applyInitialization(
         DrawRoundedRectangle(
           0, 0,
@@ -1084,6 +1091,8 @@ object ShapeCreator
           color = color,
           fillColor = color
         ))
+      */
+      bmp
     }
 
     Bitmap(
@@ -1276,6 +1285,7 @@ object ShapeCreator
       backgroundColor: Color): Bitmap = {
 
     def postCreationProcessor(bmp: Bitmap): Bitmap = {
+      /*
       bmp.applyInitialization(
         DrawRoundedSquare(
           0, 0,
@@ -1286,6 +1296,8 @@ object ShapeCreator
           color = color,
           fillColor = color
         ))
+      */
+      bmp
     }
 
     Bitmap(

@@ -19,7 +19,6 @@ package smcl.colors.metadata
 
 import smcl.colors
 import smcl.colors.rgb
-import smcl.colors.rgb.{Black, Gray, White}
 import smcl.infrastructure.StrSpace
 import smcl.interfaces.{BitmapToMetaImageConverter, MetadataOnResources, ResourceIndex, StaticGeneralBitmapMetadata}
 import smcl.pictures.fullfeatured.AbstractBitmap
@@ -48,7 +47,8 @@ abstract class MetadataOnColors[MetaImageType](sourceColors: Vector[rgb.Color])
 
   /** Bitmap representations for the source colors. */
   private[this]
-  lazy val _generalBitmaps: Vector[Seq[MetaImageType]] =
+  lazy val _generalBitmaps: Vector[Seq[MetaImageType]] = Vector()
+/*
     for {
       color <- sourceColors
 
@@ -60,6 +60,7 @@ abstract class MetadataOnColors[MetaImageType](sourceColors: Vector[rgb.Color])
       tilesForSingleColor = Seq(a, b, c, d) map convertBitmapToMetaImage
 
     } yield tilesForSingleColor
+*/
 
   /**
    *

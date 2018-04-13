@@ -17,11 +17,6 @@
 package smcl.colors.metadata
 
 
-import smcl.colors.rgb.Color
-import smcl.pictures.fullfeatured
-import smcl.settings.{ColorVisualizationTileSideLengthInPixels, VUSPreventViewerUpdates}
-
-
 
 
 /**
@@ -32,6 +27,7 @@ import smcl.settings.{ColorVisualizationTileSideLengthInPixels, VUSPreventViewer
 private[smcl]
 object ColorTileCreator {
 
+  /*
   /**
    *
    * @return
@@ -55,7 +51,9 @@ object ColorTileCreator {
         viewerHandling = VUSPreventViewerUpdates)
     }
   }
+*/
 
+/*
   /**
    *
    *
@@ -94,5 +92,6 @@ object ColorTileCreator {
       }
     }
   }
+*/
 
 }
