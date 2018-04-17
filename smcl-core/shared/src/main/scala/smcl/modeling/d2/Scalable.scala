@@ -20,6 +20,21 @@ package smcl.modeling.d2
 /**
  *
  *
+ * @author Aleksi Lukkarinen
+ */
+object Scalable {
+
+  /** The scaling factor (1.0) that does not cause any effect when scaling. */
+  val IdentityScalingFactor: Double = 1.0
+
+}
+
+
+
+
+/**
+ *
+ *
  * @tparam ReturnType
  *
  * @author Aleksi Lukkarinen
@@ -27,10 +42,6 @@ package smcl.modeling.d2
 trait Scalable[ReturnType] {
 
   self: HasDims =>
-
-
-  /** The scaling factor (1.0) that does not cause any effect when scaling. */
-  val IdentityScalingFactor: Double = 1.0
 
 
   // Width
@@ -47,7 +58,7 @@ trait Scalable[ReturnType] {
   final
   def scaleWidthTo(targetWidth: Double): ReturnType = {
     val widthFactor = targetWidth / dimensions.width.inPixels
-    val heightFactor = IdentityScalingFactor
+    val heightFactor = Scalable.IdentityScalingFactor
 
     scaleBy(widthFactor, heightFactor)
   }
@@ -62,7 +73,7 @@ trait Scalable[ReturnType] {
   @inline
   final
   def scaleWidthBy(widthFactor: Double): ReturnType = {
-    val heightFactor = IdentityScalingFactor
+    val heightFactor = Scalable.IdentityScalingFactor
 
     scaleBy(widthFactor, heightFactor)
   }
@@ -81,7 +92,7 @@ trait Scalable[ReturnType] {
   @inline
   final
   def scaleHeightTo(targetHeight: Double): ReturnType = {
-    val widthFactor = IdentityScalingFactor
+    val widthFactor = Scalable.IdentityScalingFactor
     val heightFactor = targetHeight / dimensions.height.inPixels
 
     scaleBy(widthFactor, heightFactor)
@@ -97,7 +108,7 @@ trait Scalable[ReturnType] {
   @inline
   final
   def scaleHeightBy(heightFactor: Double): ReturnType = {
-    val widthFactor = IdentityScalingFactor
+    val widthFactor = Scalable.IdentityScalingFactor
 
     scaleBy(widthFactor, heightFactor)
   }
