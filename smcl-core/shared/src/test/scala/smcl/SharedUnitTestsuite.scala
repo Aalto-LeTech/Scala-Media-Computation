@@ -19,6 +19,8 @@ package smcl
 
 import org.scalatest.{DoNotDiscover, Suites}
 
+import smcl.modeling.TransformerUnitTests
+
 
 
 
@@ -29,7 +31,8 @@ import org.scalatest.{DoNotDiscover, Suites}
  */
 @DoNotDiscover
 class SharedUnitTestsuite extends Suites(
-  new DummySMCLUnitTests()
+  new DummySMCLUnitTests(),
+  new TransformerUnitTests()
 ) {
 
 }

@@ -364,6 +364,32 @@ class BitmapContentCorners private(
   }
 
   /**
+   * Scales this object in relation to its center.
+   *
+   * @param widthFactor
+   * @param heightFactor
+   *
+   * @return
+   */
+  def scaleBy(
+      widthFactor: Double,
+      heightFactor: Double): BitmapContentCorners = {
+
+    /*
+    if (isUndefined)
+      return this
+
+    val newLR = upperLeftCorner.rotateBy180Degs(centerOfRotation)
+    val newLL = upperRightCorner.rotateBy180Degs(centerOfRotation)
+    val newUL = lowerRightCorner.rotateBy180Degs(centerOfRotation)
+    val newUR = lowerLeftCorner.rotateBy180Degs(centerOfRotation)
+
+    internalCopy(newUL, newUR, newLR, newLL)
+    */
+    this
+  }
+
+  /**
    *
    *
    * @return

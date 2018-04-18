@@ -350,4 +350,358 @@ object Transformer {
     Pos(xNew, yNew)
   }
 
+  /**
+   * Scales a [[Pos]] instance's distance from the Y axis by a given factor.
+   *
+   * @param position      position to be scaled
+   * @param scalingFactor factor describing the magnitude of scaling
+   *
+   * @return a scaled [[Pos]] instance
+   */
+  @inline
+  final
+  def scaleHorizontally(
+      position: Pos,
+      scalingFactor: Double): Pos = {
+
+    Pos(
+      scalingFactor * position.xInPixels,
+      position.yInPixels)
+  }
+
+  /**
+   * Scales distances of a sequence of [[Pos]] instances from the Y axis by a given factor.
+   *
+   * @param positions     positions to be scaled
+   * @param scalingFactor factor describing the magnitude of scaling
+   *
+   * @return a sequence of scaled [[Pos]] instances
+   */
+  @inline
+  final
+  def scaleHorizontally(
+      positions: Seq[Pos],
+      scalingFactor: Double): Seq[Pos] = {
+
+    positions map {scaleHorizontally(_, scalingFactor)}
+  }
+
+  /**
+   * Scales a [[Pos]] instance's distance from the X axis by a given factor.
+   *
+   * @param position      position to be scaled
+   * @param scalingFactor factor describing the magnitude of scaling
+   *
+   * @return a scaled [[Pos]] instance
+   */
+  @inline
+  final
+  def scaleVertically(
+      position: Pos,
+      scalingFactor: Double): Pos = {
+
+    Pos(
+      position.xInPixels,
+      scalingFactor * position.yInPixels)
+  }
+
+  /**
+   * Scales distances of a sequence of [[Pos]] instances from the X axis by a given factor.
+   *
+   * @param positions     positions to be scaled
+   * @param scalingFactor factor describing the magnitude of scaling
+   *
+   * @return a sequence of scaled [[Pos]] instances
+   */
+  @inline
+  final
+  def scaleVertically(
+      positions: Seq[Pos],
+      scalingFactor: Double): Seq[Pos] = {
+
+    positions map {scaleVertically(_, scalingFactor)}
+  }
+
+  /**
+   * Scales a [[Pos]] instance (i.e., its position)
+   * in relation to the origo (0,0) by a given factor.
+   *
+   * @param position      position to be scaled
+   * @param scalingFactor factor describing the magnitude of scaling
+   *
+   * @return a scaled [[Pos]] instance
+   */
+  @inline
+  final
+  def scale(
+      position: Pos,
+      scalingFactor: Double): Pos = {
+
+    scale(
+      position,
+      horizontalScalingFactor = scalingFactor,
+      verticalScalingFactor = scalingFactor)
+  }
+
+  /**
+   * Scales a sequence of [[Pos]] instances (i.e., their positions)
+   * in relation to the origo (0,0) by a given factor.
+   *
+   * @param positions     positions to be scaled
+   * @param scalingFactor factor describing the magnitude of scaling
+   *
+   * @return a sequence of scaled [[Pos]] instances
+   */
+  @inline
+  final
+  def scale(
+      positions: Seq[Pos],
+      scalingFactor: Double): Seq[Pos] = {
+
+    positions map {p =>
+      scale(
+        position = p,
+        horizontalScalingFactor = scalingFactor,
+        verticalScalingFactor = scalingFactor)
+    }
+  }
+
+  /**
+   * Scales a [[Pos]] instance (i.e., its position)
+   * in relation to the origo (0,0) by given factors.
+   *
+   * @param position                position to be scaled
+   * @param horizontalScalingFactor factor describing the magnitude of horizontal scaling
+   * @param verticalScalingFactor   factor describing the magnitude of vertical scaling
+   *
+   * @return a scaled [[Pos]] instance
+   */
+  @inline
+  final
+  def scale(
+      position: Pos,
+      horizontalScalingFactor: Double,
+      verticalScalingFactor: Double): Pos = {
+
+    Pos(
+      horizontalScalingFactor * position.xInPixels,
+      verticalScalingFactor * position.yInPixels)
+  }
+
+  /**
+   * Scales a sequence of [[Pos]] instances (i.e., their positions)
+   * in relation to the origo (0,0) by given factors.
+   *
+   * @param positions               positions to be scaled
+   * @param horizontalScalingFactor factor describing the magnitude of horizontal scaling
+   * @param verticalScalingFactor   factor describing the magnitude of vertical scaling
+   *
+   * @return a sequence of scaled [[Pos]] instances
+   */
+  @inline
+  final
+  def scale(
+      positions: Seq[Pos],
+      horizontalScalingFactor: Double,
+      verticalScalingFactor: Double): Seq[Pos] = {
+
+    positions map {p =>
+      scale(
+        position = p,
+        horizontalScalingFactor,
+        verticalScalingFactor)
+    }
+  }
+
+  /**
+   * Scales a [[Pos]] instance's X-wise distance from a given point by a given factor.
+   *
+   * @param position        position to be scaled
+   * @param scalingFactor   factor describing the magnitude of scaling
+   * @param relativityPoint point, relative to which to scale
+   *
+   * @return a scaled [[Pos]] instance
+   */
+  @inline
+  final
+  def scaleHorizontally(
+      position: Pos,
+      scalingFactor: Double,
+      relativityPoint: Pos): Pos = {
+
+    val xNorm = position.xInPixels - relativityPoint.xInPixels
+
+    Pos(
+      scalingFactor * xNorm + relativityPoint.xInPixels,
+      position.yInPixels)
+  }
+
+  /**
+   * Scales X-wise distances of a sequence of [[Pos]] instances
+   * from a given point by a given factor.
+   *
+   * @param positions       positions to be scaled
+   * @param scalingFactor   factor describing the magnitude of scaling
+   * @param relativityPoint point, relative to which to scale
+   *
+   * @return a sequence of scaled [[Pos]] instances
+   */
+  @inline
+  final
+  def scaleHorizontally(
+      positions: Seq[Pos],
+      scalingFactor: Double,
+      relativityPoint: Pos): Seq[Pos] = {
+
+    positions map {scaleHorizontally(_, scalingFactor, relativityPoint)}
+  }
+
+  /**
+   * Scales a [[Pos]] instance's Y-wise distance from a given point by a given factor.
+   *
+   * @param position        position to be scaled
+   * @param scalingFactor   factor describing the magnitude of scaling
+   * @param relativityPoint point, relative to which to scale
+   *
+   * @return a scaled [[Pos]] instance
+   */
+  @inline
+  final
+  def scaleVertically(
+      position: Pos,
+      scalingFactor: Double,
+      relativityPoint: Pos): Pos = {
+
+    val yNorm = position.yInPixels - relativityPoint.yInPixels
+
+    Pos(
+      position.xInPixels,
+      scalingFactor * yNorm + relativityPoint.yInPixels)
+  }
+
+  /**
+   * Scales Y-wise distances of a sequence of [[Pos]] instances
+   * from a given point by a given factor.
+   *
+   * @param positions       positions to be scaled
+   * @param scalingFactor   factor describing the magnitude of scaling
+   * @param relativityPoint point, relative to which to scale
+   *
+   * @return a sequence of scaled [[Pos]] instances
+   */
+  @inline
+  final
+  def scaleVertically(
+      positions: Seq[Pos],
+      scalingFactor: Double,
+      relativityPoint: Pos): Seq[Pos] = {
+
+    positions map {scaleVertically(_, scalingFactor, relativityPoint)}
+  }
+
+  /**
+   * Scales a [[Pos]] instance (i.e., its position)
+   * in relation to a given point by a given factor.
+   *
+   * @param position        position to be scaled
+   * @param scalingFactor   factor describing the magnitude of scaling
+   * @param relativityPoint point, relative to which to scale
+   *
+   * @return a scaled [[Pos]] instance
+   */
+  @inline
+  final
+  def scale(
+      position: Pos,
+      scalingFactor: Double,
+      relativityPoint: Pos): Pos = {
+
+    scale(
+      position,
+      horizontalScalingFactor = scalingFactor,
+      verticalScalingFactor = scalingFactor,
+      relativityPoint = relativityPoint)
+  }
+
+  /**
+   * Scales a sequence of [[Pos]] instances (i.e., their positions)
+   * in relation to a given point by a given factor.
+   *
+   * @param positions       positions to be scaled
+   * @param scalingFactor   factor describing the magnitude of scaling
+   * @param relativityPoint point, relative to which to scale
+   *
+   * @return a sequence of scaled [[Pos]] instances
+   */
+  @inline
+  final
+  def scale(
+      positions: Seq[Pos],
+      scalingFactor: Double,
+      relativityPoint: Pos): Seq[Pos] = {
+
+    positions map {p =>
+      scale(
+        position = p,
+        horizontalScalingFactor = scalingFactor,
+        verticalScalingFactor = scalingFactor,
+        relativityPoint = relativityPoint)
+    }
+  }
+
+  /**
+   * Scales a [[Pos]] instance (i.e., its position)
+   * in relation to a given point by given factors.
+   *
+   * @param position                position to be scaled
+   * @param horizontalScalingFactor factor describing the magnitude of horizontal scaling
+   * @param verticalScalingFactor   factor describing the magnitude of vertical scaling
+   * @param relativityPoint         point, relative to which to scale
+   *
+   * @return a scaled [[Pos]] instance
+   */
+  @inline
+  final
+  def scale(
+      position: Pos,
+      horizontalScalingFactor: Double,
+      verticalScalingFactor: Double,
+      relativityPoint: Pos): Pos = {
+
+    val xNorm = position.xInPixels - relativityPoint.xInPixels
+    val yNorm = position.yInPixels - relativityPoint.yInPixels
+
+    Pos(
+      horizontalScalingFactor * xNorm + position.xInPixels,
+      verticalScalingFactor * yNorm + position.yInPixels)
+  }
+
+  /**
+   * Scales a sequence of [[Pos]] instances (i.e., their positions)
+   * in relation to a given point by given factors.
+   *
+   * @param positions               positions to be scaled
+   * @param horizontalScalingFactor factor describing the magnitude of horizontal scaling
+   * @param verticalScalingFactor   factor describing the magnitude of vertical scaling
+   * @param relativityPoint         point, relative to which to scale
+   *
+   * @return a sequence of scaled [[Pos]] instances
+   */
+  @inline
+  final
+  def scale(
+      positions: Seq[Pos],
+      horizontalScalingFactor: Double,
+      verticalScalingFactor: Double,
+      relativityPoint: Pos): Seq[Pos] = {
+
+    positions map {p =>
+      scale(
+        position = p,
+        horizontalScalingFactor,
+        verticalScalingFactor,
+        relativityPoint = relativityPoint)
+    }
+  }
+
 }
