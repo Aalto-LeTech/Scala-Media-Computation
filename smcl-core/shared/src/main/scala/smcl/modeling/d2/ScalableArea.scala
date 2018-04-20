@@ -22,169 +22,152 @@ package smcl.modeling.d2
  *
  * @author Aleksi Lukkarinen
  */
-object Scalable {
+trait ScalableArea[ReturnType] {
 
-  /** The scaling factor (1.0) that does not cause any effect when scaling. */
-  val IdentityScalingFactor: Double = 1.0
-
-}
-
-
-
-
-/**
- *
- *
- * @tparam ReturnType
- *
- * @author Aleksi Lukkarinen
- */
-trait Scalable[ReturnType] {
-
-  // Scale horizontally
+  // Scale using a target width
   // -------------------------------------------------------------------------------------------- \\
 
   /**
-   * Scales this object horizontally in relation to its center.
+   * Scales this object to a given width in relation to its center.
    *
-   * @param factor
+   * @param targetWidth
    *
    * @return
    */
-  def scaleHorizontallyBy(factor: Double): ReturnType
+  def scaleHorizontallyTo(targetWidth: Double): ReturnType
 
   /**
-   * Scales this object horizontally in relation to a given point.
+   * Scales this object to a given width in relation to a given point.
    *
-   * @param factor
+   * @param targetWidth
    * @param relativityPoint
    *
    * @return
    */
-  def scaleHorizontallyBy(
-      factor: Double,
+  def scaleHorizontallyTo(
+      targetWidth: Double,
       relativityPoint: Pos): ReturnType
 
   /**
-   * Scales this object horizontally in relation to the origo.
+   * Scales this object to a given width in relation to the origo.
    *
-   * @param factor
+   * @param targetWidth
    *
    * @return
    */
-  def scaleHorizontallyByRelativeToOrigo(factor: Double): ReturnType
+  def scaleHorizontallyToRelativeToOrigo(targetWidth: Double): ReturnType
 
 
-  // Scale vertically
+  // Scale using a target height
   // -------------------------------------------------------------------------------------------- \\
 
   /**
-   * Scales this object vertically in relation to its center.
+   * Scales this object to a given height in relation to its center.
    *
-   * @param factor
+   * @param targetHeight
    *
    * @return
    */
-  def scaleVerticallyBy(factor: Double): ReturnType
+  def scaleVerticallyTo(targetHeight: Double): ReturnType
 
   /**
-   * Scales this object vertically in relation to a given point.
+   * Scales this object to a given height in relation to a given point.
    *
-   * @param factor
+   * @param targetHeight
    * @param relativityPoint
    *
    * @return
    */
-  def scaleVerticallyBy(
-      factor: Double,
+  def scaleVerticallyTo(
+      targetHeight: Double,
       relativityPoint: Pos): ReturnType
 
   /**
-   * Scales this object vertically in relation to the origo.
+   * Scales this object to a given height in relation to the origo.
    *
-   * @param factor
+   * @param targetHeight
    *
    * @return
    */
-  def scaleVerticallyByRelativeToOrigo(factor: Double): ReturnType
+  def scaleVerticallyToRelativeToOrigo(targetHeight: Double): ReturnType
 
 
-  // Scale using a given factor for both horizontal and vertical directions
+  // Scale using a single length for both target width and target height
   // -------------------------------------------------------------------------------------------- \\
 
   /**
-   * Scales this object in relation to its center by using a given factor
-   * for both horizontal and vertical directions.
+   * Scales this object in relation to its center by
+   * using a single length for both width and height.
    *
-   * @param factor
+   * @param targetSideLength
    *
    * @return
    */
-  def scaleBy(factor: Double): ReturnType
+  def scaleTo(targetSideLength: Double): ReturnType
 
   /**
-   * Scales this object in relation to a given point by using a given factor
-   * for both horizontal and vertical directions.
+   * Scales this object in relation to a given point by
+   * using a single length for both width and height.
    *
-   * @param factor
+   * @param targetSideLength
    * @param relativityPoint
    *
    * @return
    */
-  def scaleBy(
-      factor: Double,
+  def scaleTo(
+      targetSideLength: Double,
       relativityPoint: Pos): ReturnType
 
   /**
-   * Scales this object in relation to the origo by using a given factor for
-   * both horizontal and vertical directions.
+   * Scales this object in relation to the origo by
+   * using a single length for both width and height.
    *
-   * @param factor
+   * @param targetSideLength
    *
    * @return
    */
-  def scaleByRelativeToOrigo(factor: Double): ReturnType
+  def scaleToRelativeToOrigo(targetSideLength: Double): ReturnType
 
 
-  // Scale using both horizontal and vertical factors
+  // Scale using both target width and target height
   // -------------------------------------------------------------------------------------------- \\
 
   /**
-   * Scales this object by given horizontal and vertical factors in relation to its center.
+   * Scales this object to given width and height in relation to its center.
    *
-   * @param horizontalFactor
-   * @param verticalFactor
+   * @param targetWidth
+   * @param targetHeight
    *
    * @return
    */
-  def scaleBy(
-      horizontalFactor: Double,
-      verticalFactor: Double): ReturnType
+  def scaleTo(
+      targetWidth: Double,
+      targetHeight: Double): ReturnType
 
   /**
-   * Scales this object by given horizontal and vertical factors in relation to a given point.
+   * Scales this object to given width and height in relation to a given point.
    *
-   * @param horizontalFactor
-   * @param verticalFactor
+   * @param targetWidth
+   * @param targetHeight
    * @param relativityPoint
    *
    * @return
    */
-  def scaleBy(
-      horizontalFactor: Double,
-      verticalFactor: Double,
+  def scaleTo(
+      targetWidth: Double,
+      targetHeight: Double,
       relativityPoint: Pos): ReturnType
 
   /**
-   * Scales this object by given horizontal and vertical factors in relation to the origo.
+   * Scales this object to given width and height in relation to the origo.
    *
-   * @param horizontalFactor
-   * @param verticalFactor
+   * @param targetWidth
+   * @param targetHeight
    *
    * @return
    */
-  def scaleByRelativeToOrigo(
-      horizontalFactor: Double,
-      verticalFactor: Double): ReturnType
+  def scaleToRelativeToOrigo(
+      targetWidth: Double,
+      targetHeight: Double): ReturnType
 
 }

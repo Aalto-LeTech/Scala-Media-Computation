@@ -60,6 +60,7 @@ trait PictureElement
         with Movable[PictureElement]
         with Rotatable[PictureElement]
         with Scalable[PictureElement]
+        with ScalableArea[PictureElement]
         with Cropable[Bitmap] {
 
   /**

@@ -371,7 +371,7 @@ class Arc private(
    * @return
    */
   override
-  def scaleBy(
+  def scaleByRelativeToOrigo(
       widthFactor: Double,
       heightFactor: Double): Arc = {
 

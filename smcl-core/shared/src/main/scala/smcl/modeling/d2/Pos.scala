@@ -1309,7 +1309,8 @@ case class Pos private[smcl](
    */
   @inline
   override final
-  def rotateByAroundOrigo(angleInDegrees: Double): Pos = Transformer.rotate(this, angleInDegrees)
+  def rotateByAroundOrigo(angleInDegrees: Double): Pos =
+    Transformer.rotate(this, angleInDegrees)
 
   /**
    * Rotates this object around its center by the specified number of degrees.
@@ -1340,22 +1341,6 @@ case class Pos private[smcl](
   }
 
   /**
-   *
-   *
-   * @param widthFactor
-   * @param heightFactor
-   *
-   * @return
-   */
-  @inline
-  override final
-  def scaleBy(widthFactor: Double, heightFactor: Double): Pos = {
-    copy(
-      newXInPixels = widthFactor * width.inPixels,
-      newYInPixels = heightFactor * height.inPixels)
-  }
-
-  /**
    * Transforms this object using the specified affine transformation.
    *
    * @param t
@@ -1365,5 +1350,178 @@ case class Pos private[smcl](
   @inline
   override final
   def transformBy(t: AffineTransformation): Pos = t.process(this)
+
+  /**
+   * Scales this object horizontally in relation to its center.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleHorizontallyBy(factor: Double): Pos = this
+
+  /**
+   * Scales this object horizontally in relation to a given point.
+   *
+   * @param factor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleHorizontallyBy(
+      factor: Double,
+      relativityPoint: Pos): Pos = {
+
+    Transformer.scaleHorizontally(this, factor, relativityPoint)
+  }
+
+  /**
+   * Scales this object horizontally in relation to the origo.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleHorizontallyByRelativeToOrigo(factor: Double): Pos =
+    Transformer.scaleHorizontally(this, factor)
+
+  /**
+   * Scales this object vertically in relation to its center.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleVerticallyBy(factor: Double): Pos = this
+
+  /**
+   * Scales this object vertically in relation to a given point.
+   *
+   * @param factor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleVerticallyBy(
+      factor: Double,
+      relativityPoint: Pos): Pos = {
+
+    Transformer.scaleVertically(this, factor, relativityPoint)
+  }
+
+  /**
+   * Scales this object vertically in relation to the origo.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleVerticallyByRelativeToOrigo(factor: Double): Pos =
+    Transformer.scaleVertically(this, factor)
+
+  /**
+   * Scales this object in relation to its center by using a given factor
+   * for both horizontal and vertical directions.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleBy(factor: Double): Pos = this
+
+  /**
+   * Scales this object in relation to a given point by using a given factor
+   * for both horizontal and vertical directions.
+   *
+   * @param factor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleBy(
+      factor: Double,
+      relativityPoint: Pos): Pos = {
+
+    Transformer.scale(this, factor, relativityPoint)
+  }
+
+  /**
+   * Scales this object in relation to the origo by using a given factor for
+   * both horizontal and vertical directions.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleByRelativeToOrigo(factor: Double): Pos =
+    Transformer.scale(this, factor)
+
+  /**
+   * Scales this object by given horizontal and vertical factors in relation to its center.
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleBy(
+      horizontalFactor: Double,
+      verticalFactor: Double): Pos = this
+
+  /**
+   * Scales this object by given horizontal and vertical factors in relation to a given point.
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleBy(
+      horizontalFactor: Double,
+      verticalFactor: Double,
+      relativityPoint: Pos): Pos = {
+
+    Transformer.scale(this, horizontalFactor, verticalFactor, relativityPoint)
+  }
+
+  /**
+   * Scales this object by given horizontal and vertical factors in relation to the origo.
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   *
+   * @return
+   */
+  @inline
+  override final
+  def scaleByRelativeToOrigo(
+      horizontalFactor: Double,
+      verticalFactor: Double): Pos = {
+
+    Transformer.scale(this, horizontalFactor, verticalFactor)
+  }
 
 }

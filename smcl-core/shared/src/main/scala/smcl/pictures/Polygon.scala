@@ -198,11 +198,11 @@ class Polygon private(
    * @return
    */
   override
-  def scaleBy(
+  def scaleByRelativeToOrigo(
       widthFactor: Double,
       heightFactor: Double): PictureElement = {
 
-    copy(newPoints = points.map(_.scaleBy(widthFactor, heightFactor)))
+    copy(newPoints = points.map(_.scaleByRelativeToOrigo(widthFactor, heightFactor)))
   }
 
   /**
