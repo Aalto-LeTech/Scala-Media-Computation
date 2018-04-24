@@ -18,7 +18,7 @@ package smcl.infrastructure.jvmawt
 
 
 import java.awt.geom.Arc2D
-import java.awt.{AlphaComposite, Graphics2D}
+import java.awt.{AlphaComposite, BasicStroke, Graphics2D}
 
 import smcl.colors.ColorValidator
 import smcl.colors.rgb.Color
@@ -269,6 +269,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
 
     owner.withGraphics2D{g =>
       g.transform(transformation.toAWTAffineTransform)
+      g.setStroke(new BasicStroke(0))
 
       if (hasFilling) {
         g.setColor(fillColor.toAWTColor)
