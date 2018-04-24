@@ -153,8 +153,8 @@ class Arc private(
   /**
    *
    *
-   * @param newUpperLeftCorner
-   * @param newLowerRightCorner
+   * @param newWidthInPixels
+   * @param newHeightInPixels
    * @param newStartAngleInDegrees
    * @param newArcAngleInDegrees
    * @param newHasBorder
