@@ -33,14 +33,6 @@ import smcl.settings._
  */
 object Arc {
 
-  /** */
-  private
-  val InitialScalingFactor = 1.0
-
-  /** */
-  private
-  val InitialShearingFactor = 0.0
-
   /**
    *
    *
@@ -66,29 +58,17 @@ object Arc {
       fillColor: rgb.Color = DefaultSecondaryColor): VectorGraphic = {
 
     val identity = Identity()
-    val currentRotationAngleInDegrees = Angle.Zero.inDegrees
-    val currentHorizontalScalingFactor = InitialScalingFactor
-    val currentVerticalScalingFactor = InitialScalingFactor
-    val currentHorizontalShearingFactor = InitialShearingFactor
-    val currentVerticalShearingFactor = InitialShearingFactor
 
-    val correctionOffsets = (0.5, 0.5)
-    val correctedUpperLeftCorner = upperLeftCorner + correctionOffsets
-    val correctedLowerRightCorner = lowerRightCorner - correctionOffsets
+    val size = upperLeftCorner.dimsTo(lowerRightCorner)
 
-    val x = correctedUpperLeftCorner.centerBetween(correctedLowerRightCorner)
+    val x = upperLeftCorner.centerBetween(lowerRightCorner)
     val currentTransformation =
       AffineTransformation.forTranslationOf(x.xInPixels, x.yInPixels)
 
     new Arc(
       identity,
-      correctedUpperLeftCorner, correctedLowerRightCorner,
+      size.width.inPixels, size.height.inPixels,
       startAngleInDegrees, arcAngleInDegrees,
-      currentRotationAngleInDegrees,
-      currentHorizontalScalingFactor,
-      currentVerticalScalingFactor,
-      currentHorizontalShearingFactor,
-      currentVerticalShearingFactor,
       currentTransformation,
       hasBorder, hasFilling,
       color, fillColor)
@@ -103,15 +83,10 @@ object Arc {
  *
  *
  * @param identity
- * @param upperLeftCorner
- * @param lowerRightCorner
+ * @param widthInPixels
+ * @param heightInPixels
  * @param startAngleInDegrees
  * @param arcAngleInDegrees
- * @param currentRotationAngleInDegrees
- * @param currentHorizontalScalingFactor
- * @param currentVerticalScalingFactor
- * @param currentHorizontalShearingFactor
- * @param currentVerticalShearingFactor
  * @param currentTransformation
  * @param hasBorder
  * @param hasFilling
@@ -122,21 +97,33 @@ object Arc {
  */
 class Arc private(
     val identity: Identity,
-    val upperLeftCorner: Pos,
-    val lowerRightCorner: Pos,
+    val widthInPixels: Double,
+    val heightInPixels: Double,
     val startAngleInDegrees: Double,
     val arcAngleInDegrees: Double,
-    val currentRotationAngleInDegrees: Double,
-    val currentHorizontalScalingFactor: Double,
-    val currentVerticalScalingFactor: Double,
-    val currentHorizontalShearingFactor: Double,
-    val currentVerticalShearingFactor: Double,
     val currentTransformation: AffineTransformation,
     val hasBorder: Boolean = ShapesHaveBordersByDefault,
     val hasFilling: Boolean = ShapesHaveFillingsByDefault,
     val color: rgb.Color = DefaultPrimaryColor,
     val fillColor: rgb.Color = DefaultSecondaryColor)
     extends VectorGraphic {
+
+  private
+  val corners: Seq[Pos] = {
+    val halfWidth = widthInPixels / 2.0
+    val halfHeight = heightInPixels / 2.0
+
+    val upperLeftCorner = currentTransformation.process(Pos(-halfWidth, -halfHeight))
+    val lowerRightCorner = currentTransformation.process(Pos(halfWidth, halfHeight))
+
+    Seq(upperLeftCorner, lowerRightCorner)
+  }
+
+  /** */
+  val upperLeftCorner: Pos = corners.head
+
+  /** */
+  val lowerRightCorner: Pos = corners.tail.head
 
   /** Boundary of this [[Arc]]. */
   // TODO: Calculate boundary so that it reflects the current transformation!!!!
@@ -178,8 +165,8 @@ class Arc private(
    * @return
    */
   def copy(
-      newUpperLeftCorner: Pos = upperLeftCorner,
-      newLowerRightCorner: Pos = lowerRightCorner,
+      newWidthInPixels: Double = widthInPixels,
+      newHeightInPixels: Double = heightInPixels,
       newStartAngleInDegrees: Double = startAngleInDegrees,
       newArcAngleInDegrees: Double = arcAngleInDegrees,
       newHasBorder: Boolean = hasBorder,
@@ -188,8 +175,8 @@ class Arc private(
       newFillColor: rgb.Color = fillColor): Arc = {
 
     internalCopy(
-      newUpperLeftCorner,
-      newLowerRightCorner,
+      newWidthInPixels,
+      newHeightInPixels,
       newStartAngleInDegrees,
       newArcAngleInDegrees,
       newHasBorder = newHasBorder,
@@ -201,15 +188,10 @@ class Arc private(
   /**
    *
    *
-   * @param newUpperLeftCorner
-   * @param newLowerRightCorner
+   * @param newWidthInPixels
+   * @param newHeightInPixels
    * @param newStartAngleInDegrees
    * @param newArcAngleInDegrees
-   * @param newRotationAngleInDegrees
-   * @param newHorizontalScalingFactor
-   * @param newVerticalScalingFactor
-   * @param newHorizontalShearingFactor
-   * @param newVerticalShearingFactor
    * @param newTransformation
    * @param newHasBorder
    * @param newHasFilling
@@ -220,15 +202,10 @@ class Arc private(
    */
   private
   def internalCopy(
-      newUpperLeftCorner: Pos = upperLeftCorner,
-      newLowerRightCorner: Pos = lowerRightCorner,
+      newWidthInPixels: Double = widthInPixels,
+      newHeightInPixels: Double = heightInPixels,
       newStartAngleInDegrees: Double = startAngleInDegrees,
       newArcAngleInDegrees: Double = arcAngleInDegrees,
-      newRotationAngleInDegrees: Double = currentRotationAngleInDegrees,
-      newHorizontalScalingFactor: Double = currentHorizontalScalingFactor,
-      newVerticalScalingFactor: Double = currentVerticalScalingFactor,
-      newHorizontalShearingFactor: Double = currentHorizontalShearingFactor,
-      newVerticalShearingFactor: Double = currentVerticalShearingFactor,
       newTransformation: AffineTransformation = currentTransformation,
       newHasBorder: Boolean = hasBorder,
       newHasFilling: Boolean = hasFilling,
@@ -237,11 +214,8 @@ class Arc private(
 
     new Arc(
       identity,
-      newUpperLeftCorner, newLowerRightCorner,
+      newWidthInPixels, newHeightInPixels,
       newStartAngleInDegrees, newArcAngleInDegrees,
-      newRotationAngleInDegrees,
-      newHorizontalScalingFactor, newVerticalScalingFactor,
-      newHorizontalShearingFactor, newVerticalShearingFactor,
       newTransformation,
       newHasBorder, newHasFilling,
       newColor, newFillColor)
@@ -327,16 +301,11 @@ class Arc private(
    * @return
    */
   def moveBy(offsetsInPixels: Seq[Double]): Arc = {
-    val newUL = upperLeftCorner.moveBy(offsetsInPixels)
-    val newLR = lowerRightCorner.moveBy(offsetsInPixels)
     val newTx = currentTransformation.translate(
       offsetsInPixels.head,
       offsetsInPixels.tail.head)
 
-    internalCopy(
-      newUpperLeftCorner = newUL,
-      newLowerRightCorner = newLR,
-      newTransformation = newTx)
+    internalCopy(newTransformation = newTx)
   }
 
   /**
@@ -352,14 +321,9 @@ class Arc private(
       xOffsetInPixels: Double,
       yOffsetInPixels: Double): PictureElement = {
 
-    val newUL = upperLeftCorner.moveBy(xOffsetInPixels, yOffsetInPixels)
-    val newLR = lowerRightCorner.moveBy(xOffsetInPixels, yOffsetInPixels)
     val newTx = currentTransformation.translate(xOffsetInPixels, yOffsetInPixels)
 
-    internalCopy(
-      newUpperLeftCorner = newUL,
-      newLowerRightCorner = newLR,
-      newTransformation = newTx)
+    internalCopy(newTransformation = newTx)
   }
 
   /**
@@ -369,12 +333,9 @@ class Arc private(
    */
   override
   def rotateBy90DegsCWAroundOrigo: Arc = {
-    val newRotationAngle = currentRotationAngleInDegrees + Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCWAroundOrigo
 
-    internalCopy(
-      newRotationAngleInDegrees = newRotationAngle,
-      newTransformation = newTransformation)
+    internalCopy(newTransformation = newTransformation)
   }
 
   /**
@@ -394,12 +355,9 @@ class Arc private(
    */
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Arc = {
-    val newRotationAngle = currentRotationAngleInDegrees + Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCWAroundPoint(centerOfRotation)
 
-    internalCopy(
-      newRotationAngleInDegrees = newRotationAngle,
-      newTransformation = newTransformation)
+    internalCopy(newTransformation = newTransformation)
   }
 
   /**
@@ -409,12 +367,9 @@ class Arc private(
    */
   override
   def rotateBy90DegsCCWAroundOrigo: Arc = {
-    val newRotationAngle = currentRotationAngleInDegrees - Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCCWAroundOrigo
 
-    internalCopy(
-      newRotationAngleInDegrees = newRotationAngle,
-      newTransformation = newTransformation)
+    internalCopy(newTransformation = newTransformation)
   }
 
   /**
@@ -434,12 +389,9 @@ class Arc private(
    */
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Arc = {
-    val newRotationAngle = currentRotationAngleInDegrees - Angle.RightAngleInDegrees
     val newTransformation = currentTransformation.rotate90DegsCCWAroundPoint(centerOfRotation)
 
-    internalCopy(
-      newRotationAngleInDegrees = newRotationAngle,
-      newTransformation = newTransformation)
+    internalCopy(newTransformation = newTransformation)
   }
 
   /**
@@ -449,12 +401,9 @@ class Arc private(
    */
   override
   def rotateBy180DegsAroundOrigo: Arc = {
-    val newRotationAngle = currentRotationAngleInDegrees + Angle.StraightAngleInDegrees
     val newTransformation = currentTransformation.rotate180DegsAroundOrigo
 
-    internalCopy(
-      newRotationAngleInDegrees = newRotationAngle,
-      newTransformation = newTransformation)
+    internalCopy(newTransformation = newTransformation)
   }
 
   /**
@@ -474,12 +423,9 @@ class Arc private(
    */
   override
   def rotateBy180Degs(centerOfRotation: Pos): Arc = {
-    val newRotationAngle = currentRotationAngleInDegrees + Angle.StraightAngleInDegrees
     val newTransformation = currentTransformation.rotate180DegsAroundPoint(centerOfRotation)
 
-    internalCopy(
-      newRotationAngleInDegrees = newRotationAngle,
-      newTransformation = newTransformation)
+    internalCopy(newTransformation = newTransformation)
   }
 
   /**
@@ -501,13 +447,10 @@ class Arc private(
    */
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Arc = {
-    val newRotationAngle = currentRotationAngleInDegrees - angleInDegrees
     val newTransformation =
       currentTransformation.rotateAroundOrigo(Angle(-angleInDegrees))
 
-    internalCopy(
-      newRotationAngleInDegrees = newRotationAngle,
-      newTransformation = newTransformation)
+    internalCopy(newTransformation = newTransformation)
   }
 
   /**
@@ -559,13 +502,10 @@ class Arc private(
       angleInDegrees: Double,
       centerOfRotation: Pos): Arc = {
 
-    val newRotationAngle = currentRotationAngleInDegrees + angleInDegrees
     val newTransformation =
       currentTransformation.rotateAroundPoint(Angle(angleInDegrees), centerOfRotation)
 
-    internalCopy(
-      newRotationAngleInDegrees = newRotationAngle,
-      newTransformation = newTransformation)
+    internalCopy(newTransformation = newTransformation)
   }
 
   /**
@@ -942,15 +882,10 @@ class Arc private(
       verticalFactor: Double,
       relativityPoint: Pos): Arc = {
 
-    val newUpperLeftCorner =
-      upperLeftCorner.scaleBy(horizontalFactor, verticalFactor, relativityPoint)
+    val newTx = currentTransformation.scaleRelativeToPoint(
+      horizontalFactor, verticalFactor, relativityPoint)
 
-    val newLowerRightCorner =
-      lowerRightCorner.scaleBy(horizontalFactor, verticalFactor, relativityPoint)
-
-    internalCopy(
-      newUpperLeftCorner = newUpperLeftCorner,
-      newLowerRightCorner = newLowerRightCorner)
+    internalCopy(newTransformation = newTx)
   }
 
   /**
@@ -966,15 +901,10 @@ class Arc private(
       horizontalFactor: Double,
       verticalFactor: Double): Arc = {
 
-    val newUpperLeftCorner =
-      upperLeftCorner.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)
+    val newTx = currentTransformation.scaleRelativeToOrigo(
+      horizontalFactor, verticalFactor)
 
-    val newLowerRightCorner =
-      lowerRightCorner.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)
-
-    internalCopy(
-      newUpperLeftCorner = newUpperLeftCorner,
-      newLowerRightCorner = newLowerRightCorner)
+    internalCopy(newTransformation = newTx)
   }
 
 }

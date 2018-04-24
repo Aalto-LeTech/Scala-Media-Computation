@@ -114,7 +114,7 @@ class Picture private(
   /** Position of this object. */
   @inline
   override final
-  def position: Pos = boundary.upperLeftCorner
+  def position: Pos = boundary.center
 
   /** */
   val isRenderable: Boolean = width > 0 && height > 0
@@ -686,7 +686,7 @@ class Picture private(
    */
   override
   def scaleHorizontallyBy(factor: Double): Picture =
-    map(_.scaleHorizontallyBy(factor))
+    map(_.scaleHorizontallyBy(factor, position))
 
   /**
    * Scales this object horizontally in relation to a given point.
@@ -724,7 +724,7 @@ class Picture private(
    */
   override
   def scaleVerticallyBy(factor: Double): Picture =
-    map(_.scaleVerticallyBy(factor))
+    map(_.scaleVerticallyBy(factor, position))
 
   /**
    * Scales this object vertically in relation to a given point.
@@ -762,8 +762,10 @@ class Picture private(
    * @return
    */
   override
-  def scaleBy(factor: Double): Picture =
-    map(_.scaleBy(factor))
+  def scaleBy(factor: Double): Picture = {
+    println(position)
+    map(_.scaleBy(factor, position))
+  }
 
   /**
    * Scales this object in relation to a given point by using a given factor
@@ -807,7 +809,7 @@ class Picture private(
       horizontalFactor: Double,
       verticalFactor: Double): Picture = {
 
-    map(_.scaleBy(horizontalFactor, verticalFactor))
+    map(_.scaleBy(horizontalFactor, verticalFactor, position))
   }
 
   /**
