@@ -19,7 +19,7 @@ package smcl.pictures
 
 import smcl.colors.rgb
 import smcl.infrastructure.Identity
-import smcl.modeling.d2.{Bounds, Dims, NumberOfDimensions, Pos}
+import smcl.modeling.d2.{Bounds, Dims, NumberOfDimensions, Pos, Scalable}
 import smcl.modeling.{AffineTransformation, Angle}
 import smcl.settings._
 
@@ -734,7 +734,10 @@ class Arc private(
     val (horizontalFactor, verticalFactor) =
       scalingFactorsFor(targetWidth, targetHeight)
 
-    copy(newPoints = points.map(_.scaleBy(horizontalFactor, verticalFactor, relativityPoint)))
+    scaleBy(
+      horizontalFactor = horizontalFactor,
+      verticalFactor = verticalFactor,
+      relativityPoint = relativityPoint)
   }
 
   /**
@@ -753,7 +756,9 @@ class Arc private(
     val (horizontalFactor, verticalFactor) =
       scalingFactorsFor(targetWidth, targetHeight)
 
-    copy(newPoints = points.map(_.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)))
+    scaleByRelativeToOrigo(
+      horizontalFactor = horizontalFactor,
+      verticalFactor = verticalFactor)
   }
 
   /**
@@ -783,7 +788,7 @@ class Arc private(
    */
   override
   def scaleHorizontallyBy(factor: Double): Arc =
-    copy(newPoints = points.map(_.scaleHorizontallyBy(factor)))
+    scaleHorizontallyBy(factor, position)
 
   /**
    * Scales this object horizontally in relation to a given point.
@@ -798,7 +803,10 @@ class Arc private(
       factor: Double,
       relativityPoint: Pos): Arc = {
 
-    copy(newPoints = points.map(_.scaleHorizontallyBy(factor, relativityPoint)))
+    scaleBy(
+      horizontalFactor = factor,
+      verticalFactor = Scalable.IdentityScalingFactor,
+      relativityPoint = relativityPoint)
   }
 
   /**
@@ -810,7 +818,9 @@ class Arc private(
    */
   override
   def scaleHorizontallyByRelativeToOrigo(factor: Double): Arc =
-    copy(newPoints = points.map(_.scaleHorizontallyByRelativeToOrigo(factor)))
+    scaleByRelativeToOrigo(
+      horizontalFactor = factor,
+      verticalFactor = Scalable.IdentityScalingFactor)
 
   /**
    * Scales this object vertically in relation to its center.
@@ -821,7 +831,7 @@ class Arc private(
    */
   override
   def scaleVerticallyBy(factor: Double): Arc =
-    copy(newPoints = points.map(_.scaleVerticallyBy(factor)))
+    scaleVerticallyBy(factor, position)
 
   /**
    * Scales this object vertically in relation to a given point.
@@ -836,7 +846,10 @@ class Arc private(
       factor: Double,
       relativityPoint: Pos): Arc = {
 
-    copy(newPoints = points.map(_.scaleBy(factor, relativityPoint)))
+    scaleBy(
+      horizontalFactor = Scalable.IdentityScalingFactor,
+      verticalFactor = factor,
+      relativityPoint = relativityPoint)
   }
 
   /**
@@ -848,7 +861,9 @@ class Arc private(
    */
   override
   def scaleVerticallyByRelativeToOrigo(factor: Double): Arc =
-    copy(newPoints = points.map(_.scaleVerticallyByRelativeToOrigo(factor)))
+    scaleByRelativeToOrigo(
+      horizontalFactor = Scalable.IdentityScalingFactor,
+      verticalFactor = factor)
 
   /**
    * Scales this object in relation to its center by using a given factor
@@ -860,7 +875,7 @@ class Arc private(
    */
   override
   def scaleBy(factor: Double): Arc =
-    copy(newPoints = points.map(_.scaleBy(factor)))
+    scaleBy(factor, position)
 
   /**
    * Scales this object in relation to a given point by using a given factor
@@ -876,7 +891,10 @@ class Arc private(
       factor: Double,
       relativityPoint: Pos): Arc = {
 
-    copy(newPoints = points.map(_.scaleBy(factor, relativityPoint)))
+    scaleBy(
+      horizontalFactor = factor,
+      verticalFactor = factor,
+      relativityPoint = relativityPoint)
   }
 
   /**
@@ -889,7 +907,9 @@ class Arc private(
    */
   override
   def scaleByRelativeToOrigo(factor: Double): Arc =
-    copy(newPoints = points.map(_.scaleByRelativeToOrigo(factor)))
+    scaleByRelativeToOrigo(
+      horizontalFactor = factor,
+      verticalFactor = factor)
 
   /**
    * Scales this object by given horizontal and vertical factors in relation to its center.
@@ -904,7 +924,7 @@ class Arc private(
       horizontalFactor: Double,
       verticalFactor: Double): Arc = {
 
-    copy(newPoints = points.map(_.scaleBy(horizontalFactor, verticalFactor)))
+    scaleBy(horizontalFactor, verticalFactor, position)
   }
 
   /**
@@ -922,7 +942,15 @@ class Arc private(
       verticalFactor: Double,
       relativityPoint: Pos): Arc = {
 
-    copy(newPoints = points.map(_.scaleBy(horizontalFactor, verticalFactor, relativityPoint)))
+    val newUpperLeftCorner =
+      upperLeftCorner.scaleBy(horizontalFactor, verticalFactor, relativityPoint)
+
+    val newLowerRightCorner =
+      lowerRightCorner.scaleBy(horizontalFactor, verticalFactor, relativityPoint)
+
+    internalCopy(
+      newUpperLeftCorner = newUpperLeftCorner,
+      newLowerRightCorner = newLowerRightCorner)
   }
 
   /**
@@ -938,16 +966,15 @@ class Arc private(
       horizontalFactor: Double,
       verticalFactor: Double): Arc = {
 
-    val newWidthFactor = horizontalFactor * currentHorizontalScalingFactor
-    val newHeightFactor = verticalFactor * currentVerticalScalingFactor
-    val newTransformation =
-      currentTransformation.scaleRelativeToPoint(
-        newWidthFactor, newHeightFactor, position)
+    val newUpperLeftCorner =
+      upperLeftCorner.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)
+
+    val newLowerRightCorner =
+      lowerRightCorner.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)
 
     internalCopy(
-      newHorizontalScalingFactor = newWidthFactor,
-      newVerticalScalingFactor = newHeightFactor,
-      newTransformation = newTransformation)
+      newUpperLeftCorner = newUpperLeftCorner,
+      newLowerRightCorner = newLowerRightCorner)
   }
 
 }
