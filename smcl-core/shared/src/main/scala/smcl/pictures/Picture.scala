@@ -762,10 +762,8 @@ class Picture private(
    * @return
    */
   override
-  def scaleBy(factor: Double): Picture = {
-    println(position)
+  def scaleBy(factor: Double): Picture =
     map(_.scaleBy(factor, position))
-  }
 
   /**
    * Scales this object in relation to a given point by using a given factor
