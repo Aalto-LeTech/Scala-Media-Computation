@@ -76,6 +76,25 @@ class RichFloat(val value: Float) {
   /**
    *
    *
+   * @return
+   */
+  def truncate: Float = {
+    if (value > 0)
+      return value.floor
+
+    value.ceil
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def truncatedInt: Int = value.toInt
+
+  /**
+   *
+   *
    * @param other
    *
    * @return

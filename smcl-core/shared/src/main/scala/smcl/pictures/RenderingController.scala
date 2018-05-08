@@ -21,6 +21,7 @@ import scala.collection.mutable
 
 import smcl.colors.ColorValidator
 import smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter, InjectablesRegistry, PRF}
+import smcl.modeling.AffineTransformation
 import smcl.modeling.d2.BoundaryCalculator
 
 
@@ -121,8 +122,8 @@ object RenderingController
         val topLeftY = -arc.dimensions.height.half.inPixels
         val width = arc.dimensions.width.inPixels
         val height = arc.dimensions.height.inPixels
-        val transformation =
-          arc.currentTransformation.translate(xOffsetToOrigoInPixels, yOffsetToOrigoInPixels)
+        val transformation = arc.currentTransformation.preConcatenate(
+            AffineTransformation.forTranslationOf(xOffsetToOrigoInPixels, yOffsetToOrigoInPixels))
 
         targetDrawingSurface.drawArc(
           topLeftX, topLeftY,

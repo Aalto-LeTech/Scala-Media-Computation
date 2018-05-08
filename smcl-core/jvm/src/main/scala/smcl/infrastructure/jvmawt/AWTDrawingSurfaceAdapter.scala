@@ -17,12 +17,12 @@
 package smcl.infrastructure.jvmawt
 
 
-import java.awt.geom.Arc2D
+import java.awt.geom.{AffineTransform, Arc2D}
 import java.awt.{AlphaComposite, BasicStroke, Graphics2D}
 
 import smcl.colors.ColorValidator
 import smcl.colors.rgb.Color
-import smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter}
+import smcl.infrastructure.{BitmapBufferAdapter, DoubleWrapper, DrawingSurfaceAdapter}
 import smcl.modeling.AffineTransformation
 import smcl.settings._
 
@@ -258,27 +258,89 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor): Unit = {
 
+    val flooredWidth = widthInPixels.floor
+    val flooredHeight = heightInPixels.floor
+    val isOddWidth = flooredWidth % 2 == 1
+    val isOddHeight = flooredHeight % 2 == 1
+
+    val (adjustedUpperLeftX, adjustedWidth, adjustedTransformationM02) = {
+      val transformationM02 = transformation.tauX.truncate + 0.5
+      val truncatedUpperLeftX = upperLeftCornerXInPixels.truncate - 0.5
+
+      if (isOddWidth) {
+        (truncatedUpperLeftX - 0.5, flooredWidth - 1, transformationM02 + 0.5)
+      } else {
+        (truncatedUpperLeftX, flooredWidth - 1, transformationM02)
+      }
+    }
+
+    val (adjustedUpperLeftY, adjustedHeight, adjustedTransformationM12) = {
+      val transformationM12 = transformation.tauY.truncate + 0.5
+      val truncatedUpperLeftY = upperLeftCornerYInPixels.truncate - 0.5
+
+      if (isOddHeight) {
+        (truncatedUpperLeftY - 0.5, flooredHeight - 1, transformationM12 + 0.5)
+      } else {
+        (truncatedUpperLeftY, flooredHeight - 1, transformationM12)
+      }
+    }
+
+    val transformationM00 = transformation.alpha
+    val transformationM10 = transformation.delta
+    val transformationM01 = transformation.gamma
+    val transformationM11 = transformation.beta
+
+    val adjustedTransformation =
+      new AffineTransform(
+        transformationM00, transformationM10, transformationM01,
+        transformationM11, adjustedTransformationM02, adjustedTransformationM12)
+
+    /*
+    println(s"($adjustedUpperLeftX,$adjustedUpperLeftY); " +
+        s"w = $adjustedWidth & h = $adjustedHeight, " +
+        s"Tx=${adjustedTransformation.getTranslateX}, " +
+        s"Ty=${adjustedTransformation.getTranslateY}")
+    */
+
     val shape = new Arc2D.Double(
-      upperLeftCornerXInPixels,
-      upperLeftCornerYInPixels,
-      0D.max(widthInPixels - 1.0),
-      0D.max(heightInPixels - 1.0),
+      adjustedUpperLeftX,
+      adjustedUpperLeftY,
+      adjustedWidth,
+      adjustedHeight,
       startAngleInDegrees,
       arcAngleInDegrees,
       Arc2D.OPEN)
 
     owner.withGraphics2D{g =>
-      g.transform(transformation.toAWTAffineTransform)
+      g.transform(adjustedTransformation)
       g.setStroke(new BasicStroke(0))
 
-      if (hasFilling) {
-        g.setColor(fillColor.toAWTColor)
-        g.fill(shape)
-      }
+      if (adjustedWidth < 2 && (hasBorder || hasFilling)) {
+        if (hasBorder) {
+          g.setColor(color.toAWTColor)
+        }
+        else if (hasFilling) {
+          g.setColor(fillColor.toAWTColor)
+        }
 
-      if (hasBorder) {
-        g.setColor(color.toAWTColor)
-        g.draw(shape)
+        if (adjustedWidth <= 1) {
+          g.fillRect(-1, -1, 1, 1)
+        }
+        else {
+          println("Width < 2")
+          g.fillRect(-1, -1, 2, 2)
+        }
+      }
+      else {
+        if (hasFilling) {
+          g.setColor(fillColor.toAWTColor)
+          g.fill(shape)
+        }
+
+        if (hasBorder) {
+          g.setColor(color.toAWTColor)
+          g.draw(shape)
+        }
       }
     }
   }
