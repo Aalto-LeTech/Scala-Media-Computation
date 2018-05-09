@@ -118,12 +118,16 @@ object RenderingController
       }
       else if (contentItem.isArc) {
         val arc = contentItem.asInstanceOf[Arc]
-        val topLeftX = -arc.dimensions.width.half.inPixels
-        val topLeftY = -arc.dimensions.height.half.inPixels
-        val width = arc.dimensions.width.inPixels
-        val height = arc.dimensions.height.inPixels
-        val transformation = arc.currentTransformation.preConcatenate(
-            AffineTransformation.forTranslationOf(xOffsetToOrigoInPixels, yOffsetToOrigoInPixels))
+
+        val width = arc.untransformedWidthInPixels
+        val height = arc.untransformedHeightInPixels
+        val topLeftX = -(width / 2.0)
+        val topLeftY = -(height / 2.0)
+
+        val offsetsToOrigoTranslation =
+          AffineTransformation.forTranslationOf(
+            xOffsetToOrigoInPixels, yOffsetToOrigoInPixels)
+        val transformation = arc.currentTransformation.preConcatenate(offsetsToOrigoTranslation)
 
         targetDrawingSurface.drawArc(
           topLeftX, topLeftY,

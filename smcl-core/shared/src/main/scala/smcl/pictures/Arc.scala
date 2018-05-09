@@ -60,6 +60,8 @@ object Arc {
     val identity = Identity()
 
     val size = upperLeftCorner.dimsTo(lowerRightCorner)
+    val width = size.width.inPixels
+    val height = size.height.inPixels
 
     val x = upperLeftCorner.centerBetween(lowerRightCorner)
     val currentTransformation =
@@ -67,7 +69,7 @@ object Arc {
 
     new Arc(
       identity,
-      size.width.inPixels, size.height.inPixels,
+      width, height,
       startAngleInDegrees, arcAngleInDegrees,
       currentTransformation,
       hasBorder, hasFilling,
@@ -83,8 +85,8 @@ object Arc {
  *
  *
  * @param identity
- * @param widthInPixels
- * @param heightInPixels
+ * @param untransformedWidthInPixels
+ * @param untransformedHeightInPixels
  * @param startAngleInDegrees
  * @param arcAngleInDegrees
  * @param currentTransformation
@@ -97,8 +99,8 @@ object Arc {
  */
 class Arc private(
     val identity: Identity,
-    val widthInPixels: Double,
-    val heightInPixels: Double,
+    val untransformedWidthInPixels: Double,
+    val untransformedHeightInPixels: Double,
     val startAngleInDegrees: Double,
     val arcAngleInDegrees: Double,
     val currentTransformation: AffineTransformation,
@@ -108,10 +110,9 @@ class Arc private(
     val fillColor: rgb.Color = DefaultSecondaryColor)
     extends VectorGraphic {
 
-  private
   val corners: Seq[Pos] = {
-    val halfWidth = widthInPixels / 2.0
-    val halfHeight = heightInPixels / 2.0
+    val halfWidth = untransformedWidthInPixels / 2.0
+    val halfHeight = untransformedHeightInPixels / 2.0
 
     val upperLeftCorner = currentTransformation.process(Pos(-halfWidth, -halfHeight))
     val lowerRightCorner = currentTransformation.process(Pos(halfWidth, halfHeight))
@@ -119,22 +120,28 @@ class Arc private(
     Seq(upperLeftCorner, lowerRightCorner)
   }
 
-  /** */
+  /** Transformed upper left corner of this [[Arc]]. */
   val upperLeftCorner: Pos = corners.head
 
-  /** */
+  /** Transformed lower right corner of this [[Arc]]. */
   val lowerRightCorner: Pos = corners.tail.head
 
-  /** Boundary of this [[Arc]]. */
+  /** Transformed boundary of this [[Arc]]. */
   // TODO: Calculate boundary so that it reflects the current transformation!!!!
   override
   val boundary: Bounds = Bounds(upperLeftCorner, lowerRightCorner)
 
-  /** Dimensions of this [[Arc]]. */
+  /** Transformed dimensions of this [[Arc]]. */
   override
   val dimensions: Dims = boundary.dimensions
 
-  /** Position of this [[Arc]]. */
+  /** Transformed width of this [[Arc]]. */
+  val widthInPixels: Double = dimensions.width.inPixels
+
+  /** Transformed height of this [[Arc]]. */
+  val heightInPixels: Double = dimensions.height.inPixels
+
+  /** Transformed position of this [[Arc]]. */
   override
   val position: Pos = boundary.center
 
@@ -153,8 +160,6 @@ class Arc private(
   /**
    *
    *
-   * @param newWidthInPixels
-   * @param newHeightInPixels
    * @param newStartAngleInDegrees
    * @param newArcAngleInDegrees
    * @param newHasBorder
@@ -165,8 +170,6 @@ class Arc private(
    * @return
    */
   def copy(
-      newWidthInPixels: Double = widthInPixels,
-      newHeightInPixels: Double = heightInPixels,
       newStartAngleInDegrees: Double = startAngleInDegrees,
       newArcAngleInDegrees: Double = arcAngleInDegrees,
       newHasBorder: Boolean = hasBorder,
@@ -175,10 +178,8 @@ class Arc private(
       newFillColor: rgb.Color = fillColor): Arc = {
 
     internalCopy(
-      newWidthInPixels,
-      newHeightInPixels,
-      newStartAngleInDegrees,
-      newArcAngleInDegrees,
+      newStartAngleInDegrees = newStartAngleInDegrees,
+      newArcAngleInDegrees = newArcAngleInDegrees,
       newHasBorder = newHasBorder,
       newHasFilling = newHasFilling,
       newColor = newColor,
@@ -188,8 +189,6 @@ class Arc private(
   /**
    *
    *
-   * @param newWidthInPixels
-   * @param newHeightInPixels
    * @param newStartAngleInDegrees
    * @param newArcAngleInDegrees
    * @param newTransformation
@@ -202,8 +201,6 @@ class Arc private(
    */
   private
   def internalCopy(
-      newWidthInPixels: Double = widthInPixels,
-      newHeightInPixels: Double = heightInPixels,
       newStartAngleInDegrees: Double = startAngleInDegrees,
       newArcAngleInDegrees: Double = arcAngleInDegrees,
       newTransformation: AffineTransformation = currentTransformation,
@@ -214,7 +211,7 @@ class Arc private(
 
     new Arc(
       identity,
-      newWidthInPixels, newHeightInPixels,
+      untransformedWidthInPixels, untransformedHeightInPixels,
       newStartAngleInDegrees, newArcAngleInDegrees,
       newTransformation,
       newHasBorder, newHasFilling,

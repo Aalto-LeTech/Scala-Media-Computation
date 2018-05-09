@@ -368,11 +368,18 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
         transformationM00, transformationM10, transformationM01,
         transformationM11, adjustedTransformationM02, adjustedTransformationM12)
 
-    /*
+    //*
     println(s"($adjustedUpperLeftX,$adjustedUpperLeftY); " +
         s"w = $adjustedWidth & h = $adjustedHeight, " +
         s"Tx=${adjustedTransformation.getTranslateX}, " +
         s"Ty=${adjustedTransformation.getTranslateY}")
+    // */
+
+    /*
+    println(
+      s""""X scale" = $transformationM00,
+         |"Y scale" = $transformationM11
+         | (including possible rotation)""".stripMargin.replaceAll("\n", " "))
     // */
 
     // Create and draw the shape
@@ -386,7 +393,15 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       Arc2D.OPEN)
 
     owner.withGraphics2D{g =>
-      g.transform(adjustedTransformation)
+      /*
+      val curTx = g.getTransform
+      println(
+        s"""  -- current in G2D: "X scale" = ${curTx.getScaleX},
+           |"Y scale" = ${curTx.getScaleY}
+           | (including possible rotation)""".stripMargin.replaceAll("\n", " "))
+      // */
+
+      g.setTransform(adjustedTransformation)
       g.setStroke(new BasicStroke(0))
 
       if (hasFilling) {
