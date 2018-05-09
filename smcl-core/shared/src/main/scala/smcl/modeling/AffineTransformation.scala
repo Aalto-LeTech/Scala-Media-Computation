@@ -1271,12 +1271,12 @@ case class AffineTransformation(
   @inline
   final
   def preConcatenate(other: AffineTransformation): AffineTransformation = {
-    val newAlpha = this.alpha * other.alpha + this.gamma * other.delta
-    val newBeta = this.beta * other.gamma + this.beta * other.beta
-    val newGamma = this.alpha * other.gamma + this.gamma * other.beta
-    val newDelta = this.delta * other.alpha + this.beta * other.delta
-    val newTauX = this.alpha * other.tauX + this.gamma * other.tauY + this.tauX
-    val newTauY = this.delta * other.tauX + this.beta * other.tauY + this.tauY
+    val newAlpha = other.alpha * this.alpha + other.gamma * this.delta
+    val newBeta = other.beta * this.gamma + other.beta * this.beta
+    val newGamma = other.alpha * this.gamma + other.gamma * this.beta
+    val newDelta = other.delta * this.alpha + other.beta * this.delta
+    val newTauX = other.alpha * this.tauX + other.gamma * this.tauY + other.tauX
+    val newTauY = other.delta * this.tauX + other.beta * this.tauY + other.tauY
 
     new AffineTransformation(
       alpha = newAlpha,
