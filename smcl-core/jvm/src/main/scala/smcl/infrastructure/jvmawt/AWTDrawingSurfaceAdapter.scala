@@ -368,7 +368,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
         transformationM00, transformationM10, transformationM01,
         transformationM11, adjustedTransformationM02, adjustedTransformationM12)
 
-    //*
+    /*
     println(s"($adjustedUpperLeftX,$adjustedUpperLeftY); " +
         s"w = $adjustedWidth & h = $adjustedHeight, " +
         s"Tx=${adjustedTransformation.getTranslateX}, " +
