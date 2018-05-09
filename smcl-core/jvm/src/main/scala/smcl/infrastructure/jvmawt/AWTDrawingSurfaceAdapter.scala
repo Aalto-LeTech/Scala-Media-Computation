@@ -62,6 +62,8 @@ private[smcl]
 class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     extends DrawingSurfaceAdapter {
 
+  private val HairlineStroke = new BasicStroke(0)
+
   /**
    *
    *
@@ -268,7 +270,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
 
       owner.withGraphics2D{g =>
         g.transform(transformation.toAWTAffineTransform)
-        g.setStroke(new BasicStroke(0))
+        g.setStroke(HairlineStroke)
 
         if (hasBorder) {
           g.setColor(color.toAWTColor)
@@ -393,7 +395,7 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       // */
 
       g.setTransform(adjustedTransformation)
-      g.setStroke(new BasicStroke(0))
+      g.setStroke(HairlineStroke)
 
       if (hasFilling) {
         g.setColor(fillColor.toAWTColor)
