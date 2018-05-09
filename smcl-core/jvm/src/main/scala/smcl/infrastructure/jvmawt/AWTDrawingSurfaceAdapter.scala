@@ -258,33 +258,106 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color = DefaultPrimaryColor,
       fillColor: Color = DefaultSecondaryColor): Unit = {
 
+    //----------------------------------------------------------------------------------------------
+    // Special cases for small circles
+    //
+    if (arcAngleInDegrees >= 360) {   // Are we drawing a full cycle?
+      // 1 x 1 px full cycle = 1 x 1 px circle
+      if (owner.widthInPixels == 1 && owner.heightInPixels == 1) {
+        //println("1 x 1 px circle")
+        owner.withGraphics2D{g =>
+          g.transform(transformation.toAWTAffineTransform)
+          g.setStroke(new BasicStroke(0))
+
+          if (hasBorder) {
+            g.setColor(color.toAWTColor)
+          }
+          else if (hasFilling) {
+            g.setColor(fillColor.toAWTColor)
+          }
+
+          g.fillRect(-1, -1, 1, 1)
+        }
+        return
+      }
+      // 2 x 2 px full cycle = 2 x 2 px circle
+      else if (owner.widthInPixels == 2 && owner.heightInPixels == 2) {
+        //println("2 x 2 px circle")
+        owner.withGraphics2D{g =>
+          g.transform(transformation.toAWTAffineTransform)
+          g.setStroke(new BasicStroke(0))
+
+          if (hasBorder) {
+            g.setColor(color.toAWTColor)
+          }
+          else if (hasFilling) {
+            g.setColor(fillColor.toAWTColor)
+          }
+
+          g.fillRect(-1, -1, 2, 2)
+        }
+        return
+      }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // The general case
+    //
     val flooredWidth = widthInPixels.floor
     val flooredHeight = heightInPixels.floor
     val isOddWidth = flooredWidth % 2 == 1
     val isOddHeight = flooredHeight % 2 == 1
 
+    // Adjust X position and width to produce a symmetrical and right-sized circle
     val (adjustedUpperLeftX, adjustedWidth, adjustedTransformationM02) = {
       val transformationM02 = transformation.tauX.truncate + 0.5
       val truncatedUpperLeftX = upperLeftCornerXInPixels.truncate - 0.5
 
-      if (isOddWidth) {
-        (truncatedUpperLeftX - 0.5, flooredWidth - 1, transformationM02 + 0.5)
-      } else {
-        (truncatedUpperLeftX, flooredWidth - 1, transformationM02)
+      if (hasBorder) {
+        // For arcs having a border
+        if (isOddWidth) {
+          (truncatedUpperLeftX - 0.5, flooredWidth - 1, transformationM02 + 0.5)
+        } else {
+          (truncatedUpperLeftX, flooredWidth - 1, transformationM02)
+        }
+      }
+      else {
+        // For arcs without a border, the X position has to be decreased by one more
+        // pixel (without compensating that in the transformation) and the width to
+        // be increased by two pixels to fill the whole bitmap
+        if (isOddWidth) {
+          (truncatedUpperLeftX - 1.5, flooredWidth + 1, transformationM02 + 0.5)
+        } else {
+          (truncatedUpperLeftX - 1, flooredWidth + 1, transformationM02)
+        }
       }
     }
 
+    // Adjust Y position and height to produce a symmetrical and right-sized circle
     val (adjustedUpperLeftY, adjustedHeight, adjustedTransformationM12) = {
       val transformationM12 = transformation.tauY.truncate + 0.5
       val truncatedUpperLeftY = upperLeftCornerYInPixels.truncate - 0.5
 
-      if (isOddHeight) {
-        (truncatedUpperLeftY - 0.5, flooredHeight - 1, transformationM12 + 0.5)
-      } else {
-        (truncatedUpperLeftY, flooredHeight - 1, transformationM12)
+      if (hasBorder) {
+        // For arcs having a border
+        if (isOddHeight) {
+          (truncatedUpperLeftY - 0.5, flooredHeight - 1, transformationM12 + 0.5)
+        } else {
+          (truncatedUpperLeftY, flooredHeight - 1, transformationM12)
+        }
+      }
+      else {
+        // For arcs without a border, the Y position has to be adjusted by one more
+        // pixel and the height to be increased by two pixels to fill the whole bitmap
+        if (isOddHeight) {
+          (truncatedUpperLeftY - 1.5, flooredHeight + 1, transformationM12 + 0.5)
+        } else {
+          (truncatedUpperLeftY - 1, flooredHeight + 1, transformationM12)
+        }
       }
     }
 
+    // Create a new transformation matrix with previous position-wise adjustments
     val transformationM00 = transformation.alpha
     val transformationM10 = transformation.delta
     val transformationM01 = transformation.gamma
@@ -295,13 +368,14 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
         transformationM00, transformationM10, transformationM01,
         transformationM11, adjustedTransformationM02, adjustedTransformationM12)
 
-    /*
+    //*
     println(s"($adjustedUpperLeftX,$adjustedUpperLeftY); " +
         s"w = $adjustedWidth & h = $adjustedHeight, " +
         s"Tx=${adjustedTransformation.getTranslateX}, " +
         s"Ty=${adjustedTransformation.getTranslateY}")
-    */
+    // */
 
+    // Create and draw the shape
     val shape = new Arc2D.Double(
       adjustedUpperLeftX,
       adjustedUpperLeftY,
@@ -315,32 +389,14 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       g.transform(adjustedTransformation)
       g.setStroke(new BasicStroke(0))
 
-      if (adjustedWidth < 2 && (hasBorder || hasFilling)) {
-        if (hasBorder) {
-          g.setColor(color.toAWTColor)
-        }
-        else if (hasFilling) {
-          g.setColor(fillColor.toAWTColor)
-        }
-
-        if (adjustedWidth <= 1) {
-          g.fillRect(-1, -1, 1, 1)
-        }
-        else {
-          println("Width < 2")
-          g.fillRect(-1, -1, 2, 2)
-        }
+      if (hasFilling) {
+        g.setColor(fillColor.toAWTColor)
+        g.fill(shape)
       }
-      else {
-        if (hasFilling) {
-          g.setColor(fillColor.toAWTColor)
-          g.fill(shape)
-        }
 
-        if (hasBorder) {
-          g.setColor(color.toAWTColor)
-          g.draw(shape)
-        }
+      if (hasBorder) {
+        g.setColor(color.toAWTColor)
+        g.draw(shape)
       }
     }
   }
