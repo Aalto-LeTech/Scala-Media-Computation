@@ -261,43 +261,34 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     //----------------------------------------------------------------------------------------------
     // Special cases for small circles
     //
-    if (arcAngleInDegrees >= 360) {   // Are we drawing a full cycle?
-      // 1 x 1 px full cycle = 1 x 1 px circle
-      if (owner.widthInPixels == 1 && owner.heightInPixels == 1) {
-        //println("1 x 1 px circle")
-        owner.withGraphics2D{g =>
-          g.transform(transformation.toAWTAffineTransform)
-          g.setStroke(new BasicStroke(0))
+    // Are we drawing a small circle (i.e., full cycle and width == height == (1|2))?
+    if (arcAngleInDegrees >= 360 &&
+        ((owner.widthInPixels == 1 && owner.heightInPixels == 1)
+            || (owner.widthInPixels == 2 && owner.heightInPixels == 2))) {
 
-          if (hasBorder) {
-            g.setColor(color.toAWTColor)
-          }
-          else if (hasFilling) {
-            g.setColor(fillColor.toAWTColor)
-          }
+      owner.withGraphics2D{g =>
+        g.transform(transformation.toAWTAffineTransform)
+        g.setStroke(new BasicStroke(0))
 
-          g.fillRect(-1, -1, 1, 1)
+        if (hasBorder) {
+          g.setColor(color.toAWTColor)
         }
-        return
-      }
-      // 2 x 2 px full cycle = 2 x 2 px circle
-      else if (owner.widthInPixels == 2 && owner.heightInPixels == 2) {
-        //println("2 x 2 px circle")
-        owner.withGraphics2D{g =>
-          g.transform(transformation.toAWTAffineTransform)
-          g.setStroke(new BasicStroke(0))
+        else if (hasFilling) {
+          g.setColor(fillColor.toAWTColor)
+        }
 
-          if (hasBorder) {
-            g.setColor(color.toAWTColor)
-          }
-          else if (hasFilling) {
-            g.setColor(fillColor.toAWTColor)
-          }
-
+        if (owner.widthInPixels == 2) {
+          // 2 x 2 px full cycle = 2 x 2 px "circle"
+          //println("2 x 2 px circle")
           g.fillRect(-1, -1, 2, 2)
         }
-        return
+        else {
+          // 1 x 1 px full cycle = 1 x 1 px "circle"
+          //println("1 x 1 px circle")
+          g.fillRect(-1, -1, 1, 1)
+        }
       }
+      return
     }
 
     //----------------------------------------------------------------------------------------------
