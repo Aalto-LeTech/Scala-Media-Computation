@@ -17,6 +17,7 @@
 package smcl.pictures.operations
 
 
+import smcl.colors.ColorValidator
 import smcl.colors.rgb.Color
 import smcl.infrastructure._
 import smcl.modeling.Len
@@ -105,7 +106,8 @@ case class AugmentCanvas(
     newBuffer.drawingSurface.drawBitmap(
       sources(0),
       extraPixelsOntoLeftEdge,
-      extraPixelsOntoTopEdge)
+      extraPixelsOntoTopEdge,
+      ColorValidator.MaximumOpacity)
 
     newBuffer
   }

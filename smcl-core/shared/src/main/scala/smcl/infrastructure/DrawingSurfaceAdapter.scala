@@ -17,7 +17,6 @@
 package smcl.infrastructure
 
 
-import smcl.colors.ColorValidator
 import smcl.colors.rgb.Color
 import smcl.modeling.AffineTransformation
 import smcl.settings._
@@ -39,8 +38,8 @@ trait DrawingSurfaceAdapter {
    * @param color
    */
   def clearUsing(
-      color: Color = DefaultBackgroundColor,
-      useSourceColorLiterally: Boolean = false): Unit
+      color: Color,
+      useSourceColorLiterally: Boolean): Unit
 
   /**
    *
@@ -65,7 +64,7 @@ trait DrawingSurfaceAdapter {
       bitmap: BitmapBufferAdapter,
       xInPixels: Double,
       yInPixels: Double,
-      opacity: Int = ColorValidator.MaximumOpacity): Boolean
+      opacity: Int): Boolean
 
   /**
    *
@@ -121,12 +120,40 @@ trait DrawingSurfaceAdapter {
   def drawEllipse(
       boundingBoxUpperLeftX: Double,
       boundingBoxUpperLeftY: Double,
-      widthInPixels: Double = DefaultBitmapWidthInPixels,
-      heightInPixels: Double = DefaultBitmapHeightInPixels,
-      hasBorder: Boolean = ShapesHaveBordersByDefault,
-      hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: Color = DefaultPrimaryColor,
-      fillColor: Color = DefaultSecondaryColor): Unit
+      widthInPixels: Double,
+      heightInPixels: Double,
+      hasBorder: Boolean,
+      hasFilling: Boolean,
+      color: Color,
+      fillColor: Color): Unit
+
+  /**
+   *
+   *
+   * @param xOffsetToOrigoInPixels
+   * @param yOffsetToOrigoInPixels
+   * @param arcWidthInPixels
+   * @param arcHeightInPixels
+   * @param startAngleInDegrees
+   * @param arcAngleInDegrees
+   * @param transformation
+   * @param hasBorder
+   * @param hasFilling
+   * @param color
+   * @param fillColor
+   */
+  def drawArc(
+      xOffsetToOrigoInPixels: Double,
+      yOffsetToOrigoInPixels: Double,
+      arcWidthInPixels: Double,
+      arcHeightInPixels: Double,
+      startAngleInDegrees: Double,
+      arcAngleInDegrees: Double,
+      transformation: AffineTransformation,
+      hasBorder: Boolean,
+      hasFilling: Boolean,
+      color: Color,
+      fillColor: Color): Unit
 
   /**
    *
@@ -143,18 +170,18 @@ trait DrawingSurfaceAdapter {
    * @param color
    * @param fillColor
    */
-  def drawArc(
+  def drawArc2(
       upperLeftCornerXInPixels: Double,
       upperLeftCornerYInPixels: Double,
-      widthInPixels: Double = DefaultBitmapWidthInPixels,
-      heightInPixels: Double = DefaultBitmapHeightInPixels,
-      startAngleInDegrees: Double = DefaultArcStartAngleInDegrees,
-      arcAngleInDegrees: Double = DefaultArcAngleInDegrees,
-      transformation: AffineTransformation = AffineTransformation.Identity,
-      hasBorder: Boolean = ShapesHaveBordersByDefault,
-      hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: Color = DefaultPrimaryColor,
-      fillColor: Color = DefaultSecondaryColor): Unit
+      widthInPixels: Double,
+      heightInPixels: Double,
+      startAngleInDegrees: Double,
+      arcAngleInDegrees: Double,
+      transformation: AffineTransformation,
+      hasBorder: Boolean,
+      hasFilling: Boolean,
+      color: Color,
+      fillColor: Color): Unit
 
   /**
    *
@@ -172,12 +199,12 @@ trait DrawingSurfaceAdapter {
   def drawRectangle(
       upperLeftCornerXInPixels: Double,
       upperLeftCornerYInPixels: Double,
-      widthInPixels: Double = DefaultBitmapWidthInPixels,
-      heightInPixels: Double = DefaultBitmapHeightInPixels,
-      hasBorder: Boolean = ShapesHaveBordersByDefault,
-      hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: Color = DefaultPrimaryColor,
-      fillColor: Color = DefaultSecondaryColor): Unit
+      widthInPixels: Double,
+      heightInPixels: Double,
+      hasBorder: Boolean,
+      hasFilling: Boolean,
+      color: Color,
+      fillColor: Color): Unit
 
   /**
    *
@@ -196,14 +223,14 @@ trait DrawingSurfaceAdapter {
   def drawRoundedRectangle(
       upperLeftCornerXInPixels: Double,
       upperLeftCornerYInPixels: Double,
-      widthInPixels: Double = DefaultBitmapWidthInPixels,
-      heightInPixels: Double = DefaultBitmapHeightInPixels,
-      roundingWidthInPixels: Double = DefaultRoundingWidthInPixels,
-      roundingHeightInPixels: Double = DefaultRoundingHeightInPixels,
-      hasBorder: Boolean = ShapesHaveBordersByDefault,
-      hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: Color = DefaultPrimaryColor,
-      fillColor: Color = DefaultSecondaryColor): Unit
+      widthInPixels: Double,
+      heightInPixels: Double,
+      roundingWidthInPixels: Double,
+      roundingHeightInPixels: Double,
+      hasBorder: Boolean,
+      hasFilling: Boolean,
+      color: Color,
+      fillColor: Color): Unit
 
   /**
    *
@@ -234,10 +261,10 @@ trait DrawingSurfaceAdapter {
       xCoordinates: Seq[Double],
       yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
-      hasBorder: Boolean = ShapesHaveBordersByDefault,
-      hasFilling: Boolean = ShapesHaveFillingsByDefault,
-      color: Color = DefaultPrimaryColor,
-      fillColor: Color = DefaultSecondaryColor): Unit
+      hasBorder: Boolean,
+      hasFilling: Boolean,
+      color: Color,
+      fillColor: Color): Unit
 
   /**
    *
@@ -253,6 +280,6 @@ trait DrawingSurfaceAdapter {
       fromYInPixels: Double,
       toXInPixels: Double,
       toYInPixels: Double,
-      color: Color = DefaultPrimaryColor): Unit
+      color: Color): Unit
 
 }

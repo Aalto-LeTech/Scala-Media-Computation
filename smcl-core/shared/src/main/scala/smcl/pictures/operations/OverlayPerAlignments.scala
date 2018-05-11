@@ -124,7 +124,7 @@ case class OverlayPerAlignments(
     val newBuffer = PRF.createPlatformBitmapBuffer(Len(widthInPixels), Len(heightInPixels))
     val drawingSurface = newBuffer.drawingSurface
 
-    drawingSurface.clearUsing(backgroundColor)
+    drawingSurface.clearUsing(backgroundColor, true)
 
     for (itemNumber <- childOperationListsOption.get.indices) {
       val sourceBuffer = childOperationListsOption.get(itemNumber).render()

@@ -20,8 +20,7 @@ package smcl.pictures
 import scala.collection.mutable
 
 import smcl.colors.ColorValidator
-import smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter, InjectablesRegistry, PRF}
-import smcl.modeling.AffineTransformation
+import smcl.infrastructure.{BitmapBufferAdapter, DoubleWrapper, DrawingSurfaceAdapter, InjectablesRegistry, PRF}
 import smcl.modeling.d2.BoundaryCalculator
 
 
@@ -64,23 +63,33 @@ object RenderingController
       else
         BoundaryCalculator.fromBoundaries(elements)
 
-    val widthInPixels = bounds.width.floor
-    val heightInPixels = bounds.height.floor
+    val flooredWidth = bounds.width.floor
+    val flooredHeight = bounds.height.floor
 
-    if (widthInPixels < 1 || heightInPixels < 1)
+    if (flooredWidth < 1 || flooredHeight < 1)
       return Bitmap(0, 0)
 
-    bitmapValidator.validateBitmapSize(widthInPixels, heightInPixels)
+    bitmapValidator.validateBitmapSize(flooredWidth, flooredHeight)
 
     val buffer: BitmapBufferAdapter =
-      PRF.createPlatformBitmapBuffer(widthInPixels, heightInPixels)
+      PRF.createPlatformBitmapBuffer(flooredWidth, flooredHeight)
 
-    val upperLeftPos = bounds.upperLeftCorner.inverse
+    val (xOffsetToOrigoInPixels, yOffsetToOrigoInPixels) = {
+      val upperLeftCorner = bounds.upperLeftCorner
+
+      val xPrime = -upperLeftCorner.xInPixels.truncate
+      val yPrime = -upperLeftCorner.yInPixels.truncate
+
+      val xOffset = if (xPrime % 2 == 1) xPrime - 0 else xPrime
+      val yOffset = if (yPrime % 2 == 1) yPrime - 0 else yPrime
+
+      (xOffset, yOffset)
+    }
 
     renderElements(
       elements,
       buffer.drawingSurface,
-      upperLeftPos.xInPixels, upperLeftPos.yInPixels)
+      xOffsetToOrigoInPixels, yOffsetToOrigoInPixels)
 
     Bitmap(buffer)
   }
@@ -119,22 +128,13 @@ object RenderingController
       else if (contentItem.isArc) {
         val arc = contentItem.asInstanceOf[Arc]
 
-        val width = arc.untransformedWidthInPixels
-        val height = arc.untransformedHeightInPixels
-        val topLeftX = -(width / 2.0)
-        val topLeftY = -(height / 2.0)
-
-        val offsetsToOrigoTranslation =
-          AffineTransformation.forTranslationOf(
-            xOffsetToOrigoInPixels, yOffsetToOrigoInPixels)
-        val transformation = arc.currentTransformation.preConcatenate(offsetsToOrigoTranslation)
-
         targetDrawingSurface.drawArc(
-          topLeftX, topLeftY,
-          width, height,
+          xOffsetToOrigoInPixels, yOffsetToOrigoInPixels,
+          arc.untransformedWidthInPixels,
+          arc.untransformedHeightInPixels,
           arc.startAngleInDegrees,
           arc.arcAngleInDegrees,
-          transformation,
+          arc.currentTransformation,
           arc.hasBorder, arc.hasFilling,
           arc.color, arc.fillColor)
       }
@@ -147,7 +147,8 @@ object RenderingController
         val topLeftX = xOffsetToOrigoInPixels + topLeft.xInPixels
         val topLeftY = yOffsetToOrigoInPixels + topLeft.yInPixels
 
-        targetDrawingSurface.drawBitmap(bmp.buffer.get, topLeftX, topLeftY)
+        targetDrawingSurface.drawBitmap(
+          bmp.buffer.get, topLeftX, topLeftY, ColorValidator.MaximumOpacity)
       }
       else if (contentItem.isPoint) {
         val pnt = contentItem.asInstanceOf[Point]
