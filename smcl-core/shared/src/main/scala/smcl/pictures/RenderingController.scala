@@ -59,7 +59,7 @@ object RenderingController
       return Bitmap(0, 0)
 
     val bounds =
-      if (ifContainsOnlyAnImageThatDefinesAViewport(elements))
+      if (containsOnlyAnImageThatDefinesViewport(elements))
         elements.head.toPicture.viewport.get.boundary
       else
         BoundaryCalculator.fromBoundaries(elements)
@@ -86,7 +86,7 @@ object RenderingController
   }
 
   private
-  def ifContainsOnlyAnImageThatDefinesAViewport(
+  def containsOnlyAnImageThatDefinesViewport(
       elements: Seq[PictureElement]): Boolean = {
 
     elements.lengthCompare(1) == 0 &&
