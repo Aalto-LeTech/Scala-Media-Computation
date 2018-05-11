@@ -302,55 +302,16 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val isOddHeight = flooredHeight % 2 == 1
 
     // Adjust X position and width to produce a symmetrical and right-sized circle
-    val (adjustedUpperLeftX, adjustedWidth, adjustedTransformationM02) = {
-      val transformationM02 = transformation.tauX.truncate + 0.5
-      val truncatedUpperLeftX = upperLeftCornerXInPixels.truncate - 0.5
-
-      if (hasBorder) {
-        // For arcs having a border
-        if (isOddWidth) {
-          (truncatedUpperLeftX - 0.5, flooredWidth - 1, transformationM02 + 0.5)
-        } else {
-          (truncatedUpperLeftX, flooredWidth - 1, transformationM02)
-        }
-      }
-      else {
-        // For arcs without a border, the X position has to be decreased by one more
-        // pixel (without compensating that in the transformation) and the width to
-        // be increased by two pixels to fill the whole bitmap
-        if (isOddWidth) {
-          (truncatedUpperLeftX - 1.5, flooredWidth + 1, transformationM02 + 0.5)
-        } else {
-          (truncatedUpperLeftX - 1, flooredWidth + 1, transformationM02)
-        }
-      }
-    }
+    val (adjustedUpperLeftX, adjustedWidth, adjustedTransformationM02) =
+      adjustOneDimensionOfArc(transformation.tauX, upperLeftCornerXInPixels,
+        flooredWidth, hasBorder, isOddWidth)
 
     // Adjust Y position and height to produce a symmetrical and right-sized circle
-    val (adjustedUpperLeftY, adjustedHeight, adjustedTransformationM12) = {
-      val transformationM12 = transformation.tauY.truncate + 0.5
-      val truncatedUpperLeftY = upperLeftCornerYInPixels.truncate - 0.5
+    val (adjustedUpperLeftY, adjustedHeight, adjustedTransformationM12) =
+      adjustOneDimensionOfArc(transformation.tauY, upperLeftCornerYInPixels,
+        flooredHeight, hasBorder, isOddHeight)
 
-      if (hasBorder) {
-        // For arcs having a border
-        if (isOddHeight) {
-          (truncatedUpperLeftY - 0.5, flooredHeight - 1, transformationM12 + 0.5)
-        } else {
-          (truncatedUpperLeftY, flooredHeight - 1, transformationM12)
-        }
-      }
-      else {
-        // For arcs without a border, the Y position has to be adjusted by one more
-        // pixel and the height to be increased by two pixels to fill the whole bitmap
-        if (isOddHeight) {
-          (truncatedUpperLeftY - 1.5, flooredHeight + 1, transformationM12 + 0.5)
-        } else {
-          (truncatedUpperLeftY - 1, flooredHeight + 1, transformationM12)
-        }
-      }
-    }
-
-    // Create a new transformation matrix with previous position-wise adjustments
+    // Create a new transformationTranslationComponent matrix with previous position-wise adjustments
     val transformationM00 = transformation.alpha
     val transformationM10 = transformation.delta
     val transformationM01 = transformation.gamma
@@ -405,6 +366,36 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       if (hasBorder) {
         g.setColor(color.toAWTColor)
         g.draw(shape)
+      }
+    }
+  }
+
+  private
+  def adjustOneDimensionOfArc(
+      transformationTranslationComponent: Double,
+      upperLeftCoordinateInPixels: Double,
+      flooredSize: Double,
+      hasBorder: Boolean,
+      isOddSize: Boolean): (Double, Double, Double) = {
+
+    val truncTranslComp = transformationTranslationComponent.truncate + 0.5
+    val truncULCoord = upperLeftCoordinateInPixels.truncate - 0.5
+
+    if (hasBorder) {
+      // For arcs having a border
+      if (isOddSize) {
+        (truncULCoord - 0.5, flooredSize - 1, truncTranslComp + 0.5)
+      } else {
+        (truncULCoord, flooredSize - 1, truncTranslComp)
+      }
+    }
+    else {
+      // For arcs without a border, the coordinate has to be adjusted by one more
+      // pixel and the size to be increased by two pixels to fill the whole bitmap
+      if (isOddSize) {
+        (truncULCoord - 1.5, flooredSize + 1, truncTranslComp + 0.5)
+      } else {
+        (truncULCoord - 1, flooredSize + 1, truncTranslComp)
       }
     }
   }
