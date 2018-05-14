@@ -17,7 +17,7 @@
 package smcl.infrastructure.jvmawt
 
 
-import java.awt.geom.{AffineTransform, Arc2D}
+import java.awt.geom.Arc2D
 import java.awt.{AlphaComposite, BasicStroke, Graphics2D}
 
 import smcl.colors.ColorValidator
@@ -235,11 +235,15 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    *
    * @param xOffsetToOrigoInPixels
    * @param yOffsetToOrigoInPixels
+   * @param xPosition
+   * @param yPosition
    * @param widthInPixels
    * @param heightInPixels
    * @param startAngleInDegrees
    * @param arcAngleInDegrees
-   * @param transformation
+   * @param rotationAngleInDegrees
+   * @param scaleFactorX
+   * @param scaleFactorY
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -249,27 +253,38 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
   def drawArc(
       xOffsetToOrigoInPixels: Double,
       yOffsetToOrigoInPixels: Double,
+      xPosition: Double,
+      yPosition: Double,
       widthInPixels: Double,
       heightInPixels: Double,
       startAngleInDegrees: Double,
       arcAngleInDegrees: Double,
-      transformation: AffineTransformation,
+      rotationAngleInDegrees: Double,
+      scaleFactorX: Double,
+      scaleFactorY: Double,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: Color,
       fillColor: Color): Unit = {
 
-    //----------------------------------------------------------------------------------------------
-    // Special cases for small circles
-    //
-    // Are we drawing a small circle (i.e., full cycle and width == height == (1|2))?
-    if (arcAngleInDegrees >= 360 &&
-        ((owner.widthInPixels == 1 && owner.heightInPixels == 1)
-            || (owner.widthInPixels == 2 && owner.heightInPixels == 2))) {
 
-      owner.withGraphics2D{g =>
-        g.transform(transformation.toAWTAffineTransform)
-        g.setStroke(HairlineStroke)
+    val scaledWidth = (scaleFactorX * widthInPixels.floor).truncate
+    val scaledHeight = (scaleFactorY * heightInPixels.floor).truncate
+
+    val upperLeftX = xOffsetToOrigoInPixels + xPosition - (scaledWidth / 2.0).truncate
+    val upperLeftY = yOffsetToOrigoInPixels + yPosition - (scaledHeight / 2.0).truncate
+
+    owner.withGraphics2D{g =>
+      g.translate(-0.5, -0.5)
+      g.setStroke(HairlineStroke)
+
+      if (arcAngleInDegrees >= 360 &&
+          ((scaledWidth == 1.0 && scaledHeight == 1.0)
+              || (scaledWidth == 2.0 && scaledHeight == 2.0))) {
+
+        //-------------------------------------------------------------------------
+        // Special case for small circles
+        //
 
         if (hasBorder) {
           g.setColor(color.toAWTColor)
@@ -278,326 +293,36 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
           g.setColor(fillColor.toAWTColor)
         }
 
-        if (owner.widthInPixels == 2) {
-          // 2 x 2 px full cycle = 2 x 2 px "circle"
-          //println("2 x 2 px circle")
-          g.fillRect(-1, -1, 2, 2)
+        if (scaledWidth == 1.0) {
+          g.fillRect(upperLeftX.truncatedInt, upperLeftY.truncatedInt, 1, 1)
         }
         else {
-          // 1 x 1 px full cycle = 1 x 1 px "circle"
-          //println("1 x 1 px circle")
-          g.fillRect(-1, -1, 1, 1)
+          g.fillRect(upperLeftX.truncatedInt, upperLeftY.truncatedInt, 2, 2)
         }
       }
-      return
-    }
+      else {
+        //-------------------------------------------------------------------------
+        // General case for all arcs
+        //
 
-    //----------------------------------------------------------------------------------------------
-    // The general case
-    //
+        val shape = new Arc2D.Double(
+          upperLeftX + 0.5,
+          upperLeftY + 0.5,
+          scaledWidth - 1,
+          scaledHeight - 1,
+          startAngleInDegrees,
+          arcAngleInDegrees,
+          Arc2D.OPEN)
 
-    val flooredWidth = widthInPixels.floor
-    val flooredHeight = heightInPixels.floor
-    val isOddWidth = flooredWidth % 2 == 1
-    val isOddHeight = flooredHeight % 2 == 1
-
-    val upperLeftCornerXInPixels = -(widthInPixels / 2.0)
-    val upperLeftCornerYInPixels = -(heightInPixels / 2.0)
-
-    // Adjust X position and width to produce a symmetrical and right-sized circle
-    val (adjustedUpperLeftX, adjustedWidth, adjustedTransformationM02) =
-      adjustOneDimensionOfArc(finalTransformation.tauX, upperLeftCornerXInPixels,
-        flooredWidth, hasBorder, isOddWidth)
-
-    // Adjust Y position and height to produce a symmetrical and right-sized circle
-    val (adjustedUpperLeftY, adjustedHeight, adjustedTransformationM12) =
-      adjustOneDimensionOfArc(finalTransformation.tauY, upperLeftCornerYInPixels,
-        flooredHeight, hasBorder, isOddHeight)
-
-    // Create a new transformationTranslationComponent matrix with previous position-wise adjustments
-    val transformationM00 = finalTransformation.alpha
-    val transformationM10 = finalTransformation.delta
-    val transformationM01 = finalTransformation.gamma
-    val transformationM11 = finalTransformation.beta
-
-    val adjustedTransformation =
-      new AffineTransform(
-        transformationM00, transformationM10, transformationM01,
-        transformationM11, adjustedTransformationM02, adjustedTransformationM12)
-
-    //*
-    println(s"($adjustedUpperLeftX,$adjustedUpperLeftY); " +
-        s"w = $adjustedWidth & h = $adjustedHeight, " +
-        s"Tx=${adjustedTransformation.getTranslateX}, " +
-        s"Ty=${adjustedTransformation.getTranslateY}")
-    // */
-
-    /*
-    println(
-      s""""X scale" = $transformationM00,
-         |"Y scale" = $transformationM11
-         | (including possible rotation)""".stripMargin.replaceAll("\n", " "))
-    // */
-
-    // Create and draw the shape
-    val shape = new Arc2D.Double(
-      adjustedUpperLeftX,
-      adjustedUpperLeftY,
-      adjustedWidth,
-      adjustedHeight,
-      startAngleInDegrees,
-      arcAngleInDegrees,
-      Arc2D.OPEN)
-
-    owner.withGraphics2D{g =>
-      g.setColor(Color(255, 0, 0, 255).toAWTColor)
-      g.fillRect(0, 0, 1, 1)
-
-      /*
-      val curTx = g.getTransform
-      println(
-        s"""  -- current in G2D: "X scale" = ${curTx.getScaleX},
-           |"Y scale" = ${curTx.getScaleY}
-           | (including possible rotation)""".stripMargin.replaceAll("\n", " "))
-      // */
-
-      g.translate(xOffsetToOrigoInPixels, yOffsetToOrigoInPixels)
-      g.transform(adjustedTransformation)
-      g.setStroke(HairlineStroke)
-
-      if (hasFilling) {
-        g.setColor(fillColor.toAWTColor)
-        g.fill(shape)
-      }
-
-      if (hasBorder) {
-        g.setColor(color.toAWTColor)
-        g.draw(shape)
-      }
-
-      g.setTransform(g.getDeviceConfiguration.getDefaultTransform)
-      g.setColor(Color(0, 0, 0, 255).toAWTColor)
-      val w = owner.widthInPixels
-      val h = owner.heightInPixels
-      val centerX = (w / 2.0).truncatedInt
-      val centerY = (h / 2.0).truncatedInt
-
-      for (x <- 0 to w)
-        g.fillRect(x, centerY, 1, 1)
-
-      for (y <- 0 to h)
-        g.fillRect(centerX, y, 1, 1)
-
-      g.translate(xOffsetToOrigoInPixels, yOffsetToOrigoInPixels)
-      g.transform(adjustedTransformation)
-      val trans = AffineTransform.getTranslateInstance(
-        adjustedTransformation.getTranslateX, adjustedTransformation.getTranslateY)
-      g.setTransform(trans)
-      g.setStroke(HairlineStroke)
-      g.setColor(Color(0, 200, 0, 255).toAWTColor)
-
-      g.fillRect(0, 0, 1, 1)
-      for (c <- -10 to 10) {
-        g.fillRect(0, c, 1, 1)
-        g.fillRect(c, 0, 1, 1)
-      }
-    }
-  }
-
-  private
-  def adjustOneDimensionOfArc(
-      transformationTranslationComponent: Double,
-      upperLeftCoordinateInPixels: Double,
-      flooredSize: Double,
-      hasBorder: Boolean,
-      isOddSize: Boolean): (Double, Double, Double) = {
-
-    /*
-    return (
-        transformationTranslationComponent.truncate,
-        flooredSize,
-        upperLeftCoordinateInPixels.truncate)
-    // **/
-
-    val truncTranslComp = transformationTranslationComponent.truncate + 0.5
-    val truncULCoord = upperLeftCoordinateInPixels.truncate - 0.5
-
-    if (hasBorder) {
-      // For arcs having a border
-      if (isOddSize) {
-        (truncULCoord - 0.5, flooredSize - 1, truncTranslComp + 0.5)
-      } else {
-        (truncULCoord, flooredSize - 1, truncTranslComp)
-      }
-    }
-    else {
-      // For arcs without a border, the coordinate has to be adjusted by one more
-      // pixel and the size to be increased by two pixels to fill the whole bitmap
-      if (isOddSize) {
-        (truncULCoord - 1.5, flooredSize + 1, truncTranslComp + 0.5)
-      } else {
-        (truncULCoord - 1, flooredSize + 1, truncTranslComp)
-      }
-    }
-    /*
-    val truncTranslComp = transformationTranslationComponent.truncate + 0.5
-    val truncULCoord = upperLeftCoordinateInPixels.truncate - 0.5
-
-    if (hasBorder) {
-      // For arcs having a border
-      if (isOddSize) {
-        (truncULCoord - 0.5, flooredSize - 1, truncTranslComp + 0.5)
-      } else {
-        (truncULCoord, flooredSize - 1, truncTranslComp)
-      }
-    }
-    else {
-      // For arcs without a border, the coordinate has to be adjusted by one more
-      // pixel and the size to be increased by two pixels to fill the whole bitmap
-      if (isOddSize) {
-        (truncULCoord - 1.5, flooredSize + 1, truncTranslComp + 0.5)
-      } else {
-        (truncULCoord - 1, flooredSize + 1, truncTranslComp)
-      }
-    }
-    */
-  }
-
-  /**
-   *
-   *
-   * @param upperLeftCornerXInPixels
-   * @param upperLeftCornerYInPixels
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param startAngleInDegrees
-   * @param arcAngleInDegrees
-   * @param transformation
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   */
-  //override
-  def drawArc2(
-      upperLeftCornerXInPixels: Double,
-      upperLeftCornerYInPixels: Double,
-      widthInPixels: Double,
-      heightInPixels: Double,
-      startAngleInDegrees: Double,
-      arcAngleInDegrees: Double,
-      transformation: AffineTransformation,
-      hasBorder: Boolean,
-      hasFilling: Boolean,
-      color: Color,
-      fillColor: Color): Unit = {
-
-    //----------------------------------------------------------------------------------------------
-    // Special cases for small circles
-    //
-    // Are we drawing a small circle (i.e., full cycle and width == height == (1|2))?
-    if (arcAngleInDegrees >= 360 &&
-        ((owner.widthInPixels == 1 && owner.heightInPixels == 1)
-            || (owner.widthInPixels == 2 && owner.heightInPixels == 2))) {
-
-      owner.withGraphics2D{g =>
-        g.transform(transformation.toAWTAffineTransform)
-        g.setStroke(HairlineStroke)
+        if (hasFilling) {
+          g.setColor(fillColor.toAWTColor)
+          g.fill(shape)
+        }
 
         if (hasBorder) {
           g.setColor(color.toAWTColor)
+          g.draw(shape)
         }
-        else if (hasFilling) {
-          g.setColor(fillColor.toAWTColor)
-        }
-
-        if (owner.widthInPixels == 2) {
-          // 2 x 2 px full cycle = 2 x 2 px "circle"
-          //println("2 x 2 px circle")
-          g.fillRect(-1, -1, 2, 2)
-        }
-        else {
-          // 1 x 1 px full cycle = 1 x 1 px "circle"
-          //println("1 x 1 px circle")
-          g.fillRect(-1, -1, 1, 1)
-        }
-      }
-      return
-    }
-
-    //----------------------------------------------------------------------------------------------
-    // The general case
-    //
-    val flooredWidth = widthInPixels.floor
-    val flooredHeight = heightInPixels.floor
-    val isOddWidth = flooredWidth % 2 == 1
-    val isOddHeight = flooredHeight % 2 == 1
-
-    // Adjust X position and width to produce a symmetrical and right-sized circle
-    val (adjustedUpperLeftX, adjustedWidth, adjustedTransformationM02) =
-      adjustOneDimensionOfArc(transformation.tauX, upperLeftCornerXInPixels,
-        flooredWidth, hasBorder, isOddWidth)
-
-    // Adjust Y position and height to produce a symmetrical and right-sized circle
-    val (adjustedUpperLeftY, adjustedHeight, adjustedTransformationM12) =
-      adjustOneDimensionOfArc(transformation.tauY, upperLeftCornerYInPixels,
-        flooredHeight, hasBorder, isOddHeight)
-
-    // Create a new transformationTranslationComponent matrix with previous position-wise adjustments
-    val transformationM00 = transformation.alpha
-    val transformationM10 = transformation.delta
-    val transformationM01 = transformation.gamma
-    val transformationM11 = transformation.beta
-
-    val adjustedTransformation =
-      new AffineTransform(
-        transformationM00, transformationM10, transformationM01,
-        transformationM11, adjustedTransformationM02, adjustedTransformationM12)
-
-    //*
-    println(s"($adjustedUpperLeftX,$adjustedUpperLeftY); " +
-        s"w = $adjustedWidth & h = $adjustedHeight, " +
-        s"Tx=${adjustedTransformation.getTranslateX}, " +
-        s"Ty=${adjustedTransformation.getTranslateY}")
-    // */
-
-    /*
-    println(
-      s""""X scale" = $transformationM00,
-         |"Y scale" = $transformationM11
-         | (including possible rotation)""".stripMargin.replaceAll("\n", " "))
-    // */
-
-    // Create and draw the shape
-    val shape = new Arc2D.Double(
-      adjustedUpperLeftX,
-      adjustedUpperLeftY,
-      adjustedWidth,
-      adjustedHeight,
-      startAngleInDegrees,
-      arcAngleInDegrees,
-      Arc2D.OPEN)
-
-    owner.withGraphics2D{g =>
-      /*
-      val curTx = g.getTransform
-      println(
-        s"""  -- current in G2D: "X scale" = ${curTx.getScaleX},
-           |"Y scale" = ${curTx.getScaleY}
-           | (including possible rotation)""".stripMargin.replaceAll("\n", " "))
-      // */
-
-      g.setTransform(adjustedTransformation)
-      g.setStroke(HairlineStroke)
-
-      if (hasFilling) {
-        g.setColor(fillColor.toAWTColor)
-        g.fill(shape)
-      }
-
-      if (hasBorder) {
-        g.setColor(color.toAWTColor)
-        g.draw(shape)
       }
     }
   }

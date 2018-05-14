@@ -130,11 +130,14 @@ object RenderingController
 
         targetDrawingSurface.drawArc(
           xOffsetToOrigoInPixels, yOffsetToOrigoInPixels,
+          arc.position.xInPixels, arc.position.yInPixels,
           arc.untransformedWidthInPixels,
           arc.untransformedHeightInPixels,
           arc.startAngleInDegrees,
           arc.arcAngleInDegrees,
-          arc.currentTransformation,
+          0,
+          arc.currentTransformation.alpha,
+          arc.currentTransformation.beta,
           arc.hasBorder, arc.hasFilling,
           arc.color, arc.fillColor)
       }

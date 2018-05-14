@@ -132,11 +132,15 @@ trait DrawingSurfaceAdapter {
    *
    * @param xOffsetToOrigoInPixels
    * @param yOffsetToOrigoInPixels
-   * @param arcWidthInPixels
-   * @param arcHeightInPixels
+   * @param xPosition
+   * @param yPosition
+   * @param widthInPixels
+   * @param heightInPixels
    * @param startAngleInDegrees
    * @param arcAngleInDegrees
-   * @param transformation
+   * @param rotationAngleInDegrees
+   * @param scaleFactorX
+   * @param scaleFactorY
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -145,39 +149,15 @@ trait DrawingSurfaceAdapter {
   def drawArc(
       xOffsetToOrigoInPixels: Double,
       yOffsetToOrigoInPixels: Double,
-      arcWidthInPixels: Double,
-      arcHeightInPixels: Double,
-      startAngleInDegrees: Double,
-      arcAngleInDegrees: Double,
-      transformation: AffineTransformation,
-      hasBorder: Boolean,
-      hasFilling: Boolean,
-      color: Color,
-      fillColor: Color): Unit
-
-  /**
-   *
-   *
-   * @param upperLeftCornerXInPixels
-   * @param upperLeftCornerYInPixels
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param startAngleInDegrees
-   * @param arcAngleInDegrees
-   * @param transformation
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   */
-  def drawArc2(
-      upperLeftCornerXInPixels: Double,
-      upperLeftCornerYInPixels: Double,
+      xPosition: Double,
+      yPosition: Double,
       widthInPixels: Double,
       heightInPixels: Double,
       startAngleInDegrees: Double,
       arcAngleInDegrees: Double,
-      transformation: AffineTransformation,
+      rotationAngleInDegrees: Double,
+      scaleFactorX: Double,
+      scaleFactorY: Double,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: Color,
