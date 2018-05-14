@@ -271,13 +271,16 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val scaledWidth = (scaleFactorX * widthInPixels.floor).truncate
     val scaledHeight = (scaleFactorY * heightInPixels.floor).truncate
 
-    val upperLeftX = xOffsetToOrigoInPixels + xPosition - (scaledWidth / 2.0).truncate
-    val upperLeftY = yOffsetToOrigoInPixels + yPosition - (scaledHeight / 2.0).truncate
+    val upperLeftX = (scaledWidth / 2.0).truncate
+    val upperLeftY = (scaledHeight / 2.0).truncate
 
     owner.withGraphics2D{g =>
-      g.translate(-0.5, -0.5)
+      g.setTransform(g.getDeviceConfiguration.getDefaultTransform)
+      g.translate(xOffsetToOrigoInPixels + xPosition - 0.5, yOffsetToOrigoInPixels + yPosition - 0.5)
+      g.rotate(rotationAngleInDegrees)
       g.setStroke(HairlineStroke)
 
+      // If drawing a complete cycle, check if the cycle represents a small circle
       if (arcAngleInDegrees >= 360 &&
           ((scaledWidth == 1.0 && scaledHeight == 1.0)
               || (scaledWidth == 2.0 && scaledHeight == 2.0))) {
@@ -294,10 +297,10 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
         }
 
         if (scaledWidth == 1.0) {
-          g.fillRect(upperLeftX.truncatedInt, upperLeftY.truncatedInt, 1, 1)
+          g.fillRect(upperLeftX.toInt, upperLeftY.toInt, 1, 1)
         }
         else {
-          g.fillRect(upperLeftX.truncatedInt, upperLeftY.truncatedInt, 2, 2)
+          g.fillRect(upperLeftX.toInt - 2, upperLeftY.toInt - 2, 2, 2)
         }
       }
       else {
@@ -306,8 +309,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
         //
 
         val shape = new Arc2D.Double(
-          upperLeftX + 0.5,
-          upperLeftY + 0.5,
+          -upperLeftX + 0.5,
+          -upperLeftY + 0.5,
           scaledWidth - 1,
           scaledHeight - 1,
           startAngleInDegrees,
