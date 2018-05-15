@@ -17,7 +17,7 @@
 package smcl.infrastructure.jvmawt
 
 
-import java.awt.geom.Arc2D
+import java.awt.geom.{AffineTransform, Arc2D}
 import java.awt.{AlphaComposite, BasicStroke, Graphics2D}
 
 import smcl.colors.ColorValidator
@@ -235,8 +235,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    *
    * @param xOffsetToOrigoInPixels
    * @param yOffsetToOrigoInPixels
-   * @param xPosition
-   * @param yPosition
+   * @param xPositionInPixels
+   * @param yPositionInPixels
    * @param widthInPixels
    * @param heightInPixels
    * @param startAngleInDegrees
@@ -253,8 +253,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
   def drawArc(
       xOffsetToOrigoInPixels: Double,
       yOffsetToOrigoInPixels: Double,
-      xPosition: Double,
-      yPosition: Double,
+      xPositionInPixels: Double,
+      yPositionInPixels: Double,
       widthInPixels: Double,
       heightInPixels: Double,
       startAngleInDegrees: Double,
@@ -267,7 +267,6 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color,
       fillColor: Color): Unit = {
 
-
     val scaledWidth = (scaleFactorX * widthInPixels.floor).truncate
     val scaledHeight = (scaleFactorY * heightInPixels.floor).truncate
 
@@ -275,9 +274,6 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val upperLeftY = (scaledHeight / 2.0).truncate
 
     owner.withGraphics2D{g =>
-      g.setTransform(g.getDeviceConfiguration.getDefaultTransform)
-      g.translate(xOffsetToOrigoInPixels + xPosition - 0.5, yOffsetToOrigoInPixels + yPosition - 0.5)
-      g.rotate(rotationAngleInDegrees)
       g.setStroke(HairlineStroke)
 
       // If drawing a complete cycle, check if the cycle represents a small circle
@@ -289,18 +285,25 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
         // Special case for small circles
         //
 
-        if (hasBorder) {
-          g.setColor(color.toAWTColor)
-        }
-        else if (hasFilling) {
-          g.setColor(fillColor.toAWTColor)
-        }
+        if (hasBorder || hasFilling) {
+          if (hasBorder) {
+            g.setColor(color.toAWTColor)
+          }
+          else if (hasFilling) {
+            g.setColor(fillColor.toAWTColor)
+          }
 
-        if (scaledWidth == 1.0) {
-          g.fillRect(upperLeftX.toInt, upperLeftY.toInt, 1, 1)
-        }
-        else {
-          g.fillRect(upperLeftX.toInt - 2, upperLeftY.toInt - 2, 2, 2)
+          g.setTransform(g.getDeviceConfiguration.getDefaultTransform)
+          g.translate(
+            xOffsetToOrigoInPixels + xPositionInPixels,
+            yOffsetToOrigoInPixels + yPositionInPixels)
+
+          if (scaledWidth == 1.0) {
+            g.fillRect(upperLeftX.toInt, upperLeftY.toInt, 1, 1)
+          }
+          else {
+            g.fillRect(upperLeftX.toInt - 2, upperLeftY.toInt - 2, 2, 2)
+          }
         }
       }
       else {
@@ -308,23 +311,82 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
         // General case for all arcs
         //
 
-        val shape = new Arc2D.Double(
-          -upperLeftX + 0.5,
-          -upperLeftY + 0.5,
-          scaledWidth - 1,
-          scaledHeight - 1,
-          startAngleInDegrees,
-          arcAngleInDegrees,
-          Arc2D.OPEN)
+        //g.setTransform(g.getDeviceConfiguration.getDefaultTransform)
+        //g.setTransform(AffineTransform.getTranslateInstance(0.0, 0.0))
 
-        if (hasFilling) {
+        if (hasFilling && !hasBorder) {
+          g.setTransform(AffineTransform.getTranslateInstance(
+            xOffsetToOrigoInPixels + xPositionInPixels,
+            yOffsetToOrigoInPixels + yPositionInPixels))
+
+          if (rotationAngleInDegrees != 0.0)
+            g.rotate(rotationAngleInDegrees)
+
+          val shape = new Arc2D.Double(
+            -upperLeftX - 0.75,
+            -upperLeftY - 0.75,
+            scaledWidth + 0.5,
+            scaledHeight + 0.5,
+            startAngleInDegrees,
+            arcAngleInDegrees,
+            Arc2D.OPEN)
+
           g.setColor(fillColor.toAWTColor)
           g.fill(shape)
         }
+        else if (hasBorder && !hasFilling) {
+          g.translate(
+            xOffsetToOrigoInPixels + xPositionInPixels - 0.5,
+            yOffsetToOrigoInPixels + yPositionInPixels - 0.5)
 
-        if (hasBorder) {
+          if (rotationAngleInDegrees != 0.0)
+            g.rotate(rotationAngleInDegrees)
+
+          val shape = new Arc2D.Double(
+            -upperLeftX + 0.5,
+            -upperLeftY + 0.5,
+            scaledWidth - 1,
+            scaledHeight - 1,
+            startAngleInDegrees,
+            arcAngleInDegrees,
+            Arc2D.OPEN)
+
           g.setColor(color.toAWTColor)
           g.draw(shape)
+        }
+        else {
+          // Has both border and filling
+
+          g.translate(
+            xOffsetToOrigoInPixels + xPositionInPixels + 0.5,
+            yOffsetToOrigoInPixels + yPositionInPixels + 0.5)
+
+          if (rotationAngleInDegrees != 0.0)
+            g.rotate(rotationAngleInDegrees)
+
+          val fillingShape = new Arc2D.Double(
+            -upperLeftX - 0.5,
+            -upperLeftY - 0.5,
+            scaledWidth - 1,
+            scaledHeight - 1,
+            startAngleInDegrees,
+            arcAngleInDegrees,
+            Arc2D.OPEN)
+
+          g.setColor(fillColor.toAWTColor)
+          g.fill(fillingShape)
+
+          val borderShape = new Arc2D.Double(
+            -upperLeftX - 0.5,
+            -upperLeftY - 0.5,
+            scaledWidth - 1,
+            scaledHeight - 1,
+            startAngleInDegrees,
+            arcAngleInDegrees,
+            Arc2D.OPEN)
+
+          g.setColor(color.toAWTColor)
+          g.draw(borderShape)
         }
       }
     }

@@ -132,8 +132,8 @@ trait DrawingSurfaceAdapter {
    *
    * @param xOffsetToOrigoInPixels
    * @param yOffsetToOrigoInPixels
-   * @param xPosition
-   * @param yPosition
+   * @param xPositionInPixels
+   * @param yPositionInPixels
    * @param widthInPixels
    * @param heightInPixels
    * @param startAngleInDegrees
@@ -149,8 +149,8 @@ trait DrawingSurfaceAdapter {
   def drawArc(
       xOffsetToOrigoInPixels: Double,
       yOffsetToOrigoInPixels: Double,
-      xPosition: Double,
-      yPosition: Double,
+      xPositionInPixels: Double,
+      yPositionInPixels: Double,
       widthInPixels: Double,
       heightInPixels: Double,
       startAngleInDegrees: Double,

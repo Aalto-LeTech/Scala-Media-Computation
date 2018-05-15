@@ -106,6 +106,34 @@ trait PictureElement
   def isRenderable: Boolean
 
   /**
+   * Tells if this [[PictureElement]] can not be rendered on a bitmap.
+   *
+   * @return
+   */
+  lazy val isNotRenderable: Boolean = !isRenderable
+
+  /**
+   * Tells if an arc represents a circle or an ellipse.
+   *
+   * @return
+   */
+  def isFullCycle: Boolean = false
+
+  /**
+   * Tells if an arc represents a circle.
+   *
+   * @return
+   */
+  def isCircle: Boolean = false
+
+  /**
+   * Tells if an arc represents an ellipse.
+   *
+   * @return
+   */
+  def isEllipse: Boolean = false
+
+  /**
    *
    *
    * @return

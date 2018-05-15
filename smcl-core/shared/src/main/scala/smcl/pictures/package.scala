@@ -19,6 +19,9 @@ package smcl
 
 import scala.language.implicitConversions
 
+import smcl.modeling.Angle
+import smcl.modeling.d2.Pos
+
 
 /**
  *
@@ -26,6 +29,18 @@ import scala.language.implicitConversions
  * @author Aleksi Lukkarinen
  */
 package object pictures {
+
+  /** */
+  val DefaultPosition: Pos = Pos.Origo
+
+  /** */
+  val DefaultRotationAngle: Angle = Angle.Zero
+
+  /** */
+  val DefaultRotationAngleInDegrees: Double = DefaultRotationAngle.inDegrees
+
+  /** */
+  val IdentityScalingFactor: Double = 1.0
 
 
 

@@ -122,84 +122,99 @@ object RenderingController
     while (renderingQueue.nonEmpty) {
       val contentItem = renderingQueue.dequeue()
 
-      if (contentItem.isPicture) {
-        renderingQueue ++= contentItem.toPicture.elements.reverse
-      }
-      else if (contentItem.isArc) {
-        val arc = contentItem.asInstanceOf[Arc]
-
-        targetDrawingSurface.drawArc(
-          xOffsetToOrigoInPixels, yOffsetToOrigoInPixels,
-          arc.position.xInPixels, arc.position.yInPixels,
-          arc.untransformedWidthInPixels,
-          arc.untransformedHeightInPixels,
-          arc.startAngleInDegrees,
-          arc.arcAngleInDegrees,
-          0,
-          arc.currentTransformation.alpha,
-          arc.currentTransformation.beta,
-          arc.hasBorder, arc.hasFilling,
-          arc.color, arc.fillColor)
-      }
-      else if (contentItem.isBitmap) {
-        val bmp = contentItem.asInstanceOf[Bitmap]
-        if (bmp.buffer.isEmpty)
-          return
-
-        val topLeft = bmp.boundary.upperLeftCorner
-        val topLeftX = xOffsetToOrigoInPixels + topLeft.xInPixels
-        val topLeftY = yOffsetToOrigoInPixels + topLeft.yInPixels
-
-        targetDrawingSurface.drawBitmap(
-          bmp.buffer.get, topLeftX, topLeftY, ColorValidator.MaximumOpacity)
-      }
-      else if (contentItem.isPoint) {
-        val pnt = contentItem.asInstanceOf[Point]
-        val topLeftX = xOffsetToOrigoInPixels + pnt.position.xInPixels
-        val topLeftY = yOffsetToOrigoInPixels + pnt.position.yInPixels
-
-        targetDrawingSurface.drawPoint(topLeftX, topLeftY, pnt.color)
-      }
-      else if (contentItem.isPolygon) {
-        val pgon = contentItem.asInstanceOf[Polygon]
-        if (pgon.points.isEmpty)
-          return
-
-        val points = pgon.points
-
-        if (points.lengthCompare(1) == 0) {
-          val p = points.head
-          val x = xOffsetToOrigoInPixels + p.xInPixels
-          val y = yOffsetToOrigoInPixels + p.yInPixels
-
-          targetDrawingSurface.drawPoint(x, y, pgon.color)
-        }
-        else if (points.lengthCompare(2) == 0) {
-          val start = points.head
-          val end = points.tail.head
-          val xStart = xOffsetToOrigoInPixels + start.xInPixels
-          val yStart = yOffsetToOrigoInPixels + start.yInPixels
-          val xEnd = xOffsetToOrigoInPixels + end.xInPixels
-          val yEnd = yOffsetToOrigoInPixels + end.yInPixels
-
-          targetDrawingSurface.drawLine(xStart, yStart, xEnd, yEnd, pgon.color)
+      if (contentItem.isRenderable) {
+        if (contentItem.isPicture) {
+          renderingQueue ++= contentItem.toPicture.elements.reverse
         }
         else {
-          val (rawXs, rawYs) = points.unzip[Double, Double]
-          val xs = rawXs.map(xOffsetToOrigoInPixels + _)
-          val ys = rawYs.map(yOffsetToOrigoInPixels + _)
-
-          targetDrawingSurface.drawPolygon(
-            xs, ys, points.length,
-            pgon.hasBorder,
-            pgon.hasFilling,
-            pgon.color,
-            pgon.fillColor)
+          renderElement(
+            contentItem,
+            targetDrawingSurface,
+            xOffsetToOrigoInPixels,
+            yOffsetToOrigoInPixels)
         }
       }
-      else {
-        throw new IllegalStateException("Unknown image element")
+    }
+  }
+
+  private
+  def renderElement(
+      contentItem: PictureElement,
+      targetDrawingSurface: DrawingSurfaceAdapter,
+      xOffsetToOrigoInPixels: Double,
+      yOffsetToOrigoInPixels: Double): Unit = {
+
+    if (contentItem.isArc) {
+      val arc = contentItem.asInstanceOf[Arc]
+
+      targetDrawingSurface.drawArc(
+        xOffsetToOrigoInPixels, yOffsetToOrigoInPixels,
+        arc.position.xInPixels, arc.position.yInPixels,
+        arc.untransformedWidthInPixels, arc.untransformedHeightInPixels,
+        arc.startAngleInDegrees, arc.arcAngleInDegrees,
+        arc.rotationAngleInDegrees,
+        arc.horizontalScalingFactor, arc.verticalScalingFactor,
+        arc.hasBorder, arc.hasFilling,
+        arc.color, arc.fillColor)
+    }
+    else if (contentItem.isBitmap) {
+      val bmp = contentItem.asInstanceOf[Bitmap]
+      if (bmp.buffer.isEmpty)
+        return
+
+      val topLeft = bmp.boundary.upperLeftCorner
+      val topLeftX = xOffsetToOrigoInPixels + topLeft.xInPixels
+      val topLeftY = yOffsetToOrigoInPixels + topLeft.yInPixels
+
+      targetDrawingSurface.drawBitmap(
+        bmp.buffer.get, topLeftX, topLeftY, ColorValidator.MaximumOpacity)
+    }
+    else if (contentItem.isPoint) {
+      val pnt = contentItem.asInstanceOf[Point]
+      val topLeftX = xOffsetToOrigoInPixels + pnt.position.xInPixels
+      val topLeftY = yOffsetToOrigoInPixels + pnt.position.yInPixels
+
+      targetDrawingSurface.drawPoint(topLeftX, topLeftY, pnt.color)
+    }
+    else if (contentItem.isPolygon) {
+      val pgon = contentItem.asInstanceOf[Polygon]
+      if (pgon.points.isEmpty)
+        return
+
+      val points = pgon.points
+
+      if (points.lengthCompare(1) == 0) {
+        val p = points.head
+        val x = xOffsetToOrigoInPixels + p.xInPixels
+        val y = yOffsetToOrigoInPixels + p.yInPixels
+
+        targetDrawingSurface.drawPoint(x, y, pgon.color)
       }
+      else if (points.lengthCompare(2) == 0) {
+        val start = points.head
+        val end = points.tail.head
+        val xStart = xOffsetToOrigoInPixels + start.xInPixels
+        val yStart = yOffsetToOrigoInPixels + start.yInPixels
+        val xEnd = xOffsetToOrigoInPixels + end.xInPixels
+        val yEnd = yOffsetToOrigoInPixels + end.yInPixels
+
+        targetDrawingSurface.drawLine(xStart, yStart, xEnd, yEnd, pgon.color)
+      }
+      else {
+        val (rawXs, rawYs) = points.unzip[Double, Double]
+        val xs = rawXs.map(xOffsetToOrigoInPixels + _)
+        val ys = rawYs.map(yOffsetToOrigoInPixels + _)
+
+        targetDrawingSurface.drawPolygon(
+          xs, ys, points.length,
+          pgon.hasBorder,
+          pgon.hasFilling,
+          pgon.color,
+          pgon.fillColor)
+      }
+    }
+    else {
+      throw new IllegalStateException("Unknown image element")
     }
   }
 
