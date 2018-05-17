@@ -17,7 +17,7 @@
 package smcl.infrastructure.jvmawt
 
 
-import java.awt.geom.{AffineTransform, Arc2D}
+import java.awt.geom.{AffineTransform, Ellipse2D}
 import java.awt.{AlphaComposite, BasicStroke, Graphics2D}
 
 import smcl.colors.ColorValidator
@@ -322,71 +322,169 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
           if (rotationAngleInDegrees != 0.0)
             g.rotate(rotationAngleInDegrees)
 
+          g.setColor(fillColor.toAWTColor)
+
+          /*
+          g.fillOval(
+            -upperLeftX.toInt - 1,
+            -upperLeftY.toInt - 1,
+            (scaledWidth + 1).toInt,
+            (scaledHeight + 1).toInt)
+          // */
+
+          /*
           val shape = new Arc2D.Double(
-            -upperLeftX - 0.75,
-            -upperLeftY - 0.75,
-            scaledWidth + 0.5,
-            scaledHeight + 0.5,
+            -upperLeftX - 0.5,
+            -upperLeftY - 0.5,
+            scaledWidth,
+            scaledHeight,
             startAngleInDegrees,
             arcAngleInDegrees,
             Arc2D.OPEN)
 
-          g.setColor(fillColor.toAWTColor)
           g.fill(shape)
+          // */
+
+          //*
+          val ulX =
+            if (xOffsetToOrigoInPixels + xPositionInPixels - upperLeftX > 0)
+              -upperLeftX + 0.5
+            else
+              -upperLeftX - 0.5
+
+          val ulY =
+            if (yOffsetToOrigoInPixels + yPositionInPixels - upperLeftY > 0)
+              -upperLeftY + 0.5
+            else
+              -upperLeftY - 0.5
+
+          val s = new Ellipse2D.Double(
+            ulX,
+            ulY,
+            scaledWidth,
+            scaledHeight)
+
+          g.fill(s)
+          // */
         }
         else if (hasBorder && !hasFilling) {
-          g.translate(
-            xOffsetToOrigoInPixels + xPositionInPixels - 0.5,
-            yOffsetToOrigoInPixels + yPositionInPixels - 0.5)
+          g.setTransform(AffineTransform.getTranslateInstance(
+            xOffsetToOrigoInPixels + xPositionInPixels,
+            yOffsetToOrigoInPixels + yPositionInPixels))
 
           if (rotationAngleInDegrees != 0.0)
             g.rotate(rotationAngleInDegrees)
 
+          g.setColor(color.toAWTColor)
+
+          /*
+          g.drawOval(
+            -upperLeftX.toInt,
+            -upperLeftY.toInt,
+            (scaledWidth - 1).toInt,
+            (scaledHeight - 1).toInt)
+          // */
+
+          /*
           val shape = new Arc2D.Double(
-            -upperLeftX + 0.5,
-            -upperLeftY + 0.5,
+            -upperLeftX,
+            -upperLeftY,
             scaledWidth - 1,
             scaledHeight - 1,
             startAngleInDegrees,
             arcAngleInDegrees,
             Arc2D.OPEN)
 
-          g.setColor(color.toAWTColor)
           g.draw(shape)
+          // */
+
+          //*
+          val s = new Ellipse2D.Double(
+            -upperLeftX,
+            -upperLeftY,
+            scaledWidth - 1,
+            scaledHeight - 1)
+
+          g.draw(s)
+          // */
         }
         else {
           // Has both border and filling
 
-          g.translate(
-            xOffsetToOrigoInPixels + xPositionInPixels + 0.5,
-            yOffsetToOrigoInPixels + yPositionInPixels + 0.5)
+          g.setTransform(AffineTransform.getTranslateInstance(
+            xOffsetToOrigoInPixels + xPositionInPixels,
+            yOffsetToOrigoInPixels + yPositionInPixels))
 
           if (rotationAngleInDegrees != 0.0)
             g.rotate(rotationAngleInDegrees)
 
-          val fillingShape = new Arc2D.Double(
-            -upperLeftX - 0.5,
-            -upperLeftY - 0.5,
-            scaledWidth - 1,
-            scaledHeight - 1,
-            startAngleInDegrees,
-            arcAngleInDegrees,
-            Arc2D.OPEN)
-
+          g.setStroke(HairlineStroke)
           g.setColor(fillColor.toAWTColor)
-          g.fill(fillingShape)
 
-          val borderShape = new Arc2D.Double(
-            -upperLeftX - 0.5,
-            -upperLeftY - 0.5,
+          /*
+          g.fillOval(
+            -upperLeftX.toInt,
+            -upperLeftY.toInt,
+            (scaledWidth - 1).toInt,
+            (scaledHeight - 1).toInt)
+          // */
+
+          /*
+          val fillingShape = new Arc2D.Double(
+            -upperLeftX,
+            -upperLeftY,
             scaledWidth - 1,
             scaledHeight - 1,
             startAngleInDegrees,
             arcAngleInDegrees,
             Arc2D.OPEN)
 
+          g.fill(fillingShape)
+          // */
+
+          //*
+          val fillingShape = new Ellipse2D.Double(
+            -upperLeftX,
+            -upperLeftY,
+            scaledWidth - 1,
+            scaledHeight - 1)
+
+          g.fill(fillingShape)
+          // */
+
+          g.setStroke(HairlineStroke)
           g.setColor(color.toAWTColor)
+
+          /*
+          g.drawOval(
+            -upperLeftX.toInt,
+            -upperLeftY.toInt,
+            (scaledWidth - 1).toInt,
+            (scaledHeight - 1).toInt)
+          // */
+
+          /*
+          val borderShape = new Arc2D.Double(
+            -upperLeftX,
+            -upperLeftY,
+            scaledWidth - 1,
+            scaledHeight - 1,
+            startAngleInDegrees,
+            arcAngleInDegrees,
+            Arc2D.OPEN)
+
           g.draw(borderShape)
+          // */
+
+          //*
+          val borderShape = new Ellipse2D.Double(
+            -upperLeftX,
+            -upperLeftY,
+            scaledWidth - 1,
+            scaledHeight - 1)
+
+          g.draw(borderShape)
+          // */
         }
       }
     }
