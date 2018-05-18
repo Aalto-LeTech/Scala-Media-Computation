@@ -98,7 +98,7 @@ abstract class AbstractBitmap private[pictures](
     require(drawingSurface != null, "Drawing surface argument cannot be null.")
 
     val rendition = toRenderedRepresentation
-    drawingSurface.drawBitmap(rendition, x, y)
+    drawingSurface.drawBitmap(rendition, x, y, ColorValidator.MaximumOpacity)
   }
 
   /**

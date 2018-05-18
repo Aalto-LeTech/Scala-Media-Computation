@@ -1263,6 +1263,31 @@ case class AffineTransformation(
   }
 
   /**
+   * Return a new [[AffineTransformation]] `T` such that T = [other] * [this].
+   *
+   * @param other
+   * @return
+   */
+  @inline
+  final
+  def preConcatenate(other: AffineTransformation): AffineTransformation = {
+    val newAlpha = other.alpha * this.alpha + other.gamma * this.delta
+    val newBeta = other.beta * this.gamma + other.beta * this.beta
+    val newGamma = other.alpha * this.gamma + other.gamma * this.beta
+    val newDelta = other.delta * this.alpha + other.beta * this.delta
+    val newTauX = other.alpha * this.tauX + other.gamma * this.tauY + other.tauX
+    val newTauY = other.delta * this.tauX + other.beta * this.tauY + other.tauY
+
+    new AffineTransformation(
+      alpha = newAlpha,
+      beta = newBeta,
+      gamma = newGamma,
+      delta = newDelta,
+      tauX = newTauX,
+      tauY = newTauY)
+  }
+
+  /**
    *
    *
    * @param p

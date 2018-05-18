@@ -118,4 +118,16 @@ trait CommonDoubleMathOps[ElementType]
    */
   def triple: ElementType = map(3 * _)
 
+  /**
+   *
+   *
+   * @return
+   */
+  def truncate: ElementType = map {value =>
+    if (value > 0)
+      math.floor(value)
+    else
+      math.ceil(value)
+  }
+
 }

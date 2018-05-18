@@ -552,19 +552,322 @@ class Point private(
   }
 
   /**
+   * Scales this object to a given width in relation to its center.
    *
+   * @param targetWidth
    *
-   * @param widthFactor
-   * @param heightFactor
+   * @return
+   */
+  override
+  def scaleHorizontallyTo(targetWidth: Double): PictureElement = this
+
+  /**
+   * Scales this object to a given width in relation to a given point.
+   *
+   * @param targetWidth
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyTo(
+      targetWidth: Double,
+      relativityPoint: Pos): PictureElement = {
+
+    this
+  }
+
+  /**
+   * Scales this object to a given width in relation to the origo.
+   *
+   * @param targetWidth
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyToRelativeToOrigo(targetWidth: Double): PictureElement = this
+
+  /**
+   * Scales this object to a given height in relation to its center.
+   *
+   * @param targetHeight
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyTo(targetHeight: Double): PictureElement = this
+
+  /**
+   * Scales this object to a given height in relation to a given point.
+   *
+   * @param targetHeight
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyTo(
+      targetHeight: Double,
+      relativityPoint: Pos): PictureElement = {
+
+    this
+  }
+
+  /**
+   * Scales this object to a given height in relation to the origo.
+   *
+   * @param targetHeight
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyToRelativeToOrigo(targetHeight: Double): PictureElement = this
+
+  /**
+   * Scales this object in relation to its center by
+   * using a single length for both width and height.
+   *
+   * @param targetSideLength
+   *
+   * @return
+   */
+  override
+  def scaleTo(targetSideLength: Double): PictureElement = this
+
+  /**
+   * Scales this object in relation to a given point by
+   * using a single length for both width and height.
+   *
+   * @param targetSideLength
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleTo(
+      targetSideLength: Double,
+      relativityPoint: Pos): PictureElement = {
+
+    this
+  }
+
+  /**
+   * Scales this object in relation to the origo by
+   * using a single length for both width and height.
+   *
+   * @param targetSideLength
+   *
+   * @return
+   */
+  override
+  def scaleToRelativeToOrigo(targetSideLength: Double): PictureElement = this
+
+  /**
+   * Scales this object to given width and height in relation to its center.
+   *
+   * @param targetWidth
+   * @param targetHeight
+   *
+   * @return
+   */
+  override
+  def scaleTo(
+      targetWidth: Double,
+      targetHeight: Double): PictureElement = this
+
+  /**
+   * Scales this object to given width and height in relation to a given point.
+   *
+   * @param targetWidth
+   * @param targetHeight
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleTo(
+      targetWidth: Double,
+      targetHeight: Double,
+      relativityPoint: Pos): PictureElement = {
+
+    this
+  }
+
+  /**
+   * Scales this object to given width and height in relation to the origo.
+   *
+   * @param targetWidth
+   * @param targetHeight
+   *
+   * @return
+   */
+  override
+  def scaleToRelativeToOrigo(
+      targetWidth: Double,
+      targetHeight: Double): PictureElement = {
+
+    this
+  }
+
+  /**
+   * Scales this object horizontally in relation to its center.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyBy(factor: Double): PictureElement = this
+
+  /**
+   * Scales this object horizontally in relation to a given point.
+   *
+   * @param factor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyBy(
+      factor: Double,
+      relativityPoint: Pos): PictureElement = {
+
+    copy(newPosition = position.scaleHorizontallyBy(factor, relativityPoint))
+  }
+
+  /**
+   * Scales this object horizontally in relation to the origo.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyByRelativeToOrigo(factor: Double): PictureElement =
+    copy(newPosition = position.scaleHorizontallyByRelativeToOrigo(factor))
+
+  /**
+   * Scales this object vertically in relation to its center.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyBy(factor: Double): PictureElement = this
+
+  /**
+   * Scales this object vertically in relation to a given point.
+   *
+   * @param factor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyBy(
+      factor: Double,
+      relativityPoint: Pos): PictureElement = {
+
+    copy(newPosition = position.scaleVerticallyBy(factor, relativityPoint))
+  }
+
+  /**
+   * Scales this object vertically in relation to the origo.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyByRelativeToOrigo(factor: Double): PictureElement =
+    copy(newPosition = position.scaleVerticallyByRelativeToOrigo(factor))
+
+  /**
+   * Scales this object in relation to its center by using a given factor
+   * for both horizontal and vertical directions.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleBy(factor: Double): PictureElement = this
+
+  /**
+   * Scales this object in relation to a given point by using a given factor
+   * for both horizontal and vertical directions.
+   *
+   * @param factor
+   * @param relativityPoint
    *
    * @return
    */
   override
   def scaleBy(
-      widthFactor: Double,
-      heightFactor: Double): Point = {
+      factor: Double,
+      relativityPoint: Pos): PictureElement = {
 
-    this
+    copy(newPosition = position.scaleBy(factor, relativityPoint))
+  }
+
+  /**
+   * Scales this object in relation to the origo by using a given factor for
+   * both horizontal and vertical directions.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleByRelativeToOrigo(factor: Double): PictureElement =
+    copy(newPosition = position.scaleByRelativeToOrigo(factor))
+
+  /**
+   * Scales this object by given horizontal and vertical factors in relation to its center.
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(
+      horizontalFactor: Double,
+      verticalFactor: Double): PictureElement = this
+
+  /**
+   * Scales this object by given horizontal and vertical factors in relation to a given point.
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleBy(
+      horizontalFactor: Double,
+      verticalFactor: Double,
+      relativityPoint: Pos): PictureElement = {
+
+    copy(newPosition = position.scaleBy(horizontalFactor, verticalFactor, relativityPoint))
+  }
+
+  /**
+   * Scales this object by given horizontal and vertical factors in relation to the origo.
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   *
+   * @return
+   */
+  override
+  def scaleByRelativeToOrigo(
+      horizontalFactor: Double,
+      verticalFactor: Double): PictureElement = {
+
+    copy(newPosition = position.scaleByRelativeToOrigo(horizontalFactor, verticalFactor))
   }
 
 }

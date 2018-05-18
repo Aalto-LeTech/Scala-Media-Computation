@@ -30,7 +30,7 @@ import smcl.colors.ColorValidator
 import smcl.colors.rgb._
 import smcl.infrastructure._
 import smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
-import smcl.modeling.d2.{Dims, Pos}
+import smcl.modeling.d2.Dims
 import smcl.modeling.{AffineTransformation, Len}
 import smcl.pictures.{BitmapValidator, _}
 import smcl.settings.jvmawt.{AffineTransformationInterpolationMethod, DrawingIsAntialiased}
@@ -615,7 +615,7 @@ class AWTBitmapBufferAdapter private(
     val finalTransformOperation = new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
     val resultingBuffer: AWTBitmapBufferAdapter = AWTBitmapBufferAdapter(resultingImageWidth, resultingImageHeight)
 
-    resultingBuffer.drawingSurface clearUsing backgroundColor
+    resultingBuffer.drawingSurface clearUsing(backgroundColor, true)
 
     finalTransformOperation.filter(awtBufferedImage, resultingBuffer.awtBufferedImage)
 

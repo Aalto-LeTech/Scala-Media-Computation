@@ -118,12 +118,12 @@ case class OverlayFreely(
     val newBuffer = PRF.createPlatformBitmapBuffer(Len(widthInPixels), Len(heightInPixels))
     val drawingSurface = newBuffer.drawingSurface
 
-    drawingSurface.clearUsing(backgroundColor)
+    drawingSurface.clearUsing(backgroundColor, true)
 
     val bottomBuffer = bottomBitmap.toRenderedRepresentation
     val topBuffer = topBitmap.toRenderedRepresentation
 
-    drawingSurface.drawBitmap(bottomBuffer, bottomX, bottomY)
+    drawingSurface.drawBitmap(bottomBuffer, bottomX, bottomY, ColorValidator.MaximumOpacity)
     drawingSurface.drawBitmap(topBuffer, topX, topY, topBitmapOpacity)
 
     newBuffer

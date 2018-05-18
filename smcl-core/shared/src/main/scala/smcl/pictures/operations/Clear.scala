@@ -55,6 +55,6 @@ case class Clear(
    * @param destination
    */
   override def render(destination: BitmapBufferAdapter): Unit =
-    destination.drawingSurface clearUsing color
+    destination.drawingSurface.clearUsing(color, true)
 
 }

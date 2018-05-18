@@ -305,11 +305,11 @@ case class Bounds private(
 
   /** */
   lazy val width: Len =
-    Len(lowerRightCorner.xInPixels - upperLeftCorner.xInPixels + 1)
+    Len(lowerRightCorner.xInPixels - upperLeftCorner.xInPixels)
 
   /** */
   lazy val height: Len =
-    Len(lowerRightCorner.yInPixels - upperLeftCorner.yInPixels + 1)
+    Len(lowerRightCorner.yInPixels - upperLeftCorner.yInPixels)
 
   /** */
   lazy val dimensions: Dims =

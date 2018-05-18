@@ -603,4 +603,13 @@ object MathUtils {
     }
   }
 
+  @inline
+  final
+  def rotateHalfTurnTowardsZeroAngle(angleToRotate: Double): Double = {
+    if (angleToRotate > Angle.Zero.inDegrees)
+      return angleToRotate - Angle.StraightAngleInDegrees
+
+    angleToRotate + Angle.StraightAngleInDegrees
+  }
+
 }

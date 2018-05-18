@@ -1182,46 +1182,6 @@ class Bitmap private(
   }
 
   /**
-   * Scales this bitmap in relation to its center.
-   *
-   * @param widthFactor
-   * @param heightFactor
-   *
-   * @return
-   */
-  override
-  def scaleBy(
-      widthFactor: Double,
-      heightFactor: Double): Bitmap = {
-
-    if (!isRenderable)
-      return this
-
-    require(widthFactor > 0, s"The scaling factors must be larger than zero (was $widthFactor)")
-    require(heightFactor > 0, s"The scaling factors must be larger than zero (was $heightFactor)")
-
-    val newBuffer = transformContentUsing(
-      AffineTransformation.forOrigoRelativeScalingOf(
-        widthFactor, heightFactor))
-
-    val newUpperLeftCorner =
-      boundary.center - (newBuffer.widthInPixels / 2.0, newBuffer.heightInPixels / 2.0)
-
-    val newLowerRightCorner =
-      newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
-
-    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
-    val newContentCorners = contentCorners // TODO: FIX: contentCorners.scaleBy(widthFactor, heightFactor)
-
-    internalCopy(
-      identity,
-      isRenderable,
-      newBounds,
-      newContentCorners,
-      Option(newBuffer))
-  }
-
-  /**
    *
    *
    * @param upperLeftXInPixels
@@ -1293,6 +1253,451 @@ class Bitmap private(
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
     val newContentCorners = BitmapContentCorners(newBounds)
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      newContentCorners,
+      Option(newBuffer))
+  }
+
+  /**
+   * Scales this object to a given width in relation to its center.
+   *
+   * @param targetWidth
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyTo(targetWidth: Double): Bitmap =
+    scaleHorizontallyTo(targetWidth, position)
+
+  /**
+   * Scales this object to a given width in relation to a given point.
+   *
+   * @param targetWidth
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyTo(
+      targetWidth: Double,
+      relativityPoint: Pos): Bitmap = {
+
+    scaleTo(
+      targetWidth,
+      targetHeight = height.inPixels,
+      relativityPoint = relativityPoint)
+  }
+
+  /**
+   * Scales this object to a given width in relation to the origo.
+   *
+   * @param targetWidth
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyToRelativeToOrigo(targetWidth: Double): Bitmap =
+    scaleToRelativeToOrigo(
+      targetWidth,
+      targetHeight = height.inPixels)
+
+  /**
+   * Scales this object to a given height in relation to its center.
+   *
+   * @param targetHeight
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyTo(targetHeight: Double): Bitmap =
+    scaleVerticallyTo(targetHeight, position)
+
+  /**
+   * Scales this object to a given height in relation to a given point.
+   *
+   * @param targetHeight
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyTo(
+      targetHeight: Double,
+      relativityPoint: Pos): Bitmap = {
+
+    scaleTo(
+      targetWidth = width.inPixels,
+      targetHeight = targetHeight,
+      relativityPoint = relativityPoint)
+  }
+
+  /**
+   * Scales this object to a given height in relation to the origo.
+   *
+   * @param targetHeight
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyToRelativeToOrigo(targetHeight: Double): Bitmap =
+    scaleToRelativeToOrigo(
+      targetWidth = width.inPixels,
+      targetHeight = targetHeight)
+
+  /**
+   * Scales this object in relation to its center by
+   * using a single length for both width and height.
+   *
+   * @param targetSideLength
+   *
+   * @return
+   */
+  override
+  def scaleTo(targetSideLength: Double): Bitmap =
+    scaleTo(targetSideLength, position)
+
+  /**
+   * Scales this object in relation to a given point by
+   * using a single length for both width and height.
+   *
+   * @param targetSideLength
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleTo(
+      targetSideLength: Double,
+      relativityPoint: Pos): Bitmap = {
+
+    scaleTo(
+      targetWidth = targetSideLength,
+      targetHeight = targetSideLength,
+      relativityPoint = relativityPoint)
+  }
+
+  /**
+   * Scales this object in relation to the origo by
+   * using a single length for both width and height.
+   *
+   * @param targetSideLength
+   *
+   * @return
+   */
+  override
+  def scaleToRelativeToOrigo(targetSideLength: Double): Bitmap =
+    scaleToRelativeToOrigo(
+      targetWidth = targetSideLength,
+      targetHeight = targetSideLength)
+
+  /**
+   * Scales this object to given width and height in relation to its center.
+   *
+   * @param targetWidth
+   * @param targetHeight
+   *
+   * @return
+   */
+  override
+  def scaleTo(
+      targetWidth: Double,
+      targetHeight: Double): Bitmap = {
+
+    scaleTo(targetWidth, targetHeight, position)
+  }
+
+  /**
+   * Scales this object to given width and height in relation to a given point.
+   *
+   * @param targetWidth
+   * @param targetHeight
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleTo(
+      targetWidth: Double,
+      targetHeight: Double,
+      relativityPoint: Pos): Bitmap = {
+
+    val (horizontalFactor, verticalFactor) =
+      scalingFactorsFor(targetWidth, targetHeight)
+
+    scaleBy(horizontalFactor, verticalFactor, relativityPoint)
+  }
+
+  /**
+   * Scales this object to given width and height in relation to the origo.
+   *
+   * @param targetWidth
+   * @param targetHeight
+   *
+   * @return
+   */
+  override
+  def scaleToRelativeToOrigo(
+      targetWidth: Double,
+      targetHeight: Double): Bitmap = {
+
+    val (horizontalFactor, verticalFactor) =
+      scalingFactorsFor(targetWidth, targetHeight)
+
+    scaleByRelativeToOrigo(horizontalFactor, verticalFactor)
+  }
+
+  /**
+   *
+   *
+   * @param targetWidth
+   * @param targetHeight
+   *
+   * @return
+   */
+  def scalingFactorsFor(
+      targetWidth: Double,
+      targetHeight: Double): (Double, Double) = {
+
+    val horizontalFactor = targetWidth / width.inPixels
+    val verticalFactor = targetHeight / height.inPixels
+
+    (horizontalFactor, verticalFactor)
+  }
+
+  /**
+   * Scales this object horizontally in relation to its center.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyBy(factor: Double): Bitmap =
+    scaleHorizontallyBy(factor, position)
+
+  /**
+   * Scales this object horizontally in relation to a given point.
+   *
+   * @param factor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyBy(
+      factor: Double,
+      relativityPoint: Pos): Bitmap = {
+
+    scaleBy(
+      horizontalFactor = factor,
+      verticalFactor = Scalable.IdentityScalingFactor,
+      relativityPoint = relativityPoint)
+  }
+
+  /**
+   * Scales this object horizontally in relation to the origo.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleHorizontallyByRelativeToOrigo(factor: Double): Bitmap =
+    scaleByRelativeToOrigo(
+      horizontalFactor = factor,
+      verticalFactor = Scalable.IdentityScalingFactor)
+
+  /**
+   * Scales this object vertically in relation to its center.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyBy(factor: Double): Bitmap =
+    scaleVerticallyBy(factor, position)
+
+  /**
+   * Scales this object vertically in relation to a given point.
+   *
+   * @param factor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyBy(
+      factor: Double,
+      relativityPoint: Pos): Bitmap = {
+
+    scaleBy(
+      horizontalFactor = Scalable.IdentityScalingFactor,
+      verticalFactor = factor,
+      relativityPoint = relativityPoint)
+  }
+
+  /**
+   * Scales this object vertically in relation to the origo.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleVerticallyByRelativeToOrigo(factor: Double): Bitmap =
+    scaleByRelativeToOrigo(
+      horizontalFactor = Scalable.IdentityScalingFactor,
+      verticalFactor = factor)
+
+  /**
+   * Scales this object in relation to its center by using a given factor
+   * for both horizontal and vertical directions.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleBy(factor: Double): Bitmap =
+    scaleBy(factor, position)
+
+  /**
+   * Scales this object in relation to a given point by using a given factor
+   * for both horizontal and vertical directions.
+   *
+   * @param factor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleBy(
+      factor: Double,
+      relativityPoint: Pos): Bitmap = {
+
+    scaleBy(
+      horizontalFactor = factor,
+      verticalFactor = factor,
+      relativityPoint = relativityPoint)
+  }
+
+  /**
+   * Scales this object in relation to the origo by using a given factor for
+   * both horizontal and vertical directions.
+   *
+   * @param factor
+   *
+   * @return
+   */
+  override
+  def scaleByRelativeToOrigo(factor: Double): Bitmap =
+    scaleByRelativeToOrigo(
+      horizontalFactor = factor,
+      verticalFactor = factor)
+
+  /**
+   * Scales this object by given horizontal and vertical factors in relation to its center.
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   *
+   * @return
+   */
+  override
+  def scaleBy(
+      horizontalFactor: Double,
+      verticalFactor: Double): Bitmap = {
+
+    scaleBy(horizontalFactor, verticalFactor, position)
+  }
+
+  /**
+   * Scales this object by given horizontal and vertical factors in relation to a given point.
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   * @param relativityPoint
+   *
+   * @return
+   */
+  override
+  def scaleBy(
+      horizontalFactor: Double,
+      verticalFactor: Double,
+      relativityPoint: Pos): Bitmap = {
+
+    if (!isRenderable)
+      return this
+
+    if (horizontalFactor == 0 || verticalFactor == 0)
+      return Bitmap()
+
+    val newCenter =
+      boundary.center.scaleBy(
+        horizontalFactor, verticalFactor, relativityPoint)
+
+    scaleByInternal(horizontalFactor, verticalFactor, newCenter)
+  }
+
+  /**
+   * Scales this object by given horizontal and vertical factors in relation to the origo.
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   *
+   * @return
+   */
+  override
+  def scaleByRelativeToOrigo(
+      horizontalFactor: Double,
+      verticalFactor: Double): Bitmap = {
+
+    if (!isRenderable)
+      return this
+
+    if (horizontalFactor == 0 || verticalFactor == 0)
+      return Bitmap()
+
+    val newCenter =
+      boundary.center.scaleByRelativeToOrigo(
+        horizontalFactor, verticalFactor)
+
+    scaleByInternal(horizontalFactor, verticalFactor, newCenter)
+  }
+
+  /**
+   *
+   *
+   * @param horizontalFactor
+   * @param verticalFactor
+   * @param newCenter
+   *
+   * @return
+   */
+  private
+  def scaleByInternal(
+      horizontalFactor: Double,
+      verticalFactor: Double,
+      newCenter: Pos): Bitmap = {
+
+    // TODO: Make content of the bitmap to flip when scaling factors are negative
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forOrigoRelativeScalingOf(
+        math.abs(horizontalFactor), math.abs(verticalFactor)))
+
+    val newUpperLeftCorner =
+      newCenter - (newBuffer.widthInPixels / 2.0, newBuffer.heightInPixels / 2.0)
+
+    val newLowerRightCorner =
+      newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
+
+    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+    val newContentCorners = contentCorners // TODO: FIX: contentCorners.scaleBy(widthFactor, heightFactor)
 
     internalCopy(
       identity,

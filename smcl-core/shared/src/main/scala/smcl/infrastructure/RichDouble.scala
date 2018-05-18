@@ -90,6 +90,25 @@ class RichDouble(val value: Double) {
   /**
    *
    *
+   * @return
+   */
+  def truncate: Double = {
+    if (value > 0)
+      return value.floor
+
+    value.ceil
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  def truncatedInt: Int = value.toInt
+
+  /**
+   *
+   *
    * @param other
    *
    * @return
