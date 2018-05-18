@@ -17,7 +17,7 @@
 package smcl.infrastructure.jvmawt
 
 
-import java.awt.geom.{AffineTransform, Ellipse2D}
+import java.awt.geom.{AffineTransform, Arc2D, Ellipse2D}
 import java.awt.{AlphaComposite, BasicStroke, Graphics2D}
 
 import smcl.colors.ColorValidator
@@ -61,7 +61,14 @@ private[smcl]
 class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     extends DrawingSurfaceAdapter {
 
+  /** A ``BasicStroke`` instance to represent as thin line as possible (i.e., width = 1 pixel). */
   private val HairlineStroke = new BasicStroke(0)
+
+  /** A static ``Arc2D.Double`` instance to minimize creation of new objects during rendering. */
+  private val StaticArc = new Arc2D.Double()
+
+  /** A static ``Ellipse2D.Double`` instance to minimize creation of new objects during rendering. */
+  private val StaticEllipse = new Ellipse2D.Double()
 
   /**
    *
@@ -111,8 +118,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       yInPixels: Double,
       opacity: Int): Boolean = {
 
-    val x = xInPixels.floor.toInt
-    val y = yInPixels.floor.toInt
+    val x = xInPixels.truncatedInt
+    val y = yInPixels.truncatedInt
 
     val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumOpacity
 
@@ -179,8 +186,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       yInPixels: Double,
       color: Color): Unit = {
 
-    val x = xInPixels.floor.toInt
-    val y = yInPixels.floor.toInt
+    val x = xInPixels.truncatedInt
+    val y = yInPixels.truncatedInt
 
     owner.withGraphics2D{g =>
       g.setColor(color.toAWTColor)
@@ -212,8 +219,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color,
       fillColor: Color): Unit = {
 
-    val upperLeftX: Int = boundingBoxUpperLeftX.floor.toInt
-    val upperLeftY: Int = boundingBoxUpperLeftY.floor.toInt
+    val upperLeftX: Int = boundingBoxUpperLeftX.truncatedInt
+    val upperLeftY: Int = boundingBoxUpperLeftY.truncatedInt
     val width: Int = widthInPixels.floor.toInt
     val height: Int = heightInPixels.floor.toInt
 
@@ -235,8 +242,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    *
    * @param xOffsetToOrigoInPixels
    * @param yOffsetToOrigoInPixels
-   * @param xPositionInPixels
-   * @param yPositionInPixels
+   * @param xPositionOfCenterInPixels
+   * @param yPositionOfCenterInPixels
    * @param widthInPixels
    * @param heightInPixels
    * @param startAngleInDegrees
@@ -253,8 +260,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
   def drawArc(
       xOffsetToOrigoInPixels: Double,
       yOffsetToOrigoInPixels: Double,
-      xPositionInPixels: Double,
-      yPositionInPixels: Double,
+      xPositionOfCenterInPixels: Double,
+      yPositionOfCenterInPixels: Double,
       widthInPixels: Double,
       heightInPixels: Double,
       startAngleInDegrees: Double,
@@ -270,14 +277,20 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
     val scaledWidth = (scaleFactorX * widthInPixels.floor).truncate
     val scaledHeight = (scaleFactorY * heightInPixels.floor).truncate
 
-    val upperLeftX = (scaledWidth / 2.0).truncate
-    val upperLeftY = (scaledHeight / 2.0).truncate
+    val upperLeftXOffsetFromCenter = (scaledWidth / 2.0).truncate
+    val upperLeftYOffsetFromCenter = (scaledHeight / 2.0).truncate
+
+    val representsCompleteCycle = arcAngleInDegrees.abs >= 360
 
     owner.withGraphics2D{g =>
+      g.setTransform(AffineTransform.getTranslateInstance(
+        xOffsetToOrigoInPixels.truncate + xPositionOfCenterInPixels.truncate,
+        yOffsetToOrigoInPixels.truncate + yPositionOfCenterInPixels.truncate))
+
       g.setStroke(HairlineStroke)
 
       // If drawing a complete cycle, check if the cycle represents a small circle
-      if (arcAngleInDegrees >= 360 &&
+      if (representsCompleteCycle &&
           ((scaledWidth == 1.0 && scaledHeight == 1.0)
               || (scaledWidth == 2.0 && scaledHeight == 2.0))) {
 
@@ -293,16 +306,17 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
             g.setColor(fillColor.toAWTColor)
           }
 
-          g.setTransform(g.getDeviceConfiguration.getDefaultTransform)
-          g.translate(
-            xOffsetToOrigoInPixels + xPositionInPixels,
-            yOffsetToOrigoInPixels + yPositionInPixels)
-
           if (scaledWidth == 1.0) {
-            g.fillRect(upperLeftX.toInt, upperLeftY.toInt, 1, 1)
+            g.fillRect(
+              upperLeftXOffsetFromCenter.toInt,
+              upperLeftYOffsetFromCenter.toInt,
+              1, 1)
           }
           else {
-            g.fillRect(upperLeftX.toInt - 2, upperLeftY.toInt - 2, 2, 2)
+            g.fillRect(
+              upperLeftXOffsetFromCenter.toInt - 2,
+              upperLeftYOffsetFromCenter.toInt - 2,
+              2, 2)
           }
         }
       }
@@ -311,180 +325,190 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
         // General case for all arcs
         //
 
-        //g.setTransform(g.getDeviceConfiguration.getDefaultTransform)
-        //g.setTransform(AffineTransform.getTranslateInstance(0.0, 0.0))
+        if (rotationAngleInDegrees != 0.0)
+          g.rotate(rotationAngleInDegrees)
 
         if (hasFilling && !hasBorder) {
-          g.setTransform(AffineTransform.getTranslateInstance(
-            xOffsetToOrigoInPixels + xPositionInPixels,
-            yOffsetToOrigoInPixels + yPositionInPixels))
-
-          if (rotationAngleInDegrees != 0.0)
-            g.rotate(rotationAngleInDegrees)
 
           g.setColor(fillColor.toAWTColor)
 
-          /*
-          g.fillOval(
-            -upperLeftX.toInt - 1,
-            -upperLeftY.toInt - 1,
-            (scaledWidth + 1).toInt,
-            (scaledHeight + 1).toInt)
-          // */
-
-          /*
-          val shape = new Arc2D.Double(
-            -upperLeftX - 0.5,
-            -upperLeftY - 0.5,
-            scaledWidth,
-            scaledHeight,
-            startAngleInDegrees,
-            arcAngleInDegrees,
-            Arc2D.OPEN)
-
-          g.fill(shape)
-          // */
-
-          //*
           val ulX =
-            if (xOffsetToOrigoInPixels + xPositionInPixels - upperLeftX > 0)
-              -upperLeftX + 0.5
+            if (xOffsetToOrigoInPixels + xPositionOfCenterInPixels - upperLeftXOffsetFromCenter > 0)
+              -upperLeftXOffsetFromCenter + 0.5
             else
-              -upperLeftX - 0.5
+              -upperLeftXOffsetFromCenter - 0.5
 
           val ulY =
-            if (yOffsetToOrigoInPixels + yPositionInPixels - upperLeftY > 0)
-              -upperLeftY + 0.5
+            if (yOffsetToOrigoInPixels + yPositionOfCenterInPixels - upperLeftYOffsetFromCenter > 0)
+              -upperLeftYOffsetFromCenter + 0.5
             else
-              -upperLeftY - 0.5
+              -upperLeftYOffsetFromCenter - 0.5
 
-          val s = new Ellipse2D.Double(
-            ulX,
-            ulY,
-            scaledWidth,
-            scaledHeight)
+          if (representsCompleteCycle) {
+            // The arc represents a circle or an ellipse
 
-          g.fill(s)
-          // */
+            /*
+            g.fillOval(
+              -upperLeftXOffsetFromCenter.toInt - 1,
+              -upperLeftYOffsetFromCenter.toInt - 1,
+              (scaledWidth + 1).toInt,
+              (scaledHeight + 1).toInt)
+            // */
+
+            //*
+            StaticEllipse.setFrame(
+              ulX,
+              ulY,
+              scaledWidth,
+              scaledHeight)
+
+            g.fill(StaticEllipse)
+            // */
+          }
+          else {
+            // The arc does not represent a circle or an ellipse
+
+            StaticArc.setArc(
+              ulX,
+              ulY,
+              scaledWidth,
+              scaledHeight,
+              startAngleInDegrees,
+              arcAngleInDegrees,
+              Arc2D.OPEN)
+
+            g.fill(StaticArc)
+          }
         }
         else if (hasBorder && !hasFilling) {
-          g.setTransform(AffineTransform.getTranslateInstance(
-            xOffsetToOrigoInPixels + xPositionInPixels,
-            yOffsetToOrigoInPixels + yPositionInPixels))
-
-          if (rotationAngleInDegrees != 0.0)
-            g.rotate(rotationAngleInDegrees)
-
           g.setColor(color.toAWTColor)
 
-          /*
-          g.drawOval(
-            -upperLeftX.toInt,
-            -upperLeftY.toInt,
-            (scaledWidth - 1).toInt,
-            (scaledHeight - 1).toInt)
-          // */
+          if (representsCompleteCycle) {
+            // The arc represents a circle or an ellipse
 
-          /*
-          val shape = new Arc2D.Double(
-            -upperLeftX,
-            -upperLeftY,
-            scaledWidth - 1,
-            scaledHeight - 1,
-            startAngleInDegrees,
-            arcAngleInDegrees,
-            Arc2D.OPEN)
+            /*
+            g.drawOval(
+              -upperLeftXOffsetFromCenter.toInt,
+              -upperLeftYOffsetFromCenter.toInt,
+              (scaledWidth - 1).toInt,
+              (scaledHeight - 1).toInt)
+            // */
 
-          g.draw(shape)
-          // */
+            //*
+            StaticEllipse.setFrame(
+              -upperLeftXOffsetFromCenter,
+              -upperLeftYOffsetFromCenter,
+              scaledWidth - 1,
+              scaledHeight - 1)
 
-          //*
-          val s = new Ellipse2D.Double(
-            -upperLeftX,
-            -upperLeftY,
-            scaledWidth - 1,
-            scaledHeight - 1)
+            g.draw(StaticEllipse)
+            // */
+          }
+          else {
+            // The arc does not represent a circle or an ellipse
 
-          g.draw(s)
-          // */
+            StaticArc.setArc(
+              -upperLeftXOffsetFromCenter,
+              -upperLeftYOffsetFromCenter,
+              scaledWidth - 1,
+              scaledHeight - 1,
+              startAngleInDegrees,
+              arcAngleInDegrees,
+              Arc2D.OPEN)
+
+            g.draw(StaticArc)
+          }
         }
         else {
           // Has both border and filling
 
-          g.setTransform(AffineTransform.getTranslateInstance(
-            xOffsetToOrigoInPixels + xPositionInPixels,
-            yOffsetToOrigoInPixels + yPositionInPixels))
+          val fillingUpperLeftX =
+            if (xOffsetToOrigoInPixels + xPositionOfCenterInPixels - upperLeftXOffsetFromCenter > 0)
+              -upperLeftXOffsetFromCenter + 0.5
+            else
+              -upperLeftXOffsetFromCenter
 
-          if (rotationAngleInDegrees != 0.0)
-            g.rotate(rotationAngleInDegrees)
+          val fillingUpperLeftY =
+            if (yOffsetToOrigoInPixels + yPositionOfCenterInPixels - upperLeftYOffsetFromCenter > 0)
+              -upperLeftYOffsetFromCenter + 0.5
+            else
+              -upperLeftYOffsetFromCenter
 
-          g.setStroke(HairlineStroke)
           g.setColor(fillColor.toAWTColor)
 
-          /*
-          g.fillOval(
-            -upperLeftX.toInt,
-            -upperLeftY.toInt,
-            (scaledWidth - 1).toInt,
-            (scaledHeight - 1).toInt)
-          // */
+          if (representsCompleteCycle) {
+            // The arc represents a circle or an ellipse
 
-          /*
-          val fillingShape = new Arc2D.Double(
-            -upperLeftX,
-            -upperLeftY,
-            scaledWidth - 1,
-            scaledHeight - 1,
-            startAngleInDegrees,
-            arcAngleInDegrees,
-            Arc2D.OPEN)
+            /*
+            g.fillOval(
+              -upperLeftXOffsetFromCenter.toInt,
+              -upperLeftYOffsetFromCenter.toInt,
+              (scaledWidth - 1).toInt,
+              (scaledHeight - 1).toInt)
+            // */
 
-          g.fill(fillingShape)
-          // */
+            //*
+            StaticEllipse.setFrame(
+              fillingUpperLeftX,
+              fillingUpperLeftY,
+              scaledWidth - 1,
+              scaledHeight - 1)
 
-          //*
-          val fillingShape = new Ellipse2D.Double(
-            -upperLeftX,
-            -upperLeftY,
-            scaledWidth - 1,
-            scaledHeight - 1)
+            g.fill(StaticEllipse)
+            // */
+          }
+          else {
+            // The arc does not represent a circle or an ellipse
 
-          g.fill(fillingShape)
-          // */
+            StaticArc.setArc(
+              fillingUpperLeftX,
+              fillingUpperLeftY,
+              scaledWidth - 1,
+              scaledHeight - 1,
+              startAngleInDegrees,
+              arcAngleInDegrees,
+              Arc2D.OPEN)
 
-          g.setStroke(HairlineStroke)
+            g.fill(StaticArc)
+          }
+
           g.setColor(color.toAWTColor)
 
-          /*
-          g.drawOval(
-            -upperLeftX.toInt,
-            -upperLeftY.toInt,
-            (scaledWidth - 1).toInt,
-            (scaledHeight - 1).toInt)
-          // */
+          if (representsCompleteCycle) {
+            // The arc represents a circle or an ellipse
 
-          /*
-          val borderShape = new Arc2D.Double(
-            -upperLeftX,
-            -upperLeftY,
-            scaledWidth - 1,
-            scaledHeight - 1,
-            startAngleInDegrees,
-            arcAngleInDegrees,
-            Arc2D.OPEN)
+            /*
+            g.drawOval(
+              -upperLeftXOffsetFromCenter.toInt,
+              -upperLeftYOffsetFromCenter.toInt,
+              (scaledWidth - 1).toInt,
+              (scaledHeight - 1).toInt)
+            // */
 
-          g.draw(borderShape)
-          // */
+            //*
+            StaticEllipse.setFrame(
+              -upperLeftXOffsetFromCenter,
+              -upperLeftYOffsetFromCenter,
+              scaledWidth - 1,
+              scaledHeight - 1)
 
-          //*
-          val borderShape = new Ellipse2D.Double(
-            -upperLeftX,
-            -upperLeftY,
-            scaledWidth - 1,
-            scaledHeight - 1)
+            g.draw(StaticEllipse)
+            // */
+          }
+          else {
+            // The arc does not represent a circle or an ellipse
 
-          g.draw(borderShape)
-          // */
+            StaticArc.setArc(
+              -upperLeftXOffsetFromCenter,
+              -upperLeftYOffsetFromCenter,
+              scaledWidth - 1,
+              scaledHeight - 1,
+              startAngleInDegrees,
+              arcAngleInDegrees,
+              Arc2D.OPEN)
+
+            g.draw(StaticArc)
+          }
         }
       }
     }
@@ -514,8 +538,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color,
       fillColor: Color): Unit = {
 
-    val upperLeftX: Int = upperLeftCornerXInPixels.floor.toInt
-    val upperLeftY: Int = upperLeftCornerYInPixels.floor.toInt
+    val upperLeftX: Int = upperLeftCornerXInPixels.truncatedInt
+    val upperLeftY: Int = upperLeftCornerYInPixels.truncatedInt
     val width: Int = widthInPixels.floor.toInt
     val height: Int = heightInPixels.floor.toInt
 
@@ -559,8 +583,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color,
       fillColor: Color): Unit = {
 
-    val upperLeftX: Int = upperLeftCornerXInPixels.floor.toInt
-    val upperLeftY: Int = upperLeftCornerYInPixels.floor.toInt
+    val upperLeftX: Int = upperLeftCornerXInPixels.truncatedInt
+    val upperLeftY: Int = upperLeftCornerYInPixels.truncatedInt
     val width: Int = widthInPixels.floor.toInt
     val height: Int = heightInPixels.floor.toInt
     val roundingWidth: Int = roundingWidthInPixels.floor.toInt
@@ -594,8 +618,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       numberOfCoordinatesToDraw: Int,
       color: Color): Unit = {
 
-    val xs = xCoordinates.map(_.floor.toInt).toArray
-    val ys = yCoordinates.map(_.floor.toInt).toArray
+    val xs = xCoordinates.map(_.truncatedInt).toArray
+    val ys = yCoordinates.map(_.truncatedInt).toArray
 
     owner.withGraphics2D{g =>
       g.setColor(color.toAWTColor)
@@ -624,8 +648,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color,
       fillColor: Color): Unit = {
 
-    val xs = xCoordinates.map(_.floor.toInt).toArray
-    val ys = yCoordinates.map(_.floor.toInt).toArray
+    val xs = xCoordinates.map(_.truncatedInt).toArray
+    val ys = yCoordinates.map(_.truncatedInt).toArray
 
     owner.withGraphics2D{g =>
       if (hasFilling) {
@@ -657,10 +681,10 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       toYInPixels: Double,
       color: Color): Unit = {
 
-    val startX = fromXInPixels.floor.toInt
-    val startY = fromYInPixels.floor.toInt
-    val endX = toXInPixels.floor.toInt
-    val endY = toYInPixels.floor.toInt
+    val startX = fromXInPixels.truncatedInt
+    val startY = fromYInPixels.truncatedInt
+    val endX = toXInPixels.truncatedInt
+    val endY = toYInPixels.truncatedInt
 
     owner.withGraphics2D{g =>
       g.setColor(color.toAWTColor)
