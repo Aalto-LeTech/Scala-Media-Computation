@@ -1471,8 +1471,9 @@ case class Pos private[smcl](
    */
   @inline
   override final
-  def scaleByRelativeToOrigo(factor: Double): Pos =
+  def scaleByRelativeToOrigo(factor: Double): Pos = {
     Transformer.scale(this, factor)
+  }
 
   /**
    * Scales this object by given horizontal and vertical factors in relation to its center.

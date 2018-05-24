@@ -104,10 +104,11 @@ object Line {
       end: Pos,
       color: rgb.Color = DefaultPrimaryColor): VectorGraphic = {
 
-    val points = Seq(start, end)
+    val points = Seq(Pos.Origo, end - start)
 
     // TODO: Change to Polyline after it is implemented
     Polygon(
+      start,
       points,
       hasBorder = true,
       hasFilling = false,

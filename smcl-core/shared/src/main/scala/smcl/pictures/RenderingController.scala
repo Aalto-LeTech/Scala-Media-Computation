@@ -66,6 +66,8 @@ object RenderingController
     val flooredWidth = bounds.width.floor
     val flooredHeight = bounds.height.floor
 
+    // println(s"${bounds.width.inPixels} x ${bounds.height.inPixels}  ---> $flooredWidth x $flooredHeight")
+
     if (flooredWidth < 1 || flooredHeight < 1)
       return Bitmap(0, 0)
 
@@ -171,47 +173,30 @@ object RenderingController
     }
     else if (contentItem.isPoint) {
       val pnt = contentItem.asInstanceOf[Point]
-      val topLeftX = xOffsetToOrigoInPixels + pnt.position.xInPixels
-      val topLeftY = yOffsetToOrigoInPixels + pnt.position.yInPixels
 
-      targetDrawingSurface.drawPoint(topLeftX, topLeftY, pnt.color)
+      targetDrawingSurface.drawPoint(
+        xOffsetToOrigoInPixels, yOffsetToOrigoInPixels,
+        pnt.position.xInPixels, pnt.position.yInPixels,
+        pnt.color)
     }
     else if (contentItem.isPolygon) {
       val pgon = contentItem.asInstanceOf[Polygon]
-      if (pgon.points.isEmpty)
+      if (pgon.pointsRelativeToPosition.isEmpty)
         return
 
-      val points = pgon.points
+      val position = pgon.position
+      val points = pgon.pointsRelativeToPosition
 
-      if (points.lengthCompare(1) == 0) {
-        val p = points.head
-        val x = xOffsetToOrigoInPixels + p.xInPixels
-        val y = yOffsetToOrigoInPixels + p.yInPixels
+      val (xs, ys) = points.unzip[Double, Double]
 
-        targetDrawingSurface.drawPoint(x, y, pgon.color)
-      }
-      else if (points.lengthCompare(2) == 0) {
-        val start = points.head
-        val end = points.tail.head
-        val xStart = xOffsetToOrigoInPixels + start.xInPixels
-        val yStart = yOffsetToOrigoInPixels + start.yInPixels
-        val xEnd = xOffsetToOrigoInPixels + end.xInPixels
-        val yEnd = yOffsetToOrigoInPixels + end.yInPixels
-
-        targetDrawingSurface.drawLine(xStart, yStart, xEnd, yEnd, pgon.color)
-      }
-      else {
-        val (rawXs, rawYs) = points.unzip[Double, Double]
-        val xs = rawXs.map(xOffsetToOrigoInPixels + _)
-        val ys = rawYs.map(yOffsetToOrigoInPixels + _)
-
-        targetDrawingSurface.drawPolygon(
-          xs, ys, points.length,
-          pgon.hasBorder,
-          pgon.hasFilling,
-          pgon.color,
-          pgon.fillColor)
-      }
+      targetDrawingSurface.drawPolygon(
+        xOffsetToOrigoInPixels, yOffsetToOrigoInPixels,
+        position.xInPixels, position.yInPixels,
+        xs, ys, points.length,
+        pgon.hasBorder,
+        pgon.hasFilling,
+        pgon.color,
+        pgon.fillColor)
     }
     else {
       throw new IllegalStateException("Unknown image element")

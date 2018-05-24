@@ -188,11 +188,12 @@ object StarPentagon {
         s"Length of star pentagon's cuspradius cannot be negative (was: $cuspRadiusInPixels).")
     }
 
-    val outerPoints = Pentagon.pointsFor(circumRadiusInPixels, center, Angle.Zero).toList
-    val innerPoints = cuspRadiusPointsFor(cuspRadiusInPixels, center).toList
+    val outerPoints = Pentagon.pointsFor(circumRadiusInPixels, Angle.Zero).toList
+    val innerPoints = cuspRadiusPointsFor(cuspRadiusInPixels).toList
     val points = ListUtils.intersperse(outerPoints, innerPoints)
 
     Polygon(
+      center,
       points,
       hasBorder, hasFilling,
       color, fillColor)
@@ -202,15 +203,11 @@ object StarPentagon {
    *
    *
    * @param cuspRadiusInPixels
-   * @param center
    *
    * @return
    */
-  def cuspRadiusPointsFor(
-      cuspRadiusInPixels: Double,
-      center: Pos): Seq[Pos] = {
-
-    Pentagon.pointsFor(cuspRadiusInPixels, center, Pentagon.RotationalSymmetryAngle.half)
+  def cuspRadiusPointsFor(cuspRadiusInPixels: Double): Seq[Pos] = {
+    Pentagon.pointsFor(cuspRadiusInPixels, Pentagon.RotationalSymmetryAngle.half)
   }
 
 }

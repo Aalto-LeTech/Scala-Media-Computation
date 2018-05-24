@@ -68,7 +68,7 @@ trait PictureElement
    *
    * @return
    */
-  def points: Seq[Pos] = Seq()
+  def pointsRelativeToPosition: Seq[Pos] = Seq()
 
   /**
    * The unique identity of this [[PictureElement]].

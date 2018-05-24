@@ -483,6 +483,8 @@ object Transformer {
       horizontalScalingFactor: Double,
       verticalScalingFactor: Double): Pos = {
 
+    println(s"------> $position; $horizontalScalingFactor / $verticalScalingFactor")
+
     Pos(
       horizontalScalingFactor * position.xInPixels,
       verticalScalingFactor * position.yInPixels)

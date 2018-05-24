@@ -19,6 +19,7 @@ package smcl.pictures
 
 import smcl.colors
 import smcl.colors.rgb
+import smcl.infrastructure.DoubleWrapper
 import smcl.modeling.d2.Pos
 import smcl.settings._
 
@@ -35,13 +36,13 @@ object Rectangle {
   /**
    *
    *
-   * @param sideLength
+   * @param sideLengthInPixels
    *
    * @return
    */
-  def apply(sideLength: Double): VectorGraphic =
+  def apply(sideLengthInPixels: Double): VectorGraphic =
     apply(
-      sideLength,
+      sideLengthInPixels,
       hasBorder = ShapesHaveBordersByDefault,
       hasFilling = ShapesHaveFillingsByDefault,
       color = DefaultPrimaryColor,
@@ -50,7 +51,7 @@ object Rectangle {
   /**
    *
    *
-   * @param sideLength
+   * @param sideLengthInPixels
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -59,14 +60,14 @@ object Rectangle {
    * @return
    */
   def apply(
-      sideLength: Double,
+      sideLengthInPixels: Double,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: colors.rgb.Color,
       fillColor: rgb.Color): VectorGraphic = {
 
     apply(
-      sideLength,
+      sideLengthInPixels,
       Pos.Origo,
       hasBorder, hasFilling,
       color, fillColor)
@@ -75,17 +76,17 @@ object Rectangle {
   /**
    *
    *
-   * @param sideLength
+   * @param sideLengthInPixels
    * @param center
    *
    * @return
    */
   def apply(
-      sideLength: Double,
+      sideLengthInPixels: Double,
       center: Pos): VectorGraphic = {
 
     apply(
-      sideLength,
+      sideLengthInPixels,
       center,
       hasBorder = ShapesHaveBordersByDefault,
       hasFilling = ShapesHaveFillingsByDefault,
@@ -96,7 +97,7 @@ object Rectangle {
   /**
    *
    *
-   * @param sideLength
+   * @param sideLengthInPixels
    * @param center
    * @param hasBorder
    * @param hasFilling
@@ -106,15 +107,20 @@ object Rectangle {
    * @return
    */
   def apply(
-      sideLength: Double,
+      sideLengthInPixels: Double,
       center: Pos,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: rgb.Color,
       fillColor: rgb.Color): VectorGraphic = {
 
+    if (sideLengthInPixels < 0.0) {
+      throw new IllegalArgumentException(
+        s"Rectangle's side length cannot be negative (was: $sideLengthInPixels).")
+    }
+
     apply(
-      sideLength, sideLength,
+      sideLengthInPixels, sideLengthInPixels,
       center,
       hasBorder, hasFilling,
       color, fillColor)
@@ -123,17 +129,17 @@ object Rectangle {
   /**
    *
    *
-   * @param baseLength
-   * @param height
+   * @param baseLengthInPixels
+   * @param heightInPixels
    *
    * @return
    */
   def apply(
-      baseLength: Double,
-      height: Double): VectorGraphic = {
+      baseLengthInPixels: Double,
+      heightInPixels: Double): VectorGraphic = {
 
     apply(
-      baseLength, height,
+      baseLengthInPixels, heightInPixels,
       Pos.Origo,
       hasBorder = ShapesHaveBordersByDefault,
       hasFilling = ShapesHaveFillingsByDefault,
@@ -144,8 +150,8 @@ object Rectangle {
   /**
    *
    *
-   * @param baseLength
-   * @param height
+   * @param baseLengthInPixels
+   * @param heightInPixels
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -154,15 +160,15 @@ object Rectangle {
    * @return
    */
   def apply(
-      baseLength: Double,
-      height: Double,
+      baseLengthInPixels: Double,
+      heightInPixels: Double,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: rgb.Color,
       fillColor: rgb.Color): VectorGraphic = {
 
     apply(
-      baseLength, height,
+      baseLengthInPixels, heightInPixels,
       Pos.Origo,
       hasBorder, hasFilling,
       color, fillColor)
@@ -171,8 +177,8 @@ object Rectangle {
   /**
    *
    *
-   * @param baseLength
-   * @param height
+   * @param baseLengthInPixels
+   * @param heightInPixels
    * @param center
    * @param hasBorder
    * @param hasFilling
@@ -182,25 +188,52 @@ object Rectangle {
    * @return
    */
   def apply(
-      baseLength: Double,
-      height: Double,
+      baseLengthInPixels: Double,
+      heightInPixels: Double,
       center: Pos,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: rgb.Color = DefaultPrimaryColor,
       fillColor: rgb.Color = DefaultSecondaryColor): VectorGraphic = {
 
-    val halfBase = (baseLength - 1) / 2.0
-    val halfHeight = (height - 1) / 2.0
+    if (baseLengthInPixels < 0.0) {
+      throw new IllegalArgumentException(
+        s"Rectangle's base length cannot be negative (was: $baseLengthInPixels).")
+    }
 
-    val cornerPoints = Seq(
-      center + (-halfBase, halfHeight),
-      center + (halfBase, halfHeight),
-      center + (halfBase, -halfHeight),
-      center + (-halfBase, -halfHeight))
+    if (heightInPixels < 0.0) {
+      throw new IllegalArgumentException(
+        s"Rectangle's height cannot be negative (was: $heightInPixels).")
+    }
 
-    // TODO: When no filling, create a Polyline, after it is implemented
+    val cornerPoints =
+      if (baseLengthInPixels > 0.0 && heightInPixels > 0.0) {
+        val ulX = {
+          val x = -baseLengthInPixels / 2.0
+
+          if (baseLengthInPixels >= 1.0) x.truncate else x
+        }
+        val lrX = ulX + baseLengthInPixels - 1
+
+        val ulY = {
+          val y = -heightInPixels / 2.0
+
+          if (heightInPixels >= 1.0) y.truncate else y
+        }
+        val lrY = ulY + heightInPixels - 1
+
+        Seq(
+          Pos(ulX, ulY),
+          Pos(lrX, ulY),
+          Pos(lrX, lrY),
+          Pos(ulX, lrY))
+      }
+      else {
+        Seq()
+      }
+
     Polygon(
+      center,
       cornerPoints,
       hasBorder, hasFilling,
       color, fillColor)

@@ -19,6 +19,8 @@ package smcl.modeling.d2
 
 import scala.annotation.tailrec
 
+import smcl.pictures.PictureElement
+
 
 
 
@@ -48,7 +50,7 @@ object BoundaryCalculator {
    *
    * @return
    */
-  def fromBoundaries(elements: Seq[HasBounds]): Bounds = {
+  def fromBoundaries(elements: Seq[PictureElement]): Bounds = {
     if (elements == null) {
       return Bounds.NotDefined
     }
@@ -59,7 +61,10 @@ object BoundaryCalculator {
       Bounds.NotDefined
     }
     if (numberOfElements == 1) {
-      elements.head.boundary
+      if (elements.head.isRenderable)
+        elements.head.boundary
+      else
+        Bounds.NotDefined
     }
     else {
       fromBoundariesRecursive(
@@ -85,7 +90,7 @@ object BoundaryCalculator {
   @tailrec
   private
   def fromBoundariesRecursive(
-      it: Iterator[HasBounds], foundOneBoundary: Boolean,
+      it: Iterator[PictureElement], foundOneBoundary: Boolean,
       x0: Double, y0: Double, x1: Double, y1: Double): Bounds = {
 
     if (!it.hasNext) {
@@ -95,9 +100,10 @@ object BoundaryCalculator {
       return Bounds.NotDefined
     }
 
-    val boundary = it.next().boundary
+    val element = it.next()
 
-    if (boundary.isDefined) {
+    if (element.isRenderable && element.boundary.isDefined) {
+      val boundary = element.boundary
       val ul = boundary.upperLeftCorner
       val lr = boundary.lowerRightCorner
 
@@ -125,7 +131,7 @@ object BoundaryCalculator {
   @inline
   final
   def fromPositions(position: Pos): Bounds = {
-    Bounds(position)
+    Bounds(position, position + (1, 1))
   }
 
   /**
@@ -149,7 +155,7 @@ object BoundaryCalculator {
       else
         (b.yInPixels, a.yInPixels)
 
-    Bounds(xMin, yMin, xMax, yMax)
+    Bounds(xMin, yMin, xMax + 1, yMax + 1)
   }
 
   /**
@@ -232,7 +238,7 @@ object BoundaryCalculator {
       }
     }
 
-    Bounds(xMin, yMin, xMax, yMax)
+    Bounds(xMin, yMin, xMax + 1, yMax + 1)
   }
 
   /**
@@ -295,7 +301,7 @@ object BoundaryCalculator {
 
     if (!it.hasNext) {
       if (foundOneBoundary)
-        return Bounds(x0, y0, x1, y1)
+        return Bounds(x0, y0, x1 + 1, y1 + 1)
 
       return Bounds.NotDefined
     }

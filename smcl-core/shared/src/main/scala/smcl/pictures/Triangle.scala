@@ -431,25 +431,18 @@ object Triangle {
       color: rgb.Color,
       fillColor: rgb.Color): VectorGraphic = {
 
-    val correctedHalfHeight = halfHeight - 0.5
-
-    val correctedHalfBase = halfBase - 0.5
-
-    val firstCorner: Pos = Pos(
-      center.xInPixels,
-      center.yInPixels - correctedHalfHeight)
-
-    val bottomY = center.yInPixels + correctedHalfHeight
+    val firstCorner: Pos = Pos(0, -halfHeight)
 
     val secondCorner: Pos = Pos(
-      center.xInPixels + correctedHalfBase,
-      bottomY)
+      center.xInPixels + halfBase,
+      halfHeight)
 
     val thirdCorner: Pos = Pos(
-      center.xInPixels - correctedHalfBase,
-      bottomY)
+      center.xInPixels - halfBase,
+      halfHeight)
 
     apply(
+      center,
       firstCorner, secondCorner, thirdCorner,
       hasBorder, hasFilling,
       color, fillColor)
@@ -565,7 +558,7 @@ object Triangle {
             (2 * leftSideLength * baseLength))
 
     val prelimTop =
-      Pos(leftSideLength, 0).rotateByAroundOrigo(-leftAngle)
+      Pos(leftSideLength, 0).rotateByAroundOrigo(leftAngle)
 
     val xOffset =
       if (leftAngle <= Angle.RightAngleInDegrees) {
@@ -582,20 +575,17 @@ object Triangle {
     val halfHeight = (prelimTop.yInPixels - 1) / 2.0
 
     val firstCorner: Pos = Pos(
-      center.xInPixels + prelimTop.xInPixels + xOffset,
-      center.yInPixels - halfHeight)
+      prelimTop.xInPixels + xOffset,
+      -halfHeight)
 
-    val bottomY = center.yInPixels + halfHeight
-
-    val secondCorner: Pos = Pos(
-      center.xInPixels + xOffset,
-      bottomY)
+    val secondCorner: Pos = Pos(xOffset, halfHeight)
 
     val thirdCorner: Pos = Pos(
       secondCorner.xInPixels + baseLength,
-      bottomY)
+      halfHeight)
 
     apply(
+      center,
       firstCorner, secondCorner, thirdCorner,
       hasBorder, hasFilling,
       color, fillColor)
@@ -604,9 +594,10 @@ object Triangle {
   /**
    * Creates a new (expectedly) scalene triangle.
    *
-   * @param firstCorner
-   * @param secondCorner
-   * @param thirdCorner
+   * @param center
+   * @param firstCornerRelativeToCenter
+   * @param secondCornerRelativeToCenter
+   * @param thirdCornerRelativeToCenter
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -614,20 +605,24 @@ object Triangle {
    *
    * @return
    */
+  private
   def apply(
-      firstCorner: Pos,
-      secondCorner: Pos,
-      thirdCorner: Pos,
+      center: Pos,
+      firstCornerRelativeToCenter: Pos,
+      secondCornerRelativeToCenter: Pos,
+      thirdCornerRelativeToCenter: Pos,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: rgb.Color = DefaultPrimaryColor,
       fillColor: rgb.Color = DefaultSecondaryColor): VectorGraphic = {
 
-    val points: Seq[Pos] =
-      Seq(firstCorner, secondCorner, thirdCorner)
+    val points: Seq[Pos] = Seq(
+      firstCornerRelativeToCenter,
+      secondCornerRelativeToCenter,
+      thirdCornerRelativeToCenter)
 
     // TODO: When no filling, create a Polyline, after it is implemented
-    Polygon(points, hasBorder, hasFilling, color, fillColor)
+    Polygon(center, points, hasBorder, hasFilling, color, fillColor)
   }
 
   /**

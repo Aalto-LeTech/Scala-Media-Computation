@@ -176,20 +176,25 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
   /**
    *
    *
+   * @param xOffsetToOrigoInPixels
+   * @param yOffsetToOrigoInPixels
    * @param xInPixels
    * @param yInPixels
    * @param color
    */
   override
   def drawPoint(
+      xOffsetToOrigoInPixels: Double,
+      yOffsetToOrigoInPixels: Double,
       xInPixels: Double,
       yInPixels: Double,
       color: Color): Unit = {
 
-    val x = xInPixels.truncatedInt
-    val y = yInPixels.truncatedInt
+    val x = xOffsetToOrigoInPixels.truncatedInt + xInPixels.truncatedInt
+    val y = yOffsetToOrigoInPixels.truncatedInt + yInPixels.truncatedInt
 
     owner.withGraphics2D{g =>
+      g.setStroke(HairlineStroke)
       g.setColor(color.toAWTColor)
       g.drawLine(x, y, x, y)
     }
@@ -640,6 +645,10 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
    */
   override
   def drawPolygon(
+      xOffsetToOrigoInPixels: Double,
+      yOffsetToOrigoInPixels: Double,
+      xPositionInPixels: Double,
+      yPositionInPixels: Double,
       xCoordinates: Seq[Double],
       yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
@@ -648,18 +657,41 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color,
       fillColor: Color): Unit = {
 
-    val xs = xCoordinates.map(_.truncatedInt).toArray
-    val ys = yCoordinates.map(_.truncatedInt).toArray
+    if (numberOfCoordinatesToDraw == 1) {
+      drawPoint(
+        xOffsetToOrigoInPixels,
+        yOffsetToOrigoInPixels,
+        xPositionInPixels + xCoordinates.head,
+        yPositionInPixels + yCoordinates.head,
+        color)
+    }
+    else if (numberOfCoordinatesToDraw > 1) {
+      val xs = xCoordinates.map(_.truncatedInt).toArray
+      val ys = yCoordinates.map(_.truncatedInt).toArray
 
-    owner.withGraphics2D{g =>
-      if (hasFilling) {
-        g.setColor(fillColor.toAWTColor)
-        g.fillPolygon(xs, ys, numberOfCoordinatesToDraw)
-      }
+      owner.withGraphics2D{g =>
+        g.setTransform(AffineTransform.getTranslateInstance(
+          xOffsetToOrigoInPixels.truncate + xPositionInPixels.truncate,
+          yOffsetToOrigoInPixels.truncate + yPositionInPixels.truncate))
 
-      if (hasBorder) {
-        g.setColor(color.toAWTColor)
-        g.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
+        g.setStroke(HairlineStroke)
+
+        if (hasBorder && !hasFilling) {
+          g.setColor(color.toAWTColor)
+          g.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
+        }
+        else if (hasBorder && hasFilling) {
+          g.setColor(fillColor.toAWTColor)
+          g.fillPolygon(xs, ys, numberOfCoordinatesToDraw)
+
+          g.setColor(color.toAWTColor)
+          g.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
+        }
+        else if (!hasBorder && hasFilling) {
+          g.setColor(fillColor.toAWTColor)
+          g.fillPolygon(xs, ys, numberOfCoordinatesToDraw)
+          g.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
+        }
       }
     }
   }

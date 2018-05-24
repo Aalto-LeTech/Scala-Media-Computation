@@ -100,6 +100,8 @@ trait DrawingSurfaceAdapter {
    * @param color
    */
   def drawPoint(
+      xOffsetToOrigoInPixels: Double,
+      yOffsetToOrigoInPixels: Double,
       xInPixels: Double,
       yInPixels: Double,
       color: Color): Unit
@@ -238,6 +240,10 @@ trait DrawingSurfaceAdapter {
    * @param fillColor
    */
   def drawPolygon(
+      xOffsetToOrigoInPixels: Double,
+      yOffsetToOrigoInPixels: Double,
+      xPositionInPixels: Double,
+      yPositionInPixels: Double,
       xCoordinates: Seq[Double],
       yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,

@@ -118,11 +118,11 @@ class Arc private(
   /** Tells if this [[Arc]] can be rendered on a bitmap. */
   override
   lazy val isRenderable: Boolean =
-    (untransformedWidthInPixels > 0
-        && untransformedHeightInPixels > 0
+    (untransformedWidthInPixels >= 0.5
+        && untransformedHeightInPixels >= 0.5
         && arcAngleInDegrees != 0
-        && horizontalScalingFactor > 0
-        && verticalScalingFactor > 0
+        && horizontalScalingFactor * untransformedWidthInPixels >= 0.5
+        && verticalScalingFactor * untransformedHeightInPixels >= 0.5
         && (hasBorder || hasFilling))
 
   private[this]
@@ -161,12 +161,7 @@ class Arc private(
     if (isNotRenderable)
       Bounds.NotDefined
     else
-      BoundaryCalculator.fromPositions(
-        Seq(upperLeftCorner, upperRightCorner, lowerRightCorner, lowerLeftCorner))
-
-  /** Transformed dimensions of this [[Arc]]. */
-  override
-  lazy val dimensions: Dims = boundary.dimensions
+      Bounds(upperLeftCorner, lowerRightCorner)
 
   /** Transformed width of this [[Arc]]. */
   lazy val widthInPixels: Double = dimensions.width.inPixels
@@ -281,6 +276,72 @@ class Arc private(
       newRotationAngleInDegrees,
       newHasBorder, newHasFilling,
       newColor, newFillColor)
+  }
+
+  /**
+   *
+   *
+   * @return
+   */
+  override
+  lazy val hashCode: Int = {
+    val prime = 31
+    var sum = 0
+
+    sum = prime * sum + position.##
+    sum = prime * sum + untransformedWidthInPixels.##
+    sum = prime * sum + untransformedHeightInPixels.##
+    sum = prime * sum + startAngleInDegrees.##
+    sum = prime * sum + arcAngleInDegrees.##
+    sum = prime * sum + horizontalScalingFactor.##
+    sum = prime * sum + verticalScalingFactor.##
+    sum = prime * sum + rotationAngleInDegrees.##
+    sum = prime * sum + hasBorder.##
+    sum = prime * sum + hasFilling.##
+    sum = prime * sum + color.##
+    sum = prime * sum + fillColor.##
+
+    sum
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  def canEqual(other: Any): Boolean = {
+    other.isInstanceOf[Arc]
+  }
+
+  /**
+   *
+   *
+   * @param other
+   *
+   * @return
+   */
+  override
+  def equals(other: Any): Boolean = {
+    other match {
+      case that: Arc =>
+        that.canEqual(this) &&
+            that.position == this.position &&
+            that.untransformedWidthInPixels == this.untransformedWidthInPixels &&
+            that.untransformedHeightInPixels == this.untransformedHeightInPixels &&
+            that.startAngleInDegrees == this.startAngleInDegrees &&
+            that.arcAngleInDegrees == this.arcAngleInDegrees &&
+            that.horizontalScalingFactor == this.horizontalScalingFactor &&
+            that.verticalScalingFactor == this.verticalScalingFactor &&
+            that.rotationAngleInDegrees == this.rotationAngleInDegrees &&
+            that.hasBorder == this.hasBorder &&
+            that.hasFilling == this.hasFilling &&
+            that.color == this.color &&
+            that.fillColor == this.fillColor
+
+      case _ => false
+    }
   }
 
   /**
@@ -403,7 +464,8 @@ class Arc private(
    */
   override
   def rotateBy90DegsCW: Arc = {
-    internalCopy(newRotationAngleInDegrees = decideNewRotationAngleFor(-Angle.RightAngleInDegrees))
+    internalCopy(
+      newRotationAngleInDegrees = decideNewRotationAngleFor(-Angle.RightAngleInDegrees))
   }
 
   /**
@@ -439,7 +501,8 @@ class Arc private(
    */
   override
   def rotateBy90DegsCCW: Arc = {
-    internalCopy(newRotationAngleInDegrees = decideNewRotationAngleFor(Angle.RightAngleInDegrees))
+    internalCopy(
+      newRotationAngleInDegrees = decideNewRotationAngleFor(Angle.RightAngleInDegrees))
   }
 
   /**
