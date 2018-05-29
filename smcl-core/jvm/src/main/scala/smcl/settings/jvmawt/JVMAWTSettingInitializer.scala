@@ -19,7 +19,7 @@ package smcl.settings.jvmawt
 
 import smcl.infrastructure.SettingInitializer
 import smcl.pictures.BitmapValidatorFunctionFactory
-import smcl.settings.{BooleanSetting, ObjectSetting, SIdShapesHaveBordersByDefault, SettingValidatorFactory}
+import smcl.settings.{BooleanSetting, ObjectSetting, SettingValidatorFactory}
 
 
 
@@ -47,7 +47,7 @@ class JVMAWTSettingInitializer()
 
     ObjectSetting[AWTAffineTransformationInterpolationMethod](
       key = "AffineTransformationInterpolationMethod",
-      initialValue = NearestNeighbor,
+      initialValue = Bilinear,
       validator = settingValidatorFactory.EmptyValidator)
 
   }
