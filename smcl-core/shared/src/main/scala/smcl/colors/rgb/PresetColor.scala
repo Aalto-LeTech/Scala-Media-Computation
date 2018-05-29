@@ -18,7 +18,7 @@ package smcl.colors.rgb
 
 
 import smcl.colors.{ColorValidator, rgb}
-import smcl.infrastructure.{CommonValidators, InjectablesRegistry}
+import smcl.infrastructure.{CommonValidators, InjectablesRegistry, StringWrapper}
 
 
 
@@ -159,10 +159,13 @@ class PresetColor private(
    * @return
    */
   override
-  def toString: String =
+  def toString: String = {
     if (canonicalName.isDefined)
-      canonicalName.get
-    else
-      super.toString
+      return canonicalName.get
+          .toAmericanTitleCase
+          .replace(" ", "")
+
+    super.toString
+  }
 
 }
