@@ -154,10 +154,13 @@ object Pentagon {
     }
 
     val circumRadius = limitCircumRadiusTo(widthInPixels, heightInPixels)
+    val points = pointsFor(circumRadius, Angle.Zero)
+    val refY = 2 * circumRadius - heightInPixels
 
-    apply(
-      circumRadius,
+    Polygon(
       center,
+      points,
+      Pos(0, -refY),
       hasBorder, hasFilling,
       color, fillColor)
   }
@@ -188,6 +191,7 @@ object Pentagon {
     Polygon(
       center,
       points,
+      Pos.Origo,
       hasBorder, hasFilling,
       color, fillColor)
   }

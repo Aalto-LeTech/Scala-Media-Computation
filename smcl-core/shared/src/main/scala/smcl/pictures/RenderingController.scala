@@ -20,7 +20,7 @@ package smcl.pictures
 import scala.collection.mutable
 
 import smcl.colors.ColorValidator
-import smcl.infrastructure.{BitmapBufferAdapter, DoubleWrapper, DrawingSurfaceAdapter, InjectablesRegistry, PRF}
+import smcl.infrastructure.{BitmapBufferAdapter, DrawingSurfaceAdapter, InjectablesRegistry, PRF}
 import smcl.modeling.d2.BoundaryCalculator
 
 
@@ -79,11 +79,8 @@ object RenderingController
     val (xOffsetToOrigoInPixels, yOffsetToOrigoInPixels) = {
       val upperLeftCorner = bounds.upperLeftCorner
 
-      val xPrime = -upperLeftCorner.xInPixels.truncate
-      val yPrime = -upperLeftCorner.yInPixels.truncate
-
-      val xOffset = if (xPrime % 2 == 1) xPrime - 0 else xPrime
-      val yOffset = if (yPrime % 2 == 1) yPrime - 0 else yPrime
+      val xOffset = -upperLeftCorner.xInPixels
+      val yOffset = -upperLeftCorner.yInPixels
 
       (xOffset, yOffset)
     }
@@ -181,18 +178,25 @@ object RenderingController
     }
     else if (contentItem.isPolygon) {
       val pgon = contentItem.asInstanceOf[Polygon]
-      if (pgon.pointsRelativeToPosition.isEmpty)
+      if (pgon.pointsRelativeToCenterAtOrigo.isEmpty)
         return
 
       val position = pgon.position
-      val points = pgon.pointsRelativeToPosition
+      val points = pgon.pointsRelativeToCenterAtOrigo
 
+      //val (refX, refY) = pgon.referencePointRelativeToCenterAtOrigo.toTuple
+      // .map(_.moveBy(-refX, -refY))
       val (xs, ys) = points.unzip[Double, Double]
+
+      val contentUpperLeftCorner = pgon.contentBoundary.upperLeftCorner
+      val contentLeftEdge = contentUpperLeftCorner.xInPixels
+      val contentTopEdge = contentUpperLeftCorner.yInPixels
 
       targetDrawingSurface.drawPolygon(
         xOffsetToOrigoInPixels, yOffsetToOrigoInPixels,
         position.xInPixels, position.yInPixels,
         xs, ys, points.length,
+        contentLeftEdge, contentTopEdge,
         pgon.hasBorder,
         pgon.hasFilling,
         pgon.color,

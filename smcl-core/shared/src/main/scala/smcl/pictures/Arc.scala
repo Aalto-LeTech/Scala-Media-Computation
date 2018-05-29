@@ -636,6 +636,8 @@ class Arc private(
       angleInDegrees: Double,
       centerOfRotation: Pos): Arc = {
 
+    // println(s"rotateBy($angleInDegrees, $centerOfRotation): Circle($widthInPixels x $heightInPixels)")
+
     internalCopy(
       newPosition = Transformer.rotate(position, angleInDegrees, centerOfRotation),
       newRotationAngleInDegrees = decideNewRotationAngleFor(angleInDegrees))

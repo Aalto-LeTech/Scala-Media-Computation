@@ -118,8 +118,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       yInPixels: Double,
       opacity: Int): Boolean = {
 
-    val x = xInPixels.truncatedInt
-    val y = yInPixels.truncatedInt
+    val x = xInPixels.floor.toInt
+    val y = yInPixels.floor.toInt
 
     val normalizedOpacity: Float = opacity.toFloat / ColorValidator.MaximumOpacity
 
@@ -190,8 +190,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       yInPixels: Double,
       color: Color): Unit = {
 
-    val x = xOffsetToOrigoInPixels.truncatedInt + xInPixels.truncatedInt
-    val y = yOffsetToOrigoInPixels.truncatedInt + yInPixels.truncatedInt
+    val x = xOffsetToOrigoInPixels.floor.toInt + xInPixels.floor.toInt
+    val y = yOffsetToOrigoInPixels.floor.toInt + yInPixels.floor.toInt
 
     owner.withGraphics2D{g =>
       g.setStroke(HairlineStroke)
@@ -224,8 +224,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color,
       fillColor: Color): Unit = {
 
-    val upperLeftX: Int = boundingBoxUpperLeftX.truncatedInt
-    val upperLeftY: Int = boundingBoxUpperLeftY.truncatedInt
+    val upperLeftX: Int = boundingBoxUpperLeftX.floor.toInt
+    val upperLeftY: Int = boundingBoxUpperLeftY.floor.toInt
     val width: Int = widthInPixels.floor.toInt
     val height: Int = heightInPixels.floor.toInt
 
@@ -338,13 +338,13 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
           g.setColor(fillColor.toAWTColor)
 
           val ulX =
-            if (xOffsetToOrigoInPixels + xPositionOfCenterInPixels - upperLeftXOffsetFromCenter > 0)
+            if (xOffsetToOrigoInPixels.truncate + xPositionOfCenterInPixels - upperLeftXOffsetFromCenter > 0)
               -upperLeftXOffsetFromCenter + 0.5
             else
               -upperLeftXOffsetFromCenter - 0.5
 
           val ulY =
-            if (yOffsetToOrigoInPixels + yPositionOfCenterInPixels - upperLeftYOffsetFromCenter > 0)
+            if (yOffsetToOrigoInPixels.truncate + yPositionOfCenterInPixels - upperLeftYOffsetFromCenter > 0)
               -upperLeftYOffsetFromCenter + 0.5
             else
               -upperLeftYOffsetFromCenter - 0.5
@@ -428,13 +428,13 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
           // Has both border and filling
 
           val fillingUpperLeftX =
-            if (xOffsetToOrigoInPixels + xPositionOfCenterInPixels - upperLeftXOffsetFromCenter > 0)
+            if (xOffsetToOrigoInPixels.truncate + xPositionOfCenterInPixels - upperLeftXOffsetFromCenter > 0)
               -upperLeftXOffsetFromCenter + 0.5
             else
               -upperLeftXOffsetFromCenter
 
           val fillingUpperLeftY =
-            if (yOffsetToOrigoInPixels + yPositionOfCenterInPixels - upperLeftYOffsetFromCenter > 0)
+            if (yOffsetToOrigoInPixels.truncate + yPositionOfCenterInPixels - upperLeftYOffsetFromCenter > 0)
               -upperLeftYOffsetFromCenter + 0.5
             else
               -upperLeftYOffsetFromCenter
@@ -543,8 +543,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color,
       fillColor: Color): Unit = {
 
-    val upperLeftX: Int = upperLeftCornerXInPixels.truncatedInt
-    val upperLeftY: Int = upperLeftCornerYInPixels.truncatedInt
+    val upperLeftX: Int = upperLeftCornerXInPixels.floor.toInt
+    val upperLeftY: Int = upperLeftCornerYInPixels.floor.toInt
     val width: Int = widthInPixels.floor.toInt
     val height: Int = heightInPixels.floor.toInt
 
@@ -588,8 +588,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       color: Color,
       fillColor: Color): Unit = {
 
-    val upperLeftX: Int = upperLeftCornerXInPixels.truncatedInt
-    val upperLeftY: Int = upperLeftCornerYInPixels.truncatedInt
+    val upperLeftX: Int = upperLeftCornerXInPixels.floor.toInt
+    val upperLeftY: Int = upperLeftCornerYInPixels.floor.toInt
     val width: Int = widthInPixels.floor.toInt
     val height: Int = heightInPixels.floor.toInt
     val roundingWidth: Int = roundingWidthInPixels.floor.toInt
@@ -623,8 +623,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       numberOfCoordinatesToDraw: Int,
       color: Color): Unit = {
 
-    val xs = xCoordinates.map(_.truncatedInt).toArray
-    val ys = yCoordinates.map(_.truncatedInt).toArray
+    val xs = xCoordinates.map(_.floor.toInt).toArray
+    val ys = yCoordinates.map(_.floor.toInt).toArray
 
     owner.withGraphics2D{g =>
       g.setColor(color.toAWTColor)
@@ -635,9 +635,15 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
   /**
    *
    *
+   * @param xOffsetToOrigoInPixels
+   * @param yOffsetToOrigoInPixels
+   * @param xPositionInPixels
+   * @param yPositionInPixels
    * @param xCoordinates
    * @param yCoordinates
    * @param numberOfCoordinatesToDraw
+   * @param leftEdgeInPixels
+   * @param topEdgeInPixels
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -652,6 +658,8 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       xCoordinates: Seq[Double],
       yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
+      leftEdgeInPixels: Double,
+      topEdgeInPixels: Double,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: Color,
@@ -666,28 +674,74 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
         color)
     }
     else if (numberOfCoordinatesToDraw > 1) {
-      val xs = xCoordinates.map(_.truncatedInt).toArray
-      val ys = yCoordinates.map(_.truncatedInt).toArray
+      val leftEdgeOffset = leftEdgeInPixels - leftEdgeInPixels.floor
+      val topEdgeOffset = topEdgeInPixels - topEdgeInPixels.floor
+
+      val horizontalAdjustment = if (owner.widthInPixels % 2 == 1) 0.5 else 0
+      val verticalAdjustment = if (owner.heightInPixels % 2 == 1) 0.5 else 0
+
+      val xOffset = (xOffsetToOrigoInPixels + xPositionInPixels).floor + leftEdgeOffset - horizontalAdjustment
+      val yOffset = (yOffsetToOrigoInPixels + yPositionInPixels).floor + topEdgeOffset - verticalAdjustment
+
+      val xs = xCoordinates.map(x => (x - leftEdgeOffset).floor.toInt).toArray
+      val ys = yCoordinates.map(y => (y - topEdgeOffset).floor.toInt).toArray
+
+      /*
+      if (numberOfCoordinatesToDraw == 2) {
+        if (leftEdgeInPixels < -100) {
+          println()
+          val s = s"Line (${xCoordinates.head}, ${yCoordinates.head})-(${xCoordinates.tail.head}, ${yCoordinates.tail.head})"
+          println(s + "\n" + "-" * s.length)
+          println(s"Image's dimensions: ${owner.widthInPixels} x ${owner.heightInPixels}")
+          println(s"Origo's position: ($xOffsetToOrigoInPixels, $yOffsetToOrigoInPixels)")
+          println(s"Object's logical position: ($xPositionInPixels, $yPositionInPixels)")
+          println(s"Object's physical position: ($xOffset, $yOffset)")
+          println(s"Left edge: $leftEdgeInPixels  --> offset: $leftEdgeOffset")
+          println(s"Top edge: $topEdgeInPixels  --> offset: $topEdgeOffset")
+          println(s"Adjusted: (${xs.head}, ${ys.head})-(${xs.tail.head}, ${ys.tail.head})")
+        }
+      }
+      else if (numberOfCoordinatesToDraw == 4) {
+        println()
+        val s = s"4 Lines (a rectangle?) " + xCoordinates.zip(yCoordinates).mkString(" -> ")
+        println(s + "\n" + "-" * s.length)
+        println(s"Image's dimensions: ${owner.widthInPixels} x ${owner.heightInPixels}")
+        println(s"Origo's position: ($xOffsetToOrigoInPixels, $yOffsetToOrigoInPixels)")
+        println(s"Object's logical position: ($xPositionInPixels, $yPositionInPixels)")
+        println(s"Object's physical position: ($xOffset, $yOffset)")
+        println(s"Left edge: $leftEdgeInPixels  -->  offset: $leftEdgeOffset")
+        println(s"Top edge: $topEdgeInPixels  -->  offset: $topEdgeOffset")
+        println("Adjusted: " + xs.zip(ys).mkString(" -> "))
+      }
+      // */
 
       owner.withGraphics2D{g =>
-        g.setTransform(AffineTransform.getTranslateInstance(
-          xOffsetToOrigoInPixels.truncate + xPositionInPixels.truncate,
-          yOffsetToOrigoInPixels.truncate + yPositionInPixels.truncate))
-
         g.setStroke(HairlineStroke)
 
         if (hasBorder && !hasFilling) {
+          g.setTransform(AffineTransform.getTranslateInstance(xOffset, yOffset))
+
           g.setColor(color.toAWTColor)
           g.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
         }
         else if (hasBorder && hasFilling) {
+          g.setTransform(AffineTransform.getTranslateInstance(
+            xOffset + horizontalAdjustment,
+            yOffset + verticalAdjustment))
+
           g.setColor(fillColor.toAWTColor)
           g.fillPolygon(xs, ys, numberOfCoordinatesToDraw)
+
+          g.setTransform(AffineTransform.getTranslateInstance(xOffset, yOffset))
 
           g.setColor(color.toAWTColor)
           g.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
         }
         else if (!hasBorder && hasFilling) {
+          g.setTransform(AffineTransform.getTranslateInstance(
+            xOffset + horizontalAdjustment,
+            yOffset + verticalAdjustment))
+
           g.setColor(fillColor.toAWTColor)
           g.fillPolygon(xs, ys, numberOfCoordinatesToDraw)
           g.drawPolygon(xs, ys, numberOfCoordinatesToDraw)
@@ -713,10 +767,10 @@ class AWTDrawingSurfaceAdapter private(val owner: AWTBitmapBufferAdapter)
       toYInPixels: Double,
       color: Color): Unit = {
 
-    val startX = fromXInPixels.truncatedInt
-    val startY = fromYInPixels.truncatedInt
-    val endX = toXInPixels.truncatedInt
-    val endY = toYInPixels.truncatedInt
+    val startX = fromXInPixels.floor.toInt
+    val startY = fromYInPixels.floor.toInt
+    val endX = toXInPixels.floor.toInt
+    val endY = toYInPixels.floor.toInt
 
     owner.withGraphics2D{g =>
       g.setColor(color.toAWTColor)

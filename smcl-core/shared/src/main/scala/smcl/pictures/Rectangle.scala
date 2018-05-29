@@ -19,7 +19,6 @@ package smcl.pictures
 
 import smcl.colors
 import smcl.colors.rgb
-import smcl.infrastructure.DoubleWrapper
 import smcl.modeling.d2.Pos
 import smcl.settings._
 
@@ -208,25 +207,14 @@ object Rectangle {
 
     val cornerPoints =
       if (baseLengthInPixels > 0.0 && heightInPixels > 0.0) {
-        val ulX = {
-          val x = -baseLengthInPixels / 2.0
-
-          if (baseLengthInPixels >= 1.0) x.truncate else x
-        }
-        val lrX = ulX + baseLengthInPixels - 1
-
-        val ulY = {
-          val y = -heightInPixels / 2.0
-
-          if (heightInPixels >= 1.0) y.truncate else y
-        }
-        val lrY = ulY + heightInPixels - 1
+        val halfWidth = (baseLengthInPixels - 1) / 2.0
+        val halfHeight = (heightInPixels - 1) / 2.0
 
         Seq(
-          Pos(ulX, ulY),
-          Pos(lrX, ulY),
-          Pos(lrX, lrY),
-          Pos(ulX, lrY))
+          Pos(-halfWidth, -halfHeight),
+          Pos(halfWidth, -halfHeight),
+          Pos(halfWidth, halfHeight),
+          Pos(-halfWidth, halfHeight))
       }
       else {
         Seq()
@@ -235,6 +223,7 @@ object Rectangle {
     Polygon(
       center,
       cornerPoints,
+      referencePointRelativeToCenterAtOrigo = Pos.Origo,
       hasBorder, hasFilling,
       color, fillColor)
   }

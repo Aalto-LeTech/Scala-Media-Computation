@@ -104,12 +104,19 @@ object Line {
       end: Pos,
       color: rgb.Color = DefaultPrimaryColor): VectorGraphic = {
 
-    val points = Seq(Pos.Origo, end - start)
+    val halfWidth = (end.xInPixels - start.xInPixels) / 2.0
+    val halfHeight = (end.yInPixels - start.yInPixels) / 2.0
+
+    val adjustedStart = Pos(-halfWidth, -halfHeight)
+    val adjustedEnd = Pos(halfWidth, halfHeight)
+
+    val points = Seq(adjustedStart, adjustedEnd)
 
     // TODO: Change to Polyline after it is implemented
     Polygon(
-      start,
+      start + (halfWidth, halfHeight),
       points,
+      Pos.Origo,
       hasBorder = true,
       hasFilling = false,
       color = color)

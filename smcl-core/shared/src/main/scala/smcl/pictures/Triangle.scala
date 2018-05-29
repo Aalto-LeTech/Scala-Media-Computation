@@ -622,7 +622,7 @@ object Triangle {
       thirdCornerRelativeToCenter)
 
     // TODO: When no filling, create a Polyline, after it is implemented
-    Polygon(center, points, hasBorder, hasFilling, color, fillColor)
+    Polygon(center, points, Pos.Origo, hasBorder, hasFilling, color, fillColor)
   }
 
   /**

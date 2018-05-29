@@ -217,17 +217,10 @@ object Bitmap
           buffer.get.widthInPixels,
           buffer.get.heightInPixels)
 
-    val contentCorners =
-      if (!isRenderable)
-        BitmapContentCorners.NotDefined
-      else
-        BitmapContentCorners(boundary)
-
     new Bitmap(
       identity,
       isRenderable,
       boundary,
-      contentCorners,
       buffer)
   }
 
@@ -250,7 +243,6 @@ class Bitmap private(
     override val identity: Identity,
     val isRenderable: Boolean,
     override val boundary: Bounds,
-    val contentCorners: BitmapContentCorners,
     private[smcl] val buffer: Option[BitmapBufferAdapter])
     extends PictureElement
         with Displayable {
@@ -632,8 +624,7 @@ class Bitmap private(
   override
   def moveBy(offsetsInPixels: Seq[Double]): Bitmap =
     internalBufferPreservingCopy(
-      newBoundary = boundary.moveBy(offsetsInPixels),
-      newContentCorners = contentCorners.moveBy(offsetsInPixels))
+      newBoundary = boundary.moveBy(offsetsInPixels))
 
   /**
    *
@@ -649,8 +640,7 @@ class Bitmap private(
       yOffsetInPixels: Double): Bitmap = {
 
     internalBufferPreservingCopy(
-      newBoundary = boundary.moveBy(xOffsetInPixels, yOffsetInPixels),
-      newContentCorners = contentCorners.moveBy(xOffsetInPixels, yOffsetInPixels))
+      newBoundary = boundary.moveBy(xOffsetInPixels, yOffsetInPixels))
   }
 
 
@@ -780,7 +770,6 @@ class Bitmap private(
    * @param newIdentity
    * @param newIsRenderable
    * @param newBoundary
-   * @param newContentCorners
    * @param newBuffer
    *
    * @return
@@ -790,14 +779,12 @@ class Bitmap private(
       newIdentity: Identity = identity,
       newIsRenderable: Boolean = isRenderable,
       newBoundary: Bounds = boundary,
-      newContentCorners: BitmapContentCorners = contentCorners,
       newBuffer: Option[BitmapBufferAdapter] = buffer): Bitmap = {
 
     new Bitmap(
       newIdentity,
       newIsRenderable,
       newBoundary,
-      newContentCorners,
       newBuffer) // e.g., buffer.map(_.copy) to make a new copy of the internal buffer
   }
 
@@ -810,7 +797,6 @@ class Bitmap private(
    * @param newIdentity
    * @param newIsRenderable
    * @param newBoundary
-   * @param newContentCorners
    *
    * @return
    */
@@ -818,14 +804,12 @@ class Bitmap private(
   def internalBufferPreservingCopy(
       newIdentity: Identity = identity,
       newIsRenderable: Boolean = isRenderable,
-      newBoundary: Bounds = boundary,
-      newContentCorners: BitmapContentCorners = contentCorners): Bitmap = {
+      newBoundary: Bounds = boundary): Bitmap = {
 
     internalCopy(
       newIdentity,
       newIsRenderable,
       newBoundary,
-      newContentCorners,
       buffer)
   }
 
@@ -899,13 +883,11 @@ class Bitmap private(
         width.half.inPixels, height.half.inPixels))
 
     val newBounds = boundary.rotateBy90DegsCWAroundOrigo
-    val newContentCorners = contentCorners.rotateBy90DegsCWAroundOrigo
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -934,13 +916,11 @@ class Bitmap private(
         width.half.inPixels, height.half.inPixels))
 
     val newBounds = boundary.rotateBy90DegsCW(position)
-    val newContentCorners = contentCorners.rotateBy90DegsCW(position)
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -959,13 +939,11 @@ class Bitmap private(
         width.half.inPixels, height.half.inPixels))
 
     val newBounds = boundary.rotateBy90DegsCCWAroundOrigo
-    val newContentCorners = contentCorners.rotateBy90DegsCCWAroundOrigo
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -994,13 +972,11 @@ class Bitmap private(
         width.half.inPixels, height.half.inPixels))
 
     val newBounds = boundary.rotateBy90DegsCCW(position)
-    val newContentCorners = contentCorners.rotateBy90DegsCCW(position)
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -1019,13 +995,11 @@ class Bitmap private(
         width.half.inPixels, height.half.inPixels))
 
     val newBounds = boundary.rotateBy180DegsAroundOrigo
-    val newContentCorners = contentCorners.rotateBy180DegsAroundOrigo
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -1054,13 +1028,11 @@ class Bitmap private(
         width.half.inPixels, height.half.inPixels))
 
     val newBounds = boundary.rotateBy180Degs(position)
-    val newContentCorners = contentCorners.rotateBy180Degs(position)
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -1096,13 +1068,11 @@ class Bitmap private(
     val newLowerRightCorner = newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
-    val newContentCorners = contentCorners.rotateByAroundOrigo(angleInDegrees)
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -1171,13 +1141,11 @@ class Bitmap private(
     val newLowerRightCorner = newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
-    val newContentCorners = contentCorners.rotateByAroundOrigo(angleInDegrees)
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -1213,13 +1181,11 @@ class Bitmap private(
       newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
-    val newContentCorners = BitmapContentCorners(newBounds)
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -1252,13 +1218,11 @@ class Bitmap private(
       newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
-    val newContentCorners = BitmapContentCorners(newBounds)
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 
@@ -1697,13 +1661,11 @@ class Bitmap private(
       newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
-    val newContentCorners = contentCorners // TODO: FIX: contentCorners.scaleBy(widthFactor, heightFactor)
 
     internalCopy(
       identity,
       isRenderable,
       newBounds,
-      newContentCorners,
       Option(newBuffer))
   }
 

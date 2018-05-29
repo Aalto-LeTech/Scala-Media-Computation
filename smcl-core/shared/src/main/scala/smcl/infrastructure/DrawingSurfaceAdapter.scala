@@ -231,9 +231,15 @@ trait DrawingSurfaceAdapter {
   /**
    *
    *
+   * @param xOffsetToOrigoInPixels
+   * @param yOffsetToOrigoInPixels
+   * @param xPositionInPixels
+   * @param yPositionInPixels
    * @param xCoordinates
    * @param yCoordinates
    * @param numberOfCoordinatesToDraw
+   * @param leftEdgeInPixels
+   * @param topEdgeInPixels
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -247,6 +253,8 @@ trait DrawingSurfaceAdapter {
       xCoordinates: Seq[Double],
       yCoordinates: Seq[Double],
       numberOfCoordinatesToDraw: Int,
+      leftEdgeInPixels: Double,
+      topEdgeInPixels: Double,
       hasBorder: Boolean,
       hasFilling: Boolean,
       color: Color,

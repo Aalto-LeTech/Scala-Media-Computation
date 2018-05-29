@@ -68,8 +68,8 @@ object Transformer {
       position: Pos,
       centerOfRotation: Pos): Pos = {
 
-    val newX = -position.yInPixels + centerOfRotation.xInPixels + centerOfRotation.yInPixels
-    val newY = position.xInPixels - centerOfRotation.xInPixels + centerOfRotation.yInPixels
+    val newX = position.yInPixels - centerOfRotation.yInPixels + centerOfRotation.xInPixels
+    val newY = -position.xInPixels + centerOfRotation.xInPixels + centerOfRotation.yInPixels
 
     Pos(newX, newY)
   }
@@ -131,8 +131,8 @@ object Transformer {
       position: Pos,
       centerOfRotation: Pos): Pos = {
 
-    val newX = position.yInPixels - centerOfRotation.yInPixels + centerOfRotation.xInPixels
-    val newY = -position.xInPixels + centerOfRotation.xInPixels + centerOfRotation.yInPixels
+    val newX = -position.yInPixels + centerOfRotation.xInPixels + centerOfRotation.yInPixels
+    val newY = position.xInPixels - centerOfRotation.xInPixels + centerOfRotation.yInPixels
 
     Pos(newX, newY)
   }
@@ -274,7 +274,7 @@ object Transformer {
       cos: Double): Pos = {
 
     val xNew = cos * position.xInPixels + sin * position.yInPixels
-    val yNew = cos * position.yInPixels - sin * position.xInPixels
+    val yNew = -sin * position.xInPixels + cos * position.yInPixels
 
     Pos(xNew, yNew)
   }
@@ -344,8 +344,8 @@ object Transformer {
     val xNorm = position.xInPixels - centerOfRotation.xInPixels
     val yNorm = position.yInPixels - centerOfRotation.yInPixels
 
-    val xNew = cos * xNorm - sin * yNorm + centerOfRotation.xInPixels
-    val yNew = cos * yNorm + sin * xNorm + centerOfRotation.yInPixels
+    val xNew = cos * xNorm + sin * yNorm + centerOfRotation.xInPixels
+    val yNew = -sin * xNorm + cos * yNorm + centerOfRotation.yInPixels
 
     Pos(xNew, yNew)
   }
@@ -482,8 +482,6 @@ object Transformer {
       position: Pos,
       horizontalScalingFactor: Double,
       verticalScalingFactor: Double): Pos = {
-
-    println(s"------> $position; $horizontalScalingFactor / $verticalScalingFactor")
 
     Pos(
       horizontalScalingFactor * position.xInPixels,

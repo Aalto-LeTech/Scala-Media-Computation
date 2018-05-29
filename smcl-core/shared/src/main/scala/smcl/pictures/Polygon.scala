@@ -37,7 +37,8 @@ object Polygon {
    *
    *
    * @param position
-   * @param pointsRelativeToPosition
+   * @param pointsRelativeToCenterAtOrigo
+   * @param referencePointRelativeToCenterAtOrigo
    * @param hasBorder
    * @param hasFilling
    * @param color
@@ -47,7 +48,8 @@ object Polygon {
    */
   def apply(
       position: Pos = DefaultPosition,
-      pointsRelativeToPosition: Seq[Pos],
+      pointsRelativeToCenterAtOrigo: Seq[Pos],
+      referencePointRelativeToCenterAtOrigo: Pos,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
       hasFilling: Boolean = ShapesHaveFillingsByDefault,
       color: rgb.Color = DefaultPrimaryColor,
@@ -58,7 +60,8 @@ object Polygon {
     new Polygon(
       identity,
       position,
-      pointsRelativeToPosition,
+      pointsRelativeToCenterAtOrigo,
+      referencePointRelativeToCenterAtOrigo,
       hasBorder, hasFilling,
       color, fillColor)
   }
@@ -73,7 +76,8 @@ object Polygon {
  *
  * @param identity
  * @param position
- * @param pointsRelativeToPosition
+ * @param pointsRelativeToCenterAtOrigo
+ * @param referencePointRelativeToCenterAtOrigo
  * @param hasBorder
  * @param hasFilling
  * @param color
@@ -84,7 +88,8 @@ object Polygon {
 class Polygon private(
     val identity: Identity,
     override val position: Pos,
-    override val pointsRelativeToPosition: Seq[Pos],
+    override val pointsRelativeToCenterAtOrigo: Seq[Pos],
+    override val referencePointRelativeToCenterAtOrigo: Pos,
     val hasBorder: Boolean,
     val hasFilling: Boolean,
     val color: rgb.Color,
@@ -92,8 +97,8 @@ class Polygon private(
     extends VectorGraphic {
 
   //private[smcl]
-  val contentBoundary =
-    BoundaryCalculator.fromPositions(pointsRelativeToPosition)
+  val contentBoundary: Bounds =
+    BoundaryCalculator.fromPositions(pointsRelativeToCenterAtOrigo)
 
   /** Tells if this [[Polygon]] can be rendered on a bitmap. */
   override
@@ -101,7 +106,7 @@ class Polygon private(
     (contentBoundary.isDefined
         && contentBoundary.width.inPixels >= 0.5
         && contentBoundary.height.inPixels >= 0.5
-        && pointsRelativeToPosition.nonEmpty
+        && pointsRelativeToCenterAtOrigo.nonEmpty
         && (hasBorder || hasFilling))
 
   private[this]
@@ -114,6 +119,9 @@ class Polygon private(
       val ulY = contentBoundary.upperLeftCorner.yInPixels
       val lrX = contentBoundary.lowerRightCorner.xInPixels
       val lrY = contentBoundary.lowerRightCorner.yInPixels
+
+      val refX = referencePointRelativeToCenterAtOrigo.xInPixels
+      val refY = referencePointRelativeToCenterAtOrigo.yInPixels
 
       Seq(
         position + contentBoundary.upperLeftCorner,
@@ -170,7 +178,7 @@ class Polygon private(
 
     sum = prime * sum + position.##
 
-    pointsRelativeToPosition.foreach{p =>
+    pointsRelativeToCenterAtOrigo.foreach{p =>
       sum = prime * sum + p.xInPixels.##
       sum = prime * sum + p.yInPixels.##
     }
@@ -207,7 +215,7 @@ class Polygon private(
       case that: Polygon =>
         that.canEqual(this) &&
             that.position == this.position &&
-            that.pointsRelativeToPosition == this.pointsRelativeToPosition &&
+            that.pointsRelativeToCenterAtOrigo == this.pointsRelativeToCenterAtOrigo &&
             that.hasBorder == this.hasBorder &&
             that.hasFilling == this.hasFilling &&
             that.color == this.color &&
@@ -234,7 +242,8 @@ class Polygon private(
    */
   def copy(
       newPosition: Pos = position,
-      newPointsRelativeToPosition: Seq[Pos] = pointsRelativeToPosition,
+      newPointsRelativeToCenterAtOrigo: Seq[Pos] = pointsRelativeToCenterAtOrigo,
+      newReferencePointRelativeToCenterAtOrigo: Pos = referencePointRelativeToCenterAtOrigo,
       newHasBorder: Boolean = hasBorder,
       newHasFilling: Boolean = hasFilling,
       newColor: rgb.Color = color,
@@ -243,7 +252,8 @@ class Polygon private(
     new Polygon(
       identity,
       newPosition,
-      newPointsRelativeToPosition,
+      newPointsRelativeToCenterAtOrigo,
+      newReferencePointRelativeToCenterAtOrigo,
       newHasBorder, newHasFilling,
       newColor, newFillColor)
   }
@@ -359,7 +369,8 @@ class Polygon private(
   def rotateBy90DegsCWAroundOrigo: Polygon = {
     copy(
       newPosition = Transformer.rotateBy90DegsCW(position),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateBy90DegsCWAroundOrigo))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateBy90DegsCWAroundOrigo),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCWAroundOrigo)
   }
 
   /**
@@ -370,7 +381,8 @@ class Polygon private(
   override
   def rotateBy90DegsCW: Polygon = {
     copy(
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateBy90DegsCWAroundOrigo))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateBy90DegsCWAroundOrigo),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCWAroundOrigo)
   }
 
   /**
@@ -384,7 +396,8 @@ class Polygon private(
   def rotateBy90DegsCW(centerOfRotation: Pos): Polygon = {
     copy(
       newPosition = Transformer.rotateBy90DegsCW(position, centerOfRotation),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateBy90DegsCWAroundOrigo))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateBy90DegsCWAroundOrigo),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCWAroundOrigo)
   }
 
   /**
@@ -396,7 +409,8 @@ class Polygon private(
   def rotateBy90DegsCCWAroundOrigo: Polygon = {
     copy(
       newPosition = Transformer.rotateBy90DegsCCW(position),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateBy90DegsCCWAroundOrigo))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateBy90DegsCCWAroundOrigo),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCCWAroundOrigo)
   }
 
   /**
@@ -407,7 +421,8 @@ class Polygon private(
   override
   def rotateBy90DegsCCW: Polygon = {
     copy(
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateBy90DegsCCWAroundOrigo))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateBy90DegsCCWAroundOrigo),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCCWAroundOrigo)
   }
 
   /**
@@ -421,7 +436,8 @@ class Polygon private(
   def rotateBy90DegsCCW(centerOfRotation: Pos): Polygon = {
     copy(
       newPosition = Transformer.rotateBy90DegsCCW(position, centerOfRotation),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateBy90DegsCCWAroundOrigo))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateBy90DegsCCWAroundOrigo),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCCWAroundOrigo)
   }
 
   /**
@@ -433,7 +449,8 @@ class Polygon private(
   def rotateBy180DegsAroundOrigo: Polygon = {
     copy(
       newPosition = Transformer.rotateBy180Degs(position),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateBy180DegsAroundOrigo))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateBy180DegsAroundOrigo),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy180DegsAroundOrigo)
   }
 
   /**
@@ -444,7 +461,8 @@ class Polygon private(
   override
   def rotateBy180Degs: Polygon = {
     copy(
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateBy180DegsAroundOrigo))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateBy180DegsAroundOrigo),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy180DegsAroundOrigo)
   }
 
   /**
@@ -458,7 +476,8 @@ class Polygon private(
   def rotateBy180Degs(centerOfRotation: Pos): Polygon = {
     copy(
       newPosition = Transformer.rotateBy180Degs(position, centerOfRotation),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateBy180DegsAroundOrigo))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateBy180DegsAroundOrigo),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy180DegsAroundOrigo)
   }
 
   /**
@@ -484,7 +503,8 @@ class Polygon private(
   def rotateByAroundOrigo(angleInDegrees: Double): Polygon = {
     copy(
       newPosition = Transformer.rotate(position, angleInDegrees),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateByAroundOrigo(angleInDegrees)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateByAroundOrigo(angleInDegrees)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateByAroundOrigo(angleInDegrees))
   }
 
   /**
@@ -509,7 +529,8 @@ class Polygon private(
   override
   def rotateBy(angleInDegrees: Double): Polygon = {
     copy(
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateByAroundOrigo(angleInDegrees)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateByAroundOrigo(angleInDegrees)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateByAroundOrigo(angleInDegrees))
   }
 
   /**
@@ -541,9 +562,12 @@ class Polygon private(
       angleInDegrees: Double,
       centerOfRotation: Pos): Polygon = {
 
+    // println(s"rotateBy($angleInDegrees, $centerOfRotation): Polygon(${pointsRelativeToCenterAtOrigo.length})")
+
     copy(
       newPosition = Transformer.rotate(position, angleInDegrees, centerOfRotation),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.rotateByAroundOrigo(angleInDegrees)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.rotateByAroundOrigo(angleInDegrees)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateByAroundOrigo(angleInDegrees))
   }
 
   /**
@@ -767,7 +791,8 @@ class Polygon private(
   override
   def scaleHorizontallyBy(factor: Double): Polygon =
     copy(
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleHorizontallyByRelativeToOrigo(factor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleHorizontallyByRelativeToOrigo(factor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleHorizontallyByRelativeToOrigo(factor))
 
   /**
    * Scales this object horizontally in relation to a given point.
@@ -784,7 +809,8 @@ class Polygon private(
 
     copy(
       newPosition = Transformer.scaleHorizontally(position, factor, relativityPoint),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleHorizontallyByRelativeToOrigo(factor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleHorizontallyByRelativeToOrigo(factor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleHorizontallyByRelativeToOrigo(factor))
   }
 
   /**
@@ -798,7 +824,8 @@ class Polygon private(
   def scaleHorizontallyByRelativeToOrigo(factor: Double): Polygon =
     copy(
       newPosition = Transformer.scaleHorizontally(position, factor),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleHorizontallyByRelativeToOrigo(factor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleHorizontallyByRelativeToOrigo(factor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleHorizontallyByRelativeToOrigo(factor))
 
   /**
    * Scales this object vertically in relation to its position.
@@ -810,7 +837,8 @@ class Polygon private(
   override
   def scaleVerticallyBy(factor: Double): Polygon =
     copy(
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleVerticallyByRelativeToOrigo(factor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleVerticallyByRelativeToOrigo(factor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleVerticallyByRelativeToOrigo(factor))
 
   /**
    * Scales this object vertically in relation to a given point.
@@ -827,7 +855,8 @@ class Polygon private(
 
     copy(
       newPosition = Transformer.scaleVertically(position, factor, relativityPoint),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleVerticallyByRelativeToOrigo(factor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleVerticallyByRelativeToOrigo(factor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleVerticallyByRelativeToOrigo(factor))
   }
 
   /**
@@ -841,7 +870,8 @@ class Polygon private(
   def scaleVerticallyByRelativeToOrigo(factor: Double): Polygon =
     copy(
       newPosition = Transformer.scaleVertically(position, factor),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleVerticallyByRelativeToOrigo(factor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleVerticallyByRelativeToOrigo(factor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleVerticallyByRelativeToOrigo(factor))
 
   /**
    * Scales this object in relation to its position by using a given factor
@@ -854,7 +884,8 @@ class Polygon private(
   override
   def scaleBy(factor: Double): Polygon = {
     copy(
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleByRelativeToOrigo(factor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleByRelativeToOrigo(factor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(factor))
   }
 
   /**
@@ -873,7 +904,8 @@ class Polygon private(
 
     copy(
       newPosition = Transformer.scale(position, factor, relativityPoint),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleByRelativeToOrigo(factor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleByRelativeToOrigo(factor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(factor))
   }
 
   /**
@@ -888,7 +920,8 @@ class Polygon private(
   def scaleByRelativeToOrigo(factor: Double): Polygon =
     copy(
       newPosition = Transformer.scale(position, factor),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleByRelativeToOrigo(factor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleByRelativeToOrigo(factor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(factor))
 
   /**
    * Scales this object by given horizontal and vertical factors in relation to its position.
@@ -904,7 +937,8 @@ class Polygon private(
       verticalFactor: Double): Polygon = {
 
     copy(
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(horizontalFactor, verticalFactor))
   }
 
   /**
@@ -924,7 +958,8 @@ class Polygon private(
 
     copy(
       newPosition = Transformer.scale(position, horizontalFactor, verticalFactor, relativityPoint),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(horizontalFactor, verticalFactor))
   }
 
   /**
@@ -942,7 +977,8 @@ class Polygon private(
 
     copy(
       newPosition = Transformer.scale(position, horizontalFactor, verticalFactor),
-      newPointsRelativeToPosition = pointsRelativeToPosition.map(_.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)))
+      newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleByRelativeToOrigo(horizontalFactor, verticalFactor)),
+      newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(horizontalFactor, verticalFactor))
   }
 
 }

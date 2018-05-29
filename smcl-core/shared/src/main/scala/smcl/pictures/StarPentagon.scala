@@ -146,12 +146,21 @@ object StarPentagon {
         s"Star pentagon's width cannot be negative (was: $heightInPixels).")
     }
 
+    if (cuspRadiusInPixels < 0) {
+      throw new IllegalArgumentException(
+        s"Length of star pentagon's cuspradius cannot be negative (was: $cuspRadiusInPixels).")
+    }
+
     val circumRadius = Pentagon.limitCircumRadiusTo(widthInPixels, heightInPixels)
 
-    apply(
-      circumRadius,
-      cuspRadiusInPixels,
+    val outerPoints = Pentagon.pointsFor(circumRadius, Angle.Zero).toList
+    val innerPoints = cuspRadiusPointsFor(cuspRadiusInPixels).toList
+    val points = ListUtils.intersperse(outerPoints, innerPoints)
+
+    Polygon(
       center,
+      points,
+      Pos.Origo,
       hasBorder, hasFilling,
       color, fillColor)
   }
@@ -195,6 +204,7 @@ object StarPentagon {
     Polygon(
       center,
       points,
+      Pos.Origo,
       hasBorder, hasFilling,
       color, fillColor)
   }

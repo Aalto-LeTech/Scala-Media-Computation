@@ -68,7 +68,17 @@ trait PictureElement
    *
    * @return
    */
-  def pointsRelativeToPosition: Seq[Pos] = Seq()
+  def pointsRelativeToCenterAtOrigo: Seq[Pos] = Seq()
+
+  /**
+   * The point that defines, relative to the local origo of this [[PictureElement]],
+   * how the [[PictureElement]] should be aligned in relation to its position. In other
+   * words, when rendering, the [[PictureElement]] should be placed so that this point
+   * is at its position.
+   *
+   * @return
+   */
+  def referencePointRelativeToCenterAtOrigo: Pos = Pos.Origo
 
   /**
    * The unique identity of this [[PictureElement]].
