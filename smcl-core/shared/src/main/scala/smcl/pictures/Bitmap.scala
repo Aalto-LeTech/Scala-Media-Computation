@@ -150,7 +150,7 @@ object Bitmap
    */
   def apply(sourceResourcePath: String): Bitmap = {
     // The ImageProvider is trusted with validation of the source resource path.
-    val loadedBufferTry = PRF.tryToLoadImageFromPath(sourceResourcePath)
+    val loadedBufferTry = PRF.tryToLoadImageFromLocalPath(sourceResourcePath)
     if (loadedBufferTry.isFailure)
       throw loadedBufferTry.failed.get
 

@@ -85,7 +85,7 @@ trait PlatformResourceFactory {
    *
    * @return
    */
-  def tryToLoadImagesFromPath(sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
+  def tryToLoadImage(sourceResourcePath: String): Try[BitmapBufferAdapter]
 
   /**
    *
@@ -94,6 +94,60 @@ trait PlatformResourceFactory {
    *
    * @return
    */
-  def tryToLoadImageFromPath(sourceResourcePath: String): Try[BitmapBufferAdapter]
+  def tryToLoadImages(sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  def tryToLoadImageFromLocalPath(sourceResourcePath: String): Try[BitmapBufferAdapter]
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  def tryToLoadImagesFromLocalPath(sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
+
+  /**
+   *
+   *
+   * @param relativeSourceResourcePath
+   *
+   * @return
+   */
+  def tryToLoadImageFromResources(relativeSourceResourcePath: String): Try[BitmapBufferAdapter]
+
+  /**
+   *
+   *
+   * @param relativeSourceResourcePath
+   *
+   * @return
+   */
+  def tryToLoadImagesFromResources(relativeSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
+
+  /**
+   *
+   *
+   * @param absoluteSourceResourcePath
+   *
+   * @return
+   */
+  def tryToLoadImageFromServer(absoluteSourceResourcePath: String): Try[BitmapBufferAdapter]
+
+  /**
+   *
+   *
+   * @param absoluteSourceResourcePath
+   *
+   * @return
+   */
+  def tryToLoadImagesFromServer(absoluteSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
 
 }

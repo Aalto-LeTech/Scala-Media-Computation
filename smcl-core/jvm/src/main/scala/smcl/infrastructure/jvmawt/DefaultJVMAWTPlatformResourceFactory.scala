@@ -110,10 +110,9 @@ class DefaultJVMAWTPlatformResourceFactory(
    *
    * @return
    */
-  override def tryToLoadImagesFromPath(
-      sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
-
-    imageProvider.tryToLoadImagesFromFile(sourceResourcePath)
+  override
+  def tryToLoadImage(sourceResourcePath: String): Try[BitmapBufferAdapter] = {
+    imageProvider.tryToLoadImage(sourceResourcePath)
   }
 
   /**
@@ -123,10 +122,91 @@ class DefaultJVMAWTPlatformResourceFactory(
    *
    * @return
    */
-  override def tryToLoadImageFromPath(
+  override
+  def tryToLoadImages(sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+    imageProvider.tryToLoadImages(sourceResourcePath)
+  }
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  override def tryToLoadImagesFromLocalPath(
+      sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    imageProvider.tryToLoadImagesFromLocalPath(sourceResourcePath)
+  }
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  override def tryToLoadImageFromLocalPath(
       sourceResourcePath: String): Try[BitmapBufferAdapter] = {
 
-    imageProvider.tryToLoadImageFromFile(sourceResourcePath)
+    imageProvider.tryToLoadImageFromLocalPath(sourceResourcePath)
+  }
+
+  /**
+   *
+   *
+   * @param relativeSourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImageFromResources(
+      relativeSourceResourcePath: String): Try[BitmapBufferAdapter] = {
+
+    imageProvider.tryToLoadImageFromResources(relativeSourceResourcePath)
+  }
+
+  /**
+   *
+   *
+   * @param relativeSourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImagesFromResources(
+      relativeSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    imageProvider.tryToLoadImagesFromResources(relativeSourceResourcePath)
+  }
+
+  /**
+   *
+   *
+   * @param absoluteSourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImageFromServer(
+      absoluteSourceResourcePath: String): Try[BitmapBufferAdapter] = {
+
+    imageProvider.tryToLoadImageFromServer(absoluteSourceResourcePath)
+  }
+
+  /**
+   *
+   *
+   * @param absoluteSourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImagesFromServer(
+      absoluteSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    imageProvider.tryToLoadImagesFromServer(absoluteSourceResourcePath)
   }
 
 }

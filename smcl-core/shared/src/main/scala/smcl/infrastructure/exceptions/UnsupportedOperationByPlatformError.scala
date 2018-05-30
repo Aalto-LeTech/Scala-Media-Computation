@@ -14,97 +14,38 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.infrastructure.jvmawt
+package smcl.infrastructure.exceptions
 
 
-import scala.util.Try
+/**
+ *
+ *
+ * @author Aleksi Lukkarinen
+ */
+object UnsupportedOperationByPlatformError {
 
-import smcl.infrastructure.BitmapBufferAdapter
+  /**
+   *
+   *
+   * @param startOfDescription
+   *
+   * @return
+   */
+  def apply(startOfDescription: String): UnsupportedOperationByPlatformError =
+    new UnsupportedOperationByPlatformError(startOfDescription)
+
+}
 
 
 
 
 /**
  *
+ *
+ * @author Aleksi Lukkarinen
  */
-trait AWTImageProvider {
-
-  /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   */
-  def tryToLoadImage(sourceResourcePath: String): Try[BitmapBufferAdapter]
-
-  /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   */
-  def tryToLoadImages(sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
-
-  /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   */
-  def tryToLoadImageFromLocalPath(
-      sourceResourcePath: String): Try[BitmapBufferAdapter]
-
-  /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   */
-  def tryToLoadImagesFromLocalPath(
-      sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
-
-  /**
-   *
-   *
-   * @param relativeSourceResourcePath
-   *
-   * @return
-   */
-  def tryToLoadImageFromResources(
-      relativeSourceResourcePath: String): Try[BitmapBufferAdapter]
-
-  /**
-   *
-   *
-   * @param relativeSourceResourcePath
-   *
-   * @return
-   */
-  def tryToLoadImagesFromResources(
-      relativeSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
-
-  /**
-   *
-   *
-   * @param absoluteSourceResourcePath
-   *
-   * @return
-   */
-  def tryToLoadImageFromServer(
-      absoluteSourceResourcePath: String): Try[BitmapBufferAdapter]
-
-  /**
-   *
-   *
-   * @param absoluteSourceResourcePath
-   *
-   * @return
-   */
-  def tryToLoadImagesFromServer(
-      absoluteSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]]
-
-}
+final case class UnsupportedOperationByPlatformError private[smcl](
+    startOfDescription: String)
+    extends SMCLBaseError(
+      s"""$startOfDescription is not supported by the platform that currently runs SMCL.""",
+      null)

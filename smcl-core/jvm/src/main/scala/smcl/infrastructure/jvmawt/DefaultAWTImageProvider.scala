@@ -64,11 +64,36 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImage
   /**
    *
    *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImage(sourceResourcePath: String): Try[BitmapBufferAdapter] = {
+    ???
+  }
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImages(sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+    ???
+  }
+
+  /**
+   *
+   *
    * @param path
    *
    * @return
    */
-  override def tryToLoadImageFromFile(path: String): Try[BitmapBufferAdapter] = {
+  override
+  def tryToLoadImageFromLocalPath(path: String): Try[BitmapBufferAdapter] = {
     val overallLoadingResult = Try(loadImagesFromFile(path, shouldLoadOnlyFirst = true))
     if (overallLoadingResult.isFailure)
       return Failure(overallLoadingResult.failed.get)
@@ -83,8 +108,65 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImage
    *
    * @return
    */
-  override def tryToLoadImagesFromFile(path: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+  override
+  def tryToLoadImagesFromLocalPath(path: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
     Try(loadImagesFromFile(path, shouldLoadOnlyFirst = false))
+  }
+
+  /**
+   *
+   *
+   * @param relativeSourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImageFromResources(
+      relativeSourceResourcePath: String): Try[BitmapBufferAdapter] = {
+
+    ???
+  }
+
+  /**
+   *
+   *
+   * @param relativeSourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImagesFromResources(
+      relativeSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    ???
+  }
+
+  /**
+   *
+   *
+   * @param absoluteSourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImageFromServer(
+      absoluteSourceResourcePath: String): Try[BitmapBufferAdapter] = {
+
+    ???
+  }
+
+  /**
+   *
+   *
+   * @param absoluteSourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImagesFromServer(
+      absoluteSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    ???
   }
 
   /**
@@ -110,7 +192,8 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImage
    * @throws SuitableImageReaderNotFoundError
    * @throws ImageReaderNotRetrievedError
    */
-  private def loadImagesFromFile(
+  private
+  def loadImagesFromFile(
       path: String,
       shouldLoadOnlyFirst: Boolean): Seq[Try[BitmapBufferAdapter]] = {
 
@@ -139,7 +222,8 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImage
    *
    * @return
    */
-  private def loadImagesFromReader(
+  private
+  def loadImagesFromReader(
       reader: ImageReader,
       filePath: String,
       shouldLoadOnlyFirst: Boolean): Seq[Try[BitmapBufferAdapter]] = {
@@ -167,7 +251,8 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImage
    *
    * @return
    */
-  private def loadSingleImageFromReader(
+  private
+  def loadSingleImageFromReader(
       imageIndex: Int,
       reader: ImageReader,
       filePath: String): Try[BitmapBufferAdapter] = for {
@@ -210,7 +295,8 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImage
    * @throws SuitableImageStreamProviderNotFoundError
    * @throws ImageInputStreamNotCreatedError
    */
-  private def createImageInputStreamFor(imageFile: File): ImageInputStream = {
+  private
+  def createImageInputStreamFor(imageFile: File): ImageInputStream = {
     val inputStream =
       Try(ImageIO.createImageInputStream(imageFile)).recover({
         case e: IOException => throw ImageInputStreamNotCreatedError(e)
@@ -232,7 +318,8 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImage
    * @throws SuitableImageReaderNotFoundError
    * @throws ImageReaderNotRetrievedError
    */
-  private def findSuitableImageReaderFor(
+  private
+  def findSuitableImageReaderFor(
       inputStream: ImageInputStream): ImageReader = {
 
     val imageReaders = ImageIO.getImageReaders(inputStream)
@@ -262,7 +349,8 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator) extends AWTImage
    * @throws FileNotFoundError
    * @throws EmptyFileError
    */
-  private def ensureThatImageFileIsReadableAndSupported(
+  private
+  def ensureThatImageFileIsReadableAndSupported(
       filePath: String): (File, String, String) = {
 
     if (filePath == null)
