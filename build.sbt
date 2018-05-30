@@ -189,7 +189,7 @@ description in Global := {
 version in Global := moduleVersionString
 isSnapshot in Global := !projectIsRelease
 
-scalaVersion in Global := "2.12.4"
+scalaVersion in Global := "2.12.3"
 
 parallelExecution in Global := true
 
