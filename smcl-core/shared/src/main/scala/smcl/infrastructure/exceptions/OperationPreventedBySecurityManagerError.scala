@@ -14,60 +14,20 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.infrastructure
-
-
-import java.io.File
-
-
+package smcl.infrastructure.exceptions
 
 
 /**
  *
  *
+ * @param descriptionOfTriedOperation
+ * @param cause
+ *
  * @author Aleksi Lukkarinen
  */
-private[smcl]
-object JVMFileUtils {
-
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def representsReadableFile(f: File): Boolean =
-    f.isFile && f.canRead
-
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def doesNotRepresentReadableFile(f: File): Boolean =
-    !representsReadableFile(f)
-
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def representsReadableDirectory(f: File): Boolean =
-    f.isDirectory && f.canRead
-
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def doesNotRepresentReadableDirectory(f: File): Boolean =
-    !representsReadableDirectory(f)
-
-}
+final case class OperationPreventedBySecurityManagerError private[smcl](
+    descriptionOfTriedOperation: String,
+    override val cause: Throwable)
+    extends SMCLBaseError(
+      s"""${descriptionOfTriedOperation.trim} was prevented by a security manager.""",
+      cause)

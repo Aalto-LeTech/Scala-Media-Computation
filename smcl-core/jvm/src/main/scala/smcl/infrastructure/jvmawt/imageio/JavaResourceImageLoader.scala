@@ -14,10 +14,14 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.infrastructure
+package smcl.infrastructure.jvmawt.imageio
 
 
-import java.io.File
+import scala.util.{Failure, Success, Try}
+
+import smcl.infrastructure.exceptions._
+import smcl.infrastructure.{BitmapBufferAdapter, JVMReflectionUtils}
+import smcl.pictures.BitmapValidator
 
 
 
@@ -28,46 +32,43 @@ import java.io.File
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object JVMFileUtils {
+class JavaResourceImageLoader(
+    private val bitmapValidator: BitmapValidator,
+    private val supportedReadableFileExtensions: Seq[String]) {
 
   /**
    *
    *
-   * @param f
+   * @param path
+   * @param shouldLoadOnlyFirst
    *
    * @return
+   *
+   * @throws OperationPreventedBySecurityManagerError
    */
-  def representsReadableFile(f: File): Boolean =
-    f.isFile && f.canRead
+  def tryToLoad(
+      path: String,
+      shouldLoadOnlyFirst: Boolean): Seq[Try[BitmapBufferAdapter]] = {
+
+    Seq(Failure(ImageNotFoundError(path, null)))
+  }
 
   /**
+   * Tries to find a local Java resource.
    *
+   * @return an ``URL`` representing the resource, or ``null`` if either the resource could not be found or access to it was prevented by a ``SecurityManager``
    *
-   * @param f
-   *
-   * @return
+   * @throws OperationPreventedBySecurityManagerError if retrieval of a class loader is prevented by a ``SecurityManager``
    */
-  def doesNotRepresentReadableFile(f: File): Boolean =
-    !representsReadableFile(f)
+  private
+  def resolveLocalJavaResource(resourceName: String): Try[String] = {
+    val loader = JVMReflectionUtils.getClassLoader
 
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def representsReadableDirectory(f: File): Boolean =
-    f.isDirectory && f.canRead
+    val resourceURL = loader.getResource(resourceName)
+    if (resourceURL == null)
+      return Failure(ImageNotFoundError(resourceName, null))
 
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def doesNotRepresentReadableDirectory(f: File): Boolean =
-    !representsReadableDirectory(f)
+    Success(resourceURL.getPath)
+  }
 
 }

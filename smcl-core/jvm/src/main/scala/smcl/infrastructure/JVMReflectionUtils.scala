@@ -17,7 +17,7 @@
 package smcl.infrastructure
 
 
-import java.io.File
+import smcl.infrastructure.exceptions.OperationPreventedBySecurityManagerError
 
 
 
@@ -28,46 +28,25 @@ import java.io.File
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-object JVMFileUtils {
+object JVMReflectionUtils {
 
   /**
-   *
-   *
-   * @param f
+   * Returns the Java ``ClassLoader`` instance that loaded this class.
    *
    * @return
+   *
+   * @throws OperationPreventedBySecurityManagerError
    */
-  def representsReadableFile(f: File): Boolean =
-    f.isFile && f.canRead
+  def getClassLoader: ClassLoader = {
+    val clazz = this.getClass
 
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def doesNotRepresentReadableFile(f: File): Boolean =
-    !representsReadableFile(f)
-
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def representsReadableDirectory(f: File): Boolean =
-    f.isDirectory && f.canRead
-
-  /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
-  def doesNotRepresentReadableDirectory(f: File): Boolean =
-    !representsReadableDirectory(f)
+    try {
+      clazz.getClassLoader
+    }
+    catch {
+      case e: SecurityException =>
+        throw OperationPreventedBySecurityManagerError("Getting a class loader", e)
+    }
+  }
 
 }

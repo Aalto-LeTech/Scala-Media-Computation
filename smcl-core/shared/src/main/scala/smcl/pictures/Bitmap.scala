@@ -17,6 +17,8 @@
 package smcl.pictures
 
 
+import scala.util.{Failure, Success, Try}
+
 import smcl.colors.ColorValidator
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable}
 import smcl.infrastructure.{BitmapBufferAdapter, Displayable, Identity, InjectablesRegistry, PRF}
@@ -149,12 +151,121 @@ object Bitmap
    * @return
    */
   def apply(sourceResourcePath: String): Bitmap = {
-    // The ImageProvider is trusted with validation of the source resource path.
-    val loadedBufferTry = PRF.tryToLoadImageFromLocalPath(sourceResourcePath)
-    if (loadedBufferTry.isFailure)
-      throw loadedBufferTry.failed.get
+    processSingleLoadTry(PRF.tryToLoadImage(sourceResourcePath))
+  }
 
-    apply(loadedBufferTry.get)
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  def loadImages(sourceResourcePath: String): Seq[Try[Bitmap]] = {
+    processMultipleLoadTries(PRF.tryToLoadImages(sourceResourcePath))
+  }
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  def loadImageFromLocalPath(sourceResourcePath: String): Bitmap = {
+    processSingleLoadTry(PRF.tryToLoadImageFromLocalPath(sourceResourcePath))
+  }
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  def loadImagesFromLocalPath(sourceResourcePath: String): Seq[Try[Bitmap]] = {
+    processMultipleLoadTries(PRF.tryToLoadImagesFromLocalPath(sourceResourcePath))
+  }
+
+  /**
+   *
+   *
+   * @param relativeSourceResourcePath
+   *
+   * @return
+   */
+  def loadImageFromResources(relativeSourceResourcePath: String): Bitmap = {
+    processSingleLoadTry(PRF.tryToLoadImageFromResources(relativeSourceResourcePath))
+  }
+
+  /**
+   *
+   *
+   * @param relativeSourceResourcePath
+   *
+   * @return
+   */
+  def loadImagesFromResources(relativeSourceResourcePath: String): Seq[Try[Bitmap]] = {
+    processMultipleLoadTries(PRF.tryToLoadImagesFromResources(relativeSourceResourcePath))
+  }
+
+  /**
+   *
+   *
+   * @param absoluteSourceResourcePath
+   *
+   * @return
+   */
+  def loadImageFromServer(absoluteSourceResourcePath: String): Bitmap = {
+    processSingleLoadTry(PRF.tryToLoadImageFromServer(absoluteSourceResourcePath))
+  }
+
+  /**
+   *
+   *
+   * @param absoluteSourceResourcePath
+   *
+   * @return
+   */
+  def loadImagesFromServer(absoluteSourceResourcePath: String): Seq[Try[Bitmap]] = {
+    processMultipleLoadTries(PRF.tryToLoadImagesFromServer(absoluteSourceResourcePath))
+  }
+
+  /**
+   *
+   *
+   * @param singleResult
+   *
+   * @return
+   */
+  private
+  def processSingleLoadTry(singleResult: Try[BitmapBufferAdapter]): Bitmap = {
+    if (singleResult.isFailure)
+      throw singleResult.failed.get
+
+    apply(singleResult.get)
+  }
+
+  /**
+   *
+   *
+   * @param wholenessResult
+   *
+   * @return
+   */
+  private
+  def processMultipleLoadTries(
+      wholenessResult: Try[Seq[Try[BitmapBufferAdapter]]]): Seq[Try[Bitmap]] = {
+
+    if (wholenessResult.isFailure)
+      throw wholenessResult.failed.get
+
+    wholenessResult.get.map{t =>
+      if (t.isSuccess)
+        Success(apply(t.get))
+      else
+        Failure(t.failed.get)
+    }
   }
 
   /**
