@@ -14,7 +14,11 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.infrastructure
+package smcl.infrastructure.jvmawt
+
+import smcl.infrastructure.exceptions.OperationPreventedBySecurityManagerError
+
+
 
 
 /**
@@ -23,13 +27,25 @@ package smcl.infrastructure
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-trait JVMUniqueIDProvider {
+object JVMReflectionUtils {
 
   /**
-   *
+   * Returns the Java ``ClassLoader`` instance that loaded this class.
    *
    * @return
+   *
+   * @throws OperationPreventedBySecurityManagerError
    */
-  def newId: String
+  def getClassLoader: ClassLoader = {
+    val clazz = this.getClass
+
+    try {
+      clazz.getClassLoader
+    }
+    catch {
+      case e: SecurityException =>
+        throw OperationPreventedBySecurityManagerError("Getting a class loader", e)
+    }
+  }
 
 }

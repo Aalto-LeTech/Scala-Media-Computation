@@ -25,7 +25,7 @@ import javax.imageio.ImageIO
 
 import smcl.infrastructure.BitmapBufferAdapter
 import smcl.infrastructure.exceptions._
-import smcl.infrastructure.jvmawt.imageio.{LocalPathImageLoader, ServerImageLoader}
+import smcl.infrastructure.jvmawt.imageio.{JavaResourceImageLoader, LocalPathImageLoader, ServerImageLoader}
 import smcl.pictures.BitmapValidator
 
 
@@ -37,7 +37,10 @@ import smcl.pictures.BitmapValidator
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class DefaultAWTImageProvider(bitmapValidator: BitmapValidator)
+class DefaultAWTImageProvider(
+    private val urlProvider: URLProvider,
+    private val httpConnectionProvider: HTTPConnectionProvider,
+    private val bitmapValidator: BitmapValidator)
     extends AWTImageProvider {
 
   /** */
@@ -68,56 +71,6 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator)
   /**
    *
    *
-   * @param sourceResourcePath
-   *
-   * @return
-   */
-  override
-  def tryToLoadImage(sourceResourcePath: String): Try[BitmapBufferAdapter] = {
-    var result: Try[BitmapBufferAdapter] =
-      Failure[BitmapBufferAdapter](ImageNotFoundError(sourceResourcePath, null))
-
-    if (representsSupportedInternetProtocol(sourceResourcePath)) {
-      result = tryToLoadImageFromServer(sourceResourcePath)
-      if (isAcceptableLoadingResult(result))
-        return result
-    }
-
-    result = tryToLoadImageFromLocalPath(sourceResourcePath)
-    if (isAcceptableLoadingResult(result))
-      return result
-
-    tryToLoadImageFromResources(sourceResourcePath)
-  }
-
-  /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   */
-  override
-  def tryToLoadImages(sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
-    var result: Try[Seq[Try[BitmapBufferAdapter]]] =
-      Failure[Seq[Try[BitmapBufferAdapter]]](ImageNotFoundError(sourceResourcePath, null))
-
-    if (representsSupportedInternetProtocol(sourceResourcePath)) {
-      result = tryToLoadImagesFromServer(sourceResourcePath)
-      if (isAcceptableLoadingResult(result))
-        return result
-    }
-
-    result = tryToLoadImagesFromLocalPath(sourceResourcePath)
-    if (isAcceptableLoadingResult(result))
-      return result
-
-    tryToLoadImagesFromResources(sourceResourcePath)
-  }
-
-  /**
-   *
-   *
    * @param path
    *
    * @return
@@ -130,13 +83,113 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator)
   /**
    *
    *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImage(sourceResourcePath: String): Try[BitmapBufferAdapter] = {
+    pickFirstResult(
+      tryToLoadImages(
+        sourceResourcePath,
+        shouldLoadOnlyFirst = true))
+  }
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  override
+  def tryToLoadImages(sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
+    tryToLoadImages(
+      sourceResourcePath,
+      shouldLoadOnlyFirst = false)
+  }
+
+  /** */
+  private
+  type LoaderMethod = (String, Boolean) => Try[Seq[Try[BitmapBufferAdapter]]]
+
+  /** */
+  private
+  type LoadingCondition = Option[String => Boolean]
+
+
+
+
+  /**
+   *
+   *
+   * @param loader
+   * @param condition
+   */
+  private
+  case class LoaderAndCondition(
+      loader: LoaderMethod,
+      condition: LoadingCondition)
+
+
+
+
+  /** */
+  private
+  val LoadersAndConditions: Seq[LoaderAndCondition] = Seq(
+    LoaderAndCondition(tryToLoadImagesFromServer, Some(representsSupportedInternetProtocol)),
+    LoaderAndCondition(tryToLoadImagesFromLocalPath, None),
+    LoaderAndCondition(tryToLoadImagesFromResources, None)
+  )
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   * @param shouldLoadOnlyFirst
+   *
+   * @return
+   */
+  private
+  def tryToLoadImages(
+      sourceResourcePath: String,
+      shouldLoadOnlyFirst: Boolean): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    LoadersAndConditions.filter(isTriableLoader(_, sourceResourcePath)).foreach{lac =>
+      val result = lac.loader(sourceResourcePath, shouldLoadOnlyFirst)
+      if (isAcceptableOverallLoadingResult(result))
+        return result
+    }
+
+    Failure(ImageNotFoundError(sourceResourcePath, null))
+  }
+
+  /**
+   *
+   *
+   * @param lac
+   * @param sourceResourcePath
+   *
+   * @return
+   */
+  private
+  def isTriableLoader(
+      lac: LoaderAndCondition,
+      sourceResourcePath: String): Boolean = {
+
+    lac.condition.isEmpty || lac.condition.get(sourceResourcePath)
+  }
+
+  /**
+   *
+   *
    * @param result
    * @tparam A
    *
    * @return
    */
   private
-  def isAcceptableLoadingResult[A](result: Try[A]): Boolean = {
+  def isAcceptableOverallLoadingResult[A](result: Try[A]): Boolean = {
     result.isSuccess ||
         (result.isFailure &&
             !result.failed.get.isInstanceOf[ImageNotFoundError])
@@ -145,33 +198,56 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator)
   /**
    *
    *
-   * @param path
+   * @param sourceResourcePath
    *
    * @return
    */
   override
-  def tryToLoadImageFromLocalPath(path: String): Try[BitmapBufferAdapter] = {
-    val loader = new LocalPathImageLoader(bitmapValidator, SupportedReadableFileExtensions)
+  def tryToLoadImageFromLocalPath(
+      sourceResourcePath: String): Try[BitmapBufferAdapter] = {
 
-    val overallLoadingResult = Try(loader.tryToLoadFrom(path, shouldLoadOnlyFirst = true))
-    if (overallLoadingResult.isFailure)
-      return Failure(overallLoadingResult.failed.get)
-
-    overallLoadingResult.get.head
+    pickFirstResult(
+      tryToLoadImagesFromLocalPath(
+        sourceResourcePath,
+        shouldLoadOnlyFirst = false))
   }
 
   /**
    *
    *
-   * @param path
+   * @param sourceResourcePath
    *
    * @return
    */
   override
-  def tryToLoadImagesFromLocalPath(path: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
-    val loader = new LocalPathImageLoader(bitmapValidator, SupportedReadableFileExtensions)
+  def tryToLoadImagesFromLocalPath(
+      sourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
 
-    Try(loader.tryToLoadFrom(path, shouldLoadOnlyFirst = false))
+    tryToLoadImagesFromLocalPath(
+      sourceResourcePath,
+      shouldLoadOnlyFirst = false)
+  }
+
+  /**
+   *
+   *
+   * @param sourceResourcePath
+   * @param shouldLoadOnlyFirst
+   *
+   * @return
+   */
+  private
+  def tryToLoadImagesFromLocalPath(
+      sourceResourcePath: String,
+      shouldLoadOnlyFirst: Boolean): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    val loader = new LocalPathImageLoader(
+      sourceResourcePath,
+      shouldLoadOnlyFirst = false,
+      bitmapValidator,
+      SupportedReadableFileExtensions)
+
+    Try(loader.load)
   }
 
   /**
@@ -185,7 +261,10 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator)
   def tryToLoadImageFromResources(
       relativeSourceResourcePath: String): Try[BitmapBufferAdapter] = {
 
-    ???
+    pickFirstResult(
+      tryToLoadImagesFromResources(
+        relativeSourceResourcePath,
+        shouldLoadOnlyFirst = true))
   }
 
   /**
@@ -199,7 +278,31 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator)
   def tryToLoadImagesFromResources(
       relativeSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
 
-    ???
+    tryToLoadImagesFromResources(
+      relativeSourceResourcePath,
+      shouldLoadOnlyFirst = false)
+  }
+
+  /**
+   *
+   *
+   * @param relativeSourceResourcePath
+   * @param shouldLoadOnlyFirst
+   *
+   * @return
+   */
+  private
+  def tryToLoadImagesFromResources(
+      relativeSourceResourcePath: String,
+      shouldLoadOnlyFirst: Boolean): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    val loader = new JavaResourceImageLoader(
+      relativeSourceResourcePath,
+      shouldLoadOnlyFirst = false,
+      bitmapValidator,
+      SupportedReadableFileExtensions)
+
+    Try(loader.load)
   }
 
   /**
@@ -213,14 +316,10 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator)
   def tryToLoadImageFromServer(
       absoluteSourceResourcePath: String): Try[BitmapBufferAdapter] = {
 
-    val loader = new ServerImageLoader(bitmapValidator)
-    val overallLoadingResult =
-      Try(loader.tryToLoadFrom(absoluteSourceResourcePath, shouldLoadOnlyFirst = true))
-
-    if (overallLoadingResult.isFailure)
-      return Failure(overallLoadingResult.failed.get)
-
-    overallLoadingResult.get.head
+    pickFirstResult(
+      tryToLoadImagesFromServer(
+        absoluteSourceResourcePath,
+        shouldLoadOnlyFirst = true))
   }
 
   /**
@@ -234,9 +333,49 @@ class DefaultAWTImageProvider(bitmapValidator: BitmapValidator)
   def tryToLoadImagesFromServer(
       absoluteSourceResourcePath: String): Try[Seq[Try[BitmapBufferAdapter]]] = {
 
-    val loader = new ServerImageLoader(bitmapValidator)
+    tryToLoadImagesFromServer(
+      absoluteSourceResourcePath,
+      shouldLoadOnlyFirst = false)
+  }
 
-    Try(loader.tryToLoadFrom(absoluteSourceResourcePath, shouldLoadOnlyFirst = true))
+  /**
+   *
+   *
+   * @param absoluteSourceResourcePath
+   * @param shouldLoadOnlyFirst
+   *
+   * @return
+   */
+  private
+  def tryToLoadImagesFromServer(
+      absoluteSourceResourcePath: String,
+      shouldLoadOnlyFirst: Boolean): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    val loader = new ServerImageLoader(
+      absoluteSourceResourcePath,
+      shouldLoadOnlyFirst,
+      urlProvider,
+      httpConnectionProvider,
+      bitmapValidator)
+
+    Try(loader.load)
+  }
+
+  /**
+   *
+   *
+   * @param overallLoadingResult
+   *
+   * @return
+   */
+  private
+  def pickFirstResult(
+      overallLoadingResult: Try[Seq[Try[BitmapBufferAdapter]]]): Try[BitmapBufferAdapter] = {
+
+    if (overallLoadingResult.isFailure)
+      return Failure(overallLoadingResult.failed.get)
+
+    overallLoadingResult.get.head
   }
 
 }

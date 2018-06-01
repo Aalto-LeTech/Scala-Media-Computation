@@ -147,8 +147,13 @@ object Initializer extends SMCLInitializer {
     val calendarProvider = new DefaultJVMCalendarProvider()
     val uuidProvider = new DefaultJVMUniqueIDProvider()
     val fontProvider = new DefaultAWTFontProvider()
-    val imageProvider = new DefaultAWTImageProvider(bitmapValidator)
     val screenInfoProvider = new DefaultAWTScreenInformationProvider()
+
+    val imageProvider =
+      new DefaultAWTImageProvider(
+        new URLProvider(),
+        new HTTPConnectionProvider(),
+        bitmapValidator)
 
     val factory = new DefaultJVMAWTPlatformResourceFactory(
       calendarProvider, uuidProvider, fontProvider, imageProvider, screenInfoProvider)

@@ -36,18 +36,22 @@ import smcl.pictures.BitmapValidator
 /**
  *
  *
+ * @param path
+ * @param shouldLoadOnlyFirst
+ * @param bitmapValidator
+ * @param supportedReadableFileExtensions
+ *
  * @author Aleksi Lukkarinen
  */
 private[smcl]
 class LocalPathImageLoader(
+    private val path: String,
+    private val shouldLoadOnlyFirst: Boolean,
     private val bitmapValidator: BitmapValidator,
     private val supportedReadableFileExtensions: Seq[String]) {
 
   /**
    *
-   *
-   * @param path
-   * @param shouldLoadOnlyFirst
    *
    * @return
    *
@@ -66,17 +70,15 @@ class LocalPathImageLoader(
    * @throws SuitableImageReaderNotFoundError
    * @throws ImageReaderNotRetrievedError
    */
-  def tryToLoadFrom(
-      path: String,
-      shouldLoadOnlyFirst: Boolean): Seq[Try[BitmapBufferAdapter]] = {
-
+  def load: Seq[Try[BitmapBufferAdapter]] = {
     val (imageFile, imagePath) = ensureThatLocalImageFileIsReadable(path)
     ensureThatFileExtensionIsSupportedForReading(imageFile.getName)
 
     EnsureClosingOfAfter(createImageInputStreamFor(imageFile)){inputStream =>
-      val loader = new ImageStreamLoader(bitmapValidator)
+      val loader = new ImageStreamLoader(
+        inputStream, imagePath, shouldLoadOnlyFirst, bitmapValidator)
 
-      loader.tryToLoadFrom(inputStream, imagePath, shouldLoadOnlyFirst)
+      loader.load
     }
   }
 

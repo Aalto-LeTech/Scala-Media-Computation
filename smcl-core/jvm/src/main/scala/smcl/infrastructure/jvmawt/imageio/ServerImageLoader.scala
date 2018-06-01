@@ -18,7 +18,7 @@ package smcl.infrastructure.jvmawt.imageio
 
 
 import java.io.{IOException, InputStream}
-import java.net.{HttpURLConnection, URL}
+import java.net.{HttpURLConnection, ProtocolException, URL, UnknownServiceException}
 
 import scala.util.Try
 
@@ -26,6 +26,7 @@ import javax.imageio.ImageIO
 import javax.imageio.stream.ImageInputStream
 
 import smcl.infrastructure.exceptions._
+import smcl.infrastructure.jvmawt.{HTTPConnectionProvider, URLProvider}
 import smcl.infrastructure.{BitmapBufferAdapter, EnsureClosingOfAfter}
 import smcl.pictures.BitmapValidator
 
@@ -35,56 +36,130 @@ import smcl.pictures.BitmapValidator
 /**
  *
  *
+ * @param sourcePath
+ * @param shouldLoadOnlyFirst
+ * @param urlCreator
+ * @param httpConnectionCreator
+ * @param bitmapValidator
+ *
  * @author Aleksi Lukkarinen
  */
 private[smcl]
 class ServerImageLoader(
+    private val sourcePath: String,
+    private val shouldLoadOnlyFirst: Boolean,
+    private val urlCreator: URLProvider,
+    private val httpConnectionCreator: HTTPConnectionProvider,
     private val bitmapValidator: BitmapValidator) {
+
+  private
+  var url: Option[URL] = None
+
+  private
+  var connection: Option[HttpURLConnection] = None
 
   /**
    *
    *
-   * @param path
-   * @param shouldLoadOnlyFirst
-   *
    * @return
    *
-   * @throws OperationPreventedBySecurityManagerError
-   * @throws PathIsNullError
-   * @throws PathIsEmptyOrOnlyWhitespaceError
-   * @throws FileAttributeRetrievalFailedError
-   * @throws PathPointsToFolderError
-   * @throws PathPointsToSymbolicLinkError
-   * @throws PathDoesNotPointToRegularFileError
-   * @throws UnknownFileExtensionError
-   * @throws FileNotFoundError
-   * @throws EmptyFileError
-   * @throws SuitableImageStreamProviderNotFoundError
+   * @throws InvalidPathError
+   * @throws UnableToOpenHTTPConnectionError
+   * @throws UnableToRetrieveDataOverHTTPConnectionError
    * @throws ImageInputStreamNotCreatedError
    * @throws SuitableImageReaderNotFoundError
-   * @throws ImageReaderNotRetrievedError
    */
-  def tryToLoadFrom(
-      path: String,
-      shouldLoadOnlyFirst: Boolean): Seq[Try[BitmapBufferAdapter]] = {
+  def load: Seq[Try[BitmapBufferAdapter]] = {
+    initURL()
+    initConnection()
 
-    val url = new URL(path)
-    val connection = url.openConnection().asInstanceOf[HttpURLConnection]
-    connection.setRequestMethod("GET")
+    ensureThatMimeTypeIsSupported()
+    retrieveImages()
+  }
 
+  /**
+   *
+   *
+   * @throws InvalidPathError if an URL instance could not be created based on the given address
+   */
+  private
+  def initURL(): Unit = {
+    if (url.isEmpty)
+      url = Some(urlCreator.createBasedOn(sourcePath))
+  }
+
+  /**
+   *
+   *
+   * @throws UnableToOpenHTTPConnectionError when a connection could not be opened
+   */
+  private
+  def initConnection(): Unit = {
+    if (connection.isEmpty)
+      connection = Some(httpConnectionCreator.createBasedOn(url.get))
+  }
+
+  /**
+   *
+   */
+  private
+  def ensureThatMimeTypeIsSupported(): Unit = {
+    setRequestMethod(HTTPMethodHead)
     // TODO: Ensure that mimetype is supported
+  }
 
-    EnsureClosingOfAfter(createImageInputStreamFor(connection.getInputStream)){inputStream =>
-      val loader = new ImageStreamLoader(bitmapValidator)
-
-      loader.tryToLoadFrom(inputStream, path, shouldLoadOnlyFirst)
+  /**
+   *
+   *
+   * @param method
+   *
+   * @throws UnableToRetrieveDataOverHTTPConnectionError
+   */
+  private
+  def setRequestMethod(method: HTTPMethod): Unit = {
+    try {
+      connection.get.setRequestMethod(method.name)
+    }
+    catch {
+      case e@(_: ProtocolException | _: SecurityException) =>
+        throw UnableToRetrieveDataOverHTTPConnectionError(url.get, e)
     }
   }
 
   /**
    *
    *
-   * @param imageStream
+   * @return
+   *
+   * @throws UnableToRetrieveDataOverHTTPConnectionError
+   * @throws SuitableImageReaderNotFoundError
+   * @throws ImageReaderNotRetrievedError
+   */
+  private
+  def retrieveImages(): Seq[Try[BitmapBufferAdapter]] = {
+    setRequestMethod(HTTPMethodGet)
+
+    val inputStream =
+      try {
+        connection.get.getInputStream
+      }
+      catch {
+        case e@(_: IOException | _: UnknownServiceException) =>
+          throw UnableToRetrieveDataOverHTTPConnectionError(url.get, e)
+      }
+
+    EnsureClosingOfAfter(createImageInputStreamFor(inputStream)){inputStream =>
+      val loader = new ImageStreamLoader(
+        inputStream, sourcePath, shouldLoadOnlyFirst, bitmapValidator)
+
+      loader.load
+    }
+  }
+
+  /**
+   *
+   *
+   * @param connectionInputStream
    *
    * @return
    *
@@ -92,9 +167,9 @@ class ServerImageLoader(
    * @throws ImageInputStreamNotCreatedError
    */
   private
-  def createImageInputStreamFor(imageStream: InputStream): ImageInputStream = {
+  def createImageInputStreamFor(connectionInputStream: InputStream): ImageInputStream = {
     val inputStream =
-      Try(ImageIO.createImageInputStream(imageStream)).recover({
+      Try(ImageIO.createImageInputStream(connectionInputStream)).recover({
         case e: IOException => throw ImageInputStreamNotCreatedError(e)
       }).get
 

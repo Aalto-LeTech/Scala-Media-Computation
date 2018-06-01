@@ -35,47 +35,38 @@ import smcl.pictures.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSi
 /**
  *
  *
+ * @param inputStream
+ * @param descriptiveImagePath
+ * @param shouldLoadOnlyFirst
  * @param bitmapValidator
  *
  * @author Aleksi Lukkarinen
  */
 private[smcl]
 class ImageStreamLoader(
+    private val inputStream: ImageInputStream,
+    private val descriptiveImagePath: String,
+    private val shouldLoadOnlyFirst: Boolean,
     private val bitmapValidator: BitmapValidator) {
+
+  private
+  var reader: Option[ImageReader] = None
 
   /**
    *
-   *
-   * @param inputStream
-   * @param descriptiveImagePath
-   * @param shouldLoadOnlyFirst
    *
    * @return
    *
    * @throws SuitableImageReaderNotFoundError
    * @throws ImageReaderNotRetrievedError
    */
-  def tryToLoadFrom(
-      inputStream: ImageInputStream,
-      descriptiveImagePath: String,
-      shouldLoadOnlyFirst: Boolean): Seq[Try[BitmapBufferAdapter]] = {
-
-    val reader: ImageReader = findSuitableImageReaderFor(inputStream)
-
-    try {
-      reader.setInput(inputStream)
-      loadImagesFromReader(reader, descriptiveImagePath, shouldLoadOnlyFirst)
-    }
-    finally {
-      if (reader != null)
-        reader.dispose()
-    }
+  def load: Seq[Try[BitmapBufferAdapter]] = {
+    findSuitableImageReader()
+    loadImagesFromReader()
   }
 
   /**
    *
-   *
-   * @param inputStream
    *
    * @return
    *
@@ -83,43 +74,46 @@ class ImageStreamLoader(
    * @throws ImageReaderNotRetrievedError
    */
   private
-  def findSuitableImageReaderFor(
-      inputStream: ImageInputStream): ImageReader = {
-
+  def findSuitableImageReader(): Unit = {
     val imageReaders = ImageIO.getImageReaders(inputStream)
     if (!imageReaders.hasNext)
       throw SuitableImageReaderNotFoundError
 
-    Try(imageReaders.next()).recover({
+    val firstReader = Try(imageReaders.next()).recover({
       case t: Throwable => throw ImageReaderNotRetrievedError(t)
     }).get
+
+    reader = Some(firstReader)
   }
 
   /**
    *
-   * @param reader
-   * @param descriptiveImagePath
-   * @param shouldLoadOnlyFirst
    *
    * @return
    */
   private
-  def loadImagesFromReader(
-      reader: ImageReader,
-      descriptiveImagePath: String,
-      shouldLoadOnlyFirst: Boolean): Seq[Try[BitmapBufferAdapter]] = {
+  def loadImagesFromReader(): Seq[Try[BitmapBufferAdapter]] = {
+    try {
+      reader.get.setInput(inputStream)
 
-    val WithSearchingAllowed = true
-    val firstImageIndex = reader.getMinIndex
+      val WithSearchingAllowed = true
+      val firstImageIndex = reader.get.getMinIndex
 
-    if (shouldLoadOnlyFirst) {
-      Seq(loadSingleImageFromReader(firstImageIndex, reader, descriptiveImagePath))
+      if (shouldLoadOnlyFirst) {
+        Seq(loadSingleImageFromReader(firstImageIndex))
+      }
+      else {
+        val lastImageIndex = firstImageIndex + reader.get.getNumImages(WithSearchingAllowed) - 1
+        val imageNumberRange = firstImageIndex to lastImageIndex
+
+        imageNumberRange.map(loadSingleImageFromReader)
+      }
     }
-    else {
-      val lastImageIndex = firstImageIndex + reader.getNumImages(WithSearchingAllowed) - 1
-      val imageNumberRange = firstImageIndex to lastImageIndex
-
-      imageNumberRange.map(loadSingleImageFromReader(_, reader, descriptiveImagePath))
+    finally {
+      if (reader.isDefined) {
+        reader.get.dispose()
+        reader = None
+      }
     }
   }
 
@@ -127,21 +121,15 @@ class ImageStreamLoader(
    *
    *
    * @param imageIndex
-   * @param reader
-   * @param descriptiveImagePath
    *
    * @return
    */
   private
-  def loadSingleImageFromReader(
-      imageIndex: Int,
-      reader: ImageReader,
-      descriptiveImagePath: String): Try[BitmapBufferAdapter] = for {
-
-    widthInPixels <- Try(reader.getWidth(imageIndex))
+  def loadSingleImageFromReader(imageIndex: Int): Try[BitmapBufferAdapter] = for {
+    widthInPixels <- Try(reader.get.getWidth(imageIndex))
     width = Len(widthInPixels)
 
-    heightInPixels <- Try(reader.getHeight(imageIndex))
+    heightInPixels <- Try(reader.get.getHeight(imageIndex))
     height = Len(heightInPixels)
 
     _ = {
@@ -162,7 +150,7 @@ class ImageStreamLoader(
       }
     }
 
-    readImage <- Try(reader.read(imageIndex))
+    readImage <- Try(reader.get.read(imageIndex))
 
   } yield AWTBitmapBufferAdapter(readImage)
 

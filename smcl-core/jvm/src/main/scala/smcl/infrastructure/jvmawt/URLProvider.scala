@@ -14,10 +14,11 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.infrastructure
+package smcl.infrastructure.jvmawt
 
+import java.net.{MalformedURLException, URL}
 
-import java.util.Calendar
+import smcl.infrastructure.exceptions.InvalidPathError
 
 
 
@@ -28,16 +29,25 @@ import java.util.Calendar
  * @author Aleksi Lukkarinen
  */
 private[smcl]
-class DefaultJVMCalendarProvider
-    extends JVMCalendarProvider {
+class URLProvider {
 
   /**
    *
    *
+   * @param address
+   *
    * @return
+   *
+   * @throws InvalidPathError if an URL instance could not be created based on the given address
    */
-  override
-  def currentMoment: Calendar =
-    Calendar.getInstance()
+  def createBasedOn(address: String): URL = {
+    try {
+      new URL(address)
+    }
+    catch {
+      case e: MalformedURLException =>
+        throw InvalidPathError(address, e)
+    }
+  }
 
 }

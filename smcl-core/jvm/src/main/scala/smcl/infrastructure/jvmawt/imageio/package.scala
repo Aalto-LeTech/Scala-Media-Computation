@@ -24,4 +24,22 @@ package smcl.infrastructure.jvmawt
  */
 package object imageio {
 
+
+
+
+  sealed class HTTPMethod(val name: String)
+
+
+
+
+  case object HTTPMethodGet extends HTTPMethod("GET")
+
+
+
+
+  case object HTTPMethodHead extends HTTPMethod("HEAD")
+
+
+
+
 }
