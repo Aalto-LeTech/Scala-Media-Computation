@@ -209,7 +209,7 @@ class DefaultAWTImageProvider(
     pickFirstResult(
       tryToLoadImagesFromLocalPath(
         sourceResourcePath,
-        shouldLoadOnlyFirst = false))
+        shouldLoadOnlyFirst = true))
   }
 
   /**
@@ -243,7 +243,7 @@ class DefaultAWTImageProvider(
 
     val loader = new LocalPathImageLoader(
       sourceResourcePath,
-      shouldLoadOnlyFirst = false,
+      shouldLoadOnlyFirst,
       bitmapValidator,
       SupportedReadableFileExtensions)
 
@@ -298,7 +298,7 @@ class DefaultAWTImageProvider(
 
     val loader = new JavaResourceImageLoader(
       relativeSourceResourcePath,
-      shouldLoadOnlyFirst = false,
+      shouldLoadOnlyFirst,
       bitmapValidator,
       SupportedReadableFileExtensions)
 
