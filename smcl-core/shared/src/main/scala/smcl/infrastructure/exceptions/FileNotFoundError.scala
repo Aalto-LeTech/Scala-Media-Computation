@@ -44,7 +44,12 @@ object FileNotFoundError {
 /**
  *
  *
+ * @param filename
+ * @param cause
+ *
  * @author Aleksi Lukkarinen
  */
-final case class FileNotFoundError private[smcl](filename: String, override val cause: Throwable)
+final case class FileNotFoundError private[smcl](
+    filename: String,
+    override val cause: Throwable)
     extends SMCLBaseError(s"""File \"$filename\" cannot be found.""", cause)

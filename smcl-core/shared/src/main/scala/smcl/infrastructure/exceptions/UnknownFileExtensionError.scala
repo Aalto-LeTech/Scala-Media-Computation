@@ -25,6 +25,9 @@ import smcl.infrastructure.{StrComma, StrSpace}
 /**
  *
  *
+ * @param actualExtension
+ * @param supportedExtensionList
+ *
  * @author Aleksi Lukkarinen
  */
 final case class UnknownFileExtensionError private[smcl](

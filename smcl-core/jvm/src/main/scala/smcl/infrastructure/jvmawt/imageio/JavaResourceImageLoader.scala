@@ -19,8 +19,8 @@ package smcl.infrastructure.jvmawt.imageio
 
 import scala.util.{Failure, Success, Try}
 
-import smcl.infrastructure.exceptions._
 import smcl.infrastructure.BitmapBufferAdapter
+import smcl.infrastructure.exceptions._
 import smcl.infrastructure.jvmawt.JVMReflectionUtils
 import smcl.pictures.BitmapValidator
 
@@ -52,7 +52,7 @@ class JavaResourceImageLoader(
    * @throws OperationPreventedBySecurityManagerError
    */
   def load: Seq[Try[BitmapBufferAdapter]] = {
-    Seq(Failure(ImageNotFoundError(path, null)))
+    Seq(Failure(ImageNotFoundError(path)))
   }
 
   /**
@@ -68,7 +68,7 @@ class JavaResourceImageLoader(
 
     val resourceURL = loader.getResource(resourceName)
     if (resourceURL == null)
-      return Failure(ImageNotFoundError(resourceName, null))
+      return Failure(ImageNotFoundError(resourceName))
 
     Success(resourceURL.getPath)
   }

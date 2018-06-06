@@ -20,10 +20,14 @@ package smcl.infrastructure.exceptions
 /**
  *
  *
+ * @param settingKey
+ * @param cause
+ *
  * @author Aleksi Lukkarinen
  */
 final case class SettingValidationError private[smcl](
-    settingKey: String, override val cause: Throwable)
+    settingKey: String,
+    override val cause: Throwable)
     extends SMCLBaseError(
       s"""Validation of setting "$settingKey" failed (see the upstream exception).""",
       cause)

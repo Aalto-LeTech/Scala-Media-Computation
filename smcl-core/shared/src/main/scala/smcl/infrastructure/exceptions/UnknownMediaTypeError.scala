@@ -22,5 +22,6 @@ package smcl.infrastructure.exceptions
  *
  * @author Aleksi Lukkarinen
  */
-case object UnknownMediaTypeError extends SMCLBaseError(
-  s"""The given object does not represent a known media type.""", null)
+case object UnknownMediaTypeError
+    extends SMCLBaseError(
+      s"""The given object does not represent a known media type.""", null)

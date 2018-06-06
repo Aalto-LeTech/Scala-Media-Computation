@@ -20,9 +20,13 @@ package smcl.infrastructure.exceptions
 /**
  *
  *
+ * @param invalidIndex
+ * @param cause
+ *
  * @author Aleksi Lukkarinen
  */
 final case class ImageWithGivenIndexDoesNotExistError private[smcl](
-    invalidIndex: Int, override val cause: Throwable)
+    invalidIndex: Int,
+    override val cause: Throwable)
     extends SMCLBaseError(
       s"Image file does not contain an image with index $invalidIndex.", cause)

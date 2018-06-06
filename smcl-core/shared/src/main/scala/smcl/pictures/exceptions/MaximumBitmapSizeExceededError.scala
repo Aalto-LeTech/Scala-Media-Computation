@@ -26,6 +26,13 @@ import smcl.modeling.Len
 /**
  *
  *
+ * @param actualWidth
+ * @param actualHeight
+ * @param maximumBitmapWidth
+ * @param maximumBitmapHeight
+ * @param resourcePath
+ * @param imageIndexInResource
+ *
  * @author Aleksi Lukkarinen
  */
 final case class MaximumBitmapSizeExceededError private[smcl](

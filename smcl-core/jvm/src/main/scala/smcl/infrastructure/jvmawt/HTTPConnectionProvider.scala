@@ -40,7 +40,7 @@ class HTTPConnectionProvider {
    *
    * @return
    *
-   * @throws UnableToOpenHTTPConnectionError when a connection could not be opened
+   * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created
    */
   def createBasedOn(url: URL): HttpURLConnection = {
     try {

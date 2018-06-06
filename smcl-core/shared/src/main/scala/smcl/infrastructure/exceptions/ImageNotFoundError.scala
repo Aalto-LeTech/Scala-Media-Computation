@@ -17,12 +17,100 @@
 package smcl.infrastructure.exceptions
 
 
+import java.net.URL
+
+
+
+
 /**
  *
  *
  * @author Aleksi Lukkarinen
  */
-final case class ImageNotFoundError private[smcl](
-    name: String,
+object ImageNotFoundError {
+
+  /**
+   *
+   *
+   * @param imageName
+   *
+   * @return
+   */
+  def apply(imageName: String): ImageNotFoundError = {
+    new ImageNotFoundError(imageName, None, null)
+  }
+
+  /**
+   *
+   *
+   * @param imageName
+   * @param httpStatusCode
+   *
+   * @return
+   */
+  def apply(
+      imageName: String,
+      httpStatusCode: Int): ImageNotFoundError = {
+
+    new ImageNotFoundError(imageName, Some(httpStatusCode), null)
+  }
+
+  /**
+   *
+   *
+   * @param imageURL
+   * @param httpStatusCode
+   *
+   * @return
+   */
+  def apply(
+      imageURL: URL,
+      httpStatusCode: Int): ImageNotFoundError = {
+
+    new ImageNotFoundError(imageURL.toExternalForm, Some(httpStatusCode), null)
+  }
+
+  /**
+   *
+   *
+   * @param imageName
+   * @param cause
+   *
+   * @return
+   */
+  def apply(
+      imageName: String,
+      cause: Throwable): ImageNotFoundError = {
+
+    new ImageNotFoundError(imageName, None, cause)
+  }
+
+}
+
+
+
+
+/**
+ *
+ *
+ * @param imageName
+ * @param httpStatusCode
+ * @param cause
+ *
+ * @author Aleksi Lukkarinen
+ */
+final
+case class ImageNotFoundError private[smcl](
+    imageName: String,
+    httpStatusCode: Option[Int],
     override val cause: Throwable)
-    extends SMCLBaseError(s"""Image \"$name\" cannot be found.""", cause)
+    extends SMCLBaseError({
+      val sb = new StringBuilder(200)
+
+      sb ++= s"""Image \"$imageName\" could not be found."""
+
+      if (httpStatusCode.isDefined)
+        sb ++= s" HTTP status code from server: ${httpStatusCode.get}."
+
+      sb.toString()
+    }, cause)

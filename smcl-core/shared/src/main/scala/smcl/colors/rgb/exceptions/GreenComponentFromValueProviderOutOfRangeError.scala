@@ -25,10 +25,16 @@ import smcl.infrastructure.exceptions.SMCLBaseError
 /**
  *
  *
+ * @param invalidValue
+ * @param minimumValue
+ * @param maximumValue
+ *
  * @author Aleksi Lukkarinen
  */
 final case class GreenComponentFromValueProviderOutOfRangeError private[smcl](
-    invalidValue: Int, minimumValue: Int, maximumValue: Int)
+    invalidValue: Int,
+    minimumValue: Int,
+    maximumValue: Int)
     extends SMCLBaseError(
       "A green component value returned by a value provider function was out of its range " +
           s"$minimumValue - $maximumValue (was $invalidValue)", null)

@@ -20,6 +20,8 @@ package smcl.infrastructure.exceptions
 /**
  *
  *
+ * @param cause
+ *
  * @author Aleksi Lukkarinen
  */
 final case class ImageReaderInputSourceHasNotBeenSetError private[smcl](

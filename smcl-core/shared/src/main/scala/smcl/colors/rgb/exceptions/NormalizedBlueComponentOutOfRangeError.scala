@@ -26,11 +26,15 @@ import smcl.infrastructure.exceptions.SMCLBaseError
  *
  *
  * @param invalidValue
+ * @param minimumValue
+ * @param maximumValue
  *
  * @author Aleksi Lukkarinen
  */
 final case class NormalizedBlueComponentOutOfRangeError private[smcl](
-    invalidValue: Double, minimumValue: Double, maximumValue: Double)
+    invalidValue: Double,
+    minimumValue: Double,
+    maximumValue: Double)
     extends SMCLBaseError(
       "The normalized blue component value of a color was out of its range " +
           s"$minimumValue - $maximumValue (was $invalidValue)", null)

@@ -26,6 +26,13 @@ import smcl.modeling.Len
 /**
  *
  *
+ * @param actualWidth
+ * @param actualHeight
+ * @param minimumBitmapWidth
+ * @param minimumBitmapHeight
+ * @param resourcePath
+ * @param imageIndexInResource
+ *
  * @author Aleksi Lukkarinen
  */
 final case class MinimumBitmapSizeNotMetError private[smcl](

@@ -20,6 +20,8 @@ package smcl.infrastructure.exceptions
 /**
  *
  *
+ * @param idOfMissingInjectable
+ *
  * @author Aleksi Lukkarinen
  */
 final case class InjectableNotInjectedError private[smcl](

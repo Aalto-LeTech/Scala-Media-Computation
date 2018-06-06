@@ -42,6 +42,8 @@ object UnsupportedOperationByPlatformError {
 /**
  *
  *
+ * @param startOfDescription
+ *
  * @author Aleksi Lukkarinen
  */
 final case class UnsupportedOperationByPlatformError private[smcl](

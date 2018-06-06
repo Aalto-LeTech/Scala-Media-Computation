@@ -20,6 +20,8 @@ package smcl.infrastructure.exceptions
 /**
  *
  *
+ * @param missingImplementationClassName
+ *
  * @author Aleksi Lukkarinen
  */
 final case class ImplementationNotSetError private[smcl](

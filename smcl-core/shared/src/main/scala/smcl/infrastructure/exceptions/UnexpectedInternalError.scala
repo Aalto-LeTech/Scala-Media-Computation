@@ -45,6 +45,7 @@ object UnexpectedInternalError {
   def whileInit(source: String): UnexpectedInternalError = {
     apply(source + " was not correctly initialized!")
   }
+
 }
 
 
@@ -53,8 +54,12 @@ object UnexpectedInternalError {
 /**
  *
  *
+ * @param message
+ * @param cause
+ *
  * @author Aleksi Lukkarinen
  */
 final case class UnexpectedInternalError private[smcl](
-    override val message: String, override val cause: Throwable)
+    override val message: String,
+    override val cause: Throwable)
     extends SMCLBaseError(message, cause)

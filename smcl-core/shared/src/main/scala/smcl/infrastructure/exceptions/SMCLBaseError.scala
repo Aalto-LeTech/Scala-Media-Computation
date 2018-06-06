@@ -53,6 +53,9 @@ object SMCLBaseError {
 /**
  *
  *
+ * @param message
+ * @param cause
+ *
  * @author Aleksi Lukkarinen
  */
 class SMCLBaseError private[smcl](

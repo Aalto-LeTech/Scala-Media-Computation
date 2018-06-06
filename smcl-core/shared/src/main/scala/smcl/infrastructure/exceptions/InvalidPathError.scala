@@ -26,5 +26,6 @@ package smcl.infrastructure.exceptions
  * @author Aleksi Lukkarinen
  */
 final case class InvalidPathError private[smcl](
-    path: String, override val cause: Throwable)
+    path: String,
+    override val cause: Throwable)
     extends SMCLBaseError(s"""The given path \"$path\" was invalid""", cause)

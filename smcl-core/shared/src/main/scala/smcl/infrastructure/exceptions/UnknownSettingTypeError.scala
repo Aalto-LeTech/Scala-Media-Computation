@@ -42,10 +42,14 @@ object UnknownSettingTypeError {
 /**
  *
  *
+ * @param settingCandidateName
+ * @param cause
+ *
  * @author Aleksi Lukkarinen
  */
 final case class UnknownSettingTypeError private[smcl](
-    settingCandidateName: String, override val cause: Throwable)
+    settingCandidateName: String,
+    override val cause: Throwable)
     extends SMCLBaseError(
       s"""The given object of type $settingCandidateName does not represent a.valid setting""",
       cause)

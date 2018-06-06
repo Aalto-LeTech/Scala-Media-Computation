@@ -14,10 +14,10 @@
 /*     T H E   S C A L A   M E D I A   C O M P U T A T I O N   L I B R A R Y      .         +     */
 /*                                                                                    *           */
 
-package smcl.colors.exceptions
+package smcl.infrastructure.exceptions
 
 
-import smcl.infrastructure.exceptions.SMCLBaseError
+import java.net.URL
 
 
 
@@ -25,10 +25,34 @@ import smcl.infrastructure.exceptions.SMCLBaseError
 /**
  *
  *
- * @param detailMessage
+ * @author Aleksi Lukkarinen
+ */
+object RequestedURITooLongError {
+
+  /**
+   *
+   *
+   * @param url
+   *
+   * @return
+   */
+  def apply(url: URL): RequestedURITooLongError =
+    new RequestedURITooLongError(url.toExternalForm, null)
+
+}
+
+
+
+
+/**
+ *
+ *
+ * @param uri
+ * @param cause
  *
  * @author Aleksi Lukkarinen
  */
-final case class InvalidColorWeightCombinationError private[smcl](
-    private val detailMessage: String)
-    extends SMCLBaseError(detailMessage, null)
+final case class RequestedURITooLongError private[smcl](
+    uri: String,
+    override val cause: Throwable)
+    extends SMCLBaseError(s"""Requested URI \"$uri\" was rejected by the server as being too long.""", cause)

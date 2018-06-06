@@ -25,8 +25,14 @@ import smcl.infrastructure.exceptions.SMCLBaseError
 /**
  *
  *
+ * @param expectedLength
+ * @param actualLength
+ *
  * @author Aleksi Lukkarinen
  */
 final case class InvalidBlueDimensionLengthError private[smcl](
-    expectedLength: Int, actualLength: Int) extends SMCLBaseError(
-  s"The blue dimension must have exactly $expectedLength items (had $actualLength).", null)
+    expectedLength: Int,
+    actualLength: Int)
+    extends SMCLBaseError(
+      s"The blue dimension must have exactly $expectedLength items (had $actualLength).",
+      null)

@@ -20,6 +20,8 @@ package smcl.infrastructure.exceptions
 /**
  *
  *
+ * @param actualValue
+ *
  * @author Aleksi Lukkarinen
  */
 final case class NegativeUpperLeftRowError private[smcl](actualValue: Int)

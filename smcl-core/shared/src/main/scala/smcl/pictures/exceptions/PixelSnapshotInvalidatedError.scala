@@ -28,4 +28,6 @@ import smcl.infrastructure.exceptions.SMCLBaseError
  * @author Aleksi Lukkarinen
  */
 final case class PixelSnapshotInvalidatedError private[smcl]()
-    extends SMCLBaseError("This pixel snapshot has already been converted to a bitmap", null)
+    extends SMCLBaseError(
+      "This pixel snapshot has already been converted to a bitmap",
+      null)

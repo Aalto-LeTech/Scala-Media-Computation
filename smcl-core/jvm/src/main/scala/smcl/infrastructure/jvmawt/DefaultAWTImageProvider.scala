@@ -161,7 +161,7 @@ class DefaultAWTImageProvider(
         return result
     }
 
-    Failure(ImageNotFoundError(sourceResourcePath, null))
+    Failure(ImageNotFoundError(sourceResourcePath))
   }
 
   /**
@@ -351,14 +351,19 @@ class DefaultAWTImageProvider(
       absoluteSourceResourcePath: String,
       shouldLoadOnlyFirst: Boolean): Try[Seq[Try[BitmapBufferAdapter]]] = {
 
-    val loader = new ServerImageLoader(
-      absoluteSourceResourcePath,
-      shouldLoadOnlyFirst,
-      urlProvider,
-      httpConnectionProvider,
-      bitmapValidator)
+    Try(urlProvider.createBasedOn(absoluteSourceResourcePath)).fold(
+      {throwable =>
+        return Failure(throwable)
+      }, {url =>
+        val loader = new ServerImageLoader(
+          url,
+          shouldLoadOnlyFirst,
+          httpConnectionProvider,
+          bitmapValidator,
+          SupportedReadableMimeTypes)
 
-    Try(loader.load)
+        Try(loader.load)
+      })
   }
 
   /**

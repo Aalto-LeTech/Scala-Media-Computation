@@ -45,7 +45,8 @@ object UninitializedSettingError {
  * @author Aleksi Lukkarinen
  */
 final case class UninitializedSettingError private[smcl](
-    settingKey: String, override val cause: Throwable)
+    settingKey: String,
+    override val cause: Throwable)
     extends SMCLBaseError(
       s"""No setting with name "$settingKey" is initialized.""",
       cause)

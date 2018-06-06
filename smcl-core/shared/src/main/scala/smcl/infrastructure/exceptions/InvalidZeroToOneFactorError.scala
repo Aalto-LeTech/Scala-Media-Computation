@@ -42,8 +42,12 @@ object InvalidZeroToOneFactorError {
 /**
  *
  *
+ * @param message
+ * @param cause
+ *
  * @author Aleksi Lukkarinen
  */
 final case class InvalidZeroToOneFactorError private[smcl](
-    override val message: String, override val cause: Throwable)
+    override val message: String,
+    override val cause: Throwable)
     extends SMCLBaseError(message, cause)
