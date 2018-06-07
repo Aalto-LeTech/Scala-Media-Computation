@@ -17,11 +17,13 @@
 package smcl.infrastructure.jvmawt.imageio
 
 
-import scala.util.{Failure, Success, Try}
+import java.io.InputStream
 
-import smcl.infrastructure.BitmapBufferAdapter
+import scala.util.Try
+
 import smcl.infrastructure.exceptions._
 import smcl.infrastructure.jvmawt.JVMReflectionUtils
+import smcl.infrastructure.{BitmapBufferAdapter, EnsureClosingOfAfter}
 import smcl.pictures.BitmapValidator
 
 
@@ -30,8 +32,9 @@ import smcl.pictures.BitmapValidator
 /**
  *
  *
- * @param path
+ * @param resourceName
  * @param shouldLoadOnlyFirst
+ * @param imageInputStreamProvider
  * @param bitmapValidator
  * @param supportedReadableFileExtensions
  *
@@ -39,38 +42,61 @@ import smcl.pictures.BitmapValidator
  */
 private[smcl]
 class JavaResourceImageLoader(
-    path: String,
+    resourceName: String,
     shouldLoadOnlyFirst: Boolean,
+    imageInputStreamProvider: ImageInputStreamProvider,
     private val bitmapValidator: BitmapValidator,
     private val supportedReadableFileExtensions: Seq[String]) {
+
+  private
+  var resourceStream: Option[InputStream] = None
 
   /**
    *
    *
    * @return
    *
-   * @throws OperationPreventedBySecurityManagerError
+   * @throws ImageNotFoundError if the requested resource could not be found
    */
   def load: Seq[Try[BitmapBufferAdapter]] = {
-    Seq(Failure(ImageNotFoundError(path)))
+    resolveResourceStream()
+    loadResourceFromStream()
   }
 
   /**
-   * Tries to find a local Java resource.
+   * Tries to find the requested resource.
    *
-   * @return an ``URL`` representing the resource, or ``null`` if either the resource could not be found or access to it was prevented by a ``SecurityManager``
+   * @return an [[InputStream]] representing the
    *
-   * @throws OperationPreventedBySecurityManagerError if retrieval of a class loader is prevented by a ``SecurityManager``
+   * @throws ImageNotFoundError if the requested resource could not be found
    */
   private
-  def resolveLocalJavaResource(resourceName: String): Try[String] = {
+  def resolveResourceStream(): Unit = {
     val loader = JVMReflectionUtils.getClassLoader
 
-    val resourceURL = loader.getResource(resourceName)
-    if (resourceURL == null)
-      return Failure(ImageNotFoundError(resourceName))
+    val s = loader.getResourceAsStream(resourceName)
+    if (s == null) {
+      resourceStream = None
+      throw ImageNotFoundError(resourceName)
+    }
 
-    Success(resourceURL.getPath)
+    resourceStream = Some(s)
+  }
+
+  /**
+   *
+   */
+  private
+  def loadResourceFromStream(): Seq[Try[BitmapBufferAdapter]] = {
+    EnsureClosingOfAfter(imageInputStreamProvider.createFor(resourceStream.get)){inputStream =>
+      val loader = new ImageStreamLoader(
+        inputStream,
+        resourceName,
+        shouldLoadOnlyFirst,
+        bitmapValidator)
+
+      loader.load
+    }
   }
 
 }

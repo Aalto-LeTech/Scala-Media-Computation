@@ -20,6 +20,7 @@ package smcl.infrastructure.jvmawt
 import smcl.colors.ColorValidator
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable, ColorTranslationTableValidator, PresetColor}
 import smcl.infrastructure._
+import smcl.infrastructure.jvmawt.imageio.ImageInputStreamProvider
 import smcl.modeling.d1
 import smcl.pictures._
 import smcl.settings.jvmawt.JVMAWTSettingInitializer
@@ -153,6 +154,7 @@ object Initializer extends SMCLInitializer {
       new DefaultAWTImageProvider(
         new URLProvider(),
         new HTTPConnectionProvider(),
+        new ImageInputStreamProvider(),
         bitmapValidator)
 
     val factory = new DefaultJVMAWTPlatformResourceFactory(

@@ -21,11 +21,9 @@ import java.io.{IOException, InputStream}
 import java.net.{HttpURLConnection, ProtocolException, SocketTimeoutException, URL, UnknownServiceException}
 import java.util.Locale
 
-import scala.annotation.switch
 import scala.util.Try
 
 import javax.imageio.ImageIO
-import javax.imageio.stream.ImageInputStream
 
 import smcl.infrastructure.exceptions._
 import smcl.infrastructure.jvmawt.HTTPConnectionProvider
@@ -40,7 +38,8 @@ import smcl.pictures.BitmapValidator
  *
  * @param targetURL
  * @param shouldLoadOnlyFirst
- * @param httpConnectionCreator
+ * @param httpConnectionProvider
+ * @param imageInputStreamProvider
  * @param bitmapValidator
  * @param supportedReadableMimeTypes
  *
@@ -50,22 +49,22 @@ private[smcl]
 class ServerImageLoader(
     private val targetURL: URL,
     private val shouldLoadOnlyFirst: Boolean,
-    private val httpConnectionCreator: HTTPConnectionProvider,
+    private val httpConnectionProvider: HTTPConnectionProvider,
+    private val imageInputStreamProvider: ImageInputStreamProvider,
     private val bitmapValidator: BitmapValidator,
-    private val supportedReadableMimeTypes: Seq[String]) {
+    private val supportedReadableMimeTypes: Seq[String],
+    private val connectionTimeoutInMilliseconds: Int,
+    private val readTimeoutInMilliseconds: Int) {
 
-  /** A timeout in milliseconds for establishing an HTTP connection. */
-  val ConnectionTimeOutInMilliseconds: Int = 10000
-
-  /** A timeout in milliseconds for reading data over an HTTP connection. */
-  val ReadTimeOutInMilliseconds: Int = 10000
+  require(connectionTimeoutInMilliseconds > 0, "The connection timeout has to be a positive number")
+  require(readTimeoutInMilliseconds > 0, "The read timeout has to be a positive number")
 
   /**
    *
    *
    * @return
    *
-   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the [[ConnectionTimeOutInMilliseconds]] expires before a connection has been established; or if an I/O error occurs during establishing the connection
+   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
    * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
    * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
    * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
@@ -86,7 +85,7 @@ class ServerImageLoader(
   /**
    *
    *
-   * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the [[ConnectionTimeOutInMilliseconds]] expires before a connection has been established; or if an I/O error occurs during establishing the connection
+   * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
    * @throws RedirectionRequestedError       for HTTP status codes 301, 302, 307, and 308
    * @throws ImageNotFoundError              for HTTP status codes 204, 205, 404, and 410
    * @throws AccessDeniedByServerError       for HTTP status codes 401, 402, 403, 407, and 451
@@ -101,8 +100,8 @@ class ServerImageLoader(
     val connection = new WrappedHTTPConnection(
       targetURL,
       HTTPMethodHead,
-      ConnectionTimeOutInMilliseconds,
-      ReadTimeOutInMilliseconds)
+      connectionTimeoutInMilliseconds,
+      readTimeoutInMilliseconds)
 
     connection.useFor{connection =>
       val mimeType = {
@@ -137,7 +136,7 @@ class ServerImageLoader(
    *
    * @return
    *
-   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the [[ConnectionTimeOutInMilliseconds]] expires before a connection has been established; or if an I/O error occurs during establishing the connection
+   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
    * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
    * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
    * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
@@ -154,11 +153,11 @@ class ServerImageLoader(
     val connection = new WrappedHTTPConnection(
       targetURL,
       HTTPMethodGet,
-      ConnectionTimeOutInMilliseconds,
-      ReadTimeOutInMilliseconds)
+      connectionTimeoutInMilliseconds,
+      readTimeoutInMilliseconds)
 
     connection.openInputStreamFor{stream =>
-      EnsureClosingOfAfter(createImageInputStreamFor(stream)){inputStream =>
+      EnsureClosingOfAfter(imageInputStreamProvider.createFor(stream)){inputStream =>
         val loader = new ImageStreamLoader(
           inputStream,
           targetURL.toExternalForm,
@@ -168,29 +167,6 @@ class ServerImageLoader(
         loader.load
       }
     }
-  }
-
-  /**
-   *
-   *
-   * @param connectionInputStream
-   *
-   * @return
-   *
-   * @throws SuitableImageStreamProviderNotFoundError if Java's [[ImageIO]] did not find a suitable image reader
-   * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
-   */
-  private
-  def createImageInputStreamFor(connectionInputStream: InputStream): ImageInputStream = {
-    val inputStream =
-      Try(ImageIO.createImageInputStream(connectionInputStream)).recover({
-        case e: IOException => throw ImageInputStreamNotCreatedError(e)
-      }).get
-
-    if (inputStream == null)
-      throw SuitableImageStreamProviderNotFoundError
-
-    inputStream
   }
 
 
@@ -204,7 +180,7 @@ class ServerImageLoader(
    * @param readTimeOutInMilliseconds
    *
    * @throws IllegalArgumentException        if either of the connection timeouts is negative
-   * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the [[ConnectionTimeOutInMilliseconds]] expires before a connection has been established; or if an I/O error occurs during establishing the connection
+   * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
    * @throws RedirectionRequestedError       for HTTP status codes 301, 302, 307, and 308
    * @throws ImageNotFoundError              for HTTP status codes 204, 205, 404, and 410
    * @throws AccessDeniedByServerError       for HTTP status codes 401, 402, 403, 407, and 451
@@ -236,7 +212,7 @@ class ServerImageLoader(
     val HTTP_UNAVAILABLE_FOR_LEGAL_REASONS: Int = 451
 
     private
-    val connection: HttpURLConnection = httpConnectionCreator.createBasedOn(targetURL)
+    val connection: HttpURLConnection = httpConnectionProvider.createBasedOn(targetURL)
 
     init()
 
@@ -253,7 +229,7 @@ class ServerImageLoader(
      *
      *
      * @throws IllegalArgumentException        if either of the connection timeouts is negative
-     * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the [[ConnectionTimeOutInMilliseconds]] expires before a connection has been established; or if an I/O error occurs during establishing the connection
+     * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
      */
     private
     def createConnection(): Unit = {
@@ -301,7 +277,7 @@ class ServerImageLoader(
         throw ServerError(targetURL, statusCode)
       }
       else {
-        (statusCode: @switch) match {
+        statusCode match {
           case HttpURLConnection.HTTP_OK =>                     // 200 --> Everything OK
 
           case HttpURLConnection.HTTP_MOVED_PERM                // 301

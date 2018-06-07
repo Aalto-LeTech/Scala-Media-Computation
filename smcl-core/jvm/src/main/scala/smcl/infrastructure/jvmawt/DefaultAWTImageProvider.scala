@@ -25,7 +25,7 @@ import javax.imageio.ImageIO
 
 import smcl.infrastructure.BitmapBufferAdapter
 import smcl.infrastructure.exceptions._
-import smcl.infrastructure.jvmawt.imageio.{JavaResourceImageLoader, LocalPathImageLoader, ServerImageLoader}
+import smcl.infrastructure.jvmawt.imageio.{ImageInputStreamProvider, JavaResourceImageLoader, LocalPathImageLoader, ServerImageLoader}
 import smcl.pictures.BitmapValidator
 
 
@@ -34,23 +34,26 @@ import smcl.pictures.BitmapValidator
 /**
  *
  *
+ * @param urlProvider
+ * @param httpConnectionProvider
+ * @param imageInputStreamProvider
+ * @param bitmapValidator
+ *
  * @author Aleksi Lukkarinen
  */
 private[smcl]
 class DefaultAWTImageProvider(
     private val urlProvider: URLProvider,
     private val httpConnectionProvider: HTTPConnectionProvider,
+    private val imageInputStreamProvider: ImageInputStreamProvider,
     private val bitmapValidator: BitmapValidator)
     extends AWTImageProvider {
 
-  /** */
-  private
-  val SupportedInternetProtocols: Seq[String] = Seq("http", "https")
+  /** A timeout in milliseconds for establishing an HTTP connection. */
+  val InternetConnectionTimeoutInMilliseconds: Int = 10000
 
-  /** */
-  private
-  val SupportedInternetProtocolsWithColonAndSlashes: Seq[String] =
-    SupportedInternetProtocols.map(_.trim.toLowerCase + "://")
+  /** A timeout in milliseconds for reading data over an HTTP connection. */
+  val InternetReadTimeoutInMilliseconds: Int = 10000
 
   /** */
   lazy val SupportedReadableMimeTypes: Seq[String] =
@@ -67,6 +70,15 @@ class DefaultAWTImageProvider(
   /** */
   lazy val SupportedWritableFileExtensions: Seq[String] =
     ImageIO.getWriterFileSuffixes.map(_.toLowerCase(Locale.getDefault)).toSeq
+
+  /** */
+  private
+  val SupportedInternetProtocols: Seq[String] = Seq("http", "https")
+
+  /** */
+  private
+  val SupportedInternetProtocolsWithColonAndSlashes: Seq[String] =
+    SupportedInternetProtocols.map(_.trim.toLowerCase + "://")
 
   /**
    *
@@ -299,6 +311,7 @@ class DefaultAWTImageProvider(
     val loader = new JavaResourceImageLoader(
       relativeSourceResourcePath,
       shouldLoadOnlyFirst,
+      imageInputStreamProvider,
       bitmapValidator,
       SupportedReadableFileExtensions)
 
@@ -359,8 +372,11 @@ class DefaultAWTImageProvider(
           url,
           shouldLoadOnlyFirst,
           httpConnectionProvider,
+          imageInputStreamProvider,
           bitmapValidator,
-          SupportedReadableMimeTypes)
+          SupportedReadableMimeTypes,
+          InternetConnectionTimeoutInMilliseconds,
+          InternetReadTimeoutInMilliseconds)
 
         Try(loader.load)
       })

@@ -50,6 +50,12 @@ lazy val isJVMAWTPlatform: SettingKey[Boolean] = settingKey[Boolean](
 lazy val isJSHTML5Platform: SettingKey[Boolean] = settingKey[Boolean](
   "Whether or not a subproject targets JS/HTML5 platform.")
 
+lazy val packagedCommonResourcesFolder: SettingKey[File] = settingKey[File](
+  "Folder containing the common resources that are to be packaged into core JARs.")
+
+lazy val testCommonResourcesFolder: SettingKey[File] = settingKey[File](
+  "Folder containing the common resources that are to be available during tests.")
+
 lazy val generalJARAdditions: SettingKey[Seq[(java.io.File, String)]] =
   settingKey[Seq[(java.io.File, String)]](
     "Mappings of additional files common to all JARs produced from a subproject.")
@@ -96,6 +102,10 @@ lazy val prjSmclCoreSubName: String = "Core Library"
 lazy val prjSmclCoreName: String = projectFullName + ": " + prjSmclCoreSubName
 lazy val prjSmclCoreAbbrName: String = projectAbbrName + ": " + prjSmclCoreSubName
 lazy val prjSmclCoreDescription: String = "A class library for bitmap processing using Scala."
+
+lazy val cmnResFolderName: String = "common-resources"
+lazy val packagedResFolderName: String = "packaged"
+lazy val testResFolderName: String = "test"
 
 lazy val snapshotIdPostfix: String = "-SNAPSHOT"
 
@@ -388,6 +398,14 @@ def unitTestFilterForJS(name: String): Boolean =
 //--------------------------------------------------------------------------------------------------
 
 lazy val smclGeneralSettings: Seq[Def.Setting[_]] = Seq(
+  packagedCommonResourcesFolder :=
+      (baseDirectory in ThisBuild).value / cmnResFolderName / packagedResFolderName,
+
+  testCommonResourcesFolder :=
+      (baseDirectory in ThisBuild).value / cmnResFolderName / testResFolderName,
+)
+
+lazy val smclGeneralCodeProjectSettings: Seq[Def.Setting[_]] = smclGeneralSettings ++ Seq(
   slackNotify := None, // To limit slackNotify to the aggregate project only
 
   scalacOptions ++= Seq(
@@ -579,7 +597,7 @@ lazy val smclGeneralJvmSettings: Seq[Def.Setting[_]] = Seq(
 //
 //--------------------------------------------------------------------------------------------------
 
-// Do NOT add smclGeneralSettings to this project!!
+// Do NOT add the general setting collections to this project!!
 lazy val `smcl-library-info`: Project = project.in(file("smcl-library-info"))
     .disablePlugins(SbtGithubReleasePlugin)
     .settings(
@@ -609,10 +627,14 @@ lazy val smclBitmapViewer: CrossProject =
       .settings(
         name := prjSmclBitmapViewerId,
         description := prjSmclBitmapViewerDescription,
-        smclGeneralSettings,
+
+        smclGeneralCodeProjectSettings,
+
         libraryinfoIncludeFileFilter in Compile :=
             (libraryinfoIncludeFileFilter in Compile).value || "SMCLBitmapViewer.scala",
+
         scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclBitmapViewerAbbrName),
+
         inConfig(ItgTest)(Defaults.testTasks),
         inConfig(GUITest)(Defaults.testTasks),
         inConfig(SmokeTest)(Defaults.testTasks),
@@ -674,15 +696,22 @@ lazy val smclCore: CrossProject =
       .settings(
         name := prjSmclCoreId,
         description := prjSmclCoreDescription,
-        smclGeneralSettings,
+
+        smclGeneralCodeProjectSettings,
+
         libraryinfoIncludeFileFilter in Compile :=
             (libraryinfoIncludeFileFilter in Compile).value || "SMCL.scala" || "SMCLCore.scala",
+
         scalacOptions ++= Seq(
           "-opt:l:inline",
           "-opt-inline-from:**",
           "-opt-warnings:at-inline-failed",
         ),
         scalacOptions in (Compile, doc) := Seq("-doc-title", prjSmclCoreAbbrName),
+
+        unmanagedResourceDirectories in Compile += packagedCommonResourcesFolder.value,
+        unmanagedResourceDirectories in Test += testCommonResourcesFolder.value,
+
         inConfig(ItgTest)(Defaults.testTasks),
         inConfig(GUITest)(Defaults.testTasks),
         inConfig(SmokeTest)(Defaults.testTasks),
@@ -718,11 +747,16 @@ lazy val smclCoreJS: Project = smclCore.js
 //--------------------------------------------------------------------------------------------------
 lazy val smcl: Project = project.in(file("."))
     .settings(
+      smclGeneralSettings,
+
       onLoadMessage := projectFullName + " Root Project Loaded",
 
       clean := clean.dependsOn(
         clean in `smcl-library-info`
       ).value,
+
+      resourceDirectory in Compile := packagedCommonResourcesFolder.value,
+      resourceDirectory in Test := testCommonResourcesFolder.value,
 
       slackRoom := "#smcl-releases",
 
