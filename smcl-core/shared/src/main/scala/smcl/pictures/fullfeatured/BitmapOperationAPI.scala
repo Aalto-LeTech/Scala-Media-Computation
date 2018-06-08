@@ -18,8 +18,7 @@ package smcl.pictures.fullfeatured
 
 
 import smcl.colors.ColorValidator
-import smcl.colors.rgb.{Color, ColorComponentTranslationTable}
-import smcl.pictures.ConvolutionKernel
+import smcl.colors.rgb.Color
 import smcl.settings._
 
 
@@ -34,63 +33,6 @@ import smcl.settings._
  */
 private[fullfeatured]
 trait BitmapOperationAPI {
-
-  /**
-   *
-   *
-   * @param bmp
-   * @param kernel
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def convolveWith(
-      bmp: Bitmap,
-      kernel: ConvolutionKernel,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-
-    bmp.convolveWith(kernel, viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bmp
-   * @param translator
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def filterWith(
-      bmp: Bitmap,
-      translator: ColorComponentTranslationTable,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-
-    bmp.filterWith(translator, viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bmp
-   * @param function
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def iteratePixelsWith(
-      bmp: Bitmap,
-      function: (Int, Int, Int, Int) => (Int, Int, Int, Int),
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-
-    bmp.iteratePixelsWith(function, viewerHandling)
-  }
 
   /**
    *

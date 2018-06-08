@@ -20,10 +20,10 @@ package smcl.pictures.fullfeatured
 import scala.collection.mutable
 
 import smcl.colors.ColorValidator
-import smcl.colors.rgb.{Color, ColorComponentTranslationTable}
+import smcl.colors.rgb.Color
 import smcl.infrastructure._
+import smcl.pictures.BitmapValidator
 import smcl.pictures.operations._
-import smcl.pictures.{BitmapValidator, ConvolutionKernel}
 import smcl.settings._
 
 
@@ -222,51 +222,6 @@ class Bitmap private[pictures](
       viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
 
     apply(Clear(color), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param kernel
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def convolveWith(
-      kernel: ConvolutionKernel,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(ConvolveWithCustomKernel(kernel), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param translator
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def filterWith(
-      translator: ColorComponentTranslationTable,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(FilterWithComponentTranslationTable(translator), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param function
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def iteratePixelsWith(
-      function: (Int, Int, Int, Int) => (Int, Int, Int, Int),
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(IteratePixels(function), viewerHandling)
   }
 
   /**
