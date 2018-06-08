@@ -511,45 +511,6 @@ class Bitmap private[pictures](
   /**
    *
    *
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def flipHorizontally(
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(FlipHorizontally(), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def flipVertically(
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(FlipVertically(), viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def flipDiagonally(
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    apply(FlipDiagonally(), viewerHandling)
-  }
-
-  /**
-   *
-   *
    * @param shearingFactorHorizontal
    * @param shearingFactorVertical
    * @param resizeCanvasBasedOnTransformation

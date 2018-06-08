@@ -225,57 +225,6 @@ trait BitmapOperationAPI {
    *
    *
    * @param bmp
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def flipHorizontally(
-      bmp: Bitmap,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-
-    bmp.flipHorizontally(viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bmp
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def flipVertically(
-      bmp: Bitmap,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-
-    bmp.flipVertically(viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bmp
-   * @param viewerHandling
-   *
-   * @return
-   */
-  def flipDiagonally(
-      bmp: Bitmap,
-      viewerHandling: ViewerUpdateStyle = VUSUpdateViewerPerDefaults): Bitmap = {
-
-    require(bmp != null, "The bitmap argument has to be a Bitmap instance (was null).")
-
-    bmp.flipDiagonally(viewerHandling)
-  }
-
-  /**
-   *
-   *
-   * @param bmp
    * @param shearingFactorHorizontal
    * @param shearingFactorVertical
    * @param resizeCanvasBasedOnTransformation
