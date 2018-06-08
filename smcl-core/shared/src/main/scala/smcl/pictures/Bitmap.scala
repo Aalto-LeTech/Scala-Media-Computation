@@ -409,6 +409,18 @@ class Bitmap private(
   /**
    *
    *
+   * @param kernel
+   *
+   * @return
+   */
+  def convolveWith(kernel: ConvolutionKernel): Bitmap =
+    toProvideModifiedCopyOfOldBuffer{oldBuffer =>
+      oldBuffer.createFilteredVersionWith(kernel)
+    }
+
+  /**
+   *
+   *
    * @param translator
    *
    * @return
