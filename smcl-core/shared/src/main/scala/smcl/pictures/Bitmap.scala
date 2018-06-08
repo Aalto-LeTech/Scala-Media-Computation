@@ -934,32 +934,6 @@ class Bitmap private(
     this
   }
 
-/*
-  /**
-   * Transforms the content of this [[Bitmap]] using the specified affine
-   * transformation. The center of this [[Bitmap]] remains unchanged.
-   *
-   * @param t
-   *
-   * @return
-   */
-  private
-  def transformContentWith(t: AffineTransformation): Bitmap = {
-    if (buffer.isEmpty)
-      return this
-
-    val newBuffer = buffer.get.createTransformedVersionWith(
-      transformation = t,
-      resizeCanvasBasedOnTransformation = false)._1
-
-    new Bitmap(
-      identity = identity,
-      isRenderable = isRenderable,
-      boundary = boundary,
-      buffer = Some(newBuffer))
-  }
-*/
-
   /**
    * An internal method to transform the content of this
    * bitmap using a given [[AffineTransformation]].
@@ -980,13 +954,72 @@ class Bitmap private(
   }
 
   /**
+   * Flips the content of this bitmap horizontally.
+   *
+   * @return
+   */
+  def flipHorizontally: Bitmap = {
+    if (isNotRenderable)
+      return this
+
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forYAxisRelativeHorizontalFlipOf(width.inPixels))
+
+    internalCopy(
+      identity,
+      isRenderable,
+      boundary,
+      Option(newBuffer))
+  }
+
+  /**
+   * Flips the content of this bitmap vertically.
+   *
+   * @return
+   */
+  def flipVertically: Bitmap = {
+    if (isNotRenderable)
+      return this
+
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forXAxisRelativeVerticalFlipOf(height.inPixels))
+
+    internalCopy(
+      identity,
+      isRenderable,
+      boundary,
+      Option(newBuffer))
+  }
+
+  /**
+   * Flips the content of this bitmap diagonally.
+   *
+   * @return
+   */
+  def flipDiagonally: Bitmap = {
+    if (isNotRenderable)
+      return this
+
+    val newBuffer = transformContentUsing(
+      AffineTransformation.forOrigoRelativeDiagonalFlipOf(
+        width.inPixels,
+        height.inPixels))
+
+    internalCopy(
+      identity,
+      isRenderable,
+      boundary,
+      Option(newBuffer))
+  }
+
+  /**
    * Rotates this bitmap around origo (0,0) by 90 degrees clockwise.
    *
    * @return
    */
   override
   def rotateBy90DegsCWAroundOrigo: Bitmap = {
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     val newBuffer = transformContentUsing(
@@ -1019,7 +1052,7 @@ class Bitmap private(
    */
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Bitmap = {
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     val newBuffer = transformContentUsing(
@@ -1042,7 +1075,7 @@ class Bitmap private(
    */
   override
   def rotateBy90DegsCCWAroundOrigo: Bitmap = {
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     val newBuffer = transformContentUsing(
@@ -1075,7 +1108,7 @@ class Bitmap private(
    */
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Bitmap = {
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     val newBuffer = transformContentUsing(
@@ -1098,7 +1131,7 @@ class Bitmap private(
    */
   override
   def rotateBy180DegsAroundOrigo: Bitmap = {
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     val newBuffer = transformContentUsing(
@@ -1131,7 +1164,7 @@ class Bitmap private(
    */
   override
   def rotateBy180Degs(centerOfRotation: Pos): Bitmap = {
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     val newBuffer = transformContentUsing(
@@ -1166,7 +1199,7 @@ class Bitmap private(
    */
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Bitmap = {
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     val newBuffer = transformContentUsing(
@@ -1237,7 +1270,7 @@ class Bitmap private(
       angleInDegrees: Double,
       centerOfRotation: Pos): Bitmap = {
 
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     // TODO in all rotation methods: Check params, e.g., Pos has to be defined, Angle mustn't be null
@@ -1706,7 +1739,7 @@ class Bitmap private(
       verticalFactor: Double,
       relativityPoint: Pos): Bitmap = {
 
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     if (horizontalFactor == 0 || verticalFactor == 0)
@@ -1732,7 +1765,7 @@ class Bitmap private(
       horizontalFactor: Double,
       verticalFactor: Double): Bitmap = {
 
-    if (!isRenderable)
+    if (isNotRenderable)
       return this
 
     if (horizontalFactor == 0 || verticalFactor == 0)
