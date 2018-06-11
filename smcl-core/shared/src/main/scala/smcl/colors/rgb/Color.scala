@@ -1200,8 +1200,12 @@ class Color protected[smcl](
    * @return
    */
   override
-  def toString: String =
-    s"Color(red: $red, green: $green, blue: $blue, opacity: $opacity)"
+  def toString: String = {
+    if (opacity < ColorValidator.MaximumOpacity)
+      return s"Color($red, $green, $blue, $opacity)"
+
+    s"Color($red, $green, $blue)"
+  }
 
 
   ///////////////////////////////////////////////////////////////////////////////////
