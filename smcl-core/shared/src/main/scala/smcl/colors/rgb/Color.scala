@@ -29,6 +29,38 @@ import smcl.infrastructure._
  * There are some convenience constructors using [[Double]] values as their parameters instead of
  * [[Int]] values; these just call `Double.toInt` for all the appropriate values.
  *
+ * @groupname constructors-rgba RGBA Constructors
+ * @groupprio 10
+ * @groupdesc Constructors for creating colors using RGBA-style arguments
+ *
+ * @groupname constructors-grayscale Grayscale Constructors
+ * @groupprio 20
+ * @groupdesc Constructors for creating colors using gray-scale-style arguments
+ *
+ * @groupname constructors-argb-int ARGB Integer Constructors
+ * @groupprio 30
+ * @groupdesc Constructors for creating colors using gray-scale-style arguments
+ *
+ * @groupname constructors-platform-color Constructors accepting platform colors
+ * @groupprio 40
+ * @groupdesc Constructors for creating colors using gray-scale-style arguments
+ *
+ * @groupname constructors-hsv HSV Colour Model Constructors
+ * @groupprio 50
+ * @groupdesc Constructors for creating colors using gray-scale-style arguments
+ *
+ * @groupname constructors-hsi HSI Colour Model Constructors
+ * @groupprio 60
+ * @groupdesc Constructors for creating colors using gray-scale-style arguments
+ *
+ * @groupname comparing-colors Comparing Colors
+ * @groupprio 200
+ * @groupdesc Constructors for creating colors using gray-scale-style arguments
+ *
+ * @groupname mixing-colors Mixing Colors
+ * @groupprio 210
+ * @groupdesc Constructors for creating colors using gray-scale-style arguments
+ *
  * @author Aleksi Lukkarinen
  */
 object Color
@@ -83,7 +115,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param red
    * @param green
@@ -108,7 +140,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param red
    * @param green
@@ -134,7 +166,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param red
    * @param green
@@ -158,7 +190,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param red
    * @param green
@@ -181,7 +213,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param rgbaTuple
    * @param name
@@ -201,7 +233,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param rgbaTuple
    *
@@ -215,7 +247,7 @@ object Color
   /**
    *
    *
-   * @group Grayscale Constructors
+   * @group constructors-grayscale
    *
    * @param gray
    * @param opacity
@@ -236,7 +268,7 @@ object Color
 
   /**
    *
-   * @group Grayscale Constructors
+   * @group constructors-grayscale
    *
    * @param gray
    * @param opacity
@@ -258,7 +290,7 @@ object Color
   /**
    *
    *
-   * @group Grayscale Constructors
+   * @group constructors-grayscale
    *
    * @param grayOpacityTuple
    * @param name
@@ -278,7 +310,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param red
    * @param green
@@ -302,7 +334,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param red
    * @param green
@@ -325,7 +357,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param red
    * @param green
@@ -346,7 +378,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param red
    * @param green
@@ -365,7 +397,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param rgbTuple
    * @param name
@@ -384,7 +416,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param rgbTuple
    *
@@ -396,7 +428,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param rgbTuple
    * @param opacity
@@ -418,7 +450,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param rgbTuple
    * @param opacity
@@ -437,7 +469,7 @@ object Color
   /**
    *
    *
-   * @group Grayscale Constructors
+   * @group constructors-grayscale
    *
    * @param gray
    * @param opacity
@@ -456,7 +488,7 @@ object Color
   /**
    *
    *
-   * @group Grayscale Constructors
+   * @group constructors-grayscale
    *
    * @param gray
    * @param opacity
@@ -473,7 +505,7 @@ object Color
   /**
    *
    *
-   * @group Grayscale Constructors
+   * @group constructors-grayscale
    *
    * @param grayOpacityTuple
    *
@@ -489,7 +521,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param rgbHexString
    * @param opacity
@@ -548,7 +580,7 @@ object Color
   /**
    *
    *
-   * @group RGBA Constructors
+   * @group constructors-rgba
    *
    * @param rgbHexString
    *
@@ -563,7 +595,7 @@ object Color
   /**
    *
    *
-   * @group ARGB Integer Constructors
+   * @group constructors-argb-int
    *
    * @param argbInt
    * @param name
@@ -580,7 +612,7 @@ object Color
   /**
    *
    *
-   * @group ARGB Integer Constructors
+   * @group constructors-argb-int
    *
    * @param argbInt
    *
@@ -591,7 +623,7 @@ object Color
   /**
    *
    *
-   * @group Constructors accepting platform colors
+   * @group constructors-platform-color
    *
    * @param platformColor
    *
@@ -607,7 +639,7 @@ object Color
   /**
    *
    *
-   * @group Constructors accepting platform colors
+   * @group constructors-platform-color
    *
    * @param platformColor
    * @param name
@@ -629,7 +661,7 @@ object Color
   /**
    *
    *
-   * @group HSV Colour Model Constructors
+   * @group constructors-hsv
    *
    * @param hueInDegrees
    * @param saturation
@@ -650,7 +682,7 @@ object Color
   /**
    *
    *
-   * @group HSV Colour Model Constructors
+   * @group constructors-hsv
    *
    * @param hsvTuple
    *
@@ -665,7 +697,7 @@ object Color
   /**
    *
    *
-   * @group HSV Colour Model Constructors
+   * @group constructors-hsv
    *
    * @param hueInDegrees
    * @param saturation
@@ -688,7 +720,7 @@ object Color
   /**
    *
    *
-   * @group HSV Colour Model Constructors
+   * @group constructors-hsv
    *
    * @param hsvTuple
    * @param name
@@ -708,7 +740,7 @@ object Color
   /**
    *
    *
-   * @group HSV Colour Model Constructors
+   * @group constructors-hsv
    *
    * @param hueInDegrees
    * @param saturation
@@ -731,7 +763,7 @@ object Color
   /**
    *
    *
-   * @group HSV Colour Model Constructors
+   * @group constructors-hsv
    *
    * @param hsvTuple
    * @param opacity
@@ -750,7 +782,7 @@ object Color
   /**
    *
    *
-   * @group HSV Colour Model Constructors
+   * @group constructors-hsv
    *
    * @param hueInDegrees
    * @param saturation
@@ -775,7 +807,7 @@ object Color
   /**
    *
    *
-   * @group HSV Colour Model Constructors
+   * @group constructors-hsv
    *
    * @param hsvTuple
    * @param opacity
@@ -797,7 +829,7 @@ object Color
   /**
    *
    *
-   * @group HSI Colour Model Constructors
+   * @group constructors-hsi
    *
    * @param hueInDegrees
    * @param saturation
@@ -818,7 +850,7 @@ object Color
   /**
    *
    *
-   * @group HSI Colour Model Constructors
+   * @group constructors-hsi
    *
    * @param hsiTuple
    *
@@ -832,7 +864,7 @@ object Color
   /**
    *
    *
-   * @group HSI Colour Model Constructors
+   * @group constructors-hsi
    *
    * @param hueInDegrees
    * @param saturation
@@ -855,7 +887,7 @@ object Color
   /**
    *
    *
-   * @group HSI Colour Model Constructors
+   * @group constructors-hsi
    *
    * @param hsiTuple
    * @param name
@@ -875,7 +907,7 @@ object Color
   /**
    *
    *
-   * @group HSI Colour Model Constructors
+   * @group constructors-hsi
    *
    * @param hueInDegrees
    * @param saturation
@@ -898,7 +930,7 @@ object Color
   /**
    *
    *
-   * @group HSI Colour Model Constructors
+   * @group constructors-hsi
    *
    * @param hsiTuple
    * @param opacity
@@ -917,7 +949,7 @@ object Color
   /**
    *
    *
-   * @group HSI Colour Model Constructors
+   * @group constructors-hsi
    *
    * @param hueInDegrees
    * @param saturation
@@ -942,7 +974,7 @@ object Color
   /**
    *
    *
-   * @group HSI Colour Model Constructors
+   * @group constructors-hsi
    *
    * @param hsiTuple
    * @param opacity
@@ -1221,7 +1253,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Comparing Colors
+   * @group comparing-colors
    *
    * @param other
    *
@@ -1232,7 +1264,7 @@ class Color protected[smcl](
   /**
    * An equality comparison method that directly calls the equals() method.
    *
-   * @group Comparing Colors
+   * @group comparing-colors
    *
    * @param other
    *
@@ -1243,7 +1275,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Comparing Colors
+   * @group comparing-colors
    *
    * @param other
    *
@@ -1264,7 +1296,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Comparing Colors
+   * @group comparing-colors
    *
    * @param other
    *
@@ -1285,7 +1317,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Comparing Colors
+   * @group comparing-colors
    *
    * @param other
    *
@@ -1307,7 +1339,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Comparing Colors
+   * @group comparing-colors
    *
    * @param that
    *
@@ -1320,7 +1352,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Comparing Colors
+   * @group comparing-colors
    *
    * @param that
    *
@@ -1332,7 +1364,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Comparing Colors
+   * @group comparing-colors
    *
    * @param that
    *
@@ -1355,7 +1387,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThis
@@ -1376,7 +1408,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThis
@@ -1398,7 +1430,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThis
@@ -1420,7 +1452,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThis
@@ -1446,7 +1478,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThis
@@ -1478,7 +1510,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThis
@@ -1511,7 +1543,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThis
@@ -1543,7 +1575,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThis
@@ -1577,7 +1609,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThis
@@ -1596,7 +1628,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThis
@@ -1619,7 +1651,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThis
@@ -1641,7 +1673,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThis
@@ -1665,7 +1697,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThis
@@ -1698,7 +1730,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThis
@@ -1731,7 +1763,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThis
@@ -1764,7 +1796,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThis
@@ -1802,7 +1834,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThat
@@ -1821,7 +1853,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThat
@@ -1839,7 +1871,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThat
@@ -1861,7 +1893,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param portionOfThat
@@ -1885,7 +1917,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThat
@@ -1918,7 +1950,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThat
@@ -1947,7 +1979,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThat
@@ -1980,7 +2012,7 @@ class Color protected[smcl](
   /**
    *
    *
-   * @group Mixing Colors
+   * @group mixing-colors
    *
    * @param that
    * @param redPortionOfThat
