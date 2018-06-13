@@ -31,9 +31,6 @@ import javax.swing.{LookAndFeel, UIManager, UnsupportedLookAndFeelException}
 private[smcl]
 class AWTSwingUIProvider() {
 
-  /** */
-  private[infrastructure] val NimbusLookAndFeelName = "Nimbus"
-
   /** AWT toolkit. */
   private[infrastructure] val awtToolkit = Toolkit.getDefaultToolkit
 

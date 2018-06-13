@@ -80,7 +80,6 @@ object Initializer extends SMCLInitializer {
 
     initSettings()
     initPlatformResourceFactory()
-    initSwingLookAndFeel()
   }
 
   /**
@@ -161,14 +160,6 @@ object Initializer extends SMCLInitializer {
       calendarProvider, uuidProvider, fontProvider, imageProvider, screenInfoProvider)
 
     DefaultPlatformResourceFactory.setImplementation(factory)
-  }
-
-  /**
-   *
-   *
-   */
-  private def initSwingLookAndFeel(): Unit = {
-    UIProvider.tryToInitializeSpecificLookAndFeel(UIProvider.NimbusLookAndFeelName)
   }
 
 /*
