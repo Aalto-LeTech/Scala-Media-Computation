@@ -94,7 +94,10 @@ class ImageStreamLoader(
   private
   def loadImagesFromReader(): Seq[Try[BitmapBufferAdapter]] = {
     try {
-      reader.get.setInput(inputStream)
+      reader.get.setInput(
+        inputStream,
+        true, // seekForwardOnly
+        true) // ignoreMetadata
 
       val WithSearchingAllowed = true
       val firstImageIndex = reader.get.getMinIndex
