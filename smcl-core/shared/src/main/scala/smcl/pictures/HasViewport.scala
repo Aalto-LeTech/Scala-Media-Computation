@@ -229,7 +229,7 @@ trait HasViewport[ReturnType <: PictureElement] {
    */
   @inline
   final
-  def hasViewport: Boolean = viewport != null
+  def hasViewport: Boolean = viewport.isDefined
 
   /**
    *
