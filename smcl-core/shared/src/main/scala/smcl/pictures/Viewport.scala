@@ -74,6 +74,11 @@ class Viewport private(
     val boundary: Bounds,
     val name: Option[String]) {
 
+  override
+  def toString: String = {
+    s"viewport of $width x $height px; upper left corner = $upperLeftCorner"
+  }
+
   /**
    *
    *
