@@ -21,6 +21,7 @@ import scala.util.{Failure, Success, Try}
 
 import smcl.colors.ColorValidator
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable}
+import smcl.infrastructure.exceptions.{NegativeHeightError, NegativeWidthError, PositionOutOfBoundsError, XCoordinateOutOfRangeError, YCoordinateOutOfRangeError}
 import smcl.infrastructure.{BitmapBufferAdapter, Displayable, Identity, InjectablesRegistry, PRF}
 import smcl.modeling.d2._
 import smcl.modeling.{AffineTransformation, Angle, Len}
@@ -1325,16 +1326,38 @@ class Bitmap private(
     if (buffer.isEmpty)
       return this
 
-    // TODO: Check parameters: Have to be inside the bitmap
+    val upperLeftX = upperLeftXInPixels.floor
+    val upperLeftY = upperLeftYInPixels.floor
+    val lowerRightX = lowerRightXInPixels.floor
+    val lowerRightY = lowerRightYInPixels.floor
 
-    val newBuffer = buffer.get.copyPortionXYXY(
-      upperLeftXInPixels, upperLeftYInPixels,
-      lowerRightXInPixels, lowerRightYInPixels)
+    val xMin = upperLeftX.min(lowerRightX)
+    val xMax = upperLeftX.max(lowerRightX)
+    val yMin = upperLeftY.min(lowerRightY)
+    val yMax = upperLeftY.max(lowerRightY)
+
+    if (xMin < 0)
+      throw XCoordinateOutOfRangeError(xMin)
+
+    if (xMax > width.inPixels - 1)
+      throw XCoordinateOutOfRangeError(xMax)
+
+    if (yMin < 0)
+      throw YCoordinateOutOfRangeError(yMin)
+
+    if (yMax > height.inPixels - 1)
+      throw YCoordinateOutOfRangeError(yMax)
+
+    val resultingWidth = xMax - xMin + 1
+    val resultingHeight = yMax - yMin + 1
+    if (resultingWidth < 1 || resultingHeight < 1)
+      return Bitmap(0, 0)
+
+    val newBuffer = buffer.get.copyPortionXYXY(xMin, yMin, xMax, yMax)
 
     val newUpperLeftCorner = Pos.Origo
-
     val newLowerRightCorner =
-      newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
+      newUpperLeftCorner + (newBuffer.widthInPixels, newBuffer.heightInPixels)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
 
@@ -1349,29 +1372,60 @@ class Bitmap private(
    *
    *
    * @param upperLeftCorner
-   * @param widthInPixels
-   * @param heightInPixels
+   * @param targetWidthInPixels
+   * @param targetHeightInPixels
    *
    * @return
    */
   override
   def crop(
       upperLeftCorner: Pos,
-      widthInPixels: Double,
-      heightInPixels: Double): Bitmap = {
+      targetWidthInPixels: Double,
+      targetHeightInPixels: Double): Bitmap = {
 
     if (buffer.isEmpty)
       return this
 
-    // TODO: Check parameters: Have to be inside the bitmap
+    val upperLeftX = upperLeftCorner.xInPixelsFloored
+    val upperLeftY = upperLeftCorner.yInPixelsFloored
+    val desiredWidth = targetWidthInPixels.floor
+    val desiredHeight = targetHeightInPixels.floor
+
+    if (upperLeftX < 0
+        || upperLeftX > (width.inPixels - 1)
+        || upperLeftY < 0
+        || upperLeftY > (height.inPixels - 1)) {
+
+      throw PositionOutOfBoundsError(upperLeftCorner)
+    }
+
+    if (desiredWidth < 0)
+      throw NegativeWidthError(desiredWidth)
+
+    if (desiredHeight < 0)
+      throw NegativeHeightError(desiredHeight)
+
+    if (targetWidthInPixels < 1 || targetHeightInPixels < 1)
+      return Bitmap(0, 0)
+
+    val resultingWidth =
+      if (upperLeftX + desiredWidth > width.inPixels)
+        width.inPixels - upperLeftX
+      else
+        desiredWidth
+
+    val resultingHeight =
+      if (upperLeftY + desiredHeight > height.inPixels)
+        height.inPixels - upperLeftY
+      else
+        desiredHeight
 
     val newBuffer = buffer.get.copyPortionXYWH(
-      upperLeftCorner.xInPixels, upperLeftCorner.yInPixels,
-      widthInPixels, heightInPixels)
+      upperLeftX, upperLeftY, resultingWidth, resultingHeight)
 
     val newUpperLeftCorner = Pos.Origo
     val newLowerRightCorner =
-      newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
+      newUpperLeftCorner + (newBuffer.widthInPixels, newBuffer.heightInPixels)
 
     val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
 

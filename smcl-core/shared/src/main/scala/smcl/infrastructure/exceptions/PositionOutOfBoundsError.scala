@@ -17,6 +17,11 @@
 package smcl.infrastructure.exceptions
 
 
+import smcl.modeling.d2.Pos
+
+
+
+
 /**
  *
  *
@@ -24,6 +29,6 @@ package smcl.infrastructure.exceptions
  *
  * @author Aleksi Lukkarinen
  */
-final case class NegativeHeightError private[smcl](actualValue: Double)
+final case class PositionOutOfBoundsError private[smcl](actualValue: Pos)
     extends SMCLBaseError(
-      s"""The height cannot be negative (was: $actualValue)""", null)
+      s"""A given position was outside of its valid boundary (was: $actualValue)""", null)

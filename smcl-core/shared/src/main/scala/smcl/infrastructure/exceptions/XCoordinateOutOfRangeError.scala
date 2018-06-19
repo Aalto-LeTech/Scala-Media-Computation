@@ -24,6 +24,6 @@ package smcl.infrastructure.exceptions
  *
  * @author Aleksi Lukkarinen
  */
-final case class NegativeHeightError private[smcl](actualValue: Double)
+final case class XCoordinateOutOfRangeError private[smcl](actualValue: Double)
     extends SMCLBaseError(
-      s"""The height cannot be negative (was: $actualValue)""", null)
+      s"""A given X coordinate was outside of its valid range (was: $actualValue)""", null)

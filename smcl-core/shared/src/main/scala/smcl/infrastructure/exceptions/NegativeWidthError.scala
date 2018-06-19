@@ -24,6 +24,6 @@ package smcl.infrastructure.exceptions
  *
  * @author Aleksi Lukkarinen
  */
-final case class NegativeWidthError private[smcl](actualValue: Int)
+final case class NegativeWidthError private[smcl](actualValue: Double)
     extends SMCLBaseError(
       s"""The width cannot be negative (was: $actualValue)""", null)
