@@ -1405,7 +1405,7 @@ class Bitmap private(
     if (desiredHeight < 0)
       throw NegativeHeightError(desiredHeight)
 
-    if (targetWidthInPixels < 1 || targetHeightInPixels < 1)
+    if (desiredWidth < 1 || desiredHeight < 1)
       return Bitmap(0, 0)
 
     val resultingWidth =
