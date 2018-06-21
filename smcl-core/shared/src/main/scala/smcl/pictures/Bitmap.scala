@@ -1323,9 +1323,6 @@ class Bitmap private(
       lowerRightXInPixels: Double,
       lowerRightYInPixels: Double): Bitmap = {
 
-    if (buffer.isEmpty)
-      return this
-
     val upperLeftX = upperLeftXInPixels.floor
     val upperLeftY = upperLeftYInPixels.floor
     val lowerRightX = lowerRightXInPixels.floor
@@ -1347,6 +1344,9 @@ class Bitmap private(
 
     if (yMax > height.inPixels - 1)
       throw YCoordinateOutOfRangeError(yMax)
+
+    if (buffer.isEmpty)
+      return this
 
     val resultingWidth = xMax - xMin + 1
     val resultingHeight = yMax - yMin + 1
@@ -1383,9 +1383,6 @@ class Bitmap private(
       targetWidthInPixels: Double,
       targetHeightInPixels: Double): Bitmap = {
 
-    if (buffer.isEmpty)
-      return this
-
     val upperLeftX = upperLeftCorner.xInPixelsFloored
     val upperLeftY = upperLeftCorner.yInPixelsFloored
     val desiredWidth = targetWidthInPixels.floor
@@ -1407,6 +1404,9 @@ class Bitmap private(
 
     if (desiredWidth < 1 || desiredHeight < 1)
       return Bitmap(0, 0)
+
+    if (buffer.isEmpty)
+      return this
 
     val resultingWidth =
       if (upperLeftX + desiredWidth > width.inPixels)
