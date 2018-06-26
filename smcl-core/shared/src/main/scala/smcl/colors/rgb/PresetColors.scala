@@ -78,7 +78,7 @@ trait PresetColors {
   val CadetBlue = PresetColor(0xff5f9ea0, "cadet blue", "cadetblue")
 
   /** Color constant for <em>"chartreuse"</em> (<code>0xff7fff00</code>). */
-  val ChartReuse = PresetColor(0xff7fff00, "chartreuse", "chartreuse")
+  val Chartreuse = PresetColor(0xff7fff00, "chartreuse", "chartreuse")
 
   /** Color constant for <em>"chocolate"</em> (<code>0xffd2691e</code>). */
   val Chocolate = PresetColor(0xffd2691e, "chocolate", "chocolate")
