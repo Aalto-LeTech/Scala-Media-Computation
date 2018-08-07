@@ -17,6 +17,8 @@
 package smcl.pictures
 
 
+import scala.annotation.tailrec
+
 import smcl.infrastructure.{FlatMap, Identity}
 import smcl.modeling.d2._
 
@@ -136,6 +138,30 @@ class Picture private(
   @inline
   override final
   def toPicture: Picture = this
+
+  /**
+   *
+   *
+   * @return
+   */
+  @inline
+  override final
+  def toBitmap: Bitmap = {
+
+    @tailrec
+    def toBitmapInternal(p: Picture): Bitmap = {
+      if (p.elements.length != 1)
+        Bitmap(p)
+
+      p.elements.head match {
+        case childBitmap: Bitmap   => childBitmap
+        case childPicture: Picture => toBitmapInternal(childPicture)
+        case _                     => Bitmap(p)
+      }
+    }
+
+    toBitmapInternal(this)
+  }
 
   /**
    *
