@@ -104,8 +104,8 @@ trait PresetColors {
   /** Color constant for <em>"dark cyan"</em> (<code>0xff008b8b</code>). */
   val DarkCyan = PresetColor(0xff008b8b, "dark cyan", "darkcyan")
 
-  /** Color constant for <em>"dark golden rod"</em> (<code>0xffb8860b</code>). */
-  val DarkGoldenRod = PresetColor(0xffb8860b, "dark golden rod", "darkgoldenrod")
+  /** Color constant for <em>"dark goldenrod"</em> (<code>0xffb8860b</code>). */
+  val DarkGoldenrod = PresetColor(0xffb8860b, "dark goldenrod", "darkgoldenrod")
 
   /** Color constant for <em>"dark gray"</em> (<code>0xffa9a9a9</code>). */
   val DarkGray = PresetColor(0xffa9a9a9, "dark gray", "darkgray")
@@ -191,8 +191,8 @@ trait PresetColors {
   /** Color constant for <em>"gold"</em> (<code>0xffffd700</code>). */
   val Gold = PresetColor(0xffffd700, "gold", "gold")
 
-  /** Color constant for <em>"golden rod"</em> (<code>0xffdaa520</code>). */
-  val GoldenRod = PresetColor(0xffdaa520, "golden rod", "goldenrod")
+  /** Color constant for <em>"goldenrod"</em> (<code>0xffdaa520</code>). */
+  val Goldenrod = PresetColor(0xffdaa520, "goldenrod", "goldenrod")
 
   /** Color constant for <em>"gray"</em> (<code>0xff808080</code>). */
   val Gray = PresetColor(0xff808080, "gray", "gray")
@@ -245,9 +245,9 @@ trait PresetColors {
   /** Color constant for <em>"light cyan"</em> (<code>0xffe0ffff</code>). */
   val LightCyan = PresetColor(0xffe0ffff, "light cyan", "lightcyan")
 
-  /** Color constant for "light golden rod yellow" (0xfffafad2). */
-  val LightGoldenRodYellow =
-    PresetColor(0xfffafad2, "light golden rod yellow", "lightgoldenrodyellow")
+  /** Color constant for "light goldenrod yellow" (0xfffafad2). */
+  val LightGoldenrodYellow =
+    PresetColor(0xfffafad2, "light goldenrod yellow", "lightgoldenrodyellow")
 
   /** Color constant for <em>"light gray"</em> (<code>0xffd3d3d3</code>). */
   val LightGray = PresetColor(0xffd3d3d3, "light gray", "lightgray")
@@ -360,8 +360,8 @@ trait PresetColors {
   /** Color constant for <em>"orchid"</em> (<code>0xffda70d6</code>). */
   val Orchid = PresetColor(0xffda70d6, "orchid", "orchid")
 
-  /** Color constant for <em>"pale golden rod"</em> (<code>0xffeee8aa</code>). */
-  val PaleGoldenRod = PresetColor(0xffeee8aa, "pale golden rod", "palegoldenrod")
+  /** Color constant for <em>"pale goldenrod"</em> (<code>0xffeee8aa</code>). */
+  val PaleGoldenrod = PresetColor(0xffeee8aa, "pale goldenrod", "palegoldenrod")
 
   /** Color constant for <em>"pale green"</em> (<code>0xff98fb98</code>). */
   val PaleGreen = PresetColor(0xff98fb98, "pale green", "palegreen")
