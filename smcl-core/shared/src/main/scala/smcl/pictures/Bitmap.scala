@@ -1449,7 +1449,7 @@ class Bitmap private(
 
   /**
    * Scales this object to a given width in relation to a given point.
-   *
+                                                             *
    * @param targetWidth
    * @param relativityPoint
    *
@@ -1599,10 +1599,19 @@ class Bitmap private(
       targetHeight: Double,
       relativityPoint: Pos): Bitmap = {
 
-    val (horizontalFactor, verticalFactor) =
-      scalingFactorsFor(targetWidth, targetHeight)
+    if (isNotRenderable)
+      return this
 
-    scaleBy(horizontalFactor, verticalFactor, relativityPoint)
+    if (targetWidth <= 0 || targetHeight <= 0)
+      return Bitmap()
+
+    val newCenter =
+      boundary.center.scaleBy(
+        targetWidth / buffer.get.widthInPixels,
+        targetHeight / buffer.get.heightInPixels,
+        relativityPoint)
+
+    scaleToInternal(targetWidth, targetHeight, newCenter)
   }
 
   /**
@@ -1618,10 +1627,18 @@ class Bitmap private(
       targetWidth: Double,
       targetHeight: Double): Bitmap = {
 
-    val (horizontalFactor, verticalFactor) =
-      scalingFactorsFor(targetWidth, targetHeight)
+    if (isNotRenderable)
+      return this
 
-    scaleByRelativeToOrigo(horizontalFactor, verticalFactor)
+    if (targetWidth <= 0 || targetHeight <= 0)
+      return Bitmap()
+
+    val newCenter =
+      boundary.center.scaleByRelativeToOrigo(
+        targetWidth / buffer.get.widthInPixels,
+        targetHeight / buffer.get.heightInPixels)
+
+    scaleToInternal(targetWidth, targetHeight, newCenter)
   }
 
   /**
@@ -1629,17 +1646,35 @@ class Bitmap private(
    *
    * @param targetWidth
    * @param targetHeight
+   * @param newCenter
    *
    * @return
    */
-  def scalingFactorsFor(
+  private
+  def scaleToInternal(
       targetWidth: Double,
-      targetHeight: Double): (Double, Double) = {
+      targetHeight: Double,
+      newCenter: Pos): Bitmap = {
 
-    val horizontalFactor = targetWidth / width.inPixels
-    val verticalFactor = targetHeight / height.inPixels
+    val newWidth = targetWidth.toInt.max(0) + 1
+    val newHeight = targetHeight.toInt.max(0) + 1
 
-    (horizontalFactor, verticalFactor)
+    // TODO: Make content of the bitmap to flip when scaling factors are negative
+    val newBuffer = buffer.get.scaleTo(newWidth, newHeight)
+
+    val newUpperLeftCorner =
+      newCenter - (newWidth / 2.0, newHeight / 2.0)
+
+    val newLowerRightCorner =
+      newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
+
+    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
+
+    internalCopy(
+      identity,
+      isRenderable,
+      newBounds,
+      Option(newBuffer))
   }
 
   /**
@@ -1805,17 +1840,10 @@ class Bitmap private(
       verticalFactor: Double,
       relativityPoint: Pos): Bitmap = {
 
-    if (isNotRenderable)
-      return this
-
-    if (horizontalFactor == 0 || verticalFactor == 0)
-      return Bitmap()
-
-    val newCenter =
-      boundary.center.scaleBy(
-        horizontalFactor, verticalFactor, relativityPoint)
-
-    scaleByInternal(horizontalFactor, verticalFactor, newCenter)
+    scaleTo(
+      horizontalFactor * buffer.get.widthInPixels,
+      verticalFactor * buffer.get.heightInPixels,
+      relativityPoint)
   }
 
   /**
@@ -1831,52 +1859,9 @@ class Bitmap private(
       horizontalFactor: Double,
       verticalFactor: Double): Bitmap = {
 
-    if (isNotRenderable)
-      return this
-
-    if (horizontalFactor == 0 || verticalFactor == 0)
-      return Bitmap()
-
-    val newCenter =
-      boundary.center.scaleByRelativeToOrigo(
-        horizontalFactor, verticalFactor)
-
-    scaleByInternal(horizontalFactor, verticalFactor, newCenter)
-  }
-
-  /**
-   *
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   * @param newCenter
-   *
-   * @return
-   */
-  private
-  def scaleByInternal(
-      horizontalFactor: Double,
-      verticalFactor: Double,
-      newCenter: Pos): Bitmap = {
-
-    // TODO: Make content of the bitmap to flip when scaling factors are negative
-    val newBuffer = transformContentUsing(
-      AffineTransformation.forOrigoRelativeScalingOf(
-        math.abs(horizontalFactor), math.abs(verticalFactor)))
-
-    val newUpperLeftCorner =
-      newCenter - (newBuffer.widthInPixels / 2.0, newBuffer.heightInPixels / 2.0)
-
-    val newLowerRightCorner =
-      newUpperLeftCorner + (newBuffer.widthInPixels - 1, newBuffer.heightInPixels - 1)
-
-    val newBounds = Bounds(newUpperLeftCorner, newLowerRightCorner)
-
-    internalCopy(
-      identity,
-      isRenderable,
-      newBounds,
-      Option(newBuffer))
+    scaleToRelativeToOrigo(
+      horizontalFactor * buffer.get.widthInPixels,
+      verticalFactor * buffer.get.heightInPixels)
   }
 
 }

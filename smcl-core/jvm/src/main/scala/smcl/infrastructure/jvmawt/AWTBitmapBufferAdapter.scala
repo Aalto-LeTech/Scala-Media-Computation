@@ -19,7 +19,7 @@ package smcl.infrastructure.jvmawt
 
 import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
-import java.awt.{AlphaComposite, Graphics2D, RenderingHints}
+import java.awt.{AlphaComposite, Graphics2D, Image, RenderingHints}
 import java.io.File
 
 import scala.util.{Failure, Try}
@@ -568,6 +568,34 @@ class AWTBitmapBufferAdapter private(
   /**
    *
    *
+   * @param width
+   * @param height
+   *
+   * @return
+   */
+  def scaleTo(
+      width: Int,
+      height: Int): AWTBitmapBufferAdapter = {
+
+    val scalingMethod = Image.SCALE_AREA_AVERAGING
+    val lowlevelImage =
+      awtBufferedImage.getScaledInstance(width, height, scalingMethod)
+
+    val newAdapter =
+      AWTBitmapBufferAdapter(
+        lowlevelImage.getWidth(null),
+        lowlevelImage.getHeight(null))
+
+    newAdapter.withGraphics2D{
+      _.drawImage(lowlevelImage, 0, 0, null)
+    }
+
+    newAdapter
+  }
+
+  /**
+   *
+   *
    * @param transformation
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
@@ -615,7 +643,7 @@ class AWTBitmapBufferAdapter private(
     val finalTransformOperation = new AffineTransformOp(lowLevelTransformation, globalInterpolationMethod)
     val resultingBuffer: AWTBitmapBufferAdapter = AWTBitmapBufferAdapter(resultingImageWidth, resultingImageHeight)
 
-    resultingBuffer.drawingSurface clearUsing(backgroundColor, true)
+    resultingBuffer.drawingSurface clearUsing (backgroundColor, true)
 
     finalTransformOperation.filter(awtBufferedImage, resultingBuffer.awtBufferedImage)
 

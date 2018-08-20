@@ -114,6 +114,18 @@ trait BitmapBufferAdapter {
   /**
    *
    *
+   * @param width
+   * @param height
+   *
+   * @return
+   */
+  def scaleTo(
+      width: Int,
+      height: Int): BitmapBufferAdapter
+
+  /**
+   *
+   *
    * @param transformation
    * @param resizeCanvasBasedOnTransformation
    * @param backgroundColor
