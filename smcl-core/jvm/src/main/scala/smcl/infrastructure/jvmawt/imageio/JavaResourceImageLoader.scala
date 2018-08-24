@@ -21,10 +21,13 @@ import java.io.InputStream
 
 import scala.util.Try
 
+import javax.imageio.{ImageIO, ImageReader}
+
 import smcl.infrastructure.exceptions._
 import smcl.infrastructure.jvmawt.JVMReflectionUtils
 import smcl.infrastructure.{BitmapBufferAdapter, EnsureClosingOfAfter}
 import smcl.pictures.BitmapValidator
+import smcl.pictures.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
 
 
 
@@ -42,9 +45,9 @@ import smcl.pictures.BitmapValidator
  */
 private[smcl]
 class JavaResourceImageLoader(
-    resourceName: String,
-    shouldLoadOnlyFirst: Boolean,
-    imageInputStreamProvider: ImageInputStreamProvider,
+    private val resourceName: String,
+    private val shouldLoadOnlyFirst: Boolean,
+    private val imageInputStreamProvider: ImageInputStreamProvider,
     private val bitmapValidator: BitmapValidator,
     private val supportedReadableFileExtensions: Seq[String]) {
 
@@ -56,7 +59,13 @@ class JavaResourceImageLoader(
    *
    * @return
    *
-   * @throws ImageNotFoundError if the requested resource could not be found
+   * @throws ImageNotFoundError                       if the requested resource could not be found
+   * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
+   * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
+   * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
+   * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
+   * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
+   * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
    */
   def load: Seq[Try[BitmapBufferAdapter]] = {
     resolveResourceStream()
@@ -85,6 +94,15 @@ class JavaResourceImageLoader(
 
   /**
    *
+   *
+   * @return
+   *
+   * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
+   * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
+   * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
+   * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
+   * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
+   * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
    */
   private
   def loadResourceFromStream(): Seq[Try[BitmapBufferAdapter]] = {

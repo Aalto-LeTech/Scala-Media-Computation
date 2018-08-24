@@ -17,7 +17,7 @@
 package smcl.infrastructure.jvmawt.imageio
 
 
-import java.io.{IOException, InputStream}
+import java.io.{File, IOException, InputStream}
 
 import scala.util.Try
 
@@ -43,12 +43,39 @@ class ImageInputStreamProvider() {
    *
    * @return
    *
-   * @throws SuitableImageStreamProviderNotFoundError if Java's [[ImageIO]] did not find a suitable image reader
+   * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
    * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
    */
-  def createFor(stream: InputStream): ImageInputStream = {
+  def createFor(stream: InputStream): ImageInputStream =
+    createStreamFor(stream)
+
+  /**
+   *
+   *
+   * @param imageFile
+   *
+   * @return
+   *
+   * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
+   * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
+   */
+  def createFor(imageFile: File): ImageInputStream =
+    createStreamFor(imageFile)
+
+  /**
+   *
+   *
+   * @param imageSource
+   *
+   * @return
+   *
+   * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
+   * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
+   */
+  private
+  def createStreamFor(imageSource: Any): ImageInputStream = {
     val inputStream =
-      Try(ImageIO.createImageInputStream(stream)).recover({
+      Try(ImageIO.createImageInputStream(imageSource)).recover({
         case e: IOException => throw ImageInputStreamNotCreatedError(e)
       }).get
 

@@ -23,12 +23,13 @@ import java.util.Locale
 
 import scala.util.Try
 
-import javax.imageio.ImageIO
+import javax.imageio.{ImageIO, ImageReader}
 
 import smcl.infrastructure.exceptions._
 import smcl.infrastructure.jvmawt.HTTPConnectionProvider
 import smcl.infrastructure.{BitmapBufferAdapter, EnsureClosingOfAfter}
 import smcl.pictures.BitmapValidator
+import smcl.pictures.exceptions.{MaximumBitmapSizeExceededError, MinimumBitmapSizeNotMetError}
 
 
 
@@ -64,18 +65,18 @@ class ServerImageLoader(
    *
    * @return
    *
-   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
-   * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
-   * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
    * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
+   * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
+   * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
+   * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
    * @throws RequestedURITooLongError                    for HTTP status code 414
-   * @throws TooManyRequestsToServerError                for HTTP status code 429
    * @throws ServerError                                 for all HTTP status codes beginning with 5
+   * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
+   * @throws TooManyRequestsToServerError                for HTTP status code 429
    * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
    * @throws UnknownMIMETypeError                        if the MIME type sent by the server is not supported
-   * @throws UnableToRetrieveDataOverHTTPConnectionError if an [[InputStream]] could not be created for the data
-   * @throws SuitableImageStreamProviderNotFoundError    if Java's ImageIO did not find a suitable image reader
-   * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
+   * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
+   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
    */
   def load: Seq[Try[BitmapBufferAdapter]] = {
     ensureThatMimeTypeIsSupported()
@@ -85,13 +86,13 @@ class ServerImageLoader(
   /**
    *
    *
-   * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
-   * @throws RedirectionRequestedError       for HTTP status codes 301, 302, 307, and 308
-   * @throws ImageNotFoundError              for HTTP status codes 204, 205, 404, and 410
    * @throws AccessDeniedByServerError       for HTTP status codes 401, 402, 403, 407, and 451
+   * @throws ImageNotFoundError              for HTTP status codes 204, 205, 404, and 410
+   * @throws RedirectionRequestedError       for HTTP status codes 301, 302, 307, and 308
    * @throws RequestedURITooLongError        for HTTP status code 414
-   * @throws TooManyRequestsToServerError    for HTTP status code 429
    * @throws ServerError                     for all HTTP status codes beginning with 5
+   * @throws TooManyRequestsToServerError    for HTTP status code 429
+   * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
    * @throws UnknownHTTPResponseError        for all HTTP status codes other than 200 that are not reported with other exceptions
    * @throws UnknownMIMETypeError            if the MIME type sent by the server is not supported
    */
@@ -136,17 +137,21 @@ class ServerImageLoader(
    *
    * @return
    *
-   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
-   * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
-   * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
    * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
-   * @throws RequestedURITooLongError                    for HTTP status code 414
-   * @throws TooManyRequestsToServerError                for HTTP status code 429
-   * @throws ServerError                                 for all HTTP status codes beginning with 5
-   * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
-   * @throws UnableToRetrieveDataOverHTTPConnectionError if an [[InputStream]] could not be created for the data
-   * @throws SuitableImageStreamProviderNotFoundError    if Java's [[ImageIO]] did not find a suitable image reader
    * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
+   * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
+   * @throws ImageReaderNotRetrievedError                if the first suitable [[ImageReader]] cannot be retrieved
+   * @throws MaximumBitmapSizeExceededError              if a bitmap is larger than the maximum allowed bitmap size
+   * @throws MinimumBitmapSizeNotMetError                if a bitmap is smaller than the minimum allowed bitmap size
+   * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
+   * @throws RequestedURITooLongError                    for HTTP status code 414
+   * @throws ServerError                                 for all HTTP status codes beginning with 5
+   * @throws SuitableImageReaderNotFoundError            if no suitable [[ImageReader]] is found
+   * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
+   * @throws TooManyRequestsToServerError                for HTTP status code 429
+   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
+   * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
+   * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
    */
   private
   def retrieveImages(): Seq[Try[BitmapBufferAdapter]] = {
@@ -179,14 +184,14 @@ class ServerImageLoader(
    * @param connectionTimeOutInMilliseconds
    * @param readTimeOutInMilliseconds
    *
-   * @throws IllegalArgumentException        if either of the connection timeouts is negative
-   * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
-   * @throws RedirectionRequestedError       for HTTP status codes 301, 302, 307, and 308
-   * @throws ImageNotFoundError              for HTTP status codes 204, 205, 404, and 410
    * @throws AccessDeniedByServerError       for HTTP status codes 401, 402, 403, 407, and 451
+   * @throws IllegalArgumentException        if either of the connection timeouts is negative
+   * @throws ImageNotFoundError              for HTTP status codes 204, 205, 404, and 410
+   * @throws RedirectionRequestedError       for HTTP status codes 301, 302, 307, and 308
    * @throws RequestedURITooLongError        for HTTP status code 414
-   * @throws TooManyRequestsToServerError    for HTTP status code 429
    * @throws ServerError                     for all HTTP status codes beginning with 5
+   * @throws TooManyRequestsToServerError    for HTTP status code 429
+   * @throws UnableToOpenHTTPConnectionError if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
    * @throws UnknownHTTPResponseError        for all HTTP status codes other than 200 that are not reported with other exceptions
    */
   private
@@ -261,12 +266,12 @@ class ServerImageLoader(
     /**
      *
      *
-     * @throws RedirectionRequestedError    for HTTP status codes 301, 302, 307, and 308
-     * @throws ImageNotFoundError           for HTTP status codes 204, 205, 404, and 410
      * @throws AccessDeniedByServerError    for HTTP status codes 401, 402, 403, 407, and 451
+     * @throws ImageNotFoundError           for HTTP status codes 204, 205, 404, and 410
+     * @throws RedirectionRequestedError    for HTTP status codes 301, 302, 307, and 308
      * @throws RequestedURITooLongError     for HTTP status code 414
-     * @throws TooManyRequestsToServerError for HTTP status code 429
      * @throws ServerError                  for all HTTP status codes beginning with 5
+     * @throws TooManyRequestsToServerError for HTTP status code 429
      * @throws UnknownHTTPResponseError     for all HTTP status codes other than 200 that are not reported with other exceptions
      */
     private
@@ -336,6 +341,8 @@ class ServerImageLoader(
      * @tparam A
      *
      * @return
+     *
+     * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
      */
     def openInputStreamFor[A](workUnit: InputStream => A): A = {
       val inputStream =

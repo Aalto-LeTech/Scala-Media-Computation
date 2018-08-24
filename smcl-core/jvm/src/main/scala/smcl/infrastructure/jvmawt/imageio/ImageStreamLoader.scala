@@ -57,8 +57,10 @@ class ImageStreamLoader(
    *
    * @return
    *
-   * @throws SuitableImageReaderNotFoundError
-   * @throws ImageReaderNotRetrievedError
+   * @throws ImageReaderNotRetrievedError     if the first suitable [[ImageReader]] cannot be retrieved
+   * @throws MaximumBitmapSizeExceededError   if a bitmap is larger than the maximum allowed bitmap size
+   * @throws MinimumBitmapSizeNotMetError     if a bitmap is smaller than the minimum allowed bitmap size
+   * @throws SuitableImageReaderNotFoundError if no suitable [[ImageReader]] is found
    */
   def load: Seq[Try[BitmapBufferAdapter]] = {
     findSuitableImageReader()
@@ -70,8 +72,8 @@ class ImageStreamLoader(
    *
    * @return
    *
-   * @throws SuitableImageReaderNotFoundError
-   * @throws ImageReaderNotRetrievedError
+   * @throws ImageReaderNotRetrievedError     if the first suitable [[ImageReader]] cannot be retrieved
+   * @throws SuitableImageReaderNotFoundError if no suitable [[ImageReader]] is found
    */
   private
   def findSuitableImageReader(): Unit = {
@@ -90,6 +92,9 @@ class ImageStreamLoader(
    *
    *
    * @return
+   *
+   * @throws MaximumBitmapSizeExceededError if a bitmap is larger than the maximum allowed bitmap size
+   * @throws MinimumBitmapSizeNotMetError   if a bitmap is smaller than the minimum allowed bitmap size
    */
   private
   def loadImagesFromReader(): Seq[Try[BitmapBufferAdapter]] = {
@@ -126,6 +131,9 @@ class ImageStreamLoader(
    * @param imageIndex
    *
    * @return
+   *
+   * @throws MaximumBitmapSizeExceededError if a bitmap is larger than the maximum allowed bitmap size
+   * @throws MinimumBitmapSizeNotMetError   if a bitmap is smaller than the minimum allowed bitmap size
    */
   private
   def loadSingleImageFromReader(imageIndex: Int): Try[BitmapBufferAdapter] = for {
