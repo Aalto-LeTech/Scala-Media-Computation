@@ -17,7 +17,12 @@
 package smcl.infrastructure
 
 
+import java.io.IOException
+
+import javax.imageio.ImageWriter
+
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable}
+import smcl.infrastructure.exceptions._
 import smcl.modeling.AffineTransformation
 import smcl.modeling.d2.Dims
 import smcl.pictures.ConvolutionKernel
@@ -222,10 +227,18 @@ trait BitmapBufferAdapter {
   /**
    *
    *
-   * @param filename
+   * @param pathToFile
    *
-   * @return
+   * @throws FileOverwritingIsDeniedBySMCLError       if given path points to an existing file (not folder)
+   * @throws ImageWriterNotRetrievedError             if the first suitable [[ImageWriter]] cannot be retrieved
+   * @throws ImageWritingFailedError                  if an [[IOException]] occurred while writing to the file represented by the given path
+   * @throws OperationPreventedBySecurityManagerError if an existing security manager prevents access to the file represented by the given path
+   * @throws PathIsNullError                          if given path is null
+   * @throws PathIsEmptyOrOnlyWhitespaceError         if given path is an empty string or contains only whitespace
+   * @throws PathPointsToFolderError                  if given path points to an existing folder
+   * @throws SuitableImageWriterNotFoundError         if no suitable [[ImageWriter]] is found
+   * @throws UnableToOpenFileForWritingError          if the file represented by the given path cannot be opened
    */
-  def saveAsPngTo(filename: String): String
+  def saveAsPngTo(pathToFile: String): Unit
 
 }

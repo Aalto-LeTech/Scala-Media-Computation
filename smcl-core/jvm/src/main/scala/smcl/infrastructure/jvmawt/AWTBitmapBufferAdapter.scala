@@ -20,16 +20,17 @@ package smcl.infrastructure.jvmawt
 import java.awt.geom.{AffineTransform, Rectangle2D}
 import java.awt.image._
 import java.awt.{AlphaComposite, Graphics2D, Image, RenderingHints}
-import java.io.File
+import java.io.IOException
 
-import scala.util.{Failure, Try}
+import scala.util.Try
 
-import javax.imageio.ImageIO
+import javax.imageio.ImageWriter
 
 import smcl.colors.ColorValidator
 import smcl.colors.rgb._
 import smcl.infrastructure._
-import smcl.infrastructure.exceptions.{FunctionExecutionError, InvalidColorComponentArrayLengthError}
+import smcl.infrastructure.exceptions._
+import smcl.infrastructure.jvmawt.imageio.ImageFileWriter
 import smcl.modeling.d2.Dims
 import smcl.modeling.{AffineTransformation, Len}
 import smcl.pictures.{BitmapValidator, _}
@@ -818,25 +819,23 @@ class AWTBitmapBufferAdapter private(
   /**
    *
    *
-   * @param filename
+   * @param pathToFile
    *
-   * @return
+   * @throws FileOverwritingIsDeniedBySMCLError       if given path points to an existing file (not folder)
+   * @throws ImageWriterNotRetrievedError             if the first suitable [[ImageWriter]] cannot be retrieved
+   * @throws ImageWritingFailedError                  if an [[IOException]] occurred while writing to the file represented by the given path
+   * @throws OperationPreventedBySecurityManagerError if an existing security manager prevents access to the file represented by the given path
+   * @throws PathIsNullError                          if given path is null
+   * @throws PathIsEmptyOrOnlyWhitespaceError         if given path is an empty string or contains only whitespace
+   * @throws PathPointsToFolderError                  if given path points to an existing folder
+   * @throws SuitableImageWriterNotFoundError         if no suitable [[ImageWriter]] is found
+   * @throws UnableToOpenFileForWritingError          if the file represented by the given path cannot be opened
    */
   override
-  def saveAsPngTo(filename: String): String = {
-    val destFile = new File(filename)
+  def saveAsPngTo(pathToFile: String): Unit = {
+    val writer = ImageFileWriter("png")
 
-    // TODO: Refactor to throw SMCL exceptions
-
-    if (destFile.exists())
-      return "Error: The given file exists."
-
-    val savingResult = Try(ImageIO.write(awtBufferedImage, "png", destFile))
-
-    savingResult match {
-      case Failure(t: Throwable) => s"Error: ${t.getMessage}"
-      case _                     => "Save successful."
-    }
+    writer.writeTo(pathToFile, awtBufferedImage)
   }
 
 }

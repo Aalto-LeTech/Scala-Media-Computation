@@ -17,12 +17,12 @@
 package smcl.pictures
 
 
-import java.io.InputStream
+import java.io.{IOException, InputStream}
 import java.net.HttpURLConnection
 
 import scala.util.{Failure, Success, Try}
 
-import javax.imageio.{ImageIO, ImageReader}
+import javax.imageio.{ImageIO, ImageReader, ImageWriter}
 
 import smcl.colors.ColorValidator
 import smcl.colors.rgb.{Color, ColorComponentTranslationTable}
@@ -1014,12 +1014,28 @@ class Bitmap private(
   /**
    *
    *
-   * @param filename
+   * @param pathToFile
    *
-   * @return
+   * @return `true` if the saving was successful and `false` if no file was created because the bitmap was empty
+   *
+   * @throws FileOverwritingIsDeniedBySMCLError       if given path points to an existing file (not folder)
+   * @throws ImageWriterNotRetrievedError             if the first suitable [[ImageWriter]] cannot be retrieved
+   * @throws ImageWritingFailedError                  if an [[IOException]] occurred while writing to the file represented by the given path
+   * @throws OperationPreventedBySecurityManagerError if an existing security manager prevents access to the file represented by the given path
+   * @throws PathIsNullError                          if given path is null
+   * @throws PathIsEmptyOrOnlyWhitespaceError         if given path is an empty string or contains only whitespace
+   * @throws PathPointsToFolderError                  if given path points to an existing folder
+   * @throws SuitableImageWriterNotFoundError         if no suitable [[ImageWriter]] is found
+   * @throws UnableToOpenFileForWritingError          if the file represented by the given path cannot be opened
    */
-  def saveAsPngTo(filename: String): String =
-    buffer.fold("Error: No BitmapBufferAdapter to save.")(_.saveAsPngTo(filename))
+  def saveAsPngTo(pathToFile: String): Boolean = {
+    if (buffer.isEmpty)
+      return false
+
+    buffer.get.saveAsPngTo(pathToFile)
+
+    true
+  }
 
   /**
    * Creates a copy of this bitmap with given arguments.
@@ -1585,7 +1601,7 @@ class Bitmap private(
 
   /**
    * Scales this object to a given width in relation to a given point.
-                                                             *
+   *
    * @param targetWidth
    * @param relativityPoint
    *

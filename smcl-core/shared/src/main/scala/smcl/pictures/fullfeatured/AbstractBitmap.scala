@@ -201,17 +201,6 @@ abstract class AbstractBitmap private[pictures](
 
   /**
    *
-   *
-   * @param filename
-   *
-   * @return
-   */
-  def saveAsPngTo(filename: String): String = {
-    toRenderedRepresentation.saveAsPngTo(filename)
-  }
-
-  /**
-   *
    */
   def display(): AbstractBitmap = {
     displayInViewer(this)
