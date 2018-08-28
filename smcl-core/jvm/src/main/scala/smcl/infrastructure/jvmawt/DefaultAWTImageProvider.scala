@@ -92,6 +92,9 @@ class DefaultAWTImageProvider(
    */
   private
   def representsSupportedInternetProtocol(path: String): Boolean = {
+    if (path == null)
+      throw PathIsNullError
+
     SupportedInternetProtocolsWithColonAndSlashes.exists(path.toLowerCase.startsWith)
   }
 
@@ -197,6 +200,9 @@ class DefaultAWTImageProvider(
   def tryToLoadImages(
       sourceResourcePath: String,
       shouldLoadOnlyFirst: Boolean): Try[Seq[Try[BitmapBufferAdapter]]] = {
+
+    if (sourceResourcePath == null)
+      throw PathIsNullError
 
     LoadersAndConditions.filter(isTriableLoader(_, sourceResourcePath)).foreach{lac =>
       val result = lac.loader(sourceResourcePath, shouldLoadOnlyFirst)
