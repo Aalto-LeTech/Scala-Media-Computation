@@ -25,26 +25,24 @@ import smcl.modeling.{Angle, Len}
 
 
 
-/**
- * An object-based API for creating ellipses.
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating ellipses.
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Ellipse {
 
   /**
-   *
-   *
-   * @param center
-   * @param semiMajorAxisInPixels
-   * @param semiMinorAxisInPixels
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param center
+    * @param semiMajorAxisInPixels
+    * @param semiMinorAxisInPixels
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       center: Pos,
       semiMajorAxisInPixels: Double,
@@ -63,18 +61,17 @@ object Ellipse {
   }
 
   /**
-   *
-   *
-   * @param center
-   * @param width
-   * @param height
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param center
+    * @param width
+    * @param height
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       center: Pos,
       width: Len,

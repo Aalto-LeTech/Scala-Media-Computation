@@ -18,21 +18,19 @@ package smcl.pictures
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 object ConvolutionKernel {
 
   /**
-   *
-   *
-   * @param width
-   * @param height
-   * @param data
-   *
-   * @return
-   */
+    *
+    * @param width
+    * @param height
+    * @param data
+    *
+    * @return
+    */
   def apply(width: Int, height: Int, data: Array[Float]): ConvolutionKernel = {
     require(width > 1, s"Width of the kernel must be greater than 1 (was $width).")
     require(height > 1, s"Height of the kernel must be greater than 1 (was $height).")
@@ -54,10 +52,9 @@ object ConvolutionKernel {
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 case class ConvolutionKernel private(matrix: Seq[Seq[Float]])
     extends Immutable {
 
@@ -78,10 +75,9 @@ case class ConvolutionKernel private(matrix: Seq[Seq[Float]])
 
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   override
   def toString: String =
     matrix.map(_.mkString("[", ", ", "]")).mkString("[", ", ", "]")

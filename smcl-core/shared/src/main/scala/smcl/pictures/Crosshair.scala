@@ -25,22 +25,20 @@ import smcl.settings._
 
 
 
-/**
- * An object-based API for creating crosshairs, i.e., a cross with a circle.
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating crosshairs, i.e., a cross with a circle.
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Crosshair {
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param color
-   * @param center
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param color
+    * @param center
+    *
+    * @return
+    */
   def forWidth(
       widthInPixels: Double,
       color: Color,
@@ -50,14 +48,13 @@ object Crosshair {
   }
 
   /**
-   *
-   *
-   * @param radiusInPixels
-   * @param color
-   * @param center
-   *
-   * @return
-   */
+    *
+    * @param radiusInPixels
+    * @param color
+    * @param center
+    *
+    * @return
+    */
   def apply(
       radiusInPixels: Double = DefaultCircleRadiusInPixels / 3.0,
       color: Color = DefaultPrimaryColor,

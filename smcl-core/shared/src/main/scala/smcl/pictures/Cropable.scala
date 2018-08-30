@@ -16,6 +16,7 @@
 
 package smcl.pictures
 
+
 import smcl.modeling.d2
 import smcl.modeling.d2.{Bounds, Pos}
 
@@ -23,21 +24,19 @@ import smcl.modeling.d2.{Bounds, Pos}
 
 
 /**
- *
- *
- * @tparam ReturnType
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @tparam ReturnType
+  *
+  * @author Aleksi Lukkarinen
+  */
 trait Cropable[ReturnType <: PictureElement] {
 
   /**
-   *
-   *
-   * @param boundary
-   *
-   * @return
-   */
+    *
+    * @param boundary
+    *
+    * @return
+    */
   @inline
   final
   def crop(boundary: Bounds): ReturnType = {
@@ -47,13 +46,12 @@ trait Cropable[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param upperLeftCorner
-   * @param lowerRightCorner
-   *
-   * @return
-   */
+    *
+    * @param upperLeftCorner
+    * @param lowerRightCorner
+    *
+    * @return
+    */
   @inline
   final
   def crop(
@@ -68,15 +66,14 @@ trait Cropable[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param upperLeftXInPixels
-   * @param upperLeftYInPixels
-   * @param lowerRightXInPixels
-   * @param lowerRightYInPixels
-   *
-   * @return
-   */
+    *
+    * @param upperLeftXInPixels
+    * @param upperLeftYInPixels
+    * @param lowerRightXInPixels
+    * @param lowerRightYInPixels
+    *
+    * @return
+    */
   def crop(
       upperLeftXInPixels: Double,
       upperLeftYInPixels: Double,
@@ -84,13 +81,12 @@ trait Cropable[ReturnType <: PictureElement] {
       lowerRightYInPixels: Double): ReturnType
 
   /**
-   *
-   *
-   * @param background
-   * @param upperLeftCornerOfCropped
-   *
-   * @return
-   */
+    *
+    * @param background
+    * @param upperLeftCornerOfCropped
+    *
+    * @return
+    */
   @inline
   final
   def cropToSizeOf(
@@ -104,14 +100,13 @@ trait Cropable[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param upperLeftCorner
-   * @param widthInPixels
-   * @param heightInPixels
-   *
-   * @return
-   */
+    *
+    * @param upperLeftCorner
+    * @param widthInPixels
+    * @param heightInPixels
+    *
+    * @return
+    */
   def crop(
       upperLeftCorner: Pos,
       widthInPixels: Double,

@@ -26,22 +26,20 @@ import smcl.settings._
 
 
 
-/**
- * An object-based API for creating regular star (= concave) pentagons.
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating regular star (= concave) pentagons.
+  *
+  * @author Aleksi Lukkarinen
+  */
 object StarPentagon {
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param cuspRadiusInPixels
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    * @param cuspRadiusInPixels
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -57,18 +55,17 @@ object StarPentagon {
   }
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param cuspRadiusInPixels
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    * @param cuspRadiusInPixels
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -87,15 +84,14 @@ object StarPentagon {
   }
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param cuspRadiusInPixels
-   * @param center
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    * @param cuspRadiusInPixels
+    * @param center
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -113,19 +109,18 @@ object StarPentagon {
   }
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param cuspRadiusInPixels
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    * @param cuspRadiusInPixels
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -166,18 +161,17 @@ object StarPentagon {
   }
 
   /**
-   *
-   *
-   * @param circumRadiusInPixels
-   * @param cuspRadiusInPixels
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param circumRadiusInPixels
+    * @param cuspRadiusInPixels
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       circumRadiusInPixels: Double = DefaultCircleRadiusInPixels,
       cuspRadiusInPixels: Double = DefaultStarCuspRadiusInPixels,
@@ -210,12 +204,11 @@ object StarPentagon {
   }
 
   /**
-   *
-   *
-   * @param cuspRadiusInPixels
-   *
-   * @return
-   */
+    *
+    * @param cuspRadiusInPixels
+    *
+    * @return
+    */
   def cuspRadiusPointsFor(cuspRadiusInPixels: Double): Seq[Pos] = {
     Pentagon.pointsFor(cuspRadiusInPixels, Pentagon.RotationalSymmetryAngle.half)
   }

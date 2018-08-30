@@ -16,6 +16,7 @@
 
 package smcl.pictures
 
+
 import smcl.colors.rgb
 import smcl.modeling.d2.Pos
 import smcl.settings._
@@ -23,38 +24,36 @@ import smcl.settings._
 
 
 
-/**
- * An object-based API for creating lines.
- *
- * {{{
- * def moire(w: Double) = {
- *   def lines(x: Double, c: Double) = Seq(
- *           Line(Pos.Origo, Pos(x, -c), Red),
- *           Line(Pos.Origo, Pos(x, c), Blue),
- *           Line(Pos.Origo, Pos(-c, x), Green),
- *           Line(Pos.Origo, Pos(c, x), Brown))
- *
- *   val wPerTwo = (w/2).toInt
- *   val r = Range.inclusive(-wPerTwo, wPerTwo, 2)
- *
- *   Picture((for{x <- r} yield lines(x, wPerTwo)).flatten: _*)
- * }
- * }}}
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating lines.
+  *
+  * {{{
+  * def moire(w: Double) = {
+  *   def lines(x: Double, c: Double) = Seq(
+  *           Line(Pos.Origo, Pos(x, -c), Red),
+  *           Line(Pos.Origo, Pos(x, c), Blue),
+  *           Line(Pos.Origo, Pos(-c, x), Green),
+  *           Line(Pos.Origo, Pos(c, x), Brown))
+  *
+  *   val wPerTwo = (w/2).toInt
+  *   val r = Range.inclusive(-wPerTwo, wPerTwo, 2)
+  *
+  *   Picture((for{x <- r} yield lines(x, wPerTwo)).flatten: _*)
+  * }
+  * }}}
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Line {
 
   /**
-   *
-   *
-   * @param startX
-   * @param startY
-   * @param endX
-   * @param endY
-   *
-   * @return
-   */
+    *
+    * @param startX
+    * @param startY
+    * @param endX
+    * @param endY
+    *
+    * @return
+    */
   def apply(
       startX: Double,
       startY: Double,
@@ -67,16 +66,15 @@ object Line {
   }
 
   /**
-   *
-   *
-   * @param startX
-   * @param startY
-   * @param endX
-   * @param endY
-   * @param color
-   *
-   * @return
-   */
+    *
+    * @param startX
+    * @param startY
+    * @param endX
+    * @param endY
+    * @param color
+    *
+    * @return
+    */
   def apply(
       startX: Double,
       startY: Double,
@@ -91,14 +89,13 @@ object Line {
   }
 
   /**
-   *
-   *
-   * @param start
-   * @param end
-   * @param color
-   *
-   * @return
-   */
+    *
+    * @param start
+    * @param end
+    * @param color
+    *
+    * @return
+    */
   def apply(
       start: Pos,
       end: Pos,

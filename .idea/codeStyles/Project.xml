@@ -28,7 +28,6 @@
       <option name="SPACE_BEFORE_INFIX_METHOD_CALL_PARENTHESES" value="true" />
       <option name="SPACE_BEFORE_BRACE_METHOD_CALL" value="false" />
       <option name="KEEP_ONE_LINE_LAMBDAS_IN_ARG_LIST" value="true" />
-      <option name="USE_SCALADOC2_FORMATTING" value="false" />
       <option name="SPACE_BEFORE_INFIX_LIKE_METHOD_PARENTHESES" value="true" />
       <option name="KEEP_XML_FORMATTING" value="true" />
       <option name="SD_BLANK_LINE_AFTER_PARAMETERS_COMMENTS" value="true" />

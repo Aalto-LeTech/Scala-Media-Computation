@@ -25,11 +25,10 @@ import smcl.settings._
 
 
 
-/**
- * An object-based API for creating regular convex pentagons.
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating regular convex pentagons.
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Pentagon {
 
   /** Magnitude of regular convex pentagon's internal angles. */
@@ -52,13 +51,12 @@ object Pentagon {
   lazy val DiagonalPerCircumradiusRatio: Double = Math.sqrt((5.0 + Math.sqrt(5.0)) / 2.0)
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Double,
       heightInPixels: Double): VectorGraphic = {
@@ -72,17 +70,16 @@ object Pentagon {
   }
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -99,14 +96,13 @@ object Pentagon {
   }
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param center
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    * @param center
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -122,18 +118,17 @@ object Pentagon {
   }
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Double,
       heightInPixels: Double,
@@ -166,13 +161,12 @@ object Pentagon {
   }
 
   /**
-   *
-   *
-   * @param circumRadiusInPixels
-   * @param center
-   *
-   * @return
-   */
+    *
+    * @param circumRadiusInPixels
+    * @param center
+    *
+    * @return
+    */
   def apply(
       circumRadiusInPixels: Double,
       center: Pos = Pos.Origo,
@@ -197,12 +191,11 @@ object Pentagon {
   }
 
   /**
-   *
-   *
-   * @param circumRadiusInPixels
-   *
-   * @return
-   */
+    *
+    * @param circumRadiusInPixels
+    *
+    * @return
+    */
   def pointsFor(
       circumRadiusInPixels: Double,
       startAngle: Angle): Seq[Pos] = {
@@ -217,13 +210,12 @@ object Pentagon {
   }
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    *
+    * @return
+    */
   def limitCircumRadiusTo(
       widthInPixels: Double,
       heightInPixels: Double): Double = {
@@ -235,52 +227,47 @@ object Pentagon {
   }
 
   /**
-   *
-   *
-   * @param height
-   *
-   * @return
-   */
+    *
+    * @param height
+    *
+    * @return
+    */
   def diagonalFromHeight(height: Double): Double =
     DiagonalPerHeightRatio * height
 
   /**
-   *
-   *
-   * @param side
-   *
-   * @return
-   */
+    *
+    * @param side
+    *
+    * @return
+    */
   def diagonalLengthFromSideLength(side: Double): Double =
     DiagonalPerSideRatio * side
 
   /**
-   *
-   *
-   * @param diagonal
-   *
-   * @return
-   */
+    *
+    * @param diagonal
+    *
+    * @return
+    */
   def sideLengthFromDiagonalLength(diagonal: Double): Double =
     diagonal / DiagonalPerSideRatio
 
   /**
-   *
-   *
-   * @param height
-   *
-   * @return
-   */
+    *
+    * @param height
+    *
+    * @return
+    */
   def sideLengthFromHeight(height: Double): Double =
     height / HeightPerSideRatio
 
   /**
-   *
-   *
-   * @param diagonal
-   *
-   * @return
-   */
+    *
+    * @param diagonal
+    *
+    * @return
+    */
   def circumRadiusFromDiagonal(diagonal: Double): Double =
     diagonal / DiagonalPerCircumradiusRatio
 

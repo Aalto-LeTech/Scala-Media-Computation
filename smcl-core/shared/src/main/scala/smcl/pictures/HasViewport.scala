@@ -24,29 +24,26 @@ import smcl.modeling.d2.{Bounds, HasBounds, Pos}
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 trait HasViewport[ReturnType <: PictureElement] {
 
   self: HasBounds =>
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def viewport: Option[Viewport]
 
   /**
-   *
-   *
-   * @param viewportHolder
-   * @param newName
-   *
-   * @return
-   */
+    *
+    * @param viewportHolder
+    * @param newName
+    *
+    * @return
+    */
   @inline
   final
   def setViewportFrom(
@@ -62,12 +59,11 @@ trait HasViewport[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param name
-   *
-   * @return
-   */
+    *
+    * @param name
+    *
+    * @return
+    */
   @inline
   //noinspection MutatorLikeMethodIsParameterless
   final
@@ -75,13 +71,12 @@ trait HasViewport[ReturnType <: PictureElement] {
     setViewportToContentBoundaryOf(this, name)
 
   /**
-   *
-   *
-   * @param boundaryHolder
-   * @param name
-   *
-   * @return
-   */
+    *
+    * @param boundaryHolder
+    * @param name
+    *
+    * @return
+    */
   @inline
   final
   def setViewportToContentBoundaryOf(
@@ -92,13 +87,12 @@ trait HasViewport[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param upperLeftCorner
-   * @param lowerRightCorner
-   *
-   * @return
-   */
+    *
+    * @param upperLeftCorner
+    * @param lowerRightCorner
+    *
+    * @return
+    */
   @inline
   final
   def setViewport(
@@ -109,14 +103,13 @@ trait HasViewport[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param upperLeftCorner
-   * @param lowerRightCorner
-   * @param name
-   *
-   * @return
-   */
+    *
+    * @param upperLeftCorner
+    * @param lowerRightCorner
+    * @param name
+    *
+    * @return
+    */
   @inline
   final
   def setViewport(
@@ -130,15 +123,14 @@ trait HasViewport[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param upperLeftCornerXInPixels
-   * @param upperLeftCornerYInPixels
-   * @param lowerRightCornerXInPixels
-   * @param lowerRightCornerYInPixels
-   *
-   * @return
-   */
+    *
+    * @param upperLeftCornerXInPixels
+    * @param upperLeftCornerYInPixels
+    * @param lowerRightCornerXInPixels
+    * @param lowerRightCornerYInPixels
+    *
+    * @return
+    */
   @inline
   final
   def setViewport(
@@ -156,16 +148,15 @@ trait HasViewport[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param upperLeftCornerXInPixels
-   * @param upperLeftCornerYInPixels
-   * @param lowerRightCornerXInPixels
-   * @param lowerRightCornerYInPixels
-   * @param name
-   *
-   * @return
-   */
+    *
+    * @param upperLeftCornerXInPixels
+    * @param upperLeftCornerYInPixels
+    * @param lowerRightCornerXInPixels
+    * @param lowerRightCornerYInPixels
+    * @param name
+    *
+    * @return
+    */
   @inline
   final
   def setViewport(
@@ -185,25 +176,23 @@ trait HasViewport[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param boundary
-   *
-   * @return
-   */
+    *
+    * @param boundary
+    *
+    * @return
+    */
   @inline
   final
   def setViewport(boundary: Bounds): ReturnType =
     setViewport(boundary, name = None)
 
   /**
-   *
-   *
-   * @param boundary
-   * @param name
-   *
-   * @return
-   */
+    *
+    * @param boundary
+    * @param name
+    *
+    * @return
+    */
   @inline
   final
   def setViewport(
@@ -214,28 +203,25 @@ trait HasViewport[ReturnType <: PictureElement] {
   }
 
   /**
-   *
-   *
-   * @param viewport
-   *
-   * @return
-   */
+    *
+    * @param viewport
+    *
+    * @return
+    */
   def setViewport(viewport: Viewport): ReturnType
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   final
   def hasViewport: Boolean = viewport.isDefined
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   //noinspection MutatorLikeMethodIsParameterless
   def removeViewport: ReturnType
 

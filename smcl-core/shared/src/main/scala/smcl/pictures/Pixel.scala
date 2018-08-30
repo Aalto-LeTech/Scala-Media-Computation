@@ -23,18 +23,17 @@ import smcl.colors.rgb.Color
 
 
 /**
- *
- *
- * @param relatedPixelSnapshot
- * @param MinXInPixels
- * @param MaxXInPixels
- * @param MinYInPixels
- * @param MaxYInPixels
- * @param currentXInPixels
- * @param currentYInPixels
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @param relatedPixelSnapshot
+  * @param MinXInPixels
+  * @param MaxXInPixels
+  * @param MinYInPixels
+  * @param MaxYInPixels
+  * @param currentXInPixels
+  * @param currentYInPixels
+  *
+  * @author Aleksi Lukkarinen
+  */
 case class Pixel private[pictures](
     relatedPixelSnapshot: PixelSnapshot,
     MinXInPixels: Int,
@@ -50,95 +49,85 @@ case class Pixel private[pictures](
     currentYInPixels * (MaxXInPixels - MinXInPixels + 1) + currentXInPixels
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   final
   def red: Int = relatedPixelSnapshot.reds(linearPosition)
 
   /**
-   *
-   *
-   * @param value
-   */
+    *
+    * @param value
+    */
   @inline
   final
   def red_=(value: Int): Unit =
     relatedPixelSnapshot.reds(linearPosition) = value
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   final
   def green: Int = relatedPixelSnapshot.greens(linearPosition)
 
   /**
-   *
-   *
-   * @param value
-   */
+    *
+    * @param value
+    */
   @inline
   final
   def green_=(value: Int): Unit =
     relatedPixelSnapshot.greens(linearPosition) = value
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   final
   def blue: Int = relatedPixelSnapshot.blues(linearPosition)
 
   /**
-   *
-   *
-   * @param value
-   */
+    *
+    * @param value
+    */
   @inline
   final
   def blue_=(value: Int): Unit =
     relatedPixelSnapshot.blues(linearPosition) = value
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   final
   def opacity: Int = relatedPixelSnapshot.opacities(linearPosition)
 
   /**
-   *
-   *
-   * @param value
-   */
+    *
+    * @param value
+    */
   @inline
   final
   def opacity_=(value: Int): Unit =
     relatedPixelSnapshot.opacities(linearPosition) = value
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   final
   def color: Color = Color(red, green, blue, opacity)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   final
   def color_=(value: Color): Unit = {
@@ -149,10 +138,9 @@ case class Pixel private[pictures](
   }
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   final
   def setFrom(other: Pixel): Unit = {
@@ -163,10 +151,9 @@ case class Pixel private[pictures](
   }
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   override final
   def toString: String =

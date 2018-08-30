@@ -22,11 +22,10 @@ import smcl.modeling.d2.Dims
 
 
 
-/**
- * A rectangle having its dimensions measured in pixels.
- *
- * @author Aleksi Lukkarinen
- */
+/** A rectangle having its dimensions measured in pixels.
+  *
+  * @author Aleksi Lukkarinen
+  */
 private[pictures]
 trait PixelRectangle {
 

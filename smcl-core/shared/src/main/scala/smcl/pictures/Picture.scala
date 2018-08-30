@@ -26,29 +26,27 @@ import smcl.modeling.d2._
 
 
 /**
- *
- */
+  *
+  */
 object Picture {
 
   /**
-   *
-   *
-   * @param elements
-   *
-   * @return
-   */
+    *
+    * @param elements
+    *
+    * @return
+    */
   @inline
   def apply(elements: PictureElement*): Picture =
     apply(elements, Anchor.Center)
 
   /**
-   *
-   *
-   * @param elements
-   * @param anchor
-   *
-   * @return
-   */
+    *
+    * @param elements
+    * @param anchor
+    *
+    * @return
+    */
   @inline
   def apply(
       elements: Seq[PictureElement],
@@ -58,14 +56,13 @@ object Picture {
   }
 
   /**
-   *
-   *
-   * @param elements
-   * @param viewport
-   * @param anchor
-   *
-   * @return
-   */
+    *
+    * @param elements
+    * @param viewport
+    * @param anchor
+    *
+    * @return
+    */
   @inline
   def apply(
       elements: Seq[PictureElement] = Seq(),
@@ -88,15 +85,14 @@ object Picture {
 
 
 /**
- *
- *
- * @param identity
- * @param elements
- * @param viewport
- * @param anchor
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @param identity
+  * @param elements
+  * @param viewport
+  * @param anchor
+  *
+  * @author Aleksi Lukkarinen
+  */
 class Picture private(
     override val identity: Identity,
     val elements: Seq[PictureElement],
@@ -127,28 +123,25 @@ class Picture private(
   val isRenderable: Boolean = width > 0 && height > 0
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   override final
   def isPicture: Boolean = true
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   override final
   def toPicture: Picture = this
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   override final
   def toBitmap: Bitmap = {
@@ -169,8 +162,8 @@ class Picture private(
   }
 
   /**
-   *
-   */
+    *
+    */
   @inline
   override final
   def display(): Picture = {
@@ -180,14 +173,13 @@ class Picture private(
   }
 
   /**
-   *
-   *
-   * @param newElements
-   * @param newViewport
-   * @param newAnchor
-   *
-   * @return
-   */
+    *
+    * @param newElements
+    * @param newViewport
+    * @param newAnchor
+    *
+    * @return
+    */
   @inline
   final
   def copy(
@@ -199,74 +191,68 @@ class Picture private(
   }
 
   /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
+    *
+    * @param f
+    *
+    * @return
+    */
   def map(f: (PictureElement) => PictureElement): Picture =
     copy(newElements = elements.map(f))
 
   /**
-   *
-   * @param f
-   *
-   * @return
-   */
+    *
+    * @param f
+    *
+    * @return
+    */
   override
   def flatMap(f: (Seq[PictureElement]) => Picture): Picture = f(elements)
 
   /**
-   *
-   *
-   * @param viewport
-   *
-   * @return
-   */
+    *
+    * @param viewport
+    *
+    * @return
+    */
   override
   def setViewport(viewport: Viewport): Picture =
     copy(newViewport = Option(viewport))
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   override
   def removeViewport: Picture = copy(newViewport = None)
 
   /**
-   *
-   *
-   * @param content
-   *
-   * @return
-   */
+    *
+    * @param content
+    *
+    * @return
+    */
   // Has to return a copy of *this* Picture because of viewports/anchors etc.
   override
   def addToBack(content: Seq[PictureElement]): Picture =
     copy(newElements = appendTo(content, this.elements))
 
   /**
-   *
-   *
-   * @param content
-   *
-   * @return
-   */
+    *
+    * @param content
+    *
+    * @return
+    */
   // Has to return a copy of *this* Picture because of viewports/anchors etc.
   override
   def addToFront(content: Seq[PictureElement]): Picture =
     copy(newElements = prependTo(content, this.elements))
 
   /**
-   *
-   *
-   * @param offsetsInPixels
-   *
-   * @return
-   */
+    *
+    * @param offsetsInPixels
+    *
+    * @return
+    */
   @inline
   override final
   def moveBy(offsetsInPixels: Seq[Double]): Picture = {
@@ -280,13 +266,12 @@ class Picture private(
   }
 
   /**
-   *
-   *
-   * @param xOffsetInPixels
-   * @param yOffsetInPixels
-   *
-   * @return
-   */
+    *
+    * @param xOffsetInPixels
+    * @param yOffsetInPixels
+    *
+    * @return
+    */
   @inline
   override final
   def moveBy(
@@ -297,12 +282,11 @@ class Picture private(
   }
 
   /**
-   *
-   *
-   * @param coordinatesInPixels
-   *
-   * @return
-   */
+    *
+    * @param coordinatesInPixels
+    *
+    * @return
+    */
   @inline
   override final
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Picture = {
@@ -316,13 +300,12 @@ class Picture private(
   }
 
   /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   *
-   * @return
-   */
+    *
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    *
+    * @return
+    */
   @inline
   override final
   def moveUpperLeftCornerTo(
@@ -335,12 +318,11 @@ class Picture private(
   }
 
   /**
-   *
-   *
-   * @param coordinatesInPixels
-   *
-   * @return
-   */
+    *
+    * @param coordinatesInPixels
+    *
+    * @return
+    */
   @inline
   override final
   def moveCenterTo(coordinatesInPixels: Seq[Double]): Picture = {
@@ -354,13 +336,12 @@ class Picture private(
   }
 
   /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   *
-   * @return
-   */
+    *
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    *
+    * @return
+    */
   @inline
   override final
   def moveCenterTo(
@@ -372,127 +353,115 @@ class Picture private(
       yCoordinateInPixels - boundary.center.yInPixels)
   }
 
-  /**
-   * Rotates this object around origo (0,0) by 90 degrees clockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by 90 degrees clockwise.
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy90DegsCWAroundOrigo: Picture = map{_.rotateBy90DegsCWAroundOrigo}
 
-  /**
-   * Rotates this object around its center by 90 degrees clockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around its center by 90 degrees clockwise.
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy90DegsCW: Picture = rotateBy90DegsCW(position)
 
-  /**
-   * Rotates this object around a given point by 90 degrees clockwise.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by 90 degrees clockwise.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy90DegsCW(centerOfRotation: Pos): Picture =
     map{_.rotateBy90DegsCW(centerOfRotation)}
 
-  /**
-   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by 90 degrees counterclockwise.
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy90DegsCCWAroundOrigo: Picture = map{_.rotateBy90DegsCCWAroundOrigo}
 
-  /**
-   * Rotates this object around the its center by 90 degrees counterclockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around the its center by 90 degrees counterclockwise.
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy90DegsCCW: Picture = rotateBy90DegsCCW(position)
 
-  /**
-   * Rotates this object around a given point by 90 degrees counterclockwise.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by 90 degrees counterclockwise.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy90DegsCCW(centerOfRotation: Pos): Picture =
     map{_.rotateBy90DegsCCW(centerOfRotation)}
 
-  /**
-   * Rotates this object around origo (0,0) by 180 degrees.
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by 180 degrees.
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy180DegsAroundOrigo: Picture = map{_.rotateBy180DegsAroundOrigo}
 
-  /**
-   * Rotates this object around its center by 180 degrees.
-   *
-   * @return
-   */
+  /** Rotates this object around its center by 180 degrees.
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy180Degs: Picture = rotateBy180Degs(position)
 
-  /**
-   * Rotates this object around a given point by 180 degrees.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by 180 degrees.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy180Degs(centerOfRotation: Pos): Picture =
     map{_.rotateBy180Degs(centerOfRotation)}
 
-  /**
-   * Rotates this object around its center by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
+  /** Rotates this object around its center by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    *
+    * @return
+    */
   @inline
   override final
   def rotateByAroundOrigo(angleInDegrees: Double): Picture =
     map{_.rotateByAroundOrigo(angleInDegrees)}
 
-  /**
-   * Rotates this object around its center by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
+  /** Rotates this object around its center by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy(angleInDegrees: Double): Picture = rotateBy(angleInDegrees, position)
 
-  /**
-   * Rotates this object around a given point by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    * @param centerOfRotation
+    *
+    * @return
+    */
   @inline
   override final
   def rotateBy(
@@ -502,25 +471,23 @@ class Picture private(
     map{_.rotateBy(angleInDegrees, centerOfRotation)}
   }
 
-  /**
-   * Scales this object to a given width in relation to its center.
-   *
-   * @param targetWidth
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to its center.
+    *
+    * @param targetWidth
+    *
+    * @return
+    */
   override
   def scaleHorizontallyTo(targetWidth: Double): Picture =
     scaleHorizontallyTo(targetWidth, position)
 
-  /**
-   * Scales this object to a given width in relation to a given point.
-   *
-   * @param targetWidth
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to a given point.
+    *
+    * @param targetWidth
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleHorizontallyTo(
       targetWidth: Double,
@@ -532,38 +499,35 @@ class Picture private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to a given width in relation to the origo.
-   *
-   * @param targetWidth
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to the origo.
+    *
+    * @param targetWidth
+    *
+    * @return
+    */
   override
   def scaleHorizontallyToRelativeToOrigo(targetWidth: Double): Picture =
     scaleToRelativeToOrigo(
       targetWidth,
       targetHeight = height.inPixels)
 
-  /**
-   * Scales this object to a given height in relation to its center.
-   *
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to its center.
+    *
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleVerticallyTo(targetHeight: Double): Picture =
     scaleVerticallyTo(targetHeight, position)
 
-  /**
-   * Scales this object to a given height in relation to a given point.
-   *
-   * @param targetHeight
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to a given point.
+    *
+    * @param targetHeight
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleVerticallyTo(
       targetHeight: Double,
@@ -575,40 +539,37 @@ class Picture private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to a given height in relation to the origo.
-   *
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to the origo.
+    *
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleVerticallyToRelativeToOrigo(targetHeight: Double): Picture =
     scaleToRelativeToOrigo(
       targetWidth = width.inPixels,
       targetHeight = targetHeight)
 
-  /**
-   * Scales this object in relation to its center by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   *
-   * @return
-   */
+  /** Scales this object in relation to its center by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    *
+    * @return
+    */
   override
   def scaleTo(targetSideLength: Double): Picture =
     scaleTo(targetSideLength, position)
 
-  /**
-   * Scales this object in relation to a given point by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object in relation to a given point by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetSideLength: Double,
@@ -620,28 +581,26 @@ class Picture private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object in relation to the origo by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   *
-   * @return
-   */
+  /** Scales this object in relation to the origo by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    *
+    * @return
+    */
   override
   def scaleToRelativeToOrigo(targetSideLength: Double): Picture =
     scaleToRelativeToOrigo(
       targetWidth = targetSideLength,
       targetHeight = targetSideLength)
 
-  /**
-   * Scales this object to given width and height in relation to its center.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to its center.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetWidth: Double,
@@ -650,15 +609,14 @@ class Picture private(
     scaleTo(targetWidth, targetHeight, position)
   }
 
-  /**
-   * Scales this object to given width and height in relation to a given point.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to a given point.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetWidth: Double,
@@ -671,14 +629,13 @@ class Picture private(
     map(_.scaleBy(horizontalFactor, verticalFactor, relativityPoint))
   }
 
-  /**
-   * Scales this object to given width and height in relation to the origo.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to the origo.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleToRelativeToOrigo(
       targetWidth: Double,
@@ -691,13 +648,12 @@ class Picture private(
   }
 
   /**
-   *
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   def scalingFactorsFor(
       targetWidth: Double,
       targetHeight: Double): (Double, Double) = {
@@ -708,27 +664,25 @@ class Picture private(
     (horizontalFactor, verticalFactor)
   }
 
-  /**
-   * Scales this object horizontally in relation to its center.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to its center.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleHorizontallyBy(factor: Double): Picture =
     scaleBy(
       horizontalFactor = factor,
       verticalFactor = IdentityScalingFactor)
 
-  /**
-   * Scales this object horizontally in relation to a given point.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to a given point.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleHorizontallyBy(
       factor: Double,
@@ -740,40 +694,37 @@ class Picture private(
       relativityPoint)
   }
 
-  /**
-   * Scales this object horizontally in relation to the origo.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to the origo.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleHorizontallyByRelativeToOrigo(factor: Double): Picture =
     scaleByRelativeToOrigo(
       horizontalFactor = factor,
       verticalFactor = IdentityScalingFactor)
 
-  /**
-   * Scales this object vertically in relation to its center.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to its center.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleVerticallyBy(factor: Double): Picture =
     scaleBy(
       horizontalFactor = IdentityScalingFactor,
       verticalFactor = factor)
 
-  /**
-   * Scales this object vertically in relation to a given point.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to a given point.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleVerticallyBy(
       factor: Double,
@@ -785,42 +736,39 @@ class Picture private(
       relativityPoint)
   }
 
-  /**
-   * Scales this object vertically in relation to the origo.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to the origo.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleVerticallyByRelativeToOrigo(factor: Double): Picture =
     scaleByRelativeToOrigo(
       horizontalFactor = IdentityScalingFactor,
       verticalFactor = factor)
 
-  /**
-   * Scales this object in relation to its center by using a given factor
-   * for both horizontal and vertical directions.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object in relation to its center by using a given factor
+    * for both horizontal and vertical directions.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleBy(factor: Double): Picture =
     scaleBy(
       horizontalFactor = factor,
       verticalFactor = factor)
 
-  /**
-   * Scales this object in relation to a given point by using a given factor
-   * for both horizontal and vertical directions.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object in relation to a given point by using a given factor
+    * for both horizontal and vertical directions.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleBy(
       factor: Double,
@@ -832,28 +780,26 @@ class Picture private(
       relativityPoint)
   }
 
-  /**
-   * Scales this object in relation to the origo by using a given factor for
-   * both horizontal and vertical directions.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object in relation to the origo by using a given factor for
+    * both horizontal and vertical directions.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleByRelativeToOrigo(factor: Double): Picture =
     scaleByRelativeToOrigo(
       horizontalFactor = factor,
       verticalFactor = factor)
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to its center.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to its center.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    *
+    * @return
+    */
   override
   def scaleBy(
       horizontalFactor: Double,
@@ -870,15 +816,14 @@ class Picture private(
     }
   }
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to a given point.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to a given point.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleBy(
       horizontalFactor: Double,
@@ -894,14 +839,13 @@ class Picture private(
     scaledPic.map(_.moveBy(scaledXOffset, scaledYOffset))
   }
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to the origo.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to the origo.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    *
+    * @return
+    */
   override
   def scaleByRelativeToOrigo(
       horizontalFactor: Double,

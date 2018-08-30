@@ -39,10 +39,9 @@ import smcl.settings.DefaultBackgroundColor
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Bitmap
     extends InjectablesRegistry {
 
@@ -65,24 +64,22 @@ object Bitmap
   }
 
   /**
-   *
-   *
-   * @param elements
-   *
-   * @return
-   */
+    *
+    * @param elements
+    *
+    * @return
+    */
   def apply(elements: PictureElement*): Bitmap =
     RenderingController.createBitmapFrom(elements: _*)
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param contentGenerator
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    * @param contentGenerator
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Int,
       heightInPixels: Int,
@@ -92,13 +89,12 @@ object Bitmap
   }
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    *
+    * @return
+    */
   def apply(
       widthInPixels: Int,
       heightInPixels: Int): Bitmap = {
@@ -109,14 +105,13 @@ object Bitmap
   }
 
   /**
-   *
-   *
-   * @param width
-   * @param height
-   * @param contentGenerator
-   *
-   * @return
-   */
+    *
+    * @param width
+    * @param height
+    * @param contentGenerator
+    *
+    * @return
+    */
   def apply(
       width: Len,
       height: Len,
@@ -126,13 +121,12 @@ object Bitmap
   }
 
   /**
-   *
-   *
-   * @param width
-   * @param height
-   *
-   * @return
-   */
+    *
+    * @param width
+    * @param height
+    *
+    * @return
+    */
   def apply(
       width: Len,
       height: Len): Bitmap = {
@@ -151,230 +145,221 @@ object Bitmap
   }
 
   /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   *
-   * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
-   * @throws EmptyFileError                              if the given path points to an empty file
-   * @throws FileAttributeRetrievalFailedError           if the attributes of the file that the given path points to could not be retrieved
-   * @throws FileNotFoundError                           if the given path points to a file that does not seem to exist
-   * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
-   * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410, and if the requested resource could not be found
-   * @throws ImageReaderNotRetrievedError                if the first suitable [[ImageReader]] cannot be retrieved
-   * @throws MaximumBitmapSizeExceededError              if a bitmap is larger than the maximum allowed bitmap size
-   * @throws MinimumBitmapSizeNotMetError                if a bitmap is smaller than the minimum allowed bitmap size
-   * @throws OperationPreventedBySecurityManagerError    if retrieval of file attributes was prevented by a security manager
-   * @throws PathDoesNotPointToRegularFileError          if the given path does not point to a regular file
-   * @throws PathIsEmptyOrOnlyWhitespaceError            if the given path is empty or contains only whitespace
-   * @throws PathIsNullError                             if the given path was actually null
-   * @throws PathPointsToFolderError                     if the given path points to a folder
-   * @throws PathPointsToSymbolicLinkError               if the given path poins to a symbolic link
-   * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
-   * @throws RequestedURITooLongError                    for HTTP status code 414
-   * @throws ServerError                                 for all HTTP status codes beginning with 5
-   * @throws SuitableImageReaderNotFoundError            if no suitable [[ImageReader]] is found
-   * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
-   * @throws TooManyRequestsToServerError                for HTTP status code 429
-   * @throws UnknownFileExtensionError                   if the file extension is unknown
-   * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
-   * @throws UnknownMIMETypeError                        if the MIME type sent by the server is not supported
-   * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
-   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
-   */
+    *
+    * @param sourceResourcePath
+    *
+    * @return
+    *
+    * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
+    * @throws EmptyFileError                              if the given path points to an empty file
+    * @throws FileAttributeRetrievalFailedError           if the attributes of the file that the given path points to could not be retrieved
+    * @throws FileNotFoundError                           if the given path points to a file that does not seem to exist
+    * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
+    * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410, and if the requested resource could not be found
+    * @throws ImageReaderNotRetrievedError                if the first suitable [[ImageReader]] cannot be retrieved
+    * @throws MaximumBitmapSizeExceededError              if a bitmap is larger than the maximum allowed bitmap size
+    * @throws MinimumBitmapSizeNotMetError                if a bitmap is smaller than the minimum allowed bitmap size
+    * @throws OperationPreventedBySecurityManagerError    if retrieval of file attributes was prevented by a security manager
+    * @throws PathDoesNotPointToRegularFileError          if the given path does not point to a regular file
+    * @throws PathIsEmptyOrOnlyWhitespaceError            if the given path is empty or contains only whitespace
+    * @throws PathIsNullError                             if the given path was actually null
+    * @throws PathPointsToFolderError                     if the given path points to a folder
+    * @throws PathPointsToSymbolicLinkError               if the given path poins to a symbolic link
+    * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
+    * @throws RequestedURITooLongError                    for HTTP status code 414
+    * @throws ServerError                                 for all HTTP status codes beginning with 5
+    * @throws SuitableImageReaderNotFoundError            if no suitable [[ImageReader]] is found
+    * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
+    * @throws TooManyRequestsToServerError                for HTTP status code 429
+    * @throws UnknownFileExtensionError                   if the file extension is unknown
+    * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
+    * @throws UnknownMIMETypeError                        if the MIME type sent by the server is not supported
+    * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
+    * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
+    */
   def apply(sourceResourcePath: String): Bitmap = {
     processSingleLoadTry(PRF.tryToLoadImage(sourceResourcePath))
   }
 
   /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   *
-   * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
-   * @throws EmptyFileError                              if the given path points to an empty file
-   * @throws FileAttributeRetrievalFailedError           if the attributes of the file that the given path points to could not be retrieved
-   * @throws FileNotFoundError                           if the given path points to a file that does not seem to exist
-   * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
-   * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410, and if the requested resource could not be found
-   * @throws ImageReaderNotRetrievedError                if the first suitable [[ImageReader]] cannot be retrieved
-   * @throws MaximumBitmapSizeExceededError              if a bitmap is larger than the maximum allowed bitmap size
-   * @throws MinimumBitmapSizeNotMetError                if a bitmap is smaller than the minimum allowed bitmap size
-   * @throws OperationPreventedBySecurityManagerError    if retrieval of file attributes was prevented by a security manager
-   * @throws PathDoesNotPointToRegularFileError          if the given path does not point to a regular file
-   * @throws PathIsEmptyOrOnlyWhitespaceError            if the given path is empty or contains only whitespace
-   * @throws PathIsNullError                             if the given path was actually null
-   * @throws PathPointsToFolderError                     if the given path points to a folder
-   * @throws PathPointsToSymbolicLinkError               if the given path poins to a symbolic link
-   * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
-   * @throws RequestedURITooLongError                    for HTTP status code 414
-   * @throws ServerError                                 for all HTTP status codes beginning with 5
-   * @throws SuitableImageReaderNotFoundError            if no suitable [[ImageReader]] is found
-   * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
-   * @throws TooManyRequestsToServerError                for HTTP status code 429
-   * @throws UnknownFileExtensionError                   if the file extension is unknown
-   * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
-   * @throws UnknownMIMETypeError                        if the MIME type sent by the server is not supported
-   * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
-   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
-   */
+    *
+    * @param sourceResourcePath
+    *
+    * @return
+    *
+    * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
+    * @throws EmptyFileError                              if the given path points to an empty file
+    * @throws FileAttributeRetrievalFailedError           if the attributes of the file that the given path points to could not be retrieved
+    * @throws FileNotFoundError                           if the given path points to a file that does not seem to exist
+    * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
+    * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410, and if the requested resource could not be found
+    * @throws ImageReaderNotRetrievedError                if the first suitable [[ImageReader]] cannot be retrieved
+    * @throws MaximumBitmapSizeExceededError              if a bitmap is larger than the maximum allowed bitmap size
+    * @throws MinimumBitmapSizeNotMetError                if a bitmap is smaller than the minimum allowed bitmap size
+    * @throws OperationPreventedBySecurityManagerError    if retrieval of file attributes was prevented by a security manager
+    * @throws PathDoesNotPointToRegularFileError          if the given path does not point to a regular file
+    * @throws PathIsEmptyOrOnlyWhitespaceError            if the given path is empty or contains only whitespace
+    * @throws PathIsNullError                             if the given path was actually null
+    * @throws PathPointsToFolderError                     if the given path points to a folder
+    * @throws PathPointsToSymbolicLinkError               if the given path poins to a symbolic link
+    * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
+    * @throws RequestedURITooLongError                    for HTTP status code 414
+    * @throws ServerError                                 for all HTTP status codes beginning with 5
+    * @throws SuitableImageReaderNotFoundError            if no suitable [[ImageReader]] is found
+    * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
+    * @throws TooManyRequestsToServerError                for HTTP status code 429
+    * @throws UnknownFileExtensionError                   if the file extension is unknown
+    * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
+    * @throws UnknownMIMETypeError                        if the MIME type sent by the server is not supported
+    * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
+    * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
+    */
   def loadImages(sourceResourcePath: String): Seq[Try[Bitmap]] = {
     processMultipleLoadTries(PRF.tryToLoadImages(sourceResourcePath))
   }
 
   /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   *
-   * @throws EmptyFileError                           if the given path points to an empty file
-   * @throws FileAttributeRetrievalFailedError        if the attributes of the file that the given path points to could not be retrieved
-   * @throws FileNotFoundError                        if the given path points to a file that does not seem to exist
-   * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
-   * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
-   * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
-   * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
-   * @throws OperationPreventedBySecurityManagerError if retrieval of file attributes was prevented by a security manager
-   * @throws PathDoesNotPointToRegularFileError       if the given path does not point to a regular file
-   * @throws PathIsEmptyOrOnlyWhitespaceError         if the given path is empty or contains only whitespace
-   * @throws PathIsNullError                          if the given path was actually null
-   * @throws PathPointsToFolderError                  if the given path points to a folder
-   * @throws PathPointsToSymbolicLinkError            if the given path poins to a symbolic link
-   * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
-   * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
-   * @throws UnknownFileExtensionError                if the file extension is unknown
-   */
+    *
+    * @param sourceResourcePath
+    *
+    * @return
+    *
+    * @throws EmptyFileError                           if the given path points to an empty file
+    * @throws FileAttributeRetrievalFailedError        if the attributes of the file that the given path points to could not be retrieved
+    * @throws FileNotFoundError                        if the given path points to a file that does not seem to exist
+    * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
+    * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
+    * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
+    * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
+    * @throws OperationPreventedBySecurityManagerError if retrieval of file attributes was prevented by a security manager
+    * @throws PathDoesNotPointToRegularFileError       if the given path does not point to a regular file
+    * @throws PathIsEmptyOrOnlyWhitespaceError         if the given path is empty or contains only whitespace
+    * @throws PathIsNullError                          if the given path was actually null
+    * @throws PathPointsToFolderError                  if the given path points to a folder
+    * @throws PathPointsToSymbolicLinkError            if the given path poins to a symbolic link
+    * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
+    * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
+    * @throws UnknownFileExtensionError                if the file extension is unknown
+    */
   def loadImageFromLocalPath(sourceResourcePath: String): Bitmap = {
     processSingleLoadTry(PRF.tryToLoadImageFromLocalPath(sourceResourcePath))
   }
 
   /**
-   *
-   *
-   * @param sourceResourcePath
-   *
-   * @return
-   *
-   * @throws EmptyFileError                           if the given path points to an empty file
-   * @throws FileAttributeRetrievalFailedError        if the attributes of the file that the given path points to could not be retrieved
-   * @throws FileNotFoundError                        if the given path points to a file that does not seem to exist
-   * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
-   * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
-   * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
-   * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
-   * @throws OperationPreventedBySecurityManagerError if retrieval of file attributes was prevented by a security manager
-   * @throws PathDoesNotPointToRegularFileError       if the given path does not point to a regular file
-   * @throws PathIsEmptyOrOnlyWhitespaceError         if the given path is empty or contains only whitespace
-   * @throws PathIsNullError                          if the given path was actually null
-   * @throws PathPointsToFolderError                  if the given path points to a folder
-   * @throws PathPointsToSymbolicLinkError            if the given path poins to a symbolic link
-   * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
-   * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
-   * @throws UnknownFileExtensionError                if the file extension is unknown
-   */
+    *
+    * @param sourceResourcePath
+    *
+    * @return
+    *
+    * @throws EmptyFileError                           if the given path points to an empty file
+    * @throws FileAttributeRetrievalFailedError        if the attributes of the file that the given path points to could not be retrieved
+    * @throws FileNotFoundError                        if the given path points to a file that does not seem to exist
+    * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
+    * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
+    * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
+    * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
+    * @throws OperationPreventedBySecurityManagerError if retrieval of file attributes was prevented by a security manager
+    * @throws PathDoesNotPointToRegularFileError       if the given path does not point to a regular file
+    * @throws PathIsEmptyOrOnlyWhitespaceError         if the given path is empty or contains only whitespace
+    * @throws PathIsNullError                          if the given path was actually null
+    * @throws PathPointsToFolderError                  if the given path points to a folder
+    * @throws PathPointsToSymbolicLinkError            if the given path poins to a symbolic link
+    * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
+    * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
+    * @throws UnknownFileExtensionError                if the file extension is unknown
+    */
   def loadImagesFromLocalPath(sourceResourcePath: String): Seq[Try[Bitmap]] = {
     processMultipleLoadTries(PRF.tryToLoadImagesFromLocalPath(sourceResourcePath))
   }
 
   /**
-   *
-   *
-   * @param relativeSourceResourcePath
-   *
-   * @return
-   *
-   * @throws ImageNotFoundError                       if the requested resource could not be found
-   * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
-   * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
-   * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
-   * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
-   * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
-   * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
-   */
+    *
+    * @param relativeSourceResourcePath
+    *
+    * @return
+    *
+    * @throws ImageNotFoundError                       if the requested resource could not be found
+    * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
+    * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
+    * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
+    * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
+    * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
+    * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
+    */
   def loadImageFromResources(relativeSourceResourcePath: String): Bitmap = {
     processSingleLoadTry(PRF.tryToLoadImageFromResources(relativeSourceResourcePath))
   }
 
   /**
-   *
-   *
-   * @param relativeSourceResourcePath
-   *
-   * @return
-   *
-   * @throws ImageNotFoundError                       if the requested resource could not be found
-   * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
-   * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
-   * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
-   * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
-   * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
-   * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
-   */
+    *
+    * @param relativeSourceResourcePath
+    *
+    * @return
+    *
+    * @throws ImageNotFoundError                       if the requested resource could not be found
+    * @throws ImageInputStreamNotCreatedError          if a cache file is needed but could not be created
+    * @throws ImageReaderNotRetrievedError             if the first suitable [[ImageReader]] cannot be retrieved
+    * @throws MaximumBitmapSizeExceededError           if a bitmap is larger than the maximum allowed bitmap size
+    * @throws MinimumBitmapSizeNotMetError             if a bitmap is smaller than the minimum allowed bitmap size
+    * @throws SuitableImageReaderNotFoundError         if no suitable [[ImageReader]] is found
+    * @throws SuitableImageStreamProviderNotFoundError if [[ImageIO]] did not find a suitable image stream service provider instance
+    */
   def loadImagesFromResources(relativeSourceResourcePath: String): Seq[Try[Bitmap]] = {
     processMultipleLoadTries(PRF.tryToLoadImagesFromResources(relativeSourceResourcePath))
   }
 
   /**
-   *
-   *
-   * @param absoluteSourceResourcePath
-   *
-   * @return
-   *
-   * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
-   * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
-   * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
-   * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
-   * @throws RequestedURITooLongError                    for HTTP status code 414
-   * @throws ServerError                                 for all HTTP status codes beginning with 5
-   * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
-   * @throws TooManyRequestsToServerError                for HTTP status code 429
-   * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
-   * @throws UnknownMIMETypeError                        if the MIME type sent by the server is not supported
-   * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
-   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
-   */
+    *
+    * @param absoluteSourceResourcePath
+    *
+    * @return
+    *
+    * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
+    * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
+    * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
+    * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
+    * @throws RequestedURITooLongError                    for HTTP status code 414
+    * @throws ServerError                                 for all HTTP status codes beginning with 5
+    * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
+    * @throws TooManyRequestsToServerError                for HTTP status code 429
+    * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
+    * @throws UnknownMIMETypeError                        if the MIME type sent by the server is not supported
+    * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
+    * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
+    */
   def loadImageFromServer(absoluteSourceResourcePath: String): Bitmap = {
     processSingleLoadTry(PRF.tryToLoadImageFromServer(absoluteSourceResourcePath))
   }
 
   /**
-   *
-   *
-   * @param absoluteSourceResourcePath
-   *
-   * @return
-   *
-   * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
-   * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
-   * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
-   * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
-   * @throws RequestedURITooLongError                    for HTTP status code 414
-   * @throws ServerError                                 for all HTTP status codes beginning with 5
-   * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
-   * @throws TooManyRequestsToServerError                for HTTP status code 429
-   * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
-   * @throws UnknownMIMETypeError                        if the MIME type sent by the server is not supported
-   * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
-   * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
-   */
+    *
+    * @param absoluteSourceResourcePath
+    *
+    * @return
+    *
+    * @throws AccessDeniedByServerError                   for HTTP status codes 401, 402, 403, 407, and 451
+    * @throws ImageInputStreamNotCreatedError             if a cache file is needed but could not be created
+    * @throws ImageNotFoundError                          for HTTP status codes 204, 205, 404, and 410
+    * @throws RedirectionRequestedError                   for HTTP status codes 301, 302, 307, and 308
+    * @throws RequestedURITooLongError                    for HTTP status code 414
+    * @throws ServerError                                 for all HTTP status codes beginning with 5
+    * @throws SuitableImageStreamProviderNotFoundError    if [[ImageIO]] did not find a suitable image stream service provider instance
+    * @throws TooManyRequestsToServerError                for HTTP status code 429
+    * @throws UnknownHTTPResponseError                    for all HTTP status codes other than 200 that are not reported with other exceptions
+    * @throws UnknownMIMETypeError                        if the MIME type sent by the server is not supported
+    * @throws UnableToRetrieveDataOverHTTPConnectionError if an I/O error occurs while creating an [[InputStream]] or if the protocol to be used does not support input
+    * @throws UnableToOpenHTTPConnectionError             if an [[HttpURLConnection]] instance could not be created; if the HTTP request method cannot be reset; if the request method is not valid; if the connection timeout expires before a connection has been established; or if an I/O error occurs during establishing the connection
+    */
   def loadImagesFromServer(absoluteSourceResourcePath: String): Seq[Try[Bitmap]] = {
     processMultipleLoadTries(PRF.tryToLoadImagesFromServer(absoluteSourceResourcePath))
   }
 
   /**
-   *
-   *
-   * @param singleResult
-   *
-   * @return
-   */
+    *
+    * @param singleResult
+    *
+    * @return
+    */
   private
   def processSingleLoadTry(singleResult: Try[BitmapBufferAdapter]): Bitmap = {
     if (singleResult.isFailure)
@@ -384,12 +369,11 @@ object Bitmap
   }
 
   /**
-   *
-   *
-   * @param wholenessResult
-   *
-   * @return
-   */
+    *
+    * @param wholenessResult
+    *
+    * @return
+    */
   private
   def processMultipleLoadTries(
       wholenessResult: Try[Seq[Try[BitmapBufferAdapter]]]): Seq[Try[Bitmap]] = {
@@ -406,12 +390,11 @@ object Bitmap
   }
 
   /**
-   *
-   *
-   * @param buffer
-   *
-   * @return
-   */
+    *
+    * @param buffer
+    *
+    * @return
+    */
   def apply(buffer: BitmapBufferAdapter): Bitmap = {
     val newIdentity: Identity = Identity()
 
@@ -419,13 +402,12 @@ object Bitmap
   }
 
   /**
-   *
-   *
-   * @param center
-   * @param buffer
-   *
-   * @return
-   */
+    *
+    * @param center
+    * @param buffer
+    *
+    * @return
+    */
   private
   def apply(
       center: Pos,
@@ -437,14 +419,13 @@ object Bitmap
   }
 
   /**
-   *
-   *
-   * @param identity
-   * @param center
-   * @param buffer
-   *
-   * @return
-   */
+    *
+    * @param identity
+    * @param center
+    * @param buffer
+    *
+    * @return
+    */
   private
   def apply(
       identity: Identity,
@@ -478,15 +459,14 @@ object Bitmap
 
 
 /**
- *
- *
- * @param identity
- * @param isRenderable
- * @param boundary
- * @param buffer
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @param identity
+  * @param isRenderable
+  * @param boundary
+  * @param buffer
+  *
+  * @author Aleksi Lukkarinen
+  */
 class Bitmap private(
     override val identity: Identity,
     val isRenderable: Boolean,
@@ -496,26 +476,23 @@ class Bitmap private(
         with Displayable {
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   override
   def isBitmap: Boolean = true
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   override
   def toBitmap: Bitmap = this
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   override
   def toBitmapCopy: Bitmap = {
     val newBuffer = buffer.map(_.copy).orNull
@@ -524,13 +501,12 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param another
-   * @param pixelMerger
-   *
-   * @return
-   */
+    *
+    * @param another
+    * @param pixelMerger
+    *
+    * @return
+    */
   override
   def mergePixelsWith(
       another: PictureElement,
@@ -544,36 +520,33 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param kernel
-   *
-   * @return
-   */
+    *
+    * @param kernel
+    *
+    * @return
+    */
   def convolveWith(kernel: ConvolutionKernel): Bitmap =
     toProvideModifiedCopyOfOldBuffer{oldBuffer =>
       oldBuffer.createFilteredVersionWith(kernel)
     }
 
   /**
-   *
-   *
-   * @param translator
-   *
-   * @return
-   */
+    *
+    * @param translator
+    *
+    * @return
+    */
   def translateColorsWith(translator: ColorComponentTranslationTable): Bitmap =
     toProvideModifiedCopyOfOldBuffer{oldBuffer =>
       oldBuffer.createFilteredVersionWith(translator)
     }
 
   /**
-   *
-   *
-   * @param translator
-   *
-   * @return
-   */
+    *
+    * @param translator
+    *
+    * @return
+    */
   private[pictures]
   def translateColorsWith(translator: (Int, Int, Int, Int) => (Int, Int, Int, Int)): Bitmap =
     toProvideModifiedCopyOfOldBuffer{oldBuffer =>
@@ -596,12 +569,11 @@ class Bitmap private(
     }
 
   /**
-   *
-   *
-   * @param newCopyProvider
-   *
-   * @return
-   */
+    *
+    * @param newCopyProvider
+    *
+    * @return
+    */
   private
   def toProvideModifiedCopyOfOldBuffer(
       newCopyProvider: BitmapBufferAdapter => BitmapBufferAdapter): Bitmap = {
@@ -619,13 +591,12 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param xInPixels
-   * @param yInPixels
-   *
-   * @return
-   */
+    *
+    * @param xInPixels
+    * @param yInPixels
+    *
+    * @return
+    */
   def colorAt(
       xInPixels: Double,
       yInPixels: Double): Option[Color] = {
@@ -634,143 +605,126 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
+    *
+    * @param f
+    *
+    * @return
+    */
   def applySimpleFilter(f: Filter): Bitmap = f(this).toBitmap
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def keepOnlyRedComponent: Bitmap =
     applySimpleFilter(KeepOnlyRedComponent)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def keepOnlyRedAndGreenComponents: Bitmap =
     applySimpleFilter(KeepOnlyRedAndGreenComponents)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def keepOnlyRedAndBlueComponents: Bitmap =
     applySimpleFilter(KeepOnlyRedAndBlueComponents)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def keepOnlyGreenComponent: Bitmap =
     applySimpleFilter(KeepOnlyGreenComponent)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def keepOnlyGreenAndBlueComponents: Bitmap =
     applySimpleFilter(KeepOnlyGreenAndBlueComponents)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def keepOnlyBlueComponent: Bitmap =
     applySimpleFilter(KeepOnlyBlueComponent)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def negate: Bitmap =
     applySimpleFilter(Negate)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def negateRedComponent: Bitmap =
     applySimpleFilter(NegateRedComponent)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def negateRedAndGreenComponents: Bitmap =
     applySimpleFilter(NegateRedAndGreenComponents)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def negateRedAndBlueComponents: Bitmap =
     applySimpleFilter(NegateRedAndBlueComponents)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def negateGreenComponent: Bitmap =
     applySimpleFilter(NegateGreenComponent)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def negateGreenAndBlueComponents: Bitmap =
     applySimpleFilter(NegateGreenAndBlueComponents)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def negateBlueComponent: Bitmap =
     applySimpleFilter(NegateBlueComponent)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def toGrayscaleByLightness: Bitmap =
     applySimpleFilter(ToGrayscaleByLightness)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def toGrayscaleByLuminocity: Bitmap =
     applySimpleFilter(ToGrayscaleByLuminocity)
 
   /**
-   *
-   *
-   * @param redWeight
-   * @param greenWeight
-   * @param blueWeight
-   *
-   * @return
-   */
+    *
+    * @param redWeight
+    * @param greenWeight
+    * @param blueWeight
+    *
+    * @return
+    */
   def toGrayscale(
       redWeight: Double,
       greenWeight: Double,
@@ -782,92 +736,83 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param strengthAsPercentage
-   *
-   * @return
-   */
+    *
+    * @param strengthAsPercentage
+    *
+    * @return
+    */
   def posterize(strengthAsPercentage: Int): Bitmap =
     applySimpleFilter(Posterize(strengthAsPercentage))
 
   /**
-   *
-   *
-   * @param generator
-   *
-   * @return
-   */
+    *
+    * @param generator
+    *
+    * @return
+    */
   def setColorsByLocation(generator: (Int, Int) => Color): Bitmap =
     withPixelSnapshot(_.setColorsByLocation(generator))
 
   /**
-   *
-   *
-   * @param transformers
-   *
-   * @return
-   */
+    *
+    * @param transformers
+    *
+    * @return
+    */
   def transformColorToColor(transformers: Seq[Color => Color]): Bitmap =
     withPixelSnapshot(_.transformColorToColor(transformers))
 
   /**
-   *
-   *
-   * @param transformer
-   *
-   * @return
-   */
+    *
+    * @param transformer
+    *
+    * @return
+    */
   def transformColorToColor(transformer: Color => Color): Bitmap =
     withPixelSnapshot(_.transformColorToColor(transformer))
 
   /**
-   *
-   *
-   * @param transformers
-   *
-   * @return
-   */
+    *
+    * @param transformers
+    *
+    * @return
+    */
   def transformLocationColorToColor(transformers: Seq[(Int, Int, Color) => Color]): Bitmap =
     withPixelSnapshot(_.transformLocationColorToColor(transformers))
 
   /**
-   *
-   *
-   * @param transformer
-   *
-   * @return
-   */
+    *
+    * @param transformer
+    *
+    * @return
+    */
   def transformLocationColorToColor(transformer: (Int, Int, Color) => Color): Bitmap =
     withPixelSnapshot(_.transformLocationColorToColor(transformer))
 
   /**
-   *
-   *
-   * @param transformers
-   *
-   * @return
-   */
+    *
+    * @param transformers
+    *
+    * @return
+    */
   def iteratePixels(transformers: Seq[Pixel => Unit]): Bitmap =
     withPixelSnapshot(_.iteratePixels(transformers))
 
   /**
-   *
-   *
-   * @param transformer
-   *
-   * @return
-   */
+    *
+    * @param transformer
+    *
+    * @return
+    */
   def iteratePixels(transformer: Pixel => Unit): Bitmap =
     withPixelSnapshot(_.iteratePixels(transformer))
 
   /**
-   *
-   *
-   * @param f
-   *
-   * @return
-   */
+    *
+    * @param f
+    *
+    * @return
+    */
   def withPixelSnapshot(f: PixelSnapshot => Unit): Bitmap = {
     val snapshot = PixelSnapshot(toBitmapCopy)
     f(snapshot)
@@ -875,25 +820,23 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param offsetsInPixels
-   *
-   * @return
-   */
+    *
+    * @param offsetsInPixels
+    *
+    * @return
+    */
   override
   def moveBy(offsetsInPixels: Seq[Double]): Bitmap =
     internalBufferPreservingCopy(
       newBoundary = boundary.moveBy(offsetsInPixels))
 
   /**
-   *
-   *
-   * @param xOffsetInPixels
-   * @param yOffsetInPixels
-   *
-   * @return
-   */
+    *
+    * @param xOffsetInPixels
+    * @param yOffsetInPixels
+    *
+    * @return
+    */
   override
   def moveBy(
       xOffsetInPixels: Double,
@@ -905,13 +848,12 @@ class Bitmap private(
 
 
   /**
-   *
-   *
-   * @param position
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param position
+    * @param positionType
+    *
+    * @return
+    */
   override
   def moveTo(
       position: Pos,
@@ -921,14 +863,13 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    * @param positionType
+    *
+    * @return
+    */
   override
   def moveTo(
       xCoordinateInPixels: Double,
@@ -940,12 +881,11 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param coordinatesInPixels
-   *
-   * @return
-   */
+    *
+    * @param coordinatesInPixels
+    *
+    * @return
+    */
   override
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Bitmap = {
     require(
@@ -958,13 +898,12 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   *
-   * @return
-   */
+    *
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    *
+    * @return
+    */
   override
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
@@ -976,12 +915,11 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param coordinatesInPixels
-   *
-   * @return
-   */
+    *
+    * @param coordinatesInPixels
+    *
+    * @return
+    */
   override
   def moveCenterTo(coordinatesInPixels: Seq[Double]): Bitmap = {
     require(
@@ -994,13 +932,12 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   *
-   * @return
-   */
+    *
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    *
+    * @return
+    */
   override
   def moveCenterTo(
       xCoordinateInPixels: Double,
@@ -1012,22 +949,21 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param pathToFile
-   *
-   * @return `true` if the saving was successful and `false` if no file was created because the bitmap was empty
-   *
-   * @throws FileOverwritingIsDeniedBySMCLError       if given path points to an existing file (not folder)
-   * @throws ImageWriterNotRetrievedError             if the first suitable [[ImageWriter]] cannot be retrieved
-   * @throws ImageWritingFailedError                  if an [[IOException]] occurred while writing to the file represented by the given path
-   * @throws OperationPreventedBySecurityManagerError if an existing security manager prevents access to the file represented by the given path
-   * @throws PathIsNullError                          if given path is null
-   * @throws PathIsEmptyOrOnlyWhitespaceError         if given path is an empty string or contains only whitespace
-   * @throws PathPointsToFolderError                  if given path points to an existing folder
-   * @throws SuitableImageWriterNotFoundError         if no suitable [[ImageWriter]] is found
-   * @throws UnableToOpenFileForWritingError          if the file represented by the given path cannot be opened
-   */
+    *
+    * @param pathToFile
+    *
+    * @return `true` if the saving was successful and `false` if no file was created because the bitmap was empty
+    *
+    * @throws FileOverwritingIsDeniedBySMCLError       if given path points to an existing file (not folder)
+    * @throws ImageWriterNotRetrievedError             if the first suitable [[ImageWriter]] cannot be retrieved
+    * @throws ImageWritingFailedError                  if an [[IOException]] occurred while writing to the file represented by the given path
+    * @throws OperationPreventedBySecurityManagerError if an existing security manager prevents access to the file represented by the given path
+    * @throws PathIsNullError                          if given path is null
+    * @throws PathIsEmptyOrOnlyWhitespaceError         if given path is an empty string or contains only whitespace
+    * @throws PathPointsToFolderError                  if given path points to an existing folder
+    * @throws SuitableImageWriterNotFoundError         if no suitable [[ImageWriter]] is found
+    * @throws UnableToOpenFileForWritingError          if the file represented by the given path cannot be opened
+    */
   def saveAsPngTo(pathToFile: String): Boolean = {
     if (buffer.isEmpty)
       return false
@@ -1037,19 +973,18 @@ class Bitmap private(
     true
   }
 
-  /**
-   * Creates a copy of this bitmap with given arguments.
-   *
-   * This is an unsafe method, as it can be used to create [[Bitmap]] instances,
-   * whose internal state is incoherent. As such, it is not for public use.
-   *
-   * @param newIdentity
-   * @param newIsRenderable
-   * @param newBoundary
-   * @param newBuffer
-   *
-   * @return
-   */
+  /** Creates a copy of this bitmap with given arguments.
+    *
+    * This is an unsafe method, as it can be used to create [[Bitmap]] instances,
+    * whose internal state is incoherent. As such, it is not for public use.
+    *
+    * @param newIdentity
+    * @param newIsRenderable
+    * @param newBoundary
+    * @param newBuffer
+    *
+    * @return
+    */
   private
   def internalCopy(
       newIdentity: Identity = identity,
@@ -1064,18 +999,17 @@ class Bitmap private(
       newBuffer) // e.g., buffer.map(_.copy) to make a new copy of the internal buffer
   }
 
-  /**
-   * Creates a copy of this bitmap with given arguments.
-   *
-   * This is an unsafe method, as it can be used to create [[Bitmap]] instances,
-   * whose internal state is incoherent. As such, it is not for public use.
-   *
-   * @param newIdentity
-   * @param newIsRenderable
-   * @param newBoundary
-   *
-   * @return
-   */
+  /** Creates a copy of this bitmap with given arguments.
+    *
+    * This is an unsafe method, as it can be used to create [[Bitmap]] instances,
+    * whose internal state is incoherent. As such, it is not for public use.
+    *
+    * @param newIdentity
+    * @param newIsRenderable
+    * @param newBoundary
+    *
+    * @return
+    */
   private
   def internalBufferPreservingCopy(
       newIdentity: Identity = identity,
@@ -1090,8 +1024,7 @@ class Bitmap private(
   }
 
   /**
-   *
-   */
+    */
   override
   def display(): Bitmap = {
     super.display()
@@ -1099,14 +1032,13 @@ class Bitmap private(
     this
   }
 
-  /**
-   * An internal method to transform the content of this
-   * bitmap using a given [[AffineTransformation]].
-   *
-   * @param transformation
-   *
-   * @return
-   */
+  /** An internal method to transform the content of this
+    * bitmap using a given [[AffineTransformation]].
+    *
+    * @param transformation
+    *
+    * @return
+    */
   @inline
   private final
   def transformContentUsing(transformation: AffineTransformation): BitmapBufferAdapter = {
@@ -1118,11 +1050,10 @@ class Bitmap private(
     newBuffer
   }
 
-  /**
-   * Flips the content of this bitmap horizontally.
-   *
-   * @return
-   */
+  /** Flips the content of this bitmap horizontally.
+    *
+    * @return
+    */
   def flipHorizontally: Bitmap = {
     if (isNotRenderable)
       return this
@@ -1137,11 +1068,10 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Flips the content of this bitmap vertically.
-   *
-   * @return
-   */
+  /** Flips the content of this bitmap vertically.
+    *
+    * @return
+    */
   def flipVertically: Bitmap = {
     if (isNotRenderable)
       return this
@@ -1156,11 +1086,10 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Flips the content of this bitmap diagonally.
-   *
-   * @return
-   */
+  /** Flips the content of this bitmap diagonally.
+    *
+    * @return
+    */
   def flipDiagonally: Bitmap = {
     if (isNotRenderable)
       return this
@@ -1177,11 +1106,10 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Rotates this bitmap around origo (0,0) by 90 degrees clockwise.
-   *
-   * @return
-   */
+  /** Rotates this bitmap around origo (0,0) by 90 degrees clockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCWAroundOrigo: Bitmap = {
     if (isNotRenderable)
@@ -1200,21 +1128,19 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Rotates this bitmap around its center by 90 degrees clockwise.
-   *
-   * @return
-   */
+  /** Rotates this bitmap around its center by 90 degrees clockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCW: Bitmap = rotateBy90DegsCW(position)
 
-  /**
-   * Rotates this bitmap around a given point by 90 degrees clockwise.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this bitmap around a given point by 90 degrees clockwise.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Bitmap = {
     if (isNotRenderable)
@@ -1233,11 +1159,10 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Rotates this bitmap around origo (0,0) by 90 degrees counterclockwise.
-   *
-   * @return
-   */
+  /** Rotates this bitmap around origo (0,0) by 90 degrees counterclockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCCWAroundOrigo: Bitmap = {
     if (isNotRenderable)
@@ -1256,21 +1181,19 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Rotates this bitmap around the its center by 90 degrees counterclockwise.
-   *
-   * @return
-   */
+  /** Rotates this bitmap around the its center by 90 degrees counterclockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCCW: Bitmap = rotateBy90DegsCCW(position)
 
-  /**
-   * Rotates this bitmap around a given point by 90 degrees counterclockwise.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this bitmap around a given point by 90 degrees counterclockwise.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Bitmap = {
     if (isNotRenderable)
@@ -1289,11 +1212,10 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Rotates this bitmap around origo (0,0) by 180 degrees.
-   *
-   * @return
-   */
+  /** Rotates this bitmap around origo (0,0) by 180 degrees.
+    *
+    * @return
+    */
   override
   def rotateBy180DegsAroundOrigo: Bitmap = {
     if (isNotRenderable)
@@ -1312,21 +1234,19 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Rotates this bitmap around its center by 180 degrees.
-   *
-   * @return
-   */
+  /** Rotates this bitmap around its center by 180 degrees.
+    *
+    * @return
+    */
   override
   def rotateBy180Degs: Bitmap = rotateBy180Degs(position)
 
-  /**
-   * Rotates this bitmap around a given point by 180 degrees.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this bitmap around a given point by 180 degrees.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy180Degs(centerOfRotation: Pos): Bitmap = {
     if (isNotRenderable)
@@ -1345,23 +1265,21 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Rotates this bitmap around its center by the specified angle.
-   *
-   * @param angle
-   *
-   * @return
-   */
+  /** Rotates this bitmap around its center by the specified angle.
+    *
+    * @param angle
+    *
+    * @return
+    */
   override
   def rotateByAroundOrigo(angle: Angle): Bitmap = rotateByAroundOrigo(angle)
 
-  /**
-   * Rotates this bitmap around its center by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
+  /** Rotates this bitmap around its center by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    *
+    * @return
+    */
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Bitmap = {
     if (isNotRenderable)
@@ -1385,35 +1303,32 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Rotates this bitmap around its center by the specified angle.
-   *
-   * @param angle
-   *
-   * @return
-   */
+  /** Rotates this bitmap around its center by the specified angle.
+    *
+    * @param angle
+    *
+    * @return
+    */
   override
   def rotateBy(angle: Angle): Bitmap = rotateBy(angle)
 
-  /**
-   * Rotates this bitmap around its center by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
+  /** Rotates this bitmap around its center by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    *
+    * @return
+    */
   override
   def rotateBy(angleInDegrees: Double): Bitmap =
     rotateBy(angleInDegrees, position)
 
-  /**
-   * Rotates this bitmap around a given point by the specified angle.
-   *
-   * @param angle
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this bitmap around a given point by the specified angle.
+    *
+    * @param angle
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy(
       angle: Angle,
@@ -1422,14 +1337,13 @@ class Bitmap private(
     rotateBy(angle, centerOfRotation)
   }
 
-  /**
-   * Rotates this bitmap around a given point by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this bitmap around a given point by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy(
       angleInDegrees: Double,
@@ -1459,15 +1373,14 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param upperLeftXInPixels
-   * @param upperLeftYInPixels
-   * @param lowerRightXInPixels
-   * @param lowerRightYInPixels
-   *
-   * @return
-   */
+    *
+    * @param upperLeftXInPixels
+    * @param upperLeftYInPixels
+    * @param lowerRightXInPixels
+    * @param lowerRightYInPixels
+    *
+    * @return
+    */
   override
   def crop(
       upperLeftXInPixels: Double,
@@ -1521,14 +1434,13 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param upperLeftCorner
-   * @param targetWidthInPixels
-   * @param targetHeightInPixels
-   *
-   * @return
-   */
+    *
+    * @param upperLeftCorner
+    * @param targetWidthInPixels
+    * @param targetHeightInPixels
+    *
+    * @return
+    */
   override
   def crop(
       upperLeftCorner: Pos,
@@ -1588,25 +1500,23 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Scales this object to a given width in relation to its center.
-   *
-   * @param targetWidth
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to its center.
+    *
+    * @param targetWidth
+    *
+    * @return
+    */
   override
   def scaleHorizontallyTo(targetWidth: Double): Bitmap =
     scaleHorizontallyTo(targetWidth, position)
 
-  /**
-   * Scales this object to a given width in relation to a given point.
-   *
-   * @param targetWidth
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to a given point.
+    *
+    * @param targetWidth
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleHorizontallyTo(
       targetWidth: Double,
@@ -1618,38 +1528,35 @@ class Bitmap private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to a given width in relation to the origo.
-   *
-   * @param targetWidth
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to the origo.
+    *
+    * @param targetWidth
+    *
+    * @return
+    */
   override
   def scaleHorizontallyToRelativeToOrigo(targetWidth: Double): Bitmap =
     scaleToRelativeToOrigo(
       targetWidth,
       targetHeight = height.inPixels)
 
-  /**
-   * Scales this object to a given height in relation to its center.
-   *
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to its center.
+    *
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleVerticallyTo(targetHeight: Double): Bitmap =
     scaleVerticallyTo(targetHeight, position)
 
-  /**
-   * Scales this object to a given height in relation to a given point.
-   *
-   * @param targetHeight
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to a given point.
+    *
+    * @param targetHeight
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleVerticallyTo(
       targetHeight: Double,
@@ -1661,40 +1568,37 @@ class Bitmap private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to a given height in relation to the origo.
-   *
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to the origo.
+    *
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleVerticallyToRelativeToOrigo(targetHeight: Double): Bitmap =
     scaleToRelativeToOrigo(
       targetWidth = width.inPixels,
       targetHeight = targetHeight)
 
-  /**
-   * Scales this object in relation to its center by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   *
-   * @return
-   */
+  /** Scales this object in relation to its center by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    *
+    * @return
+    */
   override
   def scaleTo(targetSideLength: Double): Bitmap =
     scaleTo(targetSideLength, position)
 
-  /**
-   * Scales this object in relation to a given point by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object in relation to a given point by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetSideLength: Double,
@@ -1706,28 +1610,26 @@ class Bitmap private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object in relation to the origo by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   *
-   * @return
-   */
+  /** Scales this object in relation to the origo by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    *
+    * @return
+    */
   override
   def scaleToRelativeToOrigo(targetSideLength: Double): Bitmap =
     scaleToRelativeToOrigo(
       targetWidth = targetSideLength,
       targetHeight = targetSideLength)
 
-  /**
-   * Scales this object to given width and height in relation to its center.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to its center.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetWidth: Double,
@@ -1736,15 +1638,14 @@ class Bitmap private(
     scaleTo(targetWidth, targetHeight, position)
   }
 
-  /**
-   * Scales this object to given width and height in relation to a given point.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to a given point.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetWidth: Double,
@@ -1766,14 +1667,13 @@ class Bitmap private(
     scaleToInternal(targetWidth, targetHeight, newCenter)
   }
 
-  /**
-   * Scales this object to given width and height in relation to the origo.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to the origo.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleToRelativeToOrigo(
       targetWidth: Double,
@@ -1794,14 +1694,13 @@ class Bitmap private(
   }
 
   /**
-   *
-   *
-   * @param targetWidth
-   * @param targetHeight
-   * @param newCenter
-   *
-   * @return
-   */
+    *
+    * @param targetWidth
+    * @param targetHeight
+    * @param newCenter
+    *
+    * @return
+    */
   private
   def scaleToInternal(
       targetWidth: Double,
@@ -1829,25 +1728,23 @@ class Bitmap private(
       Option(newBuffer))
   }
 
-  /**
-   * Scales this object horizontally in relation to its center.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to its center.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleHorizontallyBy(factor: Double): Bitmap =
     scaleHorizontallyBy(factor, position)
 
-  /**
-   * Scales this object horizontally in relation to a given point.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to a given point.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleHorizontallyBy(
       factor: Double,
@@ -1859,38 +1756,35 @@ class Bitmap private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object horizontally in relation to the origo.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to the origo.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleHorizontallyByRelativeToOrigo(factor: Double): Bitmap =
     scaleByRelativeToOrigo(
       horizontalFactor = factor,
       verticalFactor = Scalable.IdentityScalingFactor)
 
-  /**
-   * Scales this object vertically in relation to its center.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to its center.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleVerticallyBy(factor: Double): Bitmap =
     scaleVerticallyBy(factor, position)
 
-  /**
-   * Scales this object vertically in relation to a given point.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to a given point.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleVerticallyBy(
       factor: Double,
@@ -1902,40 +1796,37 @@ class Bitmap private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object vertically in relation to the origo.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to the origo.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleVerticallyByRelativeToOrigo(factor: Double): Bitmap =
     scaleByRelativeToOrigo(
       horizontalFactor = Scalable.IdentityScalingFactor,
       verticalFactor = factor)
 
-  /**
-   * Scales this object in relation to its center by using a given factor
-   * for both horizontal and vertical directions.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object in relation to its center by using a given factor
+    * for both horizontal and vertical directions.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleBy(factor: Double): Bitmap =
     scaleBy(factor, position)
 
-  /**
-   * Scales this object in relation to a given point by using a given factor
-   * for both horizontal and vertical directions.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object in relation to a given point by using a given factor
+    * for both horizontal and vertical directions.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleBy(
       factor: Double,
@@ -1947,28 +1838,26 @@ class Bitmap private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object in relation to the origo by using a given factor for
-   * both horizontal and vertical directions.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object in relation to the origo by using a given factor for
+    * both horizontal and vertical directions.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleByRelativeToOrigo(factor: Double): Bitmap =
     scaleByRelativeToOrigo(
       horizontalFactor = factor,
       verticalFactor = factor)
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to its center.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to its center.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    *
+    * @return
+    */
   override
   def scaleBy(
       horizontalFactor: Double,
@@ -1977,15 +1866,14 @@ class Bitmap private(
     scaleBy(horizontalFactor, verticalFactor, position)
   }
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to a given point.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to a given point.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleBy(
       horizontalFactor: Double,
@@ -1998,14 +1886,13 @@ class Bitmap private(
       relativityPoint)
   }
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to the origo.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to the origo.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    *
+    * @return
+    */
   override
   def scaleByRelativeToOrigo(
       horizontalFactor: Double,

@@ -26,11 +26,10 @@ import smcl.settings._
 
 
 
-/**
- * An object-based API for creating triangles.
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating triangles.
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Triangle {
 
   /** The number of corners (i.e., three) in a triangle. */
@@ -43,13 +42,12 @@ object Triangle {
   val SideOfEquilateralTriangleAsFactorOfHeight: Double =
     1.0 / HeightOfEquilateralTriangleAsFactorOfSide
 
-  /**
-   * Creates a new equilateral triangle.
-   *
-   * @param sideLength
-   *
-   * @return
-   */
+  /** Creates a new equilateral triangle.
+    *
+    * @param sideLength
+    *
+    * @return
+    */
   def apply(sideLength: Double): VectorGraphic =
     apply(
       sideLength,
@@ -59,17 +57,16 @@ object Triangle {
       color = DefaultPrimaryColor,
       fillColor = DefaultSecondaryColor)
 
-  /**
-   * Creates a new equilateral triangle.
-   *
-   * @param sideLength
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new equilateral triangle.
+    *
+    * @param sideLength
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       sideLength: Double,
       hasBorder: Boolean,
@@ -84,14 +81,13 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new equilateral triangle that has a specific center point.
-   *
-   * @param sideLength
-   * @param center
-   *
-   * @return
-   */
+  /** Creates a new equilateral triangle that has a specific center point.
+    *
+    * @param sideLength
+    * @param center
+    *
+    * @return
+    */
   def apply(
       sideLength: Double,
       center: Pos): VectorGraphic = {
@@ -105,18 +101,17 @@ object Triangle {
       fillColor = DefaultSecondaryColor)
   }
 
-  /**
-   * Creates a new equilateral triangle that has a specific center point.
-   *
-   * @param sideLength
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new equilateral triangle that has a specific center point.
+    *
+    * @param sideLength
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       sideLength: Double,
       center: Pos,
@@ -139,13 +134,12 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new equilateral triangle.
-   *
-   * @param height
-   *
-   * @return
-   */
+  /** Creates a new equilateral triangle.
+    *
+    * @param height
+    *
+    * @return
+    */
   def basedOnHeight(height: Double): VectorGraphic =
     basedOnHeight(
       height,
@@ -154,17 +148,16 @@ object Triangle {
       color = DefaultPrimaryColor,
       fillColor = DefaultSecondaryColor)
 
-  /**
-   * Creates a new equilateral triangle.
-   *
-   * @param height
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new equilateral triangle.
+    *
+    * @param height
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def basedOnHeight(
       height: Double,
       hasBorder: Boolean = ShapesHaveBordersByDefault,
@@ -179,18 +172,17 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new equilateral triangle that has a specific center point.
-   *
-   * @param height
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new equilateral triangle that has a specific center point.
+    *
+    * @param height
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def basedOnHeight(
       height: Double,
       center: Pos,
@@ -216,14 +208,13 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new isosceles triangle.
-   *
-   * @param sideLength
-   * @param baseLength
-   *
-   * @return
-   */
+  /** Creates a new isosceles triangle.
+    *
+    * @param sideLength
+    * @param baseLength
+    *
+    * @return
+    */
   def apply(
       sideLength: Double,
       baseLength: Double): VectorGraphic = {
@@ -237,18 +228,17 @@ object Triangle {
       fillColor = DefaultSecondaryColor)
   }
 
-  /**
-   * Creates a new isosceles triangle.
-   *
-   * @param sideLength
-   * @param baseLength
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new isosceles triangle.
+    *
+    * @param sideLength
+    * @param baseLength
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       sideLength: Double,
       baseLength: Double,
@@ -264,15 +254,14 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new isosceles triangle that has a specific center point.
-   *
-   * @param sideLength
-   * @param baseLength
-   * @param center
-   *
-   * @return
-   */
+  /** Creates a new isosceles triangle that has a specific center point.
+    *
+    * @param sideLength
+    * @param baseLength
+    * @param center
+    *
+    * @return
+    */
   def apply(
       sideLength: Double,
       baseLength: Double,
@@ -288,19 +277,18 @@ object Triangle {
       fillColor = DefaultSecondaryColor)
   }
 
-  /**
-   * Creates a new isosceles triangle that has a specific center point.
-   *
-   * @param sideLength
-   * @param baseLength
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new isosceles triangle that has a specific center point.
+    *
+    * @param sideLength
+    * @param baseLength
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       sideLength: Double,
       baseLength: Double,
@@ -325,14 +313,13 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new isosceles triangle.
-   *
-   * @param height
-   * @param baseLength
-   *
-   * @return
-   */
+  /** Creates a new isosceles triangle.
+    *
+    * @param height
+    * @param baseLength
+    *
+    * @return
+    */
   def basedOnHeightAndBase(
       height: Double,
       baseLength: Double): VectorGraphic = {
@@ -345,18 +332,17 @@ object Triangle {
       fillColor = DefaultSecondaryColor)
   }
 
-  /**
-   * Creates a new isosceles triangle.
-   *
-   * @param height
-   * @param baseLength
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new isosceles triangle.
+    *
+    * @param height
+    * @param baseLength
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def basedOnHeightAndBase(
       height: Double,
       baseLength: Double,
@@ -372,19 +358,18 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new isosceles triangle that has a specific center point.
-   *
-   * @param height
-   * @param baseLength
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new isosceles triangle that has a specific center point.
+    *
+    * @param height
+    * @param baseLength
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def basedOnHeightAndBase(
       height: Double,
       baseLength: Double,
@@ -408,19 +393,18 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new isosceles triangle that has a specific center point.
-   *
-   * @param halfHeight
-   * @param halfBase
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new isosceles triangle that has a specific center point.
+    *
+    * @param halfHeight
+    * @param halfBase
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   private
   def createIsosceles(
       halfHeight: Double,
@@ -448,15 +432,14 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new (expectedly) scalene triangle.
-   *
-   * @param baseLength
-   * @param leftSideLength
-   * @param rightSideLength
-   *
-   * @return
-   */
+  /** Creates a new (expectedly) scalene triangle.
+    *
+    * @param baseLength
+    * @param leftSideLength
+    * @param rightSideLength
+    *
+    * @return
+    */
   def apply(
       baseLength: Double,
       leftSideLength: Double,
@@ -470,19 +453,18 @@ object Triangle {
       fillColor = DefaultSecondaryColor)
   }
 
-  /**
-   * Creates a new (expectedly) scalene triangle.
-   *
-   * @param baseLength
-   * @param leftSideLength
-   * @param rightSideLength
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new (expectedly) scalene triangle.
+    *
+    * @param baseLength
+    * @param leftSideLength
+    * @param rightSideLength
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       baseLength: Double,
       leftSideLength: Double,
@@ -499,16 +481,15 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new (expectedly) scalene triangle that has a specific center point.
-   *
-   * @param baseLength
-   * @param leftSideLength
-   * @param rightSideLength
-   * @param center
-   *
-   * @return
-   */
+  /** Creates a new (expectedly) scalene triangle that has a specific center point.
+    *
+    * @param baseLength
+    * @param leftSideLength
+    * @param rightSideLength
+    * @param center
+    *
+    * @return
+    */
   def apply(
       baseLength: Double,
       leftSideLength: Double,
@@ -524,20 +505,19 @@ object Triangle {
       fillColor = DefaultSecondaryColor)
   }
 
-  /**
-   * Creates a new (expectedly) scalene triangle that has a specific center point.
-   *
-   * @param baseLength
-   * @param leftSideLength
-   * @param rightSideLength
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new (expectedly) scalene triangle that has a specific center point.
+    *
+    * @param baseLength
+    * @param leftSideLength
+    * @param rightSideLength
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       baseLength: Double,
       leftSideLength: Double,
@@ -591,20 +571,19 @@ object Triangle {
       color, fillColor)
   }
 
-  /**
-   * Creates a new (expectedly) scalene triangle.
-   *
-   * @param center
-   * @param firstCornerRelativeToCenter
-   * @param secondCornerRelativeToCenter
-   * @param thirdCornerRelativeToCenter
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+  /** Creates a new (expectedly) scalene triangle.
+    *
+    * @param center
+    * @param firstCornerRelativeToCenter
+    * @param secondCornerRelativeToCenter
+    * @param thirdCornerRelativeToCenter
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   private
   def apply(
       center: Pos,
@@ -625,15 +604,14 @@ object Triangle {
     Polygon(center, points, Pos.Origo, hasBorder, hasFilling, color, fillColor)
   }
 
-  /**
-   * Test if the triangle inequality holds for the given side lengths.
-   *
-   * @param baseLength      length of the base
-   * @param leftSideLength  length of the left side
-   * @param rightSideLength length of the right side
-   *
-   * @return
-   */
+  /** Test if the triangle inequality holds for the given side lengths.
+    *
+    * @param baseLength      length of the base
+    * @param leftSideLength  length of the left side
+    * @param rightSideLength length of the right side
+    *
+    * @return
+    */
   def validateSides(
       baseLength: Double,
       leftSideLength: Double,
@@ -648,13 +626,12 @@ object Triangle {
   }
 
   /**
-   *
-   *
-   * @param length
-   * @param name
-   *
-   * @return
-   */
+    *
+    * @param length
+    * @param name
+    *
+    * @return
+    */
   def validateSide(
       length: Double,
       name: String): Unit = {
@@ -665,15 +642,14 @@ object Triangle {
     }
   }
 
-  /**
-   * Test if the triangle inequality holds for the given side lengths.
-   *
-   * @param a length of first side
-   * @param b length of second side
-   * @param c length of third side
-   *
-   * @return
-   */
+  /** Test if the triangle inequality holds for the given side lengths.
+    *
+    * @param a length of first side
+    * @param b length of second side
+    * @param c length of third side
+    *
+    * @return
+    */
   def checkTriangleInequality(
       a: Double,
       b: Double,

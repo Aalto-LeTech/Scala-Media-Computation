@@ -30,10 +30,9 @@ import smcl.viewers.{display => displayInViewer}
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 object PictureElement {
 
   /** */
@@ -48,10 +47,9 @@ object PictureElement {
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 trait PictureElement
     extends HasPos
         with HasBounds
@@ -63,117 +61,101 @@ trait PictureElement
         with ScalableArea[PictureElement]
         with Cropable[Bitmap] {
 
-  /**
-   * The points used to define this [[PictureElement]].
-   *
-   * @return
-   */
+  /** The points used to define this [[PictureElement]].
+    *
+    * @return
+    */
   def pointsRelativeToCenterAtOrigo: Seq[Pos] = Seq()
 
-  /**
-   * The point that defines, relative to the local origo of this [[PictureElement]],
-   * how the [[PictureElement]] should be aligned in relation to its position. In other
-   * words, when rendering, the [[PictureElement]] should be placed so that this point
-   * is at its position.
-   *
-   * @return
-   */
+  /** The point that defines, relative to the local origo of this [[PictureElement]],
+    * how the [[PictureElement]] should be aligned in relation to its position. In other
+    * words, when rendering, the [[PictureElement]] should be placed so that this point
+    * is at its position.
+    *
+    * @return
+    */
   def referencePointRelativeToCenterAtOrigo: Pos = Pos.Origo
 
-  /**
-   * The unique identity of this [[PictureElement]].
-   *
-   * @return
-   */
+  /** The unique identity of this [[PictureElement]].
+    *
+    * @return
+    */
   def identity: Identity
 
-  /**
-   * The position of this [[PictureElement]].
-   *
-   * @return
-   */
+  /** The position of this [[PictureElement]].
+    *
+    * @return
+    */
   def position: Pos = boundary.center
 
-  /**
-   * The dimensions of this [[PictureElement]].
-   *
-   * @return
-   */
+  /** The dimensions of this [[PictureElement]].
+    *
+    * @return
+    */
   def dimensions: Dims = boundary.dimensions
 
-  /**
-   * The aspect ratio of this [[PictureElement]].
-   *
-   * @return
-   */
+  /** The aspect ratio of this [[PictureElement]].
+    *
+    * @return
+    */
   def aspectRatio: AspectRatio = boundary.aspectRatio
 
-  /**
-   * Tells if this [[PictureElement]] can be rendered on a bitmap.
-   *
-   * @return
-   */
+  /** Tells if this [[PictureElement]] can be rendered on a bitmap.
+    *
+    * @return
+    */
   def isRenderable: Boolean
 
-  /**
-   * Tells if this [[PictureElement]] can not be rendered on a bitmap.
-   *
-   * @return
-   */
+  /** Tells if this [[PictureElement]] can not be rendered on a bitmap.
+    *
+    * @return
+    */
   lazy val isNotRenderable: Boolean = !isRenderable
 
-  /**
-   * Tells if an arc represents a circle or an ellipse.
-   *
-   * @return
-   */
+  /** Tells if an arc represents a circle or an ellipse.
+    *
+    * @return
+    */
   def isFullCycle: Boolean = false
 
-  /**
-   * Tells if an arc represents a circle.
-   *
-   * @return
-   */
+  /** Tells if an arc represents a circle.
+    *
+    * @return
+    */
   def isCircle: Boolean = false
 
-  /**
-   * Tells if an arc represents an ellipse.
-   *
-   * @return
-   */
+  /** Tells if an arc represents an ellipse.
+    *
+    * @return
+    */
   def isEllipse: Boolean = false
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def toBitmap: Bitmap = Bitmap(this)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def toBitmapCopy: Bitmap = toBitmap
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def toPicture: Picture = Picture(this)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def toPixelSnapshot: PixelSnapshot = PixelSnapshot(this)
 
   /**
-   *
-   */
+    */
   def display(): PictureElement = {
     displayInViewer(toBitmap)
 
@@ -181,13 +163,12 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param another
-   * @param pixelMerger
-   *
-   * @return
-   */
+    *
+    * @param another
+    * @param pixelMerger
+    *
+    * @return
+    */
   def mergePixelsWith(
       another: PictureElement,
       pixelMerger: (Color, Color) => Color): Bitmap = {
@@ -196,15 +177,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param upperLeftCornerXInPixels
-   * @param upperLeftCornerYInPixels
-   * @param lowerRightCornerXInPixels
-   * @param lowerRightCornerYInPixels
-   *
-   * @return
-   */
+    *
+    * @param upperLeftCornerXInPixels
+    * @param upperLeftCornerYInPixels
+    * @param lowerRightCornerXInPixels
+    * @param lowerRightCornerYInPixels
+    *
+    * @return
+    */
   override
   def crop(
       upperLeftCornerXInPixels: Double,
@@ -220,14 +200,13 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param upperLeftCorner
-   * @param widthInPixels
-   * @param heightInPixels
-   *
-   * @return
-   */
+    *
+    * @param upperLeftCorner
+    * @param widthInPixels
+    * @param heightInPixels
+    *
+    * @return
+    */
   override
   def crop(
       upperLeftCorner: Pos,
@@ -241,32 +220,29 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   *
-   * @return
-   */
+    *
+    * @param content
+    *
+    * @return
+    */
   def addToBack(content: PictureElement): PictureElement = addToBack(Seq(content))
 
   /**
-   *
-   *
-   * @param content
-   *
-   * @return
-   */
+    *
+    * @param content
+    *
+    * @return
+    */
   def addToBack(content: Seq[PictureElement]): PictureElement =
     Picture(appendTo(content, Seq(this)))
 
   /**
-   *
-   *
-   * @param contentToAppend
-   * @param existingContent
-   *
-   * @return
-   */
+    *
+    * @param contentToAppend
+    * @param existingContent
+    *
+    * @return
+    */
   protected final
   def appendTo(
       contentToAppend: Seq[PictureElement],
@@ -281,32 +257,29 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   *
-   * @return
-   */
+    *
+    * @param content
+    *
+    * @return
+    */
   def addToFront(content: PictureElement): PictureElement = content.addToBack(this)
 
   /**
-   *
-   *
-   * @param content
-   *
-   * @return
-   */
+    *
+    * @param content
+    *
+    * @return
+    */
   def addToFront(content: Seq[PictureElement]): PictureElement =
     Picture(prependTo(content, Seq(this)))
 
   /**
-   *
-   *
-   * @param contentToPrepend
-   * @param existingContent
-   *
-   * @return
-   */
+    *
+    * @param contentToPrepend
+    * @param existingContent
+    *
+    * @return
+    */
   protected final
   def prependTo(
       contentToPrepend: Seq[PictureElement],
@@ -321,33 +294,30 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   *
-   * @return
-   */
+    *
+    * @param content
+    *
+    * @return
+    */
   def +: (content: PictureElement): PictureElement = addToFront(content)
 
   /**
-   *
-   *
-   * @param content
-   *
-   * @return
-   */
+    *
+    * @param content
+    *
+    * @return
+    */
   def :+ (content: PictureElement): PictureElement = addToBack(content)
 
   /**
-   *
-   *
-   * @param targetSide
-   * @param content
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param targetSide
+    * @param content
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def addTo(
       targetSide: Side,
       content: PictureElement,
@@ -363,14 +333,13 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param content
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def addToTop(
       content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -388,14 +357,13 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param content
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def addToRight(
       content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -411,14 +379,13 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param content
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def addToBottom(
       content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -434,14 +401,13 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param content
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def addToLeft(
       content: PictureElement,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -459,14 +425,13 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   * @param positions
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param content
+    * @param positions
+    * @param positionType
+    *
+    * @return
+    */
   def addCopiesAtPos(
       content: PictureElement,
       positions: Seq[Pos],
@@ -484,14 +449,13 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   * @param positions
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param content
+    * @param positions
+    * @param positionType
+    *
+    * @return
+    */
   def addCopiesAt(
       content: PictureElement,
       positions: Seq[(Double, Double)],
@@ -511,13 +475,12 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param contentsAndPositions
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param contentsAndPositions
+    * @param positionType
+    *
+    * @return
+    */
   def addAtPos(
       contentsAndPositions: Seq[(PictureElement, Pos)],
       positionType: PositionType): PictureElement = {
@@ -530,13 +493,12 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param contentAndPosition
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param contentAndPosition
+    * @param positionType
+    *
+    * @return
+    */
   def addAtPos(
       contentAndPosition: (PictureElement, Pos),
       positionType: PositionType): PictureElement = {
@@ -548,14 +510,13 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   * @param position
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param content
+    * @param position
+    * @param positionType
+    *
+    * @return
+    */
   def addAtPos(
       content: PictureElement,
       position: Pos,
@@ -568,13 +529,12 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param contentsAndCoordinatesInPixels
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param contentsAndCoordinatesInPixels
+    * @param positionType
+    *
+    * @return
+    */
   def addAt(
       contentsAndCoordinatesInPixels: Seq[(PictureElement, Double, Double)],
       positionType: PositionType): PictureElement = {
@@ -587,13 +547,12 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param contentAndCoordinatesInPixels
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param contentAndCoordinatesInPixels
+    * @param positionType
+    *
+    * @return
+    */
   def addAt(
       contentAndCoordinatesInPixels: (PictureElement, Double, Double),
       positionType: PositionType): PictureElement = {
@@ -606,15 +565,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param content
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   * @param positionType
-   *
-   * @return
-   */
+    *
+    * @param content
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    * @param positionType
+    *
+    * @return
+    */
   def addAt(
       content: PictureElement,
       xCoordinateInPixels: Double,
@@ -625,15 +583,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param numberOfReplicas
-   * @param paddingInPixels
-   * @param alignment
-   * @param transformer
-   *
-   * @return
-   */
+    *
+    * @param numberOfReplicas
+    * @param paddingInPixels
+    * @param alignment
+    * @param transformer
+    *
+    * @return
+    */
   def replicateUpwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -649,15 +606,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param numberOfReplicas
-   * @param paddingInPixels
-   * @param alignment
-   * @param transformer
-   *
-   * @return
-   */
+    *
+    * @param numberOfReplicas
+    * @param paddingInPixels
+    * @param alignment
+    * @param transformer
+    *
+    * @return
+    */
   def replicateDownwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -673,15 +629,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param numberOfReplicas
-   * @param paddingInPixels
-   * @param alignment
-   * @param transformer
-   *
-   * @return
-   */
+    *
+    * @param numberOfReplicas
+    * @param paddingInPixels
+    * @param alignment
+    * @param transformer
+    *
+    * @return
+    */
   def replicateLeftwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -697,15 +652,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param numberOfReplicas
-   * @param paddingInPixels
-   * @param alignment
-   * @param transformer
-   *
-   * @return
-   */
+    *
+    * @param numberOfReplicas
+    * @param paddingInPixels
+    * @param alignment
+    * @param transformer
+    *
+    * @return
+    */
   def replicateRightwards(
       numberOfReplicas: Int,
       paddingInPixels: Double = DefaultPaddingInPixels,
@@ -721,15 +675,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param alternatives
-   * @param numberOfAlternations
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param alternatives
+    * @param numberOfAlternations
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def alternateUpwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -745,15 +698,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param alternatives
-   * @param numberOfAlternations
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param alternatives
+    * @param numberOfAlternations
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def alternateDownwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -769,15 +721,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param alternatives
-   * @param numberOfAlternations
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param alternatives
+    * @param numberOfAlternations
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def alternateLeftwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -793,15 +744,14 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param alternatives
-   * @param numberOfAlternations
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param alternatives
+    * @param numberOfAlternations
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def alternateRightwardsWith(
       alternatives: Seq[PictureElement],
       numberOfAlternations: Int,
@@ -817,16 +767,15 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param side
-   * @param numberOfReplicas
-   * @param paddingInPixels
-   * @param alignment
-   * @param transformer
-   *
-   * @return
-   */
+    *
+    * @param side
+    * @param numberOfReplicas
+    * @param paddingInPixels
+    * @param alignment
+    * @param transformer
+    *
+    * @return
+    */
   def replicateTo(
       side: Side,
       numberOfReplicas: Int,
@@ -863,16 +812,15 @@ trait PictureElement
   }
 
   /**
-   *
-   *
-   * @param alternatives
-   * @param side
-   * @param numberOfAlternations
-   * @param paddingInPixels
-   * @param alignment
-   *
-   * @return
-   */
+    *
+    * @param alternatives
+    * @param side
+    * @param numberOfAlternations
+    * @param paddingInPixels
+    * @param alignment
+    *
+    * @return
+    */
   def alternateWith(
       alternatives: Seq[PictureElement],
       side: Side,

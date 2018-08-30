@@ -18,45 +18,39 @@ package smcl.pictures
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 trait TypeQueryable {
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def isBitmap: Boolean = false
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def isPicture: Boolean = false
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def isPolygon: Boolean = false
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def isArc: Boolean = false
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def isPoint: Boolean = false
 
 }

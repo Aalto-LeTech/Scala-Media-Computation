@@ -27,10 +27,9 @@ import smcl.modeling.d2.BoundaryCalculator
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 object RenderingController
     extends InjectablesRegistry {
 
@@ -47,12 +46,11 @@ object RenderingController
   }
 
   /**
-   *
-   *
-   * @param elements
-   *
-   * @return
-   */
+    *
+    * @param elements
+    *
+    * @return
+    */
   def createBitmapFrom(elements: PictureElement*): Bitmap = {
     if (elements.isEmpty)
       return Bitmap(0, 0)
@@ -103,13 +101,12 @@ object RenderingController
   }
 
   /**
-   *
-   *
-   * @param content
-   * @param targetDrawingSurface
-   * @param xOffsetToOrigoInPixels
-   * @param yOffsetToOrigoInPixels
-   */
+    *
+    * @param content
+    * @param targetDrawingSurface
+    * @param xOffsetToOrigoInPixels
+    * @param yOffsetToOrigoInPixels
+    */
   private
   def renderElements(
       content: Seq[PictureElement],

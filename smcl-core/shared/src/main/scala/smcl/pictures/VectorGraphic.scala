@@ -17,12 +17,9 @@
 package smcl.pictures
 
 
-
-
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 trait VectorGraphic
     extends PictureElement

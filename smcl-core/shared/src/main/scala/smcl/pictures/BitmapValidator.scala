@@ -25,10 +25,10 @@ import smcl.settings.{BitmapHeightWarningLimitInPixels, BitmapWidthWarningLimitI
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  *
+  * @author Aleksi Lukkarinen
+  */
 object BitmapValidator {
 
   /** */
@@ -49,20 +49,18 @@ object BitmapValidator {
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 class BitmapValidator private[smcl]() {
 
 
   /**
-   *
-   *
-   * @param actualWidth
-   *
-   * @return
-   */
+    *
+    * @param actualWidth
+    *
+    * @return
+    */
   @inline
   final
   def minimumWidthIsNotMet(actualWidth: Len): Boolean = {
@@ -70,12 +68,11 @@ class BitmapValidator private[smcl]() {
   }
 
   /**
-   *
-   *
-   * @param actualHeight
-   *
-   * @return
-   */
+    *
+    * @param actualHeight
+    *
+    * @return
+    */
   @inline
   final
   def minimumHeightIsNotMet(actualHeight: Len): Boolean = {
@@ -83,12 +80,11 @@ class BitmapValidator private[smcl]() {
   }
 
   /**
-   *
-   *
-   * @param actualWidth
-   *
-   * @return
-   */
+    *
+    * @param actualWidth
+    *
+    * @return
+    */
   @inline
   final
   def maximumWidthIsExceeded(actualWidth: Len): Boolean = {
@@ -96,12 +92,11 @@ class BitmapValidator private[smcl]() {
   }
 
   /**
-   *
-   *
-   * @param actualHeight
-   *
-   * @return
-   */
+    *
+    * @param actualHeight
+    *
+    * @return
+    */
   @inline
   final
   def maximumHeightIsExceeded(actualHeight: Len): Boolean = {
@@ -109,12 +104,11 @@ class BitmapValidator private[smcl]() {
   }
 
   /**
-   *
-   *
-   * @param actualWidth
-   *
-   * @return
-   */
+    *
+    * @param actualWidth
+    *
+    * @return
+    */
   @inline
   final
   def warningWidthLimitIsExceeded(actualWidth: Len): Boolean = {
@@ -122,11 +116,10 @@ class BitmapValidator private[smcl]() {
   }
 
   /**
-   *
-   *
-   * @param actualHeight
-   *
-   */
+    *
+    * @param actualHeight
+    *
+    */
   @inline
   final
   def warningHeightLimitIsExceeded(actualHeight: Len): Boolean = {
@@ -134,13 +127,12 @@ class BitmapValidator private[smcl]() {
   }
 
   /**
-   *
-   *
-   * @param actualWidth
-   * @param actualHeight
-   *
-   * @return
-   */
+    *
+    * @param actualWidth
+    * @param actualHeight
+    *
+    * @return
+    */
   @inline
   final
   def minimumSizeLimitsAreNotMet(
@@ -152,13 +144,12 @@ class BitmapValidator private[smcl]() {
   }
 
   /**
-   *
-   *
-   * @param actualWidth
-   * @param actualHeight
-   *
-   * @return
-   */
+    *
+    * @param actualWidth
+    * @param actualHeight
+    *
+    * @return
+    */
   @inline
   final
   def maximumSizeLimitsAreExceeded(
@@ -170,13 +161,12 @@ class BitmapValidator private[smcl]() {
   }
 
   /**
-   *
-   *
-   * @param actualWidth
-   * @param actualHeight
-   *
-   * @return
-   */
+    *
+    * @param actualWidth
+    * @param actualHeight
+    *
+    * @return
+    */
   @inline
   final
   def warningSizeLimitsAreExceeded(
@@ -188,14 +178,13 @@ class BitmapValidator private[smcl]() {
   }
 
   /**
-   *
-   *
-   * @param actualWidth
-   * @param actualHeight
-   *
-   * @throws PixelSnapshotInvalidatedError
-   * @throws MaximumBitmapSizeExceededError
-   */
+    *
+    * @param actualWidth
+    * @param actualHeight
+    *
+    * @throws PixelSnapshotInvalidatedError
+    * @throws MaximumBitmapSizeExceededError
+    */
   @inline
   final
   def validateBitmapSize(

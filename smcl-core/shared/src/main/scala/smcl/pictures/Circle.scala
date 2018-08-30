@@ -25,21 +25,19 @@ import smcl.settings._
 
 
 
-/**
- * An object-based API for creating circles.
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating circles.
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Circle {
 
   /**
-   *
-   *
-   * @param center
-   * @param radiusInPixels
-   *
-   * @return
-   */
+    *
+    * @param center
+    * @param radiusInPixels
+    *
+    * @return
+    */
   def apply(
       center: Pos,
       radiusInPixels: Double): VectorGraphic = {
@@ -54,17 +52,16 @@ object Circle {
   }
 
   /**
-   *
-   *
-   * @param center
-   * @param radiusInPixels
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param center
+    * @param radiusInPixels
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       center: Pos,
       radiusInPixels: Double,
@@ -81,16 +78,15 @@ object Circle {
   }
 
   /**
-   *
-   *
-   * @param diameter
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param diameter
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       center: Pos,
       diameter: Len = Len(DefaultCircleRadiusInPixels).double,

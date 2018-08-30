@@ -24,20 +24,18 @@ import smcl.settings.SettingValidatorFactory
 
 
 /**
- *
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @author Aleksi Lukkarinen
+  */
 private[smcl]
 class BitmapValidatorFunctionFactory(
     private val settingValidatorFactory: SettingValidatorFactory,
     private val bitmapValidator: BitmapValidator) {
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   // @formatter:off
   def BitmapWidthValidator(): Int => Option[Throwable] =
     settingValidatorFactory.conditionFalseValidator[Int](
@@ -50,10 +48,9 @@ class BitmapValidatorFunctionFactory(
   // @formatter:on
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   // @formatter:off
   def BitmapHeightValidator(): Int => Option[Throwable] =
     settingValidatorFactory.conditionFalseValidator[Int](

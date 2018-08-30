@@ -26,27 +26,25 @@ import smcl.settings._
 
 
 
-/**
- * An object-based API for creating arcs.
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating arcs.
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Arc {
 
   /**
-   *
-   *
-   * @param widthInPixels
-   * @param heightInPixels
-   * @param startAngleInDegrees
-   * @param arcAngleInDegrees
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    * @param startAngleInDegrees
+    * @param arcAngleInDegrees
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       position: Pos = DefaultPosition,
       widthInPixels: Double,
@@ -81,24 +79,23 @@ object Arc {
 
 
 /**
- *
- *
- * @param identity
- * @param position
- * @param untransformedWidthInPixels
- * @param untransformedHeightInPixels
- * @param startAngleInDegrees
- * @param arcAngleInDegrees
- * @param horizontalScalingFactor
- * @param verticalScalingFactor
- * @param rotationAngleInDegrees
- * @param hasBorder
- * @param hasFilling
- * @param color
- * @param fillColor
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @param identity
+  * @param position
+  * @param untransformedWidthInPixels
+  * @param untransformedHeightInPixels
+  * @param startAngleInDegrees
+  * @param arcAngleInDegrees
+  * @param horizontalScalingFactor
+  * @param verticalScalingFactor
+  * @param rotationAngleInDegrees
+  * @param hasBorder
+  * @param hasFilling
+  * @param color
+  * @param fillColor
+  *
+  * @author Aleksi Lukkarinen
+  */
 class Arc private(
     val identity: Identity,
     override val position: Pos,
@@ -198,17 +195,16 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @param newStartAngleInDegrees
-   * @param newArcAngleInDegrees
-   * @param newHasBorder
-   * @param newHasFilling
-   * @param newColor
-   * @param newFillColor
-   *
-   * @return
-   */
+    *
+    * @param newStartAngleInDegrees
+    * @param newArcAngleInDegrees
+    * @param newHasBorder
+    * @param newHasFilling
+    * @param newColor
+    * @param newFillColor
+    *
+    * @return
+    */
   def copy(
       newStartAngleInDegrees: Double = startAngleInDegrees,
       newArcAngleInDegrees: Double = arcAngleInDegrees,
@@ -227,23 +223,22 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @param newPosition
-   * @param newUntransformedWidthInPixels
-   * @param newUntransformedHeightInPixels
-   * @param newStartAngleInDegrees
-   * @param newArcAngleInDegrees
-   * @param newHorizontalScalingFactor
-   * @param newVerticalScalingFactor
-   * @param newRotationAngleInDegrees
-   * @param newHasBorder
-   * @param newHasFilling
-   * @param newColor
-   * @param newFillColor
-   *
-   * @return
-   */
+    *
+    * @param newPosition
+    * @param newUntransformedWidthInPixels
+    * @param newUntransformedHeightInPixels
+    * @param newStartAngleInDegrees
+    * @param newArcAngleInDegrees
+    * @param newHorizontalScalingFactor
+    * @param newVerticalScalingFactor
+    * @param newRotationAngleInDegrees
+    * @param newHasBorder
+    * @param newHasFilling
+    * @param newColor
+    * @param newFillColor
+    *
+    * @return
+    */
   private
   def internalCopy(
       newPosition: Pos = position,
@@ -279,10 +274,9 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   override
   lazy val hashCode: Int = {
     val prime = 31
@@ -305,23 +299,21 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
+    *
+    * @param other
+    *
+    * @return
+    */
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Arc]
   }
 
   /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
+    *
+    * @param other
+    *
+    * @return
+    */
   override
   def equals(other: Any): Boolean = {
     other match {
@@ -345,12 +337,11 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @param coordinatesInPixels
-   *
-   * @return
-   */
+    *
+    * @param coordinatesInPixels
+    *
+    * @return
+    */
   override
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): Arc = {
     require(
@@ -363,13 +354,12 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   *
-   * @return
-   */
+    *
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    *
+    * @return
+    */
   override
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
@@ -381,12 +371,11 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @param coordinatesInPixels
-   *
-   * @return
-   */
+    *
+    * @param coordinatesInPixels
+    *
+    * @return
+    */
   override
   def moveCenterTo(coordinatesInPixels: Seq[Double]): Arc = {
     require(
@@ -399,13 +388,12 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   *
-   * @return
-   */
+    *
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    *
+    * @return
+    */
   override
   def moveCenterTo(
       xCoordinateInPixels: Double,
@@ -417,25 +405,23 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @param offsetsInPixels
-   *
-   * @return
-   */
+    *
+    * @param offsetsInPixels
+    *
+    * @return
+    */
   def moveBy(offsetsInPixels: Seq[Double]): Arc = {
     val newPos = position + (offsetsInPixels.head, offsetsInPixels.tail.head)
     internalCopy(newPosition = newPos)
   }
 
   /**
-   *
-   *
-   * @param xOffsetInPixels
-   * @param yOffsetInPixels
-   *
-   * @return
-   */
+    *
+    * @param xOffsetInPixels
+    * @param yOffsetInPixels
+    *
+    * @return
+    */
   override
   def moveBy(
       xOffsetInPixels: Double,
@@ -445,11 +431,10 @@ class Arc private(
     internalCopy(newPosition = newPos)
   }
 
-  /**
-   * Rotates this object around origo (0,0) by 90 degrees clockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by 90 degrees clockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCWAroundOrigo: Arc = {
     internalCopy(
@@ -457,24 +442,22 @@ class Arc private(
       newRotationAngleInDegrees = decideNewRotationAngleFor(-Angle.RightAngleInDegrees))
   }
 
-  /**
-   * Rotates this object around its center by 90 degrees clockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around its center by 90 degrees clockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCW: Arc = {
     internalCopy(
       newRotationAngleInDegrees = decideNewRotationAngleFor(-Angle.RightAngleInDegrees))
   }
 
-  /**
-   * Rotates this object around a given point by 90 degrees clockwise.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by 90 degrees clockwise.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Arc = {
     internalCopy(
@@ -482,11 +465,10 @@ class Arc private(
       newRotationAngleInDegrees = decideNewRotationAngleFor(-Angle.RightAngleInDegrees))
   }
 
-  /**
-   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by 90 degrees counterclockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCCWAroundOrigo: Arc = {
     internalCopy(
@@ -494,24 +476,22 @@ class Arc private(
       newRotationAngleInDegrees = decideNewRotationAngleFor(Angle.RightAngleInDegrees))
   }
 
-  /**
-   * Rotates this object around the its center by 90 degrees counterclockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around the its center by 90 degrees counterclockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCCW: Arc = {
     internalCopy(
       newRotationAngleInDegrees = decideNewRotationAngleFor(Angle.RightAngleInDegrees))
   }
 
-  /**
-   * Rotates this object around a given point by 90 degrees counterclockwise.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by 90 degrees counterclockwise.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Arc = {
     internalCopy(
@@ -519,11 +499,10 @@ class Arc private(
       newRotationAngleInDegrees = decideNewRotationAngleFor(Angle.RightAngleInDegrees))
   }
 
-  /**
-   * Rotates this object around origo (0,0) by 180 degrees.
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by 180 degrees.
+    *
+    * @return
+    */
   override
   def rotateBy180DegsAroundOrigo: Arc = {
     internalCopy(
@@ -532,11 +511,10 @@ class Arc private(
         MathUtils.rotateHalfTurnTowardsZeroAngle(rotationAngleInDegrees)))
   }
 
-  /**
-   * Rotates this object around its center by 180 degrees.
-   *
-   * @return
-   */
+  /** Rotates this object around its center by 180 degrees.
+    *
+    * @return
+    */
   override
   def rotateBy180Degs: Arc = {
     internalCopy(
@@ -544,13 +522,12 @@ class Arc private(
         MathUtils.rotateHalfTurnTowardsZeroAngle(rotationAngleInDegrees)))
   }
 
-  /**
-   * Rotates this object around a given point by 180 degrees.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by 180 degrees.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy180Degs(centerOfRotation: Pos): Arc = {
     internalCopy(
@@ -559,24 +536,22 @@ class Arc private(
         MathUtils.rotateHalfTurnTowardsZeroAngle(rotationAngleInDegrees)))
   }
 
-  /**
-   * Rotates this object around its center by the specified angle.
-   *
-   * @param angle
-   *
-   * @return
-   */
+  /** Rotates this object around its center by the specified angle.
+    *
+    * @param angle
+    *
+    * @return
+    */
   override
   def rotateByAroundOrigo(angle: Angle): Arc =
     rotateByAroundOrigo(angle.inDegrees)
 
-  /**
-   * Rotates this object around its center by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
+  /** Rotates this object around its center by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    *
+    * @return
+    */
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Arc = {
     internalCopy(
@@ -584,37 +559,34 @@ class Arc private(
       newRotationAngleInDegrees = decideNewRotationAngleFor(angleInDegrees))
   }
 
-  /**
-   * Rotates this object around its center by the specified angle.
-   *
-   * @param angle
-   *
-   * @return
-   */
+  /** Rotates this object around its center by the specified angle.
+    *
+    * @param angle
+    *
+    * @return
+    */
   override
   def rotateBy(angle: Angle): Arc = rotateBy(angle.inDegrees)
 
-  /**
-   * Rotates this object around its center by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
+  /** Rotates this object around its center by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    *
+    * @return
+    */
   override
   def rotateBy(angleInDegrees: Double): Arc = {
     internalCopy(
       newRotationAngleInDegrees = decideNewRotationAngleFor(angleInDegrees))
   }
 
-  /**
-   * Rotates this object around a given point by the specified angle.
-   *
-   * @param angle
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by the specified angle.
+    *
+    * @param angle
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy(
       angle: Angle,
@@ -623,14 +595,13 @@ class Arc private(
     rotateBy(angle.inDegrees, centerOfRotation)
   }
 
-  /**
-   * Rotates this object around a given point by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy(
       angleInDegrees: Double,
@@ -643,25 +614,23 @@ class Arc private(
       newRotationAngleInDegrees = decideNewRotationAngleFor(angleInDegrees))
   }
 
-  /**
-   * Scales this object to a given width in relation to its center.
-   *
-   * @param targetWidth
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to its center.
+    *
+    * @param targetWidth
+    *
+    * @return
+    */
   override
   def scaleHorizontallyTo(targetWidth: Double): Arc =
     scaleHorizontallyTo(targetWidth, position)
 
-  /**
-   * Scales this object to a given width in relation to a given point.
-   *
-   * @param targetWidth
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to a given point.
+    *
+    * @param targetWidth
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleHorizontallyTo(
       targetWidth: Double,
@@ -673,38 +642,35 @@ class Arc private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to a given width in relation to the origo.
-   *
-   * @param targetWidth
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to the origo.
+    *
+    * @param targetWidth
+    *
+    * @return
+    */
   override
   def scaleHorizontallyToRelativeToOrigo(targetWidth: Double): Arc =
     scaleToRelativeToOrigo(
       targetWidth,
       targetHeight = height.inPixels)
 
-  /**
-   * Scales this object to a given height in relation to its center.
-   *
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to its center.
+    *
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleVerticallyTo(targetHeight: Double): Arc =
     scaleVerticallyTo(targetHeight, position)
 
-  /**
-   * Scales this object to a given height in relation to a given point.
-   *
-   * @param targetHeight
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to a given point.
+    *
+    * @param targetHeight
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleVerticallyTo(
       targetHeight: Double,
@@ -716,40 +682,37 @@ class Arc private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to a given height in relation to the origo.
-   *
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to the origo.
+    *
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleVerticallyToRelativeToOrigo(targetHeight: Double): Arc =
     scaleToRelativeToOrigo(
       targetWidth = width.inPixels,
       targetHeight = targetHeight)
 
-  /**
-   * Scales this object in relation to its center by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   *
-   * @return
-   */
+  /** Scales this object in relation to its center by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    *
+    * @return
+    */
   override
   def scaleTo(targetSideLength: Double): Arc =
     scaleTo(targetSideLength, position)
 
-  /**
-   * Scales this object in relation to a given point by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object in relation to a given point by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetSideLength: Double,
@@ -761,28 +724,26 @@ class Arc private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object in relation to the origo by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   *
-   * @return
-   */
+  /** Scales this object in relation to the origo by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    *
+    * @return
+    */
   override
   def scaleToRelativeToOrigo(targetSideLength: Double): Arc =
     scaleToRelativeToOrigo(
       targetWidth = targetSideLength,
       targetHeight = targetSideLength)
 
-  /**
-   * Scales this object to given width and height in relation to its center.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to its center.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetWidth: Double,
@@ -791,15 +752,14 @@ class Arc private(
     scaleTo(targetWidth, targetHeight, position)
   }
 
-  /**
-   * Scales this object to given width and height in relation to a given point.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to a given point.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetWidth: Double,
@@ -815,14 +775,13 @@ class Arc private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to given width and height in relation to the origo.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to the origo.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleToRelativeToOrigo(
       targetWidth: Double,
@@ -837,13 +796,12 @@ class Arc private(
   }
 
   /**
-   *
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   def scalingFactorsFor(
       targetWidth: Double,
       targetHeight: Double): (Double, Double) = {
@@ -854,25 +812,23 @@ class Arc private(
     (horizontalFactor, verticalFactor)
   }
 
-  /**
-   * Scales this object horizontally in relation to its center.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to its center.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleHorizontallyBy(factor: Double): Arc =
     scaleHorizontallyBy(factor, position)
 
-  /**
-   * Scales this object horizontally in relation to a given point.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to a given point.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleHorizontallyBy(
       factor: Double,
@@ -884,38 +840,35 @@ class Arc private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object horizontally in relation to the origo.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to the origo.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleHorizontallyByRelativeToOrigo(factor: Double): Arc =
     scaleByRelativeToOrigo(
       horizontalFactor = factor,
       verticalFactor = Scalable.IdentityScalingFactor)
 
-  /**
-   * Scales this object vertically in relation to its center.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to its center.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleVerticallyBy(factor: Double): Arc =
     scaleVerticallyBy(factor, position)
 
-  /**
-   * Scales this object vertically in relation to a given point.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to a given point.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleVerticallyBy(
       factor: Double,
@@ -927,40 +880,37 @@ class Arc private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object vertically in relation to the origo.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to the origo.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleVerticallyByRelativeToOrigo(factor: Double): Arc =
     scaleByRelativeToOrigo(
       horizontalFactor = Scalable.IdentityScalingFactor,
       verticalFactor = factor)
 
-  /**
-   * Scales this object in relation to its center by using a given factor
-   * for both horizontal and vertical directions.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object in relation to its center by using a given factor
+    * for both horizontal and vertical directions.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleBy(factor: Double): Arc =
     scaleBy(factor, position)
 
-  /**
-   * Scales this object in relation to a given point by using a given factor
-   * for both horizontal and vertical directions.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object in relation to a given point by using a given factor
+    * for both horizontal and vertical directions.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleBy(
       factor: Double,
@@ -972,28 +922,26 @@ class Arc private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object in relation to the origo by using a given factor for
-   * both horizontal and vertical directions.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object in relation to the origo by using a given factor for
+    * both horizontal and vertical directions.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleByRelativeToOrigo(factor: Double): Arc =
     scaleByRelativeToOrigo(
       horizontalFactor = factor,
       verticalFactor = factor)
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to its center.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to its center.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    *
+    * @return
+    */
   override
   def scaleBy(
       horizontalFactor: Double,
@@ -1004,15 +952,14 @@ class Arc private(
       newVerticalScalingFactor = verticalFactor * verticalScalingFactor)
   }
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to a given point.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to a given point.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleBy(
       horizontalFactor: Double,
@@ -1025,14 +972,13 @@ class Arc private(
       newVerticalScalingFactor = verticalFactor * verticalScalingFactor)
   }
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to the origo.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to the origo.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    *
+    * @return
+    */
   override
   def scaleByRelativeToOrigo(
       horizontalFactor: Double,

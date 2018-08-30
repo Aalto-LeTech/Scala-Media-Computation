@@ -26,26 +26,24 @@ import smcl.settings._
 
 
 
-/**
- * An object-based API for creating general polygons.
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating general polygons.
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Polygon {
 
   /**
-   *
-   *
-   * @param position
-   * @param pointsRelativeToCenterAtOrigo
-   * @param referencePointRelativeToCenterAtOrigo
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param position
+    * @param pointsRelativeToCenterAtOrigo
+    * @param referencePointRelativeToCenterAtOrigo
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       position: Pos = DefaultPosition,
       pointsRelativeToCenterAtOrigo: Seq[Pos],
@@ -72,19 +70,18 @@ object Polygon {
 
 
 /**
- *
- *
- * @param identity
- * @param position
- * @param pointsRelativeToCenterAtOrigo
- * @param referencePointRelativeToCenterAtOrigo
- * @param hasBorder
- * @param hasFilling
- * @param color
- * @param fillColor
- *
- * @author Aleksi Lukkarinen
- */
+  *
+  * @param identity
+  * @param position
+  * @param pointsRelativeToCenterAtOrigo
+  * @param referencePointRelativeToCenterAtOrigo
+  * @param hasBorder
+  * @param hasFilling
+  * @param color
+  * @param fillColor
+  *
+  * @author Aleksi Lukkarinen
+  */
 class Polygon private(
     val identity: Identity,
     override val position: Pos,
@@ -158,19 +155,17 @@ class Polygon private(
     Dims(boundary.width, boundary.height)
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   @inline
   override final
   def isPolygon: Boolean = true
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   override
   lazy val hashCode: Int = {
     val prime = 31
@@ -192,23 +187,21 @@ class Polygon private(
   }
 
   /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
+    *
+    * @param other
+    *
+    * @return
+    */
   def canEqual(other: Any): Boolean = {
     other.isInstanceOf[Polygon]
   }
 
   /**
-   *
-   *
-   * @param other
-   *
-   * @return
-   */
+    *
+    * @param other
+    *
+    * @return
+    */
   override
   def equals(other: Any): Boolean = {
     other match {
@@ -226,8 +219,8 @@ class Polygon private(
   }
 
   /**
-   *
-   */
+    *
+    */
   override
   def display(): Polygon = {
     super.display()
@@ -236,10 +229,9 @@ class Polygon private(
   }
 
   /**
-   *
-   *
-   * @return
-   */
+    *
+    * @return
+    */
   def copy(
       newPosition: Pos = position,
       newPointsRelativeToCenterAtOrigo: Seq[Pos] = pointsRelativeToCenterAtOrigo,
@@ -259,12 +251,11 @@ class Polygon private(
   }
 
   /**
-   *
-   *
-   * @param coordinatesInPixels
-   *
-   * @return
-   */
+    *
+    * @param coordinatesInPixels
+    *
+    * @return
+    */
   override
   def moveUpperLeftCornerTo(coordinatesInPixels: Seq[Double]): PictureElement = {
     require(
@@ -277,13 +268,12 @@ class Polygon private(
   }
 
   /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   *
-   * @return
-   */
+    *
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    *
+    * @return
+    */
   override
   def moveUpperLeftCornerTo(
       xCoordinateInPixels: Double,
@@ -295,12 +285,11 @@ class Polygon private(
   }
 
   /**
-   *
-   *
-   * @param coordinatesInPixels
-   *
-   * @return
-   */
+    *
+    * @param coordinatesInPixels
+    *
+    * @return
+    */
   override
   def moveCenterTo(coordinatesInPixels: Seq[Double]): PictureElement = {
     require(
@@ -313,13 +302,12 @@ class Polygon private(
   }
 
   /**
-   *
-   *
-   * @param xCoordinateInPixels
-   * @param yCoordinateInPixels
-   *
-   * @return
-   */
+    *
+    * @param xCoordinateInPixels
+    * @param yCoordinateInPixels
+    *
+    * @return
+    */
   override
   def moveCenterTo(
       xCoordinateInPixels: Double,
@@ -331,12 +319,11 @@ class Polygon private(
   }
 
   /**
-   *
-   *
-   * @param offsetsInPixels
-   *
-   * @return
-   */
+    *
+    * @param offsetsInPixels
+    *
+    * @return
+    */
   override
   def moveBy(offsetsInPixels: Seq[Double]): PictureElement = {
     val newPos = position + (offsetsInPixels.head, offsetsInPixels.tail.head)
@@ -344,13 +331,12 @@ class Polygon private(
   }
 
   /**
-   *
-   *
-   * @param xOffsetInPixels
-   * @param yOffsetInPixels
-   *
-   * @return
-   */
+    *
+    * @param xOffsetInPixels
+    * @param yOffsetInPixels
+    *
+    * @return
+    */
   override
   def moveBy(
       xOffsetInPixels: Double,
@@ -360,11 +346,10 @@ class Polygon private(
     copy(newPosition = newPos)
   }
 
-  /**
-   * Rotates this object around origo (0,0) by 90 degrees clockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by 90 degrees clockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCWAroundOrigo: Polygon = {
     copy(
@@ -373,11 +358,10 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCWAroundOrigo)
   }
 
-  /**
-   * Rotates this object around its position by 90 degrees clockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around its position by 90 degrees clockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCW: Polygon = {
     copy(
@@ -385,13 +369,12 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCWAroundOrigo)
   }
 
-  /**
-   * Rotates this object around a given point by 90 degrees clockwise.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by 90 degrees clockwise.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCW(centerOfRotation: Pos): Polygon = {
     copy(
@@ -400,11 +383,10 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCWAroundOrigo)
   }
 
-  /**
-   * Rotates this object around origo (0,0) by 90 degrees counterclockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by 90 degrees counterclockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCCWAroundOrigo: Polygon = {
     copy(
@@ -413,11 +395,10 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCCWAroundOrigo)
   }
 
-  /**
-   * Rotates this object around the its position by 90 degrees counterclockwise.
-   *
-   * @return
-   */
+  /** Rotates this object around the its position by 90 degrees counterclockwise.
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCCW: Polygon = {
     copy(
@@ -425,13 +406,12 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCCWAroundOrigo)
   }
 
-  /**
-   * Rotates this object around a given point by 90 degrees counterclockwise.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by 90 degrees counterclockwise.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy90DegsCCW(centerOfRotation: Pos): Polygon = {
     copy(
@@ -440,11 +420,10 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy90DegsCCWAroundOrigo)
   }
 
-  /**
-   * Rotates this object around origo (0,0) by 180 degrees.
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by 180 degrees.
+    *
+    * @return
+    */
   override
   def rotateBy180DegsAroundOrigo: Polygon = {
     copy(
@@ -453,11 +432,10 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy180DegsAroundOrigo)
   }
 
-  /**
-   * Rotates this object around its position by 180 degrees.
-   *
-   * @return
-   */
+  /** Rotates this object around its position by 180 degrees.
+    *
+    * @return
+    */
   override
   def rotateBy180Degs: Polygon = {
     copy(
@@ -465,13 +443,12 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy180DegsAroundOrigo)
   }
 
-  /**
-   * Rotates this object around a given point by 180 degrees.
-   *
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by 180 degrees.
+    *
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy180Degs(centerOfRotation: Pos): Polygon = {
     copy(
@@ -480,25 +457,23 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateBy180DegsAroundOrigo)
   }
 
-  /**
-   * Rotates this object around origo (0,0) by the specified angle.
-   *
-   * @param angle
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by the specified angle.
+    *
+    * @param angle
+    *
+    * @return
+    */
   override
   def rotateByAroundOrigo(angle: Angle): Polygon = {
     rotateByAroundOrigo(angle.inDegrees)
   }
 
-  /**
-   * Rotates this object around origo (0,0) by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
+  /** Rotates this object around origo (0,0) by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    *
+    * @return
+    */
   override
   def rotateByAroundOrigo(angleInDegrees: Double): Polygon = {
     copy(
@@ -507,25 +482,23 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateByAroundOrigo(angleInDegrees))
   }
 
-  /**
-   * Rotates this object around its position by the specified angle.
-   *
-   * @param angle
-   *
-   * @return
-   */
+  /** Rotates this object around its position by the specified angle.
+    *
+    * @param angle
+    *
+    * @return
+    */
   override
   def rotateBy(angle: Angle): Polygon = {
     rotateBy(angle.inDegrees)
   }
 
-  /**
-   * Rotates this object around its position by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   *
-   * @return
-   */
+  /** Rotates this object around its position by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    *
+    * @return
+    */
   override
   def rotateBy(angleInDegrees: Double): Polygon = {
     copy(
@@ -533,14 +506,13 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateByAroundOrigo(angleInDegrees))
   }
 
-  /**
-   * Rotates this object around a given point by the specified angle.
-   *
-   * @param angle
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by the specified angle.
+    *
+    * @param angle
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy(
       angle: Angle,
@@ -549,14 +521,13 @@ class Polygon private(
     rotateBy(angle.inDegrees, centerOfRotation)
   }
 
-  /**
-   * Rotates this object around a given point by the specified number of degrees.
-   *
-   * @param angleInDegrees
-   * @param centerOfRotation
-   *
-   * @return
-   */
+  /** Rotates this object around a given point by the specified number of degrees.
+    *
+    * @param angleInDegrees
+    * @param centerOfRotation
+    *
+    * @return
+    */
   override
   def rotateBy(
       angleInDegrees: Double,
@@ -570,25 +541,23 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.rotateByAroundOrigo(angleInDegrees))
   }
 
-  /**
-   * Scales this object to a given width in relation to its position.
-   *
-   * @param targetWidth
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to its position.
+    *
+    * @param targetWidth
+    *
+    * @return
+    */
   override
   def scaleHorizontallyTo(targetWidth: Double): Polygon =
     scaleHorizontallyTo(targetWidth, position)
 
-  /**
-   * Scales this object to a given width in relation to a given point.
-   *
-   * @param targetWidth
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to a given point.
+    *
+    * @param targetWidth
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleHorizontallyTo(
       targetWidth: Double,
@@ -600,38 +569,35 @@ class Polygon private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to a given width in relation to the origo.
-   *
-   * @param targetWidth
-   *
-   * @return
-   */
+  /** Scales this object to a given width in relation to the origo.
+    *
+    * @param targetWidth
+    *
+    * @return
+    */
   override
   def scaleHorizontallyToRelativeToOrigo(targetWidth: Double): Polygon =
     scaleToRelativeToOrigo(
       targetWidth,
       targetHeight = height.inPixels)
 
-  /**
-   * Scales this object to a given height in relation to its position.
-   *
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to its position.
+    *
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleVerticallyTo(targetHeight: Double): Polygon =
     scaleVerticallyTo(targetHeight, position)
 
-  /**
-   * Scales this object to a given height in relation to a given point.
-   *
-   * @param targetHeight
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to a given point.
+    *
+    * @param targetHeight
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleVerticallyTo(
       targetHeight: Double,
@@ -643,40 +609,37 @@ class Polygon private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to a given height in relation to the origo.
-   *
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to a given height in relation to the origo.
+    *
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleVerticallyToRelativeToOrigo(targetHeight: Double): Polygon =
     scaleToRelativeToOrigo(
       targetWidth = width.inPixels,
       targetHeight = targetHeight)
 
-  /**
-   * Scales this object in relation to its position by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   *
-   * @return
-   */
+  /** Scales this object in relation to its position by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    *
+    * @return
+    */
   override
   def scaleTo(targetSideLength: Double): Polygon =
     scaleTo(targetSideLength, position)
 
-  /**
-   * Scales this object in relation to a given point by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object in relation to a given point by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetSideLength: Double,
@@ -688,28 +651,26 @@ class Polygon private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object in relation to the origo by
-   * using a single length for both width and height.
-   *
-   * @param targetSideLength
-   *
-   * @return
-   */
+  /** Scales this object in relation to the origo by
+    * using a single length for both width and height.
+    *
+    * @param targetSideLength
+    *
+    * @return
+    */
   override
   def scaleToRelativeToOrigo(targetSideLength: Double): Polygon =
     scaleToRelativeToOrigo(
       targetWidth = targetSideLength,
       targetHeight = targetSideLength)
 
-  /**
-   * Scales this object to given width and height in relation to its position.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to its position.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetWidth: Double,
@@ -718,15 +679,14 @@ class Polygon private(
     scaleTo(targetWidth, targetHeight, position)
   }
 
-  /**
-   * Scales this object to given width and height in relation to a given point.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to a given point.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleTo(
       targetWidth: Double,
@@ -742,14 +702,13 @@ class Polygon private(
       relativityPoint = relativityPoint)
   }
 
-  /**
-   * Scales this object to given width and height in relation to the origo.
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+  /** Scales this object to given width and height in relation to the origo.
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   override
   def scaleToRelativeToOrigo(
       targetWidth: Double,
@@ -764,13 +723,12 @@ class Polygon private(
   }
 
   /**
-   *
-   *
-   * @param targetWidth
-   * @param targetHeight
-   *
-   * @return
-   */
+    *
+    * @param targetWidth
+    * @param targetHeight
+    *
+    * @return
+    */
   def scalingFactorsFor(
       targetWidth: Double,
       targetHeight: Double): (Double, Double) = {
@@ -781,27 +739,25 @@ class Polygon private(
     (horizontalFactor, verticalFactor)
   }
 
-  /**
-   * Scales this object horizontally in relation to its position.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to its position.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleHorizontallyBy(factor: Double): Polygon =
     copy(
       newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleHorizontallyByRelativeToOrigo(factor)),
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleHorizontallyByRelativeToOrigo(factor))
 
-  /**
-   * Scales this object horizontally in relation to a given point.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to a given point.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleHorizontallyBy(
       factor: Double,
@@ -813,13 +769,12 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleHorizontallyByRelativeToOrigo(factor))
   }
 
-  /**
-   * Scales this object horizontally in relation to the origo.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object horizontally in relation to the origo.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleHorizontallyByRelativeToOrigo(factor: Double): Polygon =
     copy(
@@ -827,27 +782,25 @@ class Polygon private(
       newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleHorizontallyByRelativeToOrigo(factor)),
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleHorizontallyByRelativeToOrigo(factor))
 
-  /**
-   * Scales this object vertically in relation to its position.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to its position.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleVerticallyBy(factor: Double): Polygon =
     copy(
       newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleVerticallyByRelativeToOrigo(factor)),
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleVerticallyByRelativeToOrigo(factor))
 
-  /**
-   * Scales this object vertically in relation to a given point.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to a given point.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleVerticallyBy(
       factor: Double,
@@ -859,13 +812,12 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleVerticallyByRelativeToOrigo(factor))
   }
 
-  /**
-   * Scales this object vertically in relation to the origo.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object vertically in relation to the origo.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleVerticallyByRelativeToOrigo(factor: Double): Polygon =
     copy(
@@ -873,14 +825,13 @@ class Polygon private(
       newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleVerticallyByRelativeToOrigo(factor)),
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleVerticallyByRelativeToOrigo(factor))
 
-  /**
-   * Scales this object in relation to its position by using a given factor
-   * for both horizontal and vertical directions.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object in relation to its position by using a given factor
+    * for both horizontal and vertical directions.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleBy(factor: Double): Polygon = {
     copy(
@@ -888,15 +839,14 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(factor))
   }
 
-  /**
-   * Scales this object in relation to a given point by using a given factor
-   * for both horizontal and vertical directions.
-   *
-   * @param factor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object in relation to a given point by using a given factor
+    * for both horizontal and vertical directions.
+    *
+    * @param factor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleBy(
       factor: Double,
@@ -908,14 +858,13 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(factor))
   }
 
-  /**
-   * Scales this object in relation to the origo by using a given factor for
-   * both horizontal and vertical directions.
-   *
-   * @param factor
-   *
-   * @return
-   */
+  /** Scales this object in relation to the origo by using a given factor for
+    * both horizontal and vertical directions.
+    *
+    * @param factor
+    *
+    * @return
+    */
   override
   def scaleByRelativeToOrigo(factor: Double): Polygon =
     copy(
@@ -923,14 +872,13 @@ class Polygon private(
       newPointsRelativeToCenterAtOrigo = pointsRelativeToCenterAtOrigo.map(_.scaleByRelativeToOrigo(factor)),
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(factor))
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to its position.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to its position.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    *
+    * @return
+    */
   override
   def scaleBy(
       horizontalFactor: Double,
@@ -941,15 +889,14 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(horizontalFactor, verticalFactor))
   }
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to a given point.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   * @param relativityPoint
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to a given point.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    * @param relativityPoint
+    *
+    * @return
+    */
   override
   def scaleBy(
       horizontalFactor: Double,
@@ -962,14 +909,13 @@ class Polygon private(
       newReferencePointRelativeToCenterAtOrigo = referencePointRelativeToCenterAtOrigo.scaleByRelativeToOrigo(horizontalFactor, verticalFactor))
   }
 
-  /**
-   * Scales this object by given horizontal and vertical factors in relation to the origo.
-   *
-   * @param horizontalFactor
-   * @param verticalFactor
-   *
-   * @return
-   */
+  /** Scales this object by given horizontal and vertical factors in relation to the origo.
+    *
+    * @param horizontalFactor
+    * @param verticalFactor
+    *
+    * @return
+    */
   override
   def scaleByRelativeToOrigo(
       horizontalFactor: Double,

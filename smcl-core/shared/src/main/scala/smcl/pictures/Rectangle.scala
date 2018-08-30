@@ -25,20 +25,18 @@ import smcl.settings._
 
 
 
-/**
- * An object-based API for creating rectangles.
- *
- * @author Aleksi Lukkarinen
- */
+/** An object-based API for creating rectangles.
+  *
+  * @author Aleksi Lukkarinen
+  */
 object Rectangle {
 
   /**
-   *
-   *
-   * @param sideLengthInPixels
-   *
-   * @return
-   */
+    *
+    * @param sideLengthInPixels
+    *
+    * @return
+    */
   def apply(sideLengthInPixels: Double): VectorGraphic =
     apply(
       sideLengthInPixels,
@@ -48,16 +46,15 @@ object Rectangle {
       fillColor = DefaultSecondaryColor)
 
   /**
-   *
-   *
-   * @param sideLengthInPixels
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param sideLengthInPixels
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       sideLengthInPixels: Double,
       hasBorder: Boolean,
@@ -73,13 +70,12 @@ object Rectangle {
   }
 
   /**
-   *
-   *
-   * @param sideLengthInPixels
-   * @param center
-   *
-   * @return
-   */
+    *
+    * @param sideLengthInPixels
+    * @param center
+    *
+    * @return
+    */
   def apply(
       sideLengthInPixels: Double,
       center: Pos): VectorGraphic = {
@@ -94,17 +90,16 @@ object Rectangle {
   }
 
   /**
-   *
-   *
-   * @param sideLengthInPixels
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param sideLengthInPixels
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       sideLengthInPixels: Double,
       center: Pos,
@@ -126,13 +121,12 @@ object Rectangle {
   }
 
   /**
-   *
-   *
-   * @param baseLengthInPixels
-   * @param heightInPixels
-   *
-   * @return
-   */
+    *
+    * @param baseLengthInPixels
+    * @param heightInPixels
+    *
+    * @return
+    */
   def apply(
       baseLengthInPixels: Double,
       heightInPixels: Double): VectorGraphic = {
@@ -147,17 +141,16 @@ object Rectangle {
   }
 
   /**
-   *
-   *
-   * @param baseLengthInPixels
-   * @param heightInPixels
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param baseLengthInPixels
+    * @param heightInPixels
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       baseLengthInPixels: Double,
       heightInPixels: Double,
@@ -174,18 +167,17 @@ object Rectangle {
   }
 
   /**
-   *
-   *
-   * @param baseLengthInPixels
-   * @param heightInPixels
-   * @param center
-   * @param hasBorder
-   * @param hasFilling
-   * @param color
-   * @param fillColor
-   *
-   * @return
-   */
+    *
+    * @param baseLengthInPixels
+    * @param heightInPixels
+    * @param center
+    * @param hasBorder
+    * @param hasFilling
+    * @param color
+    * @param fillColor
+    *
+    * @return
+    */
   def apply(
       baseLengthInPixels: Double,
       heightInPixels: Double,
