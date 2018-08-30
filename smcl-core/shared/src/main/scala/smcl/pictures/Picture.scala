@@ -74,7 +74,12 @@ object Picture {
 
     val identity: Identity = Identity()
 
-    new Picture(identity, elements, viewport, anchor)
+    def flattener(e: PictureElement): Seq[PictureElement] =
+      if (e.isPicture) e.toPicture.elements.flatMap(flattener) else Seq(e)
+
+    val flattenedElements = elements.flatMap(flattener)
+
+    new Picture(identity, flattenedElements, viewport, anchor)
   }
 
 }
@@ -151,7 +156,7 @@ class Picture private(
     @tailrec
     def toBitmapInternal(p: Picture): Bitmap = {
       if (p.elements.length != 1)
-        Bitmap(p)
+        return Bitmap(p)
 
       p.elements.head match {
         case childBitmap: Bitmap   => childBitmap
@@ -712,7 +717,9 @@ class Picture private(
    */
   override
   def scaleHorizontallyBy(factor: Double): Picture =
-    map(_.scaleHorizontallyBy(factor, position))
+    scaleBy(
+      horizontalFactor = factor,
+      verticalFactor = IdentityScalingFactor)
 
   /**
    * Scales this object horizontally in relation to a given point.
@@ -727,7 +734,10 @@ class Picture private(
       factor: Double,
       relativityPoint: Pos): Picture = {
 
-    map(_.scaleHorizontallyBy(factor, relativityPoint))
+    scaleBy(
+      horizontalFactor = factor,
+      verticalFactor = IdentityScalingFactor,
+      relativityPoint)
   }
 
   /**
@@ -739,7 +749,9 @@ class Picture private(
    */
   override
   def scaleHorizontallyByRelativeToOrigo(factor: Double): Picture =
-    map(_.scaleHorizontallyByRelativeToOrigo(factor))
+    scaleByRelativeToOrigo(
+      horizontalFactor = factor,
+      verticalFactor = IdentityScalingFactor)
 
   /**
    * Scales this object vertically in relation to its center.
@@ -750,7 +762,9 @@ class Picture private(
    */
   override
   def scaleVerticallyBy(factor: Double): Picture =
-    map(_.scaleVerticallyBy(factor, position))
+    scaleBy(
+      horizontalFactor = IdentityScalingFactor,
+      verticalFactor = factor)
 
   /**
    * Scales this object vertically in relation to a given point.
@@ -765,7 +779,10 @@ class Picture private(
       factor: Double,
       relativityPoint: Pos): Picture = {
 
-    map(_.scaleBy(factor, relativityPoint))
+    scaleBy(
+      horizontalFactor = IdentityScalingFactor,
+      verticalFactor = factor,
+      relativityPoint)
   }
 
   /**
@@ -777,7 +794,9 @@ class Picture private(
    */
   override
   def scaleVerticallyByRelativeToOrigo(factor: Double): Picture =
-    map(_.scaleVerticallyByRelativeToOrigo(factor))
+    scaleByRelativeToOrigo(
+      horizontalFactor = IdentityScalingFactor,
+      verticalFactor = factor)
 
   /**
    * Scales this object in relation to its center by using a given factor
@@ -789,7 +808,9 @@ class Picture private(
    */
   override
   def scaleBy(factor: Double): Picture =
-    map(_.scaleBy(factor, position))
+    scaleBy(
+      horizontalFactor = factor,
+      verticalFactor = factor)
 
   /**
    * Scales this object in relation to a given point by using a given factor
@@ -805,7 +826,10 @@ class Picture private(
       factor: Double,
       relativityPoint: Pos): Picture = {
 
-    map(_.scaleBy(factor, relativityPoint))
+    scaleBy(
+      horizontalFactor = factor,
+      verticalFactor = factor,
+      relativityPoint)
   }
 
   /**
@@ -818,7 +842,9 @@ class Picture private(
    */
   override
   def scaleByRelativeToOrigo(factor: Double): Picture =
-    map(_.scaleByRelativeToOrigo(factor))
+    scaleByRelativeToOrigo(
+      horizontalFactor = factor,
+      verticalFactor = factor)
 
   /**
    * Scales this object by given horizontal and vertical factors in relation to its center.
@@ -833,7 +859,15 @@ class Picture private(
       horizontalFactor: Double,
       verticalFactor: Double): Picture = {
 
-    map(_.scaleBy(horizontalFactor, verticalFactor, position))
+    val refPos = this.boundary.upperLeftCorner
+
+    val scaledPos = this.position.scaleBy(horizontalFactor, verticalFactor, refPos)
+    val returnToPositionOffset = this.position - scaledPos
+
+    map{
+      _.scaleBy(horizontalFactor, verticalFactor, refPos)
+          .moveBy(returnToPositionOffset.xInPixels, returnToPositionOffset.yInPixels)
+    }
   }
 
   /**
@@ -851,7 +885,13 @@ class Picture private(
       verticalFactor: Double,
       relativityPoint: Pos): Picture = {
 
-    map(_.scaleBy(horizontalFactor, verticalFactor, relativityPoint))
+    val scaledPic = scaleBy(horizontalFactor, verticalFactor)
+
+    val relativityDistance = scaledPic.position - relativityPoint
+    val scaledXOffset = horizontalFactor * relativityDistance.xInPixels - relativityDistance.xInPixels
+    val scaledYOffset = verticalFactor * relativityDistance.yInPixels - relativityDistance.yInPixels
+
+    scaledPic.map(_.moveBy(scaledXOffset, scaledYOffset))
   }
 
   /**
@@ -867,7 +907,7 @@ class Picture private(
       horizontalFactor: Double,
       verticalFactor: Double): Picture = {
 
-    map(_.scaleByRelativeToOrigo(horizontalFactor, verticalFactor))
+    scaleBy(horizontalFactor, verticalFactor, Pos.Origo)
   }
 
 }

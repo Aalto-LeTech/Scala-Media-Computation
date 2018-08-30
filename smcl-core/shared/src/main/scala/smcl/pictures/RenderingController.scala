@@ -58,7 +58,7 @@ object RenderingController
       return Bitmap(0, 0)
 
     val bounds =
-      if (containsOnlyAnImageThatDefinesViewport(elements))
+      if (containsOnlyOnePictureThatDefinesViewport(elements))
         elements.head.toPicture.viewport.get.boundary
       else
         BoundaryCalculator.fromBoundaries(elements)
@@ -94,7 +94,7 @@ object RenderingController
   }
 
   private
-  def containsOnlyAnImageThatDefinesViewport(
+  def containsOnlyOnePictureThatDefinesViewport(
       elements: Seq[PictureElement]): Boolean = {
 
     elements.lengthCompare(1) == 0 &&
@@ -184,8 +184,6 @@ object RenderingController
       val position = pgon.position
       val points = pgon.pointsRelativeToCenterAtOrigo
 
-      //val (refX, refY) = pgon.referencePointRelativeToCenterAtOrigo.toTuple
-      // .map(_.moveBy(-refX, -refY))
       val (xs, ys) = points.unzip[Double, Double]
 
       val contentUpperLeftCorner = pgon.contentBoundary.upperLeftCorner

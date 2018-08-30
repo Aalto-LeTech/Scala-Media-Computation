@@ -37,7 +37,7 @@ import smcl.settings._
  *   val wPerTwo = (w/2).toInt
  *   val r = Range.inclusive(-wPerTwo, wPerTwo, 2)
  *
- *   Image((for{x <- r} yield lines(x, wPerTwo)).flatten: _*)
+ *   Picture((for{x <- r} yield lines(x, wPerTwo)).flatten: _*)
  * }
  * }}}
  *

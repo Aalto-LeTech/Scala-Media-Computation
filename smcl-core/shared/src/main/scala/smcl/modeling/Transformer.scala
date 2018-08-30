@@ -529,10 +529,10 @@ object Transformer {
       scalingFactor: Double,
       relativityPoint: Pos): Pos = {
 
-    val xNorm = position.xInPixels - relativityPoint.xInPixels
+    val xDistance = position.xInPixels - relativityPoint.xInPixels
 
     Pos(
-      scalingFactor * xNorm + relativityPoint.xInPixels,
+      relativityPoint.xInPixels + scalingFactor * xDistance,
       position.yInPixels)
   }
 
@@ -572,11 +572,11 @@ object Transformer {
       scalingFactor: Double,
       relativityPoint: Pos): Pos = {
 
-    val yNorm = position.yInPixels - relativityPoint.yInPixels
+    val yDistance = position.yInPixels - relativityPoint.yInPixels
 
     Pos(
       position.xInPixels,
-      scalingFactor * yNorm + relativityPoint.yInPixels)
+      relativityPoint.yInPixels + scalingFactor * yDistance)
   }
 
   /**
@@ -668,12 +668,12 @@ object Transformer {
       verticalScalingFactor: Double,
       relativityPoint: Pos): Pos = {
 
-    val xNorm = position.xInPixels - relativityPoint.xInPixels
-    val yNorm = position.yInPixels - relativityPoint.yInPixels
+    val xDistance = position.xInPixels - relativityPoint.xInPixels
+    val yDistance = position.yInPixels - relativityPoint.yInPixels
 
     Pos(
-      horizontalScalingFactor * xNorm + position.xInPixels,
-      verticalScalingFactor * yNorm + position.yInPixels)
+      relativityPoint.xInPixels + horizontalScalingFactor * xDistance,
+      relativityPoint.yInPixels + verticalScalingFactor * yDistance)
   }
 
   /**
