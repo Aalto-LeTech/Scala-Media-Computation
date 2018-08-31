@@ -79,10 +79,10 @@ lazy val releaseNotesTemplate: InputKey[File] = inputKey[File](
 lazy val projectFullName: String = "Scala Media Computation Library"
 lazy val projectAbbrName: String = "SMCL"
 
-lazy val projectMajorVersion: Int = 0
+lazy val projectMajorVersion: Int = 1
 lazy val projectMinorVersion: Int = 0
-lazy val projectMicroVersion: Int = 10
-lazy val projectIsRelease: Boolean = false
+lazy val projectMicroVersion: Int = 0
+lazy val projectIsRelease: Boolean = true
 
 lazy val buildTime: Long = System.currentTimeMillis()
 
