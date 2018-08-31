@@ -74,6 +74,70 @@ object Bitmap
 
   /**
     *
+    * @param width
+    * @param height
+    * @param colors
+    *
+    * @return
+    */
+  def apply(
+      width: Int,
+      height: Int,
+      colors: Seq[Color]): Bitmap = {
+
+    apply(Len(width), Len(height), colors)
+  }
+
+  /**
+    *
+    * @param width
+    * @param height
+    * @param colors
+    *
+    * @return
+    */
+  def apply(
+      width: Len,
+      height: Len,
+      colors: Seq[Color]): Bitmap = {
+
+    if (colors == null) {
+      throw new IllegalArgumentException("The colors sequence cannot be null")
+    }
+
+    if (colors.length != (width.inPixels * height.inPixels)) {
+      throw new IllegalArgumentException(
+        "The colors sequence must have exactly floor(width) * floor(height) items")
+    }
+
+    val reds = new Array[Int](colors.length)
+    val greens = new Array[Int](colors.length)
+    val blues = new Array[Int](colors.length)
+    val opacities = new Array[Int](colors.length)
+
+    for ((c, i) <- colors.zipWithIndex) {
+      if (c != null) {
+        reds(i) = c.red
+        greens(i) = c.green
+        blues(i) = c.blue
+        opacities(i) = c.opacity
+      }
+    }
+
+    val bitmap = apply(width, height)
+
+    val snapshot = bitmap.toPixelSnapshot
+
+    snapshot.setRedComponentArray(reds)
+    snapshot.setGreenComponentArray(greens)
+    snapshot.setBlueComponentArray(blues)
+    snapshot.setOpacityComponentArray(opacities)
+
+    snapshot.toBitmap
+  }
+
+  /**
+    *
     * @param widthInPixels
     * @param heightInPixels
     * @param contentGenerator
@@ -85,23 +149,7 @@ object Bitmap
       heightInPixels: Int,
       contentGenerator: LocationToColorGenerator): Bitmap = {
 
-    apply(widthInPixels, heightInPixels).setColorsByLocation(contentGenerator)
-  }
-
-  /**
-    *
-    * @param widthInPixels
-    * @param heightInPixels
-    *
-    * @return
-    */
-  def apply(
-      widthInPixels: Int,
-      heightInPixels: Int): Bitmap = {
-
-    apply(
-      Len(widthInPixels),
-      Len(heightInPixels))
+    apply(Len(widthInPixels), Len(heightInPixels), contentGenerator)
   }
 
   /**
@@ -118,6 +166,22 @@ object Bitmap
       contentGenerator: LocationToColorGenerator): Bitmap = {
 
     apply(width, height).setColorsByLocation(contentGenerator)
+  }
+
+  /**
+    *
+    * @param widthInPixels
+    * @param heightInPixels
+    *
+    * @return
+    */
+  def apply(
+      widthInPixels: Int,
+      heightInPixels: Int): Bitmap = {
+
+    apply(
+      Len(widthInPixels),
+      Len(heightInPixels))
   }
 
   /**
