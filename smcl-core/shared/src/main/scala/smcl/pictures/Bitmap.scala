@@ -1016,7 +1016,7 @@ class Bitmap private(
     *
     * @param pathToFile
     *
-    * @return `true` if the saving was successful and `false` if no file was created because the bitmap was empty
+    * @return `true` if the saving was successful and `false` if no file was created because there was no bitmap buffer to save
     *
     * @throws FileOverwritingIsDeniedBySMCLError       if given path points to an existing file (not folder)
     * @throws ImageWriterNotRetrievedError             if the first suitable [[ImageWriter]] cannot be retrieved
