@@ -1944,6 +1944,9 @@ class Bitmap private(
       verticalFactor: Double,
       relativityPoint: Pos): Bitmap = {
 
+    if (isNotRenderable)
+      return this
+
     scaleTo(
       horizontalFactor * buffer.get.widthInPixels,
       verticalFactor * buffer.get.heightInPixels,
@@ -1961,6 +1964,9 @@ class Bitmap private(
   def scaleByRelativeToOrigo(
       horizontalFactor: Double,
       verticalFactor: Double): Bitmap = {
+
+    if (isNotRenderable)
+      return this
 
     scaleToRelativeToOrigo(
       horizontalFactor * buffer.get.widthInPixels,
