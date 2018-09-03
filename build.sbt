@@ -81,8 +81,8 @@ lazy val projectAbbrName: String = "SMCL"
 
 lazy val projectMajorVersion: Int = 1
 lazy val projectMinorVersion: Int = 0
-lazy val projectMicroVersion: Int = 1
-lazy val projectIsRelease: Boolean = true
+lazy val projectMicroVersion: Int = 2
+lazy val projectIsRelease: Boolean = false
 
 lazy val buildTime: Long = System.currentTimeMillis()
 
