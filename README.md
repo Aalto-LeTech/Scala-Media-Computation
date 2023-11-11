@@ -1,4 +1,6 @@
-[![GitHub version](https://badge.fury.io/gh/Aalto-LeTech%2FScala-Media-Computation.svg)](https://badge.fury.io/gh/Aalto-LeTech%2FScala-Media-Computation)
+# Deprecated
+
+Development has moved to [https://github.com/Aalto-LeTech/SMILe](https://github.com/Aalto-LeTech/SMILe)
 
 # The Scala Media Computation Library (SMCL)
 
